@@ -138,7 +138,7 @@ const PrintablePage: React.FC<PrintablePageProps> = ({ layer, pageNumber, totalP
       {/* Main Content */}
       <div style={{ flex: 1, display: 'flex', gap: '20px' }}>
         {/* Left: Pyramid Visual */}
-        <div style={{ width: '200px', flexShrink: 0 }}>
+        <div style={{ width: '100px', flexShrink: 0 }}>
           <svg viewBox="0 0 240 300" style={{ width: '100%', height: 'auto' }}>
             <defs>
               {/* Gradients for each layer */}
