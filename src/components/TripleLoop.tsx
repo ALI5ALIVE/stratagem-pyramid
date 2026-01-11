@@ -20,24 +20,25 @@ const TripleLoop = ({ onModuleClick, scale = 1 }: TripleLoopProps) => {
   const loopRadius = 28;
   const cy = 38;
 
-  // Create flow path using smooth bezier curves
+  // Create flow path that fully circles each module before moving to the next
   const createFlowPath = () => {
     const [m1, m2, m3] = modules;
     const r = loopRadius;
     const y = cy;
     
-    // Use bezier curves for a smooth figure-8-like path through all three circles
+    // Full circle for each module: start at top, go clockwise, then transition to next
     return `
-      M ${m1.cx - r} ${y}
-      A ${r} ${r} 0 1 1 ${m1.cx + r} ${y}
-      Q ${(m1.cx + m2.cx) / 2} ${y - r * 0.6} ${m2.cx - r} ${y}
-      A ${r} ${r} 0 1 1 ${m2.cx + r} ${y}
-      Q ${(m2.cx + m3.cx) / 2} ${y - r * 0.6} ${m3.cx - r} ${y}
-      A ${r} ${r} 0 1 1 ${m3.cx + r} ${y}
-      Q ${(m2.cx + m3.cx) / 2} ${y + r * 0.6} ${m2.cx + r} ${y}
-      A ${r} ${r} 0 1 0 ${m2.cx - r} ${y}
-      Q ${(m1.cx + m2.cx) / 2} ${y + r * 0.6} ${m1.cx + r} ${y}
-      A ${r} ${r} 0 1 0 ${m1.cx - r} ${y}
+      M ${m1.cx} ${y - r}
+      A ${r} ${r} 0 0 1 ${m1.cx} ${y + r}
+      A ${r} ${r} 0 0 1 ${m1.cx} ${y - r}
+      Q ${(m1.cx + m2.cx) / 2} ${y - r * 1.3} ${m2.cx} ${y - r}
+      A ${r} ${r} 0 0 1 ${m2.cx} ${y + r}
+      A ${r} ${r} 0 0 1 ${m2.cx} ${y - r}
+      Q ${(m2.cx + m3.cx) / 2} ${y - r * 1.3} ${m3.cx} ${y - r}
+      A ${r} ${r} 0 0 1 ${m3.cx} ${y + r}
+      A ${r} ${r} 0 0 1 ${m3.cx} ${y - r}
+      Q ${(m2.cx + m3.cx) / 2} ${y - r * 1.3} ${m2.cx} ${y - r}
+      Q ${(m1.cx + m2.cx) / 2} ${y - r * 1.3} ${m1.cx} ${y - r}
     `.trim().replace(/\s+/g, " ");
   };
 
@@ -61,7 +62,7 @@ const TripleLoop = ({ onModuleClick, scale = 1 }: TripleLoopProps) => {
         return;
       }
       
-      const t = ((now - start) / 6000) % 1; // 6s loop
+      const t = ((now - start) / 10000) % 1; // 10s loop for full circles
       const p = pathEl.getPointAtLength(length * t);
 
       if (p && !isNaN(p.x) && !isNaN(p.y)) {
@@ -176,8 +177,8 @@ const TripleLoop = ({ onModuleClick, scale = 1 }: TripleLoopProps) => {
       <circle
         ref={dotRef}
         r="4"
-        cx={modules[0].cx - loopRadius}
-        cy={cy}
+        cx={modules[0].cx}
+        cy={cy - loopRadius}
         fill="hsl(50 95% 70%)"
         filter="url(#dotGlow)"
       />
