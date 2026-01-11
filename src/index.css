@@ -134,6 +134,25 @@
     @apply absolute inset-0 opacity-30;
     background: var(--gradient-glow);
   }
+
+  /* 3D Pyramid styles */
+  .pyramid-3d-container {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+  }
+
+  .pyramid-layer-3d {
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease-out, filter 0.3s ease-out;
+  }
+
+  .pyramid-layer-3d:hover {
+    transform: translateZ(10px);
+  }
+
+  .pyramid-layer-3d.active {
+    transform: translateZ(20px);
+  }
 }
 
 @layer utilities {

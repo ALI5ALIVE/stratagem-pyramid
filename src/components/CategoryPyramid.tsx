@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PyramidLayer from "./PyramidLayer";
+import Pyramid3D from "./Pyramid3D";
 import DetailsPanel, { LayerData } from "./DetailsPanel";
 import InfinityLoop from "./InfinityLoop";
 import PlatformCallout from "./PlatformCallout";
@@ -107,61 +107,48 @@ const CategoryPyramid = () => {
 
       {/* Main content */}
       <main className="container max-w-7xl mx-auto px-4 md:px-6 pb-16">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          {/* Pyramid */}
+        <div className="grid lg:grid-cols-[1fr,400px] gap-8 lg:gap-12 items-start">
+          {/* 3D Pyramid */}
           <div className="order-2 lg:order-1">
-            <div className="relative max-w-xl mx-auto">
-              {/* Ambient glow behind pyramid */}
-              <div
-                className="absolute inset-0 -z-10 blur-3xl opacity-30"
-                style={{
-                  background:
-                    "radial-gradient(ellipse at center, hsl(199 89% 48% / 0.4) 0%, transparent 70%)",
-                }}
-              />
+            <Pyramid3D
+              layers={layersData.map((layer) => ({
+                id: layer.id,
+                level: layer.level,
+                label: layer.id,
+                sublabel: layer.sublabel,
+                colorClass: layer.colorClass,
+                glowClass: glowClasses[layer.id],
+              }))}
+              activeLayer={activeLayer.level}
+              onLayerClick={(level) => {
+                const layer = layersData.find((l) => l.level === level);
+                if (layer) {
+                  setActiveLayerId(layer.id);
+                  setHighlightedModule(null);
+                }
+              }}
+            >
+              <InfinityLoop onModuleClick={handleModuleClick} />
+            </Pyramid3D>
 
-              {/* Pyramid layers - reversed for visual stacking (top first) */}
-              <div className="flex flex-col gap-1">
-                {layersData.map((layer) => (
-                  <PyramidLayer
-                    key={layer.id}
-                    level={layer.level}
-                    label={layer.id}
-                    sublabel={layer.sublabel}
-                    isActive={activeLayerId === layer.id}
-                    onClick={() => {
-                      setActiveLayerId(layer.id);
-                      setHighlightedModule(null);
-                    }}
-                    colorClass={layer.colorClass}
-                    glowClass={glowClasses[layer.id]}
-                  >
-                    {layer.id === "FOUNDATION" && (
-                      <InfinityLoop onModuleClick={handleModuleClick} />
-                    )}
-                  </PyramidLayer>
-                ))}
-              </div>
-
-              {/* Legend */}
-              <div className="mt-8 flex flex-wrap justify-center gap-4 text-xs text-muted-foreground">
-                <span className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-pyramid-foundation" />
-                  Foundation
-                </span>
-                <span className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-pyramid-operational" />
-                  Operational
-                </span>
-                <span className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-pyramid-commercial" />
-                  Commercial
-                </span>
-                <span className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-pyramid-transformational" />
-                  Transformational
-                </span>
-              </div>
+            {/* Legend */}
+            <div className="mt-4 flex flex-wrap justify-center gap-4 text-xs text-muted-foreground">
+              <span className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-pyramid-foundation" />
+                Foundation
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-pyramid-operational" />
+                Operational
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-pyramid-commercial" />
+                Commercial
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-pyramid-transformational" />
+                Transformational
+              </span>
             </div>
           </div>
 
