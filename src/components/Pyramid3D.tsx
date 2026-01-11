@@ -1,6 +1,7 @@
 import TripleLoop from "./TripleLoop";
 import MetricsGauges from "./MetricsGauges";
 import AIAccelerator from "./AIAccelerator";
+import FragmentationIllustration from "./FragmentationIllustration";
 
 interface PyramidLayerData {
   id: string;
@@ -41,6 +42,11 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
       dark: "hsl(199, 89%, 36%)", 
       glow: "hsl(199, 89%, 48%)",
     },
+    5: { 
+      main: "hsl(0, 70%, 50%)", 
+      dark: "hsl(0, 70%, 38%)", 
+      glow: "hsl(0, 70%, 50%)",
+    },
   };
 
   // Foundation section configuration
@@ -51,9 +57,9 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
   ];
 
   // Calculate X position for any Y on the pyramid slope
-  // Apex at (400, 20), left base at (40, 510), right base at (760, 510)
+  // Apex at (400, 20), left base at (40, 610), right base at (760, 610)
   const apexY = 20;
-  const baseY = 510;
+  const baseY = 610;
   const apexX = 400;
   const leftBaseX = 40;
   const rightBaseX = 760;
@@ -68,12 +74,13 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
     return apexX + slope * (y - apexY);
   };
 
-  // Layer Y boundaries (unified straight edges) - enlarged top layer
+  // Layer Y boundaries (unified straight edges) - 5 layers
   const layerBounds = {
-    1: { top: 20, bottom: 150 },   // Transformational - bigger
-    2: { top: 150, bottom: 270 },  // Commercial
-    3: { top: 270, bottom: 390 },  // Operational
-    4: { top: 390, bottom: 510 },  // Foundation
+    1: { top: 20, bottom: 138 },   // Transformational
+    2: { top: 138, bottom: 256 },  // Commercial
+    3: { top: 256, bottom: 374 },  // Operational
+    4: { top: 374, bottom: 492 },  // Foundation
+    5: { top: 492, bottom: 610 },  // Fragmentation
   };
 
   // Generate polygon points for each layer (excluding Foundation which is split)
@@ -123,6 +130,7 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
     2: { y: (layerBounds[2].top + layerBounds[2].bottom) / 2, lineEndX: 600 },
     3: { y: (layerBounds[3].top + layerBounds[3].bottom) / 2, lineEndX: 660 },
     4: { y: (layerBounds[4].top + layerBounds[4].bottom) / 2, lineEndX: 720 },
+    5: { y: (layerBounds[5].top + layerBounds[5].bottom) / 2, lineEndX: 780 },
   };
 
   // Get center position for the triple loop in operational layer
@@ -147,7 +155,7 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
     <div className="relative w-full flex flex-col items-center justify-center py-6">
       {/* Main pyramid with labels SVG */}
       <svg
-        viewBox="0 0 980 540"
+        viewBox="0 0 1020 640"
         className="w-full max-w-[1400px] h-auto"
         preserveAspectRatio="xMidYMid meet"
         style={{ 
@@ -156,7 +164,7 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
       >
         <defs>
           {/* Gradients for each layer - vertical gradient for depth */}
-          {[1, 2, 3, 4].map((level) => {
+          {[1, 2, 3, 4, 5].map((level) => {
             const colors = layerConfig[level as keyof typeof layerConfig];
             return (
               <linearGradient key={`grad-${level}`} id={`layer-grad-${level}`} x1="0%" y1="0%" x2="0%" y2="100%">
@@ -181,7 +189,7 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
           </linearGradient>
           
           {/* Glow filters for active states */}
-          {[1, 2, 3, 4].map((level) => {
+          {[1, 2, 3, 4, 5].map((level) => {
             const colors = layerConfig[level as keyof typeof layerConfig];
             return (
               <filter key={`glow-${level}`} id={`active-glow-${level}`} x="-50%" y="-50%" width="200%" height="200%">
@@ -534,6 +542,153 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
             );
           })()}
         </g>
+
+        {/* Fragmentation Layer (Level 5) - Bottom layer showing chaos */}
+        {(() => {
+          const level = 5;
+          const bounds = layerBounds[5];
+          const colors = layerConfig[5];
+          const isActive = activeLayer === 5;
+          const layerData = getLayerData(5);
+          const labelPos = labelPositions[5];
+
+          const topLeftX = getLeftX(bounds.top);
+          const topRightX = getRightX(bounds.top);
+          const bottomLeftX = getLeftX(bounds.bottom);
+          const bottomRightX = getRightX(bounds.bottom);
+          const points = `${topLeftX},${bounds.top} ${topRightX},${bounds.top} ${bottomRightX},${bounds.bottom} ${bottomLeftX},${bounds.bottom}`;
+
+          const centerY = (bounds.top + bounds.bottom) / 2;
+          const rightEdgeX = getRightX(centerY);
+
+          return (
+            <g>
+              {/* Main layer polygon */}
+              <polygon
+                points={points}
+                fill={`url(#layer-grad-${level})`}
+                stroke={colors.main}
+                strokeWidth={isActive ? "2" : "1"}
+                className="cursor-pointer transition-all duration-300"
+                onClick={() => onLayerClick(level)}
+                style={{
+                  filter: isActive ? `url(#active-glow-${level})` : "none",
+                  opacity: isActive ? 1 : 0.85,
+                }}
+              />
+
+              {/* Top edge highlight */}
+              <line
+                x1={topLeftX}
+                y1={bounds.top}
+                x2={topRightX}
+                y2={bounds.top}
+                stroke="white"
+                strokeWidth="1"
+                strokeOpacity={isActive ? "0.4" : "0.2"}
+              />
+
+              {/* Hover overlay */}
+              <polygon
+                points={points}
+                fill="transparent"
+                className="cursor-pointer hover:fill-white/10 transition-all duration-200"
+                onClick={() => onLayerClick(level)}
+              />
+
+              {/* Connecting line from pyramid to label */}
+              <line
+                x1={rightEdgeX + 5}
+                y1={labelPos.y}
+                x2={labelPos.lineEndX}
+                y2={labelPos.y}
+                stroke={isActive ? colors.main : "hsl(222, 30%, 30%)"}
+                strokeWidth={isActive ? "2" : "1"}
+                strokeDasharray={isActive ? "none" : "4 4"}
+                className="transition-all duration-300"
+              />
+
+              {/* Connector dot on pyramid edge */}
+              <circle
+                cx={rightEdgeX + 5}
+                cy={labelPos.y}
+                r={isActive ? "5" : "3"}
+                fill={isActive ? colors.main : "hsl(222, 30%, 40%)"}
+                className="transition-all duration-300"
+              />
+
+              {/* Label group (right side) */}
+              <g
+                className="cursor-pointer"
+                onClick={() => onLayerClick(level)}
+              >
+                {/* Label background */}
+                <rect
+                  x={labelPos.lineEndX + 10}
+                  y={labelPos.y - 24}
+                  width="220"
+                  height="48"
+                  rx="6"
+                  fill={isActive ? "hsl(222, 47%, 12%)" : "transparent"}
+                  stroke={isActive ? colors.main : "transparent"}
+                  strokeWidth="1"
+                  className="transition-all duration-300"
+                />
+
+                {/* Layer name */}
+                <text
+                  x={labelPos.lineEndX + 20}
+                  y={labelPos.y - 4}
+                  fill={isActive ? colors.main : "hsl(210, 40%, 80%)"}
+                  fontSize="14"
+                  fontWeight="700"
+                  fontFamily="'Space Grotesk', sans-serif"
+                  letterSpacing="0.08em"
+                  className="uppercase transition-all duration-300"
+                >
+                  {layerData.label}
+                </text>
+
+                {/* Sublabel */}
+                <text
+                  x={labelPos.lineEndX + 20}
+                  y={labelPos.y + 16}
+                  fill={isActive ? "hsl(210, 40%, 90%)" : "hsl(215, 20%, 55%)"}
+                  fontSize="12"
+                  fontWeight="400"
+                  fontFamily="'Inter', sans-serif"
+                  className="transition-all duration-300"
+                >
+                  {layerData.sublabel}
+                </text>
+              </g>
+            </g>
+          );
+        })()}
+
+        {/* Fragmentation Illustration embedded in layer 5 */}
+        {(() => {
+          const bounds = layerBounds[5];
+          const centerY = (bounds.top + bounds.bottom) / 2;
+          const leftX = getLeftX(centerY);
+          const rightX = getRightX(centerY);
+          const availableWidth = rightX - leftX;
+          const width = availableWidth * 0.70;
+          const startX = leftX + (availableWidth - width) / 2;
+          
+          return (
+            <foreignObject
+              x={startX}
+              y={bounds.top + 8}
+              width={width}
+              height={bounds.bottom - bounds.top - 16}
+            >
+              <div className="w-full h-full flex items-center justify-center overflow-hidden rounded-md bg-card/40 backdrop-blur-sm ring-1 ring-destructive/30">
+                <FragmentationIllustration onNodeClick={handleModuleClick} />
+              </div>
+            </foreignObject>
+          );
+        })()}
 
         {/* AI Accelerator embedded in Transformational layer - positioned to fit inside triangle */}
         {(() => {

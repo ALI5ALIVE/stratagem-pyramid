@@ -42,6 +42,7 @@
     --pyramid-operational: 173 80% 40%;
     --pyramid-commercial: 280 65% 55%;
     --pyramid-transformational: 45 93% 58%;
+    --pyramid-fragmentation: 0 70% 50%;
 
     /* Glow effects */
     --glow-primary: 0 0 30px hsl(199 89% 48% / 0.4);
@@ -49,6 +50,7 @@
     --glow-operational: 0 0 40px hsl(173 80% 40% / 0.5);
     --glow-commercial: 0 0 40px hsl(280 65% 55% / 0.5);
     --glow-transformational: 0 0 40px hsl(45 93% 58% / 0.5);
+    --glow-fragmentation: 0 0 40px hsl(0 70% 50% / 0.5);
 
     /* Gradients */
     --gradient-dark: linear-gradient(180deg, hsl(222 47% 8%) 0%, hsl(222 47% 4%) 100%);
@@ -104,6 +106,10 @@
 
   .glow-transformational {
     box-shadow: var(--glow-transformational);
+  }
+
+  .glow-fragmentation {
+    box-shadow: var(--glow-fragmentation);
   }
 
   .infinity-loop {

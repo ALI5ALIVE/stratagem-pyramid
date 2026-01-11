@@ -66,6 +66,23 @@ const layersData: LayerData[] = [
     colorClass: "bg-gradient-to-b from-pyramid-foundation to-pyramid-foundation/80",
     accentColor: "hsl(199 89% 48%)",
   },
+  {
+    id: "FRAGMENTATION",
+    level: 5,
+    headline: "Fragmented Point Solutions",
+    sublabel: "The cost of disconnection",
+    bullets: [
+      "Multiple disconnected tools with no shared data",
+      "Manual handoffs between safety, content, and training",
+      "No single source of truth for operational compliance",
+      "Reactive, audit-driven processes with hidden costs",
+      "Duplication, errors, delays, and accountability gaps",
+    ],
+    whyItMatters:
+      "Fragmentation creates blind spots, slows response times, and increases operational risk — this is where most organizations start",
+    colorClass: "bg-gradient-to-b from-pyramid-fragmentation to-pyramid-fragmentation/80",
+    accentColor: "hsl(0 70% 50%)",
+  },
 ];
 
 const glowClasses: Record<string, string> = {
@@ -73,13 +90,14 @@ const glowClasses: Record<string, string> = {
   COMMERCIAL: "glow-commercial",
   OPERATIONAL: "glow-operational",
   FOUNDATION: "glow-foundation",
+  FRAGMENTATION: "glow-fragmentation",
 };
 
 const CategoryPyramid = () => {
-  const [activeLayerId, setActiveLayerId] = useState("FOUNDATION");
+  const [activeLayerId, setActiveLayerId] = useState("FRAGMENTATION");
   const [highlightedModule, setHighlightedModule] = useState<string | null>(null);
 
-  const activeLayer = layersData.find((l) => l.id === activeLayerId) || layersData[3];
+  const activeLayer = layersData.find((l) => l.id === activeLayerId) || layersData[4];
 
   const handleModuleClick = (module: string) => {
     setActiveLayerId("FOUNDATION");
