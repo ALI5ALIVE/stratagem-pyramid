@@ -152,11 +152,11 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
   };
 
   return (
-    <div className="relative w-full flex flex-col items-center justify-center py-6">
+    <div className="relative w-full h-full flex flex-col items-center justify-center">
       {/* Main pyramid with labels SVG */}
       <svg
         viewBox="0 0 1020 640"
-        className="w-full max-w-[1400px] h-auto"
+        className="w-full h-full"
         preserveAspectRatio="xMidYMid meet"
         style={{ 
           filter: "drop-shadow(0 25px 50px rgba(0,0,0,0.5))",
