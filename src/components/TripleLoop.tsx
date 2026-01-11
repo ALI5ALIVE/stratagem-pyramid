@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 interface TripleLoopProps {
   onModuleClick: (module: string) => void;
@@ -65,8 +65,38 @@ const TripleLoop = ({ onModuleClick, scale = 1 }: TripleLoopProps) => {
     `;
   };
 
-  // Normalize path string to single line (prevents animation issues)
-  const flowPath = createFlowPath().trim().replace(/\s+/g, " ");
+  // Normalize path string to single line (prevents SVG parsing issues)
+  const flowPath = useMemo(
+    () => createFlowPath().trim().replace(/\s+/g, " "),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
+  const pathRef = useRef<SVGPathElement | null>(null);
+  const dotRef = useRef<SVGCircleElement | null>(null);
+
+  useEffect(() => {
+    const pathEl = pathRef.current;
+    const dotEl = dotRef.current;
+    if (!pathEl || !dotEl) return;
+
+    let raf = 0;
+    const start = performance.now();
+
+    const tick = (now: number) => {
+      const length = pathEl.getTotalLength();
+      const t = ((now - start) / 8000) % 1; // 8s loop
+      const p = pathEl.getPointAtLength(length * t);
+
+      dotEl.setAttribute("cx", String(p.x));
+      dotEl.setAttribute("cy", String(p.y));
+
+      raf = requestAnimationFrame(tick);
+    };
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [flowPath]);
 
   return (
     <svg
@@ -183,25 +213,24 @@ const TripleLoop = ({ onModuleClick, scale = 1 }: TripleLoopProps) => {
         className="pointer-events-none"
       />
 
-      {/* Define the path for animation reference */}
+      {/* Define the path for the dot to follow */}
       <path
-        id="triple-loop-flow-path"
+        ref={pathRef}
         d={flowPath}
         fill="none"
         stroke="transparent"
         strokeWidth="1"
       />
 
-      {/* Single animated dot flowing through the figure-8 path using mpath for reliability */}
-      <circle r="6" fill="hsl(50 95% 75%)" filter="url(#dotGlow)">
-        <animateMotion
-          dur="8s"
-          repeatCount="indefinite"
-          calcMode="linear"
-        >
-          <mpath href="#triple-loop-flow-path" />
-        </animateMotion>
-      </circle>
+      {/* Animated dot (RAF-driven for cross-browser reliability) */}
+      <circle
+        ref={dotRef}
+        r="6"
+        cx={modules[0].cx - loopRadius}
+        cy={cy}
+        fill="hsl(50 95% 75%)"
+        filter="url(#dotGlow)"
+      />
     </svg>
   );
 };
