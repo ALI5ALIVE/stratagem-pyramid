@@ -1,11 +1,12 @@
-import { Check, ArrowRight } from "lucide-react";
+import { Check, ArrowRight, Eye, Target } from "lucide-react";
 
 export interface LayerData {
   id: string;
   level: number;
   headline: string;
   sublabel: string;
-  bullets: string[];
+  whatItLooksLike: string[];
+  result: string[];
   whyItMatters: string;
   colorClass: string;
   accentColor: string;
@@ -17,14 +18,14 @@ interface DetailsPanelProps {
 }
 
 const DetailsPanel = ({ layer, highlightedModule }: DetailsPanelProps) => {
-  // Map modules to their relevant bullets for foundation layer
+  // Map modules to their relevant items for connected governance layer
   const moduleHighlights: Record<string, number[]> = {
-    safety: [0, 3],
-    content: [1, 3],
-    training: [2, 3],
+    safety: [0, 2],
+    content: [0, 1],
+    training: [0, 2],
   };
 
-  const highlightedBullets = highlightedModule ? moduleHighlights[highlightedModule] || [] : [];
+  const highlightedItems = highlightedModule ? moduleHighlights[highlightedModule] || [] : [];
 
   return (
     <div className="details-panel h-full animate-fade-in">
@@ -38,7 +39,7 @@ const DetailsPanel = ({ layer, highlightedModule }: DetailsPanelProps) => {
             {layer.level}
           </span>
           <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-            Layer {layer.level} — {layer.id}
+            Stage {layer.level} — {layer.sublabel}
           </span>
         </div>
         <h2
@@ -49,29 +50,60 @@ const DetailsPanel = ({ layer, highlightedModule }: DetailsPanelProps) => {
         </h2>
       </div>
 
-      {/* Bullets */}
-      <ul className="space-y-4 mb-8">
-        {layer.bullets.map((bullet, index) => (
-          <li
-            key={index}
-            className={`flex items-start gap-3 transition-all duration-300 ${
-              highlightedBullets.includes(index)
-                ? "bg-primary/10 -mx-4 px-4 py-2 rounded-lg"
-                : ""
-            }`}
-          >
-            <span
-              className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5"
-              style={{ backgroundColor: `${layer.accentColor}20` }}
+      {/* What it looks like */}
+      <div className="mb-6">
+        <div className="flex items-center gap-2 mb-3">
+          <Eye className="w-4 h-4" style={{ color: layer.accentColor }} />
+          <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            What it looks like
+          </span>
+        </div>
+        <ul className="space-y-3">
+          {layer.whatItLooksLike.map((item, index) => (
+            <li
+              key={index}
+              className={`flex items-start gap-3 transition-all duration-300 ${
+                highlightedItems.includes(index)
+                  ? "bg-primary/10 -mx-4 px-4 py-2 rounded-lg"
+                  : ""
+              }`}
             >
-              <Check className="w-3 h-3" style={{ color: layer.accentColor }} />
-            </span>
-            <span className="text-sm md:text-base text-foreground/90 leading-relaxed">
-              {bullet}
-            </span>
-          </li>
-        ))}
-      </ul>
+              <span
+                className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5"
+                style={{ backgroundColor: `${layer.accentColor}20` }}
+              >
+                <Check className="w-3 h-3" style={{ color: layer.accentColor }} />
+              </span>
+              <span className="text-sm md:text-base text-foreground/90 leading-relaxed">
+                {item}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Result */}
+      <div className="mb-6">
+        <div className="flex items-center gap-2 mb-3">
+          <Target className="w-4 h-4" style={{ color: layer.accentColor }} />
+          <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            Result
+          </span>
+        </div>
+        <ul className="space-y-2">
+          {layer.result.map((item, index) => (
+            <li key={index} className="flex items-start gap-3">
+              <span
+                className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-2"
+                style={{ backgroundColor: layer.accentColor }}
+              />
+              <span className="text-sm md:text-base text-foreground/80 leading-relaxed font-medium">
+                {item}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       {/* Why it matters */}
       <div

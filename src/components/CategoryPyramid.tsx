@@ -5,78 +5,101 @@ import PlatformCallout from "./PlatformCallout";
 
 const layersData: LayerData[] = [
   {
-    id: "TRANSFORMATIONAL",
+    id: "PREDICTIVE",
     level: 1,
-    headline: "AI Accelerator / Agentic Operations",
-    sublabel: "AI-powered decision acceleration",
-    bullets: [
-      "Earlier detection and smarter prioritisation",
-      "Faster controlled change and targeted training activation",
-      "New ways of working through exception-led oversight",
-      "Human governance and auditability built in",
+    headline: "Predictive & Agentic Reliability",
+    sublabel: "AI-Accelerated",
+    whatItLooksLike: [
+      "AI detects weak signals early and forecasts risk patterns",
+      "Prioritised recommendations and action plans",
+      "Assisted drafting of procedures and training triggers",
+      "Exception-led oversight with humans governing approvals",
+      "Continuous proof and reporting",
+    ],
+    result: [
+      "Reliability becomes proactive, scalable, and continuously improving",
+      "Customer experience strengthens as an operational outcome",
+      "Teams shift from administration to performance leadership",
     ],
     whyItMatters:
-      "AI compresses decision + execution time while keeping humans in control",
+      "AI compresses decision + execution time while keeping humans in control — reliability becomes a competitive advantage",
     colorClass: "bg-gradient-to-b from-pyramid-transformational to-pyramid-transformational/80",
     accentColor: "hsl(45 93% 58%)",
   },
   {
-    id: "COMMERCIAL",
+    id: "CLOSED_LOOP",
     level: 2,
-    headline: "Measurable Reliability & Readiness Improvement",
-    sublabel: "Outcomes that matter",
-    bullets: [
-      "OTP ↑ | delay minutes ↓ | cancellations ↓",
-      "Readiness and time-to-competency ↑",
-      "Audit proof readiness ↑",
+    headline: "Closed-Loop Operational Improvement",
+    sublabel: "Outcome Engine",
+    whatItLooksLike: [
+      "Operational signals trigger coordinated workflows",
+      "Corrective actions drive controlled procedural change",
+      "Training is targeted and triggered by change",
+      "Evidence captured automatically",
+    ],
+    result: [
+      "Reduced recurrence and drift",
+      "Faster time-to-change",
+      "Measurable reliability and readiness KPI improvement",
     ],
     whyItMatters:
-      "Converts compliance into measurable operational performance and customer experience impact",
+      "Turns operational signals into controlled execution, not just reporting",
     colorClass: "bg-gradient-to-b from-pyramid-commercial to-pyramid-commercial/80",
     accentColor: "hsl(280 65% 55%)",
   },
   {
-    id: "OPERATIONAL",
+    id: "CONNECTED",
     level: 3,
-    headline: "Closed-Loop Operational Improvement",
-    sublabel: "Signal to action",
-    bullets: [
-      "Signals trigger coordinated action",
-      "Event → corrective action → procedure update → training → evidence",
-      "Faster time-to-change and reduced recurrence",
+    headline: "Connected Governance",
+    sublabel: "Platform Foundation",
+    whatItLooksLike: [
+      "Safety, procedures, training unified into one governed system of record",
+      "Traceability and approvals established",
+      "Visibility improves; fragmentation reduces",
+    ],
+    result: [
+      "Improved governance and confidence",
+      "Audit readiness increases",
+      "Foundation for closed-loop improvement is in place",
     ],
     whyItMatters:
-      "Turns operational signals into controlled execution, not just reporting",
+      "Eliminates handoffs and creates one version of operational truth",
     colorClass: "bg-gradient-to-b from-pyramid-operational to-pyramid-operational/80",
     accentColor: "hsl(173 80% 40%)",
   },
   {
-    id: "FOUNDATION",
+    id: "MANAGED",
     level: 4,
-    headline: "One Connected System of Record",
-    sublabel: "Unified operational truth",
-    bullets: [
-      "Unify safety, procedures/content, and training into one connected platform",
-      "Shared governance, traceability, and accountability by design",
-      "Reduced fragmentation and tool sprawl",
-      "Continuous data flow across modules (Safety ↔ Content ↔ Training) as an always-on loop",
+    headline: "Managed (Siloed) Compliance",
+    sublabel: "Structured but disconnected",
+    whatItLooksLike: [
+      "Strong systems in specific departments",
+      "Compliance and training are structured but disconnected",
+      "Investigations produce actions but follow-through is inconsistent",
+    ],
+    result: [
+      "Compliance is managed, but performance does not systematically improve",
+      "Repeat issues persist",
     ],
     whyItMatters:
-      "Eliminates handoffs and creates one version of operational truth",
+      "Departments operate well individually, but lack of connection prevents organizational learning",
     colorClass: "bg-gradient-to-b from-pyramid-foundation to-pyramid-foundation/80",
     accentColor: "hsl(199 89% 48%)",
   },
   {
-    id: "FRAGMENTATION",
+    id: "FRAGMENTED",
     level: 5,
-    headline: "Fragmented Point Solutions",
-    sublabel: "The cost of disconnection",
-    bullets: [
-      "Multiple disconnected tools with no shared data",
-      "Manual handoffs between safety, content, and training",
-      "No single source of truth for operational compliance",
-      "Reactive, audit-driven processes with hidden costs",
-      "Duplication, errors, delays, and accountability gaps",
+    headline: "Fragmented & Reactive",
+    sublabel: "The starting point",
+    whatItLooksLike: [
+      "Disconnected systems across safety, procedures, training",
+      "Investigations and changes happen manually",
+      "Training not tied to operational signals",
+      "Evidence assembled late and inconsistently",
+    ],
+    result: [
+      "High variability and repeat issues",
+      "Slow recovery and inconsistent readiness proof",
     ],
     whyItMatters:
       "Fragmentation creates blind spots, slows response times, and increases operational risk — this is where most organizations start",
@@ -86,21 +109,21 @@ const layersData: LayerData[] = [
 ];
 
 const glowClasses: Record<string, string> = {
-  TRANSFORMATIONAL: "glow-transformational",
-  COMMERCIAL: "glow-commercial",
-  OPERATIONAL: "glow-operational",
-  FOUNDATION: "glow-foundation",
-  FRAGMENTATION: "glow-fragmentation",
+  PREDICTIVE: "glow-transformational",
+  CLOSED_LOOP: "glow-commercial",
+  CONNECTED: "glow-operational",
+  MANAGED: "glow-foundation",
+  FRAGMENTED: "glow-fragmentation",
 };
 
 const CategoryPyramid = () => {
-  const [activeLayerId, setActiveLayerId] = useState("FRAGMENTATION");
+  const [activeLayerId, setActiveLayerId] = useState("FRAGMENTED");
   const [highlightedModule, setHighlightedModule] = useState<string | null>(null);
 
   const activeLayer = layersData.find((l) => l.id === activeLayerId) || layersData[4];
 
   const handleModuleClick = (module: string) => {
-    setActiveLayerId("FOUNDATION");
+    setActiveLayerId("CONNECTED");
     setHighlightedModule(module);
     // Clear highlight after a delay
     setTimeout(() => setHighlightedModule(null), 3000);
