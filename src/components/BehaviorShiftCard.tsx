@@ -32,6 +32,11 @@ const getIcons = (level: number) => {
 const BehaviorShiftCard = ({ behavioralShift, accentColor, level }: BehaviorShiftCardProps) => {
   const { from: FromIcon, to: ToIcon } = getIcons(level);
 
+  // Guard against undefined behavioralShift
+  if (!behavioralShift) {
+    return null;
+  }
+
   return (
     <div
       className="relative p-5 rounded-xl border transition-all duration-300"
