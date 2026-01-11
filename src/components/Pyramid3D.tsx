@@ -673,17 +673,17 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
           const leftX = getLeftX(centerY);
           const rightX = getRightX(centerY);
           const availableWidth = rightX - leftX;
-          const width = availableWidth * 0.92; // Use 92% of available width
+          const width = availableWidth * 0.95; // Use 95% of available width
           const startX = leftX + (availableWidth - width) / 2;
           
           return (
             <foreignObject
               x={startX}
-              y={bounds.top + 8}
+              y={bounds.top + 5}
               width={width}
-              height={bounds.bottom - bounds.top - 16}
+              height={bounds.bottom - bounds.top - 10}
             >
-              <div className="w-full h-full flex items-center justify-center overflow-hidden rounded-md bg-card/40 backdrop-blur-sm ring-1 ring-destructive/30">
+              <div className="w-full h-full flex items-center justify-center overflow-hidden">
                 <FragmentationIllustration onNodeClick={handleModuleClick} />
               </div>
             </foreignObject>
@@ -693,23 +693,23 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
         {/* Transformational Illustration embedded in layer 1 - Human + AI = Opportunity */}
         {(() => {
           const bounds = layerBounds[1];
-          // Position near bottom of layer where triangle is widest
-          const positionY = bounds.bottom - 35;
+          // Position at 70% down the layer where triangle has more width
+          const positionY = bounds.top + (bounds.bottom - bounds.top) * 0.70;
           const leftX = getLeftX(positionY);
           const rightX = getRightX(positionY);
           const availableWidth = rightX - leftX;
-          const width = availableWidth * 0.90;
-          const height = 55;
+          const width = availableWidth * 0.95;
+          const height = 65;
           const startX = leftX + (availableWidth - width) / 2;
           
           return (
             <foreignObject
               x={startX}
-              y={bounds.bottom - height - 8}
+              y={bounds.bottom - height - 5}
               width={width}
               height={height}
             >
-              <div className="w-full h-full flex items-center justify-center">
+              <div className="w-full h-full flex items-center justify-center overflow-hidden">
                 <TransformationalIllustration onNodeClick={handleModuleClick} />
               </div>
             </foreignObject>
