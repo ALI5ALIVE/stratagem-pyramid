@@ -20,7 +20,8 @@ const AIAccelerator = ({ onNodeClick }: AIAcceleratorProps) => {
   return (
     <svg
       viewBox="0 0 200 75"
-      className="w-full h-full"
+      className="w-full h-auto max-w-full"
+      preserveAspectRatio="xMidYMid meet"
       style={{
         filter: "drop-shadow(0 0 12px hsl(45 93% 58% / 0.6))"
       }}
