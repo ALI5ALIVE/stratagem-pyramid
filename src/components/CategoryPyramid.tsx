@@ -110,7 +110,7 @@ const CategoryPyramid = () => {
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Pyramid */}
           <div className="order-2 lg:order-1">
-            <div className="relative max-w-md mx-auto">
+            <div className="relative max-w-xl mx-auto">
               {/* Ambient glow behind pyramid */}
               <div
                 className="absolute inset-0 -z-10 blur-3xl opacity-30"

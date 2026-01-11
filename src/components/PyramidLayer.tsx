@@ -22,20 +22,23 @@ const PyramidLayer = ({
   children,
 }: PyramidLayerProps) => {
   // Calculate trapezoid widths based on level (1 = top/smallest, 4 = bottom/largest)
+  // Level 1 is a triangle (top width = 0), others are trapezoids
   const widthPercentages = {
-    1: { top: 40, bottom: 55 },
-    2: { top: 55, bottom: 70 },
-    3: { top: 70, bottom: 85 },
-    4: { top: 85, bottom: 100 },
+    1: { top: 0, bottom: 35 },      // Triangle
+    2: { top: 35, bottom: 60 },     // Trapezoid
+    3: { top: 60, bottom: 80 },     // Trapezoid
+    4: { top: 80, bottom: 100 },    // Trapezoid (base)
   };
 
   const { top, bottom } = widthPercentages[level as keyof typeof widthPercentages];
-  const height = level === 4 ? 140 : 90; // Foundation layer is taller to accommodate infinity loop
+  const height = level === 4 ? 140 : 120; // Equal height, Foundation slightly taller for infinity loop
 
-  // Create trapezoid clip path
+  // Create clip path - triangle for level 1, trapezoid for others
   const topOffset = (100 - top) / 2;
   const bottomOffset = (100 - bottom) / 2;
-  const clipPath = `polygon(${topOffset}% 0%, ${100 - topOffset}% 0%, ${100 - bottomOffset}% 100%, ${bottomOffset}% 100%)`;
+  const clipPath = level === 1
+    ? `polygon(50% 0%, ${100 - bottomOffset}% 100%, ${bottomOffset}% 100%)`
+    : `polygon(${topOffset}% 0%, ${100 - topOffset}% 0%, ${100 - bottomOffset}% 100%, ${bottomOffset}% 100%)`;
 
   return (
     <button

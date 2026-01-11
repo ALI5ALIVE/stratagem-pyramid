@@ -15,7 +15,7 @@ const InfinityLoop = ({ onModuleClick }: InfinityLoopProps) => {
   ];
 
   return (
-    <div className="relative w-full max-w-[180px] mx-auto">
+    <div className="relative w-full max-w-[160px] mx-auto">
       {/* Infinity Symbol SVG */}
       <svg
         viewBox="0 0 200 100"
