@@ -138,7 +138,7 @@ const PrintablePage: React.FC<PrintablePageProps> = ({ layer, pageNumber, totalP
       {/* Main Content */}
       <div style={{ flex: 1, display: 'flex', gap: '20px' }}>
         {/* Left: Pyramid Visual */}
-        <div style={{ width: '280px', flexShrink: 0 }}>
+        <div style={{ width: '200px', flexShrink: 0 }}>
           <svg viewBox="0 0 240 300" style={{ width: '100%', height: 'auto' }}>
             <defs>
               {/* Gradients for each layer */}
@@ -249,35 +249,35 @@ const PrintablePage: React.FC<PrintablePageProps> = ({ layer, pageNumber, totalP
           backgroundColor: cardBg,
           borderRadius: '12px',
           border: `1px solid ${borderColor}`,
-          padding: '16px',
+          padding: '18px',
           display: 'flex',
           flexDirection: 'column',
-          gap: '10px',
+          gap: '12px',
           background: `linear-gradient(135deg, hsl(222 47% 10%) 0%, hsl(222 47% 6%) 100%)`,
         }}>
           {/* Header */}
           <div style={{ marginBottom: '4px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
               <span style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                width: '16px',
-                height: '16px',
+                width: '20px',
+                height: '20px',
                 borderRadius: '4px',
                 backgroundColor: accentColor,
                 color: bgColor,
-                fontSize: '9px',
+                fontSize: '11px',
                 fontWeight: 700,
               }}>
                 {layer.level}
               </span>
-              <span style={{ fontSize: '8px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: mutedForeground }}>
+              <span style={{ fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: mutedForeground }}>
                 Stage {layer.level} — {layer.sublabel}
               </span>
             </div>
             <h2 style={{ 
-              fontSize: '16px', 
+              fontSize: '20px', 
               fontWeight: 700, 
               fontFamily: "'Space Grotesk', sans-serif",
               color: accentColor,
@@ -289,26 +289,26 @@ const PrintablePage: React.FC<PrintablePageProps> = ({ layer, pageNumber, totalP
           </div>
 
           {/* Grid layout for sections */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', flex: 1 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', flex: 1 }}>
             {/* What it looks like */}
             <div style={{ 
               backgroundColor: `${accentColor}08`,
               borderRadius: '8px',
-              padding: '10px',
+              padding: '12px',
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
-                <Eye style={{ width: '10px', height: '10px', color: accentColor }} />
-                <span style={{ fontSize: '8px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: mutedForeground }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <Eye style={{ width: '12px', height: '12px', color: accentColor }} />
+                <span style={{ fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: mutedForeground }}>
                   What it looks like
                 </span>
               </div>
               <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
                 {layer.whatItLooksLike.map((item, index) => (
-                  <li key={index} style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', marginBottom: '4px' }}>
+                  <li key={index} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginBottom: '5px' }}>
                     <span style={{
                       flexShrink: 0,
-                      width: '12px',
-                      height: '12px',
+                      width: '16px',
+                      height: '16px',
                       borderRadius: '50%',
                       backgroundColor: `${accentColor}20`,
                       display: 'flex',
@@ -316,9 +316,9 @@ const PrintablePage: React.FC<PrintablePageProps> = ({ layer, pageNumber, totalP
                       justifyContent: 'center',
                       marginTop: '1px',
                     }}>
-                      <Check style={{ width: '8px', height: '8px', color: accentColor }} />
+                      <Check style={{ width: '10px', height: '10px', color: accentColor }} />
                     </span>
-                    <span style={{ fontSize: '9px', color: `${foreground}e6`, lineHeight: 1.4 }}>
+                    <span style={{ fontSize: '11px', color: `${foreground}e6`, lineHeight: 1.4 }}>
                       {item}
                     </span>
                   </li>
@@ -330,26 +330,26 @@ const PrintablePage: React.FC<PrintablePageProps> = ({ layer, pageNumber, totalP
             <div style={{ 
               backgroundColor: `${accentColor}08`,
               borderRadius: '8px',
-              padding: '10px',
+              padding: '12px',
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
-                <Target style={{ width: '10px', height: '10px', color: accentColor }} />
-                <span style={{ fontSize: '8px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: mutedForeground }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <Target style={{ width: '12px', height: '12px', color: accentColor }} />
+                <span style={{ fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: mutedForeground }}>
                   Result
                 </span>
               </div>
               <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
                 {layer.result.map((item, index) => (
-                  <li key={index} style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', marginBottom: '4px' }}>
+                  <li key={index} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginBottom: '5px' }}>
                     <span style={{
                       flexShrink: 0,
-                      width: '4px',
-                      height: '4px',
+                      width: '6px',
+                      height: '6px',
                       borderRadius: '50%',
                       backgroundColor: accentColor,
-                      marginTop: '5px',
+                      marginTop: '6px',
                     }} />
-                    <span style={{ fontSize: '9px', color: `${foreground}cc`, fontWeight: 500, lineHeight: 1.4 }}>
+                    <span style={{ fontSize: '11px', color: `${foreground}cc`, fontWeight: 500, lineHeight: 1.4 }}>
                       {item}
                     </span>
                   </li>
@@ -361,22 +361,22 @@ const PrintablePage: React.FC<PrintablePageProps> = ({ layer, pageNumber, totalP
             <div style={{ 
               backgroundColor: `${accentColor}08`,
               borderRadius: '8px',
-              padding: '10px',
+              padding: '12px',
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
-                <TrendingUp style={{ width: '10px', height: '10px', color: accentColor }} />
-                <span style={{ fontSize: '8px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: mutedForeground }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <TrendingUp style={{ width: '12px', height: '12px', color: accentColor }} />
+                <span style={{ fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: mutedForeground }}>
                   Value Proof
                 </span>
               </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginBottom: '8px' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '10px' }}>
                 {layer.valueProof.metrics.map((metric, index) => (
                   <span key={index} style={{
                     display: 'inline-flex',
                     alignItems: 'center',
-                    padding: '2px 6px',
+                    padding: '4px 8px',
                     borderRadius: '12px',
-                    fontSize: '8px',
+                    fontSize: '10px',
                     fontWeight: 600,
                     backgroundColor: `${accentColor}15`,
                     color: accentColor,
@@ -387,12 +387,12 @@ const PrintablePage: React.FC<PrintablePageProps> = ({ layer, pageNumber, totalP
                 ))}
               </div>
               <div style={{
-                padding: '8px',
+                padding: '10px',
                 borderRadius: '6px',
                 background: `linear-gradient(135deg, ${accentColor}10 0%, transparent 100%)`,
-                borderLeft: `2px solid ${accentColor}`,
+                borderLeft: `3px solid ${accentColor}`,
               }}>
-                <p style={{ fontSize: '9px', fontWeight: 500, fontStyle: 'italic', color: `${foreground}e6`, margin: 0 }}>
+                <p style={{ fontSize: '11px', fontWeight: 500, fontStyle: 'italic', color: `${foreground}e6`, margin: 0 }}>
                   "{layer.valueProof.roiStatement}"
                 </p>
               </div>
@@ -400,55 +400,55 @@ const PrintablePage: React.FC<PrintablePageProps> = ({ layer, pageNumber, totalP
 
             {/* Why it matters */}
             <div style={{
-              padding: '10px',
+              padding: '12px',
               borderRadius: '8px',
               border: `1px solid ${accentColor}30`,
               background: `linear-gradient(135deg, ${accentColor}08 0%, transparent 100%)`,
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
-                <ArrowRight style={{ width: '10px', height: '10px', color: accentColor }} />
-                <span style={{ fontSize: '8px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: mutedForeground }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <ArrowRight style={{ width: '12px', height: '12px', color: accentColor }} />
+                <span style={{ fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: mutedForeground }}>
                   Why it matters
                 </span>
               </div>
-              <p style={{ fontSize: '9px', fontWeight: 500, color: foreground, margin: 0, lineHeight: 1.5 }}>
+              <p style={{ fontSize: '11px', fontWeight: 500, color: foreground, margin: 0, lineHeight: 1.5 }}>
                 {layer.whyItMatters}
               </p>
             </div>
 
             {/* Behavioral Shift */}
             <div style={{
-              padding: '10px',
+              padding: '12px',
               borderRadius: '8px',
               border: `1px solid ${accentColor}30`,
               background: `linear-gradient(135deg, ${accentColor}08 0%, transparent 100%)`,
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
-                <Users style={{ width: '10px', height: '10px', color: accentColor }} />
-                <span style={{ fontSize: '8px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: mutedForeground }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                <Users style={{ width: '12px', height: '12px', color: accentColor }} />
+                <span style={{ fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: mutedForeground }}>
                   How Work Changes
                 </span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
                 {/* FROM */}
                 <div style={{ flex: 1 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '4px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '5px' }}>
                     <div style={{
-                      width: '14px',
-                      height: '14px',
+                      width: '18px',
+                      height: '18px',
                       borderRadius: '4px',
                       backgroundColor: `${accentColor}20`,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                     }}>
-                      <FromIcon style={{ width: '8px', height: '8px', color: mutedForeground }} />
+                      <FromIcon style={{ width: '10px', height: '10px', color: mutedForeground }} />
                     </div>
-                    <span style={{ fontSize: '7px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: mutedForeground }}>
+                    <span style={{ fontSize: '9px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: mutedForeground }}>
                       From
                     </span>
                   </div>
-                  <p style={{ fontSize: '8px', color: `${foreground}b3`, lineHeight: 1.4, margin: 0 }}>
+                  <p style={{ fontSize: '10px', color: `${foreground}b3`, lineHeight: 1.4, margin: 0 }}>
                     {layer.behavioralShift.from}
                   </p>
                 </div>
@@ -456,36 +456,36 @@ const PrintablePage: React.FC<PrintablePageProps> = ({ layer, pageNumber, totalP
                 {/* Arrow */}
                 <div style={{
                   flexShrink: 0,
-                  width: '18px',
-                  height: '18px',
+                  width: '22px',
+                  height: '22px',
                   borderRadius: '50%',
                   backgroundColor: `${accentColor}20`,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
-                  <ArrowRight style={{ width: '10px', height: '10px', color: accentColor }} />
+                  <ArrowRight style={{ width: '12px', height: '12px', color: accentColor }} />
                 </div>
 
                 {/* TO */}
                 <div style={{ flex: 1 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '4px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '5px' }}>
                     <div style={{
-                      width: '14px',
-                      height: '14px',
+                      width: '18px',
+                      height: '18px',
                       borderRadius: '4px',
                       backgroundColor: accentColor,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                     }}>
-                      <ToIcon style={{ width: '8px', height: '8px', color: bgColor }} />
+                      <ToIcon style={{ width: '10px', height: '10px', color: bgColor }} />
                     </div>
-                    <span style={{ fontSize: '7px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: accentColor }}>
+                    <span style={{ fontSize: '9px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: accentColor }}>
                       To
                     </span>
                   </div>
-                  <p style={{ fontSize: '8px', color: foreground, fontWeight: 500, lineHeight: 1.4, margin: 0 }}>
+                  <p style={{ fontSize: '10px', color: foreground, fontWeight: 500, lineHeight: 1.4, margin: 0 }}>
                     {layer.behavioralShift.to}
                   </p>
                 </div>
@@ -493,12 +493,12 @@ const PrintablePage: React.FC<PrintablePageProps> = ({ layer, pageNumber, totalP
 
               {/* Cultural Marker */}
               <div style={{
-                padding: '6px',
+                padding: '8px',
                 borderRadius: '4px',
-                borderLeft: `2px solid ${accentColor}`,
+                borderLeft: `3px solid ${accentColor}`,
                 backgroundColor: `${accentColor}08`,
               }}>
-                <p style={{ fontSize: '8px', fontStyle: 'italic', color: `${foreground}cc`, margin: 0 }}>
+                <p style={{ fontSize: '10px', fontStyle: 'italic', color: `${foreground}cc`, margin: 0 }}>
                   "{layer.behavioralShift.culturalMarker}"
                 </p>
               </div>
@@ -506,25 +506,25 @@ const PrintablePage: React.FC<PrintablePageProps> = ({ layer, pageNumber, totalP
 
             {/* Time Allocation */}
             <div style={{
-              padding: '10px',
+              padding: '12px',
               borderRadius: '8px',
               border: `1px solid ${accentColor}30`,
               background: `linear-gradient(135deg, ${accentColor}08 0%, transparent 100%)`,
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
-                <Clock style={{ width: '10px', height: '10px', color: accentColor }} />
-                <span style={{ fontSize: '8px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: mutedForeground }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                <Clock style={{ width: '12px', height: '12px', color: accentColor }} />
+                <span style={{ fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: mutedForeground }}>
                   Where Teams Spend Time
                 </span>
               </div>
 
               {/* Stacked Bar */}
               <div style={{ 
-                height: '16px', 
+                height: '22px', 
                 borderRadius: '4px', 
                 overflow: 'hidden', 
                 display: 'flex',
-                marginBottom: '8px',
+                marginBottom: '10px',
               }}>
                 <div style={{
                   width: `${coordination}%`,
@@ -533,8 +533,8 @@ const PrintablePage: React.FC<PrintablePageProps> = ({ layer, pageNumber, totalP
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
-                  {coordination >= 20 && (
-                    <span style={{ fontSize: '8px', fontWeight: 600, color: 'white' }}>{coordination}%</span>
+                  {coordination >= 15 && (
+                    <span style={{ fontSize: '10px', fontWeight: 600, color: 'white' }}>{coordination}%</span>
                   )}
                 </div>
                 <div style={{
@@ -544,8 +544,8 @@ const PrintablePage: React.FC<PrintablePageProps> = ({ layer, pageNumber, totalP
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
-                  {administration >= 20 && (
-                    <span style={{ fontSize: '8px', fontWeight: 600, color: 'white' }}>{administration}%</span>
+                  {administration >= 15 && (
+                    <span style={{ fontSize: '10px', fontWeight: 600, color: 'white' }}>{administration}%</span>
                   )}
                 </div>
                 <div style={{
@@ -555,27 +555,27 @@ const PrintablePage: React.FC<PrintablePageProps> = ({ layer, pageNumber, totalP
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
-                  {improvement >= 20 && (
-                    <span style={{ fontSize: '8px', fontWeight: 600, color: 'white' }}>{improvement}%</span>
+                  {improvement >= 15 && (
+                    <span style={{ fontSize: '10px', fontWeight: 600, color: 'white' }}>{improvement}%</span>
                   )}
                 </div>
               </div>
 
               {/* Legend */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', fontSize: '7px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <div style={{ width: '8px', height: '8px', borderRadius: '2px', backgroundColor: 'hsl(0 70% 50%)' }} />
-                  <span style={{ color: mutedForeground }}>Coord</span>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', fontSize: '9px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <div style={{ width: '10px', height: '10px', borderRadius: '2px', backgroundColor: 'hsl(0 70% 50%)' }} />
+                  <span style={{ color: mutedForeground }}>Coordination</span>
                   <span style={{ fontWeight: 600, color: foreground }}>{coordination}%</span>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <div style={{ width: '8px', height: '8px', borderRadius: '2px', backgroundColor: 'hsl(199 89% 48%)' }} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <div style={{ width: '10px', height: '10px', borderRadius: '2px', backgroundColor: 'hsl(199 89% 48%)' }} />
                   <span style={{ color: mutedForeground }}>Admin</span>
                   <span style={{ fontWeight: 600, color: foreground }}>{administration}%</span>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <div style={{ width: '8px', height: '8px', borderRadius: '2px', backgroundColor: 'hsl(173 80% 40%)' }} />
-                  <span style={{ color: mutedForeground }}>Improve</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <div style={{ width: '10px', height: '10px', borderRadius: '2px', backgroundColor: 'hsl(173 80% 40%)' }} />
+                  <span style={{ color: mutedForeground }}>Improvement</span>
                   <span style={{ fontWeight: 600, color: foreground }}>{improvement}%</span>
                 </div>
               </div>
