@@ -143,6 +143,7 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
       <svg
         viewBox="0 0 950 480"
         className="w-full max-w-[900px] h-auto"
+        preserveAspectRatio="xMidYMid meet"
         style={{ 
           filter: "drop-shadow(0 25px 50px rgba(0,0,0,0.5))",
         }}
@@ -539,12 +540,12 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
           
           return (
             <foreignObject
-              x={centerX - width * 0.45}
-              y={bounds.top + 12}
-              width={width * 0.9}
-              height={bounds.bottom - bounds.top - 20}
+              x={centerX - width * 0.48}
+              y={bounds.top + 8}
+              width={width * 0.96}
+              height={bounds.bottom - bounds.top - 12}
             >
-              <div className="w-full h-full flex items-center justify-center">
+              <div className="w-full h-full flex items-center justify-center rounded-md bg-black/30 backdrop-blur-sm ring-1 ring-white/10">
                 <AIAccelerator onNodeClick={handleModuleClick} />
               </div>
             </foreignObject>
@@ -562,12 +563,12 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
           
           return (
             <foreignObject
-              x={centerX - width * 0.42}
-              y={bounds.top + 10}
-              width={width * 0.84}
-              height={bounds.bottom - bounds.top - 18}
+              x={centerX - width * 0.46}
+              y={bounds.top + 6}
+              width={width * 0.92}
+              height={bounds.bottom - bounds.top - 10}
             >
-              <div className="w-full h-full flex items-center justify-center">
+              <div className="w-full h-full flex items-center justify-center rounded-md bg-black/30 backdrop-blur-sm ring-1 ring-white/10">
                 <MetricsGauges onMetricClick={handleModuleClick} />
               </div>
             </foreignObject>
@@ -576,12 +577,12 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
 
         {/* Triple Loop embedded in Operational layer */}
         <foreignObject
-          x={operationalCenterX - operationalWidth * 0.4}
-          y={operationalBounds.top + 8}
-          width={operationalWidth * 0.8}
-          height={operationalBounds.bottom - operationalBounds.top - 16}
+          x={operationalCenterX - operationalWidth * 0.44}
+          y={operationalBounds.top + 6}
+          width={operationalWidth * 0.88}
+          height={operationalBounds.bottom - operationalBounds.top - 10}
         >
-          <div className="w-full h-full flex items-center justify-center">
+          <div className="w-full h-full flex items-center justify-center rounded-md bg-black/30 backdrop-blur-sm ring-1 ring-white/10">
             <TripleLoop onModuleClick={handleModuleClick} />
           </div>
         </foreignObject>

@@ -65,7 +65,8 @@ const TripleLoop = ({ onModuleClick, scale = 1 }: TripleLoopProps) => {
     `;
   };
 
-  const flowPath = createFlowPath();
+  // Normalize path string to single line (prevents animation issues)
+  const flowPath = createFlowPath().trim().replace(/\s+/g, " ");
 
   return (
     <svg
@@ -182,22 +183,24 @@ const TripleLoop = ({ onModuleClick, scale = 1 }: TripleLoopProps) => {
         className="pointer-events-none"
       />
 
-      {/* Hidden path for the animation to follow (for debugging, can be made visible) */}
+      {/* Define the path for animation reference */}
       <path
+        id="triple-loop-flow-path"
         d={flowPath}
         fill="none"
         stroke="transparent"
         strokeWidth="1"
       />
 
-      {/* Single animated dot flowing through the figure-8 path */}
-      <circle r="5" fill="hsl(50 95% 70%)" filter="url(#dotGlow)">
+      {/* Single animated dot flowing through the figure-8 path using mpath for reliability */}
+      <circle r="6" fill="hsl(50 95% 75%)" filter="url(#dotGlow)">
         <animateMotion
           dur="8s"
           repeatCount="indefinite"
-          path={flowPath}
-          rotate="auto"
-        />
+          calcMode="linear"
+        >
+          <mpath href="#triple-loop-flow-path" />
+        </animateMotion>
       </circle>
     </svg>
   );
