@@ -49,11 +49,11 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
     },
   };
 
-  // Foundation section configuration
+  // Foundation section configuration - emphasizing siloed nature of Layer 4
   const foundationSections = [
-    { id: "safety", label: "Safety", sublabel: "Risk & Events" },
-    { id: "content", label: "Content", sublabel: "Procedures" },
-    { id: "training", label: "Training", sublabel: "Readiness" },
+    { id: "safety", label: "Safety", sublabel: "Isolated" },
+    { id: "content", label: "Content", sublabel: "Siloed" },
+    { id: "training", label: "Training", sublabel: "Disconnected" },
   ];
 
   // Calculate X position for any Y on the pyramid slope
@@ -288,12 +288,12 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
                 className="cursor-pointer"
                 onClick={() => onLayerClick(level)}
               >
-                {/* Label background for readability */}
+              {/* Label background for readability */}
                 <rect
                   x={labelPos.lineEndX + 10}
-                  y={labelPos.y - 24}
-                  width="220"
-                  height="48"
+                  y={labelPos.y - 28}
+                  width="290"
+                  height="56"
                   rx="6"
                   fill={isActive ? "hsl(222, 47%, 12%)" : "transparent"}
                   stroke={isActive ? colors.main : "transparent"}
@@ -304,13 +304,13 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
                 {/* Layer name */}
                 <text
                   x={labelPos.lineEndX + 20}
-                  y={labelPos.y - 4}
+                  y={labelPos.y - 6}
                   fill={isActive ? colors.main : "hsl(210, 40%, 80%)"}
-                  fontSize="14"
+                  fontSize="11"
                   fontWeight="700"
                   fontFamily="'Space Grotesk', sans-serif"
-                  letterSpacing="0.08em"
-                  className="uppercase transition-all duration-300"
+                  letterSpacing="0.06em"
+                  className="transition-all duration-300"
                 >
                   {layerData.label}
                 </text>
@@ -498,16 +498,16 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
                   className="transition-all duration-300"
                 />
 
-                {/* Label group */}
+              {/* Label group */}
                 <g
                   className="cursor-pointer"
                   onClick={() => onLayerClick(4)}
                 >
                   <rect
                     x={labelPos.lineEndX + 10}
-                    y={labelPos.y - 24}
-                    width="220"
-                    height="48"
+                    y={labelPos.y - 28}
+                    width="290"
+                    height="56"
                     rx="6"
                     fill={isActive ? "hsl(222, 47%, 12%)" : "transparent"}
                     stroke={isActive ? colors.main : "transparent"}
@@ -516,13 +516,13 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
                   />
                   <text
                     x={labelPos.lineEndX + 20}
-                    y={labelPos.y - 4}
+                    y={labelPos.y - 6}
                     fill={isActive ? colors.main : "hsl(210, 40%, 80%)"}
-                    fontSize="14"
+                    fontSize="11"
                     fontWeight="700"
                     fontFamily="'Space Grotesk', sans-serif"
-                    letterSpacing="0.08em"
-                    className="uppercase transition-all duration-300"
+                    letterSpacing="0.06em"
+                    className="transition-all duration-300"
                   >
                     {layerData.label}
                   </text>
@@ -625,9 +625,9 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
                 {/* Label background */}
                 <rect
                   x={labelPos.lineEndX + 10}
-                  y={labelPos.y - 24}
-                  width="220"
-                  height="48"
+                  y={labelPos.y - 28}
+                  width="290"
+                  height="56"
                   rx="6"
                   fill={isActive ? "hsl(222, 47%, 12%)" : "transparent"}
                   stroke={isActive ? colors.main : "transparent"}
@@ -638,13 +638,13 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
                 {/* Layer name */}
                 <text
                   x={labelPos.lineEndX + 20}
-                  y={labelPos.y - 4}
+                  y={labelPos.y - 6}
                   fill={isActive ? colors.main : "hsl(210, 40%, 80%)"}
-                  fontSize="14"
+                  fontSize="11"
                   fontWeight="700"
                   fontFamily="'Space Grotesk', sans-serif"
-                  letterSpacing="0.08em"
-                  className="uppercase transition-all duration-300"
+                  letterSpacing="0.06em"
+                  className="transition-all duration-300"
                 >
                   {layerData.label}
                 </text>
@@ -693,21 +693,22 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
         {/* Transformational Illustration embedded in layer 1 - Human + AI = Opportunity */}
         {(() => {
           const bounds = layerBounds[1];
-          // Position at 80% down the layer where triangle has more width
-          const positionY = bounds.top + (bounds.bottom - bounds.top) * 0.80;
+          // Position at 90% down the layer where triangle has maximum width
+          const positionY = bounds.top + (bounds.bottom - bounds.top) * 0.92;
           const leftX = getLeftX(positionY);
           const rightX = getRightX(positionY);
           const availableWidth = rightX - leftX;
-          const width = availableWidth * 0.98;
-          const height = 90;
+          const width = availableWidth * 0.92;
+          const height = 55;
           const startX = leftX + (availableWidth - width) / 2;
           
           return (
             <foreignObject
               x={startX}
-              y={bounds.bottom - height - 2}
+              y={bounds.bottom - height - 5}
               width={width}
               height={height}
+              style={{ overflow: 'hidden' }}
             >
               <div className="w-full h-full flex items-center justify-center overflow-hidden">
                 <TransformationalIllustration onNodeClick={handleModuleClick} />
