@@ -13,8 +13,8 @@ const MetricsGauges = ({ onMetricClick }: MetricsGaugesProps) => {
     { id: "audit", label: "Audit ↑", value: 90, cx: 205 },
   ];
 
-  const gaugeRadius = 32;
-  const cy = 42;
+  const gaugeRadius = 34;
+  const cy = 40;
 
   return (
     <svg
@@ -71,12 +71,12 @@ const MetricsGauges = ({ onMetricClick }: MetricsGaugesProps) => {
             onMouseEnter={() => setHoveredMetric(metric.id)}
             onMouseLeave={() => setHoveredMetric(null)}
           >
-            {/* Semi-circle gauge background */}
+            {/* Semi-circle gauge background - darker for contrast */}
             <path
               d={`M ${metric.cx - gaugeRadius} ${cy} A ${gaugeRadius} ${gaugeRadius} 0 0 1 ${metric.cx + gaugeRadius} ${cy}`}
               fill="none"
-              stroke="hsl(280 25% 30%)"
-              strokeWidth="8"
+              stroke="hsl(280 20% 20%)"
+              strokeWidth="10"
               strokeLinecap="round"
             />
 
@@ -85,12 +85,12 @@ const MetricsGauges = ({ onMetricClick }: MetricsGaugesProps) => {
               d={`M ${metric.cx - gaugeRadius} ${cy} A ${gaugeRadius} ${gaugeRadius} 0 0 1 ${metric.cx + gaugeRadius} ${cy}`}
               fill="none"
               stroke="url(#gaugeGradient)"
-              strokeWidth="8"
+              strokeWidth="10"
               strokeLinecap="round"
               strokeDasharray={`${(metric.value / 100) * Math.PI * gaugeRadius} ${Math.PI * gaugeRadius}`}
               filter={isHovered ? "url(#gaugeHoverGlow)" : "url(#gaugeGlow)"}
               style={{
-                opacity: isHovered ? 1 : 0.9,
+                opacity: isHovered ? 1 : 0.95,
                 transition: "opacity 0.3s ease"
               }}
             />
@@ -128,19 +128,22 @@ const MetricsGauges = ({ onMetricClick }: MetricsGaugesProps) => {
               fill={isHovered ? "hsl(280 65% 70%)" : "hsl(280 65% 55%)"}
             />
 
-            {/* Label */}
+            {/* Label - larger and brighter with outline */}
             <text
               x={metric.cx}
-              y={cy + 20}
+              y={cy + 22}
               textAnchor="middle"
-              fill={isHovered ? "hsl(280 75% 85%)" : "hsl(280 50% 80%)"}
-              fontSize="10"
-              fontWeight="700"
+              fill={isHovered ? "hsl(280 80% 92%)" : "hsl(280 70% 88%)"}
+              fontSize="11"
+              fontWeight="800"
               fontFamily="'Space Grotesk', sans-serif"
-              letterSpacing="0.04em"
+              letterSpacing="0.05em"
               className="pointer-events-none select-none uppercase"
+              stroke="hsl(280 30% 15%)"
+              strokeWidth="2"
+              paintOrder="stroke fill"
               style={{
-                textShadow: isHovered ? "0 0 10px hsl(280 70% 60%)" : "0 0 4px hsl(280 50% 40%)"
+                textShadow: "0 0 12px hsl(280 80% 70%), 0 2px 4px hsl(0 0% 0% / 0.5)"
               }}
             >
               {metric.label}

@@ -195,19 +195,22 @@ const AIAccelerator = ({ onNodeClick }: AIAcceleratorProps) => {
               </g>
             )}
 
-            {/* Node label - larger */}
+            {/* Node label - larger with outline for legibility */}
             <text
               x={nodeX}
-              y={nodeY + (node.angle < -60 ? -15 : 18)}
+              y={nodeY + (node.angle < -60 ? -16 : 20)}
               textAnchor="middle"
-              fill={isHovered ? "hsl(45 95% 85%)" : "hsl(45 80% 75%)"}
-              fontSize="8"
-              fontWeight="600"
+              fill={isHovered ? "hsl(45 95% 92%)" : "hsl(45 90% 85%)"}
+              fontSize="9"
+              fontWeight="700"
               fontFamily="'Space Grotesk', sans-serif"
-              letterSpacing="0.03em"
+              letterSpacing="0.04em"
               className="pointer-events-none select-none uppercase"
+              stroke="hsl(45 30% 10%)"
+              strokeWidth="2.5"
+              paintOrder="stroke fill"
               style={{
-                textShadow: isHovered ? "0 0 8px hsl(45 95% 60%)" : "0 0 4px hsl(45 70% 40%)"
+                textShadow: "0 0 10px hsl(45 95% 60%), 0 2px 4px hsl(0 0% 0% / 0.6)"
               }}
             >
               {node.label}
