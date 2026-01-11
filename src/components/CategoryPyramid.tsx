@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Pyramid3D from "./Pyramid3D";
 import DetailsPanel, { LayerData } from "./DetailsPanel";
-import InfinityLoop from "./InfinityLoop";
 import PlatformCallout from "./PlatformCallout";
 
 const layersData: LayerData[] = [
@@ -126,9 +125,8 @@ const CategoryPyramid = () => {
                 setHighlightedModule(null);
               }
             }}
-          >
-            <InfinityLoop onModuleClick={handleModuleClick} />
-          </Pyramid3D>
+            onModuleClick={handleModuleClick}
+          />
         </div>
 
         {/* Details Panel - Below pyramid */}
