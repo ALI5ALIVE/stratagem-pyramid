@@ -51,23 +51,29 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
   ];
 
   // Calculate X position for any Y on the pyramid slope
-  // Apex at (400, 30), left base at (40, 450), right base at (760, 450)
+  // Apex at (400, 20), left base at (40, 510), right base at (760, 510)
+  const apexY = 20;
+  const baseY = 510;
+  const apexX = 400;
+  const leftBaseX = 40;
+  const rightBaseX = 760;
+  
   const getLeftX = (y: number) => {
-    const slope = (400 - 40) / (30 - 450); // dx/dy
-    return 400 + slope * (y - 30);
+    const slope = (apexX - leftBaseX) / (apexY - baseY);
+    return apexX + slope * (y - apexY);
   };
 
   const getRightX = (y: number) => {
-    const slope = (760 - 400) / (450 - 30); // dx/dy
-    return 400 + slope * (y - 30);
+    const slope = (rightBaseX - apexX) / (baseY - apexY);
+    return apexX + slope * (y - apexY);
   };
 
-  // Layer Y boundaries (unified straight edges)
+  // Layer Y boundaries (unified straight edges) - enlarged top layer
   const layerBounds = {
-    1: { top: 30, bottom: 135 },   // Transformational
-    2: { top: 135, bottom: 240 },  // Commercial
-    3: { top: 240, bottom: 345 },  // Operational
-    4: { top: 345, bottom: 450 },  // Foundation
+    1: { top: 20, bottom: 150 },   // Transformational - bigger
+    2: { top: 150, bottom: 270 },  // Commercial
+    3: { top: 270, bottom: 390 },  // Operational
+    4: { top: 390, bottom: 510 },  // Foundation
   };
 
   // Generate polygon points for each layer (excluding Foundation which is split)
@@ -80,7 +86,7 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
 
     if (level === 1) {
       // Triangle apex
-      return `400,${bounds.top} ${bottomRightX},${bounds.bottom} ${bottomLeftX},${bounds.bottom}`;
+      return `${apexX},${apexY} ${bottomRightX},${bounds.bottom} ${bottomLeftX},${bounds.bottom}`;
     }
     // Trapezoid
     return `${topLeftX},${bounds.top} ${topRightX},${bounds.top} ${bottomRightX},${bounds.bottom} ${bottomLeftX},${bounds.bottom}`;
@@ -111,12 +117,12 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
     return layer || { id: "", label: "", sublabel: "" };
   };
 
-  // Label positions (right side of pyramid with connecting lines)
+  // Label positions - dynamically computed from layer bounds
   const labelPositions = {
-    1: { y: 82, lineEndX: 520 },
-    2: { y: 187, lineEndX: 580 },
-    3: { y: 292, lineEndX: 640 },
-    4: { y: 397, lineEndX: 700 },
+    1: { y: (layerBounds[1].top + layerBounds[1].bottom) / 2, lineEndX: 540 },
+    2: { y: (layerBounds[2].top + layerBounds[2].bottom) / 2, lineEndX: 600 },
+    3: { y: (layerBounds[3].top + layerBounds[3].bottom) / 2, lineEndX: 660 },
+    4: { y: (layerBounds[4].top + layerBounds[4].bottom) / 2, lineEndX: 720 },
   };
 
   // Get center position for the triple loop in operational layer
@@ -141,8 +147,8 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
     <div className="relative w-full flex flex-col items-center justify-center py-6">
       {/* Main pyramid with labels SVG */}
       <svg
-        viewBox="0 0 950 480"
-        className="w-full max-w-[1100px] h-auto"
+        viewBox="0 0 980 540"
+        className="w-full max-w-[1400px] h-auto"
         preserveAspectRatio="xMidYMid meet"
         style={{ 
           filter: "drop-shadow(0 25px 50px rgba(0,0,0,0.5))",
@@ -529,24 +535,28 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
           })()}
         </g>
 
-        {/* AI Accelerator embedded in Transformational layer */}
+        {/* AI Accelerator embedded in Transformational layer - positioned lower where triangle is wider */}
         {(() => {
           const bounds = layerBounds[1];
-          const centerY = (bounds.top + bounds.bottom) / 2;
-          const leftX = getLeftX(centerY);
-          const rightX = getRightX(centerY);
+          // Position at 70% down the layer for more width
+          const positionY = bounds.top + (bounds.bottom - bounds.top) * 0.7;
+          const leftX = getLeftX(positionY);
+          const rightX = getRightX(positionY);
           const width = rightX - leftX;
           const centerX = (leftX + rightX) / 2;
+          const height = bounds.bottom - bounds.top;
           
           return (
             <foreignObject
-              x={centerX - width * 0.5}
-              y={bounds.top + 6}
-              width={width * 1.0}
-              height={bounds.bottom - bounds.top - 8}
+              x={centerX - width * 0.48}
+              y={bounds.top + 20}
+              width={width * 0.96}
+              height={height - 25}
             >
-              <div className="w-full h-full flex items-center justify-center rounded-md bg-card/60 backdrop-blur-sm ring-1 ring-border/60">
-                <AIAccelerator onNodeClick={handleModuleClick} />
+              <div className="w-full h-full flex items-center justify-center overflow-visible">
+                <div style={{ transform: 'scale(1.4)', transformOrigin: 'center center' }}>
+                  <AIAccelerator onNodeClick={handleModuleClick} />
+                </div>
               </div>
             </foreignObject>
           );
@@ -589,21 +599,21 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
 
         {/* Outer pyramid edge highlights for polish */}
         <path
-          d="M400,30 L40,450"
+          d={`M${apexX},${apexY} L${leftBaseX},${baseY}`}
           fill="none"
           stroke="white"
           strokeWidth="1"
           strokeOpacity="0.15"
         />
         <path
-          d="M400,30 L760,450"
+          d={`M${apexX},${apexY} L${rightBaseX},${baseY}`}
           fill="none"
           stroke="white"
           strokeWidth="1"
           strokeOpacity="0.25"
         />
         <path
-          d="M40,450 L760,450"
+          d={`M${leftBaseX},${baseY} L${rightBaseX},${baseY}`}
           fill="none"
           stroke="white"
           strokeWidth="1"

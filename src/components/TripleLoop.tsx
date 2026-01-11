@@ -9,13 +9,15 @@ const TripleLoop = ({ onModuleClick, scale = 1 }: TripleLoopProps) => {
   const [hoveredModule, setHoveredModule] = useState<string | null>(null);
 
   const modules = [
-    { id: "safety", label: "Safety", cx: 70, color: "hsl(185 75% 40%)" },
-    { id: "content", label: "Content", cx: 150, color: "hsl(173 80% 50%)" },
-    { id: "training", label: "Training", cx: 230, color: "hsl(160 70% 45%)" },
+    { id: "safety", label: "Safety", cx: 60, color: "hsl(185 75% 40%)" },
+    { id: "content", label: "Content", cx: 130, color: "hsl(173 80% 50%)" },
+    { id: "training", label: "Training", cx: 200, color: "hsl(160 70% 45%)" },
   ];
 
-  const loopRadius = 35;
-  const cy = 50;
+  // Radius must be > half the distance between centers for circles to intersect
+  // Distance between centers = 70, so radius needs to be > 35. Using 45 for good overlap.
+  const loopRadius = 45;
+  const cy = 55;
 
   // Create a proper continuous path that traces through all 3 overlapping circles
   // The path goes: around Safety (clockwise) → cross to Content → around Content (clockwise) 
@@ -100,7 +102,7 @@ const TripleLoop = ({ onModuleClick, scale = 1 }: TripleLoopProps) => {
 
   return (
     <svg
-      viewBox="0 0 300 100"
+      viewBox="0 0 260 110"
       className="w-full h-auto max-w-full"
       preserveAspectRatio="xMidYMid meet"
       style={{ 
