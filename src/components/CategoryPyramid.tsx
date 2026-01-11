@@ -107,9 +107,9 @@ const CategoryPyramid = () => {
 
       {/* Main content */}
       <main className="container max-w-7xl mx-auto px-4 md:px-6 pb-16">
-        <div className="grid lg:grid-cols-[1fr,400px] gap-8 lg:gap-12 items-start">
-          {/* 3D Pyramid */}
-          <div className="order-2 lg:order-1">
+        <div className="grid lg:grid-cols-[1.2fr,380px] gap-6 lg:gap-10 items-start">
+          {/* 3D Pyramid - Hero Visual */}
+          <div className="order-2 lg:order-1 flex flex-col items-center">
             <Pyramid3D
               layers={layersData.map((layer) => ({
                 id: layer.id,
@@ -130,26 +130,6 @@ const CategoryPyramid = () => {
             >
               <InfinityLoop onModuleClick={handleModuleClick} />
             </Pyramid3D>
-
-            {/* Legend */}
-            <div className="mt-4 flex flex-wrap justify-center gap-4 text-xs text-muted-foreground">
-              <span className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-pyramid-foundation" />
-                Foundation
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-pyramid-operational" />
-                Operational
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-pyramid-commercial" />
-                Commercial
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-pyramid-transformational" />
-                Transformational
-              </span>
-            </div>
           </div>
 
           {/* Details Panel */}
