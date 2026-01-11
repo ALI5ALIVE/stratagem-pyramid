@@ -12,6 +12,11 @@ interface TimeAllocationBarProps {
 }
 
 const TimeAllocationBar = ({ timeAllocation, accentColor }: TimeAllocationBarProps) => {
+  // Guard against undefined timeAllocation
+  if (!timeAllocation) {
+    return null;
+  }
+
   const { coordination, administration, improvement } = timeAllocation;
 
   return (
