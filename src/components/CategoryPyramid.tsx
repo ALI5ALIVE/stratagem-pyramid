@@ -25,6 +25,16 @@ const layersData: LayerData[] = [
       "AI compresses decision + execution time while keeping humans in control — reliability becomes a competitive advantage",
     colorClass: "bg-gradient-to-b from-pyramid-transformational to-pyramid-transformational/80",
     accentColor: "hsl(45 93% 58%)",
+    behavioralShift: {
+      from: "Administration and process gatekeeping",
+      to: "Performance leadership and strategic focus",
+      culturalMarker: "Reliability is a competitive advantage",
+    },
+    timeAllocation: {
+      coordination: 10,
+      administration: 20,
+      improvement: 70,
+    },
   },
   {
     id: "CLOSED_LOOP",
@@ -46,6 +56,16 @@ const layersData: LayerData[] = [
       "Turns operational signals into controlled execution, not just reporting",
     colorClass: "bg-gradient-to-b from-pyramid-commercial to-pyramid-commercial/80",
     accentColor: "hsl(280 65% 55%)",
+    behavioralShift: {
+      from: "Reactive fixes and compliance checklists",
+      to: "Proactive improvement with outcome ownership",
+      culturalMarker: "Issues drive real change, not just reports",
+    },
+    timeAllocation: {
+      coordination: 20,
+      administration: 30,
+      improvement: 50,
+    },
   },
   {
     id: "CONNECTED",
@@ -66,6 +86,16 @@ const layersData: LayerData[] = [
       "Eliminates handoffs and creates one version of operational truth",
     colorClass: "bg-gradient-to-b from-pyramid-operational to-pyramid-operational/80",
     accentColor: "hsl(173 80% 40%)",
+    behavioralShift: {
+      from: "Chasing information across systems and meetings",
+      to: "Single source of truth, async collaboration",
+      culturalMarker: "We can see what's happening across the operation",
+    },
+    timeAllocation: {
+      coordination: 30,
+      administration: 35,
+      improvement: 35,
+    },
   },
   {
     id: "MANAGED",
@@ -85,6 +115,16 @@ const layersData: LayerData[] = [
       "Departments operate well individually, but lack of connection prevents organizational learning",
     colorClass: "bg-gradient-to-b from-pyramid-foundation to-pyramid-foundation/80",
     accentColor: "hsl(199 89% 48%)",
+    behavioralShift: {
+      from: "Firefighting with limited visibility",
+      to: "Structured processes within each silo",
+      culturalMarker: "We're compliant, but not learning",
+    },
+    timeAllocation: {
+      coordination: 45,
+      administration: 35,
+      improvement: 20,
+    },
   },
   {
     id: "FRAGMENTED",
@@ -105,6 +145,16 @@ const layersData: LayerData[] = [
       "Fragmentation creates blind spots, slows response times, and increases operational risk — this is where most organizations start",
     colorClass: "bg-gradient-to-b from-pyramid-fragmentation to-pyramid-fragmentation/80",
     accentColor: "hsl(0 70% 50%)",
+    behavioralShift: {
+      from: "Firefighting across disconnected systems",
+      to: "This is where most organizations start",
+      culturalMarker: "Compliance is a burden; issues recur",
+    },
+    timeAllocation: {
+      coordination: 60,
+      administration: 30,
+      improvement: 10,
+    },
   },
 ];
 
