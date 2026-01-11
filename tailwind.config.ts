@@ -56,6 +56,7 @@ export default {
           operational: "hsl(var(--pyramid-operational))",
           commercial: "hsl(var(--pyramid-commercial))",
           transformational: "hsl(var(--pyramid-transformational))",
+          fragmentation: "hsl(var(--pyramid-fragmentation))",
         },
       },
       borderRadius: {
