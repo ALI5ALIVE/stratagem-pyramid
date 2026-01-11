@@ -9,7 +9,7 @@ const TransformationalIllustration = ({ onNodeClick }: TransformationalIllustrat
 
   return (
     <svg
-      viewBox="0 0 300 70"
+      viewBox="0 0 340 95"
       className="w-full h-full"
       preserveAspectRatio="xMidYMid meet"
       style={{ filter: "drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))" }}
@@ -35,8 +35,8 @@ const TransformationalIllustration = ({ onNodeClick }: TransformationalIllustrat
 
         {/* Glow filters */}
         <filter id="blueGlow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="3" result="blur" />
-          <feFlood floodColor="hsl(220, 80%, 50%)" floodOpacity="0.6" />
+          <feGaussianBlur stdDeviation="4" result="blur" />
+          <feFlood floodColor="hsl(220, 80%, 50%)" floodOpacity="0.7" />
           <feComposite in2="blur" operator="in" />
           <feMerge>
             <feMergeNode />
@@ -45,8 +45,8 @@ const TransformationalIllustration = ({ onNodeClick }: TransformationalIllustrat
         </filter>
 
         <filter id="purpleGlow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="3" result="blur" />
-          <feFlood floodColor="hsl(280, 75%, 55%)" floodOpacity="0.6" />
+          <feGaussianBlur stdDeviation="4" result="blur" />
+          <feFlood floodColor="hsl(280, 75%, 55%)" floodOpacity="0.7" />
           <feComposite in2="blur" operator="in" />
           <feMerge>
             <feMergeNode />
@@ -55,8 +55,8 @@ const TransformationalIllustration = ({ onNodeClick }: TransformationalIllustrat
         </filter>
 
         <filter id="tealGlow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="4" result="blur" />
-          <feFlood floodColor="hsl(160, 80%, 45%)" floodOpacity="0.7" />
+          <feGaussianBlur stdDeviation="5" result="blur" />
+          <feFlood floodColor="hsl(160, 80%, 45%)" floodOpacity="0.8" />
           <feComposite in2="blur" operator="in" />
           <feMerge>
             <feMergeNode />
@@ -65,30 +65,30 @@ const TransformationalIllustration = ({ onNodeClick }: TransformationalIllustrat
         </filter>
 
         {/* Animated energy flow path from Human to AI */}
-        <path id="flowPath1" d="M 65 28 Q 95 20 125 28" fill="none" />
+        <path id="flowPath1" d="M 85 35 Q 120 25 155 35" fill="none" />
         {/* Animated energy flow path from AI to Opportunity */}
-        <path id="flowPath2" d="M 155 28 Q 190 20 225 28" fill="none" />
+        <path id="flowPath2" d="M 195 35 Q 235 25 275 35" fill="none" />
       </defs>
 
       {/* Energy flow connection lines */}
       <path 
-        d="M 65 28 Q 95 22 125 28" 
+        d="M 85 35 Q 120 28 155 35" 
         fill="none" 
         stroke="hsl(250, 60%, 50%)" 
-        strokeWidth="2" 
-        strokeOpacity="0.4"
+        strokeWidth="3" 
+        strokeOpacity="0.5"
       />
       <path 
-        d="M 155 28 Q 190 22 225 28" 
+        d="M 195 35 Q 235 28 275 35" 
         fill="none" 
         stroke="hsl(200, 60%, 45%)" 
-        strokeWidth="2" 
-        strokeOpacity="0.4"
+        strokeWidth="3" 
+        strokeOpacity="0.5"
       />
 
       {/* Animated particles - Human to AI */}
       {[0, 0.33, 0.66].map((offset, i) => (
-        <circle key={`particle1-${i}`} r="3" fill="hsl(250, 70%, 60%)">
+        <circle key={`particle1-${i}`} r="5" fill="hsl(250, 70%, 60%)">
           <animateMotion
             dur="1.5s"
             repeatCount="indefinite"
@@ -108,7 +108,7 @@ const TransformationalIllustration = ({ onNodeClick }: TransformationalIllustrat
 
       {/* Animated particles - AI to Opportunity */}
       {[0, 0.33, 0.66].map((offset, i) => (
-        <circle key={`particle2-${i}`} r="3.5" fill="hsl(170, 70%, 50%)">
+        <circle key={`particle2-${i}`} r="5" fill="hsl(170, 70%, 50%)">
           <animateMotion
             dur="1.5s"
             repeatCount="indefinite"
@@ -134,36 +134,36 @@ const TransformationalIllustration = ({ onNodeClick }: TransformationalIllustrat
         onMouseLeave={() => setHoveredNode(null)}
       >
         <circle
-          cx="45"
-          cy="28"
-          r={hoveredNode === "human" ? 22 : 20}
+          cx="55"
+          cy="35"
+          r={hoveredNode === "human" ? 32 : 30}
           fill="url(#humanGradientContrast)"
           stroke="hsl(220, 60%, 60%)"
-          strokeWidth="2"
+          strokeWidth="3"
           style={{ filter: hoveredNode === "human" ? "url(#blueGlow)" : "none" }}
           className="transition-all duration-200"
         />
         <text
-          x="45"
-          y="32"
+          x="55"
+          y="40"
           textAnchor="middle"
           dominantBaseline="middle"
-          fontSize="20"
+          fontSize="28"
           className="pointer-events-none select-none"
         >
           👤
         </text>
         <text
-          x="45"
-          y="56"
+          x="55"
+          y="78"
           textAnchor="middle"
-          fill="hsl(220, 30%, 20%)"
-          fontSize="10"
-          fontWeight="700"
+          fill="hsl(0, 0%, 100%)"
+          fontSize="14"
+          fontWeight="800"
           fontFamily="'Space Grotesk', sans-serif"
-          letterSpacing="0.06em"
+          letterSpacing="0.08em"
           className="uppercase pointer-events-none select-none"
-          style={{ textShadow: "0 1px 2px rgba(255,255,255,0.8)" }}
+          style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8), 0 0 8px rgba(0,0,0,0.5)" }}
         >
           Human
         </text>
@@ -171,16 +171,16 @@ const TransformationalIllustration = ({ onNodeClick }: TransformationalIllustrat
 
       {/* Plus Sign */}
       <text
-        x="95"
-        y="30"
+        x="120"
+        y="38"
         textAnchor="middle"
         dominantBaseline="middle"
-        fill="hsl(220, 30%, 25%)"
-        fontSize="24"
+        fill="hsl(0, 0%, 100%)"
+        fontSize="32"
         fontWeight="bold"
         fontFamily="'Space Grotesk', sans-serif"
         className="pointer-events-none select-none"
-        style={{ textShadow: "0 1px 2px rgba(255,255,255,0.6)" }}
+        style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.5)" }}
       >
         +
       </text>
@@ -193,36 +193,36 @@ const TransformationalIllustration = ({ onNodeClick }: TransformationalIllustrat
         onMouseLeave={() => setHoveredNode(null)}
       >
         <circle
-          cx="140"
-          cy="28"
-          r={hoveredNode === "ai" ? 22 : 20}
+          cx="170"
+          cy="35"
+          r={hoveredNode === "ai" ? 32 : 30}
           fill="url(#aiGradientContrast)"
           stroke="hsl(280, 60%, 60%)"
-          strokeWidth="2"
+          strokeWidth="3"
           style={{ filter: hoveredNode === "ai" ? "url(#purpleGlow)" : "none" }}
           className="transition-all duration-200"
         />
         <text
-          x="140"
-          y="32"
+          x="170"
+          y="40"
           textAnchor="middle"
           dominantBaseline="middle"
-          fontSize="20"
+          fontSize="28"
           className="pointer-events-none select-none"
         >
           🤖
         </text>
         <text
-          x="140"
-          y="56"
+          x="170"
+          y="78"
           textAnchor="middle"
-          fill="hsl(280, 30%, 25%)"
-          fontSize="10"
-          fontWeight="700"
+          fill="hsl(0, 0%, 100%)"
+          fontSize="14"
+          fontWeight="800"
           fontFamily="'Space Grotesk', sans-serif"
-          letterSpacing="0.06em"
+          letterSpacing="0.08em"
           className="uppercase pointer-events-none select-none"
-          style={{ textShadow: "0 1px 2px rgba(255,255,255,0.8)" }}
+          style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8), 0 0 8px rgba(0,0,0,0.5)" }}
         >
           AI
         </text>
@@ -230,16 +230,16 @@ const TransformationalIllustration = ({ onNodeClick }: TransformationalIllustrat
 
       {/* Equals Sign */}
       <text
-        x="190"
-        y="30"
+        x="235"
+        y="38"
         textAnchor="middle"
         dominantBaseline="middle"
-        fill="hsl(220, 30%, 25%)"
-        fontSize="24"
+        fill="hsl(0, 0%, 100%)"
+        fontSize="32"
         fontWeight="bold"
         fontFamily="'Space Grotesk', sans-serif"
         className="pointer-events-none select-none"
-        style={{ textShadow: "0 1px 2px rgba(255,255,255,0.6)" }}
+        style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.5)" }}
       >
         =
       </text>
@@ -252,36 +252,36 @@ const TransformationalIllustration = ({ onNodeClick }: TransformationalIllustrat
         onMouseLeave={() => setHoveredNode(null)}
       >
         <circle
-          cx="240"
-          cy="28"
-          r={hoveredNode === "opportunity" ? 24 : 22}
+          cx="295"
+          cy="35"
+          r={hoveredNode === "opportunity" ? 34 : 32}
           fill="url(#opportunityGradientContrast)"
           stroke="hsl(160, 70%, 50%)"
-          strokeWidth="2.5"
+          strokeWidth="3"
           style={{ filter: "url(#tealGlow)" }}
           className="transition-all duration-200"
         />
         <text
-          x="240"
-          y="32"
+          x="295"
+          y="40"
           textAnchor="middle"
           dominantBaseline="middle"
-          fontSize="22"
+          fontSize="30"
           className="pointer-events-none select-none"
         >
           🎯
         </text>
         <text
-          x="240"
-          y="58"
+          x="295"
+          y="80"
           textAnchor="middle"
-          fill="hsl(160, 40%, 25%)"
-          fontSize="9"
-          fontWeight="700"
+          fill="hsl(0, 0%, 100%)"
+          fontSize="12"
+          fontWeight="800"
           fontFamily="'Space Grotesk', sans-serif"
-          letterSpacing="0.03em"
+          letterSpacing="0.05em"
           className="uppercase pointer-events-none select-none"
-          style={{ textShadow: "0 1px 2px rgba(255,255,255,0.8)" }}
+          style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8), 0 0 8px rgba(0,0,0,0.5)" }}
         >
           Opportunity
         </text>
