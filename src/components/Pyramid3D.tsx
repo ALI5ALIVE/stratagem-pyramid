@@ -693,19 +693,19 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
         {/* Transformational Illustration embedded in layer 1 - Human + AI = Opportunity */}
         {(() => {
           const bounds = layerBounds[1];
-          // Position at 70% down the layer where triangle has more width
-          const positionY = bounds.top + (bounds.bottom - bounds.top) * 0.70;
+          // Position at 80% down the layer where triangle has more width
+          const positionY = bounds.top + (bounds.bottom - bounds.top) * 0.80;
           const leftX = getLeftX(positionY);
           const rightX = getRightX(positionY);
           const availableWidth = rightX - leftX;
-          const width = availableWidth * 0.95;
-          const height = 65;
+          const width = availableWidth * 0.98;
+          const height = 90;
           const startX = leftX + (availableWidth - width) / 2;
           
           return (
             <foreignObject
               x={startX}
-              y={bounds.bottom - height - 5}
+              y={bounds.bottom - height - 2}
               width={width}
               height={height}
             >
