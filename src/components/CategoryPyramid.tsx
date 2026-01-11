@@ -195,34 +195,40 @@ const CategoryPyramid = () => {
         </p>
       </header>
 
-      {/* Main content */}
+      {/* Main content - Side by side layout */}
       <main className="container max-w-7xl mx-auto px-4 md:px-6 pb-16">
-        {/* Pyramid - Full Width Hero Visual */}
-        <div className="mb-10">
-          <Pyramid3D
-            layers={layersData.map((layer) => ({
-              id: layer.id,
-              level: layer.level,
-              label: layer.headline,
-              sublabel: layer.sublabel,
-              colorClass: layer.colorClass,
-              glowClass: glowClasses[layer.id],
-            }))}
-            activeLayer={activeLayer.level}
-            onLayerClick={(level) => {
-              const layer = layersData.find((l) => l.level === level);
-              if (layer) {
-                setActiveLayerId(layer.id);
-                setHighlightedModule(null);
-              }
-            }}
-            onModuleClick={handleModuleClick}
-          />
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-start">
+          {/* LEFT: Pyramid Visual - sticky on desktop */}
+          <div className="lg:sticky lg:top-8">
+            <Pyramid3D
+              layers={layersData.map((layer) => ({
+                id: layer.id,
+                level: layer.level,
+                label: layer.headline,
+                sublabel: layer.sublabel,
+                colorClass: layer.colorClass,
+                glowClass: glowClasses[layer.id],
+              }))}
+              activeLayer={activeLayer.level}
+              onLayerClick={(level) => {
+                const layer = layersData.find((l) => l.level === level);
+                if (layer) {
+                  setActiveLayerId(layer.id);
+                  setHighlightedModule(null);
+                }
+              }}
+              onModuleClick={handleModuleClick}
+            />
+          </div>
+
+          {/* RIGHT: Details Panel - scrollable content */}
+          <div className="lg:max-h-[calc(100vh-120px)] lg:overflow-y-auto lg:pr-2 scrollbar-thin">
+            <DetailsPanel layer={activeLayer} highlightedModule={highlightedModule} />
+          </div>
         </div>
 
-        {/* Details Panel - Below pyramid */}
-        <div className="grid lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
-          <DetailsPanel layer={activeLayer} highlightedModule={highlightedModule} />
+        {/* Platform Callout - full width below */}
+        <div className="mt-12 max-w-3xl mx-auto">
           <PlatformCallout />
         </div>
       </main>
