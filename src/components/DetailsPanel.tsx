@@ -1,4 +1,6 @@
 import { Check, ArrowRight, Eye, Target } from "lucide-react";
+import BehaviorShiftCard, { BehavioralShift } from "./BehaviorShiftCard";
+import TimeAllocationBar, { TimeAllocation } from "./TimeAllocationBar";
 
 export interface LayerData {
   id: string;
@@ -10,6 +12,8 @@ export interface LayerData {
   whyItMatters: string;
   colorClass: string;
   accentColor: string;
+  behavioralShift: BehavioralShift;
+  timeAllocation: TimeAllocation;
 }
 
 interface DetailsPanelProps {
@@ -123,6 +127,19 @@ const DetailsPanel = ({ layer, highlightedModule }: DetailsPanelProps) => {
           {layer.whyItMatters}
         </p>
       </div>
+
+      {/* Behavioral Shift */}
+      <BehaviorShiftCard
+        behavioralShift={layer.behavioralShift}
+        accentColor={layer.accentColor}
+        level={layer.level}
+      />
+
+      {/* Time Allocation */}
+      <TimeAllocationBar
+        timeAllocation={layer.timeAllocation}
+        accentColor={layer.accentColor}
+      />
     </div>
   );
 };
