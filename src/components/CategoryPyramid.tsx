@@ -197,9 +197,9 @@ const CategoryPyramid = () => {
 
       {/* Main content - Side by side layout */}
       <main className="container max-w-7xl mx-auto px-4 md:px-6 pb-16">
-        <div className="grid lg:grid-cols-[1.4fr_0.8fr] gap-6 lg:gap-8 items-start">
+        <div className="grid lg:grid-cols-[1.2fr_1fr] gap-6 lg:gap-10 items-stretch">
           {/* LEFT: Pyramid Visual - full size */}
-          <div className="w-full">
+          <div className="w-full h-full flex items-center justify-center">
             <Pyramid3D
               layers={layersData.map((layer) => ({
                 id: layer.id,
@@ -222,7 +222,7 @@ const CategoryPyramid = () => {
           </div>
 
           {/* RIGHT: Details Panel - scrollable content */}
-          <div className="lg:max-h-[calc(100vh-120px)] lg:overflow-y-auto lg:pr-2 scrollbar-thin">
+          <div className="h-full lg:overflow-y-auto lg:pr-2 scrollbar-thin bg-card/30 rounded-xl p-6 border border-border/30">
             <DetailsPanel layer={activeLayer} highlightedModule={highlightedModule} />
           </div>
         </div>
