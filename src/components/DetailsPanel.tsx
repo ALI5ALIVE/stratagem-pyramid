@@ -1,6 +1,11 @@
-import { Check, ArrowRight, Eye, Target } from "lucide-react";
+import { Check, ArrowRight, Eye, Target, TrendingUp } from "lucide-react";
 import BehaviorShiftCard, { BehavioralShift } from "./BehaviorShiftCard";
 import TimeAllocationBar, { TimeAllocation } from "./TimeAllocationBar";
+
+export interface ValueProof {
+  metrics: string[];
+  roiStatement: string;
+}
 
 export interface LayerData {
   id: string;
@@ -14,6 +19,7 @@ export interface LayerData {
   accentColor: string;
   behavioralShift: BehavioralShift;
   timeAllocation: TimeAllocation;
+  valueProof: ValueProof;
 }
 
 interface DetailsPanelProps {
@@ -107,6 +113,42 @@ const DetailsPanel = ({ layer, highlightedModule }: DetailsPanelProps) => {
             </li>
           ))}
         </ul>
+      </div>
+
+      {/* Value Proof */}
+      <div className="mb-4">
+        <div className="flex items-center gap-2 mb-2">
+          <TrendingUp className="w-3.5 h-3.5" style={{ color: layer.accentColor }} />
+          <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+            Value Proof
+          </span>
+        </div>
+        <div className="flex flex-wrap gap-2 mb-3">
+          {layer.valueProof.metrics.map((metric, index) => (
+            <span
+              key={index}
+              className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold"
+              style={{
+                backgroundColor: `${layer.accentColor}15`,
+                color: layer.accentColor,
+                border: `1px solid ${layer.accentColor}30`,
+              }}
+            >
+              {metric}
+            </span>
+          ))}
+        </div>
+        <div
+          className="relative p-3 rounded-lg"
+          style={{
+            background: `linear-gradient(135deg, ${layer.accentColor}10 0%, transparent 100%)`,
+            borderLeft: `3px solid ${layer.accentColor}`,
+          }}
+        >
+          <p className="text-sm font-medium text-foreground/90 italic">
+            "{layer.valueProof.roiStatement}"
+          </p>
+        </div>
       </div>
 
       {/* Why it matters */}
