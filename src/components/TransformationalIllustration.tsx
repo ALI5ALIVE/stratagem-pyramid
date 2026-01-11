@@ -9,15 +9,16 @@ const TransformationalIllustration = ({ onNodeClick }: TransformationalIllustrat
 
   return (
     <svg
-      viewBox="0 0 300 75"
-      className="w-full h-auto"
-      style={{ filter: "drop-shadow(0 2px 12px rgba(234, 179, 8, 0.4))", minWidth: "100%" }}
+      viewBox="0 0 260 50"
+      className="w-full h-full"
+      preserveAspectRatio="xMidYMid meet"
+      style={{ filter: "drop-shadow(0 2px 8px rgba(234, 179, 8, 0.3))" }}
     >
       <defs>
         {/* Golden glow filter */}
         <filter id="goldGlow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="4" result="blur" />
-          <feFlood floodColor="hsl(45, 93%, 47%)" floodOpacity="0.7" />
+          <feGaussianBlur stdDeviation="3" result="blur" />
+          <feFlood floodColor="hsl(45, 93%, 47%)" floodOpacity="0.6" />
           <feComposite in2="blur" operator="in" />
           <feMerge>
             <feMergeNode />
@@ -27,8 +28,8 @@ const TransformationalIllustration = ({ onNodeClick }: TransformationalIllustrat
 
         {/* Opportunity star glow */}
         <filter id="starGlow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="5" result="blur" />
-          <feFlood floodColor="hsl(45, 100%, 60%)" floodOpacity="0.8" />
+          <feGaussianBlur stdDeviation="4" result="blur" />
+          <feFlood floodColor="hsl(45, 100%, 60%)" floodOpacity="0.7" />
           <feComposite in2="blur" operator="in" />
           <feMerge>
             <feMergeNode />
@@ -63,35 +64,34 @@ const TransformationalIllustration = ({ onNodeClick }: TransformationalIllustrat
         onMouseLeave={() => setHoveredNode(null)}
       >
         <circle
-          cx="50"
-          cy="32"
-          r={hoveredNode === "human" ? 20 : 18}
+          cx="40"
+          cy="22"
+          r={hoveredNode === "human" ? 16 : 14}
           fill="url(#humanGradient)"
           stroke="hsl(220, 60%, 70%)"
-          strokeWidth="2"
+          strokeWidth="1.5"
           style={{ filter: hoveredNode === "human" ? "url(#goldGlow)" : "none" }}
           className="transition-all duration-200"
         />
-        {/* Human icon */}
         <text
-          x="50"
-          y="36"
+          x="40"
+          y="25"
           textAnchor="middle"
           dominantBaseline="middle"
-          fontSize="20"
+          fontSize="14"
           className="pointer-events-none select-none"
         >
           👤
         </text>
         <text
-          x="50"
-          y="60"
+          x="40"
+          y="44"
           textAnchor="middle"
           fill="hsl(45, 90%, 70%)"
-          fontSize="10"
+          fontSize="8"
           fontWeight="600"
           fontFamily="'Space Grotesk', sans-serif"
-          letterSpacing="0.08em"
+          letterSpacing="0.06em"
           className="uppercase pointer-events-none select-none"
         >
           Human
@@ -99,21 +99,19 @@ const TransformationalIllustration = ({ onNodeClick }: TransformationalIllustrat
       </g>
 
       {/* Plus Sign */}
-      <g className="animate-pulse-glow">
-        <text
-          x="95"
-          y="36"
-          textAnchor="middle"
-          dominantBaseline="middle"
-          fill="hsl(45, 100%, 65%)"
-          fontSize="26"
-          fontWeight="bold"
-          fontFamily="'Space Grotesk', sans-serif"
-          className="pointer-events-none select-none"
-        >
-          +
-        </text>
-      </g>
+      <text
+        x="80"
+        y="24"
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fill="hsl(45, 100%, 65%)"
+        fontSize="20"
+        fontWeight="bold"
+        fontFamily="'Space Grotesk', sans-serif"
+        className="pointer-events-none select-none animate-pulse-glow"
+      >
+        +
+      </text>
 
       {/* AI Section */}
       <g
@@ -123,35 +121,34 @@ const TransformationalIllustration = ({ onNodeClick }: TransformationalIllustrat
         onMouseLeave={() => setHoveredNode(null)}
       >
         <circle
-          cx="145"
-          cy="32"
-          r={hoveredNode === "ai" ? 20 : 18}
+          cx="125"
+          cy="22"
+          r={hoveredNode === "ai" ? 16 : 14}
           fill="url(#aiGradient)"
           stroke="hsl(280, 60%, 70%)"
-          strokeWidth="2"
+          strokeWidth="1.5"
           style={{ filter: hoveredNode === "ai" ? "url(#goldGlow)" : "none" }}
           className="transition-all duration-200"
         />
-        {/* AI icon */}
         <text
-          x="145"
-          y="36"
+          x="125"
+          y="25"
           textAnchor="middle"
           dominantBaseline="middle"
-          fontSize="20"
+          fontSize="14"
           className="pointer-events-none select-none"
         >
           🤖
         </text>
         <text
-          x="145"
-          y="60"
+          x="125"
+          y="44"
           textAnchor="middle"
           fill="hsl(45, 90%, 70%)"
-          fontSize="10"
+          fontSize="8"
           fontWeight="600"
           fontFamily="'Space Grotesk', sans-serif"
-          letterSpacing="0.08em"
+          letterSpacing="0.06em"
           className="uppercase pointer-events-none select-none"
         >
           AI
@@ -159,21 +156,19 @@ const TransformationalIllustration = ({ onNodeClick }: TransformationalIllustrat
       </g>
 
       {/* Equals Sign */}
-      <g className="animate-pulse-glow">
-        <text
-          x="190"
-          y="36"
-          textAnchor="middle"
-          dominantBaseline="middle"
-          fill="hsl(45, 100%, 65%)"
-          fontSize="26"
-          fontWeight="bold"
-          fontFamily="'Space Grotesk', sans-serif"
-          className="pointer-events-none select-none"
-        >
-          =
-        </text>
-      </g>
+      <text
+        x="165"
+        y="24"
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fill="hsl(45, 100%, 65%)"
+        fontSize="20"
+        fontWeight="bold"
+        fontFamily="'Space Grotesk', sans-serif"
+        className="pointer-events-none select-none animate-pulse-glow"
+      >
+        =
+      </text>
 
       {/* OPPORTUNITY Section */}
       <g
@@ -183,66 +178,43 @@ const TransformationalIllustration = ({ onNodeClick }: TransformationalIllustrat
         onMouseLeave={() => setHoveredNode(null)}
       >
         <circle
-          cx="245"
-          cy="32"
-          r={hoveredNode === "opportunity" ? 22 : 20}
+          cx="215"
+          cy="22"
+          r={hoveredNode === "opportunity" ? 18 : 16}
           fill="url(#opportunityGradient)"
           stroke="hsl(45, 100%, 70%)"
-          strokeWidth="2.5"
+          strokeWidth="2"
           style={{ filter: "url(#starGlow)" }}
           className="transition-all duration-200"
         />
-        {/* Star icon */}
         <text
-          x="245"
-          y="36"
+          x="215"
+          y="25"
           textAnchor="middle"
           dominantBaseline="middle"
-          fontSize="22"
+          fontSize="16"
           className="pointer-events-none select-none"
         >
           ⭐
         </text>
         <text
-          x="245"
-          y="60"
+          x="215"
+          y="44"
           textAnchor="middle"
           fill="hsl(45, 100%, 70%)"
-          fontSize="9"
+          fontSize="7"
           fontWeight="700"
           fontFamily="'Space Grotesk', sans-serif"
-          letterSpacing="0.04em"
+          letterSpacing="0.03em"
           className="uppercase pointer-events-none select-none"
         >
           Opportunity
         </text>
       </g>
 
-      {/* Energy flow line from Human to AI */}
-      <line
-        x1="70"
-        y1="32"
-        x2="125"
-        y2="32"
-        stroke="hsl(45, 80%, 55%)"
-        strokeWidth="2"
-        strokeDasharray="4 3"
-        className="animate-pulse-glow"
-        opacity="0.6"
-      />
-
-      {/* Energy flow line from AI to Opportunity */}
-      <line
-        x1="165"
-        y1="32"
-        x2="223"
-        y2="32"
-        stroke="hsl(45, 100%, 60%)"
-        strokeWidth="2"
-        strokeDasharray="4 3"
-        className="animate-pulse-glow"
-        opacity="0.7"
-      />
+      {/* Energy flow lines */}
+      <line x1="56" y1="22" x2="109" y2="22" stroke="hsl(45, 80%, 55%)" strokeWidth="1.5" strokeDasharray="3 2" opacity="0.5" />
+      <line x1="141" y1="22" x2="197" y2="22" stroke="hsl(45, 100%, 60%)" strokeWidth="1.5" strokeDasharray="3 2" opacity="0.6" />
     </svg>
   );
 };
