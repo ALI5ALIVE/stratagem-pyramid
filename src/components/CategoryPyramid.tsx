@@ -197,7 +197,7 @@ const CategoryPyramid = () => {
 
       {/* Main content - Side by side layout */}
       <main className="container max-w-7xl mx-auto px-4 md:px-6 pb-16">
-        <div className="grid lg:grid-cols-[1.2fr_1fr] gap-6 lg:gap-8 items-start">
+        <div className="grid lg:grid-cols-[1.4fr_0.8fr] gap-6 lg:gap-8 items-start">
           {/* LEFT: Pyramid Visual - full size */}
           <div className="w-full">
             <Pyramid3D

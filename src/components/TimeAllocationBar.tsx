@@ -21,21 +21,21 @@ const TimeAllocationBar = ({ timeAllocation, accentColor }: TimeAllocationBarPro
 
   return (
     <div
-      className="relative p-5 rounded-xl border transition-all duration-300"
+      className="relative p-4 rounded-lg border transition-all duration-300"
       style={{
         borderColor: `${accentColor}30`,
         background: `linear-gradient(135deg, ${accentColor}08 0%, transparent 100%)`,
       }}
     >
-      <div className="flex items-center gap-2 mb-4">
-        <Clock className="w-4 h-4" style={{ color: accentColor }} />
-        <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+      <div className="flex items-center gap-2 mb-3">
+        <Clock className="w-3.5 h-3.5" style={{ color: accentColor }} />
+        <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
           Where Teams Spend Time
         </span>
       </div>
 
       {/* Stacked Bar */}
-      <div className="h-8 rounded-lg overflow-hidden flex mb-4">
+      <div className="h-6 rounded-md overflow-hidden flex mb-3">
         <div
           className="h-full transition-all duration-500 ease-out flex items-center justify-center"
           style={{
@@ -44,7 +44,7 @@ const TimeAllocationBar = ({ timeAllocation, accentColor }: TimeAllocationBarPro
           }}
         >
           {coordination >= 15 && (
-            <span className="text-xs font-semibold text-white">{coordination}%</span>
+            <span className="text-[10px] font-semibold text-white">{coordination}%</span>
           )}
         </div>
         <div
@@ -55,7 +55,7 @@ const TimeAllocationBar = ({ timeAllocation, accentColor }: TimeAllocationBarPro
           }}
         >
           {administration >= 15 && (
-            <span className="text-xs font-semibold text-white">{administration}%</span>
+            <span className="text-[10px] font-semibold text-white">{administration}%</span>
           )}
         </div>
         <div
@@ -66,25 +66,25 @@ const TimeAllocationBar = ({ timeAllocation, accentColor }: TimeAllocationBarPro
           }}
         >
           {improvement >= 15 && (
-            <span className="text-xs font-semibold text-white">{improvement}%</span>
+            <span className="text-[10px] font-semibold text-white">{improvement}%</span>
           )}
         </div>
       </div>
 
       {/* Legend */}
-      <div className="flex flex-wrap gap-4 text-xs">
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: "hsl(0 70% 50%)" }} />
+      <div className="flex flex-wrap gap-3 text-[10px]">
+        <div className="flex items-center gap-1.5">
+          <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: "hsl(0 70% 50%)" }} />
           <span className="text-muted-foreground">Coordination</span>
           <span className="font-semibold text-foreground">{coordination}%</span>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: "hsl(199 89% 48%)" }} />
+        <div className="flex items-center gap-1.5">
+          <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: "hsl(199 89% 48%)" }} />
           <span className="text-muted-foreground">Administration</span>
           <span className="font-semibold text-foreground">{administration}%</span>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: "hsl(173 80% 40%)" }} />
+        <div className="flex items-center gap-1.5">
+          <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: "hsl(173 80% 40%)" }} />
           <span className="text-muted-foreground">Improvement</span>
           <span className="font-semibold text-foreground">{improvement}%</span>
         </div>
