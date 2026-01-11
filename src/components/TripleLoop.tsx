@@ -16,10 +16,10 @@ const TripleLoop = ({ onModuleClick, scale = 1 }: TripleLoopProps) => {
 
   const loopRadius = 35;
   const cy = 50;
-  const overlap = 25; // How much circles overlap
 
-  // Calculate the continuous figure-8 path through all 3 loops
-  // This creates a smooth infinity-like flow: Safety → Content → Training → Content → Safety
+  // Create a proper continuous path that traces through all 3 overlapping circles
+  // The path goes: around Safety (clockwise) → cross to Content → around Content (clockwise) 
+  // → cross to Training → around Training (clockwise) → back through Content → back to Safety
   const createFlowPath = () => {
     const r = loopRadius;
     const y = cy;
@@ -29,22 +29,39 @@ const TripleLoop = ({ onModuleClick, scale = 1 }: TripleLoopProps) => {
     const c2 = modules[1].cx; // Content (150)
     const c3 = modules[2].cx; // Training (230)
     
-    // Crossover points (where circles meet)
-    const cross1 = (c1 + c2) / 2; // ~110
-    const cross2 = (c2 + c3) / 2; // ~190
+    // Calculate actual intersection points between circles
+    // Distance between centers
+    const d12 = c2 - c1; // 80
+    const d23 = c3 - c2; // 80
     
-    // Build a smooth continuous path
-    // Start at top of Safety loop, go clockwise
+    // For two circles of radius r with centers d apart, intersection x offset from first center
+    // Using circle intersection formula: x = (d² + r² - r²) / (2d) = d/2
+    // y offset: sqrt(r² - (d/2)²)
+    const intersectOffset12 = d12 / 2; // 40
+    const intersectOffset23 = d23 / 2; // 40
+    const yOffset12 = Math.sqrt(r * r - intersectOffset12 * intersectOffset12);
+    const yOffset23 = Math.sqrt(r * r - intersectOffset23 * intersectOffset23);
+    
+    // Intersection points between Safety and Content
+    const int1Top = { x: c1 + intersectOffset12, y: y - yOffset12 };
+    const int1Bot = { x: c1 + intersectOffset12, y: y + yOffset12 };
+    
+    // Intersection points between Content and Training
+    const int2Top = { x: c2 + intersectOffset23, y: y - yOffset23 };
+    const int2Bot = { x: c2 + intersectOffset23, y: y + yOffset23 };
+    
+    // Build path that traces through all circles using cubic beziers for smooth transitions
+    // Start at left side of Safety, go clockwise
     return `
-      M ${c1} ${y - r}
-      A ${r} ${r} 0 1 1 ${cross1} ${y}
-      A ${r} ${r} 0 1 1 ${c2} ${y - r}
-      A ${r} ${r} 0 1 1 ${cross2} ${y}
-      A ${r} ${r} 0 1 1 ${c3} ${y - r}
-      A ${r} ${r} 0 1 1 ${cross2} ${y}
-      A ${r} ${r} 0 1 1 ${c2} ${y + r}
-      A ${r} ${r} 0 1 1 ${cross1} ${y}
-      A ${r} ${r} 0 1 1 ${c1} ${y - r}
+      M ${c1 - r} ${y}
+      A ${r} ${r} 0 1 1 ${int1Top.x} ${int1Top.y}
+      A ${r} ${r} 0 0 1 ${c2} ${y - r}
+      A ${r} ${r} 0 1 1 ${int2Top.x} ${int2Top.y}
+      A ${r} ${r} 0 1 1 ${c3 - r} ${y}
+      A ${r} ${r} 0 1 1 ${int2Bot.x} ${int2Bot.y}
+      A ${r} ${r} 0 0 1 ${c2} ${y + r}
+      A ${r} ${r} 0 1 1 ${int1Bot.x} ${int1Bot.y}
+      A ${r} ${r} 0 0 1 ${c1 - r} ${y}
     `;
   };
 
@@ -53,7 +70,8 @@ const TripleLoop = ({ onModuleClick, scale = 1 }: TripleLoopProps) => {
   return (
     <svg
       viewBox="0 0 300 100"
-      className="w-full h-full"
+      className="w-full h-auto max-w-full"
+      preserveAspectRatio="xMidYMid meet"
       style={{ 
         transform: `scale(${scale})`,
         filter: "drop-shadow(0 0 8px hsl(173 80% 40% / 0.4))"
@@ -91,7 +109,7 @@ const TripleLoop = ({ onModuleClick, scale = 1 }: TripleLoopProps) => {
 
         {/* Dot glow */}
         <filter id="dotGlow" x="-200%" y="-200%" width="500%" height="500%">
-          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feGaussianBlur stdDeviation="3" result="blur" />
           <feMerge>
             <feMergeNode in="blur" />
             <feMergeNode in="SourceGraphic" />
@@ -164,12 +182,21 @@ const TripleLoop = ({ onModuleClick, scale = 1 }: TripleLoopProps) => {
         className="pointer-events-none"
       />
 
-      {/* Single animated dot flowing through the infinity path */}
-      <circle r="4" fill="hsl(50 95% 70%)" filter="url(#dotGlow)">
+      {/* Hidden path for the animation to follow (for debugging, can be made visible) */}
+      <path
+        d={flowPath}
+        fill="none"
+        stroke="transparent"
+        strokeWidth="1"
+      />
+
+      {/* Single animated dot flowing through the figure-8 path */}
+      <circle r="5" fill="hsl(50 95% 70%)" filter="url(#dotGlow)">
         <animateMotion
-          dur="6s"
+          dur="8s"
           repeatCount="indefinite"
           path={flowPath}
+          rotate="auto"
         />
       </circle>
     </svg>
