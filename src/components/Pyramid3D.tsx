@@ -1,6 +1,6 @@
 import TripleLoop from "./TripleLoop";
 import MetricsGauges from "./MetricsGauges";
-import AIAccelerator from "./AIAccelerator";
+import TransformationalIllustration from "./TransformationalIllustration";
 import FragmentationIllustration from "./FragmentationIllustration";
 
 interface PyramidLayerData {
@@ -673,7 +673,7 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
           const leftX = getLeftX(centerY);
           const rightX = getRightX(centerY);
           const availableWidth = rightX - leftX;
-          const width = availableWidth * 0.70;
+          const width = availableWidth * 0.92; // Use 92% of available width
           const startX = leftX + (availableWidth - width) / 2;
           
           return (
@@ -690,27 +690,27 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
           );
         })()}
 
-        {/* AI Accelerator embedded in Transformational layer - positioned to fit inside triangle */}
+        {/* Transformational Illustration embedded in layer 1 - Human + AI = Opportunity */}
         {(() => {
           const bounds = layerBounds[1];
-          // Position at 60% down the layer for more width while staying inside
-          const centerY = bounds.top + (bounds.bottom - bounds.top) * 0.6;
+          // Position at 80% down the layer for maximum width
+          const centerY = bounds.top + (bounds.bottom - bounds.top) * 0.80;
           const leftX = getLeftX(centerY);
           const rightX = getRightX(centerY);
           const availableWidth = rightX - leftX;
-          const width = availableWidth * 0.75; // Use 75% of available width
-          const height = (bounds.bottom - bounds.top) * 0.65;
+          const width = availableWidth * 0.95;
+          const height = (bounds.bottom - bounds.top) * 0.85;
           const startX = leftX + (availableWidth - width) / 2;
           
           return (
             <foreignObject
               x={startX}
-              y={bounds.top + (bounds.bottom - bounds.top) * 0.2}
+              y={bounds.top + 15}
               width={width}
               height={height}
             >
-              <div className="w-full h-full flex items-center justify-center overflow-hidden">
-                <AIAccelerator onNodeClick={handleModuleClick} />
+              <div className="w-full h-full flex items-end justify-center pb-2">
+                <TransformationalIllustration onNodeClick={handleModuleClick} />
               </div>
             </foreignObject>
           );
