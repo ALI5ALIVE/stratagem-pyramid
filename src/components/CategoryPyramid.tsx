@@ -153,7 +153,7 @@ const CategoryPyramid = () => {
             layers={layersData.map((layer) => ({
               id: layer.id,
               level: layer.level,
-              label: layer.id,
+              label: layer.headline,
               sublabel: layer.sublabel,
               colorClass: layer.colorClass,
               glowClass: glowClasses[layer.id],
