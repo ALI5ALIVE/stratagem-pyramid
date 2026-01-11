@@ -535,28 +535,27 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
           })()}
         </g>
 
-        {/* AI Accelerator embedded in Transformational layer - positioned lower where triangle is wider */}
+        {/* AI Accelerator embedded in Transformational layer - positioned to fit inside triangle */}
         {(() => {
           const bounds = layerBounds[1];
-          // Position at 70% down the layer for more width
-          const positionY = bounds.top + (bounds.bottom - bounds.top) * 0.7;
-          const leftX = getLeftX(positionY);
-          const rightX = getRightX(positionY);
-          const width = rightX - leftX;
-          const centerX = (leftX + rightX) / 2;
-          const height = bounds.bottom - bounds.top;
+          // Position at 60% down the layer for more width while staying inside
+          const centerY = bounds.top + (bounds.bottom - bounds.top) * 0.6;
+          const leftX = getLeftX(centerY);
+          const rightX = getRightX(centerY);
+          const availableWidth = rightX - leftX;
+          const width = availableWidth * 0.75; // Use 75% of available width
+          const height = (bounds.bottom - bounds.top) * 0.65;
+          const startX = leftX + (availableWidth - width) / 2;
           
           return (
             <foreignObject
-              x={centerX - width * 0.48}
-              y={bounds.top + 20}
-              width={width * 0.96}
-              height={height - 25}
+              x={startX}
+              y={bounds.top + (bounds.bottom - bounds.top) * 0.2}
+              width={width}
+              height={height}
             >
-              <div className="w-full h-full flex items-center justify-center overflow-visible">
-                <div style={{ transform: 'scale(1.4)', transformOrigin: 'center center' }}>
-                  <AIAccelerator onNodeClick={handleModuleClick} />
-                </div>
+              <div className="w-full h-full flex items-center justify-center overflow-hidden">
+                <AIAccelerator onNodeClick={handleModuleClick} />
               </div>
             </foreignObject>
           );
@@ -586,16 +585,28 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
         })()}
 
         {/* Triple Loop embedded in Operational layer */}
-        <foreignObject
-          x={operationalCenterX - operationalWidth * 0.46}
-          y={operationalBounds.top + 6}
-          width={operationalWidth * 0.92}
-          height={operationalBounds.bottom - operationalBounds.top - 10}
-        >
-          <div className="w-full h-full flex items-center justify-center rounded-md bg-card/60 backdrop-blur-sm ring-1 ring-border/60">
-            <TripleLoop onModuleClick={handleModuleClick} />
-          </div>
-        </foreignObject>
+        {(() => {
+          const bounds = layerBounds[3];
+          const centerY = (bounds.top + bounds.bottom) / 2;
+          const leftX = getLeftX(centerY);
+          const rightX = getRightX(centerY);
+          const availableWidth = rightX - leftX;
+          const width = availableWidth * 0.78; // Use 78% of available width
+          const startX = leftX + (availableWidth - width) / 2;
+          
+          return (
+            <foreignObject
+              x={startX}
+              y={bounds.top + 10}
+              width={width}
+              height={bounds.bottom - bounds.top - 20}
+            >
+              <div className="w-full h-full flex items-center justify-center overflow-hidden rounded-md bg-card/60 backdrop-blur-sm ring-1 ring-border/60">
+                <TripleLoop onModuleClick={handleModuleClick} />
+              </div>
+            </foreignObject>
+          );
+        })()}
 
         {/* Outer pyramid edge highlights for polish */}
         <path
