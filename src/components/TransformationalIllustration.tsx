@@ -1,85 +1,55 @@
+import { Brain, Sparkles, Rocket } from 'lucide-react';
+
 interface TransformationalIllustrationProps {
   onNodeClick?: (node: string) => void;
 }
 
 const TransformationalIllustration = ({ onNodeClick }: TransformationalIllustrationProps) => {
   return (
-    <svg
-      viewBox="0 0 200 50"
-      className="w-full h-full"
-      preserveAspectRatio="xMidYMid meet"
-    >
-      {/* Human emoji */}
-      <text
-        x="30"
-        y="32"
-        textAnchor="middle"
-        dominantBaseline="middle"
-        fontSize="38"
-        className="pointer-events-none select-none cursor-pointer"
+    <div className="w-full h-full flex items-center justify-center gap-2">
+      {/* Brain - Human Intelligence */}
+      <div 
+        className="cursor-pointer hover:scale-110 transition-transform"
         onClick={() => onNodeClick?.("human")}
+        style={{ filter: 'drop-shadow(0 0 4px rgba(147, 197, 253, 0.6))' }}
       >
-        👤
-      </text>
+        <Brain size={22} className="text-white" strokeWidth={1.5} />
+      </div>
 
       {/* Plus sign */}
-      <text
-        x="65"
-        y="28"
-        textAnchor="middle"
-        dominantBaseline="middle"
-        fill="hsl(0, 0%, 100%)"
-        fontSize="26"
-        fontWeight="bold"
-        fontFamily="'Space Grotesk', sans-serif"
-        className="pointer-events-none select-none"
-        style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
+      <span 
+        className="text-white font-bold text-lg select-none"
+        style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.5)' }}
       >
         +
-      </text>
+      </span>
 
-      {/* AI emoji */}
-      <text
-        x="100"
-        y="32"
-        textAnchor="middle"
-        dominantBaseline="middle"
-        fontSize="38"
-        className="pointer-events-none select-none cursor-pointer"
+      {/* Sparkles - AI Power */}
+      <div 
+        className="cursor-pointer hover:scale-110 transition-transform"
         onClick={() => onNodeClick?.("ai")}
+        style={{ filter: 'drop-shadow(0 0 4px rgba(196, 181, 253, 0.6))' }}
       >
-        🤖
-      </text>
+        <Sparkles size={22} className="text-white" strokeWidth={1.5} />
+      </div>
 
       {/* Equals sign */}
-      <text
-        x="135"
-        y="28"
-        textAnchor="middle"
-        dominantBaseline="middle"
-        fill="hsl(0, 0%, 100%)"
-        fontSize="26"
-        fontWeight="bold"
-        fontFamily="'Space Grotesk', sans-serif"
-        className="pointer-events-none select-none"
-        style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
+      <span 
+        className="text-white font-bold text-lg select-none"
+        style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.5)' }}
       >
         =
-      </text>
+      </span>
 
-      {/* Target/Opportunity emoji */}
-      <text
-        x="170"
-        y="32"
-        textAnchor="middle"
-        dominantBaseline="middle"
-        fontSize="40"
-        className="pointer-events-none select-none cursor-pointer"
+      {/* Rocket - Transformation */}
+      <div 
+        className="cursor-pointer hover:scale-110 transition-transform"
         onClick={() => onNodeClick?.("opportunity")}
+        style={{ filter: 'drop-shadow(0 0 4px rgba(253, 224, 71, 0.6))' }}
       >
-        🎯
-      </text>
-    </svg>
+        <Rocket size={22} className="text-white" strokeWidth={1.5} />
+      </div>
+    </div>
   );
 };
 
