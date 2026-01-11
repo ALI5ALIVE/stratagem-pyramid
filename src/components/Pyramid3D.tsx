@@ -693,23 +693,23 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
         {/* Transformational Illustration embedded in layer 1 - Human + AI = Opportunity */}
         {(() => {
           const bounds = layerBounds[1];
-          // Position at 80% down the layer for maximum width
-          const centerY = bounds.top + (bounds.bottom - bounds.top) * 0.80;
-          const leftX = getLeftX(centerY);
-          const rightX = getRightX(centerY);
+          // Position near bottom of layer where triangle is widest
+          const positionY = bounds.bottom - 35;
+          const leftX = getLeftX(positionY);
+          const rightX = getRightX(positionY);
           const availableWidth = rightX - leftX;
-          const width = availableWidth * 0.95;
-          const height = (bounds.bottom - bounds.top) * 0.85;
+          const width = availableWidth * 0.90;
+          const height = 55;
           const startX = leftX + (availableWidth - width) / 2;
           
           return (
             <foreignObject
               x={startX}
-              y={bounds.top + 15}
+              y={bounds.bottom - height - 8}
               width={width}
               height={height}
             >
-              <div className="w-full h-full flex items-end justify-center pb-2">
+              <div className="w-full h-full flex items-center justify-center">
                 <TransformationalIllustration onNodeClick={handleModuleClick} />
               </div>
             </foreignObject>
