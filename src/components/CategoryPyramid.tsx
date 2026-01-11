@@ -35,6 +35,10 @@ const layersData: LayerData[] = [
       administration: 20,
       improvement: 70,
     },
+    valueProof: {
+      metrics: ["OTP ↑ 15%", "Delay mins ↓ 40%", "Admin hours ↓ 70%"],
+      roiStatement: "70% less time on administration, 30% faster decision cycles",
+    },
   },
   {
     id: "CLOSED_LOOP",
@@ -66,6 +70,10 @@ const layersData: LayerData[] = [
       administration: 30,
       improvement: 50,
     },
+    valueProof: {
+      metrics: ["Recurrence ↓ 50%", "Time-to-change ↓ 60%", "KPI lift ↑"],
+      roiStatement: "50% reduction in repeat issues, measurable readiness lift",
+    },
   },
   {
     id: "CONNECTED",
@@ -96,6 +104,10 @@ const layersData: LayerData[] = [
       administration: 35,
       improvement: 35,
     },
+    valueProof: {
+      metrics: ["Audit prep ↓ 30%", "Handoffs ↓ 50%", "Visibility ↑"],
+      roiStatement: "Single source of truth reduces coordination overhead by 40%",
+    },
   },
   {
     id: "MANAGED",
@@ -124,6 +136,10 @@ const layersData: LayerData[] = [
       coordination: 45,
       administration: 35,
       improvement: 20,
+    },
+    valueProof: {
+      metrics: ["Dept compliance ↑", "Process consistency ↑", "Cross-func ROI limited"],
+      roiStatement: "Structured compliance, but limited cross-functional ROI",
     },
   },
   {
@@ -154,6 +170,10 @@ const layersData: LayerData[] = [
       coordination: 60,
       administration: 30,
       improvement: 10,
+    },
+    valueProof: {
+      metrics: ["Variability ↑", "Recovery time ↑", "Risk exposure ↑"],
+      roiStatement: "Hidden costs: repeat work, audit scrambles, inconsistent readiness",
     },
   },
 ];
