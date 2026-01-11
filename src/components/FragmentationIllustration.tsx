@@ -8,26 +8,27 @@ const FragmentationIllustration = ({ onNodeClick }: FragmentationIllustrationPro
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
 
   const nodes = [
-    { id: "docs", label: "Docs", x: 40, y: 32, icon: "📄" },
-    { id: "training", label: "LMS", x: 100, y: 20, icon: "🎓" },
-    { id: "safety", label: "Safety", x: 160, y: 35, icon: "⚠️" },
-    { id: "audit", label: "Audit", x: 55, y: 65, icon: "📋" },
-    { id: "comms", label: "Comms", x: 140, y: 68, icon: "📧" },
+    { id: "docs", label: "Docs", x: 60, y: 38, icon: "📄" },
+    { id: "training", label: "LMS", x: 150, y: 28, icon: "🎓" },
+    { id: "safety", label: "Safety", x: 340, y: 35, icon: "⚠️" },
+    { id: "audit", label: "Audit", x: 245, y: 45, icon: "📋" },
+    { id: "comms", label: "Comms", x: 200, y: 28, icon: "📧" },
   ];
 
-  // Broken connection lines (dashed, not connecting properly)
+  // Broken connection lines (dashed, not connecting properly) - spread across width
   const brokenLines = [
-    { x1: 55, y1: 38, x2: 85, y2: 28 },
-    { x1: 115, y1: 28, x2: 145, y2: 38 },
-    { x1: 50, y1: 50, x2: 65, y2: 55 },
-    { x1: 130, y1: 55, x2: 150, y2: 58 },
-    { x1: 80, y1: 60, x2: 110, y2: 62 },
+    { x1: 80, y1: 38, x2: 130, y2: 30 },
+    { x1: 170, y1: 32, x2: 220, y2: 30 },
+    { x1: 220, y1: 32, x2: 265, y2: 42 },
+    { x1: 265, y1: 48, x2: 320, y2: 38 },
+    { x1: 80, y1: 45, x2: 130, y2: 50 },
+    { x1: 170, y1: 35, x2: 225, y2: 40 },
   ];
 
   return (
     <svg
-      viewBox="0 0 200 85"
-      className="w-full h-full max-w-[180px]"
+      viewBox="0 0 400 90"
+      className="w-full h-full"
       style={{ filter: "drop-shadow(0 2px 8px rgba(239, 68, 68, 0.3))" }}
     >
       <defs>
@@ -98,14 +99,14 @@ const FragmentationIllustration = ({ onNodeClick }: FragmentationIllustrationPro
               transformOrigin: `${node.x}px ${node.y}px`,
             }}
           >
-            {/* Node background circle */}
+          {/* Node background circle */}
             <circle
               cx={node.x}
               cy={node.y}
-              r={isHovered ? 14 : 12}
+              r={isHovered ? 20 : 18}
               fill="hsl(222, 47%, 12%)"
               stroke={isHovered ? "hsl(0, 70%, 55%)" : "hsl(0, 50%, 40%)"}
-              strokeWidth={isHovered ? 2 : 1.5}
+              strokeWidth={isHovered ? 2.5 : 2}
               style={{
                 filter: isHovered ? "url(#fragmentGlow)" : "none",
               }}
@@ -117,7 +118,7 @@ const FragmentationIllustration = ({ onNodeClick }: FragmentationIllustrationPro
               y={node.y + 1}
               textAnchor="middle"
               dominantBaseline="middle"
-              fontSize="10"
+              fontSize="16"
               className="pointer-events-none select-none"
             >
               {node.icon}
@@ -126,14 +127,14 @@ const FragmentationIllustration = ({ onNodeClick }: FragmentationIllustrationPro
             {/* Label below node */}
             <text
               x={node.x}
-              y={node.y + 22}
+              y={node.y + 30}
               textAnchor="middle"
               fill={isHovered ? "hsl(0, 70%, 65%)" : "hsl(0, 40%, 60%)"}
-              fontSize="7"
-              fontWeight="500"
-              fontFamily="'Inter', sans-serif"
+              fontSize="10"
+              fontWeight="600"
+              fontFamily="'Space Grotesk', sans-serif"
               className="pointer-events-none select-none uppercase"
-              letterSpacing="0.03em"
+              letterSpacing="0.05em"
             >
               {node.label}
             </text>
@@ -141,17 +142,19 @@ const FragmentationIllustration = ({ onNodeClick }: FragmentationIllustrationPro
         );
       })}
 
-      {/* Warning indicators scattered around */}
+      {/* Warning indicators scattered across width */}
       {[
-        { x: 100, y: 45 },
-        { x: 75, y: 75 },
-        { x: 125, y: 78 },
+        { x: 110, y: 50 },
+        { x: 190, y: 55 },
+        { x: 290, y: 52 },
+        { x: 160, y: 65 },
+        { x: 250, y: 68 },
       ].map((pos, index) => (
         <g key={`warning-${index}`} className="animate-pulse-glow">
           <circle
             cx={pos.x}
             cy={pos.y}
-            r="4"
+            r="6"
             fill="hsl(25, 90%, 50%)"
             style={{ filter: "url(#warningPulse)" }}
           />
@@ -161,7 +164,7 @@ const FragmentationIllustration = ({ onNodeClick }: FragmentationIllustrationPro
             textAnchor="middle"
             dominantBaseline="middle"
             fill="white"
-            fontSize="5"
+            fontSize="8"
             fontWeight="bold"
           >
             !
@@ -169,21 +172,6 @@ const FragmentationIllustration = ({ onNodeClick }: FragmentationIllustrationPro
         </g>
       ))}
 
-      {/* Central "FRAGMENTED" text */}
-      <text
-        x="100"
-        y="48"
-        textAnchor="middle"
-        fill="hsl(0, 60%, 55%)"
-        fontSize="6"
-        fontWeight="600"
-        fontFamily="'Space Grotesk', sans-serif"
-        letterSpacing="0.15em"
-        opacity="0.7"
-        className="uppercase pointer-events-none select-none"
-      >
-        Disconnected
-      </text>
     </svg>
   );
 };
