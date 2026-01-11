@@ -107,40 +107,34 @@ const CategoryPyramid = () => {
 
       {/* Main content */}
       <main className="container max-w-7xl mx-auto px-4 md:px-6 pb-16">
-        <div className="grid lg:grid-cols-[1.2fr,380px] gap-6 lg:gap-10 items-start">
-          {/* 3D Pyramid - Hero Visual */}
-          <div className="order-2 lg:order-1 flex flex-col items-center">
-            <Pyramid3D
-              layers={layersData.map((layer) => ({
-                id: layer.id,
-                level: layer.level,
-                label: layer.id,
-                sublabel: layer.sublabel,
-                colorClass: layer.colorClass,
-                glowClass: glowClasses[layer.id],
-              }))}
-              activeLayer={activeLayer.level}
-              onLayerClick={(level) => {
-                const layer = layersData.find((l) => l.level === level);
-                if (layer) {
-                  setActiveLayerId(layer.id);
-                  setHighlightedModule(null);
-                }
-              }}
-            >
-              <InfinityLoop onModuleClick={handleModuleClick} />
-            </Pyramid3D>
-          </div>
+        {/* Pyramid - Full Width Hero Visual */}
+        <div className="mb-10">
+          <Pyramid3D
+            layers={layersData.map((layer) => ({
+              id: layer.id,
+              level: layer.level,
+              label: layer.id,
+              sublabel: layer.sublabel,
+              colorClass: layer.colorClass,
+              glowClass: glowClasses[layer.id],
+            }))}
+            activeLayer={activeLayer.level}
+            onLayerClick={(level) => {
+              const layer = layersData.find((l) => l.level === level);
+              if (layer) {
+                setActiveLayerId(layer.id);
+                setHighlightedModule(null);
+              }
+            }}
+          >
+            <InfinityLoop onModuleClick={handleModuleClick} />
+          </Pyramid3D>
+        </div>
 
-          {/* Details Panel */}
-          <div className="order-1 lg:order-2 lg:sticky lg:top-8">
-            <DetailsPanel layer={activeLayer} highlightedModule={highlightedModule} />
-            
-            {/* Platform Callout */}
-            <div className="mt-6">
-              <PlatformCallout />
-            </div>
-          </div>
+        {/* Details Panel - Below pyramid */}
+        <div className="grid lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          <DetailsPanel layer={activeLayer} highlightedModule={highlightedModule} />
+          <PlatformCallout />
         </div>
       </main>
 
