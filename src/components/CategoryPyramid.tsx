@@ -197,9 +197,9 @@ const CategoryPyramid = () => {
 
       {/* Main content - Side by side layout */}
       <main className="container max-w-7xl mx-auto px-4 md:px-6 pb-16">
-        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-start">
-          {/* LEFT: Pyramid Visual - sticky on desktop */}
-          <div className="lg:sticky lg:top-8">
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
+          {/* LEFT: Pyramid Visual - matches height of details panel */}
+          <div className="flex items-center justify-center">
             <Pyramid3D
               layers={layersData.map((layer) => ({
                 id: layer.id,
