@@ -46,14 +46,18 @@ const TripleLoop = ({ onModuleClick, scale = 1 }: TripleLoopProps) => {
 
   const pathRef = useRef<SVGPathElement | null>(null);
   const dotRef = useRef<SVGCircleElement | null>(null);
+  const dotRef2 = useRef<SVGCircleElement | null>(null);
 
   useEffect(() => {
     const pathEl = pathRef.current;
     const dotEl = dotRef.current;
-    if (!pathEl || !dotEl) return;
+    const dotEl2 = dotRef2.current;
+    if (!pathEl || !dotEl || !dotEl2) return;
 
     let raf = 0;
     const start = performance.now();
+    const duration = 10000; // 10s loop
+    const delay = 3000; // 3s delay for second dot
 
     const tick = (now: number) => {
       const length = pathEl.getTotalLength();
@@ -62,12 +66,20 @@ const TripleLoop = ({ onModuleClick, scale = 1 }: TripleLoopProps) => {
         return;
       }
       
-      const t = ((now - start) / 10000) % 1; // 10s loop for full circles
-      const p = pathEl.getPointAtLength(length * t);
+      // First dot
+      const t1 = ((now - start) / duration) % 1;
+      const p1 = pathEl.getPointAtLength(length * t1);
+      if (p1 && !isNaN(p1.x) && !isNaN(p1.y)) {
+        dotEl.setAttribute("cx", String(p1.x));
+        dotEl.setAttribute("cy", String(p1.y));
+      }
 
-      if (p && !isNaN(p.x) && !isNaN(p.y)) {
-        dotEl.setAttribute("cx", String(p.x));
-        dotEl.setAttribute("cy", String(p.y));
+      // Second dot with delay
+      const t2 = ((now - start - delay) / duration) % 1;
+      const p2 = pathEl.getPointAtLength(length * ((t2 + 1) % 1));
+      if (p2 && !isNaN(p2.x) && !isNaN(p2.y)) {
+        dotEl2.setAttribute("cx", String(p2.x));
+        dotEl2.setAttribute("cy", String(p2.y));
       }
 
       raf = requestAnimationFrame(tick);
@@ -173,7 +185,7 @@ const TripleLoop = ({ onModuleClick, scale = 1 }: TripleLoopProps) => {
         );
       })}
 
-      {/* Animated dot */}
+      {/* Animated dots */}
       <circle
         ref={dotRef}
         r="4"
@@ -181,6 +193,15 @@ const TripleLoop = ({ onModuleClick, scale = 1 }: TripleLoopProps) => {
         cy={cy - loopRadius}
         fill="hsl(50 95% 70%)"
         filter="url(#dotGlow)"
+      />
+      <circle
+        ref={dotRef2}
+        r="3.5"
+        cx={modules[0].cx}
+        cy={cy - loopRadius}
+        fill="hsl(173 80% 60%)"
+        filter="url(#dotGlow)"
+        opacity="0.85"
       />
     </svg>
   );
