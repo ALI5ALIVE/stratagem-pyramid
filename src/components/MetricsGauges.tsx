@@ -13,29 +13,29 @@ const MetricsGauges = ({ onMetricClick }: MetricsGaugesProps) => {
     { id: "audit", label: "Audit ↑", value: 90, cx: 205 },
   ];
 
-  const gaugeRadius = 28;
-  const cy = 45;
+  const gaugeRadius = 32;
+  const cy = 42;
 
   return (
     <svg
-      viewBox="0 0 260 75"
+      viewBox="0 0 260 80"
       className="w-full h-full"
       style={{
-        filter: "drop-shadow(0 0 6px hsl(280 65% 55% / 0.4))"
+        filter: "drop-shadow(0 0 10px hsl(280 65% 55% / 0.6))"
       }}
     >
       <defs>
-        {/* Gauge gradient */}
+        {/* Gauge gradient - brighter */}
         <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="hsl(280 65% 40%)" />
-          <stop offset="50%" stopColor="hsl(280 65% 60%)" />
-          <stop offset="100%" stopColor="hsl(280 65% 70%)" />
+          <stop offset="0%" stopColor="hsl(280 70% 50%)" />
+          <stop offset="50%" stopColor="hsl(280 75% 65%)" />
+          <stop offset="100%" stopColor="hsl(280 80% 75%)" />
         </linearGradient>
 
-        {/* Glow filter */}
+        {/* Glow filter - stronger */}
         <filter id="gaugeGlow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="2" result="blur" />
-          <feFlood floodColor="hsl(280 65% 55%)" floodOpacity="0.5" />
+          <feGaussianBlur stdDeviation="3" result="blur" />
+          <feFlood floodColor="hsl(280 70% 60%)" floodOpacity="0.7" />
           <feComposite in2="blur" operator="in" />
           <feMerge>
             <feMergeNode />
@@ -43,10 +43,10 @@ const MetricsGauges = ({ onMetricClick }: MetricsGaugesProps) => {
           </feMerge>
         </filter>
 
-        {/* Hover glow */}
+        {/* Hover glow - brighter */}
         <filter id="gaugeHoverGlow" x="-100%" y="-100%" width="300%" height="300%">
-          <feGaussianBlur stdDeviation="3" result="blur" />
-          <feFlood floodColor="hsl(280 65% 65%)" floodOpacity="0.7" />
+          <feGaussianBlur stdDeviation="4" result="blur" />
+          <feFlood floodColor="hsl(280 75% 70%)" floodOpacity="0.9" />
           <feComposite in2="blur" operator="in" />
           <feMerge>
             <feMergeNode />
@@ -75,8 +75,8 @@ const MetricsGauges = ({ onMetricClick }: MetricsGaugesProps) => {
             <path
               d={`M ${metric.cx - gaugeRadius} ${cy} A ${gaugeRadius} ${gaugeRadius} 0 0 1 ${metric.cx + gaugeRadius} ${cy}`}
               fill="none"
-              stroke="hsl(280 20% 25%)"
-              strokeWidth="6"
+              stroke="hsl(280 25% 30%)"
+              strokeWidth="8"
               strokeLinecap="round"
             />
 
@@ -85,12 +85,12 @@ const MetricsGauges = ({ onMetricClick }: MetricsGaugesProps) => {
               d={`M ${metric.cx - gaugeRadius} ${cy} A ${gaugeRadius} ${gaugeRadius} 0 0 1 ${metric.cx + gaugeRadius} ${cy}`}
               fill="none"
               stroke="url(#gaugeGradient)"
-              strokeWidth="6"
+              strokeWidth="8"
               strokeLinecap="round"
               strokeDasharray={`${(metric.value / 100) * Math.PI * gaugeRadius} ${Math.PI * gaugeRadius}`}
               filter={isHovered ? "url(#gaugeHoverGlow)" : "url(#gaugeGlow)"}
               style={{
-                opacity: isHovered ? 1 : 0.85,
+                opacity: isHovered ? 1 : 0.9,
                 transition: "opacity 0.3s ease"
               }}
             />
@@ -131,16 +131,16 @@ const MetricsGauges = ({ onMetricClick }: MetricsGaugesProps) => {
             {/* Label */}
             <text
               x={metric.cx}
-              y={cy + 16}
+              y={cy + 20}
               textAnchor="middle"
-              fill={isHovered ? "hsl(280 65% 80%)" : "hsl(210 40% 90%)"}
-              fontSize="8"
-              fontWeight="600"
+              fill={isHovered ? "hsl(280 75% 85%)" : "hsl(280 50% 80%)"}
+              fontSize="10"
+              fontWeight="700"
               fontFamily="'Space Grotesk', sans-serif"
-              letterSpacing="0.03em"
+              letterSpacing="0.04em"
               className="pointer-events-none select-none uppercase"
               style={{
-                textShadow: isHovered ? "0 0 8px hsl(280 65% 55%)" : "none"
+                textShadow: isHovered ? "0 0 10px hsl(280 70% 60%)" : "0 0 4px hsl(280 50% 40%)"
               }}
             >
               {metric.label}

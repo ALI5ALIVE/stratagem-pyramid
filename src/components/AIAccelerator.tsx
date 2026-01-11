@@ -8,8 +8,8 @@ const AIAccelerator = ({ onNodeClick }: AIAcceleratorProps) => {
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
 
   const centerX = 100;
-  const centerY = 40;
-  const nodeDistance = 32;
+  const centerY = 38;
+  const nodeDistance = 38;
 
   const nodes = [
     { id: "detect", label: "Detect", angle: -120, icon: "eye" },
@@ -19,24 +19,24 @@ const AIAccelerator = ({ onNodeClick }: AIAcceleratorProps) => {
 
   return (
     <svg
-      viewBox="0 0 200 70"
+      viewBox="0 0 200 75"
       className="w-full h-full"
       style={{
-        filter: "drop-shadow(0 0 8px hsl(45 93% 58% / 0.4))"
+        filter: "drop-shadow(0 0 12px hsl(45 93% 58% / 0.6))"
       }}
     >
       <defs>
-        {/* Gold gradient */}
+        {/* Gold gradient - brighter */}
         <linearGradient id="aiGoldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="hsl(45 93% 50%)" />
-          <stop offset="50%" stopColor="hsl(45 93% 65%)" />
-          <stop offset="100%" stopColor="hsl(40 90% 55%)" />
+          <stop offset="0%" stopColor="hsl(45 95% 55%)" />
+          <stop offset="50%" stopColor="hsl(45 95% 70%)" />
+          <stop offset="100%" stopColor="hsl(40 92% 60%)" />
         </linearGradient>
 
-        {/* Center AI glow */}
+        {/* Center AI glow - stronger */}
         <filter id="aiCoreGlow" x="-100%" y="-100%" width="300%" height="300%">
-          <feGaussianBlur stdDeviation="3" result="blur" />
-          <feFlood floodColor="hsl(45 93% 58%)" floodOpacity="0.6" />
+          <feGaussianBlur stdDeviation="4" result="blur" />
+          <feFlood floodColor="hsl(45 95% 65%)" floodOpacity="0.8" />
           <feComposite in2="blur" operator="in" />
           <feMerge>
             <feMergeNode />
@@ -44,10 +44,10 @@ const AIAccelerator = ({ onNodeClick }: AIAcceleratorProps) => {
           </feMerge>
         </filter>
 
-        {/* Node glow */}
+        {/* Node glow - stronger */}
         <filter id="nodeGlow" x="-100%" y="-100%" width="300%" height="300%">
-          <feGaussianBlur stdDeviation="2" result="blur" />
-          <feFlood floodColor="hsl(45 93% 65%)" floodOpacity="0.5" />
+          <feGaussianBlur stdDeviation="3" result="blur" />
+          <feFlood floodColor="hsl(45 95% 70%)" floodOpacity="0.7" />
           <feComposite in2="blur" operator="in" />
           <feMerge>
             <feMergeNode />
@@ -55,9 +55,9 @@ const AIAccelerator = ({ onNodeClick }: AIAcceleratorProps) => {
           </feMerge>
         </filter>
 
-        {/* Pulse animation */}
+        {/* Pulse animation - brighter */}
         <filter id="pulseGlow" x="-100%" y="-100%" width="300%" height="300%">
-          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feGaussianBlur stdDeviation="2.5" result="blur" />
           <feMerge>
             <feMergeNode in="blur" />
             <feMergeNode in="SourceGraphic" />
@@ -99,48 +99,48 @@ const AIAccelerator = ({ onNodeClick }: AIAcceleratorProps) => {
 
       {/* Central AI chip */}
       <g filter="url(#aiCoreGlow)">
-        {/* Hexagon shape for AI core */}
+        {/* Hexagon shape for AI core - larger */}
         <polygon
           points={`
-            ${centerX},${centerY - 12}
-            ${centerX + 10},${centerY - 6}
-            ${centerX + 10},${centerY + 6}
-            ${centerX},${centerY + 12}
-            ${centerX - 10},${centerY + 6}
-            ${centerX - 10},${centerY - 6}
+            ${centerX},${centerY - 16}
+            ${centerX + 14},${centerY - 8}
+            ${centerX + 14},${centerY + 8}
+            ${centerX},${centerY + 16}
+            ${centerX - 14},${centerY + 8}
+            ${centerX - 14},${centerY - 8}
           `}
           fill="url(#aiGoldGradient)"
-          stroke="hsl(45 93% 70%)"
-          strokeWidth="1"
+          stroke="hsl(45 95% 75%)"
+          strokeWidth="1.5"
           className="cursor-pointer"
           onClick={() => onNodeClick?.("ai-core")}
         />
         
-        {/* AI label inside */}
+        {/* AI label inside - larger */}
         <text
           x={centerX}
           y={centerY + 2}
           textAnchor="middle"
           dominantBaseline="middle"
           fill="hsl(45 30% 15%)"
-          fontSize="7"
-          fontWeight="700"
+          fontSize="10"
+          fontWeight="800"
           fontFamily="'Space Grotesk', sans-serif"
           className="pointer-events-none select-none"
         >
           AI
         </text>
 
-        {/* Rotating ring around core */}
+        {/* Rotating ring around core - larger and brighter */}
         <circle
           cx={centerX}
           cy={centerY}
-          r="16"
+          r="22"
           fill="none"
-          stroke="hsl(45 93% 60%)"
-          strokeWidth="1"
-          strokeDasharray="8 4"
-          strokeOpacity="0.6"
+          stroke="hsl(45 95% 65%)"
+          strokeWidth="1.5"
+          strokeDasharray="10 5"
+          strokeOpacity="0.8"
         >
           <animateTransform
             attributeName="transform"
@@ -168,15 +168,15 @@ const AIAccelerator = ({ onNodeClick }: AIAcceleratorProps) => {
             onMouseEnter={() => setHoveredNode(node.id)}
             onMouseLeave={() => setHoveredNode(null)}
           >
-            {/* Node circle */}
+            {/* Node circle - larger */}
             <circle
               cx={nodeX}
               cy={nodeY}
-              r={isHuman ? "8" : "6"}
-              fill={isHuman ? "hsl(210 40% 25%)" : "hsl(45 93% 50%)"}
-              stroke={isHovered ? "hsl(45 93% 75%)" : "hsl(45 93% 60%)"}
-              strokeWidth={isHovered ? "2" : "1.5"}
-              filter={isHovered ? "url(#nodeGlow)" : "none"}
+              r={isHuman ? "10" : "8"}
+              fill={isHuman ? "hsl(210 40% 25%)" : "hsl(45 95% 55%)"}
+              stroke={isHovered ? "hsl(45 95% 80%)" : "hsl(45 95% 65%)"}
+              strokeWidth={isHovered ? "2.5" : "2"}
+              filter={isHovered ? "url(#nodeGlow)" : "url(#pulseGlow)"}
               className="transition-all duration-300"
             />
 
@@ -195,19 +195,19 @@ const AIAccelerator = ({ onNodeClick }: AIAcceleratorProps) => {
               </g>
             )}
 
-            {/* Node label */}
+            {/* Node label - larger */}
             <text
               x={nodeX}
-              y={nodeY + (node.angle < -60 ? -12 : 14)}
+              y={nodeY + (node.angle < -60 ? -15 : 18)}
               textAnchor="middle"
-              fill={isHovered ? "hsl(45 93% 80%)" : "hsl(210 40% 85%)"}
-              fontSize="6"
-              fontWeight="500"
+              fill={isHovered ? "hsl(45 95% 85%)" : "hsl(45 80% 75%)"}
+              fontSize="8"
+              fontWeight="600"
               fontFamily="'Space Grotesk', sans-serif"
-              letterSpacing="0.02em"
+              letterSpacing="0.03em"
               className="pointer-events-none select-none uppercase"
               style={{
-                textShadow: isHovered ? "0 0 6px hsl(45 93% 58%)" : "none"
+                textShadow: isHovered ? "0 0 8px hsl(45 95% 60%)" : "0 0 4px hsl(45 70% 40%)"
               }}
             >
               {node.label}
