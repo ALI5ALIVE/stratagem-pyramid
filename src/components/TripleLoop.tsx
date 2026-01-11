@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Shield, FileText, GraduationCap } from "lucide-react";
 
 interface TripleLoopProps {
   onModuleClick: (module: string) => void;
@@ -10,13 +9,46 @@ const TripleLoop = ({ onModuleClick, scale = 1 }: TripleLoopProps) => {
   const [hoveredModule, setHoveredModule] = useState<string | null>(null);
 
   const modules = [
-    { id: "safety", label: "Safety", icon: Shield, cx: 70 },
-    { id: "content", label: "Content", icon: FileText, cx: 150 },
-    { id: "training", label: "Training", icon: GraduationCap, cx: 230 },
+    { id: "safety", label: "Safety", cx: 70 },
+    { id: "content", label: "Content", cx: 150 },
+    { id: "training", label: "Training", cx: 230 },
   ];
 
   const loopRadius = 35;
   const cy = 50;
+  const overlap = 25; // How much circles overlap
+
+  // Calculate the continuous figure-8 path through all 3 loops
+  // This creates a smooth infinity-like flow: Safety → Content → Training → Content → Safety
+  const createFlowPath = () => {
+    const r = loopRadius;
+    const y = cy;
+    
+    // Circle centers
+    const c1 = modules[0].cx; // Safety (70)
+    const c2 = modules[1].cx; // Content (150)
+    const c3 = modules[2].cx; // Training (230)
+    
+    // Crossover points (where circles meet)
+    const cross1 = (c1 + c2) / 2; // ~110
+    const cross2 = (c2 + c3) / 2; // ~190
+    
+    // Build a smooth continuous path
+    // Start at top of Safety loop, go clockwise
+    return `
+      M ${c1} ${y - r}
+      A ${r} ${r} 0 1 1 ${cross1} ${y}
+      A ${r} ${r} 0 1 1 ${c2} ${y - r}
+      A ${r} ${r} 0 1 1 ${cross2} ${y}
+      A ${r} ${r} 0 1 1 ${c3} ${y - r}
+      A ${r} ${r} 0 1 1 ${cross2} ${y}
+      A ${r} ${r} 0 1 1 ${c2} ${y + r}
+      A ${r} ${r} 0 1 1 ${cross1} ${y}
+      A ${r} ${r} 0 1 1 ${c1} ${y - r}
+    `;
+  };
+
+  const flowPath = createFlowPath();
 
   return (
     <svg
@@ -56,10 +88,19 @@ const TripleLoop = ({ onModuleClick, scale = 1 }: TripleLoopProps) => {
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
+
+        {/* Dot glow */}
+        <filter id="dotGlow" x="-200%" y="-200%" width="500%" height="500%">
+          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
       </defs>
 
       {/* Three interlocking circles */}
-      {modules.map((module, index) => {
+      {modules.map((module) => {
         const isHovered = hoveredModule === module.id;
         
         return (
@@ -123,58 +164,28 @@ const TripleLoop = ({ onModuleClick, scale = 1 }: TripleLoopProps) => {
         className="pointer-events-none"
       />
 
-      {/* Animated flowing dots through all 3 loops */}
-      <circle r="3" fill="hsl(173 80% 60%)">
+      {/* Animated flowing dots through the infinity path */}
+      <circle r="3.5" fill="hsl(173 80% 65%)" filter="url(#dotGlow)">
         <animateMotion
-          dur="6s"
+          dur="8s"
           repeatCount="indefinite"
-          path={`
-            M ${modules[0].cx} ${cy - loopRadius}
-            A ${loopRadius} ${loopRadius} 0 1 1 ${modules[0].cx} ${cy + loopRadius}
-            A ${loopRadius} ${loopRadius} 0 0 0 ${modules[1].cx} ${cy + loopRadius}
-            A ${loopRadius} ${loopRadius} 0 1 1 ${modules[1].cx} ${cy - loopRadius}
-            A ${loopRadius} ${loopRadius} 0 0 0 ${modules[2].cx} ${cy - loopRadius}
-            A ${loopRadius} ${loopRadius} 0 1 1 ${modules[2].cx} ${cy + loopRadius}
-            A ${loopRadius} ${loopRadius} 0 0 0 ${modules[1].cx} ${cy + loopRadius}
-            A ${loopRadius} ${loopRadius} 0 1 1 ${modules[1].cx} ${cy - loopRadius}
-            A ${loopRadius} ${loopRadius} 0 0 0 ${modules[0].cx} ${cy - loopRadius}
-          `}
+          path={flowPath}
         />
       </circle>
-      <circle r="3" fill="hsl(199 89% 55%)">
+      <circle r="3.5" fill="hsl(199 89% 60%)" filter="url(#dotGlow)">
         <animateMotion
-          dur="6s"
+          dur="8s"
           repeatCount="indefinite"
-          begin="2s"
-          path={`
-            M ${modules[0].cx} ${cy - loopRadius}
-            A ${loopRadius} ${loopRadius} 0 1 1 ${modules[0].cx} ${cy + loopRadius}
-            A ${loopRadius} ${loopRadius} 0 0 0 ${modules[1].cx} ${cy + loopRadius}
-            A ${loopRadius} ${loopRadius} 0 1 1 ${modules[1].cx} ${cy - loopRadius}
-            A ${loopRadius} ${loopRadius} 0 0 0 ${modules[2].cx} ${cy - loopRadius}
-            A ${loopRadius} ${loopRadius} 0 1 1 ${modules[2].cx} ${cy + loopRadius}
-            A ${loopRadius} ${loopRadius} 0 0 0 ${modules[1].cx} ${cy + loopRadius}
-            A ${loopRadius} ${loopRadius} 0 1 1 ${modules[1].cx} ${cy - loopRadius}
-            A ${loopRadius} ${loopRadius} 0 0 0 ${modules[0].cx} ${cy - loopRadius}
-          `}
+          begin="2.67s"
+          path={flowPath}
         />
       </circle>
-      <circle r="3" fill="hsl(173 80% 70%)">
+      <circle r="3.5" fill="hsl(45 93% 65%)" filter="url(#dotGlow)">
         <animateMotion
-          dur="6s"
+          dur="8s"
           repeatCount="indefinite"
-          begin="4s"
-          path={`
-            M ${modules[0].cx} ${cy - loopRadius}
-            A ${loopRadius} ${loopRadius} 0 1 1 ${modules[0].cx} ${cy + loopRadius}
-            A ${loopRadius} ${loopRadius} 0 0 0 ${modules[1].cx} ${cy + loopRadius}
-            A ${loopRadius} ${loopRadius} 0 1 1 ${modules[1].cx} ${cy - loopRadius}
-            A ${loopRadius} ${loopRadius} 0 0 0 ${modules[2].cx} ${cy - loopRadius}
-            A ${loopRadius} ${loopRadius} 0 1 1 ${modules[2].cx} ${cy + loopRadius}
-            A ${loopRadius} ${loopRadius} 0 0 0 ${modules[1].cx} ${cy + loopRadius}
-            A ${loopRadius} ${loopRadius} 0 1 1 ${modules[1].cx} ${cy - loopRadius}
-            A ${loopRadius} ${loopRadius} 0 0 0 ${modules[0].cx} ${cy - loopRadius}
-          `}
+          begin="5.33s"
+          path={flowPath}
         />
       </circle>
     </svg>

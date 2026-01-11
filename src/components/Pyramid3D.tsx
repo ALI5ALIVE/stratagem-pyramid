@@ -1,4 +1,6 @@
 import TripleLoop from "./TripleLoop";
+import MetricsGauges from "./MetricsGauges";
+import AIAccelerator from "./AIAccelerator";
 
 interface PyramidLayerData {
   id: string;
@@ -525,6 +527,52 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
             );
           })()}
         </g>
+
+        {/* AI Accelerator embedded in Transformational layer */}
+        {(() => {
+          const bounds = layerBounds[1];
+          const centerY = (bounds.top + bounds.bottom) / 2;
+          const leftX = getLeftX(centerY);
+          const rightX = getRightX(centerY);
+          const width = rightX - leftX;
+          const centerX = (leftX + rightX) / 2;
+          
+          return (
+            <foreignObject
+              x={centerX - width * 0.45}
+              y={bounds.top + 12}
+              width={width * 0.9}
+              height={bounds.bottom - bounds.top - 20}
+            >
+              <div className="w-full h-full flex items-center justify-center">
+                <AIAccelerator onNodeClick={handleModuleClick} />
+              </div>
+            </foreignObject>
+          );
+        })()}
+
+        {/* Metrics Gauges embedded in Commercial layer */}
+        {(() => {
+          const bounds = layerBounds[2];
+          const centerY = (bounds.top + bounds.bottom) / 2;
+          const leftX = getLeftX(centerY);
+          const rightX = getRightX(centerY);
+          const width = rightX - leftX;
+          const centerX = (leftX + rightX) / 2;
+          
+          return (
+            <foreignObject
+              x={centerX - width * 0.42}
+              y={bounds.top + 10}
+              width={width * 0.84}
+              height={bounds.bottom - bounds.top - 18}
+            >
+              <div className="w-full h-full flex items-center justify-center">
+                <MetricsGauges onMetricClick={handleModuleClick} />
+              </div>
+            </foreignObject>
+          );
+        })()}
 
         {/* Triple Loop embedded in Operational layer */}
         <foreignObject
