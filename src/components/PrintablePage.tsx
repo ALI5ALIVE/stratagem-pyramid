@@ -1,5 +1,5 @@
 import React from 'react';
-import { Check, TrendingUp, ArrowRight, Clock } from 'lucide-react';
+import { Check, ArrowRight, Eye, Target, TrendingUp, Clock, Users, Flame, ClipboardList, Building2, Link, Sparkles } from 'lucide-react';
 
 interface LayerData {
   id: string;
@@ -34,219 +34,550 @@ interface PrintablePageProps {
   totalPages: number;
 }
 
+// Color map matching the web design exactly
+const levelColors: Record<number, string> = {
+  1: 'hsl(45 93% 58%)',    // Gold - Predictive
+  2: 'hsl(280 65% 55%)',   // Purple - Closed-Loop
+  3: 'hsl(173 80% 40%)',   // Teal - Connected
+  4: 'hsl(199 89% 48%)',   // Blue - Managed
+  5: 'hsl(0 70% 50%)',     // Red - Fragmented
+};
+
+const getIcons = (level: number) => {
+  switch (level) {
+    case 1:
+      return { from: Clock, to: Sparkles };
+    case 2:
+      return { from: ClipboardList, to: TrendingUp };
+    case 3:
+      return { from: Building2, to: Link };
+    case 4:
+      return { from: Users, to: Building2 };
+    case 5:
+      return { from: Flame, to: Target };
+    default:
+      return { from: Flame, to: Target };
+  }
+};
+
 const PrintablePage: React.FC<PrintablePageProps> = ({ layer, pageNumber, totalPages }) => {
-  const { reactive, proactive, strategic } = layer.timeAllocation;
+  const { reactive: coordination, proactive: administration, strategic: improvement } = layer.timeAllocation;
+  const accentColor = levelColors[layer.level] || layer.color;
+  const { from: FromIcon, to: ToIcon } = getIcons(layer.level);
+
+  // Dark theme colors
+  const bgColor = 'hsl(222 47% 6%)';
+  const cardBg = 'hsl(222 47% 8%)';
+  const borderColor = 'hsl(222 47% 18%)';
+  const foreground = 'hsl(210 40% 98%)';
+  const mutedForeground = 'hsl(215 20% 65%)';
 
   return (
     <div 
-      className="printable-page bg-white text-gray-900 p-8 flex flex-col"
+      className="printable-page"
       style={{ 
         width: '1056px', 
         height: '816px', 
-        fontFamily: 'system-ui, -apple-system, sans-serif',
-        boxSizing: 'border-box'
+        backgroundColor: bgColor,
+        color: foreground,
+        fontFamily: "'Inter', system-ui, sans-serif",
+        boxSizing: 'border-box',
+        padding: '24px',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
+      {/* Google Fonts inline for PDF rendering */}
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+      `}</style>
+
       {/* Header */}
-      <header className="flex justify-between items-start mb-6 pb-4 border-b-2 border-gray-200">
+      <header style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center',
+        marginBottom: '16px',
+        paddingBottom: '12px',
+        borderBottom: `1px solid ${borderColor}`,
+      }}>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">COMPLY365</h1>
-          <p className="text-sm text-gray-500">Compliance Maturity Model</p>
+          <h1 style={{ 
+            fontSize: '18px', 
+            fontWeight: 700, 
+            fontFamily: "'Space Grotesk', sans-serif",
+            color: foreground,
+            margin: 0,
+          }}>
+            COMPLY365
+          </h1>
+          <p style={{ fontSize: '10px', color: mutedForeground, margin: '2px 0 0 0' }}>
+            Compliance Maturity Model
+          </p>
         </div>
-        <div className="text-right">
-          <div 
-            className="inline-block px-4 py-2 rounded-lg text-white font-bold text-lg"
-            style={{ backgroundColor: layer.color }}
-          >
-            Stage {layer.level}
+        <div style={{ textAlign: 'right' }}>
+          <div style={{ 
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px',
+            padding: '6px 12px',
+            borderRadius: '8px',
+            backgroundColor: `${accentColor}`,
+            color: bgColor,
+            fontWeight: 700,
+            fontSize: '12px',
+          }}>
+            Stage {layer.level} — {layer.sublabel}
           </div>
-          <p className="text-xs text-gray-400 mt-1">Page {pageNumber} of {totalPages}</p>
+          <p style={{ fontSize: '9px', color: mutedForeground, margin: '4px 0 0 0' }}>
+            Page {pageNumber} of {totalPages}
+          </p>
         </div>
       </header>
 
       {/* Main Content */}
-      <div className="flex-1 flex gap-8">
-        {/* Left: Mini Pyramid */}
-        <div className="w-64 flex-shrink-0">
-          <svg viewBox="0 0 200 240" className="w-full h-auto">
+      <div style={{ flex: 1, display: 'flex', gap: '20px' }}>
+        {/* Left: Pyramid Visual */}
+        <div style={{ width: '280px', flexShrink: 0 }}>
+          <svg viewBox="0 0 240 300" style={{ width: '100%', height: 'auto' }}>
             <defs>
-              <linearGradient id={`gradient-${layer.level}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor={layer.color} stopOpacity="1" />
-                <stop offset="100%" stopColor={layer.color} stopOpacity="0.7" />
+              {/* Gradients for each layer */}
+              <linearGradient id="grad-1" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="hsl(45 93% 58%)" stopOpacity="1" />
+                <stop offset="100%" stopColor="hsl(45 93% 48%)" stopOpacity="0.8" />
               </linearGradient>
+              <linearGradient id="grad-2" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="hsl(280 65% 55%)" stopOpacity="1" />
+                <stop offset="100%" stopColor="hsl(280 65% 45%)" stopOpacity="0.8" />
+              </linearGradient>
+              <linearGradient id="grad-3" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="hsl(173 80% 40%)" stopOpacity="1" />
+                <stop offset="100%" stopColor="hsl(173 80% 30%)" stopOpacity="0.8" />
+              </linearGradient>
+              <linearGradient id="grad-4" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="hsl(199 89% 48%)" stopOpacity="1" />
+                <stop offset="100%" stopColor="hsl(199 89% 38%)" stopOpacity="0.8" />
+              </linearGradient>
+              <linearGradient id="grad-5" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="hsl(0 70% 50%)" stopOpacity="1" />
+                <stop offset="100%" stopColor="hsl(0 70% 40%)" stopOpacity="0.8" />
+              </linearGradient>
+              {/* Glow filter */}
+              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
             </defs>
             
-            {/* Layer 1 - Top */}
+            {/* Layer 1 - Top (Predictive) */}
             <polygon
-              points="100,10 130,50 70,50"
-              fill={layer.level === 1 ? `url(#gradient-${layer.level})` : '#e5e7eb'}
-              stroke={layer.level === 1 ? layer.color : '#d1d5db'}
-              strokeWidth="2"
+              points="120,20 150,60 90,60"
+              fill={layer.level === 1 ? 'url(#grad-1)' : 'hsl(222 47% 15%)'}
+              stroke={layer.level === 1 ? 'hsl(45 93% 58%)' : 'hsl(222 47% 25%)'}
+              strokeWidth={layer.level === 1 ? 3 : 1}
+              filter={layer.level === 1 ? 'url(#glow)' : undefined}
             />
             
-            {/* Layer 2 */}
+            {/* Layer 2 (Closed-Loop) */}
             <polygon
-              points="70,55 130,55 145,95 55,95"
-              fill={layer.level === 2 ? `url(#gradient-${layer.level})` : '#e5e7eb'}
-              stroke={layer.level === 2 ? layer.color : '#d1d5db'}
-              strokeWidth="2"
+              points="90,65 150,65 170,115 70,115"
+              fill={layer.level === 2 ? 'url(#grad-2)' : 'hsl(222 47% 15%)'}
+              stroke={layer.level === 2 ? 'hsl(280 65% 55%)' : 'hsl(222 47% 25%)'}
+              strokeWidth={layer.level === 2 ? 3 : 1}
+              filter={layer.level === 2 ? 'url(#glow)' : undefined}
             />
             
-            {/* Layer 3 */}
+            {/* Layer 3 (Connected) */}
             <polygon
-              points="55,100 145,100 160,140 40,140"
-              fill={layer.level === 3 ? `url(#gradient-${layer.level})` : '#e5e7eb'}
-              stroke={layer.level === 3 ? layer.color : '#d1d5db'}
-              strokeWidth="2"
+              points="70,120 170,120 195,175 45,175"
+              fill={layer.level === 3 ? 'url(#grad-3)' : 'hsl(222 47% 15%)'}
+              stroke={layer.level === 3 ? 'hsl(173 80% 40%)' : 'hsl(222 47% 25%)'}
+              strokeWidth={layer.level === 3 ? 3 : 1}
+              filter={layer.level === 3 ? 'url(#glow)' : undefined}
             />
             
-            {/* Layer 4 */}
+            {/* Layer 4 (Managed) */}
             <polygon
-              points="40,145 160,145 175,185 25,185"
-              fill={layer.level === 4 ? `url(#gradient-${layer.level})` : '#e5e7eb'}
-              stroke={layer.level === 4 ? layer.color : '#d1d5db'}
-              strokeWidth="2"
+              points="45,180 195,180 220,235 20,235"
+              fill={layer.level === 4 ? 'url(#grad-4)' : 'hsl(222 47% 15%)'}
+              stroke={layer.level === 4 ? 'hsl(199 89% 48%)' : 'hsl(222 47% 25%)'}
+              strokeWidth={layer.level === 4 ? 3 : 1}
+              filter={layer.level === 4 ? 'url(#glow)' : undefined}
             />
             
-            {/* Layer 5 - Bottom */}
+            {/* Layer 5 - Bottom (Fragmented) */}
             <polygon
-              points="25,190 175,190 190,230 10,230"
-              fill={layer.level === 5 ? `url(#gradient-${layer.level})` : '#e5e7eb'}
-              stroke={layer.level === 5 ? layer.color : '#d1d5db'}
-              strokeWidth="2"
+              points="20,240 220,240 240,290 0,290"
+              fill={layer.level === 5 ? 'url(#grad-5)' : 'hsl(222 47% 15%)'}
+              stroke={layer.level === 5 ? 'hsl(0 70% 50%)' : 'hsl(222 47% 25%)'}
+              strokeWidth={layer.level === 5 ? 3 : 1}
+              filter={layer.level === 5 ? 'url(#glow)' : undefined}
             />
             
             {/* Level labels */}
-            <text x="100" y="35" textAnchor="middle" fontSize="10" fill={layer.level === 1 ? 'white' : '#6b7280'} fontWeight="bold">1</text>
-            <text x="100" y="80" textAnchor="middle" fontSize="10" fill={layer.level === 2 ? 'white' : '#6b7280'} fontWeight="bold">2</text>
-            <text x="100" y="125" textAnchor="middle" fontSize="10" fill={layer.level === 3 ? 'white' : '#6b7280'} fontWeight="bold">3</text>
-            <text x="100" y="170" textAnchor="middle" fontSize="10" fill={layer.level === 4 ? 'white' : '#6b7280'} fontWeight="bold">4</text>
-            <text x="100" y="215" textAnchor="middle" fontSize="10" fill={layer.level === 5 ? 'white' : '#6b7280'} fontWeight="bold">5</text>
+            <text x="120" y="45" textAnchor="middle" fontSize="11" fill={layer.level === 1 ? bgColor : mutedForeground} fontWeight="700" fontFamily="Space Grotesk, sans-serif">1</text>
+            <text x="120" y="95" textAnchor="middle" fontSize="11" fill={layer.level === 2 ? bgColor : mutedForeground} fontWeight="700" fontFamily="Space Grotesk, sans-serif">2</text>
+            <text x="120" y="152" textAnchor="middle" fontSize="11" fill={layer.level === 3 ? bgColor : mutedForeground} fontWeight="700" fontFamily="Space Grotesk, sans-serif">3</text>
+            <text x="120" y="212" textAnchor="middle" fontSize="11" fill={layer.level === 4 ? bgColor : mutedForeground} fontWeight="700" fontFamily="Space Grotesk, sans-serif">4</text>
+            <text x="120" y="270" textAnchor="middle" fontSize="11" fill={layer.level === 5 ? 'white' : mutedForeground} fontWeight="700" fontFamily="Space Grotesk, sans-serif">5</text>
           </svg>
           
-          <div className="mt-4 text-center">
-            <h2 
-              className="font-bold text-lg leading-tight"
-              style={{ color: layer.color }}
-            >
+          <div style={{ textAlign: 'center', marginTop: '12px' }}>
+            <h2 style={{ 
+              fontWeight: 700, 
+              fontSize: '14px',
+              fontFamily: "'Space Grotesk', sans-serif",
+              color: accentColor,
+              margin: 0,
+            }}>
               {layer.label}
             </h2>
             {layer.sublabel && (
-              <p className="text-xs text-gray-500 mt-1">{layer.sublabel}</p>
+              <p style={{ fontSize: '10px', color: mutedForeground, margin: '4px 0 0 0' }}>
+                {layer.sublabel}
+              </p>
             )}
           </div>
         </div>
 
-        {/* Right: Content */}
-        <div className="flex-1 flex flex-col gap-4 text-sm">
-          {/* Headline */}
-          <h3 
-            className="text-xl font-bold leading-tight"
-            style={{ color: layer.color }}
-          >
-            {layer.headline}
-          </h3>
+        {/* Right: Details Panel */}
+        <div style={{ 
+          flex: 1, 
+          backgroundColor: cardBg,
+          borderRadius: '12px',
+          border: `1px solid ${borderColor}`,
+          padding: '16px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px',
+          background: `linear-gradient(135deg, hsl(222 47% 10%) 0%, hsl(222 47% 6%) 100%)`,
+        }}>
+          {/* Header */}
+          <div style={{ marginBottom: '4px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+              <span style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '16px',
+                height: '16px',
+                borderRadius: '4px',
+                backgroundColor: accentColor,
+                color: bgColor,
+                fontSize: '9px',
+                fontWeight: 700,
+              }}>
+                {layer.level}
+              </span>
+              <span style={{ fontSize: '8px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: mutedForeground }}>
+                Stage {layer.level} — {layer.sublabel}
+              </span>
+            </div>
+            <h2 style={{ 
+              fontSize: '16px', 
+              fontWeight: 700, 
+              fontFamily: "'Space Grotesk', sans-serif",
+              color: accentColor,
+              margin: 0,
+              lineHeight: 1.3,
+            }}>
+              {layer.headline}
+            </h2>
+          </div>
 
-          <div className="grid grid-cols-2 gap-4 flex-1">
-            {/* What It Looks Like */}
-            <div className="bg-gray-50 rounded-lg p-3">
-              <h4 className="font-semibold text-gray-700 text-xs uppercase tracking-wide mb-2">What It Looks Like</h4>
-              <ul className="space-y-1">
-                {layer.whatItLooksLike.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2 text-xs text-gray-600">
-                    <Check className="w-3 h-3 mt-0.5 flex-shrink-0" style={{ color: layer.color }} />
-                    <span>{item}</span>
+          {/* Grid layout for sections */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', flex: 1 }}>
+            {/* What it looks like */}
+            <div style={{ 
+              backgroundColor: `${accentColor}08`,
+              borderRadius: '8px',
+              padding: '10px',
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
+                <Eye style={{ width: '10px', height: '10px', color: accentColor }} />
+                <span style={{ fontSize: '8px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: mutedForeground }}>
+                  What it looks like
+                </span>
+              </div>
+              <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+                {layer.whatItLooksLike.map((item, index) => (
+                  <li key={index} style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', marginBottom: '4px' }}>
+                    <span style={{
+                      flexShrink: 0,
+                      width: '12px',
+                      height: '12px',
+                      borderRadius: '50%',
+                      backgroundColor: `${accentColor}20`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginTop: '1px',
+                    }}>
+                      <Check style={{ width: '8px', height: '8px', color: accentColor }} />
+                    </span>
+                    <span style={{ fontSize: '9px', color: `${foreground}e6`, lineHeight: 1.4 }}>
+                      {item}
+                    </span>
                   </li>
                 ))}
               </ul>
             </div>
 
             {/* Result */}
-            <div className="bg-gray-50 rounded-lg p-3">
-              <h4 className="font-semibold text-gray-700 text-xs uppercase tracking-wide mb-2">Result</h4>
-              <ul className="space-y-1">
-                {layer.result.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2 text-xs text-gray-600">
-                    <TrendingUp className="w-3 h-3 mt-0.5 flex-shrink-0" style={{ color: layer.color }} />
-                    <span>{item}</span>
+            <div style={{ 
+              backgroundColor: `${accentColor}08`,
+              borderRadius: '8px',
+              padding: '10px',
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
+                <Target style={{ width: '10px', height: '10px', color: accentColor }} />
+                <span style={{ fontSize: '8px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: mutedForeground }}>
+                  Result
+                </span>
+              </div>
+              <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+                {layer.result.map((item, index) => (
+                  <li key={index} style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', marginBottom: '4px' }}>
+                    <span style={{
+                      flexShrink: 0,
+                      width: '4px',
+                      height: '4px',
+                      borderRadius: '50%',
+                      backgroundColor: accentColor,
+                      marginTop: '5px',
+                    }} />
+                    <span style={{ fontSize: '9px', color: `${foreground}cc`, fontWeight: 500, lineHeight: 1.4 }}>
+                      {item}
+                    </span>
                   </li>
                 ))}
               </ul>
             </div>
 
             {/* Value Proof */}
-            <div className="bg-gray-50 rounded-lg p-3">
-              <h4 className="font-semibold text-gray-700 text-xs uppercase tracking-wide mb-2">Value Proof</h4>
-              <div className="flex flex-wrap gap-1 mb-2">
-                {layer.valueProof.metrics.map((metric, idx) => (
-                  <span 
-                    key={idx} 
-                    className="text-xs px-2 py-0.5 rounded text-white"
-                    style={{ backgroundColor: layer.color }}
-                  >
+            <div style={{ 
+              backgroundColor: `${accentColor}08`,
+              borderRadius: '8px',
+              padding: '10px',
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
+                <TrendingUp style={{ width: '10px', height: '10px', color: accentColor }} />
+                <span style={{ fontSize: '8px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: mutedForeground }}>
+                  Value Proof
+                </span>
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginBottom: '8px' }}>
+                {layer.valueProof.metrics.map((metric, index) => (
+                  <span key={index} style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    padding: '2px 6px',
+                    borderRadius: '12px',
+                    fontSize: '8px',
+                    fontWeight: 600,
+                    backgroundColor: `${accentColor}15`,
+                    color: accentColor,
+                    border: `1px solid ${accentColor}30`,
+                  }}>
                     {metric}
                   </span>
                 ))}
               </div>
-              <p className="text-xs text-gray-600 italic">{layer.valueProof.roiStatement}</p>
-            </div>
-
-            {/* Why It Matters */}
-            <div className="bg-gray-50 rounded-lg p-3">
-              <h4 className="font-semibold text-gray-700 text-xs uppercase tracking-wide mb-2">Why It Matters</h4>
-              <p className="text-xs text-gray-600 leading-relaxed">{layer.whyItMatters}</p>
-            </div>
-
-            {/* Behavioral Shift */}
-            <div className="bg-gray-50 rounded-lg p-3">
-              <h4 className="font-semibold text-gray-700 text-xs uppercase tracking-wide mb-2">Behavioral Shift</h4>
-              <div className="flex items-center gap-2 text-xs">
-                <div className="flex-1 bg-red-100 text-red-800 rounded p-2">
-                  <span className="font-medium">From:</span> {layer.behavioralShift.from}
-                </div>
-                <ArrowRight className="w-4 h-4 flex-shrink-0" style={{ color: layer.color }} />
-                <div className="flex-1 bg-green-100 text-green-800 rounded p-2">
-                  <span className="font-medium">To:</span> {layer.behavioralShift.to}
-                </div>
+              <div style={{
+                padding: '8px',
+                borderRadius: '6px',
+                background: `linear-gradient(135deg, ${accentColor}10 0%, transparent 100%)`,
+                borderLeft: `2px solid ${accentColor}`,
+              }}>
+                <p style={{ fontSize: '9px', fontWeight: 500, fontStyle: 'italic', color: `${foreground}e6`, margin: 0 }}>
+                  "{layer.valueProof.roiStatement}"
+                </p>
               </div>
-              <p className="text-xs text-gray-500 mt-2 italic">
-                Cultural Marker: "{layer.behavioralShift.culturalMarker}"
+            </div>
+
+            {/* Why it matters */}
+            <div style={{
+              padding: '10px',
+              borderRadius: '8px',
+              border: `1px solid ${accentColor}30`,
+              background: `linear-gradient(135deg, ${accentColor}08 0%, transparent 100%)`,
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
+                <ArrowRight style={{ width: '10px', height: '10px', color: accentColor }} />
+                <span style={{ fontSize: '8px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: mutedForeground }}>
+                  Why it matters
+                </span>
+              </div>
+              <p style={{ fontSize: '9px', fontWeight: 500, color: foreground, margin: 0, lineHeight: 1.5 }}>
+                {layer.whyItMatters}
               </p>
             </div>
 
-            {/* Time Allocation */}
-            <div className="bg-gray-50 rounded-lg p-3">
-              <h4 className="font-semibold text-gray-700 text-xs uppercase tracking-wide mb-2">Time Allocation</h4>
-              <div className="flex h-6 rounded overflow-hidden mb-2">
-                <div 
-                  className="bg-red-400 flex items-center justify-center text-white text-xs font-medium"
-                  style={{ width: `${reactive}%` }}
-                >
-                  {reactive > 15 && `${reactive}%`}
+            {/* Behavioral Shift */}
+            <div style={{
+              padding: '10px',
+              borderRadius: '8px',
+              border: `1px solid ${accentColor}30`,
+              background: `linear-gradient(135deg, ${accentColor}08 0%, transparent 100%)`,
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+                <Users style={{ width: '10px', height: '10px', color: accentColor }} />
+                <span style={{ fontSize: '8px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: mutedForeground }}>
+                  How Work Changes
+                </span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                {/* FROM */}
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '4px' }}>
+                    <div style={{
+                      width: '14px',
+                      height: '14px',
+                      borderRadius: '4px',
+                      backgroundColor: `${accentColor}20`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                      <FromIcon style={{ width: '8px', height: '8px', color: mutedForeground }} />
+                    </div>
+                    <span style={{ fontSize: '7px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: mutedForeground }}>
+                      From
+                    </span>
+                  </div>
+                  <p style={{ fontSize: '8px', color: `${foreground}b3`, lineHeight: 1.4, margin: 0 }}>
+                    {layer.behavioralShift.from}
+                  </p>
                 </div>
-                <div 
-                  className="bg-amber-400 flex items-center justify-center text-white text-xs font-medium"
-                  style={{ width: `${proactive}%` }}
-                >
-                  {proactive > 15 && `${proactive}%`}
+
+                {/* Arrow */}
+                <div style={{
+                  flexShrink: 0,
+                  width: '18px',
+                  height: '18px',
+                  borderRadius: '50%',
+                  backgroundColor: `${accentColor}20`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                  <ArrowRight style={{ width: '10px', height: '10px', color: accentColor }} />
                 </div>
-                <div 
-                  className="bg-emerald-500 flex items-center justify-center text-white text-xs font-medium"
-                  style={{ width: `${strategic}%` }}
-                >
-                  {strategic > 15 && `${strategic}%`}
+
+                {/* TO */}
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '4px' }}>
+                    <div style={{
+                      width: '14px',
+                      height: '14px',
+                      borderRadius: '4px',
+                      backgroundColor: accentColor,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                      <ToIcon style={{ width: '8px', height: '8px', color: bgColor }} />
+                    </div>
+                    <span style={{ fontSize: '7px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: accentColor }}>
+                      To
+                    </span>
+                  </div>
+                  <p style={{ fontSize: '8px', color: foreground, fontWeight: 500, lineHeight: 1.4, margin: 0 }}>
+                    {layer.behavioralShift.to}
+                  </p>
                 </div>
               </div>
-              <div className="flex justify-between text-xs text-gray-500">
-                <span className="flex items-center gap-1">
-                  <span className="w-2 h-2 rounded bg-red-400"></span> Reactive {reactive}%
+
+              {/* Cultural Marker */}
+              <div style={{
+                padding: '6px',
+                borderRadius: '4px',
+                borderLeft: `2px solid ${accentColor}`,
+                backgroundColor: `${accentColor}08`,
+              }}>
+                <p style={{ fontSize: '8px', fontStyle: 'italic', color: `${foreground}cc`, margin: 0 }}>
+                  "{layer.behavioralShift.culturalMarker}"
+                </p>
+              </div>
+            </div>
+
+            {/* Time Allocation */}
+            <div style={{
+              padding: '10px',
+              borderRadius: '8px',
+              border: `1px solid ${accentColor}30`,
+              background: `linear-gradient(135deg, ${accentColor}08 0%, transparent 100%)`,
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+                <Clock style={{ width: '10px', height: '10px', color: accentColor }} />
+                <span style={{ fontSize: '8px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: mutedForeground }}>
+                  Where Teams Spend Time
                 </span>
-                <span className="flex items-center gap-1">
-                  <span className="w-2 h-2 rounded bg-amber-400"></span> Proactive {proactive}%
-                </span>
-                <span className="flex items-center gap-1">
-                  <span className="w-2 h-2 rounded bg-emerald-500"></span> Strategic {strategic}%
-                </span>
+              </div>
+
+              {/* Stacked Bar */}
+              <div style={{ 
+                height: '16px', 
+                borderRadius: '4px', 
+                overflow: 'hidden', 
+                display: 'flex',
+                marginBottom: '8px',
+              }}>
+                <div style={{
+                  width: `${coordination}%`,
+                  backgroundColor: 'hsl(0 70% 50%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                  {coordination >= 20 && (
+                    <span style={{ fontSize: '8px', fontWeight: 600, color: 'white' }}>{coordination}%</span>
+                  )}
+                </div>
+                <div style={{
+                  width: `${administration}%`,
+                  backgroundColor: 'hsl(199 89% 48%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                  {administration >= 20 && (
+                    <span style={{ fontSize: '8px', fontWeight: 600, color: 'white' }}>{administration}%</span>
+                  )}
+                </div>
+                <div style={{
+                  width: `${improvement}%`,
+                  backgroundColor: 'hsl(173 80% 40%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                  {improvement >= 20 && (
+                    <span style={{ fontSize: '8px', fontWeight: 600, color: 'white' }}>{improvement}%</span>
+                  )}
+                </div>
+              </div>
+
+              {/* Legend */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', fontSize: '7px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <div style={{ width: '8px', height: '8px', borderRadius: '2px', backgroundColor: 'hsl(0 70% 50%)' }} />
+                  <span style={{ color: mutedForeground }}>Coord</span>
+                  <span style={{ fontWeight: 600, color: foreground }}>{coordination}%</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <div style={{ width: '8px', height: '8px', borderRadius: '2px', backgroundColor: 'hsl(199 89% 48%)' }} />
+                  <span style={{ color: mutedForeground }}>Admin</span>
+                  <span style={{ fontWeight: 600, color: foreground }}>{administration}%</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <div style={{ width: '8px', height: '8px', borderRadius: '2px', backgroundColor: 'hsl(173 80% 40%)' }} />
+                  <span style={{ color: mutedForeground }}>Improve</span>
+                  <span style={{ fontWeight: 600, color: foreground }}>{improvement}%</span>
+                </div>
               </div>
             </div>
           </div>
@@ -254,7 +585,16 @@ const PrintablePage: React.FC<PrintablePageProps> = ({ layer, pageNumber, totalP
       </div>
 
       {/* Footer */}
-      <footer className="mt-4 pt-3 border-t border-gray-200 flex justify-between items-center text-xs text-gray-400">
+      <footer style={{ 
+        marginTop: '12px',
+        paddingTop: '10px',
+        borderTop: `1px solid ${borderColor}`,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        fontSize: '9px',
+        color: mutedForeground,
+      }}>
         <span>© 2026 Comply365. All rights reserved.</span>
         <span>Compliance Maturity Model v1.0</span>
       </footer>
