@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { Play, Pause } from "lucide-react";
 import Pyramid3D from "./Pyramid3D";
 import DetailsPanel, { LayerData } from "./DetailsPanel";
 import PlatformCallout from "./PlatformCallout";
@@ -187,17 +188,68 @@ const glowClasses: Record<string, string> = {
   FRAGMENTED: "glow-fragmentation",
 };
 
+const layerOrder = ["FRAGMENTED", "MANAGED", "CONNECTED", "CLOSED_LOOP", "PREDICTIVE"];
+
 const CategoryPyramid = () => {
   const [activeLayerId, setActiveLayerId] = useState("FRAGMENTED");
   const [highlightedModule, setHighlightedModule] = useState<string | null>(null);
+  const [isAutoCycling, setIsAutoCycling] = useState(true);
+  const [progress, setProgress] = useState(0);
 
   const activeLayer = layersData.find((l) => l.id === activeLayerId) || layersData[4];
+  const currentIndex = layerOrder.indexOf(activeLayerId);
 
-  const handleModuleClick = (module: string) => {
+  // Auto-cycle through stages
+  useEffect(() => {
+    if (!isAutoCycling) {
+      setProgress(0);
+      return;
+    }
+
+    // Progress animation
+    const progressInterval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) return 0;
+        return prev + 2;
+      });
+    }, 80);
+
+    // Stage change
+    const cycleInterval = setInterval(() => {
+      setActiveLayerId((prev) => {
+        const currentIdx = layerOrder.indexOf(prev);
+        const nextIdx = (currentIdx + 1) % layerOrder.length;
+        return layerOrder[nextIdx];
+      });
+      setProgress(0);
+    }, 4000);
+
+    return () => {
+      clearInterval(progressInterval);
+      clearInterval(cycleInterval);
+    };
+  }, [isAutoCycling]);
+
+  const handleLayerClick = useCallback((level: number) => {
+    const layer = layersData.find((l) => l.level === level);
+    if (layer) {
+      setActiveLayerId(layer.id);
+      setHighlightedModule(null);
+      setIsAutoCycling(false); // Pause on manual interaction
+    }
+  }, []);
+
+  const handleModuleClick = useCallback((module: string) => {
     setActiveLayerId("CONNECTED");
     setHighlightedModule(module);
-    // Clear highlight after a delay
+    setIsAutoCycling(false); // Pause on manual interaction
     setTimeout(() => setHighlightedModule(null), 3000);
+  }, []);
+
+  const handleDotClick = (index: number) => {
+    setActiveLayerId(layerOrder[index]);
+    setIsAutoCycling(false);
+    setProgress(0);
   };
 
   return (
@@ -232,20 +284,78 @@ const CategoryPyramid = () => {
                 glowClass: glowClasses[layer.id],
               }))}
               activeLayer={activeLayer.level}
-              onLayerClick={(level) => {
-                const layer = layersData.find((l) => l.level === level);
-                if (layer) {
-                  setActiveLayerId(layer.id);
-                  setHighlightedModule(null);
-                }
-              }}
+              onLayerClick={handleLayerClick}
               onModuleClick={handleModuleClick}
             />
           </div>
 
           {/* RIGHT: Details Panel - scrollable content */}
-          <div className="h-full lg:overflow-y-auto lg:pr-1 scrollbar-thin bg-card/30 rounded-md p-3 border border-border/30">
-            <DetailsPanel layer={activeLayer} highlightedModule={highlightedModule} />
+          <div className="h-full lg:overflow-y-auto lg:pr-1 scrollbar-thin bg-card/30 rounded-md p-3 border border-border/30 flex flex-col">
+            <div className="flex-1 transition-opacity duration-300">
+              <DetailsPanel layer={activeLayer} highlightedModule={highlightedModule} />
+            </div>
+            
+            {/* Stage Indicator & Controls */}
+            <div className="mt-4 pt-4 border-t border-border/30">
+              <div className="flex items-center justify-between gap-4">
+                {/* Stage dots */}
+                <div className="flex items-center gap-2">
+                  {layerOrder.map((id, index) => (
+                    <button
+                      key={id}
+                      onClick={() => handleDotClick(index)}
+                      className={`relative w-2.5 h-2.5 rounded-full transition-all duration-200 ${
+                        index === currentIndex
+                          ? "bg-primary scale-125"
+                          : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                      }`}
+                      aria-label={`Go to stage ${index + 1}`}
+                    >
+                      {index === currentIndex && isAutoCycling && (
+                        <span 
+                          className="absolute inset-0 rounded-full bg-primary/30 animate-ping"
+                          style={{ animationDuration: "2s" }}
+                        />
+                      )}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Progress bar */}
+                {isAutoCycling && (
+                  <div className="flex-1 h-1 bg-muted/30 rounded-full overflow-hidden max-w-24">
+                    <div 
+                      className="h-full bg-primary/60 transition-all duration-100 ease-linear"
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
+                )}
+
+                {/* Play/Pause button */}
+                <button
+                  onClick={() => setIsAutoCycling(!isAutoCycling)}
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label={isAutoCycling ? "Pause auto-play" : "Resume auto-play"}
+                >
+                  {isAutoCycling ? (
+                    <>
+                      <Pause className="w-3 h-3" />
+                      <span className="hidden sm:inline">Pause</span>
+                    </>
+                  ) : (
+                    <>
+                      <Play className="w-3 h-3" />
+                      <span className="hidden sm:inline">Auto-play</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {/* Stage label */}
+              <p className="text-xs text-muted-foreground mt-2 text-center">
+                Stage {currentIndex + 1} of {layerOrder.length} · {isAutoCycling ? "Click pyramid or pause to explore" : "Click play to resume"}
+              </p>
+            </div>
           </div>
         </div>
 
