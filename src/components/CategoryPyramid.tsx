@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { TrendingUp } from "lucide-react";
 import Pyramid3D from "./Pyramid3D";
 import DetailsPanel, { LayerData } from "./DetailsPanel";
 import PlatformCallout from "./PlatformCallout";
+import PageNavigation from "./PageNavigation";
 
 const layersData: LayerData[] = [
   {
@@ -208,6 +207,7 @@ const CategoryPyramid = () => {
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary mb-3">
           Comply365
         </p>
+        <PageNavigation />
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground mb-4">
           Operational Reliability &<br />
           <span className="text-gradient-primary">Readiness Platform</span>
@@ -215,13 +215,6 @@ const CategoryPyramid = () => {
         <p className="text-muted-foreground max-w-2xl mx-auto text-sm md:text-base">
           From fragmented point solutions to a connected platform that delivers measurable outcomes
         </p>
-        <Link 
-          to="/maturity-curve" 
-          className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-lg bg-primary/10 border border-primary/30 text-primary text-sm font-medium hover:bg-primary/20 transition-colors"
-        >
-          <TrendingUp className="w-4 h-4" />
-          View Maturity Curve
-        </Link>
       </header>
 
       {/* Main content - Side by side layout */}
