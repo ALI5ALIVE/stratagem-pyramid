@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { TrendingUp } from "lucide-react";
 import Pyramid3D from "./Pyramid3D";
 import DetailsPanel, { LayerData } from "./DetailsPanel";
 import PlatformCallout from "./PlatformCallout";
-import DownloadButton from "./DownloadButton";
 
 const layersData: LayerData[] = [
   {
@@ -214,25 +215,13 @@ const CategoryPyramid = () => {
         <p className="text-muted-foreground max-w-2xl mx-auto text-sm md:text-base">
           From fragmented point solutions to a connected platform that delivers measurable outcomes
         </p>
-        <DownloadButton layersData={layersData.map(layer => ({
-          id: layer.id,
-          level: layer.level,
-          label: layer.headline,
-          sublabel: layer.sublabel,
-          color: layer.accentColor,
-          glow: layer.accentColor,
-          headline: layer.headline,
-          whatItLooksLike: layer.whatItLooksLike,
-          result: layer.result,
-          valueProof: layer.valueProof,
-          whyItMatters: layer.whyItMatters,
-          behavioralShift: layer.behavioralShift,
-          timeAllocation: {
-            reactive: layer.timeAllocation.coordination,
-            proactive: layer.timeAllocation.administration,
-            strategic: layer.timeAllocation.improvement,
-          },
-        }))} />
+        <Link 
+          to="/maturity-curve" 
+          className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-lg bg-primary/10 border border-primary/30 text-primary text-sm font-medium hover:bg-primary/20 transition-colors"
+        >
+          <TrendingUp className="w-4 h-4" />
+          View Maturity Curve
+        </Link>
       </header>
 
       {/* Main content - Side by side layout */}

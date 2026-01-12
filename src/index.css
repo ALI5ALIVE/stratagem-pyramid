@@ -210,4 +210,13 @@
       stroke-dashoffset: 50;
     }
   }
+
+  /* Maturity Curve styles */
+  .maturity-curve-container {
+    perspective: 1000px;
+  }
+
+  .maturity-curve-container svg {
+    filter: drop-shadow(0 0 20px hsl(199 89% 48% / 0.1));
+  }
 }
