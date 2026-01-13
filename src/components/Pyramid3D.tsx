@@ -2,6 +2,7 @@ import TripleLoop from "./TripleLoop";
 import MetricsGauges from "./MetricsGauges";
 import TransformationalIllustration from "./TransformationalIllustration";
 import FragmentationIllustration from "./FragmentationIllustration";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface PyramidLayerData {
   id: string;
@@ -20,6 +21,7 @@ interface Pyramid3DProps {
 }
 
 const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid3DProps) => {
+  const isMobile = useIsMobile();
   // Colors for each layer
   const layerConfig = {
     1: { 
@@ -151,15 +153,18 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
     }
   };
 
+  // Mobile-optimized viewBox: show only pyramid (centered) without right-side labels
+  const viewBox = isMobile ? "0 0 800 640" : "0 0 1020 640";
+
   return (
     <div className="relative w-full h-full flex flex-col items-center justify-center">
       {/* Main pyramid with labels SVG */}
       <svg
-        viewBox="0 0 1020 640"
+        viewBox={viewBox}
         className="w-full h-full"
         preserveAspectRatio="xMidYMid meet"
         style={{ 
-          filter: "drop-shadow(0 25px 50px rgba(0,0,0,0.5))",
+          filter: isMobile ? "drop-shadow(0 15px 30px rgba(0,0,0,0.4))" : "drop-shadow(0 25px 50px rgba(0,0,0,0.5))",
         }}
       >
         <defs>
@@ -262,72 +267,76 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
                 onClick={() => onLayerClick(level)}
               />
 
-              {/* Connecting line from pyramid to label */}
-              <line
-                x1={rightEdgeX + 5}
-                y1={labelPos.y}
-                x2={labelPos.lineEndX}
-                y2={labelPos.y}
-                stroke={isActive ? colors.main : "hsl(222, 30%, 30%)"}
-                strokeWidth={isActive ? "2" : "1"}
-                strokeDasharray={isActive ? "none" : "4 4"}
-                className="transition-all duration-300"
-              />
+              {/* Connecting line from pyramid to label - hidden on mobile */}
+              {!isMobile && (
+                <>
+                  <line
+                    x1={rightEdgeX + 5}
+                    y1={labelPos.y}
+                    x2={labelPos.lineEndX}
+                    y2={labelPos.y}
+                    stroke={isActive ? colors.main : "hsl(222, 30%, 30%)"}
+                    strokeWidth={isActive ? "2" : "1"}
+                    strokeDasharray={isActive ? "none" : "4 4"}
+                    className="transition-all duration-300"
+                  />
 
-              {/* Connector dot on pyramid edge */}
-              <circle
-                cx={rightEdgeX + 5}
-                cy={labelPos.y}
-                r={isActive ? "5" : "3"}
-                fill={isActive ? colors.main : "hsl(222, 30%, 40%)"}
-                className="transition-all duration-300"
-              />
+                  {/* Connector dot on pyramid edge */}
+                  <circle
+                    cx={rightEdgeX + 5}
+                    cy={labelPos.y}
+                    r={isActive ? "5" : "3"}
+                    fill={isActive ? colors.main : "hsl(222, 30%, 40%)"}
+                    className="transition-all duration-300"
+                  />
 
-              {/* Label group (right side) */}
-              <g
-                className="cursor-pointer"
-                onClick={() => onLayerClick(level)}
-              >
-              {/* Label background for readability */}
-                <rect
-                  x={labelPos.lineEndX + 10}
-                  y={labelPos.y - 28}
-                  width="290"
-                  height="56"
-                  rx="6"
-                  fill={isActive ? "hsl(222, 47%, 12%)" : "transparent"}
-                  stroke={isActive ? colors.main : "transparent"}
-                  strokeWidth="1"
-                  className="transition-all duration-300"
-                />
+                  {/* Label group (right side) */}
+                  <g
+                    className="cursor-pointer"
+                    onClick={() => onLayerClick(level)}
+                  >
+                  {/* Label background for readability */}
+                    <rect
+                      x={labelPos.lineEndX + 10}
+                      y={labelPos.y - 28}
+                      width="290"
+                      height="56"
+                      rx="6"
+                      fill={isActive ? "hsl(222, 47%, 12%)" : "transparent"}
+                      stroke={isActive ? colors.main : "transparent"}
+                      strokeWidth="1"
+                      className="transition-all duration-300"
+                    />
 
-                {/* Layer name */}
-                <text
-                  x={labelPos.lineEndX + 20}
-                  y={labelPos.y - 6}
-                  fill={isActive ? colors.main : "hsl(210, 40%, 80%)"}
-                  fontSize="11"
-                  fontWeight="700"
-                  fontFamily="'Space Grotesk', sans-serif"
-                  letterSpacing="0.06em"
-                  className="transition-all duration-300"
-                >
-                  {layerData.label}
-                </text>
-                
-                {/* Sublabel */}
-                <text
-                  x={labelPos.lineEndX + 20}
-                  y={labelPos.y + 16}
-                  fill={isActive ? "hsl(210, 40%, 90%)" : "hsl(215, 20%, 55%)"}
-                  fontSize="12"
-                  fontWeight="400"
-                  fontFamily="'Inter', sans-serif"
-                  className="transition-all duration-300"
-                >
-                  {layerData.sublabel}
-                </text>
-              </g>
+                    {/* Layer name */}
+                    <text
+                      x={labelPos.lineEndX + 20}
+                      y={labelPos.y - 6}
+                      fill={isActive ? colors.main : "hsl(210, 40%, 80%)"}
+                      fontSize="11"
+                      fontWeight="700"
+                      fontFamily="'Space Grotesk', sans-serif"
+                      letterSpacing="0.06em"
+                      className="transition-all duration-300"
+                    >
+                      {layerData.label}
+                    </text>
+                    
+                    {/* Sublabel */}
+                    <text
+                      x={labelPos.lineEndX + 20}
+                      y={labelPos.y + 16}
+                      fill={isActive ? "hsl(210, 40%, 90%)" : "hsl(215, 20%, 55%)"}
+                      fontSize="12"
+                      fontWeight="400"
+                      fontFamily="'Inter', sans-serif"
+                      className="transition-all duration-300"
+                    >
+                      {layerData.sublabel}
+                    </text>
+                  </g>
+                </>
+              )}
             </g>
           );
         })}
@@ -466,8 +475,8 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
             strokeOpacity={activeLayer === 4 ? "0.4" : "0.2"}
           />
 
-          {/* Foundation label (right side) */}
-          {(() => {
+          {/* Foundation label (right side) - hidden on mobile */}
+          {!isMobile && (() => {
             const labelPos = labelPositions[4];
             const centerY = (foundationBounds.top + foundationBounds.bottom) / 2;
             const rightEdgeX = getRightX(centerY);
@@ -596,72 +605,76 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
                 onClick={() => onLayerClick(level)}
               />
 
-              {/* Connecting line from pyramid to label */}
-              <line
-                x1={rightEdgeX + 5}
-                y1={labelPos.y}
-                x2={labelPos.lineEndX}
-                y2={labelPos.y}
-                stroke={isActive ? colors.main : "hsl(222, 30%, 30%)"}
-                strokeWidth={isActive ? "2" : "1"}
-                strokeDasharray={isActive ? "none" : "4 4"}
-                className="transition-all duration-300"
-              />
+              {/* Connecting line from pyramid to label - hidden on mobile */}
+              {!isMobile && (
+                <>
+                  <line
+                    x1={rightEdgeX + 5}
+                    y1={labelPos.y}
+                    x2={labelPos.lineEndX}
+                    y2={labelPos.y}
+                    stroke={isActive ? colors.main : "hsl(222, 30%, 30%)"}
+                    strokeWidth={isActive ? "2" : "1"}
+                    strokeDasharray={isActive ? "none" : "4 4"}
+                    className="transition-all duration-300"
+                  />
 
-              {/* Connector dot on pyramid edge */}
-              <circle
-                cx={rightEdgeX + 5}
-                cy={labelPos.y}
-                r={isActive ? "5" : "3"}
-                fill={isActive ? colors.main : "hsl(222, 30%, 40%)"}
-                className="transition-all duration-300"
-              />
+                  {/* Connector dot on pyramid edge */}
+                  <circle
+                    cx={rightEdgeX + 5}
+                    cy={labelPos.y}
+                    r={isActive ? "5" : "3"}
+                    fill={isActive ? colors.main : "hsl(222, 30%, 40%)"}
+                    className="transition-all duration-300"
+                  />
 
-              {/* Label group (right side) */}
-              <g
-                className="cursor-pointer"
-                onClick={() => onLayerClick(level)}
-              >
-                {/* Label background */}
-                <rect
-                  x={labelPos.lineEndX + 10}
-                  y={labelPos.y - 28}
-                  width="290"
-                  height="56"
-                  rx="6"
-                  fill={isActive ? "hsl(222, 47%, 12%)" : "transparent"}
-                  stroke={isActive ? colors.main : "transparent"}
-                  strokeWidth="1"
-                  className="transition-all duration-300"
-                />
+                  {/* Label group (right side) */}
+                  <g
+                    className="cursor-pointer"
+                    onClick={() => onLayerClick(level)}
+                  >
+                    {/* Label background */}
+                    <rect
+                      x={labelPos.lineEndX + 10}
+                      y={labelPos.y - 28}
+                      width="290"
+                      height="56"
+                      rx="6"
+                      fill={isActive ? "hsl(222, 47%, 12%)" : "transparent"}
+                      stroke={isActive ? colors.main : "transparent"}
+                      strokeWidth="1"
+                      className="transition-all duration-300"
+                    />
 
-                {/* Layer name */}
-                <text
-                  x={labelPos.lineEndX + 20}
-                  y={labelPos.y - 6}
-                  fill={isActive ? colors.main : "hsl(210, 40%, 80%)"}
-                  fontSize="11"
-                  fontWeight="700"
-                  fontFamily="'Space Grotesk', sans-serif"
-                  letterSpacing="0.06em"
-                  className="transition-all duration-300"
-                >
-                  {layerData.label}
-                </text>
+                    {/* Layer name */}
+                    <text
+                      x={labelPos.lineEndX + 20}
+                      y={labelPos.y - 6}
+                      fill={isActive ? colors.main : "hsl(210, 40%, 80%)"}
+                      fontSize="11"
+                      fontWeight="700"
+                      fontFamily="'Space Grotesk', sans-serif"
+                      letterSpacing="0.06em"
+                      className="transition-all duration-300"
+                    >
+                      {layerData.label}
+                    </text>
 
-                {/* Sublabel */}
-                <text
-                  x={labelPos.lineEndX + 20}
-                  y={labelPos.y + 16}
-                  fill={isActive ? "hsl(210, 40%, 90%)" : "hsl(215, 20%, 55%)"}
-                  fontSize="12"
-                  fontWeight="400"
-                  fontFamily="'Inter', sans-serif"
-                  className="transition-all duration-300"
-                >
-                  {layerData.sublabel}
-                </text>
-              </g>
+                    {/* Sublabel */}
+                    <text
+                      x={labelPos.lineEndX + 20}
+                      y={labelPos.y + 16}
+                      fill={isActive ? "hsl(210, 40%, 90%)" : "hsl(215, 20%, 55%)"}
+                      fontSize="12"
+                      fontWeight="400"
+                      fontFamily="'Inter', sans-serif"
+                      className="transition-all duration-300"
+                    >
+                      {layerData.sublabel}
+                    </text>
+                  </g>
+                </>
+              )}
             </g>
           );
         })()}
