@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import MaturityStageDetails from "./MaturityStageDetails";
 import MaturitySummaryBanner from "./MaturitySummaryBanner";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export interface MaturityStage {
   id: string;
@@ -206,6 +207,7 @@ const stagesData: MaturityStage[] = [
 const MaturityCurveVisualization = () => {
   const [activeStage, setActiveStage] = useState(1);
   const [isAnimated, setIsAnimated] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const timer = setTimeout(() => setIsAnimated(true), 100);
@@ -214,8 +216,14 @@ const MaturityCurveVisualization = () => {
 
   const selectedStage = stagesData.find((s) => s.stage === activeStage) || stagesData[0];
 
-  // Hockey stick curve points (x, y) - flat at start, steep at end
-  const curvePoints = [
+  // Hockey stick curve points (x, y) - adjusted for mobile
+  const curvePoints = isMobile ? [
+    { x: 60, y: 380 },   // Stage 1
+    { x: 140, y: 360 },  // Stage 2
+    { x: 220, y: 300 },  // Stage 3 - curve starts here
+    { x: 300, y: 180 },  // Stage 4
+    { x: 380, y: 60 },   // Stage 5
+  ] : [
     { x: 80, y: 380 },   // Stage 1
     { x: 200, y: 360 },  // Stage 2
     { x: 320, y: 300 },  // Stage 3 - curve starts here
@@ -238,15 +246,18 @@ const MaturityCurveVisualization = () => {
     return path;
   };
 
+  // Mobile-optimized viewBox
+  const viewBox = isMobile ? "0 0 450 480" : "0 0 650 480";
+
   return (
-    <div className="space-y-6">
-      <div className="grid lg:grid-cols-[5fr_3fr] gap-6 items-start">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-[5fr_3fr] gap-4 sm:gap-6 items-start">
         {/* LEFT: Hockey Stick Curve */}
-        <div className="maturity-curve-container bg-card/30 rounded-xl border border-border/30 p-6">
+        <div className="maturity-curve-container bg-card/30 rounded-xl border border-border/30 p-3 sm:p-4 md:p-6">
           <svg
-            viewBox="0 0 650 480"
+            viewBox={viewBox}
             className="w-full h-auto"
-            style={{ maxHeight: "550px" }}
+            style={{ maxHeight: isMobile ? "350px" : "550px" }}
           >
             <defs>
               {/* Gradient for curve */}
@@ -348,39 +359,41 @@ const MaturityCurveVisualization = () => {
               }}
             />
 
-            {/* Platform Shift marker */}
-            <g className={`transition-opacity duration-700 delay-500 ${isAnimated ? "opacity-100" : "opacity-0"}`}>
-              <line
-                x1="320"
-                y1="300"
-                x2="320"
-                y2="420"
-                stroke="hsl(173 80% 40%)"
-                strokeWidth="2"
-                strokeDasharray="6,4"
-              />
-              <rect
-                x="270"
-                y="330"
-                width="100"
-                height="24"
-                rx="4"
-                fill="hsl(173 80% 40% / 0.2)"
-                stroke="hsl(173 80% 40%)"
-                strokeWidth="1"
-              />
-              <text
-                x="320"
-                y="346"
-                fill="hsl(173 80% 50%)"
-                fontSize="10"
-                fontWeight="600"
-                textAnchor="middle"
-                className="font-display"
-              >
-                PLATFORM SHIFT
-              </text>
-            </g>
+            {/* Platform Shift marker - hidden on mobile */}
+            {!isMobile && (
+              <g className={`transition-opacity duration-700 delay-500 ${isAnimated ? "opacity-100" : "opacity-0"}`}>
+                <line
+                  x1="320"
+                  y1="300"
+                  x2="320"
+                  y2="420"
+                  stroke="hsl(173 80% 40%)"
+                  strokeWidth="2"
+                  strokeDasharray="6,4"
+                />
+                <rect
+                  x="270"
+                  y="330"
+                  width="100"
+                  height="24"
+                  rx="4"
+                  fill="hsl(173 80% 40% / 0.2)"
+                  stroke="hsl(173 80% 40%)"
+                  strokeWidth="1"
+                />
+                <text
+                  x="320"
+                  y="346"
+                  fill="hsl(173 80% 50%)"
+                  fontSize="10"
+                  fontWeight="600"
+                  textAnchor="middle"
+                  className="font-display"
+                >
+                  PLATFORM SHIFT
+                </text>
+              </g>
+            )}
 
             {/* Stage markers and labels */}
             {stagesData.map((stage, index) => {
@@ -393,7 +406,7 @@ const MaturityCurveVisualization = () => {
                   <circle
                     cx={point.x}
                     cy={point.y}
-                    r={isActive ? 14 : 10}
+                    r={isActive ? (isMobile ? 12 : 14) : (isMobile ? 8 : 10)}
                     fill={stage.accentColor}
                     filter={isActive ? "url(#activeGlow)" : "url(#glow)"}
                     className={`transition-all duration-300 ${isAnimated ? "opacity-100" : "opacity-0"}`}
@@ -402,7 +415,7 @@ const MaturityCurveVisualization = () => {
                   <circle
                     cx={point.x}
                     cy={point.y}
-                    r={isActive ? 8 : 5}
+                    r={isActive ? (isMobile ? 6 : 8) : (isMobile ? 4 : 5)}
                     fill="hsl(222 47% 6%)"
                     className={`transition-all duration-300 ${isAnimated ? "opacity-100" : "opacity-0"}`}
                     style={{ transitionDelay: `${index * 100}ms` }}
@@ -411,7 +424,7 @@ const MaturityCurveVisualization = () => {
                     x={point.x}
                     y={point.y + 4}
                     fill={stage.accentColor}
-                    fontSize="10"
+                    fontSize={isMobile ? "9" : "10"}
                     fontWeight="bold"
                     textAnchor="middle"
                     className={`transition-all duration-300 ${isAnimated ? "opacity-100" : "opacity-0"}`}
@@ -426,28 +439,30 @@ const MaturityCurveVisualization = () => {
                       x={point.x}
                       y="442"
                       fill={isActive ? stage.accentColor : "hsl(215 20% 65%)"}
-                      fontSize="10"
+                      fontSize={isMobile ? "8" : "10"}
                       fontWeight={isActive ? "700" : "500"}
                       textAnchor="middle"
                       className="font-display transition-colors duration-300"
                     >
-                      Stage {stage.stage}
+                      {isMobile ? `S${stage.stage}` : `Stage ${stage.stage}`}
                     </text>
-                    <text
-                      x={point.x}
-                      y="456"
-                      fill={isActive ? stage.accentColor : "hsl(215 20% 55%)"}
-                      fontSize="9"
-                      fontWeight={isActive ? "600" : "400"}
-                      textAnchor="middle"
-                      className="transition-colors duration-300"
-                    >
-                      {stage.sublabel}
-                    </text>
+                    {!isMobile && (
+                      <text
+                        x={point.x}
+                        y="456"
+                        fill={isActive ? stage.accentColor : "hsl(215 20% 55%)"}
+                        fontSize="9"
+                        fontWeight={isActive ? "600" : "400"}
+                        textAnchor="middle"
+                        className="transition-colors duration-300"
+                      >
+                        {stage.sublabel}
+                      </text>
+                    )}
                   </g>
 
-                  {/* Annotation callouts */}
-                  {isActive && (
+                  {/* Annotation callouts - hidden on mobile */}
+                  {isActive && !isMobile && (
                     <g className="animate-fade-in">
                       <rect
                         x={point.x - 70}
@@ -480,21 +495,21 @@ const MaturityCurveVisualization = () => {
 
             {/* X-axis footer label */}
             <text
-              x="335"
+              x={isMobile ? "225" : "335"}
               y="478"
               fill="hsl(215 20% 50%)"
-              fontSize="10"
+              fontSize={isMobile ? "8" : "10"}
               fontWeight="600"
               textAnchor="middle"
               className="font-display uppercase tracking-widest"
             >
-              Maturity Stages (People • Process • Platform • AI)
+              {isMobile ? "Maturity Stages" : "Maturity Stages (People • Process • Platform • AI)"}
             </text>
           </svg>
         </div>
 
         {/* RIGHT: Stage Details Panel */}
-        <div className="bg-card/30 rounded-xl border border-border/30 p-4 lg:max-h-[550px] lg:overflow-y-auto">
+        <div className="bg-card/30 rounded-xl border border-border/30 p-3 sm:p-4 max-h-[60vh] sm:max-h-[70vh] lg:max-h-[550px] overflow-y-auto">
           <MaturityStageDetails stage={selectedStage} />
         </div>
       </div>

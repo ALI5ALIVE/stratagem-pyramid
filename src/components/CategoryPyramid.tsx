@@ -255,25 +255,25 @@ const CategoryPyramid = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="pt-12 pb-8 px-6 text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary mb-3">
+      <header className="pt-6 sm:pt-8 md:pt-12 pb-4 sm:pb-6 md:pb-8 px-4 sm:px-6 text-center">
+        <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-primary mb-2 sm:mb-3">
           Comply365
         </p>
         <PageNavigation />
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground mb-4">
+        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-display font-bold text-foreground mb-2 sm:mb-4">
           Operational Reliability &<br />
           <span className="text-gradient-primary">Readiness Platform</span>
         </h1>
-        <p className="text-muted-foreground max-w-2xl mx-auto text-sm md:text-base">
+        <p className="text-muted-foreground max-w-2xl mx-auto text-xs sm:text-sm md:text-base px-2">
           From fragmented point solutions to a connected platform that delivers measurable outcomes
         </p>
       </header>
 
-      {/* Main content - Side by side layout */}
-      <main className="container max-w-7xl mx-auto px-4 md:px-6 pb-16">
-        <div className="grid lg:grid-cols-[5fr_3fr] gap-4 lg:gap-6 items-stretch min-h-[650px]">
+      {/* Main content - Side by side layout on desktop, stacked on mobile */}
+      <main className="container max-w-7xl mx-auto px-3 sm:px-4 md:px-6 pb-8 sm:pb-12 md:pb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-[5fr_3fr] gap-4 lg:gap-6 items-stretch lg:min-h-[650px]">
           {/* LEFT: Pyramid Visual - full size */}
-          <div className="w-full h-full flex items-center justify-center">
+          <div className="w-full min-h-[350px] sm:min-h-[450px] md:min-h-[500px] lg:h-full flex items-center justify-center order-1">
             <Pyramid3D
               layers={layersData.map((layer) => ({
                 id: layer.id,
@@ -290,21 +290,21 @@ const CategoryPyramid = () => {
           </div>
 
           {/* RIGHT: Details Panel - scrollable content */}
-          <div className="h-full lg:overflow-y-auto lg:pr-1 scrollbar-thin bg-card/30 rounded-md p-3 border border-border/30 flex flex-col">
+          <div className="h-full max-h-[60vh] sm:max-h-[70vh] lg:max-h-none lg:overflow-y-auto lg:pr-1 scrollbar-thin bg-card/30 rounded-md p-2 sm:p-3 border border-border/30 flex flex-col order-2 overflow-y-auto">
             <div className="flex-1 transition-opacity duration-300">
               <DetailsPanel layer={activeLayer} highlightedModule={highlightedModule} />
             </div>
             
             {/* Stage Indicator & Controls */}
-            <div className="mt-4 pt-4 border-t border-border/30">
-              <div className="flex items-center justify-between gap-4">
+            <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-border/30">
+              <div className="flex items-center justify-between gap-2 sm:gap-4">
                 {/* Stage dots */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 sm:gap-2">
                   {layerOrder.map((id, index) => (
                     <button
                       key={id}
                       onClick={() => handleDotClick(index)}
-                      className={`relative w-2.5 h-2.5 rounded-full transition-all duration-200 ${
+                      className={`relative w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full transition-all duration-200 ${
                         index === currentIndex
                           ? "bg-primary scale-125"
                           : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
@@ -323,7 +323,7 @@ const CategoryPyramid = () => {
 
                 {/* Progress bar */}
                 {isAutoCycling && (
-                  <div className="flex-1 h-1 bg-muted/30 rounded-full overflow-hidden max-w-24">
+                  <div className="flex-1 h-1 bg-muted/30 rounded-full overflow-hidden max-w-16 sm:max-w-24">
                     <div 
                       className="h-full bg-primary/60 transition-all duration-100 ease-linear"
                       style={{ width: `${progress}%` }}
@@ -334,40 +334,40 @@ const CategoryPyramid = () => {
                 {/* Play/Pause button */}
                 <button
                   onClick={() => setIsAutoCycling(!isAutoCycling)}
-                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+                  className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 rounded-md text-[10px] sm:text-xs font-medium bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
                   aria-label={isAutoCycling ? "Pause auto-play" : "Resume auto-play"}
                 >
                   {isAutoCycling ? (
                     <>
-                      <Pause className="w-3 h-3" />
-                      <span className="hidden sm:inline">Pause</span>
+                      <Pause className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                      <span className="hidden xs:inline sm:inline">Pause</span>
                     </>
                   ) : (
                     <>
-                      <Play className="w-3 h-3" />
-                      <span className="hidden sm:inline">Auto-play</span>
+                      <Play className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                      <span className="hidden xs:inline sm:inline">Auto-play</span>
                     </>
                   )}
                 </button>
               </div>
 
               {/* Stage label */}
-              <p className="text-xs text-muted-foreground mt-2 text-center">
-                Stage {currentIndex + 1} of {layerOrder.length} · {isAutoCycling ? "Click pyramid or pause to explore" : "Click play to resume"}
+              <p className="text-[10px] sm:text-xs text-muted-foreground mt-1.5 sm:mt-2 text-center">
+                Stage {currentIndex + 1} of {layerOrder.length} · <span className="hidden sm:inline">{isAutoCycling ? "Click pyramid or pause to explore" : "Click play to resume"}</span><span className="sm:hidden">{isAutoCycling ? "Tap to explore" : "Tap play"}</span>
               </p>
             </div>
           </div>
         </div>
 
         {/* Platform Callout - full width below */}
-        <div className="mt-12 max-w-3xl mx-auto">
+        <div className="mt-6 sm:mt-8 md:mt-12 max-w-3xl mx-auto">
           <PlatformCallout />
         </div>
       </main>
 
       {/* Footer attribution */}
-      <footer className="py-6 text-center border-t border-border/50">
-        <p className="text-xs text-muted-foreground">
+      <footer className="py-4 sm:py-6 text-center border-t border-border/50">
+        <p className="text-[10px] sm:text-xs text-muted-foreground">
           © 2026 Comply365 · Operational Reliability & Readiness Platform
         </p>
       </footer>
