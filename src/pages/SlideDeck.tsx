@@ -16,9 +16,9 @@ const slides = [
   { id: "slide-3", label: "Operating Model" },
   { id: "slide-4", label: "Value Pyramid" },
   { id: "slide-5", label: "Maturity Curve" },
-  { id: "slide-6", label: "Investors" },
+  { id: "slide-6", label: "Positioning" },
   { id: "slide-7", label: "Customers" },
-  { id: "slide-8", label: "Positioning" },
+  { id: "slide-8", label: "Investors" },
 ];
 
 const SlideDeck = () => {
@@ -179,9 +179,9 @@ const SlideDeck = () => {
         <Slide3OperatingModel />
         <Slide4ValuePyramid />
         <Slide5MaturityCurve />
-        <Slide6Investors />
-        <Slide7Customers />
         <Slide8PositioningMap />
+        <Slide7Customers />
+        <Slide6Investors />
       </div>
     </div>
   );
