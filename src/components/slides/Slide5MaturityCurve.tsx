@@ -6,21 +6,21 @@ const Slide5MaturityCurve = () => {
   const [activeStage, setActiveStage] = useState(3);
 
   const stages = [
-    { x: 50, y: 280, stage: 5, label: "Fragmented" },
-    { x: 130, y: 240, stage: 4, label: "Managed" },
+    { x: 50, y: 280, stage: 1, label: "Fragmented" },
+    { x: 130, y: 240, stage: 2, label: "Managed" },
     { x: 220, y: 180, stage: 3, label: "Connected" },
-    { x: 320, y: 100, stage: 2, label: "Continuous" },
-    { x: 440, y: 30, stage: 1, label: "Predictive" },
+    { x: 320, y: 100, stage: 4, label: "Continuous" },
+    { x: 440, y: 30, stage: 5, label: "Predictive" },
   ];
 
   const stageProgression = [
     {
-      stage: 5,
+      stage: 1,
       from: "Disconnected tools + reactive audits",
       to: "Stabilise within silos",
     },
     {
-      stage: 4,
+      stage: 2,
       from: "Departmental strength, limited cross-functional execution",
       to: "Connect under shared governance",
     },
@@ -30,12 +30,12 @@ const Slide5MaturityCurve = () => {
       to: "Activate cross-functional workflows",
     },
     {
-      stage: 2,
+      stage: 4,
       from: "Orchestrated action + controlled change with evidence by default",
       to: "Embed AI with governance",
     },
     {
-      stage: 1,
+      stage: 5,
       from: "AI detects + recommends",
       to: "Humans govern approvals; proof continuous",
     },
