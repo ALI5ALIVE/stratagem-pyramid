@@ -8,6 +8,7 @@ import Slide4ValuePyramid from "@/components/slides/Slide4ValuePyramid";
 import Slide5MaturityCurve from "@/components/slides/Slide5MaturityCurve";
 import Slide6Investors from "@/components/slides/Slide6Investors";
 import Slide7Customers from "@/components/slides/Slide7Customers";
+import Slide8PositioningMap from "@/components/slides/Slide8PositioningMap";
 
 const slides = [
   { id: "slide-1", label: "Strategic Shift" },
@@ -17,6 +18,7 @@ const slides = [
   { id: "slide-5", label: "Maturity Curve" },
   { id: "slide-6", label: "Investors" },
   { id: "slide-7", label: "Customers" },
+  { id: "slide-8", label: "Positioning" },
 ];
 
 const SlideDeck = () => {
@@ -179,6 +181,7 @@ const SlideDeck = () => {
         <Slide5MaturityCurve />
         <Slide6Investors />
         <Slide7Customers />
+        <Slide8PositioningMap />
       </div>
     </div>
   );
