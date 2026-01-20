@@ -11,7 +11,7 @@ const MaturityCurve = () => {
         </p>
         <PageNavigation />
         <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-display font-bold text-foreground mb-2 sm:mb-3 px-2">
-          Operational Reliability &<br />
+          Operational Excellence &<br />
           <span className="text-gradient-primary">Readiness Maturity Curve</span>
         </h1>
         <p className="text-muted-foreground max-w-2xl mx-auto text-xs sm:text-sm px-2">
