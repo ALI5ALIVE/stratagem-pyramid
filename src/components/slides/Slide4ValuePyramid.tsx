@@ -8,19 +8,19 @@ const Slide4ValuePyramid = () => {
   const stages = [
     {
       level: 1,
-      label: "Predictive & Agentic",
-      sublabel: "AI-Accelerated",
-      description: "AI detects weak signals; prioritised recommendations; assisted drafting; exception-led oversight with governed approvals; continuous proof.",
-      color: "from-emerald-500 to-teal-500",
-      textColor: "text-emerald-400",
+      label: "Fragmented & Reactive",
+      sublabel: "Starting Point",
+      description: "Disconnected systems; manual coordination; training not tied to signals; evidence late → variability + repeat issues + slow recovery.",
+      color: "from-red-500 to-rose-500",
+      textColor: "text-red-400",
     },
     {
       level: 2,
-      label: "Continuous Improvement",
-      sublabel: "Outcome Engine",
-      description: "Signals trigger workflows; corrective actions drive controlled change; training targeted + triggered; evidence automatic → recurrence down; time-to-change down; KPI lift.",
-      color: "from-primary to-blue-500",
-      textColor: "text-primary",
+      label: "Managed Compliance",
+      sublabel: "Siloed",
+      description: "Strong departmental systems, but disconnected → compliance managed, performance doesn't systematically improve, repeat issues persist.",
+      color: "from-amber-500 to-orange-500",
+      textColor: "text-amber-400",
     },
     {
       level: 3,
@@ -32,19 +32,19 @@ const Slide4ValuePyramid = () => {
     },
     {
       level: 4,
-      label: "Managed Compliance",
-      sublabel: "Siloed",
-      description: "Strong departmental systems, but disconnected → compliance managed, performance doesn't systematically improve, repeat issues persist.",
-      color: "from-amber-500 to-orange-500",
-      textColor: "text-amber-400",
+      label: "Continuous Improvement",
+      sublabel: "Outcome Engine",
+      description: "Signals trigger workflows; corrective actions drive controlled change; training targeted + triggered; evidence automatic → recurrence down; time-to-change down; KPI lift.",
+      color: "from-primary to-blue-500",
+      textColor: "text-primary",
     },
     {
       level: 5,
-      label: "Fragmented & Reactive",
-      sublabel: "Starting Point",
-      description: "Disconnected systems; manual coordination; training not tied to signals; evidence late → variability + repeat issues + slow recovery.",
-      color: "from-red-500 to-rose-500",
-      textColor: "text-red-400",
+      label: "Predictive & Agentic",
+      sublabel: "AI-Accelerated",
+      description: "AI detects weak signals; prioritised recommendations; assisted drafting; exception-led oversight with governed approvals; continuous proof.",
+      color: "from-emerald-500 to-teal-500",
+      textColor: "text-emerald-400",
     },
   ];
 
@@ -86,11 +86,11 @@ const Slide4ValuePyramid = () => {
 
               // Determine fill color based on stage
               const fillColors = {
-                1: "#10b981", // emerald
-                2: "#3b82f6", // primary blue
+                1: "#ef4444", // red
+                2: "#f59e0b", // amber
                 3: "#8b5cf6", // violet
-                4: "#f59e0b", // amber
-                5: "#ef4444", // red
+                4: "#3b82f6", // primary blue
+                5: "#10b981", // emerald
               };
 
               return (
