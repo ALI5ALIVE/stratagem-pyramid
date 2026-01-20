@@ -41,13 +41,6 @@ const Slide5MaturityCurve = () => {
     },
   ];
 
-  const programSteps = [
-    "Identify current stage (today)",
-    "Agree next target stage (near-term)",
-    "Prioritise workflows + governance required to move up",
-    "Prove progress with value proof metrics at each stage",
-  ];
-
   return (
     <SlideContainer
       id="slide-5"
@@ -158,21 +151,6 @@ const Slide5MaturityCurve = () => {
 
         {/* Program Details */}
         <div className="space-y-6">
-          {/* How to use the model */}
-          <div className="bg-card/30 border border-primary/30 rounded-xl p-5">
-            <h3 className="text-lg font-semibold text-foreground mb-4">How to use the model:</h3>
-            <ul className="space-y-3">
-              {programSteps.map((step, index) => (
-                <li key={index} className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-primary/20 text-primary text-sm font-bold flex items-center justify-center shrink-0">
-                    {index + 1}
-                  </span>
-                  <span className="text-sm text-foreground">{step}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
           {/* Stage progression */}
           <div>
             <h3 className="text-lg font-semibold text-foreground mb-4">Stage Progression:</h3>
