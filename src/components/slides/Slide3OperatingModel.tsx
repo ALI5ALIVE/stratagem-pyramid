@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import SlideContainer from "./SlideContainer";
 import { Radio, Bell, GitBranch, ShieldCheck, ArrowRight } from "lucide-react";
+import CoreSolutionsInfinity from "../CoreSolutionsInfinity";
 
 const Slide3OperatingModel = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -67,6 +68,11 @@ const Slide3OperatingModel = () => {
       title="The Continuous Improvement Operating System"
       subtitle="The narrative spine that powers every outcome"
     >
+      {/* Core Solutions Infinity Model */}
+      <div className="mb-16">
+        <CoreSolutionsInfinity />
+      </div>
+
       {/* Main Pipeline Visual */}
       <div className="relative max-w-5xl mx-auto">
         {/* Connection line */}
