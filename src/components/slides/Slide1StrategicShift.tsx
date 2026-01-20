@@ -13,7 +13,7 @@ const Slide1StrategicShift = () => {
   return (
     <SlideContainer
       id="slide-1"
-      title="The Strategic Shift: From 'Compliance Tools' to a New Category"
+      title="The Strategic Shift: From 'Compliance Tools' to Operational Excellence & Readiness Platform"
       subtitle="In mission-critical, regulated operations, disruption and readiness are now board-level outcomes — and fragmented tool stacks can't deliver them."
     >
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
