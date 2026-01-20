@@ -27,7 +27,7 @@ const MaturityCurve = () => {
       {/* Footer */}
       <footer className="py-4 sm:py-6 text-center border-t border-border/50">
         <p className="text-[10px] sm:text-xs text-muted-foreground">
-          © 2026 Comply365 · Operational Reliability & Readiness Platform
+          © 2026 Comply365 · Operational Performance & Readiness Platform
         </p>
       </footer>
     </div>
