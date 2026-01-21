@@ -49,10 +49,10 @@ const possibilities = [
 const Slide4Transformation = () => {
   return (
     <SlideContainer
-      id="slide-4"
+      id="slide-5"
       title="The Transformation"
       subtitle="From cost center to competitive advantage"
-      slideNumber={4}
+      slideNumber={5}
     >
       <div className="h-full flex flex-col gap-3">
         {/* Main comparison section */}
