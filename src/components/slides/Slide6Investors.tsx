@@ -5,12 +5,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 const Slide6Investors = ({
-  isActive = false,
   isPlaying = false,
   isLoading = false,
   progress = 0,
+  hasCompleted = false,
   onPlay,
   onPause,
+  onNextSlide,
 }: SlideNarrationProps) => {
   const [activeNode, setActiveNode] = useState(0);
   const [activeTab, setActiveTab] = useState("growth");
@@ -104,12 +105,13 @@ const Slide6Investors = ({
       title="Why the Platform + New Category Builds Shareholder Value"
       subtitle="How category leadership compounds into shareholder value"
       slideNumber={10}
-      isActive={isActive}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}
+      hasCompleted={hasCompleted}
       onPlay={onPlay}
       onPause={onPause}
+      onNextSlide={onNextSlide}
     >
       {/* Core Message Banner */}
       <div className="bg-primary/10 border border-primary/30 rounded-lg p-4 mb-6">

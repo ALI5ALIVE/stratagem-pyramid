@@ -144,12 +144,13 @@ const personas = [
 ];
 
 const SlideMessagingHouse = ({
-  isActive = false,
   isPlaying = false,
   isLoading = false,
   progress = 0,
+  hasCompleted = false,
   onPlay,
   onPause,
+  onNextSlide,
 }: SlideNarrationProps) => {
   const [activePersona, setActivePersona] = useState(0);
 
@@ -160,12 +161,13 @@ const SlideMessagingHouse = ({
       subtitle="Complete positioning architecture for Operational Excellence & Readiness"
       variant="dark"
       slideNumber={12}
-      isActive={isActive}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}
+      hasCompleted={hasCompleted}
       onPlay={onPlay}
       onPause={onPause}
+      onNextSlide={onNextSlide}
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 h-full">
         {/* Left Column: House Structure */}

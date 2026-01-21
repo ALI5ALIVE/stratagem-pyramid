@@ -3,12 +3,13 @@ import { ArrowRight, AlertTriangle, FileText, GraduationCap, Shield } from "luci
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 const Slide1StrategicShift = ({
-  isActive = false,
   isPlaying = false,
   isLoading = false,
   progress = 0,
+  hasCompleted = false,
   onPlay,
   onPause,
+  onNextSlide,
 }: SlideNarrationProps) => {
   const modernGaps = [
     "Signals scattered across siloed systems — no unified view of operational risk",
@@ -24,12 +25,13 @@ const Slide1StrategicShift = ({
       title="The Strategic Shift"
       subtitle="From fragmented point tools to an intelligent operating system"
       slideNumber={1}
-      isActive={isActive}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}
+      hasCompleted={hasCompleted}
       onPlay={onPlay}
       onPause={onPause}
+      onNextSlide={onNextSlide}
     >
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
         {/* Visual: Category Shift */}

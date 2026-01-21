@@ -13,29 +13,31 @@ interface SlideContainerProps {
   slideNumber?: number;
   showTitleAccent?: boolean;
   // Narration props
-  isActive?: boolean;
   isPlaying?: boolean;
   isLoading?: boolean;
   progress?: number;
+  hasCompleted?: boolean;
   onPlay?: () => void;
   onPause?: () => void;
+  onNextSlide?: () => void;
 }
 
-const SlideContainer = ({ 
-  id, 
-  title, 
-  subtitle, 
-  children, 
+const SlideContainer = ({
+  id,
+  title,
+  subtitle,
+  children,
   className,
   variant = "dark",
   slideNumber,
   showTitleAccent = true,
-  isActive = false,
   isPlaying = false,
   isLoading = false,
   progress = 0,
+  hasCompleted = false,
   onPlay,
   onPause,
+  onNextSlide,
 }: SlideContainerProps) => {
   return (
     <section
@@ -46,23 +48,25 @@ const SlideContainer = ({
         className
       )}
     >
-      {/* Play button - centered when active */}
-      {isActive && onPlay && (
+      {/* Play button - always visible when onPlay is provided */}
+      {onPlay && (
         <SlidePlayButton
           isPlaying={isPlaying}
           isLoading={isLoading}
           progress={progress}
+          hasCompleted={hasCompleted}
           onPlay={onPlay}
           onPause={onPause ?? (() => {})}
+          onNextSlide={onNextSlide}
           variant={variant}
         />
       )}
 
       {/* Logo icon - top right */}
       <div className="absolute top-6 right-6 sm:top-8 sm:right-10">
-        <img 
-          src={complyIcon} 
-          alt="Comply365" 
+        <img
+          src={complyIcon}
+          alt="Comply365"
           className="h-6 sm:h-8 w-auto opacity-90"
         />
       </div>

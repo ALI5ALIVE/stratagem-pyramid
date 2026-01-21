@@ -5,12 +5,13 @@ import CoreSolutionsInfinity from "../CoreSolutionsInfinity";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 const Slide3OperatingModel = ({
-  isActive = false,
   isPlaying = false,
   isLoading = false,
   progress = 0,
+  hasCompleted = false,
   onPlay,
   onPause,
+  onNextSlide,
 }: SlideNarrationProps) => {
   const [activeStep, setActiveStep] = useState<number | null>(null);
 
@@ -83,12 +84,13 @@ const Slide3OperatingModel = ({
       title="The Operational Intelligence Layer"
       subtitle="How signals become outcomes: Detect → Trigger → Orchestrate → Prove"
       slideNumber={3}
-      isActive={isActive}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}
+      hasCompleted={hasCompleted}
       onPlay={onPlay}
       onPause={onPause}
+      onNextSlide={onNextSlide}
     >
       {/* Core Solutions Infinity Model */}
       <div className="mb-4">
@@ -141,7 +143,7 @@ const Slide3OperatingModel = ({
                 {/* Arrow between steps (mobile hidden) */}
                 {index < steps.length - 1 && (
                   <div className="absolute -right-3 top-1/2 -translate-y-1/2 hidden md:block z-10">
-                    <ArrowRight className={`w-4 h-4 transition-colors duration-300 ${isActive ? step.color : 'text-muted-foreground/30'}`} />
+                    <ArrowRight className={`w-4 h-4 transition-colors duration-300 ${isStepActive ? step.color : 'text-muted-foreground/30'}`} />
                   </div>
                 )}
 

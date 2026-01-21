@@ -3,12 +3,13 @@ import { CheckCircle2, XCircle, Target, Building2, Layers, Sparkles, BarChart3 }
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 const Slide9CategoryRationale = ({
-  isActive = false,
   isPlaying = false,
   isLoading = false,
   progress = 0,
+  hasCompleted = false,
   onPlay,
   onPause,
+  onNextSlide,
 }: SlideNarrationProps) => {
   const criteriaChecks = [
     {
@@ -72,12 +73,13 @@ const Slide9CategoryRationale = ({
       title="Why 'Operational Excellence & Readiness Platform'"
       subtitle="The name that protects scope, resonates with executives, and defines the category"
       slideNumber={11}
-      isActive={isActive}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}
+      hasCompleted={hasCompleted}
       onPlay={onPlay}
       onPause={onPause}
+      onNextSlide={onNextSlide}
     >
       {/* Hero Banner */}
       <div className="bg-primary/15 border-2 border-primary rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 text-center">

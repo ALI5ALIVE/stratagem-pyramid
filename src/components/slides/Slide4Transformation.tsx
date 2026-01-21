@@ -48,12 +48,13 @@ const possibilities = [
 ];
 
 const Slide4Transformation = ({
-  isActive = false,
   isPlaying = false,
   isLoading = false,
   progress = 0,
+  hasCompleted = false,
   onPlay,
   onPause,
+  onNextSlide,
 }: SlideNarrationProps) => {
   return (
     <SlideContainer
@@ -61,12 +62,13 @@ const Slide4Transformation = ({
       title="The Transformation"
       subtitle="From cost center to competitive advantage"
       slideNumber={5}
-      isActive={isActive}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}
+      hasCompleted={hasCompleted}
       onPlay={onPlay}
       onPause={onPause}
+      onNextSlide={onNextSlide}
     >
       <div className="h-full flex flex-col gap-3">
         {/* Main comparison section */}
