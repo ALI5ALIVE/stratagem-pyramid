@@ -182,12 +182,13 @@ const stagesData: MaturityStage[] = [
 ];
 
 const Slide5MaturityCurve = ({
-  isActive = false,
   isPlaying = false,
   isLoading = false,
   progress = 0,
+  hasCompleted = false,
   onPlay,
   onPause,
+  onNextSlide,
 }: SlideNarrationProps) => {
   const [activeStage, setActiveStage] = useState(1);
   const [isAnimated, setIsAnimated] = useState(false);
@@ -241,12 +242,13 @@ const Slide5MaturityCurve = ({
       title="The Operational Excellence Roadmap"
       subtitle="The measurable journey from reactive to predictive operations"
       slideNumber={7}
-      isActive={isActive}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}
+      hasCompleted={hasCompleted}
       onPlay={onPlay}
       onPause={onPause}
+      onNextSlide={onNextSlide}
     >
       <div className="space-y-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">

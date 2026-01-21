@@ -1,8 +1,7 @@
-import { useEffect, useState, useRef, useMemo, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
-import { useSlideNarration } from "@/hooks/useSlideNarration";
-import NarrationControls from "@/components/NarrationControls";
+import { useSimpleNarration } from "@/hooks/useSimpleNarration";
 import Slide0Title from "@/components/slides/Slide0Title";
 import Slide1StrategicShift from "@/components/slides/Slide1StrategicShift";
 import Slide2BeforeAfter from "@/components/slides/Slide2BeforeAfter";
@@ -37,20 +36,19 @@ const SlideDeck = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
   
-  // Narration hook for auto-play voiceover
-  const narration = useSlideNarration(activeSlide);
+  const narration = useSimpleNarration();
 
-  // Debounced slide setter - only updates after scroll settles
-  const debouncedSetActiveSlide = useCallback((slide: number) => {
-    if (debounceTimerRef.current) {
-      clearTimeout(debounceTimerRef.current);
-    }
-    debounceTimerRef.current = setTimeout(() => {
-      setActiveSlide(slide);
-    }, 300);
-  }, []);
+  // Helper to get narration props for a slide
+  const getNarrationProps = (slideId: number) => ({
+    isPlaying: narration.currentSlide === slideId && narration.isPlaying,
+    isLoading: narration.currentSlide === slideId && narration.isLoading,
+    progress: narration.currentSlide === slideId ? narration.progress : 0,
+    hasCompleted: narration.currentSlide === slideId && narration.hasCompleted,
+    onPlay: () => narration.play(slideId),
+    onPause: () => narration.pause(),
+    onNextSlide: slideId < slides.length - 1 ? () => scrollToSlide(slideId + 1) : undefined,
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,16 +59,15 @@ const SlideDeck = () => {
       const progress = scrollHeight > 0 ? scrollTop / scrollHeight : 0;
       setScrollProgress(progress * 100);
 
-      // Calculate active slide with debounce
       const slideHeight = containerRef.current.clientHeight;
       const currentSlide = Math.round(scrollTop / slideHeight);
-      debouncedSetActiveSlide(Math.min(currentSlide, slides.length - 1));
+      setActiveSlide(Math.min(currentSlide, slides.length - 1));
     };
 
     const container = containerRef.current;
     container?.addEventListener("scroll", handleScroll);
     
-    // Set initial active slide immediately on mount (no debounce)
+    // Set initial active slide on mount
     if (container) {
       const slideHeight = container.clientHeight;
       const currentSlide = Math.round(container.scrollTop / slideHeight);
@@ -79,11 +76,8 @@ const SlideDeck = () => {
     
     return () => {
       container?.removeEventListener("scroll", handleScroll);
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
-      }
     };
-  }, [debouncedSetActiveSlide]);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -112,14 +106,14 @@ const SlideDeck = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activeSlide]);
 
-  const scrollToSlide = (index: number) => {
+  const scrollToSlide = useCallback((index: number) => {
     if (!containerRef.current) return;
     const slideHeight = containerRef.current.clientHeight;
     containerRef.current.scrollTo({
       top: index * slideHeight,
       behavior: "smooth",
     });
-  };
+  }, []);
 
   const navigateSlide = (direction: "up" | "down") => {
     if (direction === "up" && activeSlide > 0) {
@@ -131,7 +125,7 @@ const SlideDeck = () => {
 
   return (
     <div className="h-screen w-screen bg-background overflow-hidden relative">
-      {/* Progress bar - Comply365 blue */}
+      {/* Progress bar */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-muted z-50">
         <div
           className="h-full bg-primary transition-all duration-150"
@@ -156,14 +150,7 @@ const SlideDeck = () => {
             </span>
           </div>
 
-          <NarrationControls
-            isPlaying={narration.isPlaying}
-            isMuted={narration.isMuted}
-            isLoading={narration.isLoading}
-            progress={narration.progress}
-            error={narration.error}
-            onToggleMute={narration.toggleMute}
-          />
+          <div className="w-16" /> {/* Spacer for balance */}
         </div>
       </header>
 
@@ -216,111 +203,19 @@ const SlideDeck = () => {
         ref={containerRef}
         className="h-full w-full overflow-y-auto snap-y snap-mandatory scroll-smooth"
       >
-        <Slide0Title 
-          onNavigateToSlide={scrollToSlide}
-          isActive={activeSlide === 0}
-          isPlaying={narration.isPlaying && narration.currentSlide === 0}
-          isLoading={narration.isLoading && narration.currentSlide === 0}
-          progress={narration.currentSlide === 0 ? narration.progress : 0}
-          onPlay={() => narration.playNarration(0)}
-          onPause={narration.stopNarration}
-        />
-        <Slide1StrategicShift 
-          isActive={activeSlide === 1}
-          isPlaying={narration.isPlaying && narration.currentSlide === 1}
-          isLoading={narration.isLoading && narration.currentSlide === 1}
-          progress={narration.currentSlide === 1 ? narration.progress : 0}
-          onPlay={() => narration.playNarration(1)}
-          onPause={narration.stopNarration}
-        />
-        <Slide2BeforeAfter 
-          isActive={activeSlide === 2}
-          isPlaying={narration.isPlaying && narration.currentSlide === 2}
-          isLoading={narration.isLoading && narration.currentSlide === 2}
-          progress={narration.currentSlide === 2 ? narration.progress : 0}
-          onPlay={() => narration.playNarration(2)}
-          onPause={narration.stopNarration}
-        />
-        <Slide3OperatingModel 
-          isActive={activeSlide === 3}
-          isPlaying={narration.isPlaying && narration.currentSlide === 3}
-          isLoading={narration.isLoading && narration.currentSlide === 3}
-          progress={narration.currentSlide === 3 ? narration.progress : 0}
-          onPlay={() => narration.playNarration(3)}
-          onPause={narration.stopNarration}
-        />
-        <Slide4PlatformCapabilities 
-          isActive={activeSlide === 4}
-          isPlaying={narration.isPlaying && narration.currentSlide === 4}
-          isLoading={narration.isLoading && narration.currentSlide === 4}
-          progress={narration.currentSlide === 4 ? narration.progress : 0}
-          onPlay={() => narration.playNarration(4)}
-          onPause={narration.stopNarration}
-        />
-        <Slide5Transformation 
-          isActive={activeSlide === 5}
-          isPlaying={narration.isPlaying && narration.currentSlide === 5}
-          isLoading={narration.isLoading && narration.currentSlide === 5}
-          progress={narration.currentSlide === 5 ? narration.progress : 0}
-          onPlay={() => narration.playNarration(5)}
-          onPause={narration.stopNarration}
-        />
-        <Slide6ValuePyramid 
-          isActive={activeSlide === 6}
-          isPlaying={narration.isPlaying && narration.currentSlide === 6}
-          isLoading={narration.isLoading && narration.currentSlide === 6}
-          progress={narration.currentSlide === 6 ? narration.progress : 0}
-          onPlay={() => narration.playNarration(6)}
-          onPause={narration.stopNarration}
-        />
-        <Slide7MaturityCurve 
-          isActive={activeSlide === 7}
-          isPlaying={narration.isPlaying && narration.currentSlide === 7}
-          isLoading={narration.isLoading && narration.currentSlide === 7}
-          progress={narration.currentSlide === 7 ? narration.progress : 0}
-          onPlay={() => narration.playNarration(7)}
-          onPause={narration.stopNarration}
-        />
-        <Slide8PositioningMap 
-          isActive={activeSlide === 8}
-          isPlaying={narration.isPlaying && narration.currentSlide === 8}
-          isLoading={narration.isLoading && narration.currentSlide === 8}
-          progress={narration.currentSlide === 8 ? narration.progress : 0}
-          onPlay={() => narration.playNarration(8)}
-          onPause={narration.stopNarration}
-        />
-        <Slide9Customers 
-          isActive={activeSlide === 9}
-          isPlaying={narration.isPlaying && narration.currentSlide === 9}
-          isLoading={narration.isLoading && narration.currentSlide === 9}
-          progress={narration.currentSlide === 9 ? narration.progress : 0}
-          onPlay={() => narration.playNarration(9)}
-          onPause={narration.stopNarration}
-        />
-        <Slide10Investors 
-          isActive={activeSlide === 10}
-          isPlaying={narration.isPlaying && narration.currentSlide === 10}
-          isLoading={narration.isLoading && narration.currentSlide === 10}
-          progress={narration.currentSlide === 10 ? narration.progress : 0}
-          onPlay={() => narration.playNarration(10)}
-          onPause={narration.stopNarration}
-        />
-        <Slide11CategoryRationale 
-          isActive={activeSlide === 11}
-          isPlaying={narration.isPlaying && narration.currentSlide === 11}
-          isLoading={narration.isLoading && narration.currentSlide === 11}
-          progress={narration.currentSlide === 11 ? narration.progress : 0}
-          onPlay={() => narration.playNarration(11)}
-          onPause={narration.stopNarration}
-        />
-        <SlideMessagingHouse 
-          isActive={activeSlide === 12}
-          isPlaying={narration.isPlaying && narration.currentSlide === 12}
-          isLoading={narration.isLoading && narration.currentSlide === 12}
-          progress={narration.currentSlide === 12 ? narration.progress : 0}
-          onPlay={() => narration.playNarration(12)}
-          onPause={narration.stopNarration}
-        />
+        <Slide0Title onNavigateToSlide={scrollToSlide} {...getNarrationProps(0)} />
+        <Slide1StrategicShift {...getNarrationProps(1)} />
+        <Slide2BeforeAfter {...getNarrationProps(2)} />
+        <Slide3OperatingModel {...getNarrationProps(3)} />
+        <Slide4PlatformCapabilities {...getNarrationProps(4)} />
+        <Slide5Transformation {...getNarrationProps(5)} />
+        <Slide6ValuePyramid {...getNarrationProps(6)} />
+        <Slide7MaturityCurve {...getNarrationProps(7)} />
+        <Slide8PositioningMap {...getNarrationProps(8)} />
+        <Slide9Customers {...getNarrationProps(9)} />
+        <Slide10Investors {...getNarrationProps(10)} />
+        <Slide11CategoryRationale {...getNarrationProps(11)} />
+        <SlideMessagingHouse {...getNarrationProps(12)} />
       </div>
     </div>
   );

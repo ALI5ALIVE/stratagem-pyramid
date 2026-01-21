@@ -3,12 +3,13 @@ import { AlertCircle, CheckCircle2, Database, FileText, Users, TrendingUp, Clock
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 const Slide2BeforeAfter = ({
-  isActive = false,
   isPlaying = false,
   isLoading = false,
   progress = 0,
+  hasCompleted = false,
   onPlay,
   onPause,
+  onNextSlide,
 }: SlideNarrationProps) => {
   const beforeItems = [
     "Safety, procedures, training are disconnected",
@@ -43,12 +44,13 @@ const Slide2BeforeAfter = ({
       title="Before & After"
       subtitle="The operational reality we're transforming"
       slideNumber={2}
-      isActive={isActive}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}
+      hasCompleted={hasCompleted}
       onPlay={onPlay}
       onPause={onPause}
+      onNextSlide={onNextSlide}
     >
       <div className="grid md:grid-cols-2 gap-6 lg:gap-10">
         {/* Before */}

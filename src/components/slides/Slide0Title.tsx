@@ -24,26 +24,29 @@ interface Slide0TitleProps extends SlideNarrationProps {
 
 const Slide0Title = ({ 
   onNavigateToSlide,
-  isActive = false,
   isPlaying = false,
   isLoading = false,
   progress = 0,
+  hasCompleted = false,
   onPlay,
   onPause,
+  onNextSlide,
 }: Slide0TitleProps) => {
   return (
     <section
       id="slide-0"
       className="min-h-screen w-full flex flex-col items-center justify-center px-6 sm:px-10 lg:px-16 py-16 snap-start relative overflow-hidden bg-background"
     >
-      {/* Play button - centered when active */}
-      {isActive && onPlay && (
+      {/* Play button - always visible when onPlay provided */}
+      {onPlay && (
         <SlidePlayButton
           isPlaying={isPlaying}
           isLoading={isLoading}
           progress={progress}
+          hasCompleted={hasCompleted}
           onPlay={onPlay}
           onPause={onPause ?? (() => {})}
+          onNextSlide={onNextSlide}
         />
       )}
       {/* Decorative gradient orbs */}

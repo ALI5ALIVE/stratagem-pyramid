@@ -137,12 +137,13 @@ const QuadrantLabel = ({ viewBox, label, sublabel, position }: any) => {
 };
 
 const Slide8PositioningMap = ({
-  isActive = false,
   isPlaying = false,
   isLoading = false,
   progress = 0,
+  hasCompleted = false,
   onPlay,
   onPause,
+  onNextSlide,
 }: SlideNarrationProps) => {
   const [activeView, setActiveView] = useState<"matrix" | "radar">("matrix");
   const [selectedVendors, setSelectedVendors] = useState<Set<string>>(
@@ -167,12 +168,13 @@ const Slide8PositioningMap = ({
       title="Competitive Positioning"
       subtitle="Where Comply365 stands — and why competitors can't follow"
       slideNumber={6}
-      isActive={isActive}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}
+      hasCompleted={hasCompleted}
       onPlay={onPlay}
       onPause={onPause}
+      onNextSlide={onNextSlide}
     >
       <div className="flex flex-col gap-5">
         {/* Tab Toggle */}

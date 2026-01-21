@@ -67,12 +67,13 @@ const outcomes = [
 ];
 
 const SlidePlatformCapabilities = ({
-  isActive: isSlideActive = false,
   isPlaying = false,
   isLoading = false,
   progress = 0,
+  hasCompleted = false,
   onPlay,
   onPause,
+  onNextSlide,
 }: SlideNarrationProps) => {
   const [activeCapability, setActiveCapability] = useState<number | null>(null);
 
@@ -82,12 +83,13 @@ const SlidePlatformCapabilities = ({
       title="The Platform That Powers It"
       subtitle="Three foundational capabilities that deliver outcomes point solutions cannot achieve alone"
       slideNumber={4}
-      isActive={isSlideActive}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}
+      hasCompleted={hasCompleted}
       onPlay={onPlay}
       onPause={onPause}
+      onNextSlide={onNextSlide}
     >
       <div className="flex flex-col h-full">
         {/* Main content - Two column layout */}

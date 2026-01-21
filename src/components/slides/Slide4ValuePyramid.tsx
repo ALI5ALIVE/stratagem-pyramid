@@ -191,12 +191,13 @@ const glowClasses: Record<string, string> = {
 const layerOrder = ["FRAGMENTED", "MANAGED", "CONNECTED", "CLOSED_LOOP", "PREDICTIVE"];
 
 const Slide4ValuePyramid = ({
-  isActive = false,
   isPlaying: narrationPlaying = false,
   isLoading: narrationLoading = false,
   progress: narrationProgress = 0,
+  hasCompleted = false,
   onPlay,
   onPause,
+  onNextSlide,
 }: SlideNarrationProps) => {
   const [activeLayerId, setActiveLayerId] = useState("FRAGMENTED");
   const [highlightedModule, setHighlightedModule] = useState<string | null>(null);
@@ -263,12 +264,13 @@ const Slide4ValuePyramid = ({
       title="The Readiness Ladder"
       subtitle="The building blocks: from fragmented compliance to predictive excellence"
       slideNumber={6}
-      isActive={isActive}
       isPlaying={narrationPlaying}
       isLoading={narrationLoading}
       progress={narrationProgress}
+      hasCompleted={hasCompleted}
       onPlay={onPlay}
       onPause={onPause}
+      onNextSlide={onNextSlide}
     >
       <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch h-full">
         {/* LEFT: Pyramid Visual */}

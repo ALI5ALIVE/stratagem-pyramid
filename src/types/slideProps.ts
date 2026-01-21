@@ -3,6 +3,8 @@ export interface SlideNarrationProps {
   isPlaying?: boolean;
   isLoading?: boolean;
   progress?: number;
+  hasCompleted?: boolean;
   onPlay?: () => void;
   onPause?: () => void;
+  onNextSlide?: () => void;
 }
