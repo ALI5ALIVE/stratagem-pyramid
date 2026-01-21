@@ -62,7 +62,7 @@ const Slide3OperatingModel = () => {
     <SlideContainer
       id="slide-3"
       title="The Continuous Improvement Operating System"
-      subtitle="The narrative spine that powers every outcome"
+      subtitle="How signals become outcomes: Detect → Trigger → Orchestrate → Prove"
       slideNumber={3}
     >
       {/* Core Solutions Infinity Model */}

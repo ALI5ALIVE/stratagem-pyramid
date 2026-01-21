@@ -14,7 +14,7 @@ const Slide1StrategicShift = () => {
     <SlideContainer
       id="slide-1"
       title="The Strategic Shift"
-      subtitle="From 'Compliance Tools' to Operational Excellence & Readiness Platform"
+      subtitle="Why we're defining a new category — and what it replaces"
       slideNumber={1}
     >
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">

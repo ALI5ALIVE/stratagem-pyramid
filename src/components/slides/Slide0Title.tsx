@@ -3,11 +3,11 @@ import complyLogo from "@/assets/comply365-logo-white.png";
 
 const agendaItems = [
   { num: 1, label: "Strategic Shift", summary: "Why we're redefining the category" },
-  { num: 2, label: "Before & After", summary: "The transformation we enable" },
+  { num: 2, label: "Before & After", summary: "What's broken — and how we fix it" },
   { num: 3, label: "Operating Model", summary: "Detect → Trigger → Orchestrate → Prove" },
   { num: 4, label: "Readiness Ladder", summary: "Building blocks of excellence" },
   { num: 5, label: "Excellence Roadmap", summary: "The measurable journey" },
-  { num: 6, label: "Positioning", summary: "Competitive differentiation" },
+  { num: 6, label: "Positioning", summary: "Where we stand vs. competitors" },
   { num: 7, label: "Customers", summary: "Measurable value delivery" },
   { num: 8, label: "Investors", summary: "Shareholder value creation" },
 ];

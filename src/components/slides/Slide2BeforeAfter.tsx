@@ -20,7 +20,7 @@ const Slide2BeforeAfter = () => {
     <SlideContainer
       id="slide-2"
       title="Before & After"
-      subtitle="Point Tools vs Connected Platform"
+      subtitle="The operational reality we're transforming"
       slideNumber={2}
     >
       <div className="grid md:grid-cols-2 gap-6 lg:gap-10">
