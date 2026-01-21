@@ -92,10 +92,10 @@ const Slide6Investors = () => {
 
   return (
     <SlideContainer
-      id="slide-6"
+      id="slide-10"
       title="Why the Platform + New Category Builds Shareholder Value"
       subtitle="How category leadership compounds into shareholder value"
-      slideNumber={8}
+      slideNumber={10}
     >
       {/* Core Message Banner */}
       <div className="bg-primary/10 border border-primary/30 rounded-lg p-4 mb-6">

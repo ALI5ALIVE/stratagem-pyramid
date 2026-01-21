@@ -37,7 +37,7 @@ export const slideNarrations: SlideNarration[] = [
     slideId: 4,
     title: "Platform Capabilities",
     voiceId: DEFAULT_VOICE_ID,
-    script: "The Comply365 platform delivers comprehensive capabilities across the operational lifecycle. Real-time document distribution ensures everyone works from current information. Integrated training management tracks competencies and certifications. Safety reporting captures issues and near-misses before they become incidents. Audit management streamlines compliance verification. And our AI-powered analytics layer connects these capabilities, surfacing insights and recommendations that drive continuous improvement."
+    script: "What sets a platform apart from point solutions? Three foundational capabilities working together. First, Data That Connects: shared models and knowledge maps across safety, training, and content, creating one version of truth with full traceability. Second, Automation That Adapts: threshold-driven, role-aware workflows that trigger cross-functional actions and accelerate time-to-change. Third, AI That Drives: embedded intelligence that detects weak signals early, recommends actions rather than just alerts, and keeps humans in control of exceptions. Together, these pillars deliver outcomes fragmented tools cannot achieve: revenue protection through fewer disruptions, operational efficiency with seventy percent faster change cycles, and competitive advantage through forty percent less manual effort."
   },
   {
     slideId: 5,
