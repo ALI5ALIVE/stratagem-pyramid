@@ -20,8 +20,8 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const vendors = [
   { name: "Comply365", breadth: 9, depth: 9.5, color: "#0066ff", isHighlighted: true },
-  { name: "Ideagen", breadth: 7, depth: 7.5, color: "#00b4d8", isHighlighted: false },
-  { name: "TrustFlight Centrik", breadth: 7.5, depth: 7, color: "#8b5cf6", isHighlighted: false },
+  { name: "Ideagen", breadth: 6.5, depth: 8, color: "#00b4d8", isHighlighted: false },
+  { name: "TrustFlight Centrik", breadth: 8, depth: 6.5, color: "#8b5cf6", isHighlighted: false },
   { name: "Hinfact", breadth: 5, depth: 5.5, color: "#6b7280", isHighlighted: false },
   { name: "Web Manuals", breadth: 6, depth: 5, color: "#9ca3af", isHighlighted: false },
   { name: "Yonder", breadth: 3, depth: 3.5, color: "#d1d5db", isHighlighted: false },
@@ -77,10 +77,19 @@ const CustomTooltip = ({ active, payload }: any) => {
 
 const QuadrantLabel = ({ x, y, label, sublabel }: { x: number; y: number; label: string; sublabel: string }) => (
   <g>
-    <text x={x} y={y} textAnchor="middle" className="fill-muted-foreground text-[10px] font-semibold">
+    <rect
+      x={x - 85}
+      y={y - 16}
+      width={170}
+      height={38}
+      fill="hsl(var(--card))"
+      opacity={0.9}
+      rx={6}
+    />
+    <text x={x} y={y} textAnchor="middle" className="fill-foreground text-sm font-bold">
       {label}
     </text>
-    <text x={x} y={y + 14} textAnchor="middle" className="fill-muted-foreground/70 text-[8px]">
+    <text x={x} y={y + 16} textAnchor="middle" className="fill-muted-foreground text-xs">
       {sublabel}
     </text>
   </g>
@@ -112,10 +121,10 @@ const Slide8PositioningMap = () => {
         </div>
 
         {/* Chart Container */}
-        <div className="bg-card rounded-xl border border-border p-5 min-h-[380px] lg:min-h-[420px]">
+        <div className="bg-card rounded-xl border border-border p-5">
           {activeView === "matrix" ? (
-            <div className="h-full">
-              <ResponsiveContainer width="100%" height={380}>
+            <div className="w-full max-w-[480px] mx-auto aspect-square">
+              <ResponsiveContainer width="100%" height="100%">
                 <ScatterChart margin={{ top: 40, right: 30, bottom: 60, left: 60 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                   
@@ -219,16 +228,16 @@ const Slide8PositioningMap = () => {
                   ))}
 
                   {/* Quadrant labels */}
-                  <QuadrantLabel x={120} y={320} label="Point Tools" sublabel="Task-level Value" />
+                  <QuadrantLabel x={150} y={320} label="Point Tools" sublabel="Task-level Value" />
                   <QuadrantLabel x={350} y={320} label="Functional Suite" sublabel="Breadth without Strategic Lift" />
-                  <QuadrantLabel x={120} y={60} label="Strategic Specialist" sublabel="High Value in a Narrow Domain" />
-                  <QuadrantLabel x={350} y={60} label="Platform Leader" sublabel="Full Capability + High Strategic Value" />
+                  <QuadrantLabel x={150} y={70} label="Strategic Specialist" sublabel="High Value in a Narrow Domain" />
+                  <QuadrantLabel x={350} y={70} label="Platform Leader" sublabel="Full Capability + High Strategic Value" />
                 </ScatterChart>
               </ResponsiveContainer>
             </div>
           ) : (
-            <div className="h-full">
-              <ResponsiveContainer width="100%" height={380}>
+            <div className="w-full max-w-[480px] mx-auto aspect-square">
+              <ResponsiveContainer width="100%" height="100%">
                 <RadarChart data={radarData} margin={{ top: 10, right: 20, bottom: 10, left: 20 }}>
                   <PolarGrid stroke="hsl(var(--border))" />
                   <PolarAngleAxis
