@@ -18,6 +18,7 @@ interface Pyramid3DProps {
   activeLayer: number;
   onLayerClick: (level: number) => void;
   onModuleClick?: (module: string) => void;
+  compact?: boolean;
 }
 
 // 2x scaled layer colors configuration
@@ -40,6 +41,7 @@ const Pyramid3D = ({
   activeLayer,
   onLayerClick,
   onModuleClick,
+  compact = false,
 }: Pyramid3DProps) => {
   const isMobile = useIsMobile();
 
@@ -142,8 +144,10 @@ const Pyramid3D = ({
         className="w-full"
         preserveAspectRatio="xMidYMid meet"
         style={{ 
-          minWidth: isMobile ? "480px" : "720px",
-          minHeight: isMobile ? "420px" : "570px",
+          ...(compact ? {} : {
+            minWidth: isMobile ? "480px" : "720px",
+            minHeight: isMobile ? "420px" : "570px",
+          }),
           filter: isMobile ? "drop-shadow(0 20px 40px rgba(0,0,0,0.4))" : "drop-shadow(0 30px 60px rgba(0,0,0,0.5))",
         }}
       >
