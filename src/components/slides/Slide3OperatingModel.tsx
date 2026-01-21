@@ -72,7 +72,7 @@ const Slide3OperatingModel = () => {
   return (
     <SlideContainer
       id="slide-3"
-      title="The Continuous Improvement Operating System"
+      title="The Operational Intelligence Layer"
       subtitle="How signals become outcomes: Detect → Trigger → Orchestrate → Prove"
       slideNumber={3}
     >
