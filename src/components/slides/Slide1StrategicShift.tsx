@@ -92,8 +92,8 @@ const Slide1StrategicShift = () => {
               Operational Excellence & Readiness Platform
             </p>
             <p className="text-sm text-muted-foreground">
-              "Connects safety, procedures, and training into a continuous improvement operating system… 
-              improving operational excellence, readiness, and customer experience at scale."
+              Connects safety, procedures, and training into an intelligent operating system, 
+              turning signals into orchestrated change and audit-ready proof.
             </p>
           </div>
         </div>
