@@ -193,7 +193,7 @@ const layerOrder = ["FRAGMENTED", "MANAGED", "CONNECTED", "CLOSED_LOOP", "PREDIC
 const CategoryPyramid = () => {
   const [activeLayerId, setActiveLayerId] = useState("FRAGMENTED");
   const [highlightedModule, setHighlightedModule] = useState<string | null>(null);
-  const [isAutoCycling, setIsAutoCycling] = useState(true);
+  const [isAutoCycling, setIsAutoCycling] = useState(false);
   const [progress, setProgress] = useState(0);
 
   const activeLayer = layersData.find((l) => l.id === activeLayerId) || layersData[4];
