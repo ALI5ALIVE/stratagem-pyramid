@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import SlideContainer from "./SlideContainer";
-import { Radio, Bell, GitBranch, ShieldCheck, ArrowRight, Database, Workflow, Brain, BarChart3 } from "lucide-react";
+import { Radio, Bell, GitBranch, ShieldCheck, ArrowRight } from "lucide-react";
 import CoreSolutionsInfinity from "../CoreSolutionsInfinity";
 
 const Slide3OperatingModel = () => {
@@ -12,7 +12,7 @@ const Slide3OperatingModel = () => {
       id: "detect",
       icon: Radio,
       label: "Detect",
-      description: "Capture operational signals earlier — risk, issues, drift — before they become disruptions",
+      description: "Capture operational signals earlier (risk + issues + drift)",
       color: "text-amber-500",
       bgColor: "bg-amber-500/20",
       borderColor: "border-amber-500/50",
@@ -22,7 +22,7 @@ const Slide3OperatingModel = () => {
       id: "trigger",
       icon: Bell,
       label: "Trigger",
-      description: "Convert signals into coordinated actions with threshold-driven, role-aware workflows",
+      description: "Convert signals into coordinated actions (not manual handoffs)",
       color: "text-orange-500",
       bgColor: "bg-orange-500/20",
       borderColor: "border-orange-500/50",
@@ -32,7 +32,7 @@ const Slide3OperatingModel = () => {
       id: "orchestrate",
       icon: GitBranch,
       label: "Orchestrate",
-      description: "Controlled procedural change + targeted training activation with configurable governance",
+      description: "Controlled procedural change + targeted training activation with governance",
       color: "text-primary",
       bgColor: "bg-primary/20",
       borderColor: "border-primary/50",
@@ -42,66 +42,11 @@ const Slide3OperatingModel = () => {
       id: "prove",
       icon: ShieldCheck,
       label: "Prove",
-      description: "Audit-ready evidence and readiness proof generated automatically by default",
+      description: "Audit-ready evidence and readiness proof by default",
       color: "text-emerald-500",
       bgColor: "bg-emerald-500/20",
       borderColor: "border-emerald-500/50",
       glowColor: "shadow-emerald-500/30",
-    },
-  ];
-
-  const pillars = [
-    {
-      icon: Database,
-      title: "Connected Foundation",
-      subtitle: "Pillar 1",
-      points: [
-        "One version of truth across safety, procedures, and training",
-        "Shared governance and full traceability",
-        "Less fragmentation, less coordination overhead",
-      ],
-      color: "text-primary",
-      bgColor: "bg-primary/10",
-      borderColor: "border-primary/30",
-    },
-    {
-      icon: Workflow,
-      title: "Continuous Improvement Execution",
-      subtitle: "Pillar 2",
-      points: [
-        "Event → investigation → procedure update",
-        "Training trigger → evidence capture",
-        "Closed-loop workflow across domains",
-      ],
-      color: "text-orange-400",
-      bgColor: "bg-orange-500/10",
-      borderColor: "border-orange-500/30",
-    },
-    {
-      icon: BarChart3,
-      title: "Proof at Scale",
-      subtitle: "Pillar 3",
-      points: [
-        "Audit-ready evidence trails by default",
-        "Role-based approvals and version control",
-        "Confidence across regulators and stakeholders",
-      ],
-      color: "text-emerald-400",
-      bgColor: "bg-emerald-500/10",
-      borderColor: "border-emerald-500/30",
-    },
-    {
-      icon: Brain,
-      title: "Intelligence + AI as Accelerator",
-      subtitle: "Pillar 4",
-      points: [
-        "Earlier detection with weak signal analysis",
-        "Recommended actions with explainability",
-        "Exception-led oversight, not checkbox compliance",
-      ],
-      color: "text-violet-400",
-      bgColor: "bg-violet-500/10",
-      borderColor: "border-violet-500/30",
     },
   ];
 
@@ -123,20 +68,13 @@ const Slide3OperatingModel = () => {
       title="The Continuous Improvement Operating System"
       subtitle="The narrative spine that powers every outcome"
     >
-      {/* Primary Message */}
-      <div className="mb-8 text-center">
-        <p className="text-xl md:text-2xl font-bold text-foreground">
-          <span className="text-primary">Operational excellence</span> is customer experience.
-        </p>
-      </div>
-
       {/* Core Solutions Infinity Model */}
-      <div className="mb-12">
+      <div className="mb-16">
         <CoreSolutionsInfinity />
       </div>
 
       {/* Main Pipeline Visual */}
-      <div className="relative max-w-5xl mx-auto mb-12">
+      <div className="relative max-w-5xl mx-auto">
         {/* Connection line */}
         <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-amber-500/30 via-primary/30 to-emerald-500/30 -translate-y-1/2 hidden md:block" />
         
@@ -162,31 +100,31 @@ const Slide3OperatingModel = () => {
 
                 <div 
                   className={`
-                    relative p-5 rounded-2xl border-2 transition-all duration-500
+                    relative p-6 rounded-2xl border-2 transition-all duration-500
                     ${isActive ? `${step.bgColor} ${step.borderColor} shadow-lg ${step.glowColor}` : 'bg-card/20 border-muted-foreground/20'}
                   `}
                 >
                   {/* Icon */}
                   <div className={`
-                    w-14 h-14 mx-auto mb-3 rounded-full flex items-center justify-center transition-all duration-500
+                    w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center transition-all duration-500
                     ${isActive ? `${step.bgColor} ${step.borderColor} border-2` : 'bg-muted/30 border-muted-foreground/20 border'}
                   `}>
-                    <Icon className={`w-7 h-7 transition-colors duration-500 ${isActive ? step.color : 'text-muted-foreground/50'}`} />
+                    <Icon className={`w-8 h-8 transition-colors duration-500 ${isActive ? step.color : 'text-muted-foreground/50'}`} />
                   </div>
 
                   {/* Label */}
-                  <h3 className={`text-lg font-bold text-center mb-2 transition-colors duration-500 ${isActive ? step.color : 'text-muted-foreground/50'}`}>
+                  <h3 className={`text-xl font-bold text-center mb-2 transition-colors duration-500 ${isActive ? step.color : 'text-muted-foreground/50'}`}>
                     {step.label}
                   </h3>
 
                   {/* Description */}
-                  <p className={`text-xs text-center transition-colors duration-500 ${isActive ? 'text-foreground' : 'text-muted-foreground/50'}`}>
+                  <p className={`text-sm text-center transition-colors duration-500 ${isActive ? 'text-foreground' : 'text-muted-foreground/50'}`}>
                     {step.description}
                   </p>
 
                   {/* Step number */}
                   <div className={`
-                    absolute -top-3 -left-3 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold
+                    absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold
                     ${isActive ? `${step.bgColor} ${step.color} border-2 ${step.borderColor}` : 'bg-muted text-muted-foreground border border-muted-foreground/20'}
                   `}>
                     {index + 1}
@@ -198,42 +136,41 @@ const Slide3OperatingModel = () => {
         </div>
       </div>
 
-      {/* 4 Supporting Pillars */}
-      <div className="mb-8">
-        <h3 className="text-lg font-semibold text-foreground text-center mb-6">Four Supporting Pillars</h3>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {pillars.map((pillar, index) => {
-            const Icon = pillar.icon;
-            return (
-              <div 
-                key={index} 
-                className={`${pillar.bgColor} border ${pillar.borderColor} rounded-xl p-4`}
-              >
-                <div className="flex items-center gap-2 mb-3">
-                  <Icon className={`w-5 h-5 ${pillar.color}`} />
-                  <div>
-                    <p className="text-xs text-muted-foreground">{pillar.subtitle}</p>
-                    <h4 className={`text-sm font-semibold ${pillar.color}`}>{pillar.title}</h4>
-                  </div>
-                </div>
-                <ul className="space-y-1.5">
-                  {pillar.points.map((point, idx) => (
-                    <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
-                      <span className={`w-1 h-1 rounded-full ${pillar.color.replace('text-', 'bg-')} mt-1.5 shrink-0`} />
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            );
-          })}
-        </div>
+      {/* Animated dots (desktop only) */}
+      <div className="relative h-8 max-w-5xl mx-auto mt-8 hidden md:block">
+        <svg className="w-full h-full overflow-visible">
+          <defs>
+            <filter id="dotGlow">
+              <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+              <feMerge>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          {[0, 1, 2].map((dotIndex) => (
+            <circle
+              key={dotIndex}
+              r="6"
+              fill="hsl(var(--primary))"
+              filter="url(#dotGlow)"
+              className="animate-pulse"
+            >
+              <animateMotion
+                dur="4s"
+                repeatCount="indefinite"
+                begin={`${dotIndex * 1.3}s`}
+                path="M 50 16 L 950 16"
+              />
+            </circle>
+          ))}
+        </svg>
       </div>
 
       {/* Board-level summary */}
-      <div className="max-w-3xl mx-auto">
+      <div className="mt-12 max-w-3xl mx-auto">
         <div className="bg-gradient-to-r from-amber-500/10 via-primary/10 to-emerald-500/10 border border-primary/20 rounded-xl p-6 text-center">
-          <p className="text-base font-medium text-foreground mb-2">
+          <p className="text-lg font-medium text-foreground mb-2">
             Operating Model Name:
           </p>
           <p className="text-2xl font-bold text-gradient-primary">

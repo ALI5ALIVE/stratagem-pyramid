@@ -1,76 +1,64 @@
 import { useState } from "react";
 import SlideContainer from "./SlideContainer";
-import { ArrowRight, CheckCircle2, Lightbulb } from "lucide-react";
+import { CheckCircle2, ArrowRight } from "lucide-react";
 
 const Slide5MaturityCurve = () => {
   const [activeStage, setActiveStage] = useState(3);
 
   const stages = [
-    { x: 50, y: 280, label: "Stage 5", sublabel: "Fragmented" },
-    { x: 130, y: 260, label: "Stage 4", sublabel: "Managed" },
-    { x: 220, y: 200, label: "Stage 3", sublabel: "Connected" },
-    { x: 330, y: 100, label: "Stage 2", sublabel: "Continuous" },
-    { x: 430, y: 40, label: "Stage 1", sublabel: "Predictive" },
+    { x: 50, y: 280, stage: 1, label: "Fragmented" },
+    { x: 130, y: 240, stage: 2, label: "Managed" },
+    { x: 220, y: 180, stage: 3, label: "Connected" },
+    { x: 320, y: 100, stage: 4, label: "Continuous" },
+    { x: 440, y: 30, stage: 5, label: "Predictive" },
   ];
 
-  const stageDetails = [
+  const stageProgression = [
     {
-      stage: 5,
-      headline: "Fragmented & Reactive",
-      howItWorks: "Disconnected tools, manual coordination, reactive audits. Evidence assembled late, often only for audits.",
-      toProgress: "Stabilise processes inside silos. Establish departmental ownership and basic documentation.",
-      valueCheckpoint: "Baseline established — ready to connect",
-    },
-    {
-      stage: 4,
-      headline: "Managed Compliance",
-      howItWorks: "Strong departmental systems, structured but disconnected. Compliance managed within silos, limited cross-functional execution.",
-      toProgress: "Connect systems under shared governance. Establish common taxonomies and traceability.",
-      valueCheckpoint: "Silos structured — ready to unify",
-    },
-    {
-      stage: 3,
-      headline: "Connected Governance",
-      howItWorks: "Unified platform foundation with shared taxonomies. Single source of truth with role-based access and approvals.",
-      toProgress: "Activate cross-functional workflows. Enable signals to trigger orchestrated actions.",
-      valueCheckpoint: "Foundation unified — ready for automation",
+      stage: 1,
+      from: "Disconnected tools + reactive audits",
+      to: "Stabilise within silos",
     },
     {
       stage: 2,
-      headline: "Continuous Improvement",
-      howItWorks: "Signals trigger orchestrated action with evidence by default. Closed-loop execution across safety, procedures, and training.",
-      toProgress: "Embed AI with governance. Enable predictive detection and assisted drafting.",
-      valueCheckpoint: "Loops closed — ready for intelligence",
+      from: "Departmental strength, limited cross-functional execution",
+      to: "Connect under shared governance",
     },
     {
-      stage: 1,
-      headline: "Predictive & Agentic",
-      howItWorks: "AI detects weak signals, recommends interventions, assists drafting. Exception-led oversight replaces checkbox compliance.",
-      toProgress: "Sustain with governed autonomy, transparency, and continuous optimisation.",
-      valueCheckpoint: "Intelligence embedded — continuous optimisation",
+      stage: 3,
+      from: "Unified platform foundation",
+      to: "Activate cross-functional workflows",
+    },
+    {
+      stage: 4,
+      from: "Orchestrated action + controlled change with evidence by default",
+      to: "Embed AI with governance",
+    },
+    {
+      stage: 5,
+      from: "AI detects + recommends",
+      to: "Humans govern approvals; proof continuous",
     },
   ];
-
-  const selectedStage = stageDetails.find(s => s.stage === activeStage) || stageDetails[2];
 
   return (
     <SlideContainer
       id="slide-5"
       title="The Maturity Curve"
-      subtitle="A progression framework from reactive compliance to predictive excellence"
+      subtitle="How organisations progress up the pyramid — a measurable transformation program"
     >
-      <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-        {/* Curve Visualization */}
-        <div className="relative bg-card/20 rounded-2xl p-4 border border-muted/30">
+      <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+        {/* Curve Visual */}
+        <div className="relative">
           <svg viewBox="0 0 500 320" className="w-full">
             <defs>
-              <linearGradient id="curveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="hsl(var(--destructive))" />
-                <stop offset="40%" stopColor="hsl(var(--primary))" />
-                <stop offset="100%" stopColor="#10b981" />
+              <linearGradient id="curveGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="hsl(var(--destructive))" stopOpacity="0.8" />
+                <stop offset="50%" stopColor="hsl(var(--primary))" stopOpacity="0.9" />
+                <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity="1" />
               </linearGradient>
               <filter id="curveGlow">
-                <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+                <feGaussianBlur stdDeviation="3" result="coloredBlur" />
                 <feMerge>
                   <feMergeNode in="coloredBlur" />
                   <feMergeNode in="SourceGraphic" />
@@ -78,26 +66,17 @@ const Slide5MaturityCurve = () => {
               </filter>
             </defs>
 
-            {/* Grid lines */}
-            <g stroke="hsl(var(--muted-foreground))" strokeOpacity="0.1" strokeWidth="1">
-              <line x1="40" y1="40" x2="40" y2="290" />
-              <line x1="40" y1="290" x2="470" y2="290" />
-              {[0, 1, 2, 3, 4].map(i => (
-                <line key={i} x1="40" y1={290 - i * 62.5} x2="470" y2={290 - i * 62.5} strokeDasharray="4,4" />
-              ))}
-            </g>
-
+            {/* Axes */}
+            <line x1="30" y1="290" x2="480" y2="290" stroke="hsl(var(--muted-foreground))" strokeWidth="1" opacity="0.3" />
+            <line x1="30" y1="290" x2="30" y2="20" stroke="hsl(var(--muted-foreground))" strokeWidth="1" opacity="0.3" />
+            
             {/* Axis labels */}
-            <text x="250" y="315" textAnchor="middle" fill="hsl(var(--muted-foreground))" fontSize="11">
-              Maturity Stage →
-            </text>
-            <text x="15" y="165" textAnchor="middle" fill="hsl(var(--muted-foreground))" fontSize="11" transform="rotate(-90, 15, 165)">
-              Value & Impact →
-            </text>
+            <text x="250" y="310" textAnchor="middle" fill="hsl(var(--muted-foreground))" fontSize="10">Maturity Stage</text>
+            <text x="15" y="155" textAnchor="middle" fill="hsl(var(--muted-foreground))" fontSize="10" transform="rotate(-90, 15, 155)">Value</text>
 
             {/* Hockey stick curve */}
             <path
-              d="M 50 280 Q 80 275, 130 260 Q 180 240, 220 200 Q 280 140, 330 100 Q 380 60, 430 40"
+              d="M 50 280 Q 100 270 130 240 Q 170 200 220 180 Q 280 150 320 100 Q 380 40 440 30"
               fill="none"
               stroke="url(#curveGradient)"
               strokeWidth="4"
@@ -106,175 +85,101 @@ const Slide5MaturityCurve = () => {
             />
 
             {/* Stage markers */}
-            {stages.map((stage, index) => {
-              const stageNum = 5 - index;
-              const isActive = activeStage === stageNum;
-              
-              return (
-                <g
-                  key={stageNum}
-                  onClick={() => setActiveStage(stageNum)}
-                  className="cursor-pointer"
+            {stages.map((point) => (
+              <g 
+                key={point.stage}
+                onClick={() => setActiveStage(point.stage)}
+                className="cursor-pointer"
+              >
+                <circle
+                  cx={point.x}
+                  cy={point.y}
+                  r={activeStage === point.stage ? 16 : 12}
+                  fill={activeStage === point.stage ? "hsl(var(--primary))" : "hsl(var(--card))"}
+                  stroke="hsl(var(--primary))"
+                  strokeWidth="2"
+                  className="transition-all duration-300"
+                  filter={activeStage === point.stage ? "url(#curveGlow)" : undefined}
+                />
+                <text
+                  x={point.x}
+                  y={point.y + 4}
+                  textAnchor="middle"
+                  fill={activeStage === point.stage ? "white" : "hsl(var(--primary))"}
+                  fontSize="12"
+                  fontWeight="bold"
                 >
-                  <circle
-                    cx={stage.x}
-                    cy={stage.y}
-                    r={isActive ? 16 : 12}
-                    fill={isActive ? "hsl(var(--primary))" : "hsl(var(--card))"}
-                    stroke={isActive ? "white" : "hsl(var(--muted-foreground))"}
-                    strokeWidth={isActive ? 3 : 1.5}
-                    filter={isActive ? "url(#curveGlow)" : "none"}
-                    className="transition-all duration-300"
-                  />
-                  <text
-                    x={stage.x}
-                    y={stage.y + 4}
-                    textAnchor="middle"
-                    fill={isActive ? "white" : "hsl(var(--muted-foreground))"}
-                    fontSize="10"
-                    fontWeight="bold"
-                  >
-                    {stageNum}
-                  </text>
-                  <text
-                    x={stage.x}
-                    y={stage.y + 30}
-                    textAnchor="middle"
-                    fill="hsl(var(--muted-foreground))"
-                    fontSize="9"
-                  >
-                    {stage.sublabel}
-                  </text>
-                </g>
-              );
-            })}
+                  {point.stage}
+                </text>
+                <text
+                  x={point.x}
+                  y={point.y + 32}
+                  textAnchor="middle"
+                  fill="hsl(var(--foreground))"
+                  fontSize="9"
+                >
+                  {point.label}
+                </text>
+              </g>
+            ))}
 
-            {/* Value proof checkpoints - dashed lines between stages */}
-            {stages.slice(0, -1).map((stage, index) => {
-              const nextStage = stages[index + 1];
-              return (
+            {/* Proof metrics checkpoints */}
+            {stages.slice(0, -1).map((point, index) => (
+              <g key={`checkpoint-${index}`}>
                 <line
-                  key={index}
-                  x1={stage.x + 15}
-                  y1={stage.y - 5}
-                  x2={nextStage.x - 15}
-                  y2={nextStage.y + 5}
+                  x1={point.x + 30}
+                  y1={point.y - 10}
+                  x2={stages[index + 1].x - 30}
+                  y2={stages[index + 1].y + 10}
                   stroke="hsl(var(--primary))"
                   strokeWidth="1"
-                  strokeDasharray="4,4"
-                  opacity="0.4"
+                  strokeDasharray="4 2"
+                  opacity="0.3"
                 />
-              );
-            })}
+              </g>
+            ))}
           </svg>
 
           {/* Legend */}
-          <div className="flex items-center justify-center gap-4 mt-4 text-xs text-muted-foreground">
+          <div className="flex items-center justify-center gap-4 mt-4">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-0.5 bg-gradient-to-r from-destructive via-primary to-emerald-500" />
-              <span>Value Acceleration</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-0.5 border-t-2 border-dashed border-primary" />
-              <span>Value Checkpoints</span>
+              <div className="w-3 h-3 rounded-full bg-primary" />
+              <span className="text-xs text-muted-foreground">Value Proof Checkpoints</span>
             </div>
           </div>
         </div>
 
-        {/* Stage Details */}
+        {/* Program Details */}
         <div className="space-y-6">
-          {/* Selected Stage Info */}
-          <div className="bg-primary/10 border border-primary/30 rounded-2xl p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-lg font-bold text-white">{selectedStage.stage}</span>
-              </div>
-              <div>
-                <p className="text-xs text-muted-foreground">Stage {selectedStage.stage}</p>
-                <h3 className="text-xl font-bold text-primary">{selectedStage.headline}</h3>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <h4 className="text-sm font-semibold text-foreground mb-2">How it works:</h4>
-                <p className="text-sm text-muted-foreground">{selectedStage.howItWorks}</p>
-              </div>
-
-              <div className="bg-card/30 rounded-lg p-4 border border-muted/30">
-                <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-2">
-                  <Lightbulb className="w-4 h-4 text-amber-400" />
-                  To progress:
-                </h4>
-                <p className="text-sm text-muted-foreground">{selectedStage.toProgress}</p>
-              </div>
-
-              <div className="flex items-center gap-2 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">
-                <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
-                <p className="text-sm text-emerald-400 font-medium">{selectedStage.valueCheckpoint}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Stage Navigation */}
+          {/* Stage progression */}
           <div>
-            <h3 className="text-sm font-semibold text-foreground mb-3">Stage Progression:</h3>
-            <div className="space-y-2">
-              {stageDetails.slice().reverse().map((stage, index) => {
-                const isActive = activeStage === stage.stage;
-                const showArrow = index < stageDetails.length - 1;
-                
-                return (
-                  <div key={stage.stage}>
-                    <button
-                      onClick={() => setActiveStage(stage.stage)}
-                      className={`w-full text-left p-3 rounded-lg transition-all duration-300 ${
-                        isActive 
-                          ? 'bg-primary/20 border border-primary/50' 
-                          : 'bg-card/20 border border-muted/30 hover:border-muted'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                            isActive ? 'bg-primary text-white' : 'bg-muted/30 text-muted-foreground'
-                          }`}>
-                            {stage.stage}
-                          </span>
-                          <span className={`text-sm font-medium ${isActive ? 'text-primary' : 'text-foreground'}`}>
-                            {stage.headline}
-                          </span>
-                        </div>
-                        {showArrow && (
-                          <ArrowRight className={`w-4 h-4 ${isActive ? 'text-primary' : 'text-muted-foreground/50'}`} />
-                        )}
-                      </div>
-                    </button>
+            <h3 className="text-lg font-semibold text-foreground mb-4">Stage Progression:</h3>
+            <div className="space-y-3">
+              {stageProgression.map((item) => (
+                <div
+                  key={item.stage}
+                  className={`
+                    p-3 rounded-lg border transition-all duration-300 cursor-pointer
+                    ${activeStage === item.stage 
+                      ? 'bg-primary/10 border-primary/50' 
+                      : 'bg-card/20 border-muted-foreground/20 hover:border-muted-foreground/40'}
+                  `}
+                  onClick={() => setActiveStage(item.stage)}
+                >
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className={`text-sm font-bold ${activeStage === item.stage ? 'text-primary' : 'text-muted-foreground'}`}>
+                      Stage {item.stage}:
+                    </span>
                   </div>
-                );
-              })}
+                  <div className="flex items-center gap-2 text-xs">
+                    <span className="text-muted-foreground">{item.from}</span>
+                    <ArrowRight className="w-3 h-3 text-primary shrink-0" />
+                    <span className="text-foreground font-medium">{item.to}</span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* How to use the model */}
-      <div className="mt-8 bg-card/30 border border-muted/30 rounded-xl p-5">
-        <h3 className="text-base font-semibold text-foreground mb-4 text-center">How to Use the Model</h3>
-        <div className="grid md:grid-cols-4 gap-4">
-          {[
-            { step: 1, text: "Identify current stage (today)" },
-            { step: 2, text: "Agree next target stage (near-term)" },
-            { step: 3, text: "Prioritise workflows + governance required to move up" },
-            { step: 4, text: "Prove progress with Value Proof metrics at each stage" },
-          ].map((item) => (
-            <div key={item.step} className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-primary/20 text-primary text-sm font-bold flex items-center justify-center shrink-0">
-                {item.step}
-              </span>
-              <span className="text-sm text-muted-foreground">{item.text}</span>
-            </div>
-          ))}
         </div>
       </div>
     </SlideContainer>

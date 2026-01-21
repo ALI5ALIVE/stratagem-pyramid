@@ -1,120 +1,51 @@
-import { useState } from "react";
 import SlideContainer from "./SlideContainer";
-import { 
-  TrendingUp, Clock, Shield, BarChart3, 
-  AlertTriangle, FileText, GraduationCap
-} from "lucide-react";
+import { TrendingUp, TrendingDown, Clock, Shield, Users, BarChart3, CheckCircle2 } from "lucide-react";
 
 const Slide7Customers = () => {
-  const [activePersona, setActivePersona] = useState<string>("safety");
-
-  const personas = [
-    {
-      id: "safety",
-      title: "Head of Safety",
-      icon: AlertTriangle,
-      color: "text-amber-400",
-      bgColor: "bg-amber-500/10",
-      borderColor: "border-amber-500/30",
-      valueProp: "Reduce risk and recurrence by turning safety signals into controlled operational change",
-      painPoints: [
-        "Safety events handled in isolation, not connected to procedures or training",
-        "Investigations close but root causes recur",
-        "Evidence assembled manually for audits",
-      ],
-      outcomes: [
-        { label: "Faster investigations", metric: "↓ 40% cycle time" },
-        { label: "Reduced repeat events", metric: "↓ 50% recurrence" },
-        { label: "Evidence by default", metric: "100% audit-ready" },
-      ],
-    },
-    {
-      id: "compliance",
-      title: "Head of Compliance",
-      icon: FileText,
-      color: "text-primary",
-      bgColor: "bg-primary/10",
-      borderColor: "border-primary/30",
-      valueProp: "Improve audit readiness, governance and regulatory confidence",
-      painPoints: [
-        "Procedure changes aren't tracked end-to-end",
-        "Training compliance disconnected from procedure updates",
-        "Audit prep takes weeks of manual effort",
-      ],
-      outcomes: [
-        { label: "Audit prep time", metric: "↓ 30%" },
-        { label: "Evidence readiness", metric: "↑ Always current" },
-        { label: "Findings reduction", metric: "↓ 25% year-over-year" },
-      ],
-    },
-    {
-      id: "training",
-      title: "Head of Training",
-      icon: GraduationCap,
-      color: "text-emerald-400",
-      bgColor: "bg-emerald-500/10",
-      borderColor: "border-emerald-500/30",
-      valueProp: "Increase workforce readiness by linking training to real operational risk and change",
-      painPoints: [
-        "Training triggered by schedule, not operational need",
-        "No visibility into whether training drives behavior change",
-        "Competency data siloed from safety and compliance",
-      ],
-      outcomes: [
-        { label: "Time-to-competency", metric: "↓ 35%" },
-        { label: "Training readiness", metric: "↑ Real-time visibility" },
-        { label: "Procedural deviations", metric: "↓ 40%" },
-      ],
-    },
-  ];
-
   const kpiCategories = [
     {
-      title: "Reliability",
+      title: "Reliability & Disruption",
       icon: TrendingUp,
-      color: "text-primary",
-      bgColor: "bg-primary/10",
-      borderColor: "border-primary/30",
+      color: "from-emerald-500 to-teal-500",
+      textColor: "text-emerald-400",
       metrics: [
-        { label: "On-Time Performance", value: "↑ 15%" },
-        { label: "Delay Minutes", value: "↓ 40%" },
-        { label: "Disruption Recovery", value: "↓ 60%" },
+        { label: "OTP", direction: "up", value: "↑" },
+        { label: "Delay mins", direction: "down", value: "↓" },
+        { label: "Cancellations", direction: "down", value: "↓" },
+        { label: "Recovery time", direction: "down", value: "↓" },
       ],
     },
     {
-      title: "Readiness",
+      title: "Readiness & Execution",
       icon: Clock,
-      color: "text-emerald-400",
-      bgColor: "bg-emerald-500/10",
-      borderColor: "border-emerald-500/30",
+      color: "from-primary to-blue-500",
+      textColor: "text-primary",
       metrics: [
-        { label: "Time-to-Change", value: "↓ 60%" },
-        { label: "Time-to-Competency", value: "↓ 35%" },
-        { label: "Training Currency", value: "↑ 98%" },
+        { label: "Time-to-change", direction: "down", value: "↓" },
+        { label: "Time-to-competency", direction: "down", value: "↓" },
+        { label: "Change adoption", direction: "up", value: "↑" },
       ],
     },
     {
-      title: "Governance",
+      title: "Governance & Proof",
       icon: Shield,
-      color: "text-violet-400",
-      bgColor: "bg-violet-500/10",
-      borderColor: "border-violet-500/30",
+      color: "from-violet-500 to-purple-500",
+      textColor: "text-violet-400",
       metrics: [
-        { label: "Audit Prep Time", value: "↓ 30%" },
-        { label: "Manual Reporting", value: "↓ 70%" },
-        { label: "Finding Recurrence", value: "↓ 50%" },
+        { label: "Audit prep time", direction: "down", value: "↓" },
+        { label: "Evidence readiness", direction: "down", value: "↓" },
+        { label: "Repeat findings", direction: "down", value: "↓" },
+        { label: "Manual reporting", direction: "down", value: "↓" },
       ],
     },
   ];
 
-  const reliabilityIndex = [
-    { dimension: "Detection & Insight", description: "Capture signals earlier" },
-    { dimension: "Action & Orchestration", description: "Coordinate response" },
-    { dimension: "Readiness & Execution", description: "Enable front-line" },
-    { dimension: "Governance & Proof", description: "Demonstrate compliance" },
+  const programSteps = [
+    "Maturity score benchmarking",
+    "Peer comparison analysis",
+    "Gap analysis and priorities",
+    "Executive-ready 30/60/90 roadmap",
   ];
-
-  const selectedPersona = personas.find(p => p.id === activePersona) || personas[0];
 
   return (
     <SlideContainer
@@ -122,122 +53,110 @@ const Slide7Customers = () => {
       title="What This Means for Customers"
       subtitle="Measurable performance, readiness, and proof"
     >
-      {/* Persona Tabs */}
-      <div className="mb-8">
-        <div className="flex flex-wrap justify-center gap-2 mb-6">
-          {personas.map((persona) => {
-            const Icon = persona.icon;
-            const isActive = activePersona === persona.id;
-            return (
-              <button
-                key={persona.id}
-                onClick={() => setActivePersona(persona.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                  isActive 
-                    ? `${persona.bgColor} ${persona.color} border ${persona.borderColor}` 
-                    : 'bg-card/30 text-muted-foreground border border-muted/30 hover:border-muted'
-                }`}
-              >
-                <Icon className="w-4 h-4" />
-                {persona.title}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Selected Persona Details */}
-        <div className={`${selectedPersona.bgColor} border ${selectedPersona.borderColor} rounded-2xl p-6`}>
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Left: Value Prop + Pain Points */}
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className={`w-12 h-12 rounded-xl ${selectedPersona.bgColor} border ${selectedPersona.borderColor} flex items-center justify-center`}>
-                  <selectedPersona.icon className={`w-6 h-6 ${selectedPersona.color}`} />
-                </div>
-                <div>
-                  <h3 className={`text-lg font-bold ${selectedPersona.color}`}>{selectedPersona.title}</h3>
-                  <p className="text-xs text-muted-foreground">Primary Value</p>
-                </div>
-              </div>
-
-              <p className="text-sm text-foreground font-medium mb-4 p-3 bg-card/30 rounded-lg border border-muted/30">
-                "{selectedPersona.valueProp}"
-              </p>
-
-              <h4 className="text-sm font-semibold text-foreground mb-2">Pain Points Addressed:</h4>
-              <ul className="space-y-2">
-                {selectedPersona.painPoints.map((point, idx) => (
-                  <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
-                    <span className={`w-1.5 h-1.5 rounded-full ${selectedPersona.color.replace('text-', 'bg-')} mt-1.5 shrink-0`} />
-                    {point}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Right: Outcomes */}
-            <div>
-              <h4 className="text-sm font-semibold text-foreground mb-4">Measurable Outcomes:</h4>
-              <div className="space-y-3">
-                {selectedPersona.outcomes.map((outcome, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-3 bg-card/30 rounded-lg border border-muted/30">
-                    <span className="text-sm text-foreground">{outcome.label}</span>
-                    <span className={`text-sm font-bold ${selectedPersona.color}`}>{outcome.metric}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+      {/* Executive Value Proposition */}
+      <div className="max-w-4xl mx-auto mb-10">
+        <div className="bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 border border-primary/30 rounded-xl p-6 text-center">
+          <p className="text-sm text-muted-foreground mb-2">Executive Value Proposition:</p>
+          <p className="text-lg text-foreground leading-relaxed">
+            We help leaders <span className="text-primary font-semibold">reduce disruption, protect revenue, and improve customer experience</span> by accelerating the speed and control of operational change across safety, procedures, and training — through one connected, governed platform.
+          </p>
         </div>
       </div>
 
-      {/* KPI Dashboard */}
-      <div className="mb-8">
-        <h3 className="text-lg font-semibold text-foreground text-center mb-6">KPI Impact Dashboard</h3>
-        <div className="grid md:grid-cols-3 gap-4">
-          {kpiCategories.map((category, index) => {
-            const Icon = category.icon;
-            return (
-              <div key={index} className={`${category.bgColor} border ${category.borderColor} rounded-xl p-5`}>
-                <div className="flex items-center gap-2 mb-4">
-                  <Icon className={`w-5 h-5 ${category.color}`} />
-                  <h4 className={`font-semibold ${category.color}`}>{category.title}</h4>
+      {/* COO Outcomes Dashboard */}
+      <div className="grid md:grid-cols-3 gap-6 mb-10">
+        {kpiCategories.map((category, index) => {
+          const Icon = category.icon;
+          return (
+            <div
+              key={index}
+              className="relative group"
+            >
+              {/* Glow effect */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${category.color} opacity-10 blur-xl rounded-2xl group-hover:opacity-20 transition-opacity`} />
+              
+              <div className="relative bg-card/50 border border-muted-foreground/20 rounded-2xl p-6 h-full hover:border-primary/50 transition-colors">
+                {/* Header */}
+                <div className="flex items-center gap-3 mb-4">
+                  <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center`}>
+                    <Icon className="w-5 h-5 text-white" />
+                  </div>
+                  <h3 className={`font-semibold ${category.textColor}`}>{category.title}</h3>
                 </div>
-                <div className="space-y-2">
-                  {category.metrics.map((metric, idx) => (
-                    <div key={idx} className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground">{metric.label}</span>
-                      <span className={`font-bold ${metric.value.startsWith('↑') ? 'text-emerald-400' : 'text-amber-400'}`}>
+
+                {/* Gauge visual */}
+                <div className="relative h-24 mb-4">
+                  <svg viewBox="0 0 200 100" className="w-full h-full">
+                    <defs>
+                      <linearGradient id={`gaugeGrad${index}`} x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="hsl(var(--muted))" />
+                        <stop offset="100%" stopColor="hsl(var(--primary))" />
+                      </linearGradient>
+                    </defs>
+                    {/* Background arc */}
+                    <path
+                      d="M 20 80 A 80 80 0 0 1 180 80"
+                      fill="none"
+                      stroke="hsl(var(--muted))"
+                      strokeWidth="12"
+                      strokeLinecap="round"
+                    />
+                    {/* Progress arc */}
+                    <path
+                      d="M 20 80 A 80 80 0 0 1 180 80"
+                      fill="none"
+                      stroke={`url(#gaugeGrad${index})`}
+                      strokeWidth="12"
+                      strokeLinecap="round"
+                      strokeDasharray="251"
+                      strokeDashoffset={251 - (251 * (0.6 + index * 0.1))}
+                      className="transition-all duration-1000"
+                    />
+                    {/* Center value */}
+                    <text x="100" y="75" textAnchor="middle" fill="hsl(var(--foreground))" fontSize="20" fontWeight="bold">
+                      {Math.round((0.6 + index * 0.1) * 100)}%
+                    </text>
+                    <text x="100" y="90" textAnchor="middle" fill="hsl(var(--muted-foreground))" fontSize="10">
+                      improvement
+                    </text>
+                  </svg>
+                </div>
+
+                {/* Metrics */}
+                <div className="grid grid-cols-2 gap-2">
+                  {category.metrics.map((metric, mIndex) => (
+                    <div key={mIndex} className="flex items-center gap-2 text-sm">
+                      <span className={metric.direction === 'up' ? 'text-emerald-400' : 'text-primary'}>
                         {metric.value}
                       </span>
+                      <span className="text-muted-foreground">{metric.label}</span>
                     </div>
                   ))}
                 </div>
               </div>
-            );
-          })}
-        </div>
+            </div>
+          );
+        })}
       </div>
 
-      {/* Reliability & Readiness Index */}
-      <div className="bg-gradient-to-r from-primary/10 via-accent/5 to-primary/10 border border-primary/30 rounded-xl p-6">
-        <div className="flex items-center justify-center gap-2 mb-4">
-          <BarChart3 className="w-5 h-5 text-primary" />
-          <h3 className="text-base font-semibold text-foreground">Reliability & Readiness Index</h3>
-        </div>
-        <p className="text-sm text-muted-foreground text-center mb-4">
-          Four dimensions that drive operational excellence measurement
-        </p>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {reliabilityIndex.map((item, index) => (
-            <div key={index} className="text-center p-3 bg-card/30 rounded-lg border border-muted/30">
-              <div className="w-8 h-8 mx-auto mb-2 rounded-full bg-primary/20 flex items-center justify-center">
-                <span className="text-sm font-bold text-primary">{index + 1}</span>
+      {/* Benchmarking Program */}
+      <div className="max-w-3xl mx-auto">
+        <div className="bg-card/30 border border-primary/30 rounded-xl p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <BarChart3 className="w-6 h-6 text-primary" />
+            <h3 className="text-lg font-semibold text-foreground">Benchmarking Program</h3>
+          </div>
+          <p className="text-sm text-muted-foreground mb-4">
+            Benchmarking turns the platform story into a measurable transformation program:
+          </p>
+          <div className="grid sm:grid-cols-2 gap-3">
+            {programSteps.map((step, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
+                <span className="text-sm text-foreground">{step}</span>
               </div>
-              <h4 className="text-xs font-semibold text-foreground mb-1">{item.dimension}</h4>
-              <p className="text-[10px] text-muted-foreground">{item.description}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </SlideContainer>
