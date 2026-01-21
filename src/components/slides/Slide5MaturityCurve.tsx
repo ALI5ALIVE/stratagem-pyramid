@@ -242,8 +242,8 @@ const Slide5MaturityCurve = () => {
               viewBox={viewBox}
               className="w-full"
               style={{ 
-                minWidth: isMobile ? "500px" : "700px",
-                minHeight: isMobile ? "500px" : "650px" 
+                minWidth: isMobile ? "320px" : "480px",
+                minHeight: isMobile ? "280px" : "380px" 
               }}
             >
               <defs>
@@ -425,7 +425,7 @@ const Slide5MaturityCurve = () => {
           </div>
 
           {/* RIGHT: Stage Details - 2x scaled container */}
-          <div className="overflow-y-auto bg-card/30 rounded-lg p-4 border border-border/30 max-h-[800px]">
+          <div className="overflow-y-auto bg-card/30 rounded-lg p-3 border border-border/30 max-h-[400px]">
             <MaturityStageDetails stage={selectedStage} />
           </div>
         </div>
