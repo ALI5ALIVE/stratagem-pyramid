@@ -52,10 +52,10 @@ const Slide7Customers = () => {
 
   return (
     <SlideContainer
-      id="slide-7"
+      id="slide-9"
       title="What This Means for Customers"
       subtitle="Measurable outcomes: reliability, readiness, and audit-ready proof"
-      slideNumber={7}
+      slideNumber={9}
     >
       {/* Executive Value Proposition */}
       <div className="max-w-4xl mx-auto mb-8">

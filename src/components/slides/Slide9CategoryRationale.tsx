@@ -60,10 +60,10 @@ const Slide9CategoryRationale = () => {
 
   return (
     <SlideContainer
-      id="slide-9"
+      id="slide-11"
       title="Why 'Operational Excellence & Readiness Platform'"
       subtitle="The name that protects scope, resonates with executives, and defines the category"
-      slideNumber={9}
+      slideNumber={11}
     >
       {/* Hero Banner */}
       <div className="bg-primary/15 border-2 border-primary rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 text-center">

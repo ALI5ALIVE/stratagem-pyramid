@@ -229,10 +229,10 @@ const Slide5MaturityCurve = () => {
 
   return (
     <SlideContainer
-      id="slide-5"
+      id="slide-7"
       title="The Operational Excellence Roadmap"
       subtitle="The measurable journey from reactive to predictive operations"
-      slideNumber={5}
+      slideNumber={7}
     >
       <div className="space-y-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
