@@ -3,18 +3,18 @@ import { ArrowRight, AlertTriangle, FileText, GraduationCap, Shield } from "luci
 
 const Slide1StrategicShift = () => {
   const modernGaps = [
-    "Manual coordination across teams (handoffs, spreadsheets, email approvals)",
-    "No real-time insight into whether change has been implemented and adopted",
-    "Reactive risk handling (issues discovered after disruption, not before)",
-    "Procedural drift between documented procedures, training, and actual operations",
-    "Duplicated effort and cost across multiple tools and repeated evidence gathering",
+    "Signals scattered across siloed systems — no unified view of operational risk",
+    "No automated trigger when a procedure, training, or safety gap is detected",
+    "Manual coordination slows change — handoffs, spreadsheets, email approvals",
+    "Procedural drift between what's documented, trained, and actually done",
+    "Audit evidence gathered reactively — duplicated effort, incomplete proof",
   ];
 
   return (
     <SlideContainer
       id="slide-1"
       title="The Strategic Shift"
-      subtitle="Why we're defining a new category — and what it replaces"
+      subtitle="From fragmented point tools to an intelligent operating system"
       slideNumber={1}
     >
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
@@ -74,7 +74,7 @@ const Slide1StrategicShift = () => {
           <div>
             <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5 text-amber-500" />
-              Why now — the modern operational gap:
+              The operational gap point tools can't close:
             </h3>
             <ul className="space-y-3">
               {modernGaps.map((gap, index) => (
