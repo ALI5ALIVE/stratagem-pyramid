@@ -258,7 +258,7 @@ const Slide4ValuePyramid = () => {
     >
       <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch h-full">
         {/* LEFT: Pyramid Visual */}
-        <div className="w-full min-h-[300px] lg:min-h-[400px] flex items-center justify-center">
+        <div className="relative w-full min-h-[300px] lg:min-h-[400px] flex items-center justify-center overflow-hidden">
           <Pyramid3D
             layers={layersData.map((layer) => ({
               id: layer.id,
@@ -275,7 +275,7 @@ const Slide4ValuePyramid = () => {
         </div>
 
         {/* RIGHT: Details Panel */}
-        <div className="h-full overflow-y-auto bg-card/30 rounded-lg p-4 border border-border/30 flex flex-col">
+        <div className="relative z-10 h-full overflow-y-auto bg-card/30 rounded-lg p-4 border border-border/30 flex flex-col">
           <div className="flex-1 transition-opacity duration-300">
             <DetailsPanel layer={activeLayer} highlightedModule={highlightedModule} />
           </div>
