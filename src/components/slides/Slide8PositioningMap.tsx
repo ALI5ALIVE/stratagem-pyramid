@@ -22,12 +22,12 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const vendors = [
   { name: "Comply365", breadth: 9.5, depth: 9.0, color: "#0066ff", isHighlighted: true },
-  { name: "Ideagen", breadth: 7.0, depth: 7.0, color: "#00b4d8", isHighlighted: false },
+  { name: "Ideagen", breadth: 7.0, depth: 7.0, color: "#10b981", isHighlighted: false },
   { name: "TrustFlight Centrik", breadth: 7.0, depth: 6.75, color: "#8b5cf6", isHighlighted: false },
-  { name: "Hinfact", breadth: 4.5, depth: 4.0, color: "#6b7280", isHighlighted: false },
-  { name: "Web Manuals", breadth: 4.0, depth: 4.4, color: "#9ca3af", isHighlighted: false },
-  { name: "Yonder", breadth: 2.0, depth: 2.5, color: "#d1d5db", isHighlighted: false },
-  { name: "Orlando", breadth: 1.5, depth: 2.5, color: "#e5e7eb", isHighlighted: false },
+  { name: "Hinfact", breadth: 4.5, depth: 4.0, color: "#f59e0b", isHighlighted: false },
+  { name: "Web Manuals", breadth: 4.0, depth: 4.4, color: "#ef4444", isHighlighted: false },
+  { name: "Yonder", breadth: 2.0, depth: 2.5, color: "#ec4899", isHighlighted: false },
+  { name: "Orlando", breadth: 1.5, depth: 2.5, color: "#14b8a6", isHighlighted: false },
 ];
 
 const capabilities = [
@@ -137,6 +137,21 @@ const QuadrantLabel = ({ viewBox, label, sublabel, position }: any) => {
 
 const Slide8PositioningMap = () => {
   const [activeView, setActiveView] = useState<"matrix" | "radar">("matrix");
+  const [selectedVendors, setSelectedVendors] = useState<Set<string>>(
+    new Set(vendors.map(v => v.name))
+  );
+
+  const toggleVendor = (name: string) => {
+    setSelectedVendors(prev => {
+      const next = new Set(prev);
+      if (next.has(name)) {
+        if (next.size > 1) next.delete(name);
+      } else {
+        next.add(name);
+      }
+      return next;
+    });
+  };
 
   return (
     <SlideContainer
@@ -313,40 +328,79 @@ const Slide8PositioningMap = () => {
               </ResponsiveContainer>
             </div>
           ) : (
-            <div className="w-full max-w-[720px] mx-auto aspect-square">
-              <ResponsiveContainer width="100%" height="100%">
-                <RadarChart data={radarData} margin={{ top: 10, right: 20, bottom: 10, left: 20 }}>
-                  <PolarGrid stroke="hsl(var(--border))" />
-                  <PolarAngleAxis
-                    dataKey="capability"
-                    tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 9 }}
-                  />
-                  <PolarRadiusAxis
-                    angle={90}
-                    domain={[0, 4]}
-                    tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 8 }}
-                  />
+            <div className="flex flex-col gap-4">
+              {/* Quick Actions */}
+              <div className="flex justify-center gap-3">
+                <button
+                  onClick={() => setSelectedVendors(new Set(vendors.map(v => v.name)))}
+                  className="text-xs text-muted-foreground hover:text-foreground transition-colors underline-offset-2 hover:underline"
+                >
+                  Select All
+                </button>
+                <span className="text-muted-foreground">|</span>
+                <button
+                  onClick={() => setSelectedVendors(new Set(["Comply365"]))}
+                  className="text-xs text-muted-foreground hover:text-foreground transition-colors underline-offset-2 hover:underline"
+                >
+                  Comply365 Only
+                </button>
+              </div>
 
-                  {vendors.map((vendor) => (
-                    <Radar
-                      key={vendor.name}
-                      name={vendor.name}
-                      dataKey={vendor.name}
-                      stroke={vendor.color}
-                      fill={vendor.color}
-                      fillOpacity={vendor.isHighlighted ? 0.4 : 0.1}
-                      strokeWidth={vendor.isHighlighted ? 3 : 1}
+              {/* Vendor Selector Chips */}
+              <div className="flex flex-wrap justify-center gap-2">
+                {vendors.map((vendor) => (
+                  <button
+                    key={vendor.name}
+                    onClick={() => toggleVendor(vendor.name)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all border-2 ${
+                      selectedVendors.has(vendor.name)
+                        ? "opacity-100"
+                        : "opacity-40 grayscale"
+                    }`}
+                    style={{
+                      backgroundColor: selectedVendors.has(vendor.name) 
+                        ? `${vendor.color}20` 
+                        : 'transparent',
+                      borderColor: vendor.color,
+                      color: vendor.color
+                    }}
+                  >
+                    {vendor.name}
+                  </button>
+                ))}
+              </div>
+
+              {/* Radar Chart */}
+              <div className="w-full max-w-[720px] mx-auto aspect-square">
+                <ResponsiveContainer width="100%" height="100%">
+                  <RadarChart data={radarData} margin={{ top: 10, right: 20, bottom: 10, left: 20 }}>
+                    <PolarGrid stroke="hsl(var(--border))" />
+                    <PolarAngleAxis
+                      dataKey="capability"
+                      tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 9 }}
                     />
-                  ))}
+                    <PolarRadiusAxis
+                      angle={90}
+                      domain={[0, 4]}
+                      tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 8 }}
+                    />
 
-                  <Legend
-                    wrapperStyle={{ paddingTop: 15 }}
-                    formatter={(value) => (
-                      <span className="text-[10px] text-muted-foreground">{value}</span>
-                    )}
-                  />
-                </RadarChart>
-              </ResponsiveContainer>
+                    {vendors
+                      .filter(vendor => selectedVendors.has(vendor.name))
+                      .map((vendor) => (
+                        <Radar
+                          key={vendor.name}
+                          name={vendor.name}
+                          dataKey={vendor.name}
+                          stroke={vendor.color}
+                          fill={vendor.color}
+                          fillOpacity={vendor.isHighlighted ? 0.4 : 0.15}
+                          strokeWidth={vendor.isHighlighted ? 3 : 2}
+                        />
+                      ))}
+                  </RadarChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           )}
         </div>
