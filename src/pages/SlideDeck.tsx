@@ -124,15 +124,15 @@ const SlideDeck = () => {
       </header>
 
       {/* Slide navigation dots */}
-      <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col gap-2">
+      <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col items-end gap-2">
         {slides.map((slide, index) => (
           <button
             key={slide.id}
             onClick={() => scrollToSlide(index)}
-            className="group flex items-center gap-2 transition-all duration-200"
+            className="group relative flex items-center justify-end transition-all duration-200"
           >
             <span className={`
-              text-xs opacity-0 group-hover:opacity-100 transition-opacity text-right
+              absolute right-5 whitespace-nowrap text-xs opacity-0 group-hover:opacity-100 transition-opacity
               ${activeSlide === index ? 'text-primary' : 'text-muted-foreground'}
             `}>
               {slide.label}
