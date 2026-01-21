@@ -5,26 +5,28 @@ import Slide0Title from "@/components/slides/Slide0Title";
 import Slide1StrategicShift from "@/components/slides/Slide1StrategicShift";
 import Slide2BeforeAfter from "@/components/slides/Slide2BeforeAfter";
 import Slide3OperatingModel from "@/components/slides/Slide3OperatingModel";
-import Slide4Transformation from "@/components/slides/Slide4Transformation";
-import Slide5ValuePyramid from "@/components/slides/Slide4ValuePyramid";
-import Slide6MaturityCurve from "@/components/slides/Slide5MaturityCurve";
-import Slide7PositioningMap from "@/components/slides/Slide8PositioningMap";
-import Slide8Customers from "@/components/slides/Slide7Customers";
-import Slide9Investors from "@/components/slides/Slide6Investors";
-import Slide10CategoryRationale from "@/components/slides/Slide9CategoryRationale";
+import Slide4PlatformCapabilities from "@/components/slides/SlidePlatformCapabilities";
+import Slide5Transformation from "@/components/slides/Slide4Transformation";
+import Slide6ValuePyramid from "@/components/slides/Slide4ValuePyramid";
+import Slide7MaturityCurve from "@/components/slides/Slide5MaturityCurve";
+import Slide8PositioningMap from "@/components/slides/Slide8PositioningMap";
+import Slide9Customers from "@/components/slides/Slide7Customers";
+import Slide10Investors from "@/components/slides/Slide6Investors";
+import Slide11CategoryRationale from "@/components/slides/Slide9CategoryRationale";
 
 const slides = [
   { id: "slide-0", label: "Title" },
   { id: "slide-1", label: "Strategic Shift" },
   { id: "slide-2", label: "Before & After" },
   { id: "slide-3", label: "Operating Model" },
-  { id: "slide-4", label: "Transformation" },
-  { id: "slide-5", label: "Readiness Ladder" },
-  { id: "slide-6", label: "Excellence Roadmap" },
-  { id: "slide-7", label: "Positioning" },
-  { id: "slide-8", label: "Customers" },
-  { id: "slide-9", label: "Investors" },
-  { id: "slide-10", label: "Category Name" },
+  { id: "slide-4", label: "Platform Capabilities" },
+  { id: "slide-5", label: "Transformation" },
+  { id: "slide-6", label: "Readiness Ladder" },
+  { id: "slide-7", label: "Excellence Roadmap" },
+  { id: "slide-8", label: "Positioning" },
+  { id: "slide-9", label: "Customers" },
+  { id: "slide-10", label: "Investors" },
+  { id: "slide-11", label: "Category Name" },
 ];
 
 const SlideDeck = () => {
@@ -180,13 +182,14 @@ const SlideDeck = () => {
         <Slide1StrategicShift />
         <Slide2BeforeAfter />
         <Slide3OperatingModel />
-        <Slide4Transformation />
-        <Slide5ValuePyramid />
-        <Slide6MaturityCurve />
-        <Slide7PositioningMap />
-        <Slide8Customers />
-        <Slide9Investors />
-        <Slide10CategoryRationale />
+        <Slide4PlatformCapabilities />
+        <Slide5Transformation />
+        <Slide6ValuePyramid />
+        <Slide7MaturityCurve />
+        <Slide8PositioningMap />
+        <Slide9Customers />
+        <Slide10Investors />
+        <Slide11CategoryRationale />
       </div>
     </div>
   );
