@@ -2,8 +2,16 @@ import { useState } from "react";
 import SlideContainer from "./SlideContainer";
 import { TrendingUp, Shield, Brain, BarChart3, Target, Zap, Users, Lock } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import type { SlideNarrationProps } from "@/types/slideProps";
 
-const Slide6Investors = () => {
+const Slide6Investors = ({
+  isActive = false,
+  isPlaying = false,
+  isLoading = false,
+  progress = 0,
+  onPlay,
+  onPause,
+}: SlideNarrationProps) => {
   const [activeNode, setActiveNode] = useState(0);
   const [activeTab, setActiveTab] = useState("growth");
 
@@ -96,6 +104,12 @@ const Slide6Investors = () => {
       title="Why the Platform + New Category Builds Shareholder Value"
       subtitle="How category leadership compounds into shareholder value"
       slideNumber={10}
+      isActive={isActive}
+      isPlaying={isPlaying}
+      isLoading={isLoading}
+      progress={progress}
+      onPlay={onPlay}
+      onPause={onPause}
     >
       {/* Core Message Banner */}
       <div className="bg-primary/10 border border-primary/30 rounded-lg p-4 mb-6">

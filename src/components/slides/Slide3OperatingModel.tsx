@@ -2,8 +2,16 @@ import { useState } from "react";
 import SlideContainer from "./SlideContainer";
 import { Radio, Bell, GitBranch, ShieldCheck, ArrowRight, Database, TrendingUp, Users, Clock, CheckCircle } from "lucide-react";
 import CoreSolutionsInfinity from "../CoreSolutionsInfinity";
+import type { SlideNarrationProps } from "@/types/slideProps";
 
-const Slide3OperatingModel = () => {
+const Slide3OperatingModel = ({
+  isActive = false,
+  isPlaying = false,
+  isLoading = false,
+  progress = 0,
+  onPlay,
+  onPause,
+}: SlideNarrationProps) => {
   const [activeStep, setActiveStep] = useState<number | null>(null);
 
   const steps = [
@@ -75,6 +83,12 @@ const Slide3OperatingModel = () => {
       title="The Operational Intelligence Layer"
       subtitle="How signals become outcomes: Detect → Trigger → Orchestrate → Prove"
       slideNumber={3}
+      isActive={isActive}
+      isPlaying={isPlaying}
+      isLoading={isLoading}
+      progress={progress}
+      onPlay={onPlay}
+      onPause={onPause}
     >
       {/* Core Solutions Infinity Model */}
       <div className="mb-4">

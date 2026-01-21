@@ -4,6 +4,7 @@ import MaturityStageDetails from "@/components/MaturityStageDetails";
 import MaturitySummaryBanner from "@/components/MaturitySummaryBanner";
 import { useIsMobile } from "@/hooks/use-mobile";
 import type { MaturityStage } from "@/components/MaturityCurveVisualization";
+import type { SlideNarrationProps } from "@/types/slideProps";
 
 const stagesData: MaturityStage[] = [
   {
@@ -180,7 +181,14 @@ const stagesData: MaturityStage[] = [
   },
 ];
 
-const Slide5MaturityCurve = () => {
+const Slide5MaturityCurve = ({
+  isActive = false,
+  isPlaying = false,
+  isLoading = false,
+  progress = 0,
+  onPlay,
+  onPause,
+}: SlideNarrationProps) => {
   const [activeStage, setActiveStage] = useState(1);
   const [isAnimated, setIsAnimated] = useState(false);
   const isMobile = useIsMobile();
@@ -233,6 +241,12 @@ const Slide5MaturityCurve = () => {
       title="The Operational Excellence Roadmap"
       subtitle="The measurable journey from reactive to predictive operations"
       slideNumber={7}
+      isActive={isActive}
+      isPlaying={isPlaying}
+      isLoading={isLoading}
+      progress={progress}
+      onPlay={onPlay}
+      onPause={onPause}
     >
       <div className="space-y-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">

@@ -290,10 +290,10 @@ export const useSlideNarration = (activeSlide: number): UseSlideNarrationReturn 
     });
   }, []);
 
-  // Auto-play when slide changes - CRITICAL: uses refs for reliable state access
+  // Stop audio when slide changes - NO auto-play (user clicks play button)
   useEffect(() => {
-    // Immediately increment playback ID to invalidate any pending playback
-    const currentPlaybackId = ++currentAudioIdRef.current;
+    // Increment playback ID to invalidate any pending playback
+    ++currentAudioIdRef.current;
     
     // Clear any pending playback timer
     if (playbackTimerRef.current) {
@@ -307,31 +307,9 @@ export const useSlideNarration = (activeSlide: number): UseSlideNarrationReturn 
       abortControllerRef.current = null;
     }
     
-    // Immediately stop current audio
+    // Stop current audio immediately when slide changes
     stopCurrentAudio();
-    
-    // Wait 500ms after slide change before starting narration
-    playbackTimerRef.current = setTimeout(() => {
-      // Verify this is still the current playback request
-      if (currentPlaybackId !== currentAudioIdRef.current) {
-        console.log(`Slide ${activeSlide} playback cancelled - superseded`);
-        return;
-      }
-      
-      // Check mute status using ref at execution time
-      if (!isMutedRef.current) {
-        lastPlayedSlideRef.current = activeSlide;
-        playNarration(activeSlide);
-      }
-    }, 500);
-    
-    return () => {
-      if (playbackTimerRef.current) {
-        clearTimeout(playbackTimerRef.current);
-        playbackTimerRef.current = null;
-      }
-    };
-  }, [activeSlide, stopCurrentAudio, playNarration]);
+  }, [activeSlide, stopCurrentAudio]);
 
   // Keyboard shortcuts
   useEffect(() => {

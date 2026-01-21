@@ -15,6 +15,7 @@ import {
   CheckCircle2,
   ChevronRight
 } from "lucide-react";
+import type { SlideNarrationProps } from "@/types/slideProps";
 
 // Category Positioning Data
 const categoryPosition = {
@@ -142,7 +143,14 @@ const personas = [
   }
 ];
 
-const SlideMessagingHouse = () => {
+const SlideMessagingHouse = ({
+  isActive = false,
+  isPlaying = false,
+  isLoading = false,
+  progress = 0,
+  onPlay,
+  onPause,
+}: SlideNarrationProps) => {
   const [activePersona, setActivePersona] = useState(0);
 
   return (
@@ -152,6 +160,12 @@ const SlideMessagingHouse = () => {
       subtitle="Complete positioning architecture for Operational Excellence & Readiness"
       variant="dark"
       slideNumber={12}
+      isActive={isActive}
+      isPlaying={isPlaying}
+      isLoading={isLoading}
+      progress={progress}
+      onPlay={onPlay}
+      onPause={onPause}
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 h-full">
         {/* Left Column: House Structure */}

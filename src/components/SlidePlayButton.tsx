@@ -1,0 +1,75 @@
+import { Play, Pause, Loader2 } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+interface SlidePlayButtonProps {
+  isPlaying: boolean;
+  isLoading: boolean;
+  progress: number;
+  onPlay: () => void;
+  onPause: () => void;
+  variant?: "dark" | "light";
+}
+
+const SlidePlayButton = ({
+  isPlaying,
+  isLoading,
+  progress,
+  onPlay,
+  onPause,
+  variant = "dark",
+}: SlidePlayButtonProps) => {
+  return (
+    <button
+      onClick={isPlaying ? onPause : onPlay}
+      className={cn(
+        "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30",
+        "w-20 h-20 rounded-full",
+        "flex items-center justify-center",
+        "shadow-lg hover:shadow-xl hover:scale-105",
+        "transition-all duration-200",
+        variant === "light" 
+          ? "bg-primary/90 hover:bg-primary border-2 border-primary-foreground/20"
+          : "bg-primary/90 hover:bg-primary border-2 border-primary-foreground/20",
+        isPlaying && "bg-primary/70"
+      )}
+      title={isPlaying ? "Pause narration" : "Play narration"}
+    >
+      {isLoading ? (
+        <Loader2 className="w-8 h-8 text-primary-foreground animate-spin" />
+      ) : isPlaying ? (
+        <Pause className="w-8 h-8 text-primary-foreground" />
+      ) : (
+        <Play className="w-8 h-8 text-primary-foreground ml-1" />
+      )}
+      
+      {/* Circular progress indicator */}
+      <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none">
+        <circle
+          cx="50%"
+          cy="50%"
+          r="38"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3"
+          className="text-primary-foreground/20"
+        />
+        {(isPlaying || progress > 0) && (
+          <circle
+            cx="50%"
+            cy="50%"
+            r="38"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeDasharray={`${2 * Math.PI * 38}`}
+            strokeDashoffset={`${2 * Math.PI * 38 * (1 - progress / 100)}`}
+            className="text-primary-foreground transition-all duration-150"
+            strokeLinecap="round"
+          />
+        )}
+      </svg>
+    </button>
+  );
+};
+
+export default SlidePlayButton;

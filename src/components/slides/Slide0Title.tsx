@@ -1,5 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import complyLogo from "@/assets/comply365-logo-white.png";
+import SlidePlayButton from "@/components/SlidePlayButton";
+import type { SlideNarrationProps } from "@/types/slideProps";
 
 const agendaItems = [
   { num: 1, label: "Strategic Shift", summary: "Why we're redefining the category" },
@@ -16,16 +18,34 @@ const agendaItems = [
   { num: 12, label: "Messaging House", summary: "Complete positioning framework" },
 ];
 
-interface Slide0TitleProps {
+interface Slide0TitleProps extends SlideNarrationProps {
   onNavigateToSlide?: (slideIndex: number) => void;
 }
 
-const Slide0Title = ({ onNavigateToSlide }: Slide0TitleProps) => {
+const Slide0Title = ({ 
+  onNavigateToSlide,
+  isActive = false,
+  isPlaying = false,
+  isLoading = false,
+  progress = 0,
+  onPlay,
+  onPause,
+}: Slide0TitleProps) => {
   return (
     <section
       id="slide-0"
       className="min-h-screen w-full flex flex-col items-center justify-center px-6 sm:px-10 lg:px-16 py-16 snap-start relative overflow-hidden bg-background"
     >
+      {/* Play button - centered when active */}
+      {isActive && onPlay && (
+        <SlidePlayButton
+          isPlaying={isPlaying}
+          isLoading={isLoading}
+          progress={progress}
+          onPlay={onPlay}
+          onPause={onPause ?? (() => {})}
+        />
+      )}
       {/* Decorative gradient orbs */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[100px] pointer-events-none" />

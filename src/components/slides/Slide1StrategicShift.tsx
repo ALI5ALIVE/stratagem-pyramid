@@ -1,7 +1,15 @@
 import SlideContainer from "./SlideContainer";
 import { ArrowRight, AlertTriangle, FileText, GraduationCap, Shield } from "lucide-react";
+import type { SlideNarrationProps } from "@/types/slideProps";
 
-const Slide1StrategicShift = () => {
+const Slide1StrategicShift = ({
+  isActive = false,
+  isPlaying = false,
+  isLoading = false,
+  progress = 0,
+  onPlay,
+  onPause,
+}: SlideNarrationProps) => {
   const modernGaps = [
     "Signals scattered across siloed systems — no unified view of operational risk",
     "No automated trigger when a procedure, training, or safety gap is detected",
@@ -16,6 +24,12 @@ const Slide1StrategicShift = () => {
       title="The Strategic Shift"
       subtitle="From fragmented point tools to an intelligent operating system"
       slideNumber={1}
+      isActive={isActive}
+      isPlaying={isPlaying}
+      isLoading={isLoading}
+      progress={progress}
+      onPlay={onPlay}
+      onPause={onPause}
     >
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
         {/* Visual: Category Shift */}

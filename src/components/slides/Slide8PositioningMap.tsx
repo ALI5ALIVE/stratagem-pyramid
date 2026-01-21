@@ -19,6 +19,7 @@ import {
   Label,
 } from "recharts";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import type { SlideNarrationProps } from "@/types/slideProps";
 
 const vendors = [
   { name: "Comply365", breadth: 9.5, depth: 9.0, color: "#0066ff", isHighlighted: true },
@@ -135,7 +136,14 @@ const QuadrantLabel = ({ viewBox, label, sublabel, position }: any) => {
   );
 };
 
-const Slide8PositioningMap = () => {
+const Slide8PositioningMap = ({
+  isActive = false,
+  isPlaying = false,
+  isLoading = false,
+  progress = 0,
+  onPlay,
+  onPause,
+}: SlideNarrationProps) => {
   const [activeView, setActiveView] = useState<"matrix" | "radar">("matrix");
   const [selectedVendors, setSelectedVendors] = useState<Set<string>>(
     new Set(vendors.map(v => v.name))
@@ -159,6 +167,12 @@ const Slide8PositioningMap = () => {
       title="Competitive Positioning"
       subtitle="Where Comply365 stands — and why competitors can't follow"
       slideNumber={6}
+      isActive={isActive}
+      isPlaying={isPlaying}
+      isLoading={isLoading}
+      progress={progress}
+      onPlay={onPlay}
+      onPause={onPause}
     >
       <div className="flex flex-col gap-5">
         {/* Tab Toggle */}
