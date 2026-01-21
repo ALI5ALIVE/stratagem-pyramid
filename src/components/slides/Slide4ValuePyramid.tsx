@@ -256,9 +256,9 @@ const Slide4ValuePyramid = () => {
       subtitle="Why value compounds when Safety + Procedures + Training are connected"
       slideNumber={4}
     >
-      <div className="grid lg:grid-cols-2 gap-3 lg:gap-4 items-stretch h-full">
+      <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch h-full">
         {/* LEFT: Pyramid Visual */}
-        <div className="w-full min-h-[340px] lg:min-h-[440px] flex items-center justify-center">
+        <div className="w-full min-h-[680px] lg:min-h-[880px] flex items-center justify-center">
           <Pyramid3D
             layers={layersData.map((layer) => ({
               id: layer.id,
@@ -275,7 +275,7 @@ const Slide4ValuePyramid = () => {
         </div>
 
         {/* RIGHT: Details Panel */}
-        <div className="h-full overflow-y-auto bg-card/30 rounded-md p-2 border border-border/30 flex flex-col">
+        <div className="h-full overflow-y-auto bg-card/30 rounded-lg p-4 border border-border/30 flex flex-col">
           <div className="flex-1 transition-opacity duration-300">
             <DetailsPanel layer={activeLayer} highlightedModule={highlightedModule} />
           </div>
