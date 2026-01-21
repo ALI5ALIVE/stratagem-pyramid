@@ -251,10 +251,10 @@ const Slide4ValuePyramid = () => {
 
   return (
     <SlideContainer
-      id="slide-4"
+      id="slide-6"
       title="The Readiness Ladder"
       subtitle="The building blocks: from fragmented compliance to predictive excellence"
-      slideNumber={4}
+      slideNumber={6}
     >
       <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch h-full">
         {/* LEFT: Pyramid Visual */}
