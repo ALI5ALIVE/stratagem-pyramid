@@ -78,18 +78,18 @@ const CustomTooltip = ({ active, payload }: any) => {
 const QuadrantLabel = ({ x, y, label, sublabel }: { x: number; y: number; label: string; sublabel: string }) => (
   <g>
     <rect
-      x={x - 85}
-      y={y - 16}
-      width={170}
-      height={38}
+      x={x - 100}
+      y={y - 18}
+      width={200}
+      height={44}
       fill="hsl(var(--card))"
       opacity={0.9}
       rx={6}
     />
-    <text x={x} y={y} textAnchor="middle" className="fill-foreground text-sm font-bold">
+    <text x={x} y={y} textAnchor="middle" className="fill-foreground text-base font-bold">
       {label}
     </text>
-    <text x={x} y={y + 16} textAnchor="middle" className="fill-muted-foreground text-xs">
+    <text x={x} y={y + 20} textAnchor="middle" className="fill-muted-foreground text-sm">
       {sublabel}
     </text>
   </g>
@@ -123,9 +123,9 @@ const Slide8PositioningMap = () => {
         {/* Chart Container */}
         <div className="bg-card rounded-xl border border-border p-5">
           {activeView === "matrix" ? (
-            <div className="w-full max-w-[480px] mx-auto aspect-square">
+            <div className="w-full max-w-[720px] mx-auto aspect-square">
               <ResponsiveContainer width="100%" height="100%">
-                <ScatterChart margin={{ top: 40, right: 30, bottom: 60, left: 60 }}>
+                <ScatterChart margin={{ top: 50, right: 40, bottom: 90, left: 80 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                   
                   {/* Reference lines for quadrants */}
@@ -138,20 +138,20 @@ const Slide8PositioningMap = () => {
                     domain={[0, 10]}
                     ticks={[0, 2, 4, 6, 8, 10]}
                     name="Full Capability Coverage"
-                    tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10 }}
+                    tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
                     axisLine={{ stroke: 'hsl(var(--border))' }}
                     label={{
                       value: "Full Capability Coverage →",
                       position: "bottom",
-                      offset: 25,
-                      style: { fill: 'hsl(var(--muted-foreground))', fontSize: 10 }
+                      offset: 15,
+                      style: { fill: 'hsl(var(--muted-foreground))', fontSize: 12 }
                     }}
                   />
                   <text 
                     x="50%" 
-                    y={370} 
+                    y={560} 
                     textAnchor="middle" 
-                    className="fill-muted-foreground/60 text-[8px]"
+                    className="fill-muted-foreground text-[10px]"
                   >
                     (Point Solution → Multi-Module Suite → Connected Platform)
                   </text>
@@ -161,16 +161,26 @@ const Slide8PositioningMap = () => {
                     domain={[0, 10]}
                     ticks={[0, 2, 4, 6, 8, 10]}
                     name="Strategic Value"
-                    tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10 }}
+                    tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
                     axisLine={{ stroke: 'hsl(var(--border))' }}
                     label={{
                       value: "Strategic Value →",
                       angle: -90,
                       position: "left",
-                      offset: 15,
-                      style: { fill: 'hsl(var(--muted-foreground))', fontSize: 10 }
+                      offset: 20,
+                      style: { fill: 'hsl(var(--muted-foreground))', fontSize: 12 }
                     }}
                   />
+                  <text 
+                    x={25} 
+                    y="50%" 
+                    textAnchor="middle" 
+                    className="fill-muted-foreground text-[10px]"
+                    transform="rotate(-90, 25, 50%)"
+                    style={{ transformOrigin: '25px 50%', transformBox: 'fill-box' }}
+                  >
+                    (Compliance Tool → Operational System → Strategic Platform)
+                  </text>
 
                   <Tooltip content={<CustomTooltip />} />
 
@@ -215,9 +225,9 @@ const Slide8PositioningMap = () => {
                             />
                             <text
                               x={cx}
-                              y={cy - size - 6}
+                              y={cy - size - 8}
                               textAnchor="middle"
-                              className="fill-foreground text-[10px] font-medium"
+                              className="fill-foreground text-xs font-medium"
                             >
                               {vendor.name}
                             </text>
@@ -228,15 +238,15 @@ const Slide8PositioningMap = () => {
                   ))}
 
                   {/* Quadrant labels */}
-                  <QuadrantLabel x={150} y={320} label="Point Tools" sublabel="Task-level Value" />
-                  <QuadrantLabel x={350} y={320} label="Functional Suite" sublabel="Breadth without Strategic Lift" />
-                  <QuadrantLabel x={150} y={70} label="Strategic Specialist" sublabel="High Value in a Narrow Domain" />
-                  <QuadrantLabel x={350} y={70} label="Platform Leader" sublabel="Full Capability + High Strategic Value" />
+                  <QuadrantLabel x={200} y={480} label="Point Tools" sublabel="Task-level Value" />
+                  <QuadrantLabel x={520} y={480} label="Functional Suite" sublabel="Breadth without Strategic Lift" />
+                  <QuadrantLabel x={200} y={100} label="Strategic Specialist" sublabel="High Value in a Narrow Domain" />
+                  <QuadrantLabel x={520} y={100} label="Platform Leader" sublabel="Full Capability + High Strategic Value" />
                 </ScatterChart>
               </ResponsiveContainer>
             </div>
           ) : (
-            <div className="w-full max-w-[480px] mx-auto aspect-square">
+            <div className="w-full max-w-[720px] mx-auto aspect-square">
               <ResponsiveContainer width="100%" height="100%">
                 <RadarChart data={radarData} margin={{ top: 10, right: 20, bottom: 10, left: 20 }}>
                   <PolarGrid stroke="hsl(var(--border))" />
