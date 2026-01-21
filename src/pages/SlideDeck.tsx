@@ -9,7 +9,6 @@ import Slide5MaturityCurve from "@/components/slides/Slide5MaturityCurve";
 import Slide6Investors from "@/components/slides/Slide6Investors";
 import Slide7Customers from "@/components/slides/Slide7Customers";
 import Slide8PositioningMap from "@/components/slides/Slide8PositioningMap";
-import complyLogo from "@/assets/comply365-logo-white.png";
 
 const slides = [
   { id: "slide-1", label: "Strategic Shift" },
@@ -118,11 +117,7 @@ const SlideDeck = () => {
             </span>
           </div>
 
-          <img 
-            src={complyLogo} 
-            alt="Comply365" 
-            className="h-6 sm:h-7 w-auto"
-          />
+          <div className="w-20" />
         </div>
       </header>
 
