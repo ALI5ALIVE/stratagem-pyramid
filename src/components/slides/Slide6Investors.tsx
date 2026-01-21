@@ -98,7 +98,6 @@ const Slide6Investors = () => {
     const nodeIndex = flywheelNodes.findIndex(n => n.tabValue === value);
     if (nodeIndex !== -1) {
       setActiveNode(nodeIndex);
-      // Reset the interval when user manually selects
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
@@ -115,7 +114,6 @@ const Slide6Investors = () => {
   const handleNodeClick = (nodeIndex: number) => {
     setActiveNode(nodeIndex);
     setActiveTab(flywheelNodes[nodeIndex].tabValue);
-    // Reset the interval
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
@@ -133,9 +131,10 @@ const Slide6Investors = () => {
       id="slide-6"
       title="Why the Platform + New Category Builds Shareholder Value"
       subtitle="A category-level repositioning designed to drive scalable growth, higher-quality revenue, and long-term defensibility"
+      slideNumber={8}
     >
       {/* Core Message Banner */}
-      <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/30 rounded-xl p-4 mb-6">
+      <div className="bg-primary/10 border border-primary/30 rounded-lg p-4 mb-6">
         <p className="text-sm text-foreground text-center">
           <span className="font-semibold text-primary">This is a category-level repositioning, not a messaging refresh.</span>{" "}
           It is designed to drive scalable growth, higher-quality revenue, and long-term defensibility.
@@ -145,27 +144,27 @@ const Slide6Investors = () => {
       <div className="grid lg:grid-cols-2 gap-6 lg:gap-10">
         {/* Value Flywheel Visual */}
         <div className="relative flex items-center justify-center">
-          <div className="relative w-72 h-72 lg:w-80 lg:h-80">
+          <div className="relative w-64 h-64 lg:w-72 lg:h-72">
             {/* Circular background */}
-            <div className="absolute inset-0 rounded-full border-2 border-dashed border-primary/30" />
+            <div className="absolute inset-0 rounded-full border border-dashed border-primary/30" />
             
             {/* Animated ring */}
-            <svg className="absolute inset-0 w-full h-full" viewBox="0 0 320 320">
+            <svg className="absolute inset-0 w-full h-full" viewBox="0 0 288 288">
               <defs>
-                <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <linearGradient id="ringGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stopColor="hsl(var(--primary))" />
                   <stop offset="100%" stopColor="hsl(var(--accent))" />
                 </linearGradient>
               </defs>
               <circle
-                cx="160"
-                cy="160"
-                r="140"
+                cx="144"
+                cy="144"
+                r="125"
                 fill="none"
-                stroke="url(#ringGradient)"
-                strokeWidth="4"
-                strokeDasharray="880"
-                strokeDashoffset={880 - (activeNode + 1) * 220}
+                stroke="url(#ringGrad2)"
+                strokeWidth="3"
+                strokeDasharray="785"
+                strokeDashoffset={785 - (activeNode + 1) * 196}
                 strokeLinecap="round"
                 className="transition-all duration-500"
               />
@@ -174,17 +173,17 @@ const Slide6Investors = () => {
             {/* Center label */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center">
-                <p className="text-lg font-bold text-primary">Shareholder</p>
-                <p className="text-sm text-muted-foreground">Value</p>
+                <p className="text-base font-bold text-primary">Shareholder</p>
+                <p className="text-xs text-muted-foreground">Value</p>
               </div>
             </div>
 
             {/* Nodes */}
             {flywheelNodes.map((node, index) => {
               const angle = (index * 90 - 90) * (Math.PI / 180);
-              const radius = 130;
-              const x = 160 + radius * Math.cos(angle);
-              const y = 160 + radius * Math.sin(angle);
+              const radius = 115;
+              const x = 144 + radius * Math.cos(angle);
+              const y = 144 + radius * Math.sin(angle);
               const isActive = activeNode === index;
               const Icon = node.icon;
 
@@ -193,16 +192,16 @@ const Slide6Investors = () => {
                   key={node.id}
                   onClick={() => handleNodeClick(index)}
                   className={`
-                    absolute w-20 h-20 lg:w-24 lg:h-24 -translate-x-1/2 -translate-y-1/2 rounded-xl
+                    absolute w-16 h-16 lg:w-20 lg:h-20 -translate-x-1/2 -translate-y-1/2 rounded-lg
                     flex flex-col items-center justify-center p-2 transition-all duration-300 cursor-pointer
                     ${isActive 
-                      ? 'bg-primary/20 border-2 border-primary shadow-lg shadow-primary/30 scale-110' 
-                      : 'bg-card/50 border border-muted-foreground/30 hover:border-primary/50'}
+                      ? 'bg-primary/20 border-2 border-primary scale-110' 
+                      : 'bg-card border border-border hover:border-primary/50'}
                   `}
                   style={{ left: x, top: y }}
                 >
-                  <Icon className={`w-5 h-5 lg:w-6 lg:h-6 mb-1 ${isActive ? 'text-primary' : 'text-muted-foreground'}`} />
-                  <span className={`text-xs text-center font-medium leading-tight ${isActive ? 'text-foreground' : 'text-muted-foreground'}`}>
+                  <Icon className={`w-4 h-4 lg:w-5 lg:h-5 mb-1 ${isActive ? 'text-primary' : 'text-muted-foreground'}`} />
+                  <span className={`text-[10px] text-center font-medium leading-tight ${isActive ? 'text-foreground' : 'text-muted-foreground'}`}>
                     {node.label}
                   </span>
                 </button>
@@ -210,8 +209,8 @@ const Slide6Investors = () => {
             })}
 
             {/* Rotation indicator */}
-            <div className="absolute top-1/2 right-0 transform translate-x-4 -translate-y-1/2">
-              <RotateCw className="w-5 h-5 text-primary animate-spin" style={{ animationDuration: '8s' }} />
+            <div className="absolute top-1/2 right-0 transform translate-x-3 -translate-y-1/2">
+              <RotateCw className="w-4 h-4 text-primary animate-spin" style={{ animationDuration: '8s' }} />
             </div>
           </div>
         </div>
@@ -219,7 +218,7 @@ const Slide6Investors = () => {
         {/* Tabbed Content */}
         <div className="space-y-4">
           <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-            <TabsList className="grid w-full grid-cols-4 h-auto p-1">
+            <TabsList className="grid w-full grid-cols-4 h-auto p-1 bg-card">
               <TabsTrigger value="growth" className="text-xs px-2 py-2">
                 <TrendingUp className="w-3 h-3 mr-1" />
                 <span className="hidden sm:inline">Growth</span>
@@ -239,19 +238,19 @@ const Slide6Investors = () => {
             </TabsList>
 
             {Object.entries(pillars).map(([key, pillar]) => (
-              <TabsContent key={key} value={key} className="mt-4 space-y-4">
+              <TabsContent key={key} value={key} className="mt-4 space-y-3">
                 <div>
-                  <h3 className="text-base font-semibold text-foreground mb-2">{pillar.title}</h3>
-                  <p className="text-sm text-muted-foreground">{pillar.description}</p>
+                  <h3 className="text-sm font-semibold text-foreground mb-1">{pillar.title}</h3>
+                  <p className="text-xs text-muted-foreground">{pillar.description}</p>
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-2">
                   <div>
-                    <p className="text-xs font-medium text-primary mb-2 flex items-center gap-1">
+                    <p className="text-xs font-medium text-primary mb-1.5 flex items-center gap-1">
                       <Target className="w-3 h-3" />
                       {key === "revenue" ? "How revenue scales:" : key === "ai" ? "What AI accelerates:" : "What this unlocks:"}
                     </p>
-                    <ul className="space-y-1.5">
+                    <ul className="space-y-1">
                       {pillar.unlocks.map((item, idx) => (
                         <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
                           <Zap className="w-3 h-3 text-accent mt-0.5 shrink-0" />
@@ -262,12 +261,12 @@ const Slide6Investors = () => {
                   </div>
 
                   {"critical" in pillar && pillar.critical && (
-                    <div className="bg-accent/10 border border-accent/30 rounded-lg p-3">
-                      <p className="text-xs font-medium text-accent mb-1.5 flex items-center gap-1">
+                    <div className="bg-accent/10 border border-accent/30 rounded-lg p-2.5">
+                      <p className="text-xs font-medium text-accent mb-1 flex items-center gap-1">
                         <Lock className="w-3 h-3" />
                         Critically:
                       </p>
-                      <ul className="space-y-1">
+                      <ul className="space-y-0.5">
                         {pillar.critical.map((item, idx) => (
                           <li key={idx} className="text-xs text-muted-foreground flex items-center gap-2">
                             <span className="w-1 h-1 rounded-full bg-accent shrink-0" />
@@ -278,12 +277,12 @@ const Slide6Investors = () => {
                     </div>
                   )}
 
-                  <div className="bg-primary/5 border border-primary/20 rounded-lg p-3">
-                    <p className="text-xs font-medium text-primary mb-1.5 flex items-center gap-1">
+                  <div className="bg-primary/5 border border-primary/20 rounded-lg p-2.5">
+                    <p className="text-xs font-medium text-primary mb-1 flex items-center gap-1">
                       <Users className="w-3 h-3" />
                       Shareholder impact:
                     </p>
-                    <ul className="space-y-1">
+                    <ul className="space-y-0.5">
                       {pillar.impacts.map((impact, idx) => (
                         <li key={idx} className="text-xs text-foreground flex items-start gap-2">
                           <TrendingUp className="w-3 h-3 text-primary mt-0.5 shrink-0" />
@@ -300,8 +299,8 @@ const Slide6Investors = () => {
       </div>
 
       {/* Closing Takeaway */}
-      <div className="mt-6 bg-gradient-to-r from-primary/15 to-accent/15 border border-primary/40 rounded-xl p-5">
-        <p className="text-sm text-foreground text-center leading-relaxed">
+      <div className="mt-6 bg-primary/10 border border-primary/30 rounded-lg p-4">
+        <p className="text-xs text-foreground text-center leading-relaxed">
           <span className="font-semibold text-primary">Closing takeaway:</span>{" "}
           Comply365 is repositioning around a platform category that compounds value over time — expanding market opportunity, improving revenue quality, and creating a durable operating-model moat that supports long-term shareholder value.
         </p>

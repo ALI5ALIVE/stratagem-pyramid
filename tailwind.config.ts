@@ -58,6 +58,15 @@ export default {
           transformational: "hsl(var(--pyramid-transformational))",
           fragmentation: "hsl(var(--pyramid-fragmentation))",
         },
+        comply: {
+          blue: "hsl(var(--comply-blue))",
+          sky: "hsl(var(--comply-sky))",
+          teal: "hsl(var(--comply-teal))",
+          plum: "hsl(var(--comply-plum))",
+          dark: "hsl(var(--comply-dark))",
+          light: "hsl(var(--comply-light))",
+          red: "hsl(var(--comply-red))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

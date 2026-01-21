@@ -9,6 +9,7 @@ import Slide5MaturityCurve from "@/components/slides/Slide5MaturityCurve";
 import Slide6Investors from "@/components/slides/Slide6Investors";
 import Slide7Customers from "@/components/slides/Slide7Customers";
 import Slide8PositioningMap from "@/components/slides/Slide8PositioningMap";
+import complyLogo from "@/assets/comply365-logo.png";
 
 const slides = [
   { id: "slide-1", label: "Strategic Shift" },
@@ -92,10 +93,10 @@ const SlideDeck = () => {
 
   return (
     <div className="h-screen w-screen bg-background overflow-hidden relative">
-      {/* Progress bar */}
+      {/* Progress bar - Comply365 blue */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-muted z-50">
         <div
-          className="h-full bg-gradient-to-r from-primary to-accent transition-all duration-150"
+          className="h-full bg-primary transition-all duration-150"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
@@ -108,18 +109,20 @@ const SlideDeck = () => {
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span className="hidden sm:inline">Back to Platform</span>
+            <span className="hidden sm:inline">Back</span>
           </Link>
           
           <div className="text-center">
             <span className="text-xs text-muted-foreground">
-              Slide {activeSlide + 1} of {slides.length}
+              {activeSlide + 1} / {slides.length}
             </span>
           </div>
 
-          <div className="text-sm font-medium text-foreground">
-            Comply365
-          </div>
+          <img 
+            src={complyLogo} 
+            alt="Comply365" 
+            className="h-6 sm:h-7 w-auto"
+          />
         </div>
       </header>
 
@@ -129,9 +132,7 @@ const SlideDeck = () => {
           <button
             key={slide.id}
             onClick={() => scrollToSlide(index)}
-            className={`
-              group flex items-center gap-2 transition-all duration-200
-            `}
+            className="group flex items-center gap-2 transition-all duration-200"
           >
             <span className={`
               text-xs opacity-0 group-hover:opacity-100 transition-opacity text-right
@@ -143,7 +144,7 @@ const SlideDeck = () => {
               className={`
                 w-2 h-2 rounded-full transition-all duration-200
                 ${activeSlide === index
-                  ? "bg-primary scale-150 shadow-lg shadow-primary/50"
+                  ? "bg-primary scale-150"
                   : "bg-muted-foreground/30 hover:bg-muted-foreground/50"}
               `}
             />
@@ -156,14 +157,14 @@ const SlideDeck = () => {
         <button
           onClick={() => navigateSlide("up")}
           disabled={activeSlide === 0}
-          className="w-10 h-10 rounded-full bg-card/80 border border-muted-foreground/20 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/50 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+          className="w-10 h-10 rounded-full bg-card/80 border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary disabled:opacity-30 disabled:cursor-not-allowed transition-all"
         >
           <ChevronUp className="w-5 h-5" />
         </button>
         <button
           onClick={() => navigateSlide("down")}
           disabled={activeSlide === slides.length - 1}
-          className="w-10 h-10 rounded-full bg-card/80 border border-muted-foreground/20 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/50 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+          className="w-10 h-10 rounded-full bg-card/80 border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary disabled:opacity-30 disabled:cursor-not-allowed transition-all"
         >
           <ChevronDown className="w-5 h-5" />
         </button>

@@ -1,5 +1,5 @@
 import SlideContainer from "./SlideContainer";
-import { AlertCircle, CheckCircle2, ArrowRight } from "lucide-react";
+import { AlertCircle, CheckCircle2 } from "lucide-react";
 
 const Slide2BeforeAfter = () => {
   const beforeItems = [
@@ -19,52 +19,42 @@ const Slide2BeforeAfter = () => {
   return (
     <SlideContainer
       id="slide-2"
-      title="Before & After: Point Tools vs Connected Platform"
-      subtitle="From siloed compliance to a connected operating model"
+      title="Before & After"
+      subtitle="Point Tools vs Connected Platform"
+      slideNumber={2}
     >
-      <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+      <div className="grid md:grid-cols-2 gap-6 lg:gap-10">
         {/* Before */}
         <div className="relative">
-          <div className="absolute inset-0 bg-destructive/10 blur-3xl rounded-3xl" />
-          <div className="relative bg-card/30 border border-destructive/30 rounded-2xl p-6 sm:p-8">
+          <div className="relative bg-card border border-destructive/30 rounded-xl p-6 sm:p-8">
             <div className="flex items-center gap-3 mb-6">
-              <AlertCircle className="w-6 h-6 text-destructive" />
-              <h3 className="text-xl font-bold text-destructive">Before</h3>
-              <span className="text-sm text-muted-foreground">(Fragmented Reality)</span>
+              <div className="w-10 h-10 rounded-lg bg-destructive/20 flex items-center justify-center">
+                <AlertCircle className="w-5 h-5 text-destructive" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-destructive">Before</h3>
+                <span className="text-xs text-muted-foreground">Fragmented Reality</span>
+              </div>
             </div>
 
             {/* Disconnected circles visual */}
-            <div className="relative h-48 mb-6">
-              <svg viewBox="0 0 300 150" className="w-full h-full">
-                <defs>
-                  <filter id="redGlow">
-                    <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-                    <feMerge>
-                      <feMergeNode in="coloredBlur" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                  </filter>
-                </defs>
-                
+            <div className="relative h-40 mb-6">
+              <svg viewBox="0 0 300 120" className="w-full h-full">
                 {/* Broken connection lines */}
-                <line x1="80" y1="75" x2="110" y2="75" stroke="hsl(var(--destructive))" strokeWidth="2" strokeDasharray="4 4" opacity="0.5" />
-                <line x1="190" y1="75" x2="220" y2="75" stroke="hsl(var(--destructive))" strokeWidth="2" strokeDasharray="4 4" opacity="0.5" />
+                <line x1="80" y1="60" x2="110" y2="60" stroke="hsl(var(--destructive))" strokeWidth="2" strokeDasharray="4 4" opacity="0.5" />
+                <line x1="190" y1="60" x2="220" y2="60" stroke="hsl(var(--destructive))" strokeWidth="2" strokeDasharray="4 4" opacity="0.5" />
                 
                 {/* Safety circle */}
-                <circle cx="55" cy="75" r="40" fill="none" stroke="hsl(var(--destructive))" strokeWidth="2" opacity="0.6" />
-                <text x="55" y="75" textAnchor="middle" dominantBaseline="middle" fill="hsl(var(--destructive))" fontSize="10" fontWeight="600">Safety</text>
+                <circle cx="55" cy="60" r="35" fill="none" stroke="hsl(var(--destructive))" strokeWidth="2" opacity="0.6" />
+                <text x="55" y="60" textAnchor="middle" dominantBaseline="middle" fill="hsl(var(--destructive))" fontSize="10" fontWeight="600">Safety</text>
                 
                 {/* Procedures circle */}
-                <circle cx="150" cy="75" r="40" fill="none" stroke="hsl(var(--destructive))" strokeWidth="2" opacity="0.6" />
-                <text x="150" y="75" textAnchor="middle" dominantBaseline="middle" fill="hsl(var(--destructive))" fontSize="10" fontWeight="600">Procedures</text>
+                <circle cx="150" cy="60" r="35" fill="none" stroke="hsl(var(--destructive))" strokeWidth="2" opacity="0.6" />
+                <text x="150" y="60" textAnchor="middle" dominantBaseline="middle" fill="hsl(var(--destructive))" fontSize="10" fontWeight="600">Procedures</text>
                 
                 {/* Training circle */}
-                <circle cx="245" cy="75" r="40" fill="none" stroke="hsl(var(--destructive))" strokeWidth="2" opacity="0.6" />
-                <text x="245" y="75" textAnchor="middle" dominantBaseline="middle" fill="hsl(var(--destructive))" fontSize="10" fontWeight="600">Training</text>
-                
-                {/* Warning icons */}
-                <text x="105" y="50" fill="hsl(var(--destructive))" fontSize="16">⚠</text>
-                <text x="195" y="100" fill="hsl(var(--destructive))" fontSize="16">⚠</text>
+                <circle cx="245" cy="60" r="35" fill="none" stroke="hsl(var(--destructive))" strokeWidth="2" opacity="0.6" />
+                <text x="245" y="60" textAnchor="middle" dominantBaseline="middle" fill="hsl(var(--destructive))" fontSize="10" fontWeight="600">Training</text>
               </svg>
             </div>
 
@@ -77,9 +67,9 @@ const Slide2BeforeAfter = () => {
               ))}
             </ul>
 
-            <div className="mt-6 p-3 bg-destructive/10 rounded-lg border border-destructive/20">
+            <div className="mt-6 p-4 bg-destructive/10 rounded-lg border border-destructive/20">
               <p className="text-sm text-destructive font-medium">
-                Result: High variability, repeat issues, slow recovery, inconsistent readiness proof
+                Result: High variability, repeat issues, slow recovery
               </p>
             </div>
           </div>
@@ -87,50 +77,46 @@ const Slide2BeforeAfter = () => {
 
         {/* After */}
         <div className="relative">
-          <div className="absolute inset-0 bg-primary/10 blur-3xl rounded-3xl" />
-          <div className="relative bg-card/30 border border-primary/30 rounded-2xl p-6 sm:p-8">
+          <div className="relative bg-card border border-primary/30 rounded-xl p-6 sm:p-8">
             <div className="flex items-center gap-3 mb-6">
-              <CheckCircle2 className="w-6 h-6 text-primary" />
-              <h3 className="text-xl font-bold text-primary">After</h3>
-              <span className="text-sm text-muted-foreground">(Platform Operating Model)</span>
+              <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+                <CheckCircle2 className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-primary">After</h3>
+                <span className="text-xs text-muted-foreground">Platform Operating Model</span>
+              </div>
             </div>
 
             {/* Connected circles visual */}
-            <div className="relative h-48 mb-6">
-              <svg viewBox="0 0 300 150" className="w-full h-full">
+            <div className="relative h-40 mb-6">
+              <svg viewBox="0 0 300 120" className="w-full h-full">
                 <defs>
-                  <filter id="greenGlow">
-                    <feGaussianBlur stdDeviation="4" result="coloredBlur" />
-                    <feMerge>
-                      <feMergeNode in="coloredBlur" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                  </filter>
-                  <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <linearGradient id="connectionGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stopColor="hsl(var(--primary))" />
                     <stop offset="100%" stopColor="hsl(var(--accent))" />
                   </linearGradient>
                 </defs>
                 
                 {/* Connection lines */}
-                <path d="M 80 75 Q 115 50 150 75" fill="none" stroke="url(#connectionGradient)" strokeWidth="3" filter="url(#greenGlow)" />
-                <path d="M 150 75 Q 185 100 220 75" fill="none" stroke="url(#connectionGradient)" strokeWidth="3" filter="url(#greenGlow)" />
+                <path d="M 80 60 Q 115 35 150 60" fill="none" stroke="url(#connectionGrad)" strokeWidth="3" />
+                <path d="M 150 60 Q 185 85 220 60" fill="none" stroke="url(#connectionGrad)" strokeWidth="3" />
                 
                 {/* Loop arrow */}
-                <path d="M 245 55 Q 280 75 245 95 Q 210 115 150 115 Q 90 115 55 95 Q 20 75 55 55 Q 90 35 150 35 Q 210 35 245 55" 
-                      fill="none" stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="6 3" opacity="0.5" />
+                <path d="M 245 45 Q 275 60 245 75 Q 200 95 150 95 Q 100 95 55 75 Q 25 60 55 45 Q 100 25 150 25 Q 200 25 245 45" 
+                      fill="none" stroke="hsl(var(--primary))" strokeWidth="1.5" strokeDasharray="6 3" opacity="0.4" />
                 
                 {/* Safety circle */}
-                <circle cx="55" cy="75" r="40" fill="hsl(var(--primary) / 0.1)" stroke="hsl(var(--primary))" strokeWidth="2" filter="url(#greenGlow)" />
-                <text x="55" y="75" textAnchor="middle" dominantBaseline="middle" fill="hsl(var(--primary))" fontSize="10" fontWeight="600">Safety</text>
+                <circle cx="55" cy="60" r="35" fill="hsl(var(--primary) / 0.1)" stroke="hsl(var(--primary))" strokeWidth="2" />
+                <text x="55" y="60" textAnchor="middle" dominantBaseline="middle" fill="hsl(var(--primary))" fontSize="10" fontWeight="600">Safety</text>
                 
                 {/* Procedures circle */}
-                <circle cx="150" cy="75" r="40" fill="hsl(var(--primary) / 0.1)" stroke="hsl(var(--primary))" strokeWidth="2" filter="url(#greenGlow)" />
-                <text x="150" y="75" textAnchor="middle" dominantBaseline="middle" fill="hsl(var(--primary))" fontSize="10" fontWeight="600">Procedures</text>
+                <circle cx="150" cy="60" r="35" fill="hsl(var(--primary) / 0.1)" stroke="hsl(var(--primary))" strokeWidth="2" />
+                <text x="150" y="60" textAnchor="middle" dominantBaseline="middle" fill="hsl(var(--primary))" fontSize="10" fontWeight="600">Procedures</text>
                 
                 {/* Training circle */}
-                <circle cx="245" cy="75" r="40" fill="hsl(var(--primary) / 0.1)" stroke="hsl(var(--primary))" strokeWidth="2" filter="url(#greenGlow)" />
-                <text x="245" y="75" textAnchor="middle" dominantBaseline="middle" fill="hsl(var(--primary))" fontSize="10" fontWeight="600">Training</text>
+                <circle cx="245" cy="60" r="35" fill="hsl(var(--primary) / 0.1)" stroke="hsl(var(--primary))" strokeWidth="2" />
+                <text x="245" y="60" textAnchor="middle" dominantBaseline="middle" fill="hsl(var(--primary))" fontSize="10" fontWeight="600">Training</text>
               </svg>
             </div>
 
@@ -143,7 +129,7 @@ const Slide2BeforeAfter = () => {
               ))}
             </ul>
 
-            <div className="mt-6 p-3 bg-primary/10 rounded-lg border border-primary/20">
+            <div className="mt-6 p-4 bg-primary/10 rounded-lg border border-primary/20">
               <p className="text-sm text-primary font-medium">
                 Result: Reduced variability, faster recovery, continuous proof
               </p>
@@ -154,9 +140,9 @@ const Slide2BeforeAfter = () => {
 
       {/* Unlike callout */}
       <div className="mt-8 max-w-4xl mx-auto">
-        <div className="bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 border border-primary/20 rounded-xl p-6">
+        <div className="bg-card border border-primary/30 rounded-xl p-6">
           <p className="text-sm text-muted-foreground">
-            <span className="font-semibold text-foreground">Unlike</span> point solutions that manage safety, procedures, or training in isolation, 
+            <span className="font-semibold text-primary">Unlike</span> point solutions that manage safety, procedures, or training in isolation, 
             Comply365 unifies all three into one governed platform so operational signals trigger controlled change, 
             workforce readiness, and audit-ready proof by default.
           </p>

@@ -6,61 +6,84 @@
 
 @layer base {
   :root {
-    /* Dark premium theme */
-    --background: 222 47% 6%;
-    --foreground: 210 40% 98%;
+    /* Comply365 Brand Colors - Dark Theme */
+    --background: 230 25% 5%;
+    --foreground: 0 0% 98%;
 
-    --card: 222 47% 8%;
-    --card-foreground: 210 40% 98%;
+    --card: 230 25% 8%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 222 47% 8%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 230 25% 8%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 199 89% 48%;
-    --primary-foreground: 222 47% 6%;
+    /* Comply365 Primary Blue */
+    --primary: 217 100% 50%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 222 47% 12%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 230 25% 12%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 222 47% 15%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 230 25% 15%;
+    --muted-foreground: 220 15% 60%;
 
-    --accent: 199 89% 48%;
-    --accent-foreground: 222 47% 6%;
+    /* Comply365 Sky Blue Accent */
+    --accent: 195 100% 45%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 222 47% 18%;
-    --input: 222 47% 18%;
-    --ring: 199 89% 48%;
+    --border: 230 25% 18%;
+    --input: 230 25% 18%;
+    --ring: 217 100% 50%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
+
+    /* Comply365 Brand Extended Colors */
+    --comply-blue: 217 100% 50%;
+    --comply-sky: 195 100% 45%;
+    --comply-teal: 173 80% 40%;
+    --comply-plum: 300 65% 50%;
+    --comply-dark: 230 25% 5%;
+    --comply-light: 0 0% 100%;
+    --comply-red: 0 75% 55%;
 
     /* Custom pyramid colors */
-    --pyramid-foundation: 199 89% 48%;
-    --pyramid-operational: 173 80% 40%;
-    --pyramid-commercial: 280 65% 55%;
+    --pyramid-foundation: 217 100% 50%;
+    --pyramid-operational: 195 100% 45%;
+    --pyramid-commercial: 300 65% 50%;
     --pyramid-transformational: 45 93% 58%;
-    --pyramid-fragmentation: 0 70% 50%;
+    --pyramid-fragmentation: 0 75% 55%;
 
     /* Glow effects */
-    --glow-primary: 0 0 30px hsl(199 89% 48% / 0.4);
-    --glow-foundation: 0 0 40px hsl(199 89% 48% / 0.5);
-    --glow-operational: 0 0 40px hsl(173 80% 40% / 0.5);
-    --glow-commercial: 0 0 40px hsl(280 65% 55% / 0.5);
+    --glow-primary: 0 0 30px hsl(217 100% 50% / 0.4);
+    --glow-foundation: 0 0 40px hsl(217 100% 50% / 0.5);
+    --glow-operational: 0 0 40px hsl(195 100% 45% / 0.5);
+    --glow-commercial: 0 0 40px hsl(300 65% 50% / 0.5);
     --glow-transformational: 0 0 40px hsl(45 93% 58% / 0.5);
-    --glow-fragmentation: 0 0 40px hsl(0 70% 50% / 0.5);
+    --glow-fragmentation: 0 0 40px hsl(0 75% 55% / 0.5);
 
     /* Gradients */
-    --gradient-dark: linear-gradient(180deg, hsl(222 47% 8%) 0%, hsl(222 47% 4%) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(222 47% 10%) 0%, hsl(222 47% 6%) 100%);
-    --gradient-glow: radial-gradient(ellipse at center, hsl(199 89% 48% / 0.1) 0%, transparent 70%);
+    --gradient-dark: linear-gradient(180deg, hsl(230 25% 8%) 0%, hsl(230 25% 4%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(230 25% 10%) 0%, hsl(230 25% 6%) 100%);
+    --gradient-glow: radial-gradient(ellipse at center, hsl(217 100% 50% / 0.1) 0%, transparent 70%);
+    --gradient-comply-diagonal: linear-gradient(135deg, hsl(217 100% 50%) 0%, hsl(195 100% 45%) 100%);
   }
 
   .dark {
-    --background: 222 47% 6%;
-    --foreground: 210 40% 98%;
+    --background: 230 25% 5%;
+    --foreground: 0 0% 98%;
+  }
+
+  /* Light variant for specific slides */
+  .slide-light {
+    --background: 0 0% 100%;
+    --foreground: 230 25% 10%;
+    --card: 220 20% 97%;
+    --card-foreground: 230 25% 10%;
+    --muted: 220 15% 92%;
+    --muted-foreground: 220 15% 40%;
+    --border: 220 15% 88%;
   }
 }
 
@@ -164,12 +187,46 @@
 @layer utilities {
   .text-gradient-primary {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(199 89% 48%) 0%, hsl(173 80% 50%) 100%);
+    background-image: linear-gradient(135deg, hsl(217 100% 50%) 0%, hsl(195 100% 45%) 100%);
   }
 
   .text-gradient-gold {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(135deg, hsl(45 93% 58%) 0%, hsl(35 90% 50%) 100%);
+  }
+
+  /* Comply365 Title Accent - Red underline */
+  .title-accent {
+    position: relative;
+    display: inline-block;
+  }
+
+  .title-accent::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: hsl(var(--comply-red));
+    border-radius: 2px;
+  }
+
+  /* Diagonal overlay for divider slides */
+  .diagonal-overlay {
+    position: relative;
+  }
+
+  .diagonal-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(135deg, hsl(217 100% 50% / 0.9) 0%, hsl(195 100% 45% / 0.7) 100%);
+    clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+    z-index: 0;
   }
 
   .animate-pulse-glow {
@@ -217,6 +274,6 @@
   }
 
   .maturity-curve-container svg {
-    filter: drop-shadow(0 0 20px hsl(199 89% 48% / 0.1));
+    filter: drop-shadow(0 0 20px hsl(217 100% 50% / 0.1));
   }
 }
