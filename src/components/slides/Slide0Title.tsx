@@ -63,7 +63,7 @@ const Slide0Title = () => {
           <p className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
             From fragmented compliance tools to a connected platform 
             <br className="hidden sm:block" />
-            that delivers <span className="text-primary font-medium">predictable excellence</span> at scale.
+            that delivers <span className="text-primary font-medium">operational performance</span> at scale.
           </p>
         </div>
 
