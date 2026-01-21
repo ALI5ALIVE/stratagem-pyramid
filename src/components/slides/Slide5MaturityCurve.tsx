@@ -237,7 +237,7 @@ const Slide5MaturityCurve = () => {
             <svg
               viewBox={viewBox}
               className="w-full h-auto"
-              style={{ maxHeight: isMobile ? "220px" : "320px" }}
+              style={{ maxHeight: isMobile ? "440px" : "640px" }}
             >
               <defs>
                 <linearGradient id="slideGradient" x1="0%" y1="100%" x2="100%" y2="0%">
