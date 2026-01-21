@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
+import Slide0Title from "@/components/slides/Slide0Title";
 import Slide1StrategicShift from "@/components/slides/Slide1StrategicShift";
 import Slide2BeforeAfter from "@/components/slides/Slide2BeforeAfter";
 import Slide3OperatingModel from "@/components/slides/Slide3OperatingModel";
@@ -11,6 +12,7 @@ import Slide7Customers from "@/components/slides/Slide7Customers";
 import Slide8PositioningMap from "@/components/slides/Slide8PositioningMap";
 
 const slides = [
+  { id: "slide-0", label: "Title" },
   { id: "slide-1", label: "Strategic Shift" },
   { id: "slide-2", label: "Before & After" },
   { id: "slide-3", label: "Operating Model" },
@@ -170,6 +172,7 @@ const SlideDeck = () => {
         ref={containerRef}
         className="h-full w-full overflow-y-auto snap-y snap-mandatory scroll-smooth"
       >
+        <Slide0Title />
         <Slide1StrategicShift />
         <Slide2BeforeAfter />
         <Slide3OperatingModel />
