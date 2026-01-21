@@ -1,12 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import SlideContainer from "./SlideContainer";
-import { TrendingUp, Shield, Brain, BarChart3, RotateCw, Target, Zap, Users, Lock } from "lucide-react";
+import { TrendingUp, Shield, Brain, BarChart3, Target, Zap, Users, Lock } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Slide6Investors = () => {
   const [activeNode, setActiveNode] = useState(0);
   const [activeTab, setActiveTab] = useState("growth");
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const flywheelNodes = [
     { id: 0, label: "Growth", subtitle: "TAM + Win Rates", icon: TrendingUp, tabValue: "growth" },
@@ -77,53 +76,18 @@ const Slide6Investors = () => {
     },
   };
 
-  useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      setActiveNode((prev) => {
-        const next = (prev + 1) % 4;
-        setActiveTab(flywheelNodes[next].tabValue);
-        return next;
-      });
-    }, 4000);
-
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, []);
 
   const handleTabChange = (value: string) => {
     setActiveTab(value);
     const nodeIndex = flywheelNodes.findIndex(n => n.tabValue === value);
     if (nodeIndex !== -1) {
       setActiveNode(nodeIndex);
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-      intervalRef.current = setInterval(() => {
-        setActiveNode((prev) => {
-          const next = (prev + 1) % 4;
-          setActiveTab(flywheelNodes[next].tabValue);
-          return next;
-        });
-      }, 4000);
     }
   };
 
   const handleNodeClick = (nodeIndex: number) => {
     setActiveNode(nodeIndex);
     setActiveTab(flywheelNodes[nodeIndex].tabValue);
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-    }
-    intervalRef.current = setInterval(() => {
-      setActiveNode((prev) => {
-        const next = (prev + 1) % 4;
-        setActiveTab(flywheelNodes[next].tabValue);
-        return next;
-      });
-    }, 4000);
   };
 
   return (
@@ -208,10 +172,6 @@ const Slide6Investors = () => {
               );
             })}
 
-            {/* Rotation indicator */}
-            <div className="absolute top-1/2 right-0 transform translate-x-3 -translate-y-1/2">
-              <RotateCw className="w-4 h-4 text-primary animate-spin" style={{ animationDuration: '8s' }} />
-            </div>
           </div>
         </div>
 
