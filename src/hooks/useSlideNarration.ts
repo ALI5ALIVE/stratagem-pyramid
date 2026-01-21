@@ -36,15 +36,30 @@ export const useSlideNarration = (activeSlide: number): UseSlideNarrationReturn 
   const lastPlayedSlideRef = useRef<number>(-1);
   const abortControllerRef = useRef<AbortController | null>(null);
   const playbackTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const currentAudioIdRef = useRef<number>(0); // Unique ID per playback attempt
+  const isPlayingRef = useRef<boolean>(false);
 
   // Stop current audio and clean up
   const stopCurrentAudio = useCallback(() => {
     if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-      audioRef.current.src = "";
+      const audio = audioRef.current;
+      
+      // Remove all event listeners to prevent stale callbacks
+      audio.onended = null;
+      audio.ontimeupdate = null;
+      audio.onerror = null;
+      
+      // Stop playback
+      audio.pause();
+      audio.currentTime = 0;
+      
+      // Release the media resource
+      audio.src = "";
+      audio.load(); // Forces the browser to release the audio resource
+      
       audioRef.current = null;
     }
+    isPlayingRef.current = false;
     setState(prev => ({
       ...prev,
       isPlaying: false,
@@ -117,46 +132,79 @@ export const useSlideNarration = (activeSlide: number): UseSlideNarrationReturn 
   const playNarration = useCallback(async (slideId: number) => {
     if (state.isMuted) return;
 
+    // Generate a unique ID for this playback attempt
+    const playbackId = ++currentAudioIdRef.current;
+
     try {
       setState(prev => ({ ...prev, isLoading: true, error: null }));
 
-      // Stop current audio properly
+      // Stop current audio properly FIRST
       stopCurrentAudio();
+
+      // Small delay to ensure cleanup is complete
+      await new Promise(resolve => setTimeout(resolve, 50));
+
+      // Check if another playback was started while we were waiting
+      if (playbackId !== currentAudioIdRef.current) {
+        console.log(`Playback ${playbackId} superseded during cleanup, aborting`);
+        return;
+      }
 
       const audioUrl = await generateAudio(slideId);
       
+      // Double-check this is still the current playback request after async fetch
+      if (playbackId !== currentAudioIdRef.current) {
+        console.log(`Playback ${playbackId} superseded after fetch, aborting`);
+        setState(prev => ({ ...prev, isLoading: false }));
+        return;
+      }
+      
       const audio = new Audio(audioUrl);
       audioRef.current = audio;
+      isPlayingRef.current = true;
 
-      // Track progress
-      audio.addEventListener("timeupdate", () => {
-        if (audio.duration) {
+      // Use property assignment instead of addEventListener
+      // These are automatically cleaned up when audio reference changes
+      audio.ontimeupdate = () => {
+        if (audio.duration && playbackId === currentAudioIdRef.current) {
           setState(prev => ({
             ...prev,
             progress: (audio.currentTime / audio.duration) * 100,
           }));
         }
-      });
+      };
 
-      audio.addEventListener("ended", () => {
-        setState(prev => ({
-          ...prev,
-          isPlaying: false,
-          progress: 0,
-        }));
-      });
+      audio.onended = () => {
+        if (playbackId === currentAudioIdRef.current) {
+          isPlayingRef.current = false;
+          setState(prev => ({
+            ...prev,
+            isPlaying: false,
+            progress: 0,
+          }));
+        }
+      };
 
-      audio.addEventListener("error", (e) => {
-        console.error("Audio playback error:", e);
-        setState(prev => ({
-          ...prev,
-          isPlaying: false,
-          isLoading: false,
-          error: "Audio playback failed",
-        }));
-      });
+      audio.onerror = (e) => {
+        if (playbackId === currentAudioIdRef.current) {
+          console.error("Audio playback error:", e);
+          isPlayingRef.current = false;
+          setState(prev => ({
+            ...prev,
+            isPlaying: false,
+            isLoading: false,
+            error: "Audio playback failed",
+          }));
+        }
+      };
 
       await audio.play();
+      
+      // Final check after play starts
+      if (playbackId !== currentAudioIdRef.current) {
+        audio.pause();
+        return;
+      }
       
       setState(prev => ({
         ...prev,
@@ -176,12 +224,16 @@ export const useSlideNarration = (activeSlide: number): UseSlideNarrationReturn 
         return;
       }
       
-      console.error("Narration error:", error);
-      setState(prev => ({
-        ...prev,
-        isLoading: false,
-        error: error instanceof Error ? error.message : "Failed to play narration",
-      }));
+      // Only update error state if this is still the current playback
+      if (playbackId === currentAudioIdRef.current) {
+        console.error("Narration error:", error);
+        isPlayingRef.current = false;
+        setState(prev => ({
+          ...prev,
+          isLoading: false,
+          error: error instanceof Error ? error.message : "Failed to play narration",
+        }));
+      }
     }
   }, [state.isMuted, generateAudio, preloadSlide, stopCurrentAudio]);
 
@@ -220,14 +272,16 @@ export const useSlideNarration = (activeSlide: number): UseSlideNarrationReturn 
     // Clear any pending playback timer
     if (playbackTimerRef.current) {
       clearTimeout(playbackTimerRef.current);
+      playbackTimerRef.current = null;
     }
     
-    // Stop current audio when slide changes
+    // Immediately stop current audio when slide changes
     stopCurrentAudio();
     
     // Wait 500ms after slide change before starting narration
     playbackTimerRef.current = setTimeout(() => {
-      if (activeSlide !== lastPlayedSlideRef.current && !state.isMuted) {
+      // Check mute status at execution time, not capture time
+      if (!state.isMuted) {
         lastPlayedSlideRef.current = activeSlide;
         playNarration(activeSlide);
       }
@@ -238,7 +292,7 @@ export const useSlideNarration = (activeSlide: number): UseSlideNarrationReturn 
         clearTimeout(playbackTimerRef.current);
       }
     };
-  }, [activeSlide, state.isMuted, playNarration, stopCurrentAudio]);
+  }, [activeSlide]); // Only depend on activeSlide - check muted state inside
 
   // Keyboard shortcuts
   useEffect(() => {
