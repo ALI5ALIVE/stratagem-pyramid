@@ -231,7 +231,7 @@ const Slide5MaturityCurve = () => {
     <SlideContainer
       id="slide-5"
       title="The Operational Excellence Roadmap"
-      subtitle="The measurable journey from reactive to predictive"
+      subtitle="The measurable journey from reactive to predictive operations"
       slideNumber={5}
     >
       <div className="space-y-4">
