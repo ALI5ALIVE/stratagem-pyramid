@@ -1,6 +1,4 @@
-import { Check, ArrowRight, Eye, Target, TrendingUp } from "lucide-react";
-import BehaviorShiftCard from "./BehaviorShiftCard";
-import TimeAllocationBar from "./TimeAllocationBar";
+import { Check, Eye, Target, TrendingUp } from "lucide-react";
 import type { MaturityStage } from "./MaturityCurveVisualization";
 
 interface MaturityStageDetailsProps {
@@ -20,7 +18,7 @@ const MaturityStageDetails = ({ stage }: MaturityStageDetailsProps) => {
             {stage.stage}
           </span>
           <span className="text-[7px] font-semibold uppercase tracking-widest text-muted-foreground">
-            Stage {stage.stage} — {stage.sublabel}
+            Stage {stage.stage}
           </span>
         </div>
         <h2
@@ -80,7 +78,7 @@ const MaturityStageDetails = ({ stage }: MaturityStageDetailsProps) => {
       </div>
 
       {/* Value Proof */}
-      <div className="mb-1.5">
+      <div>
         <div className="flex items-center gap-1 mb-0.5">
           <TrendingUp className="w-2 h-2" style={{ color: stage.accentColor }} />
           <span className="text-[7px] font-semibold uppercase tracking-widest text-muted-foreground">
@@ -114,38 +112,6 @@ const MaturityStageDetails = ({ stage }: MaturityStageDetailsProps) => {
           </p>
         </div>
       </div>
-
-      {/* Why it matters */}
-      <div
-        className="relative p-1.5 rounded border mb-1.5"
-        style={{
-          borderColor: `${stage.accentColor}30`,
-          background: `linear-gradient(135deg, ${stage.accentColor}08 0%, transparent 100%)`,
-        }}
-      >
-        <div className="flex items-center gap-1 mb-0.5">
-          <ArrowRight className="w-2 h-2" style={{ color: stage.accentColor }} />
-          <span className="text-[7px] font-semibold uppercase tracking-widest text-muted-foreground">
-            Why it matters
-          </span>
-        </div>
-        <p className="text-[9px] font-medium text-foreground leading-snug">
-          {stage.whyItMatters}
-        </p>
-      </div>
-
-      {/* Behavioral Shift */}
-      <BehaviorShiftCard
-        behavioralShift={stage.behavioralShift}
-        accentColor={stage.accentColor}
-        level={stage.stage}
-      />
-
-      {/* Time Allocation */}
-      <TimeAllocationBar
-        timeAllocation={stage.timeAllocation}
-        accentColor={stage.accentColor}
-      />
     </div>
   );
 };
