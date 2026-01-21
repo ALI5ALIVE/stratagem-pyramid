@@ -240,8 +240,11 @@ const Slide5MaturityCurve = () => {
           <div className="bg-card/30 rounded-xl border border-border/30 p-4 md:p-6 flex items-center justify-center">
             <svg
               viewBox={viewBox}
-              className="w-full h-full"
-              style={{ minHeight: isMobile ? "600px" : "800px" }}
+              className="w-full"
+              style={{ 
+                minWidth: isMobile ? "500px" : "700px",
+                minHeight: isMobile ? "500px" : "650px" 
+              }}
             >
               <defs>
                 <linearGradient id="slideGradient" x1="0%" y1="100%" x2="100%" y2="0%">

@@ -139,9 +139,11 @@ const Pyramid3D = ({
       {/* Main pyramid with labels SVG */}
       <svg
         viewBox={viewBox}
-        className="w-full h-full"
+        className="w-full"
         preserveAspectRatio="xMidYMid meet"
         style={{ 
+          minWidth: isMobile ? "600px" : "900px",
+          minHeight: isMobile ? "500px" : "700px",
           filter: isMobile ? "drop-shadow(0 20px 40px rgba(0,0,0,0.4))" : "drop-shadow(0 30px 60px rgba(0,0,0,0.5))",
         }}
       >
