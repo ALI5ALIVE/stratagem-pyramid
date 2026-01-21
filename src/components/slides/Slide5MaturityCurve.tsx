@@ -231,13 +231,13 @@ const Slide5MaturityCurve = () => {
       slideNumber={5}
     >
       <div className="space-y-2">
-        <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-3 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 items-stretch">
           {/* LEFT: Hockey Stick Curve */}
-          <div className="bg-card/30 rounded-xl border border-border/30 p-2 md:p-3">
+          <div className="bg-card/30 rounded-xl border border-border/30 p-2 md:p-3 flex items-center justify-center">
             <svg
               viewBox={viewBox}
-              className="w-full h-auto"
-              style={{ maxHeight: isMobile ? "440px" : "640px" }}
+              className="w-full h-full"
+              style={{ minHeight: isMobile ? "350px" : "450px" }}
             >
               <defs>
                 <linearGradient id="slideGradient" x1="0%" y1="100%" x2="100%" y2="0%">
