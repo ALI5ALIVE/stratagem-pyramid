@@ -7,11 +7,11 @@ interface MaturityStageDetailsProps {
 
 const MaturityStageDetails = ({ stage }: MaturityStageDetailsProps) => {
   return (
-    <div className="space-y-4">
-      {/* Header - 2x scaled */}
-      <div className="flex items-start gap-4 mb-4">
+    <div className="space-y-2">
+      {/* Header */}
+      <div className="flex items-start gap-2 mb-2">
         <div
-          className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-xl font-bold"
+          className="flex-shrink-0 w-5 h-5 rounded flex items-center justify-center text-xs font-bold"
           style={{
             background: `linear-gradient(135deg, ${stage.accentColor}, ${stage.accentColor}80)`,
             color: "white",
@@ -20,11 +20,11 @@ const MaturityStageDetails = ({ stage }: MaturityStageDetailsProps) => {
           {stage.stage}
         </div>
         <div>
-          <h3 className="text-xl lg:text-2xl font-bold text-foreground leading-tight">
+          <h3 className="text-sm lg:text-base font-bold text-foreground leading-tight">
             {stage.headline}
           </h3>
           <p
-            className="text-lg font-medium mt-1"
+            className="text-xs font-medium mt-0.5"
             style={{ color: stage.accentColor }}
           >
             {stage.sublabel}
@@ -32,31 +32,31 @@ const MaturityStageDetails = ({ stage }: MaturityStageDetailsProps) => {
         </div>
       </div>
 
-      {/* What it looks like - 2x scaled */}
-      <div className="mb-4">
-        <div className="flex items-center gap-2 mb-3">
-          <Eye className="w-6 h-6" style={{ color: stage.accentColor }} />
+      {/* What it looks like */}
+      <div className="mb-2">
+        <div className="flex items-center gap-1.5 mb-1.5">
+          <Eye className="w-3 h-3" style={{ color: stage.accentColor }} />
           <span
-            className="text-base font-semibold uppercase tracking-wider"
+            className="text-[9px] font-semibold uppercase tracking-wider"
             style={{ color: stage.accentColor }}
           >
             What it looks like
           </span>
         </div>
-        <ul className="space-y-3">
+        <ul className="space-y-1">
           {stage.whatItLooksLike.map((item, i) => (
             <li
               key={i}
-              className="flex items-start gap-3 text-lg text-muted-foreground"
+              className="flex items-start gap-1.5 text-xs text-muted-foreground"
             >
               <span
-                className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+                className="w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
                 style={{
                   backgroundColor: `${stage.accentColor}20`,
                 }}
               >
                 <Check
-                  className="w-5 h-5"
+                  className="w-2.5 h-2.5"
                   style={{ color: stage.accentColor }}
                 />
               </span>
@@ -66,25 +66,25 @@ const MaturityStageDetails = ({ stage }: MaturityStageDetailsProps) => {
         </ul>
       </div>
 
-      {/* Result - 2x scaled */}
-      <div className="mb-4">
-        <div className="flex items-center gap-2 mb-3">
-          <Target className="w-6 h-6" style={{ color: stage.accentColor }} />
+      {/* Result */}
+      <div className="mb-2">
+        <div className="flex items-center gap-1.5 mb-1.5">
+          <Target className="w-3 h-3" style={{ color: stage.accentColor }} />
           <span
-            className="text-base font-semibold uppercase tracking-wider"
+            className="text-[9px] font-semibold uppercase tracking-wider"
             style={{ color: stage.accentColor }}
           >
             Result
           </span>
         </div>
-        <ul className="space-y-2">
+        <ul className="space-y-1">
           {stage.result.map((item, i) => (
             <li
               key={i}
-              className="flex items-start gap-3 text-lg text-muted-foreground"
+              className="flex items-start gap-1.5 text-xs text-muted-foreground"
             >
               <span
-                className="w-3 h-3 rounded-full mt-2 flex-shrink-0"
+                className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
                 style={{ backgroundColor: stage.accentColor }}
               />
               <span>{item}</span>
@@ -93,22 +93,22 @@ const MaturityStageDetails = ({ stage }: MaturityStageDetailsProps) => {
         </ul>
       </div>
 
-      {/* Value Proof - 2x scaled */}
-      <div className="mb-4">
-        <div className="flex items-center gap-2 mb-3">
-          <TrendingUp className="w-6 h-6" style={{ color: stage.accentColor }} />
+      {/* Value Proof */}
+      <div className="mb-2">
+        <div className="flex items-center gap-1.5 mb-1.5">
+          <TrendingUp className="w-3 h-3" style={{ color: stage.accentColor }} />
           <span
-            className="text-base font-semibold uppercase tracking-wider"
+            className="text-[9px] font-semibold uppercase tracking-wider"
             style={{ color: stage.accentColor }}
           >
             Value Proof
           </span>
         </div>
-        <div className="flex flex-wrap gap-2 mb-3">
+        <div className="flex flex-wrap gap-1 mb-1.5">
           {stage.valueProof.metrics.map((metric, i) => (
             <span
               key={i}
-              className="px-4 py-2 rounded-full text-lg font-medium"
+              className="px-2 py-0.5 rounded-full text-[10px] font-medium"
               style={{
                 backgroundColor: `${stage.accentColor}20`,
                 color: stage.accentColor,
@@ -119,14 +119,14 @@ const MaturityStageDetails = ({ stage }: MaturityStageDetailsProps) => {
           ))}
         </div>
         <div
-          className="flex items-start gap-3 p-5 rounded-lg"
+          className="flex items-start gap-1.5 p-2 rounded-lg"
           style={{ backgroundColor: `${stage.accentColor}10` }}
         >
           <TrendingUp
-            className="w-6 h-6 flex-shrink-0 mt-0.5"
+            className="w-3 h-3 flex-shrink-0 mt-0.5"
             style={{ color: stage.accentColor }}
           />
-          <p className="text-lg italic text-muted-foreground">
+          <p className="text-xs italic text-muted-foreground">
             {stage.valueProof.roiStatement}
           </p>
         </div>
