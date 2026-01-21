@@ -343,23 +343,23 @@ const Slide5MaturityCurve = ({
               {/* Stage markers - 2x scaled */}
               {stagesData.map((stage, index) => {
                 const point = curvePoints[index];
-                const isActive = activeStage === stage.stage;
+                const isStageActive = activeStage === stage.stage;
                 
                 return (
                   <g key={stage.id} className="cursor-pointer" onClick={() => setActiveStage(stage.stage)}>
                     <circle
                       cx={point.x}
                       cy={point.y}
-                      r={isActive ? 24 : 18}
+                      r={isStageActive ? 24 : 18}
                       fill={stage.accentColor}
-                      filter={isActive ? "url(#slideActiveGlow)" : "url(#slideGlow)"}
+                      filter={isStageActive ? "url(#slideActiveGlow)" : "url(#slideGlow)"}
                       className={`transition-all duration-300 ${isAnimated ? "opacity-100" : "opacity-0"}`}
                       style={{ transitionDelay: `${index * 80}ms` }}
                     />
                     <circle
                       cx={point.x}
                       cy={point.y}
-                      r={isActive ? 12 : 8}
+                      r={isStageActive ? 12 : 8}
                       fill="hsl(222 47% 6%)"
                       className={`transition-all duration-300 ${isAnimated ? "opacity-100" : "opacity-0"}`}
                       style={{ transitionDelay: `${index * 80}ms` }}
@@ -390,9 +390,9 @@ const Slide5MaturityCurve = ({
                         <text
                           x={point.x}
                           y="696"
-                          fill={isActive ? stage.accentColor : "hsl(215 20% 65%)"}
+                          fill={isStageActive ? stage.accentColor : "hsl(215 20% 65%)"}
                           fontSize={isMobile ? "18" : "20"}
-                          fontWeight={isActive ? "700" : "500"}
+                          fontWeight={isStageActive ? "700" : "500"}
                           textAnchor="middle"
                           className="font-display transition-colors duration-300"
                         >
@@ -402,7 +402,7 @@ const Slide5MaturityCurve = ({
                     })()}
 
                     {/* Active stage annotations - desktop only, 2x scaled */}
-                    {isActive && !isMobile && (
+                    {isStageActive && !isMobile && (
                       <g className="animate-fade-in">
                         <rect
                           x={point.x - 130}
