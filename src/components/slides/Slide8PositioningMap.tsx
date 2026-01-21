@@ -125,7 +125,7 @@ const Slide8PositioningMap = () => {
           {activeView === "matrix" ? (
             <div className="w-full max-w-[720px] mx-auto aspect-square">
               <ResponsiveContainer width="100%" height="100%">
-                <ScatterChart margin={{ top: 50, right: 40, bottom: 90, left: 80 }}>
+                <ScatterChart margin={{ top: 50, right: 40, bottom: 110, left: 100 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                   
                   {/* Reference lines for quadrants */}
@@ -143,13 +143,13 @@ const Slide8PositioningMap = () => {
                     label={{
                       value: "Full Capability Coverage →",
                       position: "bottom",
-                      offset: 15,
+                      offset: 5,
                       style: { fill: 'hsl(var(--muted-foreground))', fontSize: 12 }
                     }}
                   />
                   <text 
                     x="50%" 
-                    y={560} 
+                    y="96%" 
                     textAnchor="middle" 
                     className="fill-muted-foreground text-[10px]"
                   >
@@ -172,12 +172,11 @@ const Slide8PositioningMap = () => {
                     }}
                   />
                   <text 
-                    x={25} 
-                    y="50%" 
+                    x={-360}
+                    y={18}
                     textAnchor="middle" 
                     className="fill-muted-foreground text-[10px]"
-                    transform="rotate(-90, 25, 50%)"
-                    style={{ transformOrigin: '25px 50%', transformBox: 'fill-box' }}
+                    transform="rotate(-90)"
                   >
                     (Compliance Tool → Operational System → Strategic Platform)
                   </text>
