@@ -147,7 +147,7 @@ const Slide2BeforeAfter = () => {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-primary">After</h3>
-                <span className="text-xs text-muted-foreground">Connected Data Platform</span>
+                <span className="text-xs text-muted-foreground">Operational Excellence & Readiness Platform</span>
               </div>
             </div>
 
@@ -250,8 +250,8 @@ const Slide2BeforeAfter = () => {
         <div className="bg-card border border-primary/30 rounded-xl p-5">
           <p className="text-sm text-muted-foreground">
             <span className="font-semibold text-primary">Unlike</span> point solutions that manage safety, procedures, or training in isolation, 
-            Comply365 unifies all three into one governed platform so operational signals trigger controlled change, 
-            workforce readiness, and audit-ready proof by default.
+            Comply365 connects all three into a continuous improvement operating system… 
+            improving operational excellence, readiness, and customer experience at scale.
           </p>
         </div>
       </div>
