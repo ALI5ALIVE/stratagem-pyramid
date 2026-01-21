@@ -75,21 +75,46 @@ const CustomTooltip = ({ active, payload }: any) => {
   return null;
 };
 
-const QuadrantLabel = ({ x, y, label, sublabel }: { x: number; y: number; label: string; sublabel: string }) => (
+const QuadrantOverlay = ({ 
+  x, y, width, height, label, sublabel, bgColor 
+}: { 
+  x: number; y: number; width: number; height: number; label: string; sublabel: string; bgColor: string;
+}) => (
   <g>
     <rect
-      x={x - 100}
-      y={y - 18}
-      width={200}
-      height={44}
-      fill="hsl(var(--card))"
-      opacity={0.9}
-      rx={6}
+      x={x}
+      y={y}
+      width={width}
+      height={height}
+      fill={bgColor}
+      opacity={0.15}
     />
-    <text x={x} y={y} textAnchor="middle" className="fill-foreground text-base font-bold">
+    <rect
+      x={x}
+      y={y}
+      width={width}
+      height={height}
+      fill="none"
+      stroke={bgColor}
+      strokeWidth={1}
+      opacity={0.3}
+    />
+    <text 
+      x={x + width / 2} 
+      y={y + height / 2 - 6} 
+      textAnchor="middle" 
+      className="fill-foreground text-xs font-bold"
+      opacity={0.7}
+    >
       {label}
     </text>
-    <text x={x} y={y + 20} textAnchor="middle" className="fill-muted-foreground text-sm">
+    <text 
+      x={x + width / 2} 
+      y={y + height / 2 + 10} 
+      textAnchor="middle" 
+      className="fill-muted-foreground text-[10px]"
+      opacity={0.6}
+    >
       {sublabel}
     </text>
   </g>
@@ -236,11 +261,15 @@ const Slide8PositioningMap = () => {
                     />
                   ))}
 
-                  {/* Quadrant labels */}
-                  <QuadrantLabel x={200} y={480} label="Point Tools" sublabel="Task-level Value" />
-                  <QuadrantLabel x={520} y={480} label="Functional Suite" sublabel="Breadth without Strategic Lift" />
-                  <QuadrantLabel x={200} y={100} label="Strategic Specialist" sublabel="High Value in a Narrow Domain" />
-                  <QuadrantLabel x={520} y={100} label="Platform Leader" sublabel="Full Capability + High Strategic Value" />
+                  {/* Quadrant overlays - positioned relative to chart area */}
+                  {/* Bottom-Left: Basic Tools (0-5 x, 0-5 y) */}
+                  <QuadrantOverlay x={100} y={290} width={185} height={185} label="Basic Tools" sublabel="Task-level Value" bgColor="#6b7280" />
+                  {/* Bottom-Right: Broad Tools (5-10 x, 0-5 y) */}
+                  <QuadrantOverlay x={285} y={290} width={185} height={185} label="Broad Tools" sublabel="Breadth without Depth" bgColor="#9ca3af" />
+                  {/* Top-Left: Specialists (0-5 x, 5-10 y) */}
+                  <QuadrantOverlay x={100} y={50} width={185} height={240} label="Specialists" sublabel="High Value, Narrow Domain" bgColor="#8b5cf6" />
+                  {/* Top-Right: Leaders (5-10 x, 5-10 y) */}
+                  <QuadrantOverlay x={285} y={50} width={185} height={240} label="Leaders" sublabel="Full Capability + Strategic" bgColor="#0066ff" />
                 </ScatterChart>
               </ResponsiveContainer>
             </div>
