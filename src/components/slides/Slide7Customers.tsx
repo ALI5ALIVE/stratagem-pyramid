@@ -77,7 +77,7 @@ const Slide7Customers = () => {
               className={`relative bg-card border ${category.borderColor} rounded-xl p-5`}
             >
               {/* Header */}
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-center gap-3 mb-4 relative z-0">
                 <div className={`w-9 h-9 rounded-lg ${category.color} flex items-center justify-center`}>
                   <Icon className="w-4 h-4 text-white" />
                 </div>
@@ -85,8 +85,8 @@ const Slide7Customers = () => {
               </div>
 
               {/* Gauge visual */}
-              <div className="relative h-20 mb-4">
-                <svg viewBox="0 0 200 90" className="w-full h-full">
+              <div className="relative z-10 h-24 mb-3">
+                <svg viewBox="0 0 200 100" className="w-full h-full" preserveAspectRatio="xMidYMax meet">
                   <defs>
                     <linearGradient id={`gauge${index}`} x1="0%" y1="0%" x2="100%" y2="0%">
                       <stop offset="0%" stopColor="hsl(var(--muted))" />
