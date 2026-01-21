@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import complyIcon from "@/assets/comply365-logo-white.png";
+import SlidePlayButton from "@/components/SlidePlayButton";
 
 interface SlideContainerProps {
   id: string;
@@ -11,6 +12,13 @@ interface SlideContainerProps {
   variant?: "dark" | "light";
   slideNumber?: number;
   showTitleAccent?: boolean;
+  // Narration props
+  isActive?: boolean;
+  isPlaying?: boolean;
+  isLoading?: boolean;
+  progress?: number;
+  onPlay?: () => void;
+  onPause?: () => void;
 }
 
 const SlideContainer = ({ 
@@ -21,7 +29,13 @@ const SlideContainer = ({
   className,
   variant = "dark",
   slideNumber,
-  showTitleAccent = true
+  showTitleAccent = true,
+  isActive = false,
+  isPlaying = false,
+  isLoading = false,
+  progress = 0,
+  onPlay,
+  onPause,
 }: SlideContainerProps) => {
   return (
     <section
@@ -32,6 +46,18 @@ const SlideContainer = ({
         className
       )}
     >
+      {/* Play button - centered when active */}
+      {isActive && onPlay && (
+        <SlidePlayButton
+          isPlaying={isPlaying}
+          isLoading={isLoading}
+          progress={progress}
+          onPlay={onPlay}
+          onPause={onPause ?? (() => {})}
+          variant={variant}
+        />
+      )}
+
       {/* Logo icon - top right */}
       <div className="absolute top-6 right-6 sm:top-8 sm:right-10">
         <img 

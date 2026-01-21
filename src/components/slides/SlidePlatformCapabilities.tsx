@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SlideContainer from "./SlideContainer";
 import { Database, Zap, Sparkles, ShieldCheck, TrendingUp, Trophy, ChevronRight } from "lucide-react";
+import type { SlideNarrationProps } from "@/types/slideProps";
 
 const capabilities = [
   {
@@ -65,7 +66,14 @@ const outcomes = [
   }
 ];
 
-const SlidePlatformCapabilities = () => {
+const SlidePlatformCapabilities = ({
+  isActive = false,
+  isPlaying = false,
+  isLoading = false,
+  progress = 0,
+  onPlay,
+  onPause,
+}: SlideNarrationProps) => {
   const [activeCapability, setActiveCapability] = useState<number | null>(null);
 
   return (
@@ -74,6 +82,12 @@ const SlidePlatformCapabilities = () => {
       title="The Platform That Powers It"
       subtitle="Three foundational capabilities that deliver outcomes point solutions cannot achieve alone"
       slideNumber={4}
+      isActive={isActive}
+      isPlaying={isPlaying}
+      isLoading={isLoading}
+      progress={progress}
+      onPlay={onPlay}
+      onPause={onPause}
     >
       <div className="flex flex-col h-full">
         {/* Main content - Two column layout */}

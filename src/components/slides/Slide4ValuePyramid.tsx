@@ -3,6 +3,7 @@ import { Play, Pause } from "lucide-react";
 import SlideContainer from "./SlideContainer";
 import Pyramid3D from "@/components/Pyramid3D";
 import DetailsPanel, { LayerData } from "@/components/DetailsPanel";
+import type { SlideNarrationProps } from "@/types/slideProps";
 
 const layersData: LayerData[] = [
   {
@@ -189,7 +190,14 @@ const glowClasses: Record<string, string> = {
 
 const layerOrder = ["FRAGMENTED", "MANAGED", "CONNECTED", "CLOSED_LOOP", "PREDICTIVE"];
 
-const Slide4ValuePyramid = () => {
+const Slide4ValuePyramid = ({
+  isActive = false,
+  isPlaying: narrationPlaying = false,
+  isLoading: narrationLoading = false,
+  progress: narrationProgress = 0,
+  onPlay,
+  onPause,
+}: SlideNarrationProps) => {
   const [activeLayerId, setActiveLayerId] = useState("FRAGMENTED");
   const [highlightedModule, setHighlightedModule] = useState<string | null>(null);
   const [isAutoCycling, setIsAutoCycling] = useState(false);
@@ -255,6 +263,12 @@ const Slide4ValuePyramid = () => {
       title="The Readiness Ladder"
       subtitle="The building blocks: from fragmented compliance to predictive excellence"
       slideNumber={6}
+      isActive={isActive}
+      isPlaying={narrationPlaying}
+      isLoading={narrationLoading}
+      progress={narrationProgress}
+      onPlay={onPlay}
+      onPause={onPause}
     >
       <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch h-full">
         {/* LEFT: Pyramid Visual */}

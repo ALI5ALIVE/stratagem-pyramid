@@ -1,7 +1,15 @@
 import SlideContainer from "./SlideContainer";
 import { TrendingUp, Clock, Shield, BarChart3, CheckCircle2 } from "lucide-react";
+import type { SlideNarrationProps } from "@/types/slideProps";
 
-const Slide7Customers = () => {
+const Slide7Customers = ({
+  isActive = false,
+  isPlaying = false,
+  isLoading = false,
+  progress = 0,
+  onPlay,
+  onPause,
+}: SlideNarrationProps) => {
   const kpiCategories = [
     {
       title: "Reliability & Disruption",
@@ -56,6 +64,12 @@ const Slide7Customers = () => {
       title="What This Means for Customers"
       subtitle="Measurable outcomes: reliability, readiness, and audit-ready proof"
       slideNumber={9}
+      isActive={isActive}
+      isPlaying={isPlaying}
+      isLoading={isLoading}
+      progress={progress}
+      onPlay={onPlay}
+      onPause={onPause}
     >
       {/* Executive Value Proposition */}
       <div className="max-w-4xl mx-auto mb-8">

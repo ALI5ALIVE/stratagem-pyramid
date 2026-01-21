@@ -1,5 +1,6 @@
 import SlideContainer from "./SlideContainer";
 import { ArrowRight, AlertTriangle, Zap, DollarSign, TrendingUp, Lock, Unlock, ClipboardCheck, Target, Clock, Lightbulb, Shield, Users } from "lucide-react";
+import type { SlideNarrationProps } from "@/types/slideProps";
 
 const beforeItems = [
   { icon: AlertTriangle, label: "Reactive", desc: "Risk handling" },
@@ -46,13 +47,26 @@ const possibilities = [
   },
 ];
 
-const Slide4Transformation = () => {
+const Slide4Transformation = ({
+  isActive = false,
+  isPlaying = false,
+  isLoading = false,
+  progress = 0,
+  onPlay,
+  onPause,
+}: SlideNarrationProps) => {
   return (
     <SlideContainer
       id="slide-5"
       title="The Transformation"
       subtitle="From cost center to competitive advantage"
       slideNumber={5}
+      isActive={isActive}
+      isPlaying={isPlaying}
+      isLoading={isLoading}
+      progress={progress}
+      onPlay={onPlay}
+      onPause={onPause}
     >
       <div className="h-full flex flex-col gap-3">
         {/* Main comparison section */}

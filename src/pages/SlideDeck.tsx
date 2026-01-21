@@ -208,19 +208,111 @@ const SlideDeck = () => {
         ref={containerRef}
         className="h-full w-full overflow-y-auto snap-y snap-mandatory scroll-smooth"
       >
-        <Slide0Title onNavigateToSlide={scrollToSlide} />
-        <Slide1StrategicShift />
-        <Slide2BeforeAfter />
-        <Slide3OperatingModel />
-        <Slide4PlatformCapabilities />
-        <Slide5Transformation />
-        <Slide6ValuePyramid />
-        <Slide7MaturityCurve />
-        <Slide8PositioningMap />
-        <Slide9Customers />
-        <Slide10Investors />
-        <Slide11CategoryRationale />
-        <SlideMessagingHouse />
+        <Slide0Title 
+          onNavigateToSlide={scrollToSlide}
+          isActive={activeSlide === 0}
+          isPlaying={narration.isPlaying && narration.currentSlide === 0}
+          isLoading={narration.isLoading && narration.currentSlide === 0}
+          progress={narration.currentSlide === 0 ? narration.progress : 0}
+          onPlay={() => narration.playNarration(0)}
+          onPause={narration.stopNarration}
+        />
+        <Slide1StrategicShift 
+          isActive={activeSlide === 1}
+          isPlaying={narration.isPlaying && narration.currentSlide === 1}
+          isLoading={narration.isLoading && narration.currentSlide === 1}
+          progress={narration.currentSlide === 1 ? narration.progress : 0}
+          onPlay={() => narration.playNarration(1)}
+          onPause={narration.stopNarration}
+        />
+        <Slide2BeforeAfter 
+          isActive={activeSlide === 2}
+          isPlaying={narration.isPlaying && narration.currentSlide === 2}
+          isLoading={narration.isLoading && narration.currentSlide === 2}
+          progress={narration.currentSlide === 2 ? narration.progress : 0}
+          onPlay={() => narration.playNarration(2)}
+          onPause={narration.stopNarration}
+        />
+        <Slide3OperatingModel 
+          isActive={activeSlide === 3}
+          isPlaying={narration.isPlaying && narration.currentSlide === 3}
+          isLoading={narration.isLoading && narration.currentSlide === 3}
+          progress={narration.currentSlide === 3 ? narration.progress : 0}
+          onPlay={() => narration.playNarration(3)}
+          onPause={narration.stopNarration}
+        />
+        <Slide4PlatformCapabilities 
+          isActive={activeSlide === 4}
+          isPlaying={narration.isPlaying && narration.currentSlide === 4}
+          isLoading={narration.isLoading && narration.currentSlide === 4}
+          progress={narration.currentSlide === 4 ? narration.progress : 0}
+          onPlay={() => narration.playNarration(4)}
+          onPause={narration.stopNarration}
+        />
+        <Slide5Transformation 
+          isActive={activeSlide === 5}
+          isPlaying={narration.isPlaying && narration.currentSlide === 5}
+          isLoading={narration.isLoading && narration.currentSlide === 5}
+          progress={narration.currentSlide === 5 ? narration.progress : 0}
+          onPlay={() => narration.playNarration(5)}
+          onPause={narration.stopNarration}
+        />
+        <Slide6ValuePyramid 
+          isActive={activeSlide === 6}
+          isPlaying={narration.isPlaying && narration.currentSlide === 6}
+          isLoading={narration.isLoading && narration.currentSlide === 6}
+          progress={narration.currentSlide === 6 ? narration.progress : 0}
+          onPlay={() => narration.playNarration(6)}
+          onPause={narration.stopNarration}
+        />
+        <Slide7MaturityCurve 
+          isActive={activeSlide === 7}
+          isPlaying={narration.isPlaying && narration.currentSlide === 7}
+          isLoading={narration.isLoading && narration.currentSlide === 7}
+          progress={narration.currentSlide === 7 ? narration.progress : 0}
+          onPlay={() => narration.playNarration(7)}
+          onPause={narration.stopNarration}
+        />
+        <Slide8PositioningMap 
+          isActive={activeSlide === 8}
+          isPlaying={narration.isPlaying && narration.currentSlide === 8}
+          isLoading={narration.isLoading && narration.currentSlide === 8}
+          progress={narration.currentSlide === 8 ? narration.progress : 0}
+          onPlay={() => narration.playNarration(8)}
+          onPause={narration.stopNarration}
+        />
+        <Slide9Customers 
+          isActive={activeSlide === 9}
+          isPlaying={narration.isPlaying && narration.currentSlide === 9}
+          isLoading={narration.isLoading && narration.currentSlide === 9}
+          progress={narration.currentSlide === 9 ? narration.progress : 0}
+          onPlay={() => narration.playNarration(9)}
+          onPause={narration.stopNarration}
+        />
+        <Slide10Investors 
+          isActive={activeSlide === 10}
+          isPlaying={narration.isPlaying && narration.currentSlide === 10}
+          isLoading={narration.isLoading && narration.currentSlide === 10}
+          progress={narration.currentSlide === 10 ? narration.progress : 0}
+          onPlay={() => narration.playNarration(10)}
+          onPause={narration.stopNarration}
+        />
+        <Slide11CategoryRationale 
+          isActive={activeSlide === 11}
+          isPlaying={narration.isPlaying && narration.currentSlide === 11}
+          isLoading={narration.isLoading && narration.currentSlide === 11}
+          progress={narration.currentSlide === 11 ? narration.progress : 0}
+          onPlay={() => narration.playNarration(11)}
+          onPause={narration.stopNarration}
+        />
+        <SlideMessagingHouse 
+          isActive={activeSlide === 12}
+          isPlaying={narration.isPlaying && narration.currentSlide === 12}
+          isLoading={narration.isLoading && narration.currentSlide === 12}
+          progress={narration.currentSlide === 12 ? narration.progress : 0}
+          onPlay={() => narration.playNarration(12)}
+          onPause={narration.stopNarration}
+        />
       </div>
     </div>
   );
