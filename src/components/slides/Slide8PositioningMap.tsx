@@ -157,7 +157,7 @@ const Slide8PositioningMap = () => {
     <SlideContainer
       id="slide-8"
       title="Competitive Positioning"
-      subtitle="Comply365 leads with 100% capability coverage and highest depth score (3.6/4.0)"
+      subtitle="Where Comply365 stands — and why competitors can't follow"
       slideNumber={6}
     >
       <div className="flex flex-col gap-5">

@@ -54,7 +54,7 @@ const Slide7Customers = () => {
     <SlideContainer
       id="slide-7"
       title="What This Means for Customers"
-      subtitle="Measurable performance, readiness, and proof"
+      subtitle="Measurable outcomes: reliability, readiness, and audit-ready proof"
       slideNumber={7}
     >
       {/* Executive Value Proposition */}

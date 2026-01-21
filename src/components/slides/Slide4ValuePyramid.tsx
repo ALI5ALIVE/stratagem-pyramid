@@ -253,7 +253,7 @@ const Slide4ValuePyramid = () => {
     <SlideContainer
       id="slide-4"
       title="The Readiness Ladder"
-      subtitle="Why value compounds when Safety + Procedures + Training are connected"
+      subtitle="The building blocks: from fragmented compliance to predictive excellence"
       slideNumber={4}
     >
       <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch h-full">

@@ -130,7 +130,7 @@ const Slide6Investors = () => {
     <SlideContainer
       id="slide-6"
       title="Why the Platform + New Category Builds Shareholder Value"
-      subtitle="A category-level repositioning designed to drive scalable growth, higher-quality revenue, and long-term defensibility"
+      subtitle="How category leadership compounds into shareholder value"
       slideNumber={8}
     >
       {/* Core Message Banner */}

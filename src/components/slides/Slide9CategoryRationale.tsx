@@ -62,7 +62,7 @@ const Slide9CategoryRationale = () => {
     <SlideContainer
       id="slide-9"
       title="Why 'Operational Excellence & Readiness Platform'"
-      subtitle="The strongest balance of executive clarity, cross-industry scalability, and category-defining differentiation"
+      subtitle="The name that protects scope, resonates with executives, and defines the category"
       slideNumber={9}
     >
       {/* Hero Banner */}
