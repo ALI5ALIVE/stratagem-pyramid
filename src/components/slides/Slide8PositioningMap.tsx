@@ -21,13 +21,13 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const vendors = [
-  { name: "Comply365", breadth: 9, depth: 9.5, color: "#0066ff", isHighlighted: true },
-  { name: "Ideagen", breadth: 6.5, depth: 8, color: "#00b4d8", isHighlighted: false },
-  { name: "TrustFlight Centrik", breadth: 8, depth: 6.5, color: "#8b5cf6", isHighlighted: false },
-  { name: "Hinfact", breadth: 5, depth: 5.5, color: "#6b7280", isHighlighted: false },
-  { name: "Web Manuals", breadth: 6, depth: 5, color: "#9ca3af", isHighlighted: false },
-  { name: "Yonder", breadth: 3, depth: 3.5, color: "#d1d5db", isHighlighted: false },
-  { name: "Orlando", breadth: 2, depth: 3, color: "#e5e7eb", isHighlighted: false },
+  { name: "Comply365", breadth: 9.5, depth: 9.0, color: "#0066ff", isHighlighted: true },
+  { name: "Ideagen", breadth: 7.0, depth: 7.0, color: "#00b4d8", isHighlighted: false },
+  { name: "TrustFlight Centrik", breadth: 7.0, depth: 6.75, color: "#8b5cf6", isHighlighted: false },
+  { name: "Hinfact", breadth: 4.5, depth: 4.0, color: "#6b7280", isHighlighted: false },
+  { name: "Web Manuals", breadth: 4.0, depth: 4.4, color: "#9ca3af", isHighlighted: false },
+  { name: "Yonder", breadth: 2.0, depth: 2.5, color: "#d1d5db", isHighlighted: false },
+  { name: "Orlando", breadth: 1.5, depth: 2.5, color: "#e5e7eb", isHighlighted: false },
 ];
 
 const capabilities = [
