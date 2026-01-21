@@ -13,6 +13,7 @@ import Slide8PositioningMap from "@/components/slides/Slide8PositioningMap";
 import Slide9Customers from "@/components/slides/Slide7Customers";
 import Slide10Investors from "@/components/slides/Slide6Investors";
 import Slide11CategoryRationale from "@/components/slides/Slide9CategoryRationale";
+import SlideMessagingHouse from "@/components/slides/SlideMessagingHouse";
 
 const slides = [
   { id: "slide-0", label: "Title" },
@@ -27,6 +28,7 @@ const slides = [
   { id: "slide-9", label: "Customers" },
   { id: "slide-10", label: "Investors" },
   { id: "slide-11", label: "Category Name" },
+  { id: "slide-12", label: "Messaging House" },
 ];
 
 const SlideDeck = () => {
@@ -190,6 +192,7 @@ const SlideDeck = () => {
         <Slide9Customers />
         <Slide10Investors />
         <Slide11CategoryRationale />
+        <SlideMessagingHouse />
       </div>
     </div>
   );

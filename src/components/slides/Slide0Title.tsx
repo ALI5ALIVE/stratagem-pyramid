@@ -13,6 +13,7 @@ const agendaItems = [
   { num: 9, label: "Customers", summary: "Measurable value delivery" },
   { num: 10, label: "Investors", summary: "Shareholder value creation" },
   { num: 11, label: "Category Name", summary: "Why this name wins" },
+  { num: 12, label: "Messaging House", summary: "Complete positioning framework" },
 ];
 
 const Slide0Title = () => {
