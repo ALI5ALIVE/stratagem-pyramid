@@ -9,12 +9,14 @@ import {
   Tooltip,
   ResponsiveContainer,
   ReferenceLine,
+  ReferenceArea,
   RadarChart,
   PolarGrid,
   PolarAngleAxis,
   PolarRadiusAxis,
   Radar,
   Legend,
+  Label,
 } from "recharts";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -75,50 +77,35 @@ const CustomTooltip = ({ active, payload }: any) => {
   return null;
 };
 
-const QuadrantOverlay = ({ 
-  x, y, width, height, label, sublabel, bgColor 
-}: { 
-  x: number; y: number; width: number; height: number; label: string; sublabel: string; bgColor: string;
-}) => (
-  <g>
-    <rect
-      x={x}
-      y={y}
-      width={width}
-      height={height}
-      fill={bgColor}
-      opacity={0.15}
-    />
-    <rect
-      x={x}
-      y={y}
-      width={width}
-      height={height}
-      fill="none"
-      stroke={bgColor}
-      strokeWidth={1}
-      opacity={0.3}
-    />
-    <text 
-      x={x + width / 2} 
-      y={y + height / 2 - 6} 
-      textAnchor="middle" 
-      className="fill-foreground text-xs font-bold"
-      opacity={0.7}
-    >
-      {label}
-    </text>
-    <text 
-      x={x + width / 2} 
-      y={y + height / 2 + 10} 
-      textAnchor="middle" 
-      className="fill-muted-foreground text-[10px]"
-      opacity={0.6}
-    >
-      {sublabel}
-    </text>
-  </g>
-);
+// Quadrant label component for ReferenceArea
+const QuadrantLabel = ({ viewBox, label, sublabel }: any) => {
+  const { x, y, width, height } = viewBox;
+  return (
+    <g>
+      <text
+        x={x + width / 2}
+        y={y + height / 2 - 8}
+        textAnchor="middle"
+        fill="hsl(var(--foreground))"
+        fontSize={11}
+        fontWeight="bold"
+        opacity={0.8}
+      >
+        {label}
+      </text>
+      <text
+        x={x + width / 2}
+        y={y + height / 2 + 8}
+        textAnchor="middle"
+        fill="hsl(var(--muted-foreground))"
+        fontSize={9}
+        opacity={0.7}
+      >
+        {sublabel}
+      </text>
+    </g>
+  );
+};
 
 const Slide8PositioningMap = () => {
   const [activeView, setActiveView] = useState<"matrix" | "radar">("matrix");
@@ -261,15 +248,43 @@ const Slide8PositioningMap = () => {
                     />
                   ))}
 
-                  {/* Quadrant overlays - positioned relative to chart area */}
+                  {/* Quadrant backgrounds using ReferenceArea */}
                   {/* Bottom-Left: Basic Tools (0-5 x, 0-5 y) */}
-                  <QuadrantOverlay x={100} y={290} width={185} height={185} label="Basic Tools" sublabel="Task-level Value" bgColor="#6b7280" />
+                  <ReferenceArea
+                    x1={0} x2={5} y1={0} y2={5}
+                    fill="#6b7280"
+                    fillOpacity={0.15}
+                    stroke="#6b7280"
+                    strokeOpacity={0.3}
+                    label={<QuadrantLabel label="Basic Tools" sublabel="Task-level Value" />}
+                  />
                   {/* Bottom-Right: Broad Tools (5-10 x, 0-5 y) */}
-                  <QuadrantOverlay x={285} y={290} width={185} height={185} label="Broad Tools" sublabel="Breadth without Depth" bgColor="#9ca3af" />
+                  <ReferenceArea
+                    x1={5} x2={10} y1={0} y2={5}
+                    fill="#9ca3af"
+                    fillOpacity={0.15}
+                    stroke="#9ca3af"
+                    strokeOpacity={0.3}
+                    label={<QuadrantLabel label="Broad Tools" sublabel="Breadth without Depth" />}
+                  />
                   {/* Top-Left: Specialists (0-5 x, 5-10 y) */}
-                  <QuadrantOverlay x={100} y={50} width={185} height={240} label="Specialists" sublabel="High Value, Narrow Domain" bgColor="#8b5cf6" />
+                  <ReferenceArea
+                    x1={0} x2={5} y1={5} y2={10}
+                    fill="#8b5cf6"
+                    fillOpacity={0.15}
+                    stroke="#8b5cf6"
+                    strokeOpacity={0.3}
+                    label={<QuadrantLabel label="Specialists" sublabel="High Value, Narrow Domain" />}
+                  />
                   {/* Top-Right: Leaders (5-10 x, 5-10 y) */}
-                  <QuadrantOverlay x={285} y={50} width={185} height={240} label="Leaders" sublabel="Full Capability + Strategic" bgColor="#0066ff" />
+                  <ReferenceArea
+                    x1={5} x2={10} y1={5} y2={10}
+                    fill="#0066ff"
+                    fillOpacity={0.2}
+                    stroke="#0066ff"
+                    strokeOpacity={0.4}
+                    label={<QuadrantLabel label="Leaders" sublabel="Full Capability + Strategic" />}
+                  />
                 </ScatterChart>
               </ResponsiveContainer>
             </div>
