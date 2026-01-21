@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
 import { useSlideNarration } from "@/hooks/useSlideNarration";
@@ -37,9 +37,20 @@ const SlideDeck = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
   
   // Narration hook for auto-play voiceover
   const narration = useSlideNarration(activeSlide);
+
+  // Debounced slide setter - only updates after scroll settles
+  const debouncedSetActiveSlide = useCallback((slide: number) => {
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+    debounceTimerRef.current = setTimeout(() => {
+      setActiveSlide(slide);
+    }, 300);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,16 +61,21 @@ const SlideDeck = () => {
       const progress = scrollHeight > 0 ? scrollTop / scrollHeight : 0;
       setScrollProgress(progress * 100);
 
-      // Calculate active slide
+      // Calculate active slide with debounce
       const slideHeight = containerRef.current.clientHeight;
       const currentSlide = Math.round(scrollTop / slideHeight);
-      setActiveSlide(Math.min(currentSlide, slides.length - 1));
+      debouncedSetActiveSlide(Math.min(currentSlide, slides.length - 1));
     };
 
     const container = containerRef.current;
     container?.addEventListener("scroll", handleScroll);
-    return () => container?.removeEventListener("scroll", handleScroll);
-  }, []);
+    return () => {
+      container?.removeEventListener("scroll", handleScroll);
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, [debouncedSetActiveSlide]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
