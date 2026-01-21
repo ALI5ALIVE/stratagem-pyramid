@@ -359,31 +359,31 @@ const Slide5MaturityCurve = () => {
                       {stage.stage}
                     </text>
 
-                    {/* X-axis labels */}
-                    <text
-                      x={point.x}
-                      y="325"
-                      fill={isActive ? stage.accentColor : "hsl(215 20% 65%)"}
-                      fontSize={isMobile ? "7" : "8"}
-                      fontWeight={isActive ? "700" : "500"}
-                      textAnchor="middle"
-                      className="font-display transition-colors duration-300"
-                    >
-                      {isMobile ? `S${stage.stage}` : `Stage ${stage.stage}`}
-                    </text>
-                    {!isMobile && (
-                      <text
-                        x={point.x}
-                        y="336"
-                        fill={isActive ? stage.accentColor : "hsl(215 20% 55%)"}
-                        fontSize="7"
-                        fontWeight={isActive ? "600" : "400"}
-                        textAnchor="middle"
-                        className="transition-colors duration-300"
-                      >
-                        {stage.sublabel}
-                      </text>
-                    )}
+                    {/* X-axis labels - use shortened headline to match copy box */}
+                    {(() => {
+                      const shortLabels: Record<number, string> = {
+                        1: "Fragmented",
+                        2: "Managed",
+                        3: "Connected",
+                        4: "Closed-Loop",
+                        5: "Predictive",
+                      };
+                      return (
+                        <>
+                          <text
+                            x={point.x}
+                            y="325"
+                            fill={isActive ? stage.accentColor : "hsl(215 20% 65%)"}
+                            fontSize={isMobile ? "7" : "8"}
+                            fontWeight={isActive ? "700" : "500"}
+                            textAnchor="middle"
+                            className="font-display transition-colors duration-300"
+                          >
+                            {isMobile ? shortLabels[stage.stage] : shortLabels[stage.stage]}
+                          </text>
+                        </>
+                      );
+                    })()}
 
                     {/* Active stage annotations - desktop only */}
                     {isActive && !isMobile && (
