@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import complyIcon from "@/assets/comply365-icon.png";
+import complyIcon from "@/assets/comply365-logo-white.png";
 
 interface SlideContainerProps {
   id: string;
@@ -37,7 +37,7 @@ const SlideContainer = ({
         <img 
           src={complyIcon} 
           alt="Comply365" 
-          className="h-8 sm:h-10 w-auto opacity-80"
+          className="h-6 sm:h-8 w-auto opacity-90"
         />
       </div>
 
