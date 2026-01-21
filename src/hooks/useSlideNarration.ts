@@ -292,8 +292,10 @@ export const useSlideNarration = (activeSlide: number): UseSlideNarrationReturn 
 
   // Stop audio when slide changes - NO auto-play (user clicks play button)
   useEffect(() => {
-    // Increment playback ID to invalidate any pending playback
-    ++currentAudioIdRef.current;
+    // NOTE: Do NOT increment currentAudioIdRef here!
+    // That causes a race condition where clicking play is immediately cancelled
+    // by a debounced scroll event updating activeSlide.
+    // The playNarration function manages its own playbackId.
     
     // Clear any pending playback timer
     if (playbackTimerRef.current) {

@@ -162,7 +162,7 @@ const Slide6Investors = ({
               const radius = 115;
               const x = 144 + radius * Math.cos(angle);
               const y = 144 + radius * Math.sin(angle);
-              const isActive = activeNode === index;
+              const isNodeActive = activeNode === index;
               const Icon = node.icon;
 
               return (
@@ -172,14 +172,14 @@ const Slide6Investors = ({
                   className={`
                     absolute w-16 h-16 lg:w-20 lg:h-20 -translate-x-1/2 -translate-y-1/2 rounded-lg
                     flex flex-col items-center justify-center p-2 transition-all duration-300 cursor-pointer
-                    ${isActive 
+                    ${isNodeActive 
                       ? 'bg-primary/20 border-2 border-primary scale-110' 
                       : 'bg-card border border-border hover:border-primary/50'}
                   `}
                   style={{ left: x, top: y }}
                 >
-                  <Icon className={`w-4 h-4 lg:w-5 lg:h-5 mb-1 ${isActive ? 'text-primary' : 'text-muted-foreground'}`} />
-                  <span className={`text-[10px] text-center font-medium leading-tight ${isActive ? 'text-foreground' : 'text-muted-foreground'}`}>
+                  <Icon className={`w-4 h-4 lg:w-5 lg:h-5 mb-1 ${isNodeActive ? 'text-primary' : 'text-muted-foreground'}`} />
+                  <span className={`text-[10px] text-center font-medium leading-tight ${isNodeActive ? 'text-foreground' : 'text-muted-foreground'}`}>
                     {node.label}
                   </span>
                 </button>

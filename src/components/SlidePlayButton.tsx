@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import { Play, Pause, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -10,17 +11,12 @@ interface SlidePlayButtonProps {
   variant?: "dark" | "light";
 }
 
-const SlidePlayButton = ({
-  isPlaying,
-  isLoading,
-  progress,
-  onPlay,
-  onPause,
-  variant = "dark",
-}: SlidePlayButtonProps) => {
-  return (
-    <button
-      onClick={isPlaying ? onPause : onPlay}
+const SlidePlayButton = forwardRef<HTMLButtonElement, SlidePlayButtonProps>(
+  ({ isPlaying, isLoading, progress, onPlay, onPause, variant = "dark" }, ref) => {
+    return (
+      <button
+        ref={ref}
+        onClick={isPlaying ? onPause : onPlay}
       className={cn(
         "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30",
         "w-20 h-20 rounded-full",
@@ -67,9 +63,12 @@ const SlidePlayButton = ({
             strokeLinecap="round"
           />
         )}
-      </svg>
-    </button>
-  );
-};
+        </svg>
+      </button>
+    );
+  }
+);
+
+SlidePlayButton.displayName = "SlidePlayButton";
 
 export default SlidePlayButton;
