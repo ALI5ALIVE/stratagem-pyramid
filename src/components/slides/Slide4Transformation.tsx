@@ -1,0 +1,229 @@
+import SlideContainer from "./SlideContainer";
+import { ArrowRight, AlertTriangle, Zap, DollarSign, TrendingUp, Lock, Unlock, ClipboardCheck, Target, Clock, Lightbulb, Shield, Users } from "lucide-react";
+
+const beforeItems = [
+  { icon: AlertTriangle, label: "Reactive", desc: "Risk handling" },
+  { icon: DollarSign, label: "Cost Center", desc: "Compliance burden" },
+  { icon: Lock, label: "Data Locked", desc: "Siloed systems" },
+  { icon: ClipboardCheck, label: "Firefighting", desc: "Manual coordination" },
+];
+
+const afterItems = [
+  { icon: Zap, label: "Proactive", desc: "Detection & prevention" },
+  { icon: TrendingUp, label: "Value Driver", desc: "Competitive advantage" },
+  { icon: Unlock, label: "Data Unlocked", desc: "Connected insights" },
+  { icon: Target, label: "Strategic", desc: "Improvement focus" },
+];
+
+const possibilities = [
+  { 
+    icon: Lightbulb, 
+    title: "Earlier Detection", 
+    desc: "AI detects weak signals before disruptions",
+    metric: "70%",
+    metricLabel: "faster"
+  },
+  { 
+    icon: Clock, 
+    title: "Faster Cycles", 
+    desc: "60% reduction in time-to-change",
+    metric: "60%",
+    metricLabel: "faster"
+  },
+  { 
+    icon: Shield, 
+    title: "Proof by Default", 
+    desc: "Audit evidence generated automatically",
+    metric: "100%",
+    metricLabel: "coverage"
+  },
+  { 
+    icon: Users, 
+    title: "Exception-led", 
+    desc: "Humans govern, AI handles routine",
+    metric: "10x",
+    metricLabel: "leverage"
+  },
+];
+
+const Slide4Transformation = () => {
+  return (
+    <SlideContainer
+      id="slide-4"
+      title="The Transformation"
+      subtitle="From cost center to competitive advantage"
+      slideNumber={4}
+    >
+      <div className="h-full flex flex-col gap-6">
+        {/* Main comparison section */}
+        <div className="flex-1 grid lg:grid-cols-2 gap-6 items-start">
+          {/* Before/After Comparison */}
+          <div className="flex flex-col gap-4">
+            <div className="grid grid-cols-2 gap-4">
+              {/* Before Column */}
+              <div className="relative">
+                <div className="absolute -top-3 left-3 px-2 py-0.5 bg-destructive/20 border border-destructive/30 rounded text-[10px] font-semibold text-destructive uppercase tracking-wider">
+                  Point Tools
+                </div>
+                <div className="bg-card/30 border border-destructive/20 rounded-lg p-4 pt-6 space-y-3">
+                  {beforeItems.map((item, i) => (
+                    <div key={i} className="flex items-center gap-3 group">
+                      <div className="w-8 h-8 rounded-lg bg-destructive/10 border border-destructive/20 flex items-center justify-center">
+                        <item.icon className="w-4 h-4 text-destructive" />
+                      </div>
+                      <div>
+                        <div className="text-sm font-semibold text-foreground">{item.label}</div>
+                        <div className="text-[10px] text-muted-foreground">{item.desc}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Arrow */}
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden lg:flex">
+                <div className="w-12 h-12 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
+                  <ArrowRight className="w-5 h-5 text-primary" />
+                </div>
+              </div>
+
+              {/* After Column */}
+              <div className="relative">
+                <div className="absolute -top-3 left-3 px-2 py-0.5 bg-primary/20 border border-primary/30 rounded text-[10px] font-semibold text-primary uppercase tracking-wider">
+                  Platform
+                </div>
+                <div className="bg-card/30 border border-primary/20 rounded-lg p-4 pt-6 space-y-3">
+                  {afterItems.map((item, i) => (
+                    <div key={i} className="flex items-center gap-3 group">
+                      <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
+                        <item.icon className="w-4 h-4 text-primary" />
+                      </div>
+                      <div>
+                        <div className="text-sm font-semibold text-foreground">{item.label}</div>
+                        <div className="text-[10px] text-muted-foreground">{item.desc}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Time Allocation Shift */}
+            <div className="bg-card/40 border border-border/50 rounded-lg p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <Clock className="w-4 h-4 text-primary" />
+                <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Time Allocation Shift
+                </span>
+              </div>
+              
+              <div className="space-y-3">
+                {/* Before Bar */}
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-[10px] text-muted-foreground">Before</span>
+                  </div>
+                  <div className="h-6 rounded-md overflow-hidden flex">
+                    <div className="h-full flex items-center justify-center" style={{ width: '60%', backgroundColor: 'hsl(0 70% 50%)' }}>
+                      <span className="text-[9px] font-semibold text-white">Coordination 60%</span>
+                    </div>
+                    <div className="h-full flex items-center justify-center" style={{ width: '30%', backgroundColor: 'hsl(45 93% 47%)' }}>
+                      <span className="text-[9px] font-semibold text-white">Admin 30%</span>
+                    </div>
+                    <div className="h-full flex items-center justify-center" style={{ width: '10%', backgroundColor: 'hsl(160 84% 39%)' }}>
+                      <span className="text-[9px] font-semibold text-white">10%</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* After Bar */}
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-[10px] text-muted-foreground">After</span>
+                  </div>
+                  <div className="h-6 rounded-md overflow-hidden flex">
+                    <div className="h-full flex items-center justify-center" style={{ width: '10%', backgroundColor: 'hsl(0 70% 50%)' }}>
+                      <span className="text-[9px] font-semibold text-white">10%</span>
+                    </div>
+                    <div className="h-full flex items-center justify-center" style={{ width: '20%', backgroundColor: 'hsl(45 93% 47%)' }}>
+                      <span className="text-[9px] font-semibold text-white">20%</span>
+                    </div>
+                    <div className="h-full flex items-center justify-center" style={{ width: '70%', backgroundColor: 'hsl(160 84% 39%)' }}>
+                      <span className="text-[9px] font-semibold text-white">Improvement 70%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-3 flex items-center justify-center gap-4 text-[10px]">
+                <div className="flex items-center gap-1">
+                  <div className="w-2 h-2 rounded-sm" style={{ backgroundColor: 'hsl(0 70% 50%)' }} />
+                  <span className="text-muted-foreground">Coordination</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <div className="w-2 h-2 rounded-sm" style={{ backgroundColor: 'hsl(45 93% 47%)' }} />
+                  <span className="text-muted-foreground">Administration</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <div className="w-2 h-2 rounded-sm" style={{ backgroundColor: 'hsl(160 84% 39%)' }} />
+                  <span className="text-muted-foreground">Improvement</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* New Possibilities */}
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <Zap className="w-4 h-4 text-accent" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                New Possibilities Unlocked
+              </span>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-3">
+              {possibilities.map((item, i) => (
+                <div 
+                  key={i}
+                  className="group bg-card/40 border border-border/50 hover:border-primary/30 rounded-lg p-4 transition-all duration-300"
+                >
+                  <div className="flex items-start gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                      <item.icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold text-foreground">{item.title}</div>
+                      <div className="text-[10px] text-muted-foreground leading-tight mt-0.5">{item.desc}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-2xl font-bold text-primary">{item.metric}</span>
+                    <span className="text-xs text-muted-foreground">{item.metricLabel}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Cultural Shift Quote */}
+            <div className="bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20 rounded-lg p-4">
+              <div className="flex items-start gap-3">
+                <div className="text-3xl text-primary/30">"</div>
+                <div>
+                  <p className="text-sm text-foreground italic leading-relaxed">
+                    Point solutions manage silos.<br />
+                    <span className="text-primary font-semibold not-italic">Comply365 closes the loop.</span>
+                  </p>
+                  <div className="mt-2 text-[10px] text-muted-foreground">
+                    From compliance burden → Operational excellence as competitive advantage
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </SlideContainer>
+  );
+};
+
+export default Slide4Transformation;
