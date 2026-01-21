@@ -226,8 +226,8 @@ const Slide5MaturityCurve = () => {
   return (
     <SlideContainer
       id="slide-5"
-      title="The Maturity Curve"
-      subtitle="How organisations progress up the pyramid — a measurable transformation program"
+      title="The Excellence Roadmap"
+      subtitle="How organisations progress up the ladder — a measurable transformation program"
       slideNumber={5}
     >
       <div className="space-y-2">

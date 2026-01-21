@@ -252,7 +252,7 @@ const Slide4ValuePyramid = () => {
   return (
     <SlideContainer
       id="slide-4"
-      title="The Value Pyramid"
+      title="The Readiness Ladder"
       subtitle="Why value compounds when Safety + Procedures + Training are connected"
       slideNumber={4}
     >
