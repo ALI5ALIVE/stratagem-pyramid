@@ -18,7 +18,7 @@ const PageNavigation = () => {
         )}
       >
         <Pyramid className="w-3 h-3 sm:w-4 sm:h-4" />
-        <span>Pyramid</span>
+        <span>Ladder</span>
       </Link>
       <Link
         to="/maturity-curve"
@@ -30,7 +30,7 @@ const PageNavigation = () => {
         )}
       >
         <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4" />
-        <span>Curve</span>
+        <span>Roadmap</span>
       </Link>
       <Link
         to="/slide-deck"
