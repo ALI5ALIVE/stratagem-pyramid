@@ -74,10 +74,10 @@ const Slide7Customers = () => {
           return (
             <div
               key={index}
-              className={`relative bg-card border ${category.borderColor} rounded-xl p-5`}
+              className={`relative bg-card border ${category.borderColor} rounded-xl p-5 overflow-visible`}
             >
               {/* Header */}
-              <div className="flex items-center gap-3 mb-4 relative z-0">
+              <div className="flex items-center gap-3 mb-4">
                 <div className={`w-9 h-9 rounded-lg ${category.color} flex items-center justify-center`}>
                   <Icon className="w-4 h-4 text-white" />
                 </div>
@@ -85,8 +85,8 @@ const Slide7Customers = () => {
               </div>
 
               {/* Gauge visual */}
-              <div className="relative z-10 h-24 mb-3">
-                <svg viewBox="0 0 200 100" className="w-full h-full" preserveAspectRatio="xMidYMax meet">
+              <div className="h-32 mb-3">
+                <svg viewBox="0 0 200 120" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
                   <defs>
                     <linearGradient id={`gauge${index}`} x1="0%" y1="0%" x2="100%" y2="0%">
                       <stop offset="0%" stopColor="hsl(var(--muted))" />
@@ -95,7 +95,7 @@ const Slide7Customers = () => {
                   </defs>
                   {/* Background arc */}
                   <path
-                    d="M 20 75 A 80 80 0 0 1 180 75"
+                    d="M 20 95 A 80 80 0 0 1 180 95"
                     fill="none"
                     stroke="hsl(var(--border))"
                     strokeWidth="10"
@@ -103,7 +103,7 @@ const Slide7Customers = () => {
                   />
                   {/* Progress arc */}
                   <path
-                    d="M 20 75 A 80 80 0 0 1 180 75"
+                    d="M 20 95 A 80 80 0 0 1 180 95"
                     fill="none"
                     stroke={`url(#gauge${index})`}
                     strokeWidth="10"
@@ -113,10 +113,10 @@ const Slide7Customers = () => {
                     className="transition-all duration-1000"
                   />
                   {/* Center value */}
-                  <text x="100" y="68" textAnchor="middle" fill="hsl(var(--foreground))" fontSize="18" fontWeight="bold">
+                  <text x="100" y="88" textAnchor="middle" fill="hsl(var(--foreground))" fontSize="18" fontWeight="bold">
                     {Math.round((0.6 + index * 0.1) * 100)}%
                   </text>
-                  <text x="100" y="82" textAnchor="middle" fill="hsl(var(--muted-foreground))" fontSize="9">
+                  <text x="100" y="102" textAnchor="middle" fill="hsl(var(--muted-foreground))" fontSize="9">
                     improvement
                   </text>
                 </svg>
