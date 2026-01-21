@@ -258,7 +258,7 @@ const Slide4ValuePyramid = () => {
     >
       <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch h-full">
         {/* LEFT: Pyramid Visual */}
-        <div className="w-full min-h-[680px] lg:min-h-[880px] flex items-center justify-center">
+        <div className="w-full min-h-[680px] lg:min-h-[880px] flex items-center justify-center overflow-auto">
           <Pyramid3D
             layers={layersData.map((layer) => ({
               id: layer.id,
