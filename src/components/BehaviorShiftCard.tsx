@@ -39,60 +39,50 @@ const BehaviorShiftCard = ({ behavioralShift, accentColor, level }: BehaviorShif
 
   return (
     <div
-      className="relative p-2 rounded border transition-all duration-300 mb-2"
+      className="relative p-1.5 rounded border transition-all duration-300 mb-1"
       style={{
         borderColor: `${accentColor}30`,
         background: `linear-gradient(135deg, ${accentColor}08 0%, transparent 100%)`,
       }}
     >
-      <div className="flex items-center gap-1.5 mb-2">
-        <Users className="w-2.5 h-2.5" style={{ color: accentColor }} />
-        <span className="text-[8px] font-semibold uppercase tracking-widest text-muted-foreground">
+      <div className="flex items-center gap-1 mb-1">
+        <Users className="w-2 h-2" style={{ color: accentColor }} />
+        <span className="text-[7px] font-semibold uppercase tracking-widest text-muted-foreground">
           How Work Changes
         </span>
       </div>
 
-      <div className="flex items-center gap-2 mb-2">
+      <div className="flex items-center gap-1.5 mb-1">
         {/* FROM */}
-        <div className="flex-1">
-          <div className="flex items-center gap-1 mb-1">
-            <div
-              className="w-4 h-4 rounded flex items-center justify-center"
-              style={{ backgroundColor: `${accentColor}20` }}
-            >
-              <FromIcon className="w-2 h-2 text-muted-foreground" />
-            </div>
-            <span className="text-[8px] font-semibold uppercase tracking-wider text-muted-foreground">
-              From
-            </span>
+        <div className="flex-1 flex items-center gap-1">
+          <div
+            className="w-3 h-3 rounded flex items-center justify-center flex-shrink-0"
+            style={{ backgroundColor: `${accentColor}20` }}
+          >
+            <FromIcon className="w-1.5 h-1.5 text-muted-foreground" />
           </div>
-          <p className="text-[9px] text-foreground/70 leading-relaxed">
+          <p className="text-[8px] text-foreground/70 leading-snug">
             {behavioralShift.from}
           </p>
         </div>
 
         {/* Arrow */}
         <div
-          className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center animate-pulse"
+          className="flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center"
           style={{ backgroundColor: `${accentColor}20` }}
         >
-          <ArrowRight className="w-2.5 h-2.5" style={{ color: accentColor }} />
+          <ArrowRight className="w-2 h-2" style={{ color: accentColor }} />
         </div>
 
         {/* TO */}
-        <div className="flex-1">
-          <div className="flex items-center gap-1 mb-1">
-            <div
-              className="w-4 h-4 rounded flex items-center justify-center"
-              style={{ backgroundColor: accentColor }}
-            >
-              <ToIcon className="w-2 h-2 text-primary-foreground" />
-            </div>
-            <span className="text-[8px] font-semibold uppercase tracking-wider" style={{ color: accentColor }}>
-              To
-            </span>
+        <div className="flex-1 flex items-center gap-1">
+          <div
+            className="w-3 h-3 rounded flex items-center justify-center flex-shrink-0"
+            style={{ backgroundColor: accentColor }}
+          >
+            <ToIcon className="w-1.5 h-1.5 text-primary-foreground" />
           </div>
-          <p className="text-[9px] text-foreground font-medium leading-relaxed">
+          <p className="text-[8px] text-foreground font-medium leading-snug">
             {behavioralShift.to}
           </p>
         </div>
@@ -100,13 +90,13 @@ const BehaviorShiftCard = ({ behavioralShift, accentColor, level }: BehaviorShif
 
       {/* Cultural Marker */}
       <div
-        className="p-1.5 rounded border-l-2"
+        className="p-1 rounded border-l-2"
         style={{
           borderColor: accentColor,
           backgroundColor: `${accentColor}08`,
         }}
       >
-        <p className="text-[9px] italic text-foreground/80">
+        <p className="text-[8px] italic text-foreground/80">
           "{behavioralShift.culturalMarker}"
         </p>
       </div>
