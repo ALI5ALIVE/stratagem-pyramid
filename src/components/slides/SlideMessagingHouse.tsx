@@ -19,7 +19,7 @@ import {
 // Category Positioning Data
 const categoryPosition = {
   name: "Operational Excellence & Readiness Platform",
-  definition: "Connects safety, procedures, and training into a continuous improvement operating system, turning operational signals into orchestrated change and audit-ready proof.",
+  definition: "Connects safety, procedures, and training into an intelligent operating system, turning signals into orchestrated change and audit-ready proof.",
   operatingModel: "Continuous Improvement Operating System",
   narrativeSpine: ["Detect", "Trigger", "Orchestrate", "Prove"]
 };
