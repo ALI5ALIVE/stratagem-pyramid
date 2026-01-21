@@ -34,6 +34,23 @@ export const useSlideNarration = (activeSlide: number): UseSlideNarrationReturn 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const audioCacheRef = useRef<Map<number, string>>(new Map());
   const lastPlayedSlideRef = useRef<number>(-1);
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const playbackTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Stop current audio and clean up
+  const stopCurrentAudio = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current.src = "";
+      audioRef.current = null;
+    }
+    setState(prev => ({
+      ...prev,
+      isPlaying: false,
+      progress: 0,
+    }));
+  }, []);
 
   // Generate audio for a slide
   const generateAudio = useCallback(async (slideId: number): Promise<string> => {
@@ -41,6 +58,12 @@ export const useSlideNarration = (activeSlide: number): UseSlideNarrationReturn 
     if (audioCacheRef.current.has(slideId)) {
       return audioCacheRef.current.get(slideId)!;
     }
+
+    // Cancel any in-flight request
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    abortControllerRef.current = new AbortController();
 
     const narration = getSlideNarration(slideId);
     if (!narration) {
@@ -60,6 +83,7 @@ export const useSlideNarration = (activeSlide: number): UseSlideNarrationReturn 
           text: narration.script,
           voiceId: narration.voiceId,
         }),
+        signal: abortControllerRef.current.signal,
       }
     );
 
@@ -96,11 +120,8 @@ export const useSlideNarration = (activeSlide: number): UseSlideNarrationReturn 
     try {
       setState(prev => ({ ...prev, isLoading: true, error: null }));
 
-      // Stop current audio
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
+      // Stop current audio properly
+      stopCurrentAudio();
 
       const audioUrl = await generateAudio(slideId);
       
@@ -150,6 +171,11 @@ export const useSlideNarration = (activeSlide: number): UseSlideNarrationReturn 
       }
 
     } catch (error) {
+      // Ignore abort errors - these are intentional
+      if (error instanceof Error && error.name === 'AbortError') {
+        return;
+      }
+      
       console.error("Narration error:", error);
       setState(prev => ({
         ...prev,
@@ -157,20 +183,20 @@ export const useSlideNarration = (activeSlide: number): UseSlideNarrationReturn 
         error: error instanceof Error ? error.message : "Failed to play narration",
       }));
     }
-  }, [state.isMuted, generateAudio, preloadSlide]);
+  }, [state.isMuted, generateAudio, preloadSlide, stopCurrentAudio]);
 
   // Stop narration
   const stopNarration = useCallback(() => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
+    // Cancel any pending playback
+    if (playbackTimerRef.current) {
+      clearTimeout(playbackTimerRef.current);
     }
-    setState(prev => ({
-      ...prev,
-      isPlaying: false,
-      progress: 0,
-    }));
-  }, []);
+    // Cancel any in-flight requests
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    stopCurrentAudio();
+  }, [stopCurrentAudio]);
 
   // Toggle mute
   const toggleMute = useCallback(() => {
@@ -189,13 +215,30 @@ export const useSlideNarration = (activeSlide: number): UseSlideNarrationReturn 
     });
   }, []);
 
-  // Auto-play when slide changes
+  // Auto-play when slide changes (with delay to ensure scroll has settled)
   useEffect(() => {
-    if (activeSlide !== lastPlayedSlideRef.current && !state.isMuted) {
-      lastPlayedSlideRef.current = activeSlide;
-      playNarration(activeSlide);
+    // Clear any pending playback timer
+    if (playbackTimerRef.current) {
+      clearTimeout(playbackTimerRef.current);
     }
-  }, [activeSlide, state.isMuted, playNarration]);
+    
+    // Stop current audio when slide changes
+    stopCurrentAudio();
+    
+    // Wait 500ms after slide change before starting narration
+    playbackTimerRef.current = setTimeout(() => {
+      if (activeSlide !== lastPlayedSlideRef.current && !state.isMuted) {
+        lastPlayedSlideRef.current = activeSlide;
+        playNarration(activeSlide);
+      }
+    }, 500);
+    
+    return () => {
+      if (playbackTimerRef.current) {
+        clearTimeout(playbackTimerRef.current);
+      }
+    };
+  }, [activeSlide, state.isMuted, playNarration, stopCurrentAudio]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -212,8 +255,15 @@ export const useSlideNarration = (activeSlide: number): UseSlideNarrationReturn 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
+      if (playbackTimerRef.current) {
+        clearTimeout(playbackTimerRef.current);
+      }
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
       if (audioRef.current) {
         audioRef.current.pause();
+        audioRef.current.src = "";
       }
       // Clean up cached blob URLs
       audioCacheRef.current.forEach(url => URL.revokeObjectURL(url));
