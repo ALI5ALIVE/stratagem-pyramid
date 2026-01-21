@@ -16,7 +16,11 @@ const agendaItems = [
   { num: 12, label: "Messaging House", summary: "Complete positioning framework" },
 ];
 
-const Slide0Title = () => {
+interface Slide0TitleProps {
+  onNavigateToSlide?: (slideIndex: number) => void;
+}
+
+const Slide0Title = ({ onNavigateToSlide }: Slide0TitleProps) => {
   return (
     <section
       id="slide-0"
@@ -76,9 +80,10 @@ const Slide0Title = () => {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
               {agendaItems.map((item) => (
-                <div 
+                <button 
                   key={item.num}
-                  className="group bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg px-3 py-2 sm:px-4 sm:py-3 text-left hover:border-primary/30 hover:bg-card/80 transition-all duration-200"
+                  onClick={() => onNavigateToSlide?.(item.num)}
+                  className="group bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg px-3 py-2 sm:px-4 sm:py-3 text-left hover:border-primary/50 hover:bg-card/80 hover:scale-[1.02] cursor-pointer transition-all duration-200"
                 >
                   <div className="flex items-start gap-2">
                     <span className="text-primary font-mono text-xs sm:text-sm font-bold">
@@ -93,7 +98,7 @@ const Slide0Title = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </div>
