@@ -217,6 +217,43 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
           </filter>
         </defs>
 
+        {/* Operational Performance & Readiness Arrow - Left side of pyramid */}
+        <g className="performance-arrow">
+          {/* Arrow line */}
+          <line
+            x1={20}
+            y1={600}
+            x2={20}
+            y2={50}
+            stroke="hsl(var(--muted-foreground))"
+            strokeWidth="2"
+            strokeOpacity="0.6"
+          />
+          
+          {/* Arrowhead pointing up */}
+          <polygon
+            points="20,35 13,52 27,52"
+            fill="hsl(var(--muted-foreground))"
+            fillOpacity="0.6"
+          />
+          
+          {/* Label - rotated vertically to read bottom-to-top */}
+          <text
+            x={-340}
+            y={10}
+            transform="rotate(-90)"
+            textAnchor="middle"
+            fill="hsl(var(--muted-foreground))"
+            fontSize="11"
+            fontWeight="600"
+            fontFamily="'Space Grotesk', sans-serif"
+            letterSpacing="0.08em"
+            className="uppercase"
+          >
+            Operational Performance & Readiness
+          </text>
+        </g>
+
         {/* Render layers 1-3 (Foundation is handled separately) */}
         {[3, 2, 1].map((level) => {
           const points = getLayerPoints(level);
