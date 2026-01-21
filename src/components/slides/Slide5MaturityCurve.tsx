@@ -231,7 +231,7 @@ const Slide5MaturityCurve = () => {
       slideNumber={5}
     >
       <div className="space-y-2">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 items-center">
           {/* LEFT: Hockey Stick Curve */}
           <div className="bg-card/30 rounded-xl border border-border/30 p-2 md:p-3 flex items-center justify-center">
             <svg
@@ -420,7 +420,7 @@ const Slide5MaturityCurve = () => {
           </div>
 
           {/* RIGHT: Stage Details */}
-          <div className="h-full overflow-y-auto bg-card/30 rounded-md p-2 border border-border/30">
+          <div className="overflow-y-auto bg-card/30 rounded-md p-2 border border-border/30 max-h-[450px]">
             <MaturityStageDetails stage={selectedStage} />
           </div>
         </div>
