@@ -230,7 +230,7 @@ const Slide5MaturityCurve = () => {
   return (
     <SlideContainer
       id="slide-5"
-      title="The Excellence Roadmap"
+      title="The Operational Excellence Roadmap"
       subtitle="The measurable journey from reactive to predictive"
       slideNumber={5}
     >
