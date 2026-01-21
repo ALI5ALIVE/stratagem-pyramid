@@ -59,9 +59,9 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
   ];
 
   // Calculate X position for any Y on the pyramid slope
-  // Apex at (400, 20), left base at (40, 610), right base at (760, 610)
-  const apexY = 20;
-  const baseY = 610;
+  // Apex at (400, 15), left base at (40, 465), right base at (760, 465) - compressed for slide view
+  const apexY = 15;
+  const baseY = 465;
   const apexX = 400;
   const leftBaseX = 40;
   const rightBaseX = 760;
@@ -76,13 +76,13 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
     return apexX + slope * (y - apexY);
   };
 
-  // Layer Y boundaries (unified straight edges) - 5 layers
+  // Layer Y boundaries (unified straight edges) - 5 layers - compressed
   const layerBounds = {
-    1: { top: 20, bottom: 138 },   // Transformational
-    2: { top: 138, bottom: 256 },  // Commercial
-    3: { top: 256, bottom: 374 },  // Operational
-    4: { top: 374, bottom: 492 },  // Foundation
-    5: { top: 492, bottom: 610 },  // Fragmentation
+    1: { top: 15, bottom: 105 },   // Transformational
+    2: { top: 105, bottom: 195 },  // Commercial
+    3: { top: 195, bottom: 285 },  // Operational
+    4: { top: 285, bottom: 375 },  // Foundation
+    5: { top: 375, bottom: 465 },  // Fragmentation
   };
 
   // Generate polygon points for each layer (excluding Foundation which is split)
@@ -126,13 +126,13 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
     return layer || { id: "", label: "", sublabel: "" };
   };
 
-  // Label positions - dynamically computed from layer bounds
+  // Label positions - dynamically computed from layer bounds - compressed
   const labelPositions = {
-    1: { y: (layerBounds[1].top + layerBounds[1].bottom) / 2, lineEndX: 540 },
-    2: { y: (layerBounds[2].top + layerBounds[2].bottom) / 2, lineEndX: 600 },
-    3: { y: (layerBounds[3].top + layerBounds[3].bottom) / 2, lineEndX: 660 },
-    4: { y: (layerBounds[4].top + layerBounds[4].bottom) / 2, lineEndX: 720 },
-    5: { y: (layerBounds[5].top + layerBounds[5].bottom) / 2, lineEndX: 780 },
+    1: { y: (layerBounds[1].top + layerBounds[1].bottom) / 2, lineEndX: 520 },
+    2: { y: (layerBounds[2].top + layerBounds[2].bottom) / 2, lineEndX: 570 },
+    3: { y: (layerBounds[3].top + layerBounds[3].bottom) / 2, lineEndX: 620 },
+    4: { y: (layerBounds[4].top + layerBounds[4].bottom) / 2, lineEndX: 670 },
+    5: { y: (layerBounds[5].top + layerBounds[5].bottom) / 2, lineEndX: 720 },
   };
 
   // Get center position for the triple loop in operational layer
@@ -153,8 +153,8 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
     }
   };
 
-  // Mobile-optimized viewBox: show only pyramid (centered) without right-side labels
-  const viewBox = isMobile ? "0 0 800 640" : "0 0 1020 640";
+  // Mobile-optimized viewBox: show only pyramid (centered) without right-side labels - compressed height
+  const viewBox = isMobile ? "0 0 800 490" : "0 0 1020 490";
 
   return (
     <div className="relative w-full h-full flex flex-col items-center justify-center">
@@ -217,14 +217,14 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
           </filter>
         </defs>
 
-        {/* Operational Performance & Readiness Arrow - Left side of pyramid */}
+        {/* Operational Performance & Readiness Arrow - Left side of pyramid - adjusted */}
         <g className="performance-arrow">
           {/* Arrow line */}
           <line
             x1={20}
-            y1={600}
+            y1={455}
             x2={20}
-            y2={50}
+            y2={40}
             stroke="hsl(var(--muted-foreground))"
             strokeWidth="2"
             strokeOpacity="0.6"
@@ -232,19 +232,19 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
           
           {/* Arrowhead pointing up */}
           <polygon
-            points="20,35 13,52 27,52"
+            points="20,28 13,42 27,42"
             fill="hsl(var(--muted-foreground))"
             fillOpacity="0.6"
           />
           
           {/* Label - rotated vertically to read bottom-to-top */}
           <text
-            x={-340}
+            x={-250}
             y={10}
             transform="rotate(-90)"
             textAnchor="middle"
             fill="hsl(var(--muted-foreground))"
-            fontSize="11"
+            fontSize="10"
             fontWeight="600"
             fontFamily="'Space Grotesk', sans-serif"
             letterSpacing="0.08em"
@@ -332,25 +332,25 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
                     className="cursor-pointer"
                     onClick={() => onLayerClick(level)}
                   >
-                  {/* Label background for readability */}
+                  {/* Label background for readability - compact */}
                     <rect
-                      x={labelPos.lineEndX + 10}
-                      y={labelPos.y - 28}
-                      width="290"
-                      height="56"
-                      rx="6"
+                      x={labelPos.lineEndX + 8}
+                      y={labelPos.y - 22}
+                      width="270"
+                      height="44"
+                      rx="5"
                       fill={isActive ? "hsl(222, 47%, 12%)" : "transparent"}
                       stroke={isActive ? colors.main : "transparent"}
                       strokeWidth="1"
                       className="transition-all duration-300"
                     />
 
-                    {/* Layer name */}
+                    {/* Layer name - compact */}
                     <text
-                      x={labelPos.lineEndX + 20}
-                      y={labelPos.y - 6}
+                      x={labelPos.lineEndX + 16}
+                      y={labelPos.y - 4}
                       fill={isActive ? colors.main : "hsl(210, 40%, 80%)"}
-                      fontSize="11"
+                      fontSize="10"
                       fontWeight="700"
                       fontFamily="'Space Grotesk', sans-serif"
                       letterSpacing="0.06em"
@@ -359,12 +359,12 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
                       {layerData.label}
                     </text>
                     
-                    {/* Sublabel */}
+                    {/* Sublabel - compact */}
                     <text
-                      x={labelPos.lineEndX + 20}
-                      y={labelPos.y + 16}
+                      x={labelPos.lineEndX + 16}
+                      y={labelPos.y + 12}
                       fill={isActive ? "hsl(210, 40%, 90%)" : "hsl(215, 20%, 55%)"}
-                      fontSize="12"
+                      fontSize="10"
                       fontWeight="400"
                       fontFamily="'Inter', sans-serif"
                       className="transition-all duration-300"
@@ -427,13 +427,13 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
                   }}
                 />
 
-                {/* Section label */}
+                {/* Section label - compact */}
                 <text
                   x={sectionCenterX}
-                  y={foundationCenterY - 6}
+                  y={foundationCenterY - 4}
                   textAnchor="middle"
                   fill="hsl(210, 40%, 98%)"
-                  fontSize="11"
+                  fontSize="9"
                   fontWeight="600"
                   fontFamily="'Space Grotesk', sans-serif"
                   letterSpacing="0.05em"
@@ -443,10 +443,10 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
                 </text>
                 <text
                   x={sectionCenterX}
-                  y={foundationCenterY + 12}
+                  y={foundationCenterY + 10}
                   textAnchor="middle"
                   fill="hsl(210, 40%, 80%)"
-                  fontSize="9"
+                  fontSize="8"
                   fontWeight="400"
                   fontFamily="'Inter', sans-serif"
                   className="pointer-events-none select-none"
@@ -544,27 +544,27 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
                   className="transition-all duration-300"
                 />
 
-              {/* Label group */}
+              {/* Label group - compact */}
                 <g
                   className="cursor-pointer"
                   onClick={() => onLayerClick(4)}
                 >
                   <rect
-                    x={labelPos.lineEndX + 10}
-                    y={labelPos.y - 28}
-                    width="290"
-                    height="56"
-                    rx="6"
+                    x={labelPos.lineEndX + 8}
+                    y={labelPos.y - 22}
+                    width="270"
+                    height="44"
+                    rx="5"
                     fill={isActive ? "hsl(222, 47%, 12%)" : "transparent"}
                     stroke={isActive ? colors.main : "transparent"}
                     strokeWidth="1"
                     className="transition-all duration-300"
                   />
                   <text
-                    x={labelPos.lineEndX + 20}
-                    y={labelPos.y - 6}
+                    x={labelPos.lineEndX + 16}
+                    y={labelPos.y - 4}
                     fill={isActive ? colors.main : "hsl(210, 40%, 80%)"}
-                    fontSize="11"
+                    fontSize="10"
                     fontWeight="700"
                     fontFamily="'Space Grotesk', sans-serif"
                     letterSpacing="0.06em"
@@ -573,10 +573,10 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
                     {layerData.label}
                   </text>
                   <text
-                    x={labelPos.lineEndX + 20}
-                    y={labelPos.y + 16}
+                    x={labelPos.lineEndX + 16}
+                    y={labelPos.y + 12}
                     fill={isActive ? "hsl(210, 40%, 90%)" : "hsl(215, 20%, 55%)"}
-                    fontSize="12"
+                    fontSize="10"
                     fontWeight="400"
                     fontFamily="'Inter', sans-serif"
                     className="transition-all duration-300"
@@ -665,18 +665,18 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
                     className="transition-all duration-300"
                   />
 
-                  {/* Label group (right side) */}
+                  {/* Label group (right side) - compact */}
                   <g
                     className="cursor-pointer"
                     onClick={() => onLayerClick(level)}
                   >
                     {/* Label background */}
                     <rect
-                      x={labelPos.lineEndX + 10}
-                      y={labelPos.y - 28}
-                      width="290"
-                      height="56"
-                      rx="6"
+                      x={labelPos.lineEndX + 8}
+                      y={labelPos.y - 22}
+                      width="270"
+                      height="44"
+                      rx="5"
                       fill={isActive ? "hsl(222, 47%, 12%)" : "transparent"}
                       stroke={isActive ? colors.main : "transparent"}
                       strokeWidth="1"
@@ -685,10 +685,10 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
 
                     {/* Layer name */}
                     <text
-                      x={labelPos.lineEndX + 20}
-                      y={labelPos.y - 6}
+                      x={labelPos.lineEndX + 16}
+                      y={labelPos.y - 4}
                       fill={isActive ? colors.main : "hsl(210, 40%, 80%)"}
-                      fontSize="11"
+                      fontSize="10"
                       fontWeight="700"
                       fontFamily="'Space Grotesk', sans-serif"
                       letterSpacing="0.06em"
@@ -699,10 +699,10 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
 
                     {/* Sublabel */}
                     <text
-                      x={labelPos.lineEndX + 20}
-                      y={labelPos.y + 16}
+                      x={labelPos.lineEndX + 16}
+                      y={labelPos.y + 12}
                       fill={isActive ? "hsl(210, 40%, 90%)" : "hsl(215, 20%, 55%)"}
-                      fontSize="12"
+                      fontSize="10"
                       fontWeight="400"
                       fontFamily="'Inter', sans-serif"
                       className="transition-all duration-300"
@@ -740,16 +740,16 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
           );
         })()}
 
-        {/* Transformational Illustration embedded in layer 1 - Human + AI = Opportunity */}
+        {/* Transformational Illustration embedded in layer 1 - Human + AI = Opportunity - compact */}
         {(() => {
           const bounds = layerBounds[1];
           // Position near the bottom of the triangle where there's more width
-          const height = 40;
-          const yPosition = bounds.bottom - height - 15;
+          const height = 32;
+          const yPosition = bounds.bottom - height - 10;
           const leftX = getLeftX(yPosition + height / 2);
           const rightX = getRightX(yPosition + height / 2);
           const availableWidth = rightX - leftX;
-          const width = Math.min(availableWidth * 0.85, 180);
+          const width = Math.min(availableWidth * 0.85, 160);
           const startX = (leftX + rightX) / 2 - width / 2;
           
           return (
@@ -767,7 +767,7 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
           );
         })()}
 
-        {/* Metrics Gauges embedded in Commercial layer */}
+        {/* Metrics Gauges embedded in Commercial layer - compact */}
         {(() => {
           const bounds = layerBounds[2];
           const centerY = (bounds.top + bounds.bottom) / 2;
@@ -779,9 +779,9 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
           return (
             <foreignObject
               x={centerX - width * 0.47}
-              y={bounds.top + 6}
+              y={bounds.top + 4}
               width={width * 0.94}
-              height={bounds.bottom - bounds.top - 10}
+              height={bounds.bottom - bounds.top - 8}
             >
               <div className="w-full h-full flex items-center justify-center rounded-md bg-card/60 backdrop-blur-sm ring-1 ring-border/60">
                 <MetricsGauges onMetricClick={handleModuleClick} />
@@ -790,7 +790,7 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
           );
         })()}
 
-        {/* Triple Loop embedded in Operational layer */}
+        {/* Triple Loop embedded in Operational layer - compact */}
         {(() => {
           const bounds = layerBounds[3];
           const centerY = (bounds.top + bounds.bottom) / 2;
@@ -803,9 +803,9 @@ const Pyramid3D = ({ layers, activeLayer, onLayerClick, onModuleClick }: Pyramid
           return (
             <foreignObject
               x={startX}
-              y={bounds.top + 10}
+              y={bounds.top + 6}
               width={width}
-              height={bounds.bottom - bounds.top - 20}
+              height={bounds.bottom - bounds.top - 12}
             >
               <div className="w-full h-full flex items-center justify-center overflow-hidden rounded-md bg-card/60 backdrop-blur-sm ring-1 ring-border/60">
                 <TripleLoop onModuleClick={handleModuleClick} />
