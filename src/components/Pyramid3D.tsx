@@ -23,11 +23,11 @@ interface Pyramid3DProps {
 
 // 2x scaled layer colors configuration
 const layerColors = {
-  1: { main: "hsl(45, 93%, 58%)", dark: "hsl(45, 93%, 40%)", glow: "hsl(45, 93%, 58%)" },
-  2: { main: "hsl(280, 65%, 55%)", dark: "hsl(280, 65%, 38%)", glow: "hsl(280, 65%, 55%)" },
+  1: { main: "hsl(0, 70%, 50%)", dark: "hsl(0, 70%, 35%)", glow: "hsl(0, 70%, 50%)" },
+  2: { main: "hsl(199, 89%, 48%)", dark: "hsl(199, 89%, 35%)", glow: "hsl(199, 89%, 48%)" },
   3: { main: "hsl(173, 80%, 40%)", dark: "hsl(173, 80%, 28%)", glow: "hsl(173, 80%, 40%)" },
-  4: { main: "hsl(199, 89%, 48%)", dark: "hsl(199, 89%, 35%)", glow: "hsl(199, 89%, 48%)" },
-  5: { main: "hsl(0, 70%, 50%)", dark: "hsl(0, 70%, 35%)", glow: "hsl(0, 70%, 50%)" },
+  4: { main: "hsl(280, 65%, 55%)", dark: "hsl(280, 65%, 38%)", glow: "hsl(280, 65%, 55%)" },
+  5: { main: "hsl(45, 93%, 58%)", dark: "hsl(45, 93%, 40%)", glow: "hsl(45, 93%, 58%)" },
 };
 
 const foundationSections = [
@@ -54,11 +54,11 @@ const Pyramid3D = ({
 
   // 2x scaled layer boundaries
   const layerBounds = {
-    1: { top: 40, bottom: 248 },
-    2: { top: 248, bottom: 456 },
+    1: { top: 872, bottom: 1080 },
+    2: { top: 664, bottom: 872 },
     3: { top: 456, bottom: 664 },
-    4: { top: 664, bottom: 872 },
-    5: { top: 872, bottom: 1080 },
+    4: { top: 248, bottom: 456 },
+    5: { top: 40, bottom: 248 },
   };
 
   const getLeftX = (y: number) => {
@@ -109,11 +109,11 @@ const Pyramid3D = ({
 
   // 2x scaled label positions
   const labelPositions = {
-    1: { lineStartX: 1000, lineStartY: 140, lineEndX: 1480, lineEndY: 140, labelX: 1490, labelY: 140 },
-    2: { lineStartX: 1100, lineStartY: 350, lineEndX: 1480, lineEndY: 350, labelX: 1490, labelY: 350 },
+    1: { lineStartX: 1300, lineStartY: 976, lineEndX: 1480, lineEndY: 976, labelX: 1490, labelY: 976 },
+    2: { lineStartX: 1250, lineStartY: 768, lineEndX: 1480, lineEndY: 768, labelX: 1490, labelY: 768 },
     3: { lineStartX: 1180, lineStartY: 560, lineEndX: 1480, lineEndY: 560, labelX: 1490, labelY: 560 },
-    4: { lineStartX: 1250, lineStartY: 768, lineEndX: 1480, lineEndY: 768, labelX: 1490, labelY: 768 },
-    5: { lineStartX: 1300, lineStartY: 976, lineEndX: 1480, lineEndY: 976, labelX: 1490, labelY: 976 },
+    4: { lineStartX: 1100, lineStartY: 350, lineEndX: 1480, lineEndY: 350, labelX: 1490, labelY: 350 },
+    5: { lineStartX: 1000, lineStartY: 140, lineEndX: 1480, lineEndY: 140, labelX: 1490, labelY: 140 },
   };
 
   const handleModuleClick = (module: string) => {
