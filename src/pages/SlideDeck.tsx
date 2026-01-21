@@ -69,6 +69,14 @@ const SlideDeck = () => {
 
     const container = containerRef.current;
     container?.addEventListener("scroll", handleScroll);
+    
+    // Set initial active slide immediately on mount (no debounce)
+    if (container) {
+      const slideHeight = container.clientHeight;
+      const currentSlide = Math.round(container.scrollTop / slideHeight);
+      setActiveSlide(Math.min(currentSlide, slides.length - 1));
+    }
+    
     return () => {
       container?.removeEventListener("scroll", handleScroll);
       if (debounceTimerRef.current) {
