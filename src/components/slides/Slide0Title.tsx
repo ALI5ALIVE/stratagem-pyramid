@@ -5,12 +5,14 @@ const agendaItems = [
   { num: 1, label: "Strategic Shift", summary: "Why we're redefining the category" },
   { num: 2, label: "Before & After", summary: "What's broken — and how we fix it" },
   { num: 3, label: "Operating Model", summary: "Detect → Trigger → Orchestrate → Prove" },
-  { num: 4, label: "Transformation", summary: "Cost center to value driver" },
-  { num: 5, label: "Readiness Ladder", summary: "Building blocks of excellence" },
-  { num: 6, label: "Excellence Roadmap", summary: "The measurable journey" },
-  { num: 7, label: "Positioning", summary: "Where we stand vs. competitors" },
-  { num: 8, label: "Customers", summary: "Measurable value delivery" },
-  { num: 9, label: "Investors", summary: "Shareholder value creation" },
+  { num: 4, label: "Platform Capabilities", summary: "The platform that powers it" },
+  { num: 5, label: "Transformation", summary: "Cost center to value driver" },
+  { num: 6, label: "Readiness Ladder", summary: "Building blocks of excellence" },
+  { num: 7, label: "Operational Excellence Roadmap", summary: "The measurable journey" },
+  { num: 8, label: "Positioning", summary: "Where we stand vs. competitors" },
+  { num: 9, label: "Customers", summary: "Measurable value delivery" },
+  { num: 10, label: "Investors", summary: "Shareholder value creation" },
+  { num: 11, label: "Category Name", summary: "Why this name wins" },
 ];
 
 const Slide0Title = () => {
