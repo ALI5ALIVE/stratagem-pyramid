@@ -237,7 +237,7 @@ const Slide4ValuePyramid = () => {
   }, []);
 
   const handleModuleClick = useCallback((module: string) => {
-    setActiveLayerId("CONNECTED");
+    setActiveLayerId("MANAGED"); // Foundation sections are now Stage 2
     setHighlightedModule(module);
     setIsAutoCycling(false);
     setTimeout(() => setHighlightedModule(null), 3000);

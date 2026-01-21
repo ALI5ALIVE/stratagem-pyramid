@@ -84,7 +84,7 @@ const Pyramid3D = ({
   };
 
   const getFoundationSectionPoints = (sectionIndex: number) => {
-    const bounds = layerBounds[4];
+    const bounds = layerBounds[2]; // Foundation is now at Level 2
     const topLeft = getLeftX(bounds.top);
     const topRight = getRightX(bounds.top);
     const bottomLeft = getLeftX(bounds.bottom);
@@ -132,8 +132,8 @@ const Pyramid3D = ({
   const rightBaseX = layerConfig.baseRight.x;
   const baseY = layerConfig.baseLeft.y;
 
-  // Foundation layer center
-  const foundationBounds = layerBounds[4];
+  // Foundation layer center (Level 2)
+  const foundationBounds = layerBounds[2];
   const foundationCenterY = (foundationBounds.top + foundationBounds.bottom) / 2;
 
   return (
@@ -210,8 +210,8 @@ const Pyramid3D = ({
           </text>
         </g>
 
-        {/* Render layers 1-3 */}
-        {[3, 2, 1].map((level) => {
+        {/* Render layers 1, 3, 4 (Level 2 is foundation sections, Level 5 rendered separately on top) */}
+        {[4, 3, 1].map((level) => {
           const points = getLayerPoints(level);
           const colors = layerColors[level as keyof typeof layerColors];
           const isActive = activeLayer === level;
@@ -260,12 +260,12 @@ const Pyramid3D = ({
           );
         })}
 
-        {/* Foundation Layer (Level 4) - Split into 3 sections */}
+        {/* Foundation Layer (Level 2) - Split into 3 sections */}
         <g>
           {foundationSections.map((section, index) => {
             const points = getFoundationSectionPoints(index);
-            const isActive = activeLayer === 4;
-            const colors = layerColors[4];
+            const isActive = activeLayer === 2;
+            const colors = layerColors[2];
 
             const topLeftX = getLeftX(foundationBounds.top);
             const topRightX = getRightX(foundationBounds.top);
@@ -286,10 +286,10 @@ const Pyramid3D = ({
                   stroke={colors.main}
                   strokeWidth={isActive ? "4" : "2"}
                   className="cursor-pointer transition-all duration-300"
-                  onClick={() => { onLayerClick(4); handleModuleClick(section.id); }}
-                  style={{ filter: isActive ? `url(#active-glow-4)` : "none", opacity: isActive ? 1 : 0.85 }}
+                  onClick={() => { onLayerClick(2); handleModuleClick(section.id); }}
+                  style={{ filter: isActive ? `url(#active-glow-2)` : "none", opacity: isActive ? 1 : 0.85 }}
                 />
-                <polygon points={points} fill="transparent" className="cursor-pointer hover:fill-white/10 transition-all duration-200" onClick={() => { onLayerClick(4); handleModuleClick(section.id); }} />
+                <polygon points={points} fill="transparent" className="cursor-pointer hover:fill-white/10 transition-all duration-200" onClick={() => { onLayerClick(2); handleModuleClick(section.id); }} />
 
                 <text x={sectionCenterX} y={foundationCenterY - 12} textAnchor="middle" fill="hsl(210, 40%, 98%)" fontSize="22" fontWeight="600" fontFamily="'Space Grotesk', sans-serif" letterSpacing="0.05em" className="uppercase pointer-events-none select-none">
                   {section.label}
@@ -323,23 +323,23 @@ const Pyramid3D = ({
           })}
 
           {/* Top edge highlight for Foundation */}
-          <line x1={getLeftX(foundationBounds.top)} y1={foundationBounds.top} x2={getRightX(foundationBounds.top)} y2={foundationBounds.top} stroke="white" strokeWidth="2" strokeOpacity={activeLayer === 4 ? "0.4" : "0.2"} />
+          <line x1={getLeftX(foundationBounds.top)} y1={foundationBounds.top} x2={getRightX(foundationBounds.top)} y2={foundationBounds.top} stroke="white" strokeWidth="2" strokeOpacity={activeLayer === 2 ? "0.4" : "0.2"} />
 
           {/* Foundation label (right side) - hidden on mobile */}
           {!isMobile && (() => {
-            const labelPos = labelPositions[4];
+            const labelPos = labelPositions[2];
             const centerY = (foundationBounds.top + foundationBounds.bottom) / 2;
             const rightEdgeX = getRightX(centerY);
-            const layerData = getLayerData(4);
-            const isActive = activeLayer === 4;
-            const colors = layerColors[4];
+            const layerData = getLayerData(2);
+            const isActive = activeLayer === 2;
+            const colors = layerColors[2];
 
             return (
               <g>
                 <line x1={rightEdgeX + 10} y1={labelPos.labelY} x2={labelPos.lineEndX} y2={labelPos.labelY} stroke={isActive ? colors.main : "hsl(222, 30%, 30%)"} strokeWidth={isActive ? "3" : "2"} strokeDasharray={isActive ? "none" : "8 8"} className="transition-all duration-300" />
                 <circle cx={rightEdgeX + 10} cy={labelPos.labelY} r={isActive ? "10" : "6"} fill={isActive ? colors.main : "hsl(222, 30%, 40%)"} className="transition-all duration-300" />
 
-                <g className="cursor-pointer" onClick={() => onLayerClick(4)}>
+                <g className="cursor-pointer" onClick={() => onLayerClick(2)}>
                   <rect x={labelPos.lineEndX + 16} y={labelPos.labelY - 52} width="290" height="104" rx="10" fill={isActive ? "hsl(222, 47%, 12%)" : "transparent"} stroke={isActive ? colors.main : "transparent"} strokeWidth="2" className="transition-all duration-300" />
                   <text x={labelPos.lineEndX + 32} y={labelPos.labelY - 8} fill={isActive ? colors.main : "hsl(210, 40%, 80%)"} fontSize="22" fontWeight="700" fontFamily="'Space Grotesk', sans-serif" letterSpacing="0.06em" className="transition-all duration-300">
                     {layerData?.label}
@@ -353,7 +353,7 @@ const Pyramid3D = ({
           })()}
         </g>
 
-        {/* Fragmentation Layer (Level 5) */}
+        {/* Top Layer (Level 5) - Rendered last to be on top */}
         {(() => {
           const level = 5;
           const bounds = layerBounds[5];
@@ -405,9 +405,9 @@ const Pyramid3D = ({
           );
         })()}
 
-        {/* Fragmentation Illustration embedded in layer 5 */}
+        {/* Fragmentation Illustration embedded in layer 1 (bottom) */}
         {(() => {
-          const bounds = layerBounds[5];
+          const bounds = layerBounds[1];
           const centerY = (bounds.top + bounds.bottom) / 2;
           const leftX = getLeftX(centerY);
           const rightX = getRightX(centerY);
@@ -424,9 +424,9 @@ const Pyramid3D = ({
           );
         })()}
 
-        {/* Transformational Illustration in layer 1 */}
+        {/* Transformational Illustration in layer 5 (top/apex) */}
         {(() => {
-          const bounds = layerBounds[1];
+          const bounds = layerBounds[5];
           const height = 80;
           const yPosition = bounds.bottom - height - 24;
           const leftX = getLeftX(yPosition + height / 2);
@@ -444,9 +444,9 @@ const Pyramid3D = ({
           );
         })()}
 
-        {/* Metrics Gauges in layer 2 */}
+        {/* Metrics Gauges in layer 4 */}
         {(() => {
-          const bounds = layerBounds[2];
+          const bounds = layerBounds[4];
           const centerY = (bounds.top + bounds.bottom) / 2;
           const leftX = getLeftX(centerY);
           const rightX = getRightX(centerY);
@@ -462,7 +462,7 @@ const Pyramid3D = ({
           );
         })()}
 
-        {/* Triple Loop in layer 3 */}
+        {/* Triple Loop in layer 3 (unchanged) */}
         {(() => {
           const bounds = layerBounds[3];
           const centerY = (bounds.top + bounds.bottom) / 2;
