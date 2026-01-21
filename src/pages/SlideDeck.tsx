@@ -9,7 +9,7 @@ import Slide5MaturityCurve from "@/components/slides/Slide5MaturityCurve";
 import Slide6Investors from "@/components/slides/Slide6Investors";
 import Slide7Customers from "@/components/slides/Slide7Customers";
 import Slide8PositioningMap from "@/components/slides/Slide8PositioningMap";
-import complyLogo from "@/assets/comply365-logo.png";
+import complyLogo from "@/assets/comply365-logo-white.png";
 
 const slides = [
   { id: "slide-1", label: "Strategic Shift" },
