@@ -77,28 +77,28 @@ const Slide3OperatingModel = () => {
       slideNumber={3}
     >
       {/* Core Solutions Infinity Model */}
-      <div className="mb-8">
+      <div className="mb-4">
         <CoreSolutionsInfinity />
       </div>
 
       {/* Data Sources Row */}
-      <div className="max-w-4xl mx-auto mb-6">
-        <div className="flex items-center justify-center gap-2 flex-wrap">
-          <div className="flex items-center gap-1.5 mr-2">
-            <Database className="w-4 h-4 text-muted-foreground" />
-            <span className="text-xs text-muted-foreground uppercase tracking-wide">Sources:</span>
+      <div className="max-w-4xl mx-auto mb-3">
+        <div className="flex items-center justify-center gap-1.5 flex-wrap">
+          <div className="flex items-center gap-1 mr-1.5">
+            <Database className="w-3 h-3 text-muted-foreground" />
+            <span className="text-[10px] text-muted-foreground uppercase tracking-wide">Sources:</span>
           </div>
           {dataSources.map((source) => (
             <div
               key={source.id}
-              className="px-2.5 py-1 bg-muted/50 rounded text-xs font-medium text-muted-foreground border border-border"
+              className="px-2 py-0.5 bg-muted/50 rounded text-[10px] font-medium text-muted-foreground border border-border"
             >
               {source.label}
             </div>
           ))}
-          <div className="ml-2 px-3 py-1 bg-primary/10 rounded-full border border-primary/30">
-            <span className="text-sm font-bold text-primary">65K+</span>
-            <span className="text-xs text-muted-foreground ml-1">signals/mo</span>
+          <div className="ml-1.5 px-2 py-0.5 bg-primary/10 rounded-full border border-primary/30">
+            <span className="text-xs font-bold text-primary">65K+</span>
+            <span className="text-[10px] text-muted-foreground ml-1">signals/mo</span>
           </div>
         </div>
       </div>
@@ -116,7 +116,7 @@ const Slide3OperatingModel = () => {
           />
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-3 relative">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-2 relative">
           {steps.map((step, index) => {
             const Icon = step.icon;
             const isActive = activeStep !== null && index <= activeStep;
@@ -126,46 +126,46 @@ const Slide3OperatingModel = () => {
               <div key={step.id} className="relative">
                 {/* Arrow between steps (mobile hidden) */}
                 {index < steps.length - 1 && (
-                  <div className="absolute -right-4 top-1/2 -translate-y-1/2 hidden md:block z-10">
-                    <ArrowRight className={`w-5 h-5 transition-colors duration-300 ${isActive ? step.color : 'text-muted-foreground/30'}`} />
+                  <div className="absolute -right-3 top-1/2 -translate-y-1/2 hidden md:block z-10">
+                    <ArrowRight className={`w-4 h-4 transition-colors duration-300 ${isActive ? step.color : 'text-muted-foreground/30'}`} />
                   </div>
                 )}
 
                 <button 
                   onClick={() => setActiveStep(index === activeStep ? null : index)}
                   className={`
-                    relative w-full p-4 rounded-xl border transition-all duration-300 text-left
+                    relative w-full p-3 rounded-lg border transition-all duration-300 text-left
                     ${isActive ? `${step.bgColor} ${step.borderColor}` : 'bg-card/30 border-border hover:border-muted-foreground/50'}
                     ${isCurrentStep ? 'ring-2 ring-offset-2 ring-offset-background ring-primary' : ''}
                   `}
                 >
                   {/* Icon */}
                   <div className={`
-                    w-10 h-10 mx-auto mb-2 rounded-lg flex items-center justify-center transition-all duration-300
+                    w-8 h-8 mx-auto mb-1.5 rounded-md flex items-center justify-center transition-all duration-300
                     ${isActive ? `${step.bgColor} ${step.borderColor} border` : 'bg-muted/30 border-border border'}
                   `}>
-                    <Icon className={`w-5 h-5 transition-colors duration-300 ${isActive ? step.color : 'text-muted-foreground/50'}`} />
+                    <Icon className={`w-4 h-4 transition-colors duration-300 ${isActive ? step.color : 'text-muted-foreground/50'}`} />
                   </div>
 
                   {/* Label */}
-                  <h3 className={`text-base font-bold text-center mb-1 transition-colors duration-300 ${isActive ? step.color : 'text-muted-foreground/50'}`}>
+                  <h3 className={`text-sm font-bold text-center mb-0.5 transition-colors duration-300 ${isActive ? step.color : 'text-muted-foreground/50'}`}>
                     {step.label}
                   </h3>
 
                   {/* Metric */}
-                  <div className={`text-center mb-2 ${isActive ? 'opacity-100' : 'opacity-50'}`}>
-                    <span className={`text-xl font-bold ${step.color}`}>{step.metric}</span>
-                    <span className="text-xs text-muted-foreground ml-1">{step.metricLabel}</span>
+                  <div className={`text-center mb-1 ${isActive ? 'opacity-100' : 'opacity-50'}`}>
+                    <span className={`text-lg font-bold ${step.color}`}>{step.metric}</span>
+                    <span className="text-[10px] text-muted-foreground ml-1">{step.metricLabel}</span>
                   </div>
 
                   {/* Description */}
-                  <p className={`text-xs text-center transition-colors duration-300 ${isActive ? 'text-foreground' : 'text-muted-foreground/50'}`}>
+                  <p className={`text-[10px] text-center transition-colors duration-300 ${isActive ? 'text-foreground' : 'text-muted-foreground/50'}`}>
                     {step.description}
                   </p>
 
                   {/* Step number */}
                   <div className={`
-                    absolute -top-2 -left-2 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold
+                    absolute -top-1.5 -left-1.5 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold
                     ${isActive ? `${step.bgColor} ${step.color} border ${step.borderColor}` : 'bg-muted text-muted-foreground border border-border'}
                   `}>
                     {index + 1}
@@ -178,22 +178,22 @@ const Slide3OperatingModel = () => {
       </div>
 
       {/* Value Generated Row */}
-      <div className="mt-8 max-w-4xl mx-auto">
-        <div className="flex items-center justify-center gap-2 mb-3">
-          <TrendingUp className="w-4 h-4 text-primary" />
-          <span className="text-xs text-primary uppercase tracking-wide font-semibold">Value Generated</span>
+      <div className="mt-4 max-w-4xl mx-auto">
+        <div className="flex items-center justify-center gap-1.5 mb-2">
+          <TrendingUp className="w-3 h-3 text-primary" />
+          <span className="text-[10px] text-primary uppercase tracking-wide font-semibold">Value Generated</span>
         </div>
-        <div className="grid grid-cols-4 gap-3">
+        <div className="grid grid-cols-4 gap-2">
           {valueOutputs.map((output) => {
             const Icon = output.icon;
             return (
               <div
                 key={output.label}
-                className="bg-card border border-primary/20 rounded-lg p-3 text-center"
+                className="bg-card border border-primary/20 rounded-md p-2 text-center"
               >
-                <Icon className="w-4 h-4 text-primary mx-auto mb-1" />
-                <p className="text-lg font-bold text-primary">{output.value}</p>
-                <p className="text-xs text-muted-foreground">{output.label}</p>
+                <Icon className="w-3 h-3 text-primary mx-auto mb-0.5" />
+                <p className="text-base font-bold text-primary">{output.value}</p>
+                <p className="text-[10px] text-muted-foreground">{output.label}</p>
               </div>
             );
           })}
@@ -201,7 +201,7 @@ const Slide3OperatingModel = () => {
       </div>
 
       {/* Click instruction */}
-      <p className="text-center text-xs text-muted-foreground mt-4">
+      <p className="text-center text-[10px] text-muted-foreground mt-2">
         Click each stage to explore the data flow
       </p>
     </SlideContainer>
