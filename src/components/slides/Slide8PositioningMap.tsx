@@ -77,15 +77,43 @@ const CustomTooltip = ({ active, payload }: any) => {
   return null;
 };
 
-// Quadrant label component for ReferenceArea
-const QuadrantLabel = ({ viewBox, label, sublabel }: any) => {
+// Quadrant label component for ReferenceArea with corner positioning
+const QuadrantLabel = ({ viewBox, label, sublabel, position }: any) => {
   const { x, y, width, height } = viewBox;
+  const padding = 12;
+  
+  let textX, textY;
+  
+  switch (position) {
+    case "top-left":
+      textX = x + padding;
+      textY = y + padding + 12;
+      break;
+    case "top-right":
+      textX = x + width - padding;
+      textY = y + padding + 12;
+      break;
+    case "bottom-left":
+      textX = x + padding;
+      textY = y + height - padding - 8;
+      break;
+    case "bottom-right":
+      textX = x + width - padding;
+      textY = y + height - padding - 8;
+      break;
+    default:
+      textX = x + width / 2;
+      textY = y + height / 2;
+  }
+  
+  const anchor = position?.includes("left") ? "start" : position?.includes("right") ? "end" : "middle";
+  
   return (
     <g>
       <text
-        x={x + width / 2}
-        y={y + height / 2 - 8}
-        textAnchor="middle"
+        x={textX}
+        y={textY - 8}
+        textAnchor={anchor}
         fill="hsl(var(--foreground))"
         fontSize={11}
         fontWeight="bold"
@@ -94,9 +122,9 @@ const QuadrantLabel = ({ viewBox, label, sublabel }: any) => {
         {label}
       </text>
       <text
-        x={x + width / 2}
-        y={y + height / 2 + 8}
-        textAnchor="middle"
+        x={textX}
+        y={textY + 8}
+        textAnchor={anchor}
         fill="hsl(var(--muted-foreground))"
         fontSize={9}
         opacity={0.7}
@@ -195,7 +223,41 @@ const Slide8PositioningMap = () => {
 
                   <Tooltip content={<CustomTooltip />} />
 
-                  {/* Render each vendor as a separate scatter to control styling */}
+                  {/* Quadrant backgrounds - rendered FIRST so competitors appear on top */}
+                  <ReferenceArea
+                    x1={0} x2={5} y1={0} y2={5}
+                    fill="#6b7280"
+                    fillOpacity={0.15}
+                    stroke="#6b7280"
+                    strokeOpacity={0.3}
+                    label={<QuadrantLabel label="Basic Tools" sublabel="Task-level Value" position="bottom-left" />}
+                  />
+                  <ReferenceArea
+                    x1={5} x2={10} y1={0} y2={5}
+                    fill="#9ca3af"
+                    fillOpacity={0.15}
+                    stroke="#9ca3af"
+                    strokeOpacity={0.3}
+                    label={<QuadrantLabel label="Broad Tools" sublabel="Breadth without Depth" position="bottom-right" />}
+                  />
+                  <ReferenceArea
+                    x1={0} x2={5} y1={5} y2={10}
+                    fill="#8b5cf6"
+                    fillOpacity={0.15}
+                    stroke="#8b5cf6"
+                    strokeOpacity={0.3}
+                    label={<QuadrantLabel label="Specialists" sublabel="High Value, Narrow Domain" position="top-left" />}
+                  />
+                  <ReferenceArea
+                    x1={5} x2={10} y1={5} y2={10}
+                    fill="#0066ff"
+                    fillOpacity={0.2}
+                    stroke="#0066ff"
+                    strokeOpacity={0.4}
+                    label={<QuadrantLabel label="Leaders" sublabel="Full Capability + Strategic" position="top-right" />}
+                  />
+
+                  {/* Vendors rendered AFTER quadrants so they appear on top */}
                   {vendors.map((vendor) => (
                     <Scatter
                       key={vendor.name}
@@ -247,44 +309,6 @@ const Slide8PositioningMap = () => {
                       }}
                     />
                   ))}
-
-                  {/* Quadrant backgrounds using ReferenceArea */}
-                  {/* Bottom-Left: Basic Tools (0-5 x, 0-5 y) */}
-                  <ReferenceArea
-                    x1={0} x2={5} y1={0} y2={5}
-                    fill="#6b7280"
-                    fillOpacity={0.15}
-                    stroke="#6b7280"
-                    strokeOpacity={0.3}
-                    label={<QuadrantLabel label="Basic Tools" sublabel="Task-level Value" />}
-                  />
-                  {/* Bottom-Right: Broad Tools (5-10 x, 0-5 y) */}
-                  <ReferenceArea
-                    x1={5} x2={10} y1={0} y2={5}
-                    fill="#9ca3af"
-                    fillOpacity={0.15}
-                    stroke="#9ca3af"
-                    strokeOpacity={0.3}
-                    label={<QuadrantLabel label="Broad Tools" sublabel="Breadth without Depth" />}
-                  />
-                  {/* Top-Left: Specialists (0-5 x, 5-10 y) */}
-                  <ReferenceArea
-                    x1={0} x2={5} y1={5} y2={10}
-                    fill="#8b5cf6"
-                    fillOpacity={0.15}
-                    stroke="#8b5cf6"
-                    strokeOpacity={0.3}
-                    label={<QuadrantLabel label="Specialists" sublabel="High Value, Narrow Domain" />}
-                  />
-                  {/* Top-Right: Leaders (5-10 x, 5-10 y) */}
-                  <ReferenceArea
-                    x1={5} x2={10} y1={5} y2={10}
-                    fill="#0066ff"
-                    fillOpacity={0.2}
-                    stroke="#0066ff"
-                    strokeOpacity={0.4}
-                    label={<QuadrantLabel label="Leaders" sublabel="Full Capability + Strategic" />}
-                  />
                 </ScatterChart>
               </ResponsiveContainer>
             </div>
