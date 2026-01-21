@@ -67,7 +67,7 @@ const outcomes = [
 ];
 
 const SlidePlatformCapabilities = ({
-  isActive = false,
+  isActive: isSlideActive = false,
   isPlaying = false,
   isLoading = false,
   progress = 0,
@@ -82,7 +82,7 @@ const SlidePlatformCapabilities = ({
       title="The Platform That Powers It"
       subtitle="Three foundational capabilities that deliver outcomes point solutions cannot achieve alone"
       slideNumber={4}
-      isActive={isActive}
+      isActive={isSlideActive}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}
@@ -234,15 +234,15 @@ const SlidePlatformCapabilities = ({
           <div className="flex flex-col gap-3">
             {capabilities.map((cap, index) => {
               const Icon = cap.icon;
-              const isActive = activeCapability === index;
+              const isCapActive = activeCapability === index;
 
               return (
                 <button
                   key={cap.id}
-                  onClick={() => setActiveCapability(isActive ? null : index)}
+                  onClick={() => setActiveCapability(isCapActive ? null : index)}
                   className={`
                     text-left p-4 rounded-xl border transition-all duration-300
-                    ${isActive
+                    ${isCapActive
                       ? 'bg-card border-primary/50 shadow-lg shadow-primary/10'
                       : 'bg-card/50 border-border/50 hover:border-border hover:bg-card'
                     }
@@ -260,7 +260,7 @@ const SlidePlatformCapabilities = ({
                         <h4 className="font-semibold text-foreground text-sm">{cap.title}</h4>
                         <ChevronRight className={`
                           w-4 h-4 text-muted-foreground transition-transform duration-300
-                          ${isActive ? 'rotate-90' : ''}
+                          ${isCapActive ? 'rotate-90' : ''}
                         `} />
                       </div>
                       <p className="text-xs text-muted-foreground mt-1 line-clamp-1">
@@ -270,7 +270,7 @@ const SlidePlatformCapabilities = ({
                       {/* Expanded content */}
                       <div className={`
                         overflow-hidden transition-all duration-300
-                        ${isActive ? 'max-h-32 mt-3' : 'max-h-0'}
+                        ${isCapActive ? 'max-h-32 mt-3' : 'max-h-0'}
                       `}>
                         <ul className="space-y-1.5">
                           {cap.bullets.map((bullet, bIndex) => (
