@@ -24,20 +24,20 @@ const CoreSolutionsInfinity = () => {
   `;
 
   return (
-    <div className="relative w-full max-w-3xl mx-auto">
+    <div className="relative w-full max-w-2xl mx-auto">
       {/* Stage labels above */}
-      <div className="flex justify-between px-8 mb-2">
+      <div className="flex justify-between px-4 mb-1">
         {stages.map((stage) => (
           <div
             key={stage.id}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-full"
+            className="flex items-center gap-1.5 px-2 py-1 rounded-full"
             style={{ backgroundColor: `${stage.color}20` }}
           >
             <div
-              className="w-2.5 h-2.5 rounded-full animate-pulse"
-              style={{ backgroundColor: stage.color, boxShadow: `0 0 8px ${stage.color}` }}
+              className="w-2 h-2 rounded-full animate-pulse"
+              style={{ backgroundColor: stage.color, boxShadow: `0 0 6px ${stage.color}` }}
             />
-            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: stage.color }}>
+            <span className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: stage.color }}>
               {stage.label}
             </span>
           </div>
@@ -171,7 +171,7 @@ const CoreSolutionsInfinity = () => {
       </svg>
 
       {/* Subtitle */}
-      <p className="text-center text-sm text-muted-foreground mt-4">
+      <p className="text-center text-xs text-muted-foreground mt-2">
         Three integrated modules powering continuous improvement
       </p>
     </div>
