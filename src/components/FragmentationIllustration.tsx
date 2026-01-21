@@ -163,15 +163,8 @@ const FragmentationIllustration = ({ onNodeClick }: FragmentationIllustrationPro
             r="8"
             fill="hsl(30, 100%, 55%)"
             style={{ filter: "url(#warningPulse)" }}
-          >
-            <animate
-              attributeName="opacity"
-              values="0.6;1;0.6"
-              dur="2s"
-              repeatCount="indefinite"
-              begin={`${index * 0.5}s`}
-            />
-          </circle>
+            opacity="0.85"
+          />
           <text
             x={pos.x}
             y={pos.y + 1}
