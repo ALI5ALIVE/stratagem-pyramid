@@ -192,19 +192,19 @@ const Slide5MaturityCurve = () => {
 
   const selectedStage = stagesData.find((s) => s.stage === activeStage) || stagesData[0];
 
-  // Hockey stick curve points
+  // Hockey stick curve points - expanded for legibility
   const curvePoints = isMobile ? [
-    { x: 60, y: 280 },
-    { x: 120, y: 265 },
-    { x: 180, y: 220 },
-    { x: 250, y: 140 },
-    { x: 320, y: 50 },
+    { x: 70, y: 300 },
+    { x: 140, y: 280 },
+    { x: 210, y: 230 },
+    { x: 290, y: 150 },
+    { x: 370, y: 55 },
   ] : [
-    { x: 70, y: 280 },
-    { x: 160, y: 265 },
-    { x: 250, y: 220 },
-    { x: 350, y: 140 },
-    { x: 450, y: 50 },
+    { x: 80, y: 300 },
+    { x: 180, y: 280 },
+    { x: 280, y: 230 },
+    { x: 390, y: 150 },
+    { x: 500, y: 55 },
   ];
 
   const generateCurvePath = () => {
@@ -221,7 +221,7 @@ const Slide5MaturityCurve = () => {
     return path;
   };
 
-  const viewBox = isMobile ? "0 0 380 350" : "0 0 520 350";
+  const viewBox = isMobile ? "0 0 420 380" : "0 0 580 380";
 
   return (
     <SlideContainer
@@ -233,11 +233,11 @@ const Slide5MaturityCurve = () => {
       <div className="space-y-2">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 items-center">
           {/* LEFT: Hockey Stick Curve */}
-          <div className="bg-card/30 rounded-xl border border-border/30 p-2 md:p-3 flex items-center justify-center">
+          <div className="bg-card/30 rounded-xl border border-border/30 p-3 md:p-4 flex items-center justify-center">
             <svg
               viewBox={viewBox}
               className="w-full h-full"
-              style={{ minHeight: isMobile ? "350px" : "450px" }}
+              style={{ minHeight: isMobile ? "400px" : "500px" }}
             >
               <defs>
                 <linearGradient id="slideGradient" x1="0%" y1="100%" x2="100%" y2="0%">
@@ -266,33 +266,33 @@ const Slide5MaturityCurve = () => {
               </defs>
 
               {/* Y-axis */}
-              <line x1="40" y1="310" x2="40" y2="25" stroke="hsl(222 47% 25%)" strokeWidth="1.5" />
-              <polygon points="40,20 36,28 44,28" fill="hsl(222 47% 25%)" />
+              <line x1="45" y1="330" x2="45" y2="30" stroke="hsl(222 47% 25%)" strokeWidth="1.5" />
+              <polygon points="45,25 41,33 49,33" fill="hsl(222 47% 25%)" />
               
               <text
-                x="15"
-                y="165"
+                x="18"
+                y="180"
                 fill="hsl(215 20% 65%)"
-                fontSize="9"
+                fontSize="10"
                 fontWeight="600"
                 textAnchor="middle"
-                transform="rotate(-90, 15, 165)"
+                transform="rotate(-90, 18, 180)"
                 className="font-display"
               >
                 VALUE / CAPABILITY
               </text>
 
               {/* X-axis */}
-              <line x1="40" y1="310" x2={isMobile ? 360 : 500} y2="310" stroke="hsl(222 47% 25%)" strokeWidth="1.5" />
-              <polygon points={isMobile ? "365,310 357,306 357,314" : "505,310 497,306 497,314"} fill="hsl(222 47% 25%)" />
+              <line x1="45" y1="330" x2={isMobile ? 400 : 560} y2="330" stroke="hsl(222 47% 25%)" strokeWidth="1.5" />
+              <polygon points={isMobile ? "405,330 397,326 397,334" : "565,330 557,326 557,334"} fill="hsl(222 47% 25%)" />
 
               {/* Grid lines */}
-              {[80, 140, 200, 260].map((y) => (
+              {[90, 160, 230, 280].map((y) => (
                 <line
                   key={y}
-                  x1="40"
+                  x1="45"
                   y1={y}
-                  x2={isMobile ? 360 : 500}
+                  x2={isMobile ? 400 : 560}
                   y2={y}
                   stroke="hsl(222 47% 15%)"
                   strokeWidth="1"
@@ -314,9 +314,9 @@ const Slide5MaturityCurve = () => {
               {/* Platform Shift marker - desktop only */}
               {!isMobile && (
                 <g className={`transition-opacity duration-700 delay-500 ${isAnimated ? "opacity-100" : "opacity-0"}`}>
-                  <line x1="250" y1="220" x2="250" y2="310" stroke="hsl(173 80% 40%)" strokeWidth="1.5" strokeDasharray="4,3" />
-                  <rect x="210" y="240" width="80" height="18" rx="3" fill="hsl(173 80% 40% / 0.2)" stroke="hsl(173 80% 40%)" strokeWidth="1" />
-                  <text x="250" y="252" fill="hsl(173 80% 50%)" fontSize="8" fontWeight="600" textAnchor="middle" className="font-display">
+                  <line x1="280" y1="230" x2="280" y2="330" stroke="hsl(173 80% 40%)" strokeWidth="1.5" strokeDasharray="4,3" />
+                  <rect x="235" y="255" width="90" height="20" rx="3" fill="hsl(173 80% 40% / 0.2)" stroke="hsl(173 80% 40%)" strokeWidth="1" />
+                  <text x="280" y="269" fill="hsl(173 80% 50%)" fontSize="9" fontWeight="600" textAnchor="middle" className="font-display">
                     PLATFORM SHIFT
                   </text>
                 </g>
@@ -332,7 +332,7 @@ const Slide5MaturityCurve = () => {
                     <circle
                       cx={point.x}
                       cy={point.y}
-                      r={isActive ? 10 : 7}
+                      r={isActive ? 12 : 9}
                       fill={stage.accentColor}
                       filter={isActive ? "url(#slideActiveGlow)" : "url(#slideGlow)"}
                       className={`transition-all duration-300 ${isAnimated ? "opacity-100" : "opacity-0"}`}
@@ -341,16 +341,16 @@ const Slide5MaturityCurve = () => {
                     <circle
                       cx={point.x}
                       cy={point.y}
-                      r={isActive ? 5 : 3}
+                      r={isActive ? 6 : 4}
                       fill="hsl(222 47% 6%)"
                       className={`transition-all duration-300 ${isAnimated ? "opacity-100" : "opacity-0"}`}
                       style={{ transitionDelay: `${index * 80}ms` }}
                     />
                     <text
                       x={point.x}
-                      y={point.y + 3}
+                      y={point.y + 4}
                       fill={stage.accentColor}
-                      fontSize="8"
+                      fontSize="9"
                       fontWeight="bold"
                       textAnchor="middle"
                       className={`transition-all duration-300 ${isAnimated ? "opacity-100" : "opacity-0"}`}
@@ -372,9 +372,9 @@ const Slide5MaturityCurve = () => {
                         <>
                           <text
                             x={point.x}
-                            y="325"
+                            y="348"
                             fill={isActive ? stage.accentColor : "hsl(215 20% 65%)"}
-                            fontSize={isMobile ? "7" : "8"}
+                            fontSize={isMobile ? "9" : "10"}
                             fontWeight={isActive ? "700" : "500"}
                             textAnchor="middle"
                             className="font-display transition-colors duration-300"
@@ -389,10 +389,10 @@ const Slide5MaturityCurve = () => {
                     {isActive && !isMobile && (
                       <g className="animate-fade-in">
                         <rect
-                          x={point.x - 55}
-                          y={point.y - 60}
-                          width="110"
-                          height={stage.curveAnnotations.length * 12 + 10}
+                          x={point.x - 65}
+                          y={point.y - 68}
+                          width="130"
+                          height={stage.curveAnnotations.length * 14 + 12}
                           rx="4"
                           fill="hsl(222 47% 10% / 0.95)"
                           stroke={stage.accentColor}
@@ -402,9 +402,9 @@ const Slide5MaturityCurve = () => {
                           <text
                             key={i}
                             x={point.x}
-                            y={point.y - 45 + i * 12}
+                            y={point.y - 52 + i * 14}
                             fill="hsl(210 40% 98%)"
-                            fontSize="7"
+                            fontSize="8"
                             textAnchor="middle"
                             className="font-medium"
                           >
@@ -420,7 +420,7 @@ const Slide5MaturityCurve = () => {
           </div>
 
           {/* RIGHT: Stage Details */}
-          <div className="overflow-y-auto bg-card/30 rounded-md p-2 border border-border/30 max-h-[450px]">
+          <div className="overflow-y-auto bg-card/30 rounded-md p-3 border border-border/30 max-h-[500px]">
             <MaturityStageDetails stage={selectedStage} />
           </div>
         </div>
