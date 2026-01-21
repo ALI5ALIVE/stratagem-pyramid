@@ -230,14 +230,14 @@ const Slide5MaturityCurve = () => {
       subtitle="How organisations progress up the pyramid — a measurable transformation program"
       slideNumber={5}
     >
-      <div className="space-y-3">
-        <div className="grid grid-cols-1 lg:grid-cols-[5fr_3fr] gap-4 items-start">
+      <div className="space-y-2">
+        <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-3 items-start">
           {/* LEFT: Hockey Stick Curve */}
-          <div className="bg-card/30 rounded-xl border border-border/30 p-3 md:p-4">
+          <div className="bg-card/30 rounded-xl border border-border/30 p-2 md:p-3">
             <svg
               viewBox={viewBox}
               className="w-full h-auto"
-              style={{ maxHeight: isMobile ? "250px" : "350px" }}
+              style={{ maxHeight: isMobile ? "160px" : "220px" }}
             >
               <defs>
                 <linearGradient id="slideGradient" x1="0%" y1="100%" x2="100%" y2="0%">
@@ -420,7 +420,7 @@ const Slide5MaturityCurve = () => {
           </div>
 
           {/* RIGHT: Stage Details */}
-          <div className="h-full max-h-[45vh] lg:max-h-[350px] overflow-y-auto bg-card/30 rounded-md p-3 border border-border/30">
+          <div className="h-full overflow-y-auto bg-card/30 rounded-md p-2 border border-border/30">
             <MaturityStageDetails stage={selectedStage} />
           </div>
         </div>
