@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
+import { useSlideNarration } from "@/hooks/useSlideNarration";
+import NarrationControls from "@/components/NarrationControls";
 import Slide0Title from "@/components/slides/Slide0Title";
 import Slide1StrategicShift from "@/components/slides/Slide1StrategicShift";
 import Slide2BeforeAfter from "@/components/slides/Slide2BeforeAfter";
@@ -35,6 +37,9 @@ const SlideDeck = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Narration hook for auto-play voiceover
+  const narration = useSlideNarration(activeSlide);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -127,7 +132,14 @@ const SlideDeck = () => {
             </span>
           </div>
 
-          <div className="w-20" />
+          <NarrationControls
+            isPlaying={narration.isPlaying}
+            isMuted={narration.isMuted}
+            isLoading={narration.isLoading}
+            progress={narration.progress}
+            error={narration.error}
+            onToggleMute={narration.toggleMute}
+          />
         </div>
       </header>
 
