@@ -13,12 +13,12 @@ const MetricsGauges = ({ onMetricClick }: MetricsGaugesProps) => {
     { id: "audit", label: "Audit ↑", value: 90, cx: 205 },
   ];
 
-  const gaugeRadius = 34;
-  const cy = 40;
+  const gaugeRadius = 32;
+  const cy = 50;
 
   return (
     <svg
-      viewBox="0 0 260 80"
+      viewBox="0 0 260 85"
       className="w-full h-full"
       style={{
         filter: "drop-shadow(0 0 10px hsl(280 65% 55% / 0.6))"
@@ -128,14 +128,14 @@ const MetricsGauges = ({ onMetricClick }: MetricsGaugesProps) => {
               fill={isHovered ? "hsl(280 65% 70%)" : "hsl(280 65% 55%)"}
             />
 
-            {/* Label - larger and brighter with outline */}
+            {/* Label - positioned ABOVE the gauge for visibility */}
             <text
               x={metric.cx}
-              y={cy + 22}
+              y={12}
               textAnchor="middle"
               fill={isHovered ? "hsl(280 80% 92%)" : "hsl(280 70% 88%)"}
-              fontSize="11"
-              fontWeight="800"
+              fontSize="10"
+              fontWeight="700"
               fontFamily="'Space Grotesk', sans-serif"
               letterSpacing="0.05em"
               className="pointer-events-none select-none uppercase"
