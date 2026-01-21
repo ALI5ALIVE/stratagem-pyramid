@@ -180,7 +180,7 @@ const SlideDeck = () => {
         ref={containerRef}
         className="h-full w-full overflow-y-auto snap-y snap-mandatory scroll-smooth"
       >
-        <Slide0Title />
+        <Slide0Title onNavigateToSlide={scrollToSlide} />
         <Slide1StrategicShift />
         <Slide2BeforeAfter />
         <Slide3OperatingModel />
