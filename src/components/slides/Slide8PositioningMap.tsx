@@ -19,13 +19,13 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const vendors = [
-  { name: "Comply365", breadth: 100, depth: 3.6, color: "#0066ff", isHighlighted: true },
-  { name: "Ideagen", breadth: 60, depth: 2.8, color: "#00b4d8", isHighlighted: false },
-  { name: "TrustFlight Centrik", breadth: 60, depth: 2.7, color: "#8b5cf6", isHighlighted: false },
-  { name: "Hinfact", breadth: 40, depth: 1.6, color: "#6b7280", isHighlighted: false },
-  { name: "Web Manuals", breadth: 20, depth: 1.4, color: "#9ca3af", isHighlighted: false },
-  { name: "Yonder", breadth: 10, depth: 0.9, color: "#d1d5db", isHighlighted: false },
-  { name: "Orlando", breadth: 10, depth: 0.7, color: "#e5e7eb", isHighlighted: false },
+  { name: "Comply365", breadth: 9, depth: 9.5, color: "#0066ff", isHighlighted: true },
+  { name: "Ideagen", breadth: 7, depth: 7.5, color: "#00b4d8", isHighlighted: false },
+  { name: "TrustFlight Centrik", breadth: 7.5, depth: 7, color: "#8b5cf6", isHighlighted: false },
+  { name: "Hinfact", breadth: 5, depth: 5.5, color: "#6b7280", isHighlighted: false },
+  { name: "Web Manuals", breadth: 6, depth: 5, color: "#9ca3af", isHighlighted: false },
+  { name: "Yonder", breadth: 3, depth: 3.5, color: "#d1d5db", isHighlighted: false },
+  { name: "Orlando", breadth: 2, depth: 3, color: "#e5e7eb", isHighlighted: false },
 ];
 
 const capabilities = [
@@ -77,10 +77,10 @@ const CustomTooltip = ({ active, payload }: any) => {
 
 const QuadrantLabel = ({ x, y, label, sublabel }: { x: number; y: number; label: string; sublabel: string }) => (
   <g>
-    <text x={x} y={y} textAnchor="middle" className="fill-muted-foreground text-xs font-medium">
+    <text x={x} y={y} textAnchor="middle" className="fill-muted-foreground text-[10px] font-semibold">
       {label}
     </text>
-    <text x={x} y={y + 12} textAnchor="middle" className="fill-muted-foreground/60 text-[9px]">
+    <text x={x} y={y + 14} textAnchor="middle" className="fill-muted-foreground/70 text-[8px]">
       {sublabel}
     </text>
   </g>
@@ -116,41 +116,50 @@ const Slide8PositioningMap = () => {
           {activeView === "matrix" ? (
             <div className="h-full">
               <ResponsiveContainer width="100%" height={380}>
-                <ScatterChart margin={{ top: 30, right: 30, bottom: 50, left: 50 }}>
+                <ScatterChart margin={{ top: 40, right: 30, bottom: 60, left: 60 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                   
                   {/* Reference lines for quadrants */}
-                  <ReferenceLine x={50} stroke="hsl(var(--border))" strokeDasharray="5 5" />
-                  <ReferenceLine y={2} stroke="hsl(var(--border))" strokeDasharray="5 5" />
+                  <ReferenceLine x={5} stroke="hsl(var(--border))" strokeDasharray="5 5" />
+                  <ReferenceLine y={5} stroke="hsl(var(--border))" strokeDasharray="5 5" />
 
                   <XAxis
                     type="number"
                     dataKey="breadth"
-                    domain={[0, 110]}
-                    name="Capability Breadth"
-                    unit="%"
+                    domain={[0, 10]}
+                    ticks={[0, 2, 4, 6, 8, 10]}
+                    name="Full Capability Coverage"
                     tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10 }}
                     axisLine={{ stroke: 'hsl(var(--border))' }}
                     label={{
-                      value: "Capability Breadth →",
+                      value: "Full Capability Coverage →",
                       position: "bottom",
-                      offset: 15,
-                      style: { fill: 'hsl(var(--muted-foreground))', fontSize: 11 }
+                      offset: 25,
+                      style: { fill: 'hsl(var(--muted-foreground))', fontSize: 10 }
                     }}
                   />
+                  <text 
+                    x="50%" 
+                    y={370} 
+                    textAnchor="middle" 
+                    className="fill-muted-foreground/60 text-[8px]"
+                  >
+                    (Point Solution → Multi-Module Suite → Connected Platform)
+                  </text>
                   <YAxis
                     type="number"
                     dataKey="depth"
-                    domain={[0, 4]}
-                    name="Capability Depth"
+                    domain={[0, 10]}
+                    ticks={[0, 2, 4, 6, 8, 10]}
+                    name="Strategic Value"
                     tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10 }}
                     axisLine={{ stroke: 'hsl(var(--border))' }}
                     label={{
-                      value: "Capability Depth →",
+                      value: "Strategic Value →",
                       angle: -90,
                       position: "left",
-                      offset: 8,
-                      style: { fill: 'hsl(var(--muted-foreground))', fontSize: 11 }
+                      offset: 15,
+                      style: { fill: 'hsl(var(--muted-foreground))', fontSize: 10 }
                     }}
                   />
 
@@ -210,10 +219,10 @@ const Slide8PositioningMap = () => {
                   ))}
 
                   {/* Quadrant labels */}
-                  <QuadrantLabel x={25} y={340} label="Niche Players" sublabel="Limited coverage" />
-                  <QuadrantLabel x={80} y={340} label="Challengers" sublabel="Broad but shallow" />
-                  <QuadrantLabel x={25} y={50} label="Visionaries" sublabel="High depth, narrow" />
-                  <QuadrantLabel x={80} y={50} label="Leaders" sublabel="Full capability + depth" />
+                  <QuadrantLabel x={120} y={320} label="Point Tools" sublabel="Task-level Value" />
+                  <QuadrantLabel x={350} y={320} label="Functional Suite" sublabel="Breadth without Strategic Lift" />
+                  <QuadrantLabel x={120} y={60} label="Strategic Specialist" sublabel="High Value in a Narrow Domain" />
+                  <QuadrantLabel x={350} y={60} label="Platform Leader" sublabel="Full Capability + High Strategic Value" />
                 </ScatterChart>
               </ResponsiveContainer>
             </div>
