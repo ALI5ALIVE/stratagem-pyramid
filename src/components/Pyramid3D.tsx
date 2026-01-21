@@ -142,8 +142,8 @@ const Pyramid3D = ({
         className="w-full"
         preserveAspectRatio="xMidYMid meet"
         style={{ 
-          minWidth: isMobile ? "320px" : "480px",
-          minHeight: isMobile ? "280px" : "380px",
+          minWidth: isMobile ? "480px" : "720px",
+          minHeight: isMobile ? "420px" : "570px",
           filter: isMobile ? "drop-shadow(0 20px 40px rgba(0,0,0,0.4))" : "drop-shadow(0 30px 60px rgba(0,0,0,0.5))",
         }}
       >

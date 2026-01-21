@@ -242,8 +242,8 @@ const Slide5MaturityCurve = () => {
               viewBox={viewBox}
               className="w-full"
               style={{ 
-                minWidth: isMobile ? "320px" : "480px",
-                minHeight: isMobile ? "280px" : "380px" 
+                minWidth: isMobile ? "480px" : "720px",
+                minHeight: isMobile ? "420px" : "570px" 
               }}
             >
               <defs>
