@@ -58,7 +58,7 @@ const Slide4Transformation = () => {
         {/* Main comparison section */}
         <div className="flex-1 grid lg:grid-cols-2 gap-4 items-start">
           {/* Before/After Comparison */}
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 relative">
             <div className="grid grid-cols-2 gap-3">
               {/* Before Column */}
               <div className="relative">
@@ -80,10 +80,10 @@ const Slide4Transformation = () => {
                 </div>
               </div>
 
-              {/* Arrow */}
+              {/* Arrow - centered between columns */}
               <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden lg:flex">
-                <div className="w-10 h-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
-                  <ArrowRight className="w-4 h-4 text-primary" />
+                <div className="w-14 h-14 rounded-full bg-primary border-2 border-primary shadow-[0_0_20px_hsl(var(--primary)/0.5)] flex items-center justify-center animate-pulse">
+                  <ArrowRight className="w-6 h-6 text-white" />
                 </div>
               </div>
 
