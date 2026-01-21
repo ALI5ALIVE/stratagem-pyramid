@@ -13,60 +13,52 @@ const Slide1StrategicShift = () => {
   return (
     <SlideContainer
       id="slide-1"
-      title="The Strategic Shift: From 'Compliance Tools' to Operational Excellence & Readiness Platform"
-      subtitle="In mission-critical, regulated operations, disruption and readiness are now board-level outcomes — and fragmented tool stacks can't deliver them."
+      title="The Strategic Shift"
+      subtitle="From 'Compliance Tools' to Operational Excellence & Readiness Platform"
+      slideNumber={1}
     >
-      <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
         {/* Visual: Category Shift */}
         <div className="relative">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8">
             {/* Old Categories */}
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-4">
               <div className="relative">
-                <div className="absolute inset-0 bg-destructive/20 blur-xl rounded-lg" />
-                <div className="relative bg-card/50 border border-destructive/30 rounded-lg p-4 text-center min-w-[140px]">
-                  <Shield className="w-8 h-8 mx-auto mb-2 text-destructive/70" />
+                <div className="relative bg-card border border-destructive/40 rounded-lg p-5 text-center min-w-[160px]">
+                  <Shield className="w-8 h-8 mx-auto mb-2 text-destructive" />
                   <span className="text-sm font-medium text-muted-foreground">Safety Tool</span>
                 </div>
               </div>
               <div className="relative">
-                <div className="absolute inset-0 bg-destructive/20 blur-xl rounded-lg" />
-                <div className="relative bg-card/50 border border-destructive/30 rounded-lg p-4 text-center min-w-[140px]">
-                  <FileText className="w-8 h-8 mx-auto mb-2 text-destructive/70" />
+                <div className="relative bg-card border border-destructive/40 rounded-lg p-5 text-center min-w-[160px]">
+                  <FileText className="w-8 h-8 mx-auto mb-2 text-destructive" />
                   <span className="text-sm font-medium text-muted-foreground">Manuals Tool</span>
                 </div>
               </div>
               <div className="relative">
-                <div className="absolute inset-0 bg-destructive/20 blur-xl rounded-lg" />
-                <div className="relative bg-card/50 border border-destructive/30 rounded-lg p-4 text-center min-w-[140px]">
-                  <GraduationCap className="w-8 h-8 mx-auto mb-2 text-destructive/70" />
+                <div className="relative bg-card border border-destructive/40 rounded-lg p-5 text-center min-w-[160px]">
+                  <GraduationCap className="w-8 h-8 mx-auto mb-2 text-destructive" />
                   <span className="text-sm font-medium text-muted-foreground">LMS</span>
                 </div>
               </div>
-              {/* Broken connections */}
-              <div className="absolute -right-2 top-1/4 w-8 h-0.5 bg-destructive/50 rotate-45" />
-              <div className="absolute -right-2 top-1/2 w-8 h-0.5 bg-destructive/50" />
-              <div className="absolute -right-2 top-3/4 w-8 h-0.5 bg-destructive/50 -rotate-45" />
             </div>
 
             {/* Arrow */}
             <div className="flex items-center justify-center py-4 sm:py-0">
               <div className="relative">
-                <div className="absolute inset-0 bg-primary/30 blur-lg" />
-                <ArrowRight className="relative w-12 h-12 text-primary animate-pulse" />
+                <ArrowRight className="relative w-12 h-12 text-primary" />
               </div>
             </div>
 
             {/* New Category */}
             <div className="relative">
-              <div className="absolute inset-0 bg-primary/30 blur-2xl rounded-xl" />
-              <div className="relative bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/50 rounded-xl p-6 text-center min-w-[200px]">
-                <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-primary/20 flex items-center justify-center">
+              <div className="relative bg-primary/10 border-2 border-primary rounded-xl p-8 text-center min-w-[220px]">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/20 flex items-center justify-center">
                   <div className="w-10 h-10 rounded-full bg-primary/40 flex items-center justify-center">
                     <div className="w-5 h-5 rounded-full bg-primary" />
                   </div>
                 </div>
-                <span className="text-base font-bold text-foreground block mb-1">
+                <span className="text-lg font-bold text-foreground block mb-1">
                   Operational Excellence
                 </span>
                 <span className="text-sm text-primary font-medium">
@@ -87,19 +79,19 @@ const Slide1StrategicShift = () => {
             <ul className="space-y-3">
               {modernGaps.map((gap, index) => (
                 <li key={index} className="flex items-start gap-3 text-sm text-muted-foreground">
-                  <span className="w-1.5 h-1.5 rounded-full bg-destructive mt-2 shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
                   {gap}
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="bg-primary/10 border border-primary/30 rounded-lg p-4">
-            <p className="text-sm text-muted-foreground mb-2">Category we're defining:</p>
-            <p className="text-lg font-bold text-primary mb-2">
+          <div className="bg-primary/10 border border-primary/30 rounded-lg p-5">
+            <p className="text-xs font-medium text-primary uppercase tracking-wide mb-2">Category we're defining:</p>
+            <p className="text-xl font-bold text-foreground mb-2">
               Operational Excellence & Readiness Platform
             </p>
-            <p className="text-sm text-muted-foreground italic">
+            <p className="text-sm text-muted-foreground">
               "Connects safety, procedures, and training into a continuous improvement operating system… 
               improving operational excellence, readiness, and customer experience at scale."
             </p>
