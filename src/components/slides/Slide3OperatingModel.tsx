@@ -108,7 +108,7 @@ const Slide3OperatingModel = ({
     <SlideContainer
       id="slide-3"
       title="The Operational Intelligence Layer"
-      subtitle="How signals become outcomes: Detect → Trigger → Orchestrate → Prove"
+      subtitle="Transforming operations from cost center to value driver"
       slideNumber={3}
       isPlaying={isPlaying}
       isLoading={isLoading}
