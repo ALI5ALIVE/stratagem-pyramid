@@ -1,7 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import SlidePlayButton from "@/components/SlidePlayButton";
 import type { SlideNarrationProps } from "@/types/slideProps";
-import comply365Logo from "@/assets/comply365-logo-white.png";
+import globalDataLogo from "@/assets/globaldata-logo-white.svg";
 
 const agendaItems = [
   { num: 1, label: "Growth Reality", summary: "Why markets reward speed and conviction" },
@@ -65,7 +65,7 @@ const GDSlide0Title = ({
       <div className="relative z-10 max-w-5xl w-full text-center space-y-8 sm:space-y-12">
         {/* Logo */}
         <div className="flex justify-center items-center gap-3">
-          <img src={comply365Logo} alt="GlobalData" className="h-10 sm:h-12 w-auto" />
+          <img src={globalDataLogo} alt="GlobalData" className="h-10 sm:h-12 w-auto" />
         </div>
 
         {/* Headline */}
