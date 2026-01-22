@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SlideContainer from "./SlideContainer";
 import { 
   Building2, 
@@ -153,6 +153,32 @@ const SlideMessagingHouse = ({
   onNextSlide,
 }: SlideNarrationProps) => {
   const [activePersona, setActivePersona] = useState(0);
+  const [isNarrationControlled, setIsNarrationControlled] = useState(false);
+
+  // Timing markers for narration-synced persona changes
+  const personaTimings = [
+    { index: 0, startPercent: 72 },  // CEO/COO
+    { index: 1, startPercent: 78 },  // Safety Leader
+    { index: 2, startPercent: 83 },  // Compliance Leader
+    { index: 3, startPercent: 88 },  // Training Leader
+  ];
+
+  // Sync persona with narration progress
+  useEffect(() => {
+    if (isPlaying && progress > 0) {
+      setIsNarrationControlled(true);
+      
+      const currentTiming = [...personaTimings]
+        .reverse()
+        .find(t => progress >= t.startPercent);
+      
+      if (currentTiming !== undefined && currentTiming.index !== activePersona) {
+        setActivePersona(currentTiming.index);
+      }
+    } else if (!isPlaying && isNarrationControlled) {
+      setIsNarrationControlled(false);
+    }
+  }, [isPlaying, progress, activePersona, isNarrationControlled]);
 
   return (
     <SlideContainer
@@ -293,7 +319,7 @@ const SlideMessagingHouse = ({
           </div>
 
           {/* Active Persona Content */}
-          <div className="flex-1 bg-card/60 border border-border/50 rounded-lg p-4">
+          <div className={`flex-1 bg-card/60 border border-border/50 rounded-lg p-4 ${isNarrationControlled ? 'animate-fade-in' : ''}`}>
             <div className="flex items-center gap-2 mb-3">
               {(() => {
                 const Icon = personas[activePersona].icon;
