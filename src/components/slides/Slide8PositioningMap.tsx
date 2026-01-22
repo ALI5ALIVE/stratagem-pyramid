@@ -22,7 +22,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 const vendors = [
-  { name: "Comply365", breadth: 9.5, depth: 9.0, color: "#0066ff", isHighlighted: true },
+  { name: "Comply365", breadth: 8, depth: 8, color: "#0066ff", isHighlighted: true },
   { name: "Ideagen", breadth: 7.5, depth: 4.2, color: "#10b981", isHighlighted: false },
   { name: "TrustFlight Centrik", breadth: 6.0, depth: 3.4, color: "#8b5cf6", isHighlighted: false },
   { name: "Hinfact", breadth: 4.5, depth: 4.0, color: "#f59e0b", isHighlighted: false },
