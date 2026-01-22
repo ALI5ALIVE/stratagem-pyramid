@@ -1,4 +1,9 @@
 import { useIsMobile } from "@/hooks/use-mobile";
+import { BarChart3, Lightbulb, Users, Target, DollarSign } from "lucide-react";
+import GDTransformationalIllustration from "./GDTransformationalIllustration";
+import GDMetricsGauges from "./GDMetricsGauges";
+import GDQuintupleLoop from "./GDQuintupleLoop";
+import GDFragmentationIllustration from "./GDFragmentationIllustration";
 
 interface PyramidLayerData {
   id: string;
@@ -28,11 +33,11 @@ const layerColors = {
 
 // 5 silos for Level 4 (MANAGED)
 const foundationSections = [
-  { id: "market", label: "Market", sublabel: "Silo" },
-  { id: "innovation", label: "Innovation", sublabel: "Silo" },
-  { id: "consumer", label: "Consumer", sublabel: "Silo" },
-  { id: "competitive", label: "Competitive", sublabel: "Silo" },
-  { id: "commercial", label: "Commercial", sublabel: "Silo" },
+  { id: "market", label: "Market", sublabel: "Silo", icon: BarChart3 },
+  { id: "innovation", label: "Innovation", sublabel: "Silo", icon: Lightbulb },
+  { id: "consumer", label: "Consumer", sublabel: "Silo", icon: Users },
+  { id: "competitive", label: "Competitive", sublabel: "Silo", icon: Target },
+  { id: "commercial", label: "Commercial", sublabel: "Silo", icon: DollarSign },
 ];
 
 const GDPyramid3D = ({
@@ -244,6 +249,91 @@ const GDPyramid3D = ({
           );
         })}
 
+        {/* Embedded illustrations for layers 1, 2, 3, 5 */}
+        {/* Layer 1 (PREDICTIVE - Apex) - Transformational Illustration */}
+        {(() => {
+          const bounds = layerBounds[1];
+          const leftX = getLeftX(bounds.top + 40);
+          const rightX = getRightX(bounds.top + 40);
+          const width = rightX - leftX - 40;
+          const height = bounds.bottom - bounds.top - 60;
+          
+          return (
+            <foreignObject
+              x={leftX + 20}
+              y={bounds.top + 50}
+              width={width}
+              height={height}
+              className="pointer-events-auto"
+            >
+              <GDTransformationalIllustration onNodeClick={handleModuleClick} />
+            </foreignObject>
+          );
+        })()}
+
+        {/* Layer 2 (OPERATIONAL) - Metrics Gauges */}
+        {(() => {
+          const bounds = layerBounds[2];
+          const leftX = getLeftX((bounds.top + bounds.bottom) / 2);
+          const rightX = getRightX((bounds.top + bounds.bottom) / 2);
+          const width = rightX - leftX - 60;
+          const height = bounds.bottom - bounds.top - 40;
+          
+          return (
+            <foreignObject
+              x={leftX + 30}
+              y={bounds.top + 20}
+              width={width}
+              height={height}
+              className="pointer-events-auto"
+            >
+              <GDMetricsGauges onMetricClick={handleModuleClick} />
+            </foreignObject>
+          );
+        })()}
+
+        {/* Layer 3 (CONNECTED) - Quintuple Loop */}
+        {(() => {
+          const bounds = layerBounds[3];
+          const leftX = getLeftX((bounds.top + bounds.bottom) / 2);
+          const rightX = getRightX((bounds.top + bounds.bottom) / 2);
+          const width = rightX - leftX - 80;
+          const height = bounds.bottom - bounds.top - 30;
+          
+          return (
+            <foreignObject
+              x={leftX + 40}
+              y={bounds.top + 15}
+              width={width}
+              height={height}
+              className="pointer-events-auto"
+            >
+              <GDQuintupleLoop onModuleClick={handleModuleClick} />
+            </foreignObject>
+          );
+        })()}
+
+        {/* Layer 5 (FRAGMENTED - Base) - Fragmentation Illustration */}
+        {(() => {
+          const bounds = layerBounds[5];
+          const leftX = getLeftX((bounds.top + bounds.bottom) / 2);
+          const rightX = getRightX((bounds.top + bounds.bottom) / 2);
+          const width = rightX - leftX - 100;
+          const height = bounds.bottom - bounds.top - 30;
+          
+          return (
+            <foreignObject
+              x={leftX + 50}
+              y={bounds.top + 15}
+              width={width}
+              height={height}
+              className="pointer-events-auto"
+            >
+              <GDFragmentationIllustration onNodeClick={handleModuleClick} />
+            </foreignObject>
+          );
+        })()}
+
         {/* Level 4 (MANAGED) - 5 Silos */}
         <g>
           {foundationSections.map((section, index) => {
@@ -262,6 +352,8 @@ const GDPyramid3D = ({
             const sectionBottomCenter = bottomLeftX + (bottomWidth / 5) * (index + 0.5);
             const sectionCenterX = (sectionTopCenter + sectionBottomCenter) / 2;
 
+            const IconComponent = section.icon;
+
             return (
               <g key={section.id}>
                 <polygon
@@ -275,10 +367,17 @@ const GDPyramid3D = ({
                 />
                 <polygon points={points} fill="transparent" className="cursor-pointer hover:fill-white/10 transition-all duration-200" onClick={() => { onLayerClick(4); handleModuleClick(section.id); }} />
 
-                <text x={sectionCenterX} y={foundationCenterY - 12} textAnchor="middle" fill="hsl(210, 40%, 98%)" fontSize="18" fontWeight="600" fontFamily="'Space Grotesk', sans-serif" letterSpacing="0.05em" className="uppercase pointer-events-none select-none">
+                {/* Silo icon */}
+                <foreignObject x={sectionCenterX - 12} y={foundationCenterY - 40} width="24" height="24" className="pointer-events-none">
+                  <div className="w-full h-full flex items-center justify-center">
+                    <IconComponent className="w-5 h-5 text-white/90" strokeWidth={2} />
+                  </div>
+                </foreignObject>
+
+                <text x={sectionCenterX} y={foundationCenterY + 4} textAnchor="middle" fill="hsl(210, 40%, 98%)" fontSize="16" fontWeight="600" fontFamily="'Space Grotesk', sans-serif" letterSpacing="0.05em" className="uppercase pointer-events-none select-none">
                   {section.label}
                 </text>
-                <text x={sectionCenterX} y={foundationCenterY + 18} textAnchor="middle" fill="hsl(210, 40%, 80%)" fontSize="14" fontWeight="400" fontFamily="'Inter', sans-serif" className="pointer-events-none select-none">
+                <text x={sectionCenterX} y={foundationCenterY + 26} textAnchor="middle" fill="hsl(210, 40%, 80%)" fontSize="12" fontWeight="400" fontFamily="'Inter', sans-serif" className="pointer-events-none select-none">
                   {section.sublabel}
                 </text>
               </g>
