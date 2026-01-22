@@ -26,7 +26,7 @@ interface GDPyramid3DProps {
 const layerColors = {
   1: { main: "hsl(45, 93%, 58%)", dark: "hsl(45, 93%, 45%)", glow: "hsl(45, 93%, 58%)" },     // PREDICTIVE - Gold
   2: { main: "hsl(280, 65%, 55%)", dark: "hsl(280, 65%, 42%)", glow: "hsl(280, 65%, 55%)" },  // OPERATIONAL - Purple
-  3: { main: "hsl(173, 80%, 40%)", dark: "hsl(173, 80%, 30%)", glow: "hsl(173, 80%, 40%)" },  // CONNECTED - Teal
+  3: { main: "hsl(195, 100%, 45%)", dark: "hsl(195, 100%, 35%)", glow: "hsl(195, 100%, 45%)" },  // CONNECTED - Sky Blue
   4: { main: "hsl(199, 89%, 48%)", dark: "hsl(199, 89%, 36%)", glow: "hsl(199, 89%, 48%)" },  // MANAGED - Blue
   5: { main: "hsl(0, 70%, 50%)", dark: "hsl(0, 70%, 38%)", glow: "hsl(0, 70%, 50%)" },        // FRAGMENTED - Red
 };

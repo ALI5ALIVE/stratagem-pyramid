@@ -106,7 +106,7 @@ const GDSlide1GrowthReality = ({
         {/* Bottom callout */}
         <div className="bg-card border border-border/50 rounded-lg p-4 text-center">
           <p className="text-sm text-foreground">
-            <span className="font-semibold text-emerald-400">Category leaders</span> don't just have better data — they have <span className="font-semibold text-emerald-400">connected intelligence</span> that enables faster, unified action.
+            <span className="font-semibold text-primary">Category leaders</span> don't just have better data — they have <span className="font-semibold text-primary">connected intelligence</span> that enables faster, unified action.
           </p>
         </div>
       </div>

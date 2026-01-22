@@ -1,6 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import SlidePlayButton from "@/components/SlidePlayButton";
 import type { SlideNarrationProps } from "@/types/slideProps";
+import comply365Logo from "@/assets/comply365-logo-white.png";
 
 const agendaItems = [
   { num: 1, label: "Growth Reality", summary: "Why markets reward speed and conviction" },
@@ -46,16 +47,16 @@ const GDSlide0Title = ({
         />
       )}
 
-      {/* Decorative gradient orbs - GlobalData emerald/teal theme */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/20 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-teal-400/10 rounded-full blur-[100px] pointer-events-none" />
+      {/* Decorative gradient orbs - Comply365 blue theme */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-sky-400/10 rounded-full blur-[100px] pointer-events-none" />
       
       {/* Subtle grid pattern */}
       <div 
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
-          backgroundImage: `linear-gradient(hsl(160 84% 39% / 0.3) 1px, transparent 1px),
-                           linear-gradient(90deg, hsl(160 84% 39% / 0.3) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(hsl(217 100% 50% / 0.3) 1px, transparent 1px),
+                           linear-gradient(90deg, hsl(217 100% 50% / 0.3) 1px, transparent 1px)`,
           backgroundSize: '60px 60px'
         }}
       />
@@ -64,10 +65,7 @@ const GDSlide0Title = ({
       <div className="relative z-10 max-w-5xl w-full text-center space-y-8 sm:space-y-12">
         {/* Logo */}
         <div className="flex justify-center items-center gap-3">
-          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/30">
-            <span className="text-white font-bold text-xl sm:text-2xl">GD</span>
-          </div>
-          <span className="text-2xl sm:text-3xl font-bold text-foreground">GlobalData</span>
+          <img src={comply365Logo} alt="GlobalData" className="h-10 sm:h-12 w-auto" />
         </div>
 
         {/* Headline */}
@@ -75,11 +73,11 @@ const GDSlide0Title = ({
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight">
             <span className="text-foreground">Designing</span>
             <br />
-            <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary via-sky-400 to-primary bg-clip-text text-transparent">
               Category Leadership
             </span>
             <br />
-            <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary via-sky-400 to-primary bg-clip-text text-transparent">
               with Connected Intelligence
             </span>
           </h1>
@@ -87,14 +85,14 @@ const GDSlide0Title = ({
           <p className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
             How organisations turn constant change into 
             <br className="hidden sm:block" />
-            <span className="text-emerald-400 font-medium">faster, more confident growth decisions</span>.
+            <span className="text-primary font-medium">faster, more confident growth decisions</span>.
           </p>
         </div>
 
         {/* Executive Takeaway */}
         <div className="max-w-2xl mx-auto">
-          <div className="bg-card/50 backdrop-blur-sm border border-emerald-500/30 rounded-lg p-4">
-            <p className="text-xs text-emerald-400 uppercase tracking-wider font-semibold mb-2">Executive Takeaway</p>
+          <div className="bg-card/50 backdrop-blur-sm border border-primary/30 rounded-lg p-4">
+            <p className="text-xs text-primary uppercase tracking-wider font-semibold mb-2">Executive Takeaway</p>
             <p className="text-sm text-foreground leading-relaxed">
               Category leadership is no longer defined by scale or data volume — it's defined by how quickly and confidently you act on change.
             </p>
@@ -112,10 +110,10 @@ const GDSlide0Title = ({
                 <button 
                   key={item.num}
                   onClick={() => onNavigateToSlide?.(item.num)}
-                  className="group bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg px-3 py-2 sm:px-4 sm:py-3 text-left hover:border-emerald-500/50 hover:bg-card/80 hover:scale-[1.02] cursor-pointer transition-all duration-200"
+                  className="group bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg px-3 py-2 sm:px-4 sm:py-3 text-left hover:border-primary/50 hover:bg-card/80 hover:scale-[1.02] cursor-pointer transition-all duration-200"
                 >
                   <div className="flex items-start gap-2">
-                    <span className="text-emerald-400 font-mono text-xs sm:text-sm font-bold">
+                    <span className="text-primary font-mono text-xs sm:text-sm font-bold">
                       {String(item.num).padStart(2, '0')}
                     </span>
                     <div>

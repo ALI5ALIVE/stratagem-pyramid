@@ -34,13 +34,13 @@ const ConnectedIntelligenceWheel = () => {
     { name: "Hiring\nSignals", angle: 250, radius: 115 },
   ];
 
-  // Intelligence segments (outer ring) - Emerald/Teal theme
+  // Intelligence segments (outer ring) - Blue theme
   const segments = [
-    { name: "Market Intelligence", startAngle: -90, endAngle: -20, color: "hsl(160 70% 35%)" },
-    { name: "Innovation Intelligence", startAngle: -20, endAngle: 50, color: "hsl(155 65% 45%)" },
-    { name: "Sales Intelligence", startAngle: 50, endAngle: 130, color: "hsl(165 60% 50%)" },
-    { name: "Strategic Intelligence", startAngle: 130, endAngle: 200, color: "hsl(170 55% 55%)" },
-    { name: "Competitor Intelligence", startAngle: 200, endAngle: 270, color: "hsl(145 50% 45%)" },
+    { name: "Market Intelligence", startAngle: -90, endAngle: -20, color: "hsl(217 100% 40%)" },
+    { name: "Innovation Intelligence", startAngle: -20, endAngle: 50, color: "hsl(200 90% 45%)" },
+    { name: "Sales Intelligence", startAngle: 50, endAngle: 130, color: "hsl(195 85% 50%)" },
+    { name: "Strategic Intelligence", startAngle: 130, endAngle: 200, color: "hsl(190 80% 45%)" },
+    { name: "Competitor Intelligence", startAngle: 200, endAngle: 270, color: "hsl(210 75% 50%)" },
   ];
 
   const polarToCartesian = (cx: number, cy: number, r: number, angleInDegrees: number) => {
@@ -78,7 +78,7 @@ const ConnectedIntelligenceWheel = () => {
         <defs>
           <filter id="wheelGlow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="3" result="blur" />
-            <feFlood floodColor="hsl(155 70% 50%)" floodOpacity="0.3" result="color" />
+            <feFlood floodColor="hsl(217 100% 50%)" floodOpacity="0.3" result="color" />
             <feComposite in="color" in2="blur" operator="in" result="shadow" />
             <feMerge>
               <feMergeNode in="shadow" />
@@ -86,8 +86,8 @@ const ConnectedIntelligenceWheel = () => {
             </feMerge>
           </filter>
           <linearGradient id="centerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="hsl(155 70% 50%)" />
-            <stop offset="100%" stopColor="hsl(170 65% 45%)" />
+            <stop offset="0%" stopColor="hsl(217 100% 50%)" />
+            <stop offset="100%" stopColor="hsl(200 90% 45%)" />
           </linearGradient>
         </defs>
 
@@ -110,7 +110,7 @@ const ConnectedIntelligenceWheel = () => {
                 y={labelPos.y}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                className="fill-black font-semibold"
+                className="fill-white font-semibold"
                 fontSize="8"
                 transform={`rotate(${textAngle}, ${labelPos.x}, ${labelPos.y})`}
               >
@@ -120,8 +120,8 @@ const ConnectedIntelligenceWheel = () => {
           );
         })}
 
-        {/* Middle ring - light emerald/teal */}
-        <circle cx={centerX} cy={centerY} r="135" fill="hsl(165 50% 88%)" stroke="white" strokeWidth="1" />
+        {/* Middle ring - light blue */}
+        <circle cx={centerX} cy={centerY} r="135" fill="hsl(200 50% 88%)" stroke="white" strokeWidth="1" />
 
         {/* Data points ring */}
         {dataPoints.map((point, i) => {
@@ -135,8 +135,8 @@ const ConnectedIntelligenceWheel = () => {
                 width="44"
                 height={lines.length * 10 + 4}
                 rx="3"
-                fill="hsl(160 60% 92%)"
-                stroke="hsl(160 45% 65%)"
+                fill="hsl(210 60% 92%)"
+                stroke="hsl(210 45% 65%)"
                 strokeWidth="0.5"
               />
               {lines.map((line, li) => (
@@ -157,7 +157,7 @@ const ConnectedIntelligenceWheel = () => {
         })}
 
         {/* Inner entities ring */}
-        <circle cx={centerX} cy={centerY} r="75" fill="hsl(160 55% 72%)" stroke="white" strokeWidth="1" />
+        <circle cx={centerX} cy={centerY} r="75" fill="hsl(210 55% 72%)" stroke="white" strokeWidth="1" />
 
         {/* Core entities */}
         {coreEntities.map((entity, i) => {
@@ -171,8 +171,8 @@ const ConnectedIntelligenceWheel = () => {
                 width="48"
                 height={lines.length * 12 + 4}
                 rx="4"
-                fill="hsl(155 65% 88%)"
-                stroke="hsl(155 50% 55%)"
+                fill="hsl(215 65% 88%)"
+                stroke="hsl(215 50% 55%)"
                 strokeWidth="0.5"
               />
               {lines.map((line, li) => (
@@ -192,7 +192,7 @@ const ConnectedIntelligenceWheel = () => {
           );
         })}
 
-        {/* Central hub - emerald gradient */}
+        {/* Central hub - blue gradient */}
         <circle cx={centerX} cy={centerY} r="35" fill="url(#centerGradient)" stroke="white" strokeWidth="2" filter="url(#wheelGlow)" />
         <text x={centerX} y={centerY - 5} textAnchor="middle" dominantBaseline="middle" className="fill-white font-bold" fontSize="8">
           Connected

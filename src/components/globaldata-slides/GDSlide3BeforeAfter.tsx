@@ -84,22 +84,22 @@ const GDSlide3BeforeAfter = ({
 
           {/* Transformation Arrow - Center */}
           <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-            <div className="w-12 h-12 rounded-full bg-emerald-500 border-2 border-emerald-400 shadow-lg shadow-emerald-500/30 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-full bg-primary border-2 border-sky-400 shadow-lg shadow-primary/30 flex items-center justify-center">
               <ArrowRight className="w-6 h-6 text-white" />
             </div>
           </div>
 
           {/* After Column */}
           <div className="relative">
-            <div className="absolute -top-2.5 left-3 px-2 py-0.5 bg-emerald-500/20 border border-emerald-500/30 rounded text-[10px] font-semibold text-emerald-400 uppercase tracking-wider z-10">
+            <div className="absolute -top-2.5 left-3 px-2 py-0.5 bg-primary/20 border border-primary/30 rounded text-[10px] font-semibold text-primary uppercase tracking-wider z-10">
               After: Connected Intelligence
             </div>
-            <div className="bg-card/30 border border-emerald-500/20 rounded-xl p-4 pt-6 h-full">
+            <div className="bg-card/30 border border-primary/20 rounded-xl p-4 pt-6 h-full">
               <div className="grid gap-3">
                 {afterItems.map((item, i) => (
                   <div key={i} className="flex items-center gap-3 group">
-                    <div className="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
-                      <item.icon className="w-4 h-4 text-emerald-400" />
+                    <div className="w-9 h-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+                      <item.icon className="w-4 h-4 text-primary" />
                     </div>
                     <div className="flex-1">
                       <div className="text-sm font-semibold text-foreground">{item.label}</div>
@@ -110,13 +110,13 @@ const GDSlide3BeforeAfter = ({
               </div>
 
               {/* Success indicators */}
-              <div className="mt-4 pt-4 border-t border-emerald-500/20 grid grid-cols-2 gap-2">
-                <div className="bg-emerald-500/10 rounded-lg p-2 text-center">
-                  <p className="text-xs font-medium text-emerald-400">Days</p>
+              <div className="mt-4 pt-4 border-t border-primary/20 grid grid-cols-2 gap-2">
+                <div className="bg-primary/10 rounded-lg p-2 text-center">
+                  <p className="text-xs font-medium text-primary">Days</p>
                   <p className="text-[10px] text-muted-foreground">to decision</p>
                 </div>
-                <div className="bg-emerald-500/10 rounded-lg p-2 text-center">
-                  <p className="text-xs font-medium text-emerald-400">1 source</p>
+                <div className="bg-primary/10 rounded-lg p-2 text-center">
+                  <p className="text-xs font-medium text-primary">1 source</p>
                   <p className="text-[10px] text-muted-foreground">of truth</p>
                 </div>
               </div>
@@ -131,11 +131,11 @@ const GDSlide3BeforeAfter = ({
               <div key={i} className="text-center">
                 <div className="flex items-center justify-center gap-2 mb-2">
                   <span className="text-xs text-destructive line-through">{metric.before}</span>
-                  <ArrowRight className="w-3 h-3 text-emerald-400" />
-                  <span className="text-xs text-emerald-400 font-semibold">{metric.after}</span>
+                  <ArrowRight className="w-3 h-3 text-primary" />
+                  <span className="text-xs text-primary font-semibold">{metric.after}</span>
                 </div>
                 <p className="text-xs text-muted-foreground">{metric.label}</p>
-                <p className="text-sm font-bold text-emerald-400 mt-1">{metric.improvement}</p>
+                <p className="text-sm font-bold text-primary mt-1">{metric.improvement}</p>
               </div>
             ))}
           </div>

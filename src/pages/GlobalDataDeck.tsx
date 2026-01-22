@@ -120,10 +120,10 @@ const GlobalDataDeck = () => {
 
   return (
     <div className="h-screen w-screen bg-background overflow-hidden relative">
-      {/* Progress bar - emerald theme */}
+      {/* Progress bar - primary blue theme */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-muted z-50">
         <div
-          className="h-full bg-emerald-500 transition-all duration-150"
+          className="h-full bg-primary transition-all duration-150"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
@@ -147,7 +147,7 @@ const GlobalDataDeck = () => {
           >
             <span className={`
               absolute right-5 whitespace-nowrap text-xs opacity-0 group-hover:opacity-100 transition-opacity
-              ${activeSlide === index ? 'text-emerald-400' : 'text-muted-foreground'}
+              ${activeSlide === index ? 'text-primary' : 'text-muted-foreground'}
             `}>
               {slide.label}
             </span>
@@ -155,7 +155,7 @@ const GlobalDataDeck = () => {
               className={`
                 w-2 h-2 rounded-full transition-all duration-200
                 ${activeSlide === index
-                  ? "bg-emerald-500 scale-150"
+                  ? "bg-primary scale-150"
                   : "bg-muted-foreground/30 hover:bg-muted-foreground/50"}
               `}
             />
@@ -168,14 +168,14 @@ const GlobalDataDeck = () => {
         <button
           onClick={() => navigateSlide("up")}
           disabled={activeSlide === 0}
-          className="w-10 h-10 rounded-full bg-card/80 border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-emerald-500 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+          className="w-10 h-10 rounded-full bg-card/80 border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary disabled:opacity-30 disabled:cursor-not-allowed transition-all"
         >
           <ChevronUp className="w-5 h-5" />
         </button>
         <button
           onClick={() => navigateSlide("down")}
           disabled={activeSlide === slides.length - 1}
-          className="w-10 h-10 rounded-full bg-card/80 border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-emerald-500 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+          className="w-10 h-10 rounded-full bg-card/80 border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary disabled:opacity-30 disabled:cursor-not-allowed transition-all"
         >
           <ChevronDown className="w-5 h-5" />
         </button>

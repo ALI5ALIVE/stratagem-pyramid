@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import SlidePlayButton from "@/components/SlidePlayButton";
+import comply365Logo from "@/assets/comply365-logo-white.png";
 
 interface GDSlideContainerProps {
   id: string;
@@ -62,13 +63,10 @@ const GDSlideContainer = ({
       )}
 
       <div className="max-w-7xl w-full mx-auto flex-1 flex flex-col relative">
-        {/* GlobalData Logo placeholder - top right, aligned with content */}
+        {/* GlobalData Logo - top right, aligned with content */}
         <div className="absolute -top-8 right-0">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">GD</span>
-            </div>
-            <span className="text-sm font-semibold text-foreground/80 hidden sm:block">GlobalData</span>
+            <img src={comply365Logo} alt="GlobalData" className="h-6 sm:h-8 w-auto" />
           </div>
         </div>
 
@@ -96,13 +94,13 @@ const GDSlideContainer = ({
             "text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight mb-2",
             variant === "light" ? "text-foreground" : "text-foreground"
           )}>
-            <span className={showTitleAccent ? "title-accent-gd" : ""}>
+            <span className={showTitleAccent ? "title-accent" : ""}>
               {title}
             </span>
           </h2>
           {subtitle && (
             <p className={cn(
-              "text-emerald-400 text-sm sm:text-base md:text-lg max-w-3xl mt-3"
+              "text-primary text-sm sm:text-base md:text-lg max-w-3xl mt-3"
             )}>
               {subtitle}
             </p>
