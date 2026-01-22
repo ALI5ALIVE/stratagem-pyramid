@@ -218,14 +218,6 @@ const Slide8PositioningMap = ({
                       style: { fill: 'hsl(var(--muted-foreground))', fontSize: 12 }
                     }}
                   />
-                  <text 
-                    x="50%" 
-                    y="96%" 
-                    textAnchor="middle" 
-                    className="fill-muted-foreground text-[10px]"
-                  >
-                    (Point Solution → Multi-Module Suite → Connected Platform)
-                  </text>
                   <YAxis
                     type="number"
                     dataKey="depth"
@@ -242,15 +234,6 @@ const Slide8PositioningMap = ({
                       style: { fill: 'hsl(var(--muted-foreground))', fontSize: 12 }
                     }}
                   />
-                  <text 
-                    x={-360}
-                    y={18}
-                    textAnchor="middle" 
-                    className="fill-muted-foreground text-[10px]"
-                    transform="rotate(-90)"
-                  >
-                    (Compliance Tool → Operational System → Strategic Platform)
-                  </text>
 
                   <Tooltip content={<CustomTooltip />} />
 
