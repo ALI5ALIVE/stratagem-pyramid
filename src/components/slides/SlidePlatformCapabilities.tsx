@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SlideContainer from "./SlideContainer";
 import { Database, Zap, Sparkles, ShieldCheck, TrendingUp, Trophy, ChevronRight } from "lucide-react";
+import platformEcosystem from "@/assets/comply365-platform-ecosystem.png";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 const capabilities = [
@@ -94,142 +95,70 @@ const SlidePlatformCapabilities = ({
       <div className="flex flex-col h-full">
         {/* Main content - Two column layout */}
         <div className="grid lg:grid-cols-2 gap-8 flex-1 items-center">
-          {/* Left: Visual - Interconnected Pillars */}
-          <div className="relative flex items-center justify-center">
-            <svg viewBox="0 0 400 320" className="w-full max-w-md h-auto">
-              <defs>
-                <linearGradient id="dataGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="hsl(217 91% 60%)" />
-                  <stop offset="100%" stopColor="hsl(187 92% 55%)" />
-                </linearGradient>
-                <linearGradient id="autoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="hsl(187 92% 55%)" />
-                  <stop offset="100%" stopColor="hsl(168 76% 47%)" />
-                </linearGradient>
-                <linearGradient id="aiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="hsl(168 76% 47%)" />
-                  <stop offset="100%" stopColor="hsl(152 69% 47%)" />
-                </linearGradient>
-                <filter id="glow">
-                  <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                  <feMerge>
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="SourceGraphic"/>
-                  </feMerge>
-                </filter>
-              </defs>
-
-              {/* Connection lines with animated flow */}
-              <g className="opacity-60">
-                {/* Data to Automation */}
-                <path
-                  d="M 140 120 Q 120 180 100 220"
-                  fill="none"
-                  stroke="url(#dataGrad)"
-                  strokeWidth="2"
-                  strokeDasharray="6 4"
-                  className="animate-pulse"
-                />
-                {/* Data to AI */}
-                <path
-                  d="M 260 120 Q 280 180 300 220"
-                  fill="none"
-                  stroke="url(#aiGrad)"
-                  strokeWidth="2"
-                  strokeDasharray="6 4"
-                  className="animate-pulse"
-                />
-                {/* Automation to AI */}
-                <path
-                  d="M 150 260 L 250 260"
-                  fill="none"
-                  stroke="url(#autoGrad)"
-                  strokeWidth="2"
-                  strokeDasharray="6 4"
-                  className="animate-pulse"
-                />
-              </g>
-
-              {/* Data Node - Top */}
-              <g
-                className={`cursor-pointer transition-all duration-300 ${activeCapability === 0 ? 'scale-110' : 'hover:scale-105'}`}
-                style={{ transformOrigin: '200px 80px' }}
+          {/* Left: Visual - Ecosystem Image with Capability Labels */}
+          <div className="relative flex items-center justify-center py-8">
+            {/* Central ecosystem image */}
+            <div className="relative">
+              <img 
+                src={platformEcosystem} 
+                alt="Comply365 Platform Ecosystem" 
+                className="w-72 h-72 lg:w-80 lg:h-80 object-contain"
+              />
+              
+              {/* Connected Data - Top */}
+              <button 
                 onClick={() => setActiveCapability(activeCapability === 0 ? null : 0)}
+                className={`
+                  absolute -top-2 left-1/2 -translate-x-1/2 -translate-y-full
+                  flex items-center gap-2 px-3 py-2 rounded-lg
+                  bg-card/80 backdrop-blur-sm border transition-all duration-300
+                  ${activeCapability === 0 
+                    ? 'border-blue-400 shadow-lg shadow-blue-500/20 scale-105' 
+                    : 'border-border/50 hover:border-blue-400/50 hover:scale-102'}
+                `}
               >
-                <circle
-                  cx="200"
-                  cy="80"
-                  r="55"
-                  fill="hsl(var(--card))"
-                  stroke="url(#dataGrad)"
-                  strokeWidth={activeCapability === 0 ? 3 : 2}
-                  filter={activeCapability === 0 ? "url(#glow)" : ""}
-                />
-                <foreignObject x="165" y="50" width="70" height="60">
-                  <div className="flex flex-col items-center justify-center h-full">
-                    <Database className="w-8 h-8 text-blue-400" />
-                    <span className="text-[10px] text-muted-foreground mt-1 text-center leading-tight">
-                      Connected<br/>Data
-                    </span>
-                  </div>
-                </foreignObject>
-              </g>
-
-              {/* Automation Node - Bottom Left */}
-              <g
-                className={`cursor-pointer transition-all duration-300 ${activeCapability === 1 ? 'scale-110' : 'hover:scale-105'}`}
-                style={{ transformOrigin: '100px 260px' }}
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center">
+                  <Database className="w-4 h-4 text-white" />
+                </div>
+                <span className="text-xs font-medium text-foreground whitespace-nowrap">Connected Data</span>
+              </button>
+              
+              {/* Adaptive Automation - Bottom Left */}
+              <button 
                 onClick={() => setActiveCapability(activeCapability === 1 ? null : 1)}
+                className={`
+                  absolute -bottom-2 -left-4 translate-y-full
+                  flex items-center gap-2 px-3 py-2 rounded-lg
+                  bg-card/80 backdrop-blur-sm border transition-all duration-300
+                  ${activeCapability === 1 
+                    ? 'border-cyan-400 shadow-lg shadow-cyan-500/20 scale-105' 
+                    : 'border-border/50 hover:border-cyan-400/50 hover:scale-102'}
+                `}
               >
-                <circle
-                  cx="100"
-                  cy="260"
-                  r="55"
-                  fill="hsl(var(--card))"
-                  stroke="url(#autoGrad)"
-                  strokeWidth={activeCapability === 1 ? 3 : 2}
-                  filter={activeCapability === 1 ? "url(#glow)" : ""}
-                />
-                <foreignObject x="65" y="230" width="70" height="60">
-                  <div className="flex flex-col items-center justify-center h-full">
-                    <Zap className="w-8 h-8 text-cyan-400" />
-                    <span className="text-[10px] text-muted-foreground mt-1 text-center leading-tight">
-                      Adaptive<br/>Automation
-                    </span>
-                  </div>
-                </foreignObject>
-              </g>
-
-              {/* AI Node - Bottom Right */}
-              <g
-                className={`cursor-pointer transition-all duration-300 ${activeCapability === 2 ? 'scale-110' : 'hover:scale-105'}`}
-                style={{ transformOrigin: '300px 260px' }}
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-teal-400 flex items-center justify-center">
+                  <Zap className="w-4 h-4 text-white" />
+                </div>
+                <span className="text-xs font-medium text-foreground whitespace-nowrap">Adaptive Automation</span>
+              </button>
+              
+              {/* Embedded Intelligence - Bottom Right */}
+              <button 
                 onClick={() => setActiveCapability(activeCapability === 2 ? null : 2)}
+                className={`
+                  absolute -bottom-2 -right-4 translate-y-full
+                  flex items-center gap-2 px-3 py-2 rounded-lg
+                  bg-card/80 backdrop-blur-sm border transition-all duration-300
+                  ${activeCapability === 2 
+                    ? 'border-teal-400 shadow-lg shadow-teal-500/20 scale-105' 
+                    : 'border-border/50 hover:border-teal-400/50 hover:scale-102'}
+                `}
               >
-                <circle
-                  cx="300"
-                  cy="260"
-                  r="55"
-                  fill="hsl(var(--card))"
-                  stroke="url(#aiGrad)"
-                  strokeWidth={activeCapability === 2 ? 3 : 2}
-                  filter={activeCapability === 2 ? "url(#glow)" : ""}
-                />
-                <foreignObject x="265" y="230" width="70" height="60">
-                  <div className="flex flex-col items-center justify-center h-full">
-                    <Sparkles className="w-8 h-8 text-teal-400" />
-                    <span className="text-[10px] text-muted-foreground mt-1 text-center leading-tight">
-                      Embedded<br/>Intelligence
-                    </span>
-                  </div>
-                </foreignObject>
-              </g>
-
-              {/* Center label */}
-              <text x="200" y="185" textAnchor="middle" fill="hsl(var(--muted-foreground))" fontSize="11" fontWeight="500">
-                Platform Core
-              </text>
-            </svg>
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-400 to-emerald-400 flex items-center justify-center">
+                  <Sparkles className="w-4 h-4 text-white" />
+                </div>
+                <span className="text-xs font-medium text-foreground whitespace-nowrap">Embedded Intelligence</span>
+              </button>
+            </div>
           </div>
 
           {/* Right: Capability Cards */}
