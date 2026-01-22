@@ -1,8 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SlideContainer from "./SlideContainer";
 import { Radio, Bell, GitBranch, ShieldCheck, ArrowRight, Database, TrendingUp, Users, Clock, CheckCircle } from "lucide-react";
 import CoreSolutionsInfinity from "../CoreSolutionsInfinity";
 import type { SlideNarrationProps } from "@/types/slideProps";
+
+// Timing markers for narration-synced step highlighting
+const stepTimings = [
+  { index: 0, startPercent: 15 },  // Detect
+  { index: 1, startPercent: 30 },  // Trigger
+  { index: 2, startPercent: 50 },  // Orchestrate
+  { index: 3, startPercent: 70 },  // Prove
+];
 
 const Slide3OperatingModel = ({
   isPlaying = false,
@@ -14,6 +22,24 @@ const Slide3OperatingModel = ({
   onNextSlide,
 }: SlideNarrationProps) => {
   const [activeStep, setActiveStep] = useState<number | null>(null);
+  const [isNarrationControlled, setIsNarrationControlled] = useState(false);
+
+  // Sync step highlighting with narration progress
+  useEffect(() => {
+    if (isPlaying && progress > 0) {
+      setIsNarrationControlled(true);
+      
+      const currentTiming = [...stepTimings]
+        .reverse()
+        .find(t => progress >= t.startPercent);
+      
+      if (currentTiming !== undefined) {
+        setActiveStep(currentTiming.index);
+      }
+    } else if (!isPlaying && isNarrationControlled) {
+      setIsNarrationControlled(false);
+    }
+  }, [isPlaying, progress, isNarrationControlled]);
 
   const steps = [
     {
@@ -153,6 +179,7 @@ const Slide3OperatingModel = ({
                     relative w-full p-3 rounded-lg border transition-all duration-300 text-left
                     ${isStepActive ? `${step.bgColor} ${step.borderColor}` : 'bg-card/30 border-border hover:border-muted-foreground/50'}
                     ${isCurrentStep ? 'ring-2 ring-offset-2 ring-offset-background ring-primary' : ''}
+                    ${isNarrationControlled && isCurrentStep ? 'animate-fade-in' : ''}
                   `}
                 >
                   {/* Icon */}
