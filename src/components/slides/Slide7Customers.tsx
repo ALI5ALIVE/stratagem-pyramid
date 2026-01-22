@@ -1,5 +1,5 @@
 import SlideContainer from "./SlideContainer";
-import { TrendingUp, Clock, Shield, BarChart3, CheckCircle2 } from "lucide-react";
+import { TrendingUp, Clock, Shield, BarChart3, CheckCircle2, DollarSign, Activity, ArrowRight } from "lucide-react";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 const Slide7Customers = ({
@@ -78,8 +78,50 @@ const Slide7Customers = ({
         <div className="bg-card border border-primary/30 rounded-lg p-5 text-center">
           <p className="text-xs font-medium text-primary uppercase tracking-wide mb-2">Executive Value Proposition:</p>
           <p className="text-base text-foreground leading-relaxed">
-            We help leaders <span className="text-primary font-semibold">reduce disruption, protect revenue, and improve customer experience</span> by accelerating the speed and control of operational change across safety, procedures, and training — through one connected, governed platform.
+            We help leaders <span className="text-primary font-semibold">reduce disruption, protect revenue, and improve customer experience</span> by accelerating the speed and control of operational change across safety, content, and training — through one connected, governed platform.
           </p>
+        </div>
+      </div>
+
+      {/* Cost Center to Revenue Generation Visual */}
+      <div className="max-w-4xl mx-auto mb-6">
+        <div className="bg-card border border-border rounded-lg p-4">
+          <div className="flex items-center justify-between gap-3">
+            
+            {/* Stage 1: Cost Center */}
+            <div className="flex-1 text-center p-3 rounded-lg bg-muted/30 border border-muted">
+              <DollarSign className="w-5 h-5 mx-auto text-muted-foreground mb-1.5" />
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Cost Center</p>
+              <p className="text-[10px] text-muted-foreground mt-1">Reactive • Siloed • Manual</p>
+            </div>
+            
+            {/* Arrow 1 */}
+            <div className="flex flex-col items-center shrink-0">
+              <ArrowRight className="w-5 h-5 text-primary" />
+              <span className="text-[9px] text-muted-foreground mt-0.5">through</span>
+            </div>
+            
+            {/* Stage 2: Operational Performance */}
+            <div className="flex-1 text-center p-3 rounded-lg bg-primary/10 border border-primary/30">
+              <Activity className="w-5 h-5 mx-auto text-primary mb-1.5" />
+              <p className="text-xs font-semibold text-primary uppercase tracking-wide">Operational Performance</p>
+              <p className="text-[10px] text-muted-foreground mt-1">Fewer disruptions • Faster recovery</p>
+            </div>
+            
+            {/* Arrow 2 */}
+            <div className="flex flex-col items-center shrink-0">
+              <ArrowRight className="w-5 h-5 text-emerald-500" />
+              <span className="text-[9px] text-muted-foreground mt-0.5">drives</span>
+            </div>
+            
+            {/* Stage 3: Revenue Generation */}
+            <div className="flex-1 text-center p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30">
+              <TrendingUp className="w-5 h-5 mx-auto text-emerald-400 mb-1.5" />
+              <p className="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Revenue Generation</p>
+              <p className="text-[10px] text-muted-foreground mt-1">Protected revenue • Increased trust</p>
+            </div>
+            
+          </div>
         </div>
       </div>
 
