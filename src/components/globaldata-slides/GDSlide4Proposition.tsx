@@ -1,7 +1,7 @@
 import GDSlideContainer from "./GDSlideContainer";
 import { XCircle, CheckCircle2 } from "lucide-react";
 import type { SlideNarrationProps } from "@/types/slideProps";
-import connectedIntelligenceWheel from "@/assets/globaldata-connected-intelligence-wheel.png";
+import ConnectedIntelligenceWheel from "./ConnectedIntelligenceWheel";
 
 const replaces = [
   "Tool sprawl across vendors",
@@ -48,17 +48,9 @@ const GDSlide4Proposition = ({
 
         {/* Intelligence Domains Hub */}
         <div className="flex-1 grid lg:grid-cols-2 gap-6 items-center">
-          {/* Connected Intelligence Wheel Image */}
+          {/* Connected Intelligence Wheel */}
           <div className="flex items-center justify-center py-4">
-            <div className="relative">
-              <img 
-                src={connectedIntelligenceWheel} 
-                alt="GlobalData Connected Intelligence Ecosystem"
-                className="w-full max-w-sm h-auto rounded-lg"
-              />
-              {/* Subtle glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-emerald-500/5 rounded-lg pointer-events-none" />
-            </div>
+            <ConnectedIntelligenceWheel />
           </div>
 
           {/* What it replaces / What it is NOT */}
