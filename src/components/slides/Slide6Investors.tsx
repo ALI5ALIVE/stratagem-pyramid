@@ -72,7 +72,7 @@ const Slide6Investors = ({
       description: "Platform value compounds as more workflows and teams are connected.",
       unlocks: [
         "Land with one module",
-        "Expand across safety, procedures, and training",
+        "Expand across safety, content, and training",
         "Upsell intelligence and automation",
         "Deepen lock-in through governance and embedded workflows",
       ],

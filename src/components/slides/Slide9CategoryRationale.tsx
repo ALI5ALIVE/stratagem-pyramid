@@ -90,7 +90,7 @@ const Slide9CategoryRationale = ({
           Operational Excellence & Readiness Platform
         </h3>
         <p className="text-xs sm:text-sm text-muted-foreground mt-2 max-w-2xl mx-auto">
-          Protects the full platform scope: Safety + Procedures + Training + Proof
+          Protects the full platform scope: Safety + Content + Training + Proof
         </p>
       </div>
 
@@ -145,7 +145,7 @@ const Slide9CategoryRationale = ({
         <p className="text-xs sm:text-sm text-foreground text-center leading-relaxed">
           <span className="font-semibold text-primary">What to say in the room:</span>{" "}
           "We use 'Operational Excellence & Readiness Platform' as the category because it's the clearest executive frame 
-          that still protects what makes Comply365 different: connecting Safety + Procedures + Training into a governed 
+          that still protects what makes Comply365 different: connecting Safety + Content + Training into a governed 
           operating system that turns signals into outcomes and proof."
         </p>
       </div>

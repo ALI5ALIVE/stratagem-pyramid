@@ -12,7 +12,7 @@ const Slide2BeforeAfter = ({
   onNextSlide,
 }: SlideNarrationProps) => {
   const beforeItems = [
-    "Safety, procedures, training are disconnected",
+    "Safety, content, training are disconnected",
     "Investigations and changes happen manually",
     "Training not tied to operational signals",
     "Evidence assembled late and inconsistently",
@@ -97,14 +97,14 @@ const Slide2BeforeAfter = ({
                   <text x="55" y="63" textAnchor="middle" fill="hsl(var(--destructive))" fontSize="7" opacity="0.8">Events</text>
                 </g>
                 
-                {/* Procedures Silo */}
+                {/* Content Silo */}
                 <g>
                   <circle cx="150" cy="55" r="35" fill="none" stroke="hsl(var(--destructive))" strokeWidth="2" opacity="0.6" />
                   <circle cx="150" cy="55" r="28" fill="hsl(var(--destructive) / 0.1)" />
                   {generateParticles(10, true).map((p, i) => (
                     <circle key={`p-${i}`} cx={150 + p.x} cy={55 + p.y} r="2" fill="hsl(var(--destructive))" opacity="0.6" />
                   ))}
-                  <text x="150" y="52" textAnchor="middle" dominantBaseline="middle" fill="hsl(var(--destructive))" fontSize="9" fontWeight="600">Procedures</text>
+                  <text x="150" y="52" textAnchor="middle" dominantBaseline="middle" fill="hsl(var(--destructive))" fontSize="9" fontWeight="600">Content</text>
                   <text x="150" y="63" textAnchor="middle" fill="hsl(var(--destructive))" fontSize="7" opacity="0.8">Docs</text>
                 </g>
                 
@@ -201,13 +201,13 @@ const Slide2BeforeAfter = ({
                   <text x="55" y="50" textAnchor="middle" dominantBaseline="middle" fill="hsl(var(--primary))" fontSize="9" fontWeight="600">Safety</text>
                 </g>
                 
-                {/* Procedures circle - connected */}
+                {/* Content circle - connected */}
                 <g>
                   <circle cx="150" cy="50" r="32" fill="hsl(var(--primary) / 0.15)" stroke="hsl(var(--primary))" strokeWidth="2" />
                   {generateParticles(10, false).map((p, i) => (
                     <circle key={`ap-${i}`} cx={150 + p.x} cy={50 + p.y} r="2.5" fill="hsl(var(--primary))" opacity="0.8" />
                   ))}
-                  <text x="150" y="50" textAnchor="middle" dominantBaseline="middle" fill="hsl(var(--primary))" fontSize="9" fontWeight="600">Procedures</text>
+                  <text x="150" y="50" textAnchor="middle" dominantBaseline="middle" fill="hsl(var(--primary))" fontSize="9" fontWeight="600">Content</text>
                 </g>
                 
                 {/* Training circle - connected */}
@@ -265,7 +265,7 @@ const Slide2BeforeAfter = ({
       <div className="mt-6 max-w-4xl mx-auto">
         <div className="bg-card border border-primary/30 rounded-xl p-5">
           <p className="text-sm text-muted-foreground">
-            <span className="font-semibold text-primary">Unlike</span> point solutions that manage safety, procedures, or training in isolation, 
+            <span className="font-semibold text-primary">Unlike</span> point solutions that manage safety, content, or training in isolation, 
             Comply365 connects all three into an intelligent operating system, turning signals into orchestrated change and audit-ready proof.
           </p>
         </div>
