@@ -96,69 +96,12 @@ const SlidePlatformCapabilities = ({
         {/* Main content - Two column layout */}
         <div className="grid lg:grid-cols-2 gap-8 flex-1 items-center">
           {/* Left: Visual - Ecosystem Image with Capability Labels */}
-          <div className="relative flex items-center justify-center py-8">
-            {/* Central ecosystem image */}
-            <div className="relative">
-              <img 
-                src={platformEcosystem} 
-                alt="Comply365 Platform Ecosystem" 
-                className="w-72 h-72 lg:w-80 lg:h-80 object-contain"
-              />
-              
-              {/* Connected Data - Top */}
-              <button 
-                onClick={() => setActiveCapability(activeCapability === 0 ? null : 0)}
-                className={`
-                  absolute -top-2 left-1/2 -translate-x-1/2 -translate-y-full
-                  flex items-center gap-2 px-3 py-2 rounded-lg
-                  bg-card/80 backdrop-blur-sm border transition-all duration-300
-                  ${activeCapability === 0 
-                    ? 'border-blue-400 shadow-lg shadow-blue-500/20 scale-105' 
-                    : 'border-border/50 hover:border-blue-400/50 hover:scale-102'}
-                `}
-              >
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center">
-                  <Database className="w-4 h-4 text-white" />
-                </div>
-                <span className="text-xs font-medium text-foreground whitespace-nowrap">Connected Data</span>
-              </button>
-              
-              {/* Adaptive Automation - Bottom Left */}
-              <button 
-                onClick={() => setActiveCapability(activeCapability === 1 ? null : 1)}
-                className={`
-                  absolute -bottom-2 -left-4 translate-y-full
-                  flex items-center gap-2 px-3 py-2 rounded-lg
-                  bg-card/80 backdrop-blur-sm border transition-all duration-300
-                  ${activeCapability === 1 
-                    ? 'border-cyan-400 shadow-lg shadow-cyan-500/20 scale-105' 
-                    : 'border-border/50 hover:border-cyan-400/50 hover:scale-102'}
-                `}
-              >
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-teal-400 flex items-center justify-center">
-                  <Zap className="w-4 h-4 text-white" />
-                </div>
-                <span className="text-xs font-medium text-foreground whitespace-nowrap">Adaptive Automation</span>
-              </button>
-              
-              {/* Embedded Intelligence - Bottom Right */}
-              <button 
-                onClick={() => setActiveCapability(activeCapability === 2 ? null : 2)}
-                className={`
-                  absolute -bottom-2 -right-4 translate-y-full
-                  flex items-center gap-2 px-3 py-2 rounded-lg
-                  bg-card/80 backdrop-blur-sm border transition-all duration-300
-                  ${activeCapability === 2 
-                    ? 'border-teal-400 shadow-lg shadow-teal-500/20 scale-105' 
-                    : 'border-border/50 hover:border-teal-400/50 hover:scale-102'}
-                `}
-              >
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-400 to-emerald-400 flex items-center justify-center">
-                  <Sparkles className="w-4 h-4 text-white" />
-                </div>
-                <span className="text-xs font-medium text-foreground whitespace-nowrap">Embedded Intelligence</span>
-              </button>
-            </div>
+          <div className="flex items-center justify-center py-8">
+            <img 
+              src={platformEcosystem} 
+              alt="Comply365 Platform Ecosystem" 
+              className="w-72 h-72 lg:w-80 lg:h-80 object-contain"
+            />
           </div>
 
           {/* Right: Capability Cards */}
@@ -219,7 +162,7 @@ const SlidePlatformCapabilities = ({
             })}
 
             <p className="text-[10px] text-muted-foreground/60 text-center mt-2">
-              Click nodes or cards to explore each capability
+              Click cards to explore each capability
             </p>
           </div>
         </div>
