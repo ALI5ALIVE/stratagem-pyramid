@@ -23,20 +23,21 @@ const GDMetricsGauges = ({ onMetricClick }: GDMetricsGaugesProps) => {
     return () => clearTimeout(timer);
   }, []);
 
-  const gaugeRadius = 28;
-  const gaugeWidth = 6;
-  const gaugeCenterY = 32;
+  // Doubled gauge dimensions
+  const gaugeRadius = 56;
+  const gaugeWidth = 12;
+  const gaugeCenterY = 64;
 
   return (
     <div className="w-full h-full flex items-center justify-center">
-      <svg viewBox="0 0 260 75" className="w-full max-w-[260px]">
+      <svg viewBox="0 0 520 150" className="w-full max-w-[520px]">
         <defs>
           <linearGradient id="gdGaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="hsl(280, 65%, 45%)" />
             <stop offset="100%" stopColor="hsl(280, 65%, 65%)" />
           </linearGradient>
           <filter id="gdGaugeGlow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feGaussianBlur stdDeviation="6" result="blur" />
             <feFlood floodColor="hsl(280, 65%, 55%)" floodOpacity="0.6" />
             <feComposite in2="blur" operator="in" />
             <feMerge>
@@ -45,7 +46,7 @@ const GDMetricsGauges = ({ onMetricClick }: GDMetricsGaugesProps) => {
             </feMerge>
           </filter>
           <filter id="gdGaugeHoverGlow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="5" result="blur" />
+            <feGaussianBlur stdDeviation="10" result="blur" />
             <feFlood floodColor="hsl(280, 65%, 55%)" floodOpacity="0.8" />
             <feComposite in2="blur" operator="in" />
             <feMerge>
@@ -56,21 +57,21 @@ const GDMetricsGauges = ({ onMetricClick }: GDMetricsGaugesProps) => {
         </defs>
 
         {/* Ava sparkle indicator at top center */}
-        <g transform="translate(130, 8)">
-          <circle r="8" fill="hsl(45, 93%, 58%)" fillOpacity="0.3" />
-          <foreignObject x="-6" y="-6" width="12" height="12">
+        <g transform="translate(260, 16)">
+          <circle r="16" fill="hsl(45, 93%, 58%)" fillOpacity="0.3" />
+          <foreignObject x="-12" y="-12" width="24" height="24">
             <div className="w-full h-full flex items-center justify-center">
-              <Sparkles className="w-3 h-3 text-amber-400" />
+              <Sparkles className="w-6 h-6 text-amber-400" />
             </div>
           </foreignObject>
         </g>
 
         {/* Dashed connecting lines between gauges */}
-        <line x1="70" y1={gaugeCenterY} x2="100" y2={gaugeCenterY} stroke="hsl(280, 65%, 55%)" strokeWidth="1" strokeDasharray="3 2" strokeOpacity="0.5" />
-        <line x1="160" y1={gaugeCenterY} x2="190" y2={gaugeCenterY} stroke="hsl(280, 65%, 55%)" strokeWidth="1" strokeDasharray="3 2" strokeOpacity="0.5" />
+        <line x1="140" y1={gaugeCenterY} x2="200" y2={gaugeCenterY} stroke="hsl(280, 65%, 55%)" strokeWidth="2" strokeDasharray="6 4" strokeOpacity="0.5" />
+        <line x1="320" y1={gaugeCenterY} x2="380" y2={gaugeCenterY} stroke="hsl(280, 65%, 55%)" strokeWidth="2" strokeDasharray="6 4" strokeOpacity="0.5" />
 
         {metrics.map((metric, index) => {
-          const cx = 45 + index * 85;
+          const cx = 90 + index * 170;
           const isHovered = hoveredMetric === metric.id;
           const animatedValue = animatedValues[index];
           
@@ -118,30 +119,30 @@ const GDMetricsGauges = ({ onMetricClick }: GDMetricsGaugesProps) => {
                   x1="0"
                   y1="0"
                   x2="0"
-                  y2={-gaugeRadius + 8}
+                  y2={-gaugeRadius + 16}
                   stroke="white"
-                  strokeWidth="2"
+                  strokeWidth="4"
                   strokeLinecap="round"
                   transform={`rotate(${needleAngle})`}
                   className="transition-transform duration-1000 ease-out"
                 />
-                <circle r="4" fill={metric.color} />
+                <circle r="8" fill={metric.color} />
               </g>
               
               {/* Icon */}
-              <foreignObject x={cx - 8} y={gaugeCenterY - 18} width="16" height="16">
+              <foreignObject x={cx - 16} y={gaugeCenterY - 36} width="32" height="32">
                 <div className="w-full h-full flex items-center justify-center">
-                  <IconComponent className="w-3 h-3 text-white/80" strokeWidth={2} />
+                  <IconComponent className="w-6 h-6 text-white/80" strokeWidth={2} />
                 </div>
               </foreignObject>
               
               {/* Value */}
               <text
                 x={cx}
-                y={gaugeCenterY + 20}
+                y={gaugeCenterY + 40}
                 textAnchor="middle"
                 fill="white"
-                fontSize="10"
+                fontSize="20"
                 fontWeight="700"
                 fontFamily="'Space Grotesk', sans-serif"
               >
@@ -151,10 +152,10 @@ const GDMetricsGauges = ({ onMetricClick }: GDMetricsGaugesProps) => {
               {/* Label */}
               <text
                 x={cx}
-                y={gaugeCenterY + 32}
+                y={gaugeCenterY + 64}
                 textAnchor="middle"
                 fill="hsl(280, 40%, 80%)"
-                fontSize="7"
+                fontSize="14"
                 fontWeight="500"
                 fontFamily="'Inter', sans-serif"
               >
