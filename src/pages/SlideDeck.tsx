@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef, useCallback } from "react";
-import { Link } from "react-router-dom";
-import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { useSimpleNarration } from "@/hooks/useSimpleNarration";
 import Slide0Title from "@/components/slides/Slide0Title";
 import Slide1StrategicShift from "@/components/slides/Slide1StrategicShift";
@@ -135,22 +134,10 @@ const SlideDeck = () => {
 
       {/* Header */}
       <header className="fixed top-1 left-0 right-0 z-40 px-4 py-3">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link
-            to="/"
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span className="hidden sm:inline">Back</span>
-          </Link>
-          
-          <div className="text-center">
-            <span className="text-xs text-muted-foreground">
-              {activeSlide + 1} / {slides.length}
-            </span>
-          </div>
-
-          <div className="w-16" /> {/* Spacer for balance */}
+        <div className="max-w-7xl mx-auto flex items-center justify-center">
+          <span className="text-xs text-muted-foreground">
+            {activeSlide + 1} / {slides.length}
+          </span>
         </div>
       </header>
 
