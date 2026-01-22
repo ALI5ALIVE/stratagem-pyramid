@@ -1,8 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SlideContainer from "./SlideContainer";
 import { Database, Zap, Sparkles, ShieldCheck, TrendingUp, Trophy, ChevronRight } from "lucide-react";
 import platformEcosystem from "@/assets/comply365-platform-ecosystem.png";
 import type { SlideNarrationProps } from "@/types/slideProps";
+
+// Timing markers for narration-synced capability expansion
+const capabilityTimings = [
+  { index: 0, startPercent: 15 },  // Data That Connects
+  { index: 1, startPercent: 40 },  // Automation That Adapts
+  { index: 2, startPercent: 65 },  // AI That Drives
+];
 
 const capabilities = [
   {
@@ -77,6 +84,24 @@ const SlidePlatformCapabilities = ({
   onNextSlide,
 }: SlideNarrationProps) => {
   const [activeCapability, setActiveCapability] = useState<number | null>(null);
+  const [isNarrationControlled, setIsNarrationControlled] = useState(false);
+
+  // Sync capability cards with narration progress
+  useEffect(() => {
+    if (isPlaying && progress > 0) {
+      setIsNarrationControlled(true);
+      
+      const currentTiming = [...capabilityTimings]
+        .reverse()
+        .find(t => progress >= t.startPercent);
+      
+      if (currentTiming && currentTiming.index !== activeCapability) {
+        setActiveCapability(currentTiming.index);
+      }
+    } else if (!isPlaying && isNarrationControlled) {
+      setIsNarrationControlled(false);
+    }
+  }, [isPlaying, progress, activeCapability, isNarrationControlled]);
 
   return (
     <SlideContainer
@@ -145,6 +170,7 @@ const SlidePlatformCapabilities = ({
                       <div className={`
                         overflow-hidden transition-all duration-300
                         ${isCapActive ? 'max-h-32 mt-3' : 'max-h-0'}
+                        ${isNarrationControlled && isCapActive ? 'animate-fade-in' : ''}
                       `}>
                         <ul className="space-y-1.5">
                           {cap.bullets.map((bullet, bIndex) => (
