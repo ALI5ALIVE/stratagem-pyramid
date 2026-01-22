@@ -19,10 +19,10 @@ const Slide6Investors = ({
 
   // Timing markers for narration-synced pillar changes
   const pillarTimings = [
-    { tab: "growth", startPercent: 10 },
-    { tab: "revenue", startPercent: 35 },
-    { tab: "defensibility", startPercent: 55 },
-    { tab: "ai", startPercent: 75 },
+    { tab: "growth", startPercent: 12 },
+    { tab: "revenue", startPercent: 32 },
+    { tab: "defensibility", startPercent: 52 },
+    { tab: "ai", startPercent: 72 },
   ];
 
   // Sync tab/node with narration progress
