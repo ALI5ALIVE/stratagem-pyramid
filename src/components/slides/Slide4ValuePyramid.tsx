@@ -190,6 +190,15 @@ const glowClasses: Record<string, string> = {
 
 const layerOrder = ["FRAGMENTED", "MANAGED", "CONNECTED", "CLOSED_LOOP", "PREDICTIVE"];
 
+// Timing markers for narration-synced stage changes
+const stageTimings = [
+  { stage: "FRAGMENTED", startPercent: 8 },
+  { stage: "MANAGED", startPercent: 22 },
+  { stage: "CONNECTED", startPercent: 35 },
+  { stage: "CLOSED_LOOP", startPercent: 52 },
+  { stage: "PREDICTIVE", startPercent: 70 },
+];
+
 const Slide4ValuePyramid = ({
   isPlaying: narrationPlaying = false,
   isLoading: narrationLoading = false,
@@ -203,13 +212,33 @@ const Slide4ValuePyramid = ({
   const [highlightedModule, setHighlightedModule] = useState<string | null>(null);
   const [isAutoCycling, setIsAutoCycling] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [isNarrationControlled, setIsNarrationControlled] = useState(false);
 
   const activeLayer = layersData.find((l) => l.id === activeLayerId) || layersData[4];
   const currentIndex = layerOrder.indexOf(activeLayerId);
 
-  // Auto-cycle through stages
+  // Sync stage with narration progress
   useEffect(() => {
-    if (!isAutoCycling) {
+    if (narrationPlaying && narrationProgress > 0) {
+      setIsNarrationControlled(true);
+      setIsAutoCycling(false);
+      
+      const currentTiming = [...stageTimings]
+        .reverse()
+        .find(t => narrationProgress >= t.startPercent);
+      
+      if (currentTiming && currentTiming.stage !== activeLayerId) {
+        setActiveLayerId(currentTiming.stage);
+      }
+    } else if (!narrationPlaying && isNarrationControlled) {
+      // Narration stopped - keep current stage but release control
+      setIsNarrationControlled(false);
+    }
+  }, [narrationPlaying, narrationProgress, activeLayerId, isNarrationControlled]);
+
+  // Auto-cycle through stages (only when not narration-controlled)
+  useEffect(() => {
+    if (!isAutoCycling || isNarrationControlled) {
       setProgress(0);
       return;
     }
@@ -234,7 +263,7 @@ const Slide4ValuePyramid = ({
       clearInterval(progressInterval);
       clearInterval(cycleInterval);
     };
-  }, [isAutoCycling]);
+  }, [isAutoCycling, isNarrationControlled]);
 
   const handleLayerClick = useCallback((level: number) => {
     const layer = layersData.find((l) => l.level === level);
@@ -293,7 +322,7 @@ const Slide4ValuePyramid = ({
 
         {/* RIGHT: Details Panel */}
         <div className="h-full overflow-y-auto bg-card/30 rounded-lg p-4 border border-border/30 flex flex-col">
-          <div className="flex-1 transition-opacity duration-300">
+          <div className={`flex-1 transition-all duration-500 ${isNarrationControlled ? 'animate-fade-in' : ''}`}>
             <DetailsPanel layer={activeLayer} highlightedModule={highlightedModule} />
           </div>
           

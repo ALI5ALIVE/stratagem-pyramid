@@ -181,6 +181,15 @@ const stagesData: MaturityStage[] = [
   },
 ];
 
+// Timing markers for narration-synced stage changes
+const stageTimings = [
+  { stage: 1, startPercent: 5 },
+  { stage: 2, startPercent: 20 },
+  { stage: 3, startPercent: 35 },
+  { stage: 4, startPercent: 52 },
+  { stage: 5, startPercent: 70 },
+];
+
 const Slide5MaturityCurve = ({
   isPlaying = false,
   isLoading = false,
@@ -192,12 +201,31 @@ const Slide5MaturityCurve = ({
 }: SlideNarrationProps) => {
   const [activeStage, setActiveStage] = useState(1);
   const [isAnimated, setIsAnimated] = useState(false);
+  const [isNarrationControlled, setIsNarrationControlled] = useState(false);
   const isMobile = useIsMobile();
 
   useEffect(() => {
     const timer = setTimeout(() => setIsAnimated(true), 100);
     return () => clearTimeout(timer);
   }, []);
+
+  // Sync stage with narration progress
+  useEffect(() => {
+    if (isPlaying && progress > 0) {
+      setIsNarrationControlled(true);
+      
+      const currentTiming = [...stageTimings]
+        .reverse()
+        .find(t => progress >= t.startPercent);
+      
+      if (currentTiming && currentTiming.stage !== activeStage) {
+        setActiveStage(currentTiming.stage);
+      }
+    } else if (!isPlaying && isNarrationControlled) {
+      // Narration stopped - keep current stage but release control
+      setIsNarrationControlled(false);
+    }
+  }, [isPlaying, progress, activeStage, isNarrationControlled]);
 
   const selectedStage =
     stagesData.find((s) => s.stage === activeStage) || stagesData[0];
@@ -438,7 +466,7 @@ const Slide5MaturityCurve = ({
           </div>
 
           {/* RIGHT: Stage Details - 2x scaled container */}
-          <div className="overflow-y-auto bg-card/30 rounded-lg p-3 border border-border/30 max-h-[400px]">
+          <div className={`overflow-y-auto bg-card/30 rounded-lg p-3 border border-border/30 max-h-[400px] transition-all duration-500 ${isNarrationControlled ? 'animate-fade-in' : ''}`}>
             <MaturityStageDetails stage={selectedStage} />
           </div>
         </div>
