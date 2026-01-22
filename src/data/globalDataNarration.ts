@@ -46,14 +46,14 @@ export const globalDataNarrations: SlideNarration[] = [
   },
   {
     slideId: 6,
-    title: "Value Pyramid",
-    script: "Connected Intelligence does not deliver incremental improvement. As intelligence matures, value compounds. The journey progresses through five stages: from Fragmented — multiple tools and manual reconciliation — through Managed, Connected, Optimized, and finally Predictive — where AI-driven foresight enables proactive decisions. The value logic is simple: alignment enables speed. Speed enables outcomes. Outcomes enable impact. Most organizations sit at stage one or two. Our role is to accelerate them to stage four and five.",
+    title: "Intelligence Maturity Ladder",
+    script: "Connected Intelligence does not deliver incremental improvement. As intelligence matures, value compounds. The journey progresses through five stages. Stage one is Fragmented — with multiple tools and manual reconciliation. Stage two is Managed — structured but disconnected silos. Stage three is the Platform Shift — Connected Intelligence with unified governance. Stage four is Optimized Operations with embedded workflows and continuous improvement. Stage five is Predictive and Proactive Leadership — where AI-driven foresight enables decisions before competitors can react. The value logic is simple: alignment enables speed. Speed enables outcomes. Outcomes enable impact. Most organizations sit at stage one or two. Our role is to accelerate them to stage four and five.",
     voiceId: DEFAULT_VOICE_ID,
   },
   {
     slideId: 7,
-    title: "Maturity Roadmap",
-    script: "This roadmap shows the journey from today's reality to predictive leadership. Stage one is fragmented and reactive. Stage two is managed but disconnected. Stage three is the platform shift — where connected truth is established. Stage four is optimized operations with embedded workflows. Stage five is predictive and proactive, where intelligence drives decisions before competitors can react. Most organizations don't need more data. They need a clear, credible path forward. This is that path.",
+    title: "Intelligence Maturity Roadmap",
+    script: "This roadmap shows the measurable journey from fragmented insight to predictive leadership. Stage one is Fragmented and Reactive — with disconnected tools, no shared taxonomy, and slow decisions. Stage two is Managed but Siloed — better processes but still manual handoffs. Stage three is the Platform Shift — Connected Intelligence establishes unified truth across market, consumer, and commercial domains. Stage four is Optimized Operations — with embedded workflows and faster decisions. Stage five is Predictive and Proactive — where AI-led orchestration delivers category leadership through speed and foresight. Most organizations don't need more data. They need a clear, credible path forward. This is that path.",
     voiceId: DEFAULT_VOICE_ID,
   },
   {

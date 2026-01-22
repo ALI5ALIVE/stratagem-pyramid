@@ -1,22 +1,193 @@
 import { useState, useEffect } from "react";
 import GDSlideContainer from "./GDSlideContainer";
+import MaturityStageDetails from "@/components/MaturityStageDetails";
+import GDMaturitySummaryBanner from "./GDMaturitySummaryBanner";
 import { useIsMobile } from "@/hooks/use-mobile";
+import type { MaturityStage } from "@/components/MaturityCurveVisualization";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
-const stages = [
-  { id: 1, label: "Fragmented", sublabel: "Manual/Reactive", annotations: ["Disconnected tools", "No shared taxonomy", "Slow decisions"] },
-  { id: 2, label: "Managed", sublabel: "Silo Optimization", annotations: ["Structured locally", "Limited visibility"] },
-  { id: 3, label: "Connected", sublabel: "Shared Truth", annotations: ["Market→Consumer→GTM", "Evidence by default"], isShift: true },
-  { id: 4, label: "Optimized", sublabel: "Intelligent Ops", annotations: ["Embedded workflows", "Continuous improvement"] },
-  { id: 5, label: "Predictive", sublabel: "Autonomous Leadership", annotations: ["AI-led insights", "Proactive positioning"] },
+const stagesData: MaturityStage[] = [
+  {
+    id: "FRAGMENTED",
+    stage: 1,
+    headline: "Fragmented & Reactive",
+    sublabel: "Manual / Reactive",
+    whatItLooksLike: [
+      "Insights scattered across disconnected tools",
+      "No shared taxonomy across intelligence domains",
+      "Decisions debated for weeks with conflicting data",
+      "Manual reconciliation required for every decision",
+    ],
+    result: [
+      "High decision latency and missed windows",
+      "Launches fail due to incomplete intelligence",
+    ],
+    whyItMatters:
+      "Fragmentation is where growth stalls, relevance erodes, and leadership is lost — this is where most organizations start",
+    accentColor: "hsl(0 70% 50%)",
+    behavioralShift: {
+      from: "Debating data across systems",
+      to: "Reactive decisions just to keep up",
+      culturalMarker: "We have data, but no confidence",
+    },
+    timeAllocation: {
+      coordination: 60,
+      administration: 30,
+      improvement: 10,
+    },
+    valueProof: {
+      metrics: ["Decision latency 12+ wks", "3-5 conflicting sources", "40% miss windows"],
+      roiStatement: "Hidden costs: missed opportunities, failed launches, eroded margins",
+    },
+    curveAnnotations: ["Disconnected tools", "No shared taxonomy", "Slow decisions"],
+  },
+  {
+    id: "MANAGED",
+    stage: 2,
+    headline: "Managed (Siloed) Intelligence",
+    sublabel: "Silo Optimisation",
+    whatItLooksLike: [
+      "Strong systems in specific domains",
+      "Intelligence is structured but disconnected",
+      "Analysis produces insights but alignment is inconsistent",
+    ],
+    result: [
+      "Intelligence is managed, but decisions do not systematically improve",
+      "Conflicting data persists",
+    ],
+    whyItMatters:
+      "Domains operate well individually, but lack of connection prevents organizational alignment",
+    accentColor: "hsl(199 89% 48%)",
+    behavioralShift: {
+      from: "Debating data with limited visibility",
+      to: "Structured processes within each silo",
+      culturalMarker: "We're informed, but not aligned",
+    },
+    timeAllocation: {
+      coordination: 45,
+      administration: 35,
+      improvement: 20,
+    },
+    valueProof: {
+      metrics: ["Domain coverage ↑", "Process consistency ↑", "Cross-func ROI limited"],
+      roiStatement: "Structured intelligence, but limited cross-functional ROI",
+    },
+    curveAnnotations: ["Better process", "Still manual handoffs", "Slow change cycles"],
+  },
+  {
+    id: "CONNECTED",
+    stage: 3,
+    headline: "Connected Intelligence",
+    sublabel: "Unified Platform",
+    whatItLooksLike: [
+      "Market, Consumer, Commercial intelligence unified into one governed system",
+      "Shared taxonomy and traceability established",
+      "Visibility improves; fragmentation reduces",
+    ],
+    result: [
+      "Improved governance and confidence",
+      "Decision readiness increases",
+      "Foundation for optimized operations is in place",
+    ],
+    whyItMatters:
+      "Eliminates handoffs and creates one version of intelligence truth",
+    accentColor: "hsl(173 80% 40%)",
+    behavioralShift: {
+      from: "Chasing data across tools and vendors",
+      to: "Single source of truth, async collaboration",
+      culturalMarker: "We can see what's happening across the market",
+    },
+    timeAllocation: {
+      coordination: 30,
+      administration: 35,
+      improvement: 35,
+    },
+    valueProof: {
+      metrics: ["Decision prep ↓ 30%", "Handoffs ↓ 50%", "Visibility ↑"],
+      roiStatement: "Single source of truth reduces coordination overhead by 40%",
+    },
+    curveAnnotations: ["Market→Consumer→Commercial", "Evidence by default", "Alignment improves"],
+  },
+  {
+    id: "OPTIMIZED",
+    stage: 4,
+    headline: "Optimized Operations",
+    sublabel: "Intelligent Ops",
+    whatItLooksLike: [
+      "Intelligence embedded directly into decision workflows",
+      "Continuous improvement cycles across all functions",
+      "Evidence captured automatically at every decision point",
+      "Cross-functional alignment through shared dashboards",
+    ],
+    result: [
+      "Reduced decision latency",
+      "Faster time-to-market",
+      "Measurable performance improvement across KPIs",
+    ],
+    whyItMatters:
+      "Turns intelligence into controlled execution, not just reporting",
+    accentColor: "hsl(280 65% 55%)",
+    behavioralShift: {
+      from: "Reactive fixes and analysis requests",
+      to: "Proactive improvement with outcome ownership",
+      culturalMarker: "Insights drive real change, not just reports",
+    },
+    timeAllocation: {
+      coordination: 20,
+      administration: 30,
+      improvement: 50,
+    },
+    valueProof: {
+      metrics: ["Latency ↓ 50%", "Time-to-market ↓ 40%", "KPI lift ↑"],
+      roiStatement: "50% reduction in decision latency, measurable market lift",
+    },
+    curveAnnotations: ["Embedded workflows", "Prioritised interventions", "Faster decisions"],
+  },
+  {
+    id: "PREDICTIVE",
+    stage: 5,
+    headline: "Predictive & Proactive Leadership",
+    sublabel: "AI-Driven Foresight",
+    whatItLooksLike: [
+      "AI anticipates market shifts before they surface",
+      "Proactive positioning recommendations generated automatically",
+      "Decisions made before competitors can react",
+      "Continuous market monitoring with exception-led alerts",
+      "Intelligence compounds across the value chain",
+    ],
+    result: [
+      "Category leadership through speed and foresight",
+      "First-mover advantage becomes systematic",
+      "Teams shift from analysis to strategic action",
+    ],
+    whyItMatters:
+      "AI compresses the insight-to-action gap while keeping humans in control — intelligence becomes a competitive moat",
+    accentColor: "hsl(45 93% 58%)",
+    behavioralShift: {
+      from: "Reactive analysis and reporting",
+      to: "Proactive intelligence and strategic action",
+      culturalMarker: "We see what's coming before it arrives",
+    },
+    timeAllocation: {
+      coordination: 10,
+      administration: 20,
+      improvement: 70,
+    },
+    valueProof: {
+      metrics: ["Decision speed ↑ 70%", "Launch success 2x", "TCO ↓ 30%"],
+      roiStatement: "70% faster decisions, 2x higher launch success rates",
+    },
+    curveAnnotations: ["AI-led orchestration", "Human-in-loop control", "Continuous proof"],
+  },
 ];
 
+// Timing markers for narration-synced stage changes
 const stageTimings = [
-  { stage: 0, startPercent: 10 },
-  { stage: 1, startPercent: 25 },
-  { stage: 2, startPercent: 45 },
-  { stage: 3, startPercent: 65 },
-  { stage: 4, startPercent: 80 },
+  { stage: 1, startPercent: 5 },
+  { stage: 2, startPercent: 20 },
+  { stage: 3, startPercent: 35 },
+  { stage: 4, startPercent: 52 },
+  { stage: 5, startPercent: 70 },
 ];
 
 const GDSlide7MaturityCurve = ({
@@ -28,63 +199,76 @@ const GDSlide7MaturityCurve = ({
   onPause,
   onNextSlide,
 }: SlideNarrationProps) => {
-  const isMobile = useIsMobile();
-  const [activeStage, setActiveStage] = useState(0);
+  const [activeStage, setActiveStage] = useState(1);
   const [isAnimated, setIsAnimated] = useState(false);
   const [isNarrationControlled, setIsNarrationControlled] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsAnimated(true), 300);
+    const timer = setTimeout(() => setIsAnimated(true), 100);
     return () => clearTimeout(timer);
   }, []);
 
+  // Sync stage with narration progress
   useEffect(() => {
     if (isPlaying && progress > 0) {
       setIsNarrationControlled(true);
+      
       const currentTiming = [...stageTimings]
         .reverse()
         .find(t => progress >= t.startPercent);
+      
       if (currentTiming && currentTiming.stage !== activeStage) {
         setActiveStage(currentTiming.stage);
       }
     } else if (!isPlaying && isNarrationControlled) {
+      // Narration stopped - keep current stage but release control
       setIsNarrationControlled(false);
     }
   }, [isPlaying, progress, activeStage, isNarrationControlled]);
 
-  const viewBox = isMobile ? "0 0 400 300" : "0 0 600 350";
-  const width = isMobile ? 400 : 600;
-  const height = isMobile ? 300 : 350;
-  const padding = { left: 60, right: 40, top: 40, bottom: 60 };
+  const selectedStage =
+    stagesData.find((s) => s.stage === activeStage) || stagesData[0];
 
-  // Hockey stick curve points
-  const curvePoints = stages.map((stage, i) => {
-    const x = padding.left + (i / (stages.length - 1)) * (width - padding.left - padding.right);
-    // Hockey stick: slow growth early, then acceleration
-    const baseY = height - padding.bottom;
-    const yValues = [0.08, 0.12, 0.35, 0.65, 0.95]; // Hockey stick progression
-    const y = baseY - yValues[i] * (height - padding.top - padding.bottom);
-    return { x, y, stage };
-  });
+  // 2x scaled viewBox dimensions
+  const viewBox = isMobile ? "0 0 840 760" : "0 0 1160 760";
+
+  // 2x scaled curve points
+  const curvePoints = isMobile
+    ? [
+        { x: 100, y: 620, stage: 1 },
+        { x: 240, y: 580, stage: 2 },
+        { x: 400, y: 480, stage: 3 },
+        { x: 580, y: 320, stage: 4 },
+        { x: 760, y: 120, stage: 5 },
+      ]
+    : [
+        { x: 160, y: 600, stage: 1 },
+        { x: 360, y: 560, stage: 2 },
+        { x: 560, y: 460, stage: 3 },
+        { x: 780, y: 300, stage: 4 },
+        { x: 1000, y: 110, stage: 5 },
+      ];
 
   const generateCurvePath = () => {
-    let path = `M ${curvePoints[0].x} ${curvePoints[0].y}`;
-    for (let i = 1; i < curvePoints.length; i++) {
-      const prev = curvePoints[i - 1];
-      const curr = curvePoints[i];
-      const cpx1 = prev.x + (curr.x - prev.x) * 0.5;
-      const cpx2 = prev.x + (curr.x - prev.x) * 0.5;
-      path += ` Q ${cpx1} ${prev.y}, ${cpx2} ${(prev.y + curr.y) / 2}`;
-      path += ` T ${curr.x} ${curr.y}`;
+    const points = curvePoints;
+    let path = `M ${points[0].x} ${points[0].y}`;
+    
+    for (let i = 0; i < points.length - 1; i++) {
+      const current = points[i];
+      const next = points[i + 1];
+      const cpX = (current.x + next.x) / 2;
+      path += ` Q ${cpX} ${current.y}, ${next.x} ${next.y}`;
     }
+    
     return path;
   };
 
   return (
     <GDSlideContainer
-      id="gd-slide-7"
-      title="From Today's Reality to Predictive Leadership"
-      subtitle="The maturity roadmap most organisations need to follow"
+      id="slide-7"
+      title="The Intelligence Maturity Roadmap"
+      subtitle="The measurable journey from fragmented insight to predictive leadership"
       slideNumber={7}
       isPlaying={isPlaying}
       isLoading={isLoading}
@@ -94,212 +278,220 @@ const GDSlide7MaturityCurve = ({
       onPause={onPause}
       onNextSlide={onNextSlide}
     >
-      <div className="grid lg:grid-cols-2 gap-6 h-full items-center">
-        {/* Curve Visualization */}
-        <div className="relative">
-          <svg viewBox={viewBox} className="w-full h-auto">
-            <defs>
-              <linearGradient id="curveGradientGD" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="hsl(0 72% 51%)" />
-                <stop offset="30%" stopColor="hsl(45 93% 47%)" />
-                <stop offset="60%" stopColor="hsl(160 84% 39%)" />
-                <stop offset="100%" stopColor="hsl(180 70% 45%)" />
-              </linearGradient>
-              <filter id="glowGD" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="4" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-            </defs>
-
-            {/* Grid lines */}
-            {[0, 1, 2, 3, 4].map((i) => (
-              <line
-                key={`hgrid-${i}`}
-                x1={padding.left}
-                x2={width - padding.right}
-                y1={padding.top + (i * (height - padding.top - padding.bottom)) / 4}
-                y2={padding.top + (i * (height - padding.top - padding.bottom)) / 4}
-                stroke="hsl(var(--border))"
-                strokeWidth="0.5"
-                opacity="0.3"
-              />
-            ))}
-
-            {/* Y-axis label */}
-            <text
-              x={20}
-              y={height / 2}
-              fill="hsl(var(--muted-foreground))"
-              fontSize="10"
-              textAnchor="middle"
-              transform={`rotate(-90, 20, ${height / 2})`}
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+          {/* LEFT: Hockey Stick Curve - 2x scaled */}
+          <div className="bg-card/30 rounded-xl border border-border/30 p-4 md:p-6 flex items-center justify-center">
+            <svg
+              viewBox={viewBox}
+              className="w-full h-auto max-h-[400px]"
+              preserveAspectRatio="xMidYMid meet"
             >
-              Operational Value
-            </text>
+              <defs>
+                <linearGradient id="gdSlideGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="hsl(0 70% 50%)" />
+                  <stop offset="25%" stopColor="hsl(199 89% 48%)" />
+                  <stop offset="50%" stopColor="hsl(173 80% 40%)" />
+                  <stop offset="75%" stopColor="hsl(280 65% 55%)" />
+                  <stop offset="100%" stopColor="hsl(45 93% 58%)" />
+                </linearGradient>
+                
+                <filter id="gdSlideGlow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="6" result="coloredBlur" />
+                  <feMerge>
+                    <feMergeNode in="coloredBlur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
 
-            {/* X-axis label */}
-            <text
-              x={width / 2}
-              y={height - 10}
-              fill="hsl(var(--muted-foreground))"
-              fontSize="10"
-              textAnchor="middle"
-            >
-              Intelligence Maturity
-            </text>
+                <filter id="gdSlideActiveGlow" x="-100%" y="-100%" width="300%" height="300%">
+                  <feGaussianBlur stdDeviation="12" result="coloredBlur" />
+                  <feMerge>
+                    <feMergeNode in="coloredBlur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
 
-            {/* The curve */}
-            <path
-              d={generateCurvePath()}
-              fill="none"
-              stroke="url(#curveGradientGD)"
-              strokeWidth="4"
-              strokeLinecap="round"
-              filter="url(#glowGD)"
-              className={`transition-all duration-1000 ${isAnimated ? 'opacity-100' : 'opacity-0'}`}
-              style={{
-                strokeDasharray: 1000,
-                strokeDashoffset: isAnimated ? 0 : 1000,
-                transition: 'stroke-dashoffset 2s ease-out, opacity 0.3s'
-              }}
-            />
+              {/* Y-axis - 2x scaled */}
+              <line x1="90" y1="660" x2="90" y2="60" stroke="hsl(222 47% 25%)" strokeWidth="3" />
+              <polygon points="90,50 82,66 98,66" fill="hsl(222 47% 25%)" />
+              
+              <text
+                x="36"
+                y="360"
+                fill="hsl(215 20% 65%)"
+                fontSize="20"
+                fontWeight="600"
+                textAnchor="middle"
+                transform="rotate(-90, 36, 360)"
+                className="font-display"
+              >
+                INTELLIGENCE VALUE
+              </text>
 
-            {/* Stage markers */}
-            {curvePoints.map((point, i) => {
-              const isActive = i === activeStage;
-              const stage = stages[i];
+              {/* X-axis - 2x scaled */}
+              <line x1="90" y1="660" x2={isMobile ? 800 : 1120} y2="660" stroke="hsl(222 47% 25%)" strokeWidth="3" />
+              <polygon points={isMobile ? "810,660 794,652 794,668" : "1130,660 1114,652 1114,668"} fill="hsl(222 47% 25%)" />
 
-              return (
-                <g key={i}>
-                  {/* Click target */}
-                  <circle
-                    cx={point.x}
-                    cy={point.y}
-                    r={16}
-                    fill="transparent"
-                    className="cursor-pointer"
-                    onClick={() => setActiveStage(i)}
-                  />
-
-                  {/* Marker */}
-                  <circle
-                    cx={point.x}
-                    cy={point.y}
-                    r={isActive ? 10 : 6}
-                    fill={isActive ? "hsl(160 84% 39%)" : "hsl(var(--card))"}
-                    stroke={isActive ? "white" : "hsl(160 84% 39%)"}
-                    strokeWidth={isActive ? 3 : 2}
-                    className="transition-all duration-300"
-                    filter={isActive ? "url(#glowGD)" : ""}
-                  />
-
-                  {/* Stage label */}
-                  <text
-                    x={point.x}
-                    y={height - padding.bottom + 20}
-                    fill={isActive ? "hsl(160 84% 39%)" : "hsl(var(--muted-foreground))"}
-                    fontSize="9"
-                    textAnchor="middle"
-                    fontWeight={isActive ? "bold" : "normal"}
-                  >
-                    {stage.label}
-                  </text>
-
-                  {/* Platform shift marker */}
-                  {stage.isShift && !isMobile && (
-                    <g>
-                      <line
-                        x1={point.x}
-                        y1={point.y - 15}
-                        x2={point.x}
-                        y2={padding.top + 10}
-                        stroke="hsl(160 84% 39%)"
-                        strokeWidth="1"
-                        strokeDasharray="4 4"
-                        opacity="0.5"
-                      />
-                      <rect
-                        x={point.x - 35}
-                        y={padding.top}
-                        width={70}
-                        height={18}
-                        fill="hsl(160 84% 39%)"
-                        rx={4}
-                      />
-                      <text
-                        x={point.x}
-                        y={padding.top + 12}
-                        fill="white"
-                        fontSize="8"
-                        textAnchor="middle"
-                        fontWeight="bold"
-                      >
-                        PLATFORM SHIFT
-                      </text>
-                    </g>
-                  )}
-                </g>
-              );
-            })}
-          </svg>
-        </div>
-
-        {/* Stage Details */}
-        <div className={`space-y-4 ${isNarrationControlled ? 'animate-fade-in' : ''}`}>
-          {/* Current Stage */}
-          <div className="bg-gradient-to-r from-emerald-500/20 to-teal-500/10 border border-emerald-500/30 rounded-xl p-5">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-emerald-400 font-mono text-sm">Stage {stages[activeStage].id}</span>
-              {stages[activeStage].isShift && (
-                <span className="px-2 py-0.5 bg-emerald-500 rounded text-[10px] text-white font-semibold uppercase">
-                  Platform Shift
-                </span>
-              )}
-            </div>
-            <h3 className="text-xl font-bold text-foreground mb-1">{stages[activeStage].label}</h3>
-            <p className="text-sm text-muted-foreground">{stages[activeStage].sublabel}</p>
-          </div>
-
-          {/* Annotations */}
-          <div className="bg-card/50 border border-border/50 rounded-xl p-4">
-            <p className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-3">Characteristics</p>
-            <ul className="space-y-2">
-              {stages[activeStage].annotations.map((annotation, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-foreground">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 shrink-0" />
-                  {annotation}
-                </li>
+              {/* Grid lines - 2x scaled */}
+              {[180, 320, 460, 560].map((y) => (
+                <line
+                  key={y}
+                  x1="90"
+                  y1={y}
+                  x2={isMobile ? 800 : 1120}
+                  y2={y}
+                  stroke="hsl(222 47% 15%)"
+                  strokeWidth="2"
+                  strokeDasharray="6,6"
+                />
               ))}
-            </ul>
-          </div>
 
-          {/* Key Message */}
-          <div className="bg-card border border-border/50 rounded-lg p-4 text-center">
-            <p className="text-sm text-foreground">
-              Most organisations don't need more data. They need a <span className="font-bold text-emerald-400">clear, credible path forward</span>.
-            </p>
-          </div>
-
-          {/* Stage Dots */}
-          <div className="flex items-center justify-center gap-2">
-            {stages.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setActiveStage(i)}
-                className={`
-                  w-2.5 h-2.5 rounded-full transition-all duration-300
-                  ${i === activeStage 
-                    ? 'bg-emerald-400 scale-125' 
-                    : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
-                  }
-                `}
+              {/* Hockey stick curve - 2x stroke */}
+              <path
+                d={generateCurvePath()}
+                fill="none"
+                stroke="url(#gdSlideGradient)"
+                strokeWidth="6"
+                strokeLinecap="round"
+                filter="url(#gdSlideGlow)"
+                className={`transition-all duration-1000 ${isAnimated ? "opacity-100" : "opacity-0"}`}
               />
-            ))}
+
+              {/* Platform Shift marker - desktop only, 2x scaled */}
+              {!isMobile && (
+                <g className={`transition-opacity duration-700 delay-500 ${isAnimated ? "opacity-100" : "opacity-0"}`}>
+                  <line x1="560" y1="460" x2="560" y2="660" stroke="hsl(173 80% 40%)" strokeWidth="3" strokeDasharray="8,6" />
+                  <rect x="470" y="510" width="180" height="40" rx="6" fill="hsl(173 80% 40% / 0.2)" stroke="hsl(173 80% 40%)" strokeWidth="2" />
+                  <text x="560" y="538" fill="hsl(173 80% 50%)" fontSize="18" fontWeight="600" textAnchor="middle" className="font-display">
+                    PLATFORM SHIFT
+                  </text>
+                </g>
+              )}
+
+              {/* Stage markers - 2x scaled */}
+              {stagesData.map((stage, index) => {
+                const point = curvePoints[index];
+                const isStageActive = activeStage === stage.stage;
+                
+                return (
+                  <g key={stage.id} className="cursor-pointer" onClick={() => setActiveStage(stage.stage)}>
+                    <circle
+                      cx={point.x}
+                      cy={point.y}
+                      r={isStageActive ? 24 : 18}
+                      fill={stage.accentColor}
+                      filter={isStageActive ? "url(#gdSlideActiveGlow)" : "url(#gdSlideGlow)"}
+                      className={`transition-all duration-300 ${isAnimated ? "opacity-100" : "opacity-0"}`}
+                      style={{ transitionDelay: `${index * 80}ms` }}
+                    />
+                    <circle
+                      cx={point.x}
+                      cy={point.y}
+                      r={isStageActive ? 12 : 8}
+                      fill="hsl(222 47% 6%)"
+                      className={`transition-all duration-300 ${isAnimated ? "opacity-100" : "opacity-0"}`}
+                      style={{ transitionDelay: `${index * 80}ms` }}
+                    />
+                    <text
+                      x={point.x}
+                      y={point.y + 8}
+                      fill={stage.accentColor}
+                      fontSize="18"
+                      fontWeight="bold"
+                      textAnchor="middle"
+                      className={`transition-all duration-300 ${isAnimated ? "opacity-100" : "opacity-0"}`}
+                      style={{ transitionDelay: `${index * 80}ms` }}
+                    >
+                      {stage.stage}
+                    </text>
+
+                    {/* X-axis labels - 2x font */}
+                    {(() => {
+                      const shortLabels: Record<number, string> = {
+                        1: "Fragmented",
+                        2: "Managed",
+                        3: "Connected",
+                        4: "Optimized",
+                        5: "Predictive",
+                      };
+                      return (
+                        <text
+                          x={point.x}
+                          y="696"
+                          fill={isStageActive ? stage.accentColor : "hsl(215 20% 65%)"}
+                          fontSize={isMobile ? "18" : "20"}
+                          fontWeight={isStageActive ? "700" : "500"}
+                          textAnchor="middle"
+                          className="font-display transition-colors duration-300"
+                        >
+                          {shortLabels[stage.stage]}
+                        </text>
+                      );
+                    })()}
+
+                    {/* Active stage annotations - desktop only, 2x scaled */}
+                    {isStageActive && !isMobile && (
+                      <g className="animate-fade-in">
+                        <rect
+                          x={point.x - 130}
+                          y={stage.stage === 5 ? point.y + 40 : point.y - 136}
+                          width="260"
+                          height={stage.curveAnnotations.length * 28 + 24}
+                          rx="8"
+                          fill="hsl(222 47% 10% / 0.95)"
+                          stroke={stage.accentColor}
+                          strokeWidth="2"
+                        />
+                        {stage.curveAnnotations.map((annotation, i) => (
+                          <text
+                            key={i}
+                            x={point.x}
+                            y={stage.stage === 5 ? point.y + 72 + i * 28 : point.y - 104 + i * 28}
+                            fill="hsl(210 40% 98%)"
+                            fontSize="16"
+                            textAnchor="middle"
+                            className="font-medium"
+                          >
+                            {annotation}
+                          </text>
+                        ))}
+                      </g>
+                    )}
+                  </g>
+                );
+              })}
+            </svg>
+          </div>
+
+          {/* RIGHT: Stage Details Panel */}
+          <div className="bg-card/30 rounded-xl border border-border/30 p-4 md:p-6">
+            <div className={`transition-all duration-500 ${isNarrationControlled ? 'animate-fade-in' : ''}`}>
+              <MaturityStageDetails stage={selectedStage} />
+            </div>
+
+            {/* Stage dots navigation */}
+            <div className="flex justify-center gap-2 mt-4 pt-4 border-t border-border/30">
+              {stagesData.map((stage) => (
+                <button
+                  key={stage.id}
+                  onClick={() => setActiveStage(stage.stage)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    activeStage === stage.stage
+                      ? "scale-125"
+                      : "opacity-50 hover:opacity-80"
+                  }`}
+                  style={{ backgroundColor: stage.accentColor }}
+                  aria-label={`View stage ${stage.stage}: ${stage.headline}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
+
+        {/* Summary Banner */}
+        <GDMaturitySummaryBanner />
       </div>
     </GDSlideContainer>
   );
