@@ -436,7 +436,7 @@ const Slide5MaturityCurve = ({
                       <g className="animate-fade-in">
                         <rect
                           x={point.x - 130}
-                          y={point.y - 136}
+                          y={stage.stage === 5 ? point.y + 40 : point.y - 136}
                           width="260"
                           height={stage.curveAnnotations.length * 28 + 24}
                           rx="8"
@@ -448,7 +448,7 @@ const Slide5MaturityCurve = ({
                           <text
                             key={i}
                             x={point.x}
-                            y={point.y - 104 + i * 28}
+                            y={stage.stage === 5 ? point.y + 72 + i * 28 : point.y - 104 + i * 28}
                             fill="hsl(210 40% 98%)"
                             fontSize="16"
                             textAnchor="middle"
