@@ -212,10 +212,10 @@ const Slide8PositioningMap = ({
                     tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
                     axisLine={{ stroke: 'hsl(var(--border))' }}
                     label={{
-                      value: "Full Capability Coverage →",
+                      value: "Point Solutions → Full 360° Coverage (Safety, Content, Training)",
                       position: "bottom",
                       offset: 5,
-                      style: { fill: 'hsl(var(--muted-foreground))', fontSize: 12 }
+                      style: { fill: 'hsl(var(--muted-foreground))', fontSize: 11 }
                     }}
                   />
                   <YAxis
@@ -227,11 +227,11 @@ const Slide8PositioningMap = ({
                     tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
                     axisLine={{ stroke: 'hsl(var(--border))' }}
                     label={{
-                      value: "Strategic Value →",
+                      value: "Cost Center → Revenue Generation",
                       angle: -90,
                       position: "left",
                       offset: 20,
-                      style: { fill: 'hsl(var(--muted-foreground))', fontSize: 12 }
+                      style: { fill: 'hsl(var(--muted-foreground))', fontSize: 11 }
                     }}
                   />
 
