@@ -20,7 +20,7 @@ import type { SlideNarrationProps } from "@/types/slideProps";
 // Category Positioning Data
 const categoryPosition = {
   name: "Operational Excellence & Readiness Platform",
-  definition: "Connects safety, procedures, and training into an intelligent operating system, turning signals into orchestrated change and audit-ready proof.",
+  definition: "Connects safety, content, and training into an intelligent operating system, turning signals into orchestrated change and audit-ready proof.",
   operatingModel: "Continuous Improvement Operating System",
   narrativeSpine: ["Detect", "Trigger", "Orchestrate", "Prove"]
 };
@@ -28,7 +28,7 @@ const categoryPosition = {
 // POV Data
 const pointOfView = {
   marketShift: "Operational performance is now a competitive advantage. Leaders are measured on excellence, readiness, speed of change, and governance.",
-  coreProblem: "Systems for safety, procedures, and training exist but are disconnected — creating manual coordination, reactive risk handling, procedural drift, and duplicated effort.",
+  coreProblem: "Systems for safety, content, and training exist but are disconnected — creating manual coordination, reactive risk handling, procedural drift, and duplicated effort.",
   opportunity: "A connected operating model that turns signals into controlled execution and proof."
 };
 
@@ -65,7 +65,7 @@ const capabilities = [
   {
     icon: Layers,
     title: "Shared Data & Governance",
-    description: "Shared models, taxonomies, and knowledge maps across safety, procedures, and training."
+    description: "Shared models, taxonomies, and knowledge maps across safety, content, and training."
   },
   {
     icon: Zap,
@@ -85,7 +85,7 @@ const personas = [
     id: "executive",
     icon: Briefcase,
     title: "CEO / COO",
-    valueProposition: "Reduce disruption, protect revenue, and improve customer experience by accelerating the speed and control of operational change across safety, procedures, and training.",
+    valueProposition: "Reduce disruption, protect revenue, and improve customer experience by accelerating the speed and control of operational change across safety, content, and training.",
     keyMessages: [
       "Single platform for operational governance",
       "Faster speed of controlled change",
@@ -357,7 +357,7 @@ const SlideMessagingHouse = ({
               "Point solutions manage silos. <span className="text-primary">Comply365 closes the loop.</span>"
             </p>
             <p className="text-[10px] text-muted-foreground mt-1 leading-relaxed">
-              Unlike point solutions that manage safety, procedures, or training in isolation, Comply365 unifies all three into one governed platform.
+              Unlike point solutions that manage safety, content, or training in isolation, Comply365 unifies all three into one governed platform.
             </p>
           </div>
 

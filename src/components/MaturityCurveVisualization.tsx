@@ -36,7 +36,7 @@ const stagesData: MaturityStage[] = [
     headline: "Fragmented & Reactive",
     sublabel: "Manual / Reactive",
     whatItLooksLike: [
-      "Disconnected systems across safety, procedures, training",
+      "Disconnected systems across safety, content, training",
       "Investigations and changes happen manually",
       "Training not tied to operational signals",
       "Evidence assembled late and inconsistently",
@@ -103,7 +103,7 @@ const stagesData: MaturityStage[] = [
     headline: "Connected Governance",
     sublabel: "Closed Loop",
     whatItLooksLike: [
-      "Safety, procedures, training unified into one governed system of record",
+      "Safety, content, training unified into one governed system of record",
       "Traceability and approvals established",
       "Visibility improves; fragmentation reduces",
     ],
