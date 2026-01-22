@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SlideContainer from "./SlideContainer";
 import { TrendingUp, Shield, Brain, BarChart3, Target, Zap, Users, Lock } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -15,6 +15,36 @@ const Slide6Investors = ({
 }: SlideNarrationProps) => {
   const [activeNode, setActiveNode] = useState(0);
   const [activeTab, setActiveTab] = useState("growth");
+  const [isNarrationControlled, setIsNarrationControlled] = useState(false);
+
+  // Timing markers for narration-synced pillar changes
+  const pillarTimings = [
+    { tab: "growth", startPercent: 10 },
+    { tab: "revenue", startPercent: 35 },
+    { tab: "defensibility", startPercent: 55 },
+    { tab: "ai", startPercent: 75 },
+  ];
+
+  // Sync tab/node with narration progress
+  useEffect(() => {
+    if (isPlaying && progress > 0) {
+      setIsNarrationControlled(true);
+      
+      const currentTiming = [...pillarTimings]
+        .reverse()
+        .find(t => progress >= t.startPercent);
+      
+      if (currentTiming && currentTiming.tab !== activeTab) {
+        setActiveTab(currentTiming.tab);
+        const nodeIndex = flywheelNodes.findIndex(n => n.tabValue === currentTiming.tab);
+        if (nodeIndex !== -1) {
+          setActiveNode(nodeIndex);
+        }
+      }
+    } else if (!isPlaying && isNarrationControlled) {
+      setIsNarrationControlled(false);
+    }
+  }, [isPlaying, progress, activeTab, isNarrationControlled]);
 
   const flywheelNodes = [
     { id: 0, label: "Growth", subtitle: "TAM + Win Rates", icon: TrendingUp, tabValue: "growth" },
@@ -214,7 +244,7 @@ const Slide6Investors = ({
             </TabsList>
 
             {Object.entries(pillars).map(([key, pillar]) => (
-              <TabsContent key={key} value={key} className="mt-4 space-y-3">
+              <TabsContent key={key} value={key} className={`mt-4 space-y-3 transition-all duration-500 ${isNarrationControlled ? 'animate-fade-in' : ''}`}>
                 <div>
                   <h3 className="text-sm font-semibold text-foreground mb-1">{pillar.title}</h3>
                   <p className="text-xs text-muted-foreground">{pillar.description}</p>
