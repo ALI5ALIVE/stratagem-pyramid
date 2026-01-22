@@ -149,6 +149,11 @@ const GDSlide0Title = ({
         <span className="text-xs uppercase tracking-widest">Scroll to begin</span>
         <ChevronDown className="w-5 h-5" />
       </div>
+
+      {/* Slide number - aligned with content */}
+      <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-10 max-w-5xl">
+        <span className="text-sm font-medium text-muted-foreground">00</span>
+      </div>
     </section>
   );
 };
