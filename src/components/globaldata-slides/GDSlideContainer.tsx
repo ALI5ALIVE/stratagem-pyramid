@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import SlidePlayButton from "@/components/SlidePlayButton";
-import globalDataLogo from "@/assets/globaldata-logo-white.png";
+import comply365Logo from "@/assets/comply365-logo-white.png";
 
 interface GDSlideContainerProps {
   id: string;
@@ -66,7 +66,7 @@ const GDSlideContainer = ({
         {/* GlobalData Logo - top right, aligned with content */}
         <div className="absolute -top-8 right-0">
           <div className="flex items-center gap-2">
-            <img src={globalDataLogo} alt="GlobalData" className="h-6 sm:h-8 w-auto" />
+            <img src={comply365Logo} alt="GlobalData" className="h-6 sm:h-8 w-auto" />
           </div>
         </div>
 
