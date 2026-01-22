@@ -24,11 +24,11 @@ const GDQuintupleLoop = ({ onModuleClick }: GDQuintupleLoopProps) => {
     return () => clearInterval(interval);
   }, []);
 
-  // Doubled dimensions
-  const loopRadius = 36;
-  const loopSpacing = 72;
-  const startX = 84;
-  const cy = 56;
+  // Enlarged dimensions for Stage 3
+  const loopRadius = 50;
+  const loopSpacing = 100;
+  const startX = 100;
+  const cy = 75;
 
   // Calculate dot position on the combined loop path
   const getDotPosition = (angle: number, loopIndex: number) => {
@@ -42,7 +42,7 @@ const GDQuintupleLoop = ({ onModuleClick }: GDQuintupleLoopProps) => {
 
   return (
     <div className="w-full h-full flex items-center justify-center">
-      <svg viewBox="0 0 440 140" className="w-full max-w-[440px]">
+      <svg viewBox="0 0 600 180" className="w-full max-w-[600px]">
         <defs>
           <filter id="gdLoopGlow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="4" result="blur" />
@@ -78,7 +78,7 @@ const GDQuintupleLoop = ({ onModuleClick }: GDQuintupleLoopProps) => {
         </defs>
 
         {/* Central radial glow - "One Truth" */}
-        <circle cx="220" cy={cy} r="80" fill="url(#gdCenterGlow)" />
+        <circle cx="300" cy={cy} r="110" fill="url(#gdCenterGlow)" />
 
         {/* 5 interlocking circles */}
         {modules.map((module, index) => {
@@ -105,10 +105,10 @@ const GDQuintupleLoop = ({ onModuleClick }: GDQuintupleLoopProps) => {
               {/* Module label */}
               <text
                 x={cx}
-                y={cy + loopRadius + 24}
+                y={cy + loopRadius + 28}
                 textAnchor="middle"
                 fill={isHovered ? "hsl(173, 80%, 60%)" : "hsl(173, 60%, 70%)"}
-                fontSize="12"
+                fontSize="16"
                 fontWeight="500"
                 fontFamily="'Inter', sans-serif"
                 className="pointer-events-none select-none transition-colors duration-200"
@@ -132,7 +132,7 @@ const GDQuintupleLoop = ({ onModuleClick }: GDQuintupleLoopProps) => {
               key={dotIndex}
               cx={pos.x}
               cy={pos.y}
-              r="6"
+              r="8"
               fill="hsl(45, 93%, 58%)"
               style={{ filter: "url(#gdDotGlow)" }}
               className="transition-all duration-100"
@@ -142,11 +142,11 @@ const GDQuintupleLoop = ({ onModuleClick }: GDQuintupleLoopProps) => {
 
         {/* "Unified Taxonomy" label at bottom */}
         <text
-          x="220"
-          y="132"
+          x="300"
+          y="170"
           textAnchor="middle"
           fill="hsl(173, 70%, 65%)"
-          fontSize="14"
+          fontSize="18"
           fontWeight="600"
           fontFamily="'Space Grotesk', sans-serif"
           letterSpacing="0.05em"

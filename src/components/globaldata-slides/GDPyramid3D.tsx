@@ -253,17 +253,19 @@ const GDPyramid3D = ({
         {/* Layer 1 (PREDICTIVE - Apex) - Transformational Illustration */}
         {(() => {
           const bounds = layerBounds[1];
+          const layerHeight = bounds.bottom - bounds.top;
           const centerY = (bounds.top + bounds.bottom) / 2;
           const leftX = getLeftX(centerY);
           const rightX = getRightX(centerY);
-          const width = (rightX - leftX) * 1.2;
-          const height = (bounds.bottom - bounds.top) * 1.5;
+          const width = (rightX - leftX) * 1.8;
+          const height = layerHeight * 1.8;
           const offsetX = (rightX - leftX - width) / 2;
+          const offsetY = (layerHeight - height) / 2;
           
           return (
             <foreignObject
               x={leftX + offsetX}
-              y={bounds.top + 20}
+              y={bounds.top + offsetY}
               width={width}
               height={height}
               className="pointer-events-auto"
@@ -276,17 +278,19 @@ const GDPyramid3D = ({
         {/* Layer 2 (OPERATIONAL) - Metrics Gauges */}
         {(() => {
           const bounds = layerBounds[2];
+          const layerHeight = bounds.bottom - bounds.top;
           const centerY = (bounds.top + bounds.bottom) / 2;
           const leftX = getLeftX(centerY);
           const rightX = getRightX(centerY);
           const width = (rightX - leftX) * 1.4;
-          const height = (bounds.bottom - bounds.top) * 1.6;
+          const height = layerHeight * 1.6;
           const offsetX = (rightX - leftX - width) / 2;
+          const offsetY = (layerHeight - height) / 2;
           
           return (
             <foreignObject
               x={leftX + offsetX}
-              y={bounds.top + 10}
+              y={bounds.top + offsetY}
               width={width}
               height={height}
               className="pointer-events-auto"
@@ -299,17 +303,19 @@ const GDPyramid3D = ({
         {/* Layer 3 (CONNECTED) - Quintuple Loop */}
         {(() => {
           const bounds = layerBounds[3];
+          const layerHeight = bounds.bottom - bounds.top;
           const centerY = (bounds.top + bounds.bottom) / 2;
           const leftX = getLeftX(centerY);
           const rightX = getRightX(centerY);
-          const width = (rightX - leftX) * 1.4;
-          const height = (bounds.bottom - bounds.top) * 1.6;
+          const width = (rightX - leftX) * 1.8;
+          const height = layerHeight * 1.9;
           const offsetX = (rightX - leftX - width) / 2;
+          const offsetY = (layerHeight - height) / 2;
           
           return (
             <foreignObject
               x={leftX + offsetX}
-              y={bounds.top + 10}
+              y={bounds.top + offsetY}
               width={width}
               height={height}
               className="pointer-events-auto"
@@ -322,17 +328,19 @@ const GDPyramid3D = ({
         {/* Layer 5 (FRAGMENTED - Base) - Fragmentation Illustration */}
         {(() => {
           const bounds = layerBounds[5];
+          const layerHeight = bounds.bottom - bounds.top;
           const centerY = (bounds.top + bounds.bottom) / 2;
           const leftX = getLeftX(centerY);
           const rightX = getRightX(centerY);
-          const width = (rightX - leftX) * 1.4;
-          const height = (bounds.bottom - bounds.top) * 1.6;
+          const width = (rightX - leftX) * 1.8;
+          const height = layerHeight * 1.9;
           const offsetX = (rightX - leftX - width) / 2;
+          const offsetY = (layerHeight - height) / 2;
           
           return (
             <foreignObject
               x={leftX + offsetX}
-              y={bounds.top + 10}
+              y={bounds.top + offsetY}
               width={width}
               height={height}
               className="pointer-events-auto"
