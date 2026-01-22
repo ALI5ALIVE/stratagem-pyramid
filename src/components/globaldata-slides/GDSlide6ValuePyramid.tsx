@@ -1,201 +1,212 @@
 import { useState, useEffect, useCallback } from "react";
 import { Play, Pause } from "lucide-react";
 import GDSlideContainer from "./GDSlideContainer";
-import Pyramid3D from "@/components/Pyramid3D";
-import DetailsPanel, { LayerData } from "@/components/DetailsPanel";
+import GDPyramid3D from "./GDPyramid3D";
+import GDDetailsPanel, { GDLayerData } from "./GDDetailsPanel";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
-const layersData: LayerData[] = [
+// Complete content specification with inverted stages: Level 1 = Apex (PREDICTIVE), Level 5 = Base (FRAGMENTED)
+const layersData: GDLayerData[] = [
   {
     id: "PREDICTIVE",
-    level: 5,
-    headline: "Predictive & Proactive Leadership",
-    sublabel: "AI-Driven Foresight",
+    level: 1,
+    headline: "Predictive & Adaptive Category Leadership",
+    sublabel: "Highest Maturity / AI-Accelerated",
     whatItLooksLike: [
-      "AI anticipates market shifts before they surface",
-      "Proactive positioning recommendations generated automatically",
-      "Decisions made before competitors can react",
-      "Continuous market monitoring with exception-led alerts",
-      "Intelligence compounds across the value chain",
+      "AI-driven market predictions integrated into strategic planning cycles",
+      "Real-time intelligence embedded across all functions (NPD, Trade, Brand, RGM)",
+      "Self-learning systems that auto-detect emerging trends, risks, and opportunities",
+      "Category intelligence as a core board-level capability",
+      "Ava anticipates market shifts before competitors can react",
     ],
     result: [
-      "Category leadership through speed and foresight",
-      "First-mover advantage becomes systematic",
-      "Teams shift from analysis to strategic action",
+      "Data-led category leadership, outpacing competition",
+      "Faster, smarter bets in innovation, pricing and investment",
+      "Business outcomes continuously optimized by intelligence feedback loops",
+      "Sustained category leadership through predictive advantage",
     ],
     whyItMatters:
-      "AI compresses the insight-to-action gap while keeping humans in control — intelligence becomes a competitive moat",
+      "Moves the enterprise from reactive to proactive category strategy. Leaders who reach this stage set market direction—they don't follow. Organization shapes the market instead of responding to it.",
     colorClass: "bg-gradient-to-b from-pyramid-transformational to-pyramid-transformational/80",
     accentColor: "hsl(45 93% 58%)",
     behavioralShift: {
-      from: "Reactive analysis and reporting",
-      to: "Proactive intelligence and strategic action",
-      culturalMarker: "We see what's coming before it arrives",
+      from: "Intelligence informs strategy",
+      to: "Intelligence drives the business",
+      culturalMarker: "We shape the category, not react to it",
     },
     timeAllocation: {
-      coordination: 10,
-      administration: 20,
-      improvement: 70,
+      reconciliation: 5,
+      analysis: 20,
+      strategic: 75,
     },
     valueProof: {
-      metrics: ["Decision speed ↑ 70%", "Launch success 2x", "TCO ↓ 30%"],
-      roiStatement: "70% faster decisions, 2x higher launch success rates",
+      metrics: ["Category share +3-5pts", "35% faster response", "ROI 15:1+", "First-mover ↑"],
+      roiStatement: "One global FMCG achieved #1 category share in 12 markets within 18 months of reaching Stage 1.",
     },
   },
   {
-    id: "OPTIMIZED",
-    level: 4,
-    headline: "Optimized Operations",
-    sublabel: "Embedded Workflows",
+    id: "OPERATIONAL",
+    level: 2,
+    headline: "Operational Intelligence",
+    sublabel: "Advanced / Insight in Workflow",
     whatItLooksLike: [
-      "Intelligence embedded directly into decision workflows",
-      "Continuous improvement cycles across all functions",
-      "Evidence captured automatically at every decision point",
-      "Cross-functional alignment through shared dashboards",
+      "Advanced analytics integrated into daily workflows across multiple markets",
+      "Consumer, shopper, category, and commercial insights connected in unified models",
+      "AI augmentation: automated trend detection, decision recommendations",
+      "Category insights embedded into key commercial and innovation decisions",
     ],
     result: [
-      "Reduced decision latency",
-      "Faster time-to-market",
-      "Measurable performance improvement across KPIs",
+      "Predictive-led decisions at local and regional levels",
+      "Measurably improved ROMI and trade investment outcomes",
+      "Faster innovation success rates and category growth",
+      "Higher NPD hit rates through connected intelligence",
     ],
     whyItMatters:
-      "Turns intelligence into controlled execution, not just reporting",
+      "Operationalized intelligence becomes a competitive moat. Decisions are faster, more confident, and consistently connected to live market data.",
     colorClass: "bg-gradient-to-b from-pyramid-commercial to-pyramid-commercial/80",
     accentColor: "hsl(280 65% 55%)",
     behavioralShift: {
-      from: "Reactive fixes and analysis requests",
-      to: "Proactive improvement with outcome ownership",
-      culturalMarker: "Insights drive real change, not just reports",
+      from: "Manual insight synthesis and presentation",
+      to: "Ava-augmented decisions with embedded intelligence",
+      culturalMarker: "Intelligence flows into every decision",
     },
     timeAllocation: {
-      coordination: 20,
-      administration: 30,
-      improvement: 50,
+      reconciliation: 10,
+      analysis: 30,
+      strategic: 60,
     },
     valueProof: {
-      metrics: ["Latency ↓ 50%", "Time-to-market ↓ 40%", "KPI lift ↑"],
-      roiStatement: "50% reduction in decision latency, measurable market lift",
+      metrics: ["Decision cycle -40-70%", "ROMI +25%", "Innovation hit +30%", "NPD hit rate ↑"],
+      roiStatement: "60% of time on growth decisions, AI synthesizes complexity.",
     },
   },
   {
     id: "CONNECTED",
     level: 3,
-    headline: "Connected Intelligence",
-    sublabel: "Platform Foundation",
+    headline: "Connected & Governed Intelligence",
+    sublabel: "Optimizing / Platform Foundation",
     whatItLooksLike: [
-      "Market, Consumer, Commercial intelligence unified into one governed system",
-      "Shared taxonomy and traceability established",
-      "Visibility improves; fragmentation reduces",
+      "Unified taxonomy, governance, and KPIs across all data types and markets",
+      "Democratized, self-service access to insights with training and enablement",
+      "Consistent brand safety, compliance, and usage policies globally",
+      "Market, consumer, innovation, competitive intelligence unified on single platform",
     ],
     result: [
-      "Improved governance and confidence",
-      "Decision readiness increases",
-      "Foundation for optimized operations is in place",
+      "Speed-to-insight improves; dependency on specialists reduced",
+      "Consistent data quality fuels trusted decision-making",
+      "One version of consumer truth across the organization",
+      "Foundation for AI-augmented insight is in place",
     ],
     whyItMatters:
-      "Eliminates handoffs and creates one version of intelligence truth",
+      "Governance is the hidden accelerator. Without it, even the best data creates confusion. With it, organizations scale smarter, faster, and safer.",
     colorClass: "bg-gradient-to-b from-pyramid-operational to-pyramid-operational/80",
     accentColor: "hsl(173 80% 40%)",
     behavioralShift: {
-      from: "Chasing data across tools and vendors",
-      to: "Single source of truth, async collaboration",
-      culturalMarker: "We can see what's happening across the market",
+      from: "Debating whose data is right",
+      to: "Acting on shared consumer truth",
+      culturalMarker: "One truth, one taxonomy, one platform",
     },
     timeAllocation: {
-      coordination: 30,
-      administration: 35,
-      improvement: 35,
+      reconciliation: 20,
+      analysis: 40,
+      strategic: 40,
     },
     valueProof: {
-      metrics: ["Decision prep ↓ 30%", "Handoffs ↓ 50%", "Visibility ↑"],
-      roiStatement: "Single source of truth reduces coordination overhead by 40%",
+      metrics: ["70% self-service", "Data prep -50%", "Reconciliation ↓60%", "Audit-ready"],
+      roiStatement: "Single source of truth reduces reconciliation overhead by 60%.",
     },
   },
   {
     id: "MANAGED",
-    level: 2,
-    headline: "Managed (Siloed) Intelligence",
-    sublabel: "Structured but disconnected",
+    level: 4,
+    headline: "Managed but Siloed Intelligence",
+    sublabel: "Developing / Strong tools, limited connection",
     whatItLooksLike: [
-      "Strong systems in specific domains (market, consumer, etc.)",
-      "Intelligence is structured but disconnected across teams",
-      "Analysis produces insights but alignment is inconsistent",
+      "Multiple data sources and visualization tools in use",
+      "Data ownership exists but is fragmented by function or region",
+      "Reporting is regular, but mostly backward-looking",
+      "Strong tools within market, innovation, consumer, competitive domains",
     ],
     result: [
-      "Intelligence is managed, but decisions do not systematically improve",
-      "Conflicting data persists",
+      "Partial efficiency gains—but still limited strategic leverage",
+      "Intelligence is trusted but not connected — progress is incremental",
+      "No shared view of demand across the organization",
     ],
     whyItMatters:
-      "Domains operate well individually, but lack of connection prevents organizational alignment",
+      "Organizations at Stage 4 often believe they're more advanced than they are. They have tools—but not yet a connected intelligence capability.",
     colorClass: "bg-gradient-to-b from-pyramid-foundation to-pyramid-foundation/80",
     accentColor: "hsl(199 89% 48%)",
     behavioralShift: {
-      from: "Debating data across tools",
+      from: "Insight overload with limited synthesis",
       to: "Structured processes within each silo",
-      culturalMarker: "We're informed, but not aligned",
+      culturalMarker: "We're data-rich, but not insight-aligned",
     },
     timeAllocation: {
-      coordination: 45,
-      administration: 35,
-      improvement: 20,
+      reconciliation: 40,
+      analysis: 40,
+      strategic: 20,
     },
     valueProof: {
-      metrics: ["Domain coverage ↑", "Process consistency ↑", "Cross-func ROI limited"],
-      roiStatement: "Structured intelligence, but limited cross-functional ROI",
+      metrics: ["Reporting cycle -30%", "Dept intelligence ↑", "Cross-func limited", "Silo ROI only"],
+      roiStatement: "Strong silo intelligence, but limited cross-functional value.",
     },
   },
   {
     id: "FRAGMENTED",
-    level: 1,
-    headline: "Fragmented & Reactive",
-    sublabel: "The starting point",
+    level: 5,
+    headline: "Fragmented & Reactive Intelligence",
+    sublabel: "Starting Point",
     whatItLooksLike: [
-      "Disconnected tools across market, consumer, commercial",
-      "Decisions debated for weeks with conflicting data",
-      "No shared taxonomy across intelligence domains",
-      "Manual reconciliation required for every decision",
+      "Insight requests handled ad hoc; minimal self-service",
+      "Multiple, disconnected tools and data sources",
+      "Decisions often made with incomplete or outdated data",
+      "Multiple insight providers with different taxonomies",
+      "Signals validated too late; opportunities missed",
     ],
     result: [
-      "High decision latency and missed windows",
-      "Launches fail due to incomplete intelligence",
+      "High dependency on external vendors or agencies for insights",
+      "Significant time spent wrangling data vs. acting on it",
+      "Teams debate data sources instead of acting on insights",
+      "High variability and slow response to market signals",
     ],
     whyItMatters:
-      "Fragmentation is where growth stalls, relevance erodes, and leadership is lost — this is where most organizations start",
+      "This stage represents the highest risk and lowest leverage. Every delay in intelligence maturity compounds the gap with faster-moving competitors.",
     colorClass: "bg-gradient-to-b from-pyramid-fragmentation to-pyramid-fragmentation/80",
     accentColor: "hsl(0 70% 50%)",
     behavioralShift: {
-      from: "Debating data across disconnected systems",
+      from: "Reconciling conflicting data across providers",
       to: "This is where most organizations start",
-      culturalMarker: "We have data, but no confidence",
+      culturalMarker: "Insight exists, but trust and alignment don't",
     },
     timeAllocation: {
-      coordination: 60,
-      administration: 30,
-      improvement: 10,
+      reconciliation: 60,
+      analysis: 30,
+      strategic: 10,
     },
     valueProof: {
-      metrics: ["Decision latency 12+ wks", "3-5 conflicting sources", "40% miss windows"],
-      roiStatement: "Hidden costs: missed opportunities, failed launches, eroded margins",
+      metrics: ["High vendor spend", "Low self-service", "Reconciliation ↑", "Missed windows ↑"],
+      roiStatement: "Hidden costs: reconciliation, late validation, inconsistent action.",
     },
   },
 ];
 
 const glowClasses: Record<string, string> = {
   PREDICTIVE: "glow-transformational",
-  OPTIMIZED: "glow-commercial",
+  OPERATIONAL: "glow-commercial",
   CONNECTED: "glow-operational",
   MANAGED: "glow-foundation",
   FRAGMENTED: "glow-fragmentation",
 };
 
-const layerOrder = ["FRAGMENTED", "MANAGED", "CONNECTED", "OPTIMIZED", "PREDICTIVE"];
+// Progression from base to apex (narration order)
+const layerOrder = ["FRAGMENTED", "MANAGED", "CONNECTED", "OPERATIONAL", "PREDICTIVE"];
 
 // Timing markers for narration-synced stage changes
 const stageTimings = [
   { stage: "FRAGMENTED", startPercent: 8 },
   { stage: "MANAGED", startPercent: 22 },
   { stage: "CONNECTED", startPercent: 35 },
-  { stage: "OPTIMIZED", startPercent: 52 },
+  { stage: "OPERATIONAL", startPercent: 52 },
   { stage: "PREDICTIVE", startPercent: 70 },
 ];
 
@@ -231,7 +242,6 @@ const GDSlide6ValuePyramid = ({
         setActiveLayerId(currentTiming.stage);
       }
     } else if (!narrationPlaying && isNarrationControlled) {
-      // Narration stopped - keep current stage but release control
       setIsNarrationControlled(false);
     }
   }, [narrationPlaying, narrationProgress, activeLayerId, isNarrationControlled]);
@@ -275,7 +285,7 @@ const GDSlide6ValuePyramid = ({
   }, []);
 
   const handleModuleClick = useCallback((module: string) => {
-    setActiveLayerId("MANAGED"); // Foundation sections are now Stage 2
+    setActiveLayerId("MANAGED");
     setHighlightedModule(module);
     setIsAutoCycling(false);
     setTimeout(() => setHighlightedModule(null), 3000);
@@ -291,7 +301,7 @@ const GDSlide6ValuePyramid = ({
     <GDSlideContainer
       id="slide-6"
       title="Intelligence Maturity Ladder"
-      subtitle="The building blocks: from fragmented insight to predictive leadership"
+      subtitle="From fragmented point solutions to connected intelligence that drives category leadership"
       slideNumber={6}
       isPlaying={narrationPlaying}
       isLoading={narrationLoading}
@@ -304,7 +314,7 @@ const GDSlide6ValuePyramid = ({
       <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch h-full">
         {/* LEFT: Pyramid Visual */}
         <div className="w-full min-h-[300px] lg:min-h-[400px] flex items-center justify-center">
-          <Pyramid3D
+          <GDPyramid3D
             layers={layersData.map((layer) => ({
               id: layer.id,
               level: layer.level,
@@ -323,7 +333,7 @@ const GDSlide6ValuePyramid = ({
         {/* RIGHT: Details Panel */}
         <div className="h-full overflow-y-auto bg-card/30 rounded-lg p-4 border border-border/30 flex flex-col">
           <div className={`flex-1 transition-all duration-500 ${isNarrationControlled ? 'animate-fade-in' : ''}`}>
-            <DetailsPanel layer={activeLayer} highlightedModule={highlightedModule} />
+            <GDDetailsPanel layer={activeLayer} highlightedModule={highlightedModule} />
           </div>
           
           {/* Stage Indicator & Controls */}
@@ -340,7 +350,7 @@ const GDSlide6ValuePyramid = ({
                         ? "bg-primary scale-125"
                         : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
                     }`}
-                    aria-label={`Go to stage ${index + 1}`}
+                    aria-label={`Go to stage ${5 - index}`}
                   >
                     {index === currentIndex && isAutoCycling && (
                       <span 
@@ -384,7 +394,7 @@ const GDSlide6ValuePyramid = ({
 
             {/* Stage label */}
             <p className="text-[9px] text-muted-foreground mt-1.5 text-center">
-              Stage {currentIndex + 1} of {layerOrder.length} · {isAutoCycling ? "Click pyramid or pause to explore" : "Click play to resume"}
+              Stage {activeLayer.level} of 5 · {isAutoCycling ? "Click pyramid or pause to explore" : "Click play to resume"}
             </p>
           </div>
         </div>
