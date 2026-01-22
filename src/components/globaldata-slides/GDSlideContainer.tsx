@@ -71,6 +71,13 @@ const GDSlideContainer = ({
         </div>
       </div>
 
+      {/* Footer - bottom left */}
+      <div className="absolute bottom-6 left-6 sm:bottom-8 sm:left-10 hidden sm:block">
+        <p className="text-[10px] text-muted-foreground">
+          © 2026 GlobalData · Connected Consumer Intelligence Platform
+        </p>
+      </div>
+
       {/* Slide number - bottom right */}
       {slideNumber !== undefined && (
         <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-10">
