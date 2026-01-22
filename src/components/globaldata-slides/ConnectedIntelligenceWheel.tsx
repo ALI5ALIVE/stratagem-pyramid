@@ -110,7 +110,7 @@ const ConnectedIntelligenceWheel = () => {
                 y={labelPos.y}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                className="fill-foreground font-semibold"
+                className="fill-black font-semibold"
                 fontSize="8"
                 transform={`rotate(${textAngle}, ${labelPos.x}, ${labelPos.y})`}
               >
@@ -146,7 +146,7 @@ const ConnectedIntelligenceWheel = () => {
                   y={pos.y + (li - (lines.length - 1) / 2) * 9}
                   textAnchor="middle"
                   dominantBaseline="middle"
-                  className="fill-foreground"
+                  className="fill-black"
                   fontSize="5"
                 >
                   {line}
@@ -182,7 +182,7 @@ const ConnectedIntelligenceWheel = () => {
                   y={pos.y + (li - (lines.length - 1) / 2) * 10}
                   textAnchor="middle"
                   dominantBaseline="middle"
-                  className="fill-foreground font-medium"
+                  className="fill-black font-medium"
                   fontSize="7"
                 >
                   {line}
@@ -218,14 +218,14 @@ const ConnectedIntelligenceWheel = () => {
       </svg>
 
       {/* External labels */}
-      <div className="absolute top-0 left-0 text-xs font-semibold text-foreground flex items-center gap-1">
+      <div className="absolute top-0 left-0 text-xs font-semibold text-black flex items-center gap-1">
         <span>Solutions</span>
-        <svg width="20" height="10" className="text-foreground">
+        <svg width="20" height="10" className="text-black">
           <path d="M0 5 L15 5 L12 2 M15 5 L12 8" fill="none" stroke="currentColor" strokeWidth="1.5" />
         </svg>
       </div>
-      <div className="absolute bottom-4 right-0 text-xs font-semibold text-foreground flex items-center gap-1">
-        <svg width="20" height="10" className="text-foreground">
+      <div className="absolute bottom-4 right-0 text-xs font-semibold text-black flex items-center gap-1">
+        <svg width="20" height="10" className="text-black">
           <path d="M20 5 L5 5 L8 2 M5 5 L8 8" fill="none" stroke="currentColor" strokeWidth="1.5" />
         </svg>
         <span>Products & Content</span>
