@@ -107,7 +107,7 @@ const GDQuintupleLoop = ({ onModuleClick }: GDQuintupleLoopProps) => {
                 x={cx}
                 y={cy + loopRadius + 28}
                 textAnchor="middle"
-                fill={isHovered ? "hsl(173, 80%, 60%)" : "hsl(173, 60%, 70%)"}
+                fill={isHovered ? "hsl(173, 80%, 20%)" : "black"}
                 fontSize="16"
                 fontWeight="500"
                 fontFamily="'Inter', sans-serif"
@@ -145,7 +145,7 @@ const GDQuintupleLoop = ({ onModuleClick }: GDQuintupleLoopProps) => {
           x="300"
           y="170"
           textAnchor="middle"
-          fill="hsl(173, 70%, 65%)"
+          fill="black"
           fontSize="18"
           fontWeight="600"
           fontFamily="'Space Grotesk', sans-serif"
