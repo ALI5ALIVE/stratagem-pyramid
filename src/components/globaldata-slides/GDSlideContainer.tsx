@@ -61,36 +61,35 @@ const GDSlideContainer = ({
         />
       )}
 
-      {/* GlobalData Logo placeholder - top right */}
-      <div className="absolute top-6 right-6 sm:top-8 sm:right-10">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
-            <span className="text-white font-bold text-sm">GD</span>
+      <div className="max-w-7xl w-full mx-auto flex-1 flex flex-col relative">
+        {/* GlobalData Logo placeholder - top right, aligned with content */}
+        <div className="absolute -top-8 right-0">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
+              <span className="text-white font-bold text-sm">GD</span>
+            </div>
+            <span className="text-sm font-semibold text-foreground/80 hidden sm:block">GlobalData</span>
           </div>
-          <span className="text-sm font-semibold text-foreground/80 hidden sm:block">GlobalData</span>
         </div>
-      </div>
 
-      {/* Footer - bottom left */}
-      <div className="absolute bottom-6 left-6 sm:bottom-8 sm:left-10 hidden sm:block">
-        <p className="text-[10px] text-muted-foreground">
-          © 2026 GlobalData · Connected Consumer Intelligence Platform
-        </p>
-      </div>
-
-      {/* Slide number - bottom right */}
-      {slideNumber !== undefined && (
-        <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-10">
-          <span className={cn(
-            "text-sm font-medium",
-            variant === "light" ? "text-muted-foreground" : "text-muted-foreground"
-          )}>
-            {String(slideNumber).padStart(2, '0')}
-          </span>
+        {/* Footer - bottom left, aligned with content */}
+        <div className="absolute -bottom-10 left-0 hidden sm:block">
+          <p className="text-[10px] text-muted-foreground">
+            © 2026 GlobalData · Connected Consumer Intelligence Platform
+          </p>
         </div>
-      )}
 
-      <div className="max-w-7xl w-full mx-auto flex-1 flex flex-col">
+        {/* Slide number - bottom right, aligned with content */}
+        {slideNumber !== undefined && (
+          <div className="absolute -bottom-10 right-0">
+            <span className={cn(
+              "text-sm font-medium",
+              variant === "light" ? "text-muted-foreground" : "text-muted-foreground"
+            )}>
+              {String(slideNumber).padStart(2, '0')}
+            </span>
+          </div>
+        )}
         {/* Header section - left aligned */}
         <div className="mb-8 sm:mb-12">
           <h2 className={cn(
