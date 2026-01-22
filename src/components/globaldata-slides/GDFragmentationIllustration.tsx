@@ -5,13 +5,13 @@ interface GDFragmentationIllustrationProps {
   onNodeClick?: (node: string) => void;
 }
 
-// Doubled x positions
+// Enlarged x positions for Stage 5
 const nodes = [
-  { id: "nielsen", label: "Nielsen", icon: BarChart3, color: "hsl(199, 89%, 48%)", x: 50 },
-  { id: "iri", label: "IRI", icon: ShoppingCart, color: "hsl(330, 80%, 55%)", x: 140 },
-  { id: "mintel", label: "Mintel", icon: TrendingUp, color: "hsl(145, 70%, 45%)", x: 230 },
-  { id: "social", label: "Social", icon: MessageCircle, color: "hsl(280, 65%, 55%)", x: 320 },
-  { id: "internal", label: "Internal", icon: FileSpreadsheet, color: "hsl(30, 90%, 55%)", x: 410 },
+  { id: "nielsen", label: "Nielsen", icon: BarChart3, color: "hsl(199, 89%, 48%)", x: 65 },
+  { id: "iri", label: "IRI", icon: ShoppingCart, color: "hsl(330, 80%, 55%)", x: 185 },
+  { id: "mintel", label: "Mintel", icon: TrendingUp, color: "hsl(145, 70%, 45%)", x: 305 },
+  { id: "social", label: "Social", icon: MessageCircle, color: "hsl(280, 65%, 55%)", x: 425 },
+  { id: "internal", label: "Internal", icon: FileSpreadsheet, color: "hsl(30, 90%, 55%)", x: 545 },
 ];
 
 const brokenConnections = [
@@ -33,13 +33,13 @@ const GDFragmentationIllustration = ({ onNodeClick }: GDFragmentationIllustratio
     return () => clearInterval(interval);
   }, []);
 
-  // Doubled dimensions
-  const cy = 64;
-  const nodeRadius = 28;
+  // Enlarged dimensions for Stage 5
+  const cy = 85;
+  const nodeRadius = 40;
 
   return (
     <div className="w-full h-full flex items-center justify-center">
-      <svg viewBox="0 0 460 140" className="w-full max-w-[460px]">
+      <svg viewBox="0 0 610 190" className="w-full max-w-[610px]">
         <defs>
           <filter id="gdFragmentGlow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="4" result="blur" />
@@ -90,31 +90,31 @@ const GDFragmentationIllustration = ({ onNodeClick }: GDFragmentationIllustratio
               <line
                 x1={fromNode.x + nodeRadius}
                 y1={cy}
-                x2={midX - 12}
+                x2={midX - 16}
                 y2={cy}
                 stroke="hsl(0, 70%, 45%)"
-                strokeWidth="3"
-                strokeDasharray="8 4"
+                strokeWidth="4"
+                strokeDasharray="10 5"
                 strokeOpacity="0.6"
               />
               {/* Right segment */}
               <line
-                x1={midX + 12}
+                x1={midX + 16}
                 y1={cy}
                 x2={toNode.x - nodeRadius}
                 y2={cy}
                 stroke="hsl(0, 70%, 45%)"
-                strokeWidth="3"
-                strokeDasharray="8 4"
+                strokeWidth="4"
+                strokeDasharray="10 5"
                 strokeOpacity="0.6"
               />
               {/* × break mark */}
               <text
                 x={midX}
-                y={cy + 8}
+                y={cy + 10}
                 textAnchor="middle"
                 fill="hsl(0, 70%, 55%)"
-                fontSize="20"
+                fontSize="28"
                 fontWeight="bold"
               >
                 ×
@@ -124,26 +124,26 @@ const GDFragmentationIllustration = ({ onNodeClick }: GDFragmentationIllustratio
         })}
 
         {/* Warning indicators with ≠ symbol */}
-        {[95, 275].map((x, index) => {
+        {[125, 365].map((x, index) => {
           const pulseOpacity = 0.4 + 0.3 * Math.sin((warningPulse + index * 50) * 0.1);
           
           return (
             <g key={`warning-${index}`} style={{ filter: "url(#gdWarningPulse)" }}>
               <circle
                 cx={x}
-                cy={cy - 36}
-                r="14"
+                cy={cy - 50}
+                r="20"
                 fill="hsl(30, 90%, 55%)"
                 fillOpacity={pulseOpacity}
                 stroke="hsl(30, 90%, 55%)"
-                strokeWidth="2"
+                strokeWidth="3"
               />
               <text
                 x={x}
-                y={cy - 28}
+                y={cy - 40}
                 textAnchor="middle"
                 fill="white"
-                fontSize="16"
+                fontSize="22"
                 fontWeight="bold"
               >
                 ≠
@@ -177,23 +177,23 @@ const GDFragmentationIllustration = ({ onNodeClick }: GDFragmentationIllustratio
                 r={nodeRadius}
                 fill={`url(#gdNode-${node.id})`}
                 stroke={node.color}
-                strokeWidth="4"
+                strokeWidth="5"
               />
               
               {/* Icon */}
-              <foreignObject x={node.x - 14} y={cy - 14} width="28" height="28">
+              <foreignObject x={node.x - 20} y={cy - 20} width="40" height="40">
                 <div className="w-full h-full flex items-center justify-center">
-                  <IconComponent className="w-6 h-6 text-white" strokeWidth={2.5} />
+                  <IconComponent className="w-8 h-8 text-white" strokeWidth={2.5} />
                 </div>
               </foreignObject>
               
               {/* Label */}
               <text
                 x={node.x}
-                y={cy + nodeRadius + 18}
+                y={cy + nodeRadius + 24}
                 textAnchor="middle"
                 fill={isHovered ? node.color : "hsl(0, 40%, 70%)"}
-                fontSize="12"
+                fontSize="16"
                 fontWeight="500"
                 fontFamily="'Inter', sans-serif"
                 className="transition-colors duration-200"
@@ -206,11 +206,11 @@ const GDFragmentationIllustration = ({ onNodeClick }: GDFragmentationIllustratio
 
         {/* "Different Taxonomy" label */}
         <text
-          x="230"
-          y="132"
+          x="305"
+          y="178"
           textAnchor="middle"
           fill="hsl(0, 50%, 60%)"
-          fontSize="12"
+          fontSize="16"
           fontWeight="500"
           fontFamily="'Inter', sans-serif"
           fontStyle="italic"

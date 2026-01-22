@@ -15,8 +15,8 @@ const GDTransformationalIllustration = ({ onNodeClick }: GDTransformationalIllus
   };
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-4">
-      <div className="flex items-center gap-4 sm:gap-6">
+    <div className="w-full h-full flex items-center justify-center p-4 sm:p-5">
+      <div className="flex items-center gap-5 sm:gap-8">
         {/* TrendingUp - Market Intelligence */}
         <div
           className={`flex flex-col items-center gap-2 cursor-pointer transition-all duration-300 ${
@@ -27,7 +27,7 @@ const GDTransformationalIllustration = ({ onNodeClick }: GDTransformationalIllus
           onClick={() => handleClick("intelligence")}
         >
           <div
-            className="p-3 sm:p-4 rounded-xl bg-gradient-to-b from-white/20 to-white/5 border border-white/30"
+            className="p-4 sm:p-5 rounded-xl bg-gradient-to-b from-white/20 to-white/5 border border-white/30"
             style={{
               boxShadow: hoveredNode === "intelligence" 
                 ? "0 0 32px 12px hsl(199, 89%, 48%)" 
@@ -35,15 +35,15 @@ const GDTransformationalIllustration = ({ onNodeClick }: GDTransformationalIllus
             }}
           >
             <TrendingUp 
-              className="w-10 h-10 sm:w-12 sm:h-12 text-white" 
+              className="w-14 h-14 sm:w-16 sm:h-16 text-white" 
               strokeWidth={2.5}
             />
           </div>
-          <span className="text-xs sm:text-sm text-white/70 font-medium">Intelligence</span>
+          <span className="text-sm sm:text-base text-white/70 font-medium">Intelligence</span>
         </div>
 
         {/* Plus sign */}
-        <span className="text-white/80 font-bold text-2xl sm:text-3xl">+</span>
+        <span className="text-white/80 font-bold text-3xl sm:text-4xl">+</span>
 
         {/* Sparkles - Ava AI */}
         <div
@@ -55,7 +55,7 @@ const GDTransformationalIllustration = ({ onNodeClick }: GDTransformationalIllus
           onClick={() => handleClick("ava")}
         >
           <div
-            className="p-3 sm:p-4 rounded-xl bg-gradient-to-b from-amber-400/30 to-amber-600/20 border border-amber-400/50"
+            className="p-4 sm:p-5 rounded-xl bg-gradient-to-b from-amber-400/30 to-amber-600/20 border border-amber-400/50"
             style={{
               boxShadow: hoveredNode === "ava" 
                 ? "0 0 32px 12px hsl(45, 93%, 58%)" 
@@ -63,15 +63,15 @@ const GDTransformationalIllustration = ({ onNodeClick }: GDTransformationalIllus
             }}
           >
             <Sparkles 
-              className="w-10 h-10 sm:w-12 sm:h-12 text-amber-400" 
+              className="w-14 h-14 sm:w-16 sm:h-16 text-amber-400" 
               strokeWidth={2.5}
             />
           </div>
-          <span className="text-xs sm:text-sm text-amber-400 font-semibold">Ava</span>
+          <span className="text-sm sm:text-base text-amber-400 font-semibold">Ava</span>
         </div>
 
         {/* Equals sign */}
-        <span className="text-white/80 font-bold text-2xl sm:text-3xl">=</span>
+        <span className="text-white/80 font-bold text-3xl sm:text-4xl">=</span>
 
         {/* Trophy - Category Leadership */}
         <div
@@ -83,7 +83,7 @@ const GDTransformationalIllustration = ({ onNodeClick }: GDTransformationalIllus
           onClick={() => handleClick("leadership")}
         >
           <div
-            className="p-3 sm:p-4 rounded-xl bg-gradient-to-b from-amber-400/30 to-amber-600/20 border border-amber-400/50"
+            className="p-4 sm:p-5 rounded-xl bg-gradient-to-b from-amber-400/30 to-amber-600/20 border border-amber-400/50"
             style={{
               boxShadow: hoveredNode === "leadership" 
                 ? "0 0 32px 12px hsl(45, 93%, 58%)" 
@@ -91,11 +91,11 @@ const GDTransformationalIllustration = ({ onNodeClick }: GDTransformationalIllus
             }}
           >
             <Trophy 
-              className="w-10 h-10 sm:w-12 sm:h-12 text-amber-400" 
+              className="w-14 h-14 sm:w-16 sm:h-16 text-amber-400" 
               strokeWidth={2.5}
             />
           </div>
-          <span className="text-xs sm:text-sm text-amber-400/80 font-medium">Leadership</span>
+          <span className="text-sm sm:text-base text-amber-400/80 font-medium">Leadership</span>
         </div>
       </div>
     </div>
