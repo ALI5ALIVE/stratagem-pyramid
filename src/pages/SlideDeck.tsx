@@ -44,7 +44,11 @@ const SlideDeck = () => {
     isLoading: narration.currentSlide === slideId && narration.isLoading,
     progress: narration.currentSlide === slideId ? narration.progress : 0,
     hasCompleted: narration.currentSlide === slideId && narration.hasCompleted,
-    onPlay: () => narration.play(slideId),
+    onPlay: () => {
+      narration.play(slideId);
+      // Preload next slide's audio in background
+      narration.preloadNext(slideId);
+    },
     onPause: () => narration.pause(),
     onNextSlide: slideId < slides.length - 1 ? () => scrollToSlide(slideId + 1) : undefined,
   });

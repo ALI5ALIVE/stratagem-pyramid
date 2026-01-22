@@ -155,6 +155,14 @@ export const useSimpleNarration = () => {
     }
   }, [state.currentSlide, state.hasCompleted]);
 
+  // Preload next slide's audio in background for faster playback
+  const preloadNext = useCallback((currentSlideId: number) => {
+    const nextSlideId = currentSlideId + 1;
+    if (nextSlideId <= 12 && !cacheRef.current.has(nextSlideId)) {
+      fetchAudio(nextSlideId).catch(() => {}); // Silent preload
+    }
+  }, []);
+
   return {
     ...state,
     play,
@@ -162,5 +170,6 @@ export const useSimpleNarration = () => {
     resume,
     stop,
     resetCompleted,
+    preloadNext,
   };
 };

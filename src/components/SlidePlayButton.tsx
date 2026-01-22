@@ -58,10 +58,15 @@ const SlidePlayButton = ({
         )}
 
         {/* Circular progress indicator */}
-        <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none">
+        <svg 
+          className="absolute inset-0 -rotate-90 pointer-events-none"
+          width="80"
+          height="80"
+          viewBox="0 0 80 80"
+        >
           <circle
-            cx="50%"
-            cy="50%"
+            cx="40"
+            cy="40"
             r="38"
             fill="none"
             stroke="currentColor"
@@ -70,8 +75,8 @@ const SlidePlayButton = ({
           />
           {(isPlaying || progress > 0) && (
             <circle
-              cx="50%"
-              cy="50%"
+              cx="40"
+              cy="40"
               r="38"
               fill="none"
               stroke="currentColor"
