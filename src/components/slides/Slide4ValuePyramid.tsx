@@ -290,7 +290,7 @@ const Slide4ValuePyramid = ({
   return (
     <SlideContainer
       id="slide-6"
-      title="The Readiness Ladder"
+      title="Operational Readiness Ladder"
       subtitle="The building blocks: from fragmented compliance to predictive excellence"
       slideNumber={6}
       isPlaying={narrationPlaying}
