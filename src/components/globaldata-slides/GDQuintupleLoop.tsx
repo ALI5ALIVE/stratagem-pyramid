@@ -24,10 +24,11 @@ const GDQuintupleLoop = ({ onModuleClick }: GDQuintupleLoopProps) => {
     return () => clearInterval(interval);
   }, []);
 
-  const loopRadius = 18;
-  const loopSpacing = 36;
-  const startX = 42;
-  const cy = 28;
+  // Doubled dimensions
+  const loopRadius = 36;
+  const loopSpacing = 72;
+  const startX = 84;
+  const cy = 56;
 
   // Calculate dot position on the combined loop path
   const getDotPosition = (angle: number, loopIndex: number) => {
@@ -41,10 +42,10 @@ const GDQuintupleLoop = ({ onModuleClick }: GDQuintupleLoopProps) => {
 
   return (
     <div className="w-full h-full flex items-center justify-center">
-      <svg viewBox="0 0 220 70" className="w-full max-w-[220px]">
+      <svg viewBox="0 0 440 140" className="w-full max-w-[440px]">
         <defs>
           <filter id="gdLoopGlow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="2" result="blur" />
+            <feGaussianBlur stdDeviation="4" result="blur" />
             <feFlood floodColor="hsl(173, 80%, 40%)" floodOpacity="0.6" />
             <feComposite in2="blur" operator="in" />
             <feMerge>
@@ -53,7 +54,7 @@ const GDQuintupleLoop = ({ onModuleClick }: GDQuintupleLoopProps) => {
             </feMerge>
           </filter>
           <filter id="gdLoopHoverGlow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feGaussianBlur stdDeviation="8" result="blur" />
             <feFlood floodColor="hsl(173, 80%, 50%)" floodOpacity="0.8" />
             <feComposite in2="blur" operator="in" />
             <feMerge>
@@ -62,7 +63,7 @@ const GDQuintupleLoop = ({ onModuleClick }: GDQuintupleLoopProps) => {
             </feMerge>
           </filter>
           <filter id="gdDotGlow" x="-100%" y="-100%" width="300%" height="300%">
-            <feGaussianBlur stdDeviation="2" result="blur" />
+            <feGaussianBlur stdDeviation="4" result="blur" />
             <feFlood floodColor="hsl(45, 93%, 58%)" floodOpacity="0.9" />
             <feComposite in2="blur" operator="in" />
             <feMerge>
@@ -77,7 +78,7 @@ const GDQuintupleLoop = ({ onModuleClick }: GDQuintupleLoopProps) => {
         </defs>
 
         {/* Central radial glow - "One Truth" */}
-        <circle cx="110" cy={cy} r="40" fill="url(#gdCenterGlow)" />
+        <circle cx="220" cy={cy} r="80" fill="url(#gdCenterGlow)" />
 
         {/* 5 interlocking circles */}
         {modules.map((module, index) => {
@@ -92,8 +93,8 @@ const GDQuintupleLoop = ({ onModuleClick }: GDQuintupleLoopProps) => {
                 r={loopRadius}
                 fill="transparent"
                 stroke="hsl(173, 80%, 40%)"
-                strokeWidth="2"
-                strokeDasharray="4 2"
+                strokeWidth="4"
+                strokeDasharray="8 4"
                 className="cursor-pointer transition-all duration-200"
                 style={{ filter: isHovered ? "url(#gdLoopHoverGlow)" : "url(#gdLoopGlow)" }}
                 onMouseEnter={() => setHoveredModule(module.id)}
@@ -104,10 +105,10 @@ const GDQuintupleLoop = ({ onModuleClick }: GDQuintupleLoopProps) => {
               {/* Module label */}
               <text
                 x={cx}
-                y={cy + loopRadius + 12}
+                y={cy + loopRadius + 24}
                 textAnchor="middle"
                 fill={isHovered ? "hsl(173, 80%, 60%)" : "hsl(173, 60%, 70%)"}
-                fontSize="6"
+                fontSize="12"
                 fontWeight="500"
                 fontFamily="'Inter', sans-serif"
                 className="pointer-events-none select-none transition-colors duration-200"
@@ -131,7 +132,7 @@ const GDQuintupleLoop = ({ onModuleClick }: GDQuintupleLoopProps) => {
               key={dotIndex}
               cx={pos.x}
               cy={pos.y}
-              r="3"
+              r="6"
               fill="hsl(45, 93%, 58%)"
               style={{ filter: "url(#gdDotGlow)" }}
               className="transition-all duration-100"
@@ -141,11 +142,11 @@ const GDQuintupleLoop = ({ onModuleClick }: GDQuintupleLoopProps) => {
 
         {/* "Unified Taxonomy" label at bottom */}
         <text
-          x="110"
-          y="66"
+          x="220"
+          y="132"
           textAnchor="middle"
           fill="hsl(173, 70%, 65%)"
-          fontSize="7"
+          fontSize="14"
           fontWeight="600"
           fontFamily="'Space Grotesk', sans-serif"
           letterSpacing="0.05em"
