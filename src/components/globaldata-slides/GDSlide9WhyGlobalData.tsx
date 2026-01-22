@@ -8,21 +8,21 @@ const differentiators = [
     title: "Unmatched Proprietary Data", 
     desc: "Market + Consumer intelligence no competitor can replicate",
     proof: "40+ years of consumer behavior data",
-    color: "from-blue-500 to-cyan-400"
+    color: "from-primary to-sky-400"
   },
   { 
     icon: Users, 
     title: "Human + AI at Scale", 
     desc: "Analyst expertise amplified by Ava, enterprise-grade AI analyst",
     proof: "1,000+ analysts globally",
-    color: "from-cyan-400 to-teal-400"
+    color: "from-sky-400 to-cyan-400"
   },
   { 
     icon: Layers, 
     title: "Unified Taxonomy", 
     desc: "Single classification system across all intelligence domains",
     proof: "One truth, not five conflicting ones",
-    color: "from-teal-400 to-emerald-400"
+    color: "from-cyan-400 to-teal-400"
   },
 ];
 
@@ -63,7 +63,7 @@ const GDSlide9WhyGlobalData = ({
             return (
               <div 
                 key={i}
-                className="bg-card/50 border border-border/50 rounded-xl p-5 hover:border-emerald-500/30 transition-all group"
+                className="bg-card/50 border border-border/50 rounded-xl p-5 hover:border-primary/30 transition-all group"
               >
                 <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${diff.color} flex items-center justify-center mb-4`}>
                   <Icon className="w-6 h-6 text-white" />
@@ -71,8 +71,8 @@ const GDSlide9WhyGlobalData = ({
                 <h3 className="text-sm font-bold text-foreground mb-2">{diff.title}</h3>
                 <p className="text-xs text-muted-foreground mb-3">{diff.desc}</p>
                 <div className="flex items-center gap-2 pt-3 border-t border-border/30">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span className="text-xs text-emerald-400 font-medium">{diff.proof}</span>
+                  <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
+                  <span className="text-xs text-primary font-medium">{diff.proof}</span>
                 </div>
               </div>
             );
@@ -102,10 +102,10 @@ const GDSlide9WhyGlobalData = ({
         {/* Executive Close Section */}
         <div className="flex-1 grid lg:grid-cols-2 gap-4 items-center">
           {/* Leadership Imperative */}
-          <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-5">
-            <p className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-3">Leadership Imperative</p>
+          <div className="bg-primary/10 border border-primary/30 rounded-xl p-5">
+            <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-3">Leadership Imperative</p>
             <p className="text-base text-foreground leading-relaxed">
-              Organisations that <span className="font-bold text-emerald-400">close the Intelligence Gap</span> and operate intelligence as a <span className="font-bold text-emerald-400">connected system</span> will define the next generation of <span className="font-bold text-emerald-400">category leaders</span>.
+              Organisations that <span className="font-bold text-primary">close the Intelligence Gap</span> and operate intelligence as a <span className="font-bold text-primary">connected system</span> will define the next generation of <span className="font-bold text-primary">category leaders</span>.
             </p>
           </div>
 
@@ -118,7 +118,7 @@ const GDSlide9WhyGlobalData = ({
                   key={i}
                   className="flex items-center gap-3 bg-card/50 border border-border/50 rounded-lg p-3"
                 >
-                  <Icon className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <Icon className="w-4 h-4 text-primary shrink-0" />
                   <span className="text-sm text-foreground">{truth.text}</span>
                 </div>
               );
@@ -127,7 +127,7 @@ const GDSlide9WhyGlobalData = ({
         </div>
 
         {/* Final Takeaway */}
-        <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl p-6 text-center">
+        <div className="bg-gradient-to-r from-primary to-sky-500 rounded-xl p-6 text-center">
           <p className="text-xs font-semibold text-white/80 uppercase tracking-wider mb-2">Final Takeaway</p>
           <p className="text-lg font-bold text-white leading-relaxed">
             The future belongs to organisations that turn change into decisions — <span className="underline decoration-2">earlier</span>, <span className="underline decoration-2">together</span>, and with <span className="underline decoration-2">conviction</span>.

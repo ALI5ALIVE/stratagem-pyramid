@@ -40,9 +40,9 @@ const GDSlide4Proposition = ({
     >
       <div className="flex flex-col gap-5 h-full">
         {/* Central Value Proposition */}
-        <div className="bg-gradient-to-r from-emerald-500/10 to-teal-500/5 border border-emerald-500/30 rounded-xl p-6">
+        <div className="bg-gradient-to-r from-primary/10 to-sky-500/5 border border-primary/30 rounded-xl p-6">
           <p className="text-lg md:text-xl font-medium text-foreground leading-relaxed text-center">
-            A <span className="text-emerald-400 font-bold">unified solution</span> that connects market, consumer, competitor, innovation, and commercial intelligence into <span className="text-emerald-400 font-bold">one trusted system</span> — so organisations move faster, align better, and act with confidence.
+            A <span className="text-primary font-bold">unified solution</span> that connects market, consumer, competitor, innovation, and commercial intelligence into <span className="text-primary font-bold">one trusted system</span> — so organisations move faster, align better, and act with confidence.
           </p>
         </div>
 
@@ -57,11 +57,11 @@ const GDSlide4Proposition = ({
           <div className="space-y-4">
             {/* What it replaces */}
             <div className="bg-card/50 border border-border/50 rounded-xl p-4">
-              <p className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-3">What It Replaces</p>
+              <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-3">What It Replaces</p>
               <div className="space-y-2">
                 {replaces.map((item, i) => (
                   <div key={i} className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
                     <span className="text-sm text-foreground">{item}</span>
                   </div>
                 ))}
@@ -84,9 +84,9 @@ const GDSlide4Proposition = ({
         </div>
 
         {/* Bottom callout */}
-        <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4 text-center">
+        <div className="bg-primary/10 border border-primary/30 rounded-lg p-4 text-center">
           <p className="text-sm text-foreground">
-            This is <span className="font-bold text-emerald-400">intelligence designed to drive decisions end-to-end</span> — not another layer of data.
+            This is <span className="font-bold text-primary">intelligence designed to drive decisions end-to-end</span> — not another layer of data.
           </p>
         </div>
       </div>

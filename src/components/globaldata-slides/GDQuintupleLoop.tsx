@@ -46,7 +46,7 @@ const GDQuintupleLoop = ({ onModuleClick }: GDQuintupleLoopProps) => {
         <defs>
           <filter id="gdLoopGlow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="4" result="blur" />
-            <feFlood floodColor="hsl(173, 80%, 40%)" floodOpacity="0.6" />
+            <feFlood floodColor="hsl(217, 100%, 50%)" floodOpacity="0.6" />
             <feComposite in2="blur" operator="in" />
             <feMerge>
               <feMergeNode />
@@ -55,7 +55,7 @@ const GDQuintupleLoop = ({ onModuleClick }: GDQuintupleLoopProps) => {
           </filter>
           <filter id="gdLoopHoverGlow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="8" result="blur" />
-            <feFlood floodColor="hsl(173, 80%, 50%)" floodOpacity="0.8" />
+            <feFlood floodColor="hsl(217, 100%, 60%)" floodOpacity="0.8" />
             <feComposite in2="blur" operator="in" />
             <feMerge>
               <feMergeNode />
@@ -72,8 +72,8 @@ const GDQuintupleLoop = ({ onModuleClick }: GDQuintupleLoopProps) => {
             </feMerge>
           </filter>
           <radialGradient id="gdCenterGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="hsl(173, 80%, 50%)" stopOpacity="0.4" />
-            <stop offset="100%" stopColor="hsl(173, 80%, 40%)" stopOpacity="0" />
+            <stop offset="0%" stopColor="hsl(217, 100%, 60%)" stopOpacity="0.4" />
+            <stop offset="100%" stopColor="hsl(217, 100%, 50%)" stopOpacity="0" />
           </radialGradient>
         </defs>
 
@@ -92,7 +92,7 @@ const GDQuintupleLoop = ({ onModuleClick }: GDQuintupleLoopProps) => {
                 cy={cy}
                 r={loopRadius}
                 fill="transparent"
-                stroke="hsl(173, 80%, 40%)"
+                stroke="hsl(217, 100%, 50%)"
                 strokeWidth="4"
                 strokeDasharray="8 4"
                 className="cursor-pointer transition-all duration-200"

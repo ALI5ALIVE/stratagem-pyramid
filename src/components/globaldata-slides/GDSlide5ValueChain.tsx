@@ -7,25 +7,25 @@ const stages = [
     icon: Target, 
     title: "Strategy & Portfolio", 
     items: ["Where to play", "Category prioritisation", "Investment focus"],
-    color: "from-blue-500 to-cyan-400"
+    color: "from-primary to-sky-400"
   },
   { 
     icon: Lightbulb, 
     title: "Innovation & Product", 
     items: ["Trend discovery", "Whitespace identification", "Concept screening"],
-    color: "from-cyan-400 to-teal-400"
+    color: "from-sky-400 to-cyan-400"
   },
   { 
     icon: Tag, 
     title: "Brand, Pricing & Claims", 
     items: ["Positioning", "Pricing strategy", "Claims validation"],
-    color: "from-teal-400 to-emerald-400"
+    color: "from-cyan-400 to-teal-400"
   },
   { 
     icon: Truck, 
     title: "Go-to-Market & Sales", 
     items: ["Channel strategy", "Launch planning", "Enablement"],
-    color: "from-emerald-400 to-green-400"
+    color: "from-teal-400 to-green-400"
   },
   { 
     icon: BarChart3, 
@@ -67,7 +67,7 @@ const GDSlide5ValueChain = ({
               return (
                 <div key={i} className="flex flex-col items-center">
                   {/* Stage Card */}
-                  <div className="w-full bg-card/50 border border-border/50 rounded-xl p-3 hover:border-emerald-500/30 transition-all group">
+                  <div className="w-full bg-card/50 border border-border/50 rounded-xl p-3 hover:border-primary/30 transition-all group">
                     <div className={`w-10 h-10 mx-auto rounded-lg bg-gradient-to-br ${stage.color} flex items-center justify-center mb-2`}>
                       <Icon className="w-5 h-5 text-white" />
                     </div>
@@ -86,7 +86,7 @@ const GDSlide5ValueChain = ({
                   {/* Arrow between stages */}
                   {i < stages.length - 1 && (
                     <div className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10">
-                      <ArrowRight className="w-4 h-4 text-emerald-400/50" />
+                      <ArrowRight className="w-4 h-4 text-primary/50" />
                     </div>
                   )}
                 </div>
@@ -97,27 +97,27 @@ const GDSlide5ValueChain = ({
 
         {/* Connecting Line Visual */}
         <div className="relative py-4">
-          <div className="absolute left-0 right-0 top-1/2 h-1 bg-gradient-to-r from-blue-500 via-emerald-500 to-lime-400 rounded-full" />
+          <div className="absolute left-0 right-0 top-1/2 h-1 bg-gradient-to-r from-primary via-sky-500 to-lime-400 rounded-full" />
           <div className="relative flex justify-between px-8">
             {stages.map((_, i) => (
               <div 
                 key={i} 
-                className="w-4 h-4 rounded-full bg-emerald-500 border-2 border-background shadow-lg shadow-emerald-500/30"
+                className="w-4 h-4 rounded-full bg-primary border-2 border-background shadow-lg shadow-primary/30"
               />
             ))}
           </div>
         </div>
 
         {/* What Changes Callout */}
-        <div className="bg-gradient-to-r from-emerald-500/10 to-teal-500/5 border border-emerald-500/30 rounded-xl p-5">
+        <div className="bg-gradient-to-r from-primary/10 to-sky-500/5 border border-primary/30 rounded-xl p-5">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-lg bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center shrink-0">
-              <Target className="w-6 h-6 text-emerald-400" />
+            <div className="w-12 h-12 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center shrink-0">
+              <Target className="w-6 h-6 text-primary" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-emerald-400 uppercase tracking-wider mb-2">What Changes</p>
+              <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-2">What Changes</p>
               <p className="text-base text-foreground leading-relaxed">
-                Every function operates from the <span className="font-bold text-emerald-400">same shared truth</span>, so decisions <span className="font-bold text-emerald-400">reinforce each other</span> across the entire value chain.
+                Every function operates from the <span className="font-bold text-primary">same shared truth</span>, so decisions <span className="font-bold text-primary">reinforce each other</span> across the entire value chain.
               </p>
             </div>
           </div>
@@ -126,15 +126,15 @@ const GDSlide5ValueChain = ({
         {/* Bottom Stats */}
         <div className="grid grid-cols-3 gap-4">
           <div className="bg-card/50 border border-border/50 rounded-lg p-3 text-center">
-            <p className="text-2xl font-bold text-emerald-400">5</p>
+            <p className="text-2xl font-bold text-primary">5</p>
             <p className="text-xs text-muted-foreground">Value chain stages</p>
           </div>
           <div className="bg-card/50 border border-border/50 rounded-lg p-3 text-center">
-            <p className="text-2xl font-bold text-emerald-400">1</p>
+            <p className="text-2xl font-bold text-primary">1</p>
             <p className="text-xs text-muted-foreground">Source of truth</p>
           </div>
           <div className="bg-card/50 border border-border/50 rounded-lg p-3 text-center">
-            <p className="text-2xl font-bold text-emerald-400">∞</p>
+            <p className="text-2xl font-bold text-primary">∞</p>
             <p className="text-xs text-muted-foreground">Compounding value</p>
           </div>
         </div>

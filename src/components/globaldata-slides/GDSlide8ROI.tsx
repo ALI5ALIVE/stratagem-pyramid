@@ -11,7 +11,7 @@ const roiPillars = [
     improvement: "70%",
     label: "faster decision cycles",
     desc: "Decision cycles shrink from weeks to days",
-    color: "from-blue-500 to-cyan-400"
+    color: "from-primary to-sky-400"
   },
   { 
     icon: TrendingUp, 
@@ -21,7 +21,7 @@ const roiPillars = [
     improvement: "2x",
     label: "higher launch success",
     desc: "Higher-quality bets, fewer failed launches",
-    color: "from-cyan-400 to-emerald-400"
+    color: "from-sky-400 to-cyan-400"
   },
   { 
     icon: DollarSign, 
@@ -31,7 +31,7 @@ const roiPillars = [
     improvement: "30%",
     label: "lower TCO",
     desc: "Less duplication, fewer tools, less manual reconciliation",
-    color: "from-emerald-400 to-teal-400"
+    color: "from-cyan-400 to-teal-400"
   },
 ];
 
@@ -66,7 +66,7 @@ const GDSlide8ROI = ({
             return (
               <div 
                 key={i}
-                className="bg-card/50 border border-border/50 rounded-xl p-5 hover:border-emerald-500/30 transition-all group flex flex-col"
+                className="bg-card/50 border border-border/50 rounded-xl p-5 hover:border-primary/30 transition-all group flex flex-col"
               >
                 {/* Header */}
                 <div className="flex items-start gap-3 mb-4">
@@ -83,15 +83,15 @@ const GDSlide8ROI = ({
                 <div className="bg-muted/30 rounded-lg p-3 mb-4">
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-destructive line-through">{pillar.before}</span>
-                    <ArrowRight className="w-4 h-4 text-emerald-400" />
-                    <span className="text-emerald-400 font-semibold">{pillar.after}</span>
+                    <ArrowRight className="w-4 h-4 text-primary" />
+                    <span className="text-primary font-semibold">{pillar.after}</span>
                   </div>
                 </div>
 
                 {/* Improvement Metric */}
                 <div className="mt-auto pt-4 border-t border-border/30 text-center">
                   <div className="flex items-baseline justify-center gap-1.5">
-                    <span className="text-4xl font-bold text-emerald-400">{pillar.improvement}</span>
+                    <span className="text-4xl font-bold text-primary">{pillar.improvement}</span>
                   </div>
                   <p className="text-xs text-muted-foreground mt-1">{pillar.label}</p>
                 </div>
@@ -101,15 +101,15 @@ const GDSlide8ROI = ({
         </div>
 
         {/* Compounding Message */}
-        <div className="bg-gradient-to-r from-emerald-500/10 to-teal-500/5 border border-emerald-500/30 rounded-xl p-5">
+        <div className="bg-gradient-to-r from-primary/10 to-sky-500/5 border border-primary/30 rounded-xl p-5">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-lg bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center shrink-0">
-              <Zap className="w-6 h-6 text-emerald-400" />
+            <div className="w-12 h-12 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center shrink-0">
+              <Zap className="w-6 h-6 text-primary" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-emerald-400 uppercase tracking-wider mb-2">Key Message</p>
+              <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-2">Key Message</p>
               <p className="text-base text-foreground leading-relaxed">
-                <span className="font-bold text-emerald-400">ROI compounds</span> as organisations move up the maturity curve. The sooner you start, the faster value accumulates.
+                <span className="font-bold text-primary">ROI compounds</span> as organisations move up the maturity curve. The sooner you start, the faster value accumulates.
               </p>
             </div>
           </div>
@@ -121,7 +121,7 @@ const GDSlide8ROI = ({
             {[1, 2, 3, 4, 5].map((stage) => (
               <div key={stage} className="flex flex-col items-center">
                 <div 
-                  className="w-16 bg-gradient-to-t from-emerald-500 to-teal-400 rounded-t-lg transition-all"
+                  className="w-16 bg-gradient-to-t from-primary to-sky-400 rounded-t-lg transition-all"
                   style={{ 
                     height: `${20 + stage * 20}px`,
                     opacity: stage * 0.2 + 0.2
@@ -132,7 +132,7 @@ const GDSlide8ROI = ({
             ))}
           </div>
           <div className="flex items-center justify-center gap-2 mt-3 pt-3 border-t border-border/30">
-            <ArrowRight className="w-4 h-4 text-emerald-400" />
+            <ArrowRight className="w-4 h-4 text-primary" />
             <span className="text-xs text-muted-foreground">Value compounds exponentially as maturity increases</span>
           </div>
         </div>
