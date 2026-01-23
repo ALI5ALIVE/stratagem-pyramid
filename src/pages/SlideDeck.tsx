@@ -23,7 +23,7 @@ const slides = [
   { id: "slide-4", label: "Platform Capabilities" },
   { id: "slide-5", label: "Transformation" },
   { id: "slide-6", label: "Operational Readiness Ladder" },
-  { id: "slide-7", label: "Operational Excellence Roadmap" },
+  { id: "slide-7", label: "Operational Performance Roadmap" },
   { id: "slide-8", label: "Positioning" },
   { id: "slide-9", label: "Customers" },
   { id: "slide-10", label: "Investors" },

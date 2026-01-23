@@ -14,7 +14,7 @@ const Slide9CategoryRationale = ({
   const criteriaChecks = [
     {
       label: "COO Clarity",
-      description: "Executive-native language: 'Operational Excellence' is how COOs talk about consistent execution",
+      description: "'Operational Performance' focuses on measurable outcomes COOs report to boards",
       icon: Target,
     },
     {
@@ -41,9 +41,9 @@ const Slide9CategoryRationale = ({
 
   const alternatives = [
     {
-      name: "Operational Performance & Readiness Platform",
-      verdict: "Acceptable alternate",
-      risk: "Slightly more generic; needs operating model to differentiate",
+      name: "Operational Excellence & Readiness Platform",
+      verdict: "Previous consideration",
+      risk: "Philosophy language; less measurable than 'performance'",
     },
     {
       name: "Operational Performance Platform",
@@ -66,12 +66,11 @@ const Slide9CategoryRationale = ({
       risk: "Sounds like methodology or consulting, not a product category",
     },
   ];
-
   return (
     <SlideContainer
       id="slide-11"
-      title="Why 'Operational Excellence & Readiness Platform'"
-      subtitle="The name that protects scope, resonates with executives, and defines the category"
+      title="Why 'Operational Performance & Readiness Platform'"
+      subtitle="The name that emphasizes measurable outcomes and defines the category"
       slideNumber={11}
       isPlaying={isPlaying}
       isLoading={isLoading}
@@ -87,7 +86,7 @@ const Slide9CategoryRationale = ({
           Recommended Category Name
         </p>
         <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
-          Operational Excellence & Readiness Platform
+          Operational Performance & Readiness Platform
         </h3>
         <p className="text-xs sm:text-sm text-muted-foreground mt-2 max-w-2xl mx-auto">
           Protects the full platform scope: Safety + Content + Training + Proof
@@ -144,8 +143,8 @@ const Slide9CategoryRationale = ({
       <div className="mt-4 sm:mt-6 bg-primary/10 border border-primary/30 rounded-lg p-4 sm:p-5">
         <p className="text-xs sm:text-sm text-foreground text-center leading-relaxed">
           <span className="font-semibold text-primary">What to say in the room:</span>{" "}
-          "We use 'Operational Excellence & Readiness Platform' as the category because it's the clearest executive frame 
-          that still protects what makes Comply365 different: connecting Safety + Content + Training into a governed 
+          "We use 'Operational Performance & Readiness Platform' as the category because it emphasizes measurable outcomes 
+          while still protecting what makes Comply365 different: connecting Safety + Content + Training into a governed 
           operating system that turns signals into outcomes and proof."
         </p>
       </div>

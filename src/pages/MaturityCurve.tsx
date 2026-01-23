@@ -11,8 +11,8 @@ const MaturityCurve = () => {
         </p>
         <PageNavigation />
         <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-display font-bold text-foreground mb-2 sm:mb-3 px-2">
-          Operational Excellence &<br />
-          <span className="text-gradient-primary">The Operational Excellence Roadmap</span>
+          Operational Performance &<br />
+          <span className="text-gradient-primary">The Operational Performance Roadmap</span>
         </h1>
         <p className="text-muted-foreground max-w-2xl mx-auto text-xs sm:text-sm px-2">
           Where customers are today, what best practice looks like, and how Comply365 moves them forward
@@ -27,7 +27,7 @@ const MaturityCurve = () => {
       {/* Footer */}
       <footer className="py-4 sm:py-6 text-center border-t border-border/50">
         <p className="text-[10px] sm:text-xs text-muted-foreground">
-          © 2026 Comply365 · Operational Excellence & Readiness Platform
+          © 2026 Comply365 · Operational Performance & Readiness Platform
         </p>
       </footer>
     </div>

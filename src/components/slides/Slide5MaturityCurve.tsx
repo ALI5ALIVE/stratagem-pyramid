@@ -267,7 +267,7 @@ const Slide5MaturityCurve = ({
   return (
     <SlideContainer
       id="slide-7"
-      title="The Operational Excellence Roadmap"
+      title="The Operational Performance Roadmap"
       subtitle="The measurable journey from reactive to predictive operations"
       slideNumber={7}
       isPlaying={isPlaying}
