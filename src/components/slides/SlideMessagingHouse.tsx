@@ -202,14 +202,14 @@ const SlideMessagingHouse = ({
           {/* Rooftop: Category Position */}
           <div className="relative">
             <div 
-              className="bg-gradient-to-r from-primary/20 via-primary/30 to-primary/20 border border-primary/40 rounded-lg p-4"
+              className="bg-gradient-to-r from-primary/20 via-primary/30 to-primary/20 border border-primary/40 rounded-lg p-4 min-h-[100px]"
               style={{
                 clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)"
               }}
             >
-              <div className="pt-6 pb-2 text-center">
-                <div className="text-xs uppercase tracking-widest text-primary/80 mb-1">Category Position</div>
-                <h3 className="text-sm sm:text-base font-bold text-foreground leading-tight">
+              <div className="pt-10 pb-2 text-center px-8">
+                <div className="text-[10px] uppercase tracking-widest text-primary/80 mb-1">Category Position</div>
+                <h3 className="text-xs sm:text-sm font-bold text-foreground leading-tight">
                   {categoryPosition.name}
                 </h3>
               </div>
