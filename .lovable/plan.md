@@ -1,192 +1,108 @@
 
-# Plan: Rename Category from "Operational Excellence" to "Operational Performance & Readiness"
+# Plan: Fix Text Cutoff in Messaging House Roof (Slide 12)
 
-## Overview
+## Problem
 
-This plan covers all changes required to update the category name from **"Operational Excellence & Readiness Platform"** to **"Operational Performance & Readiness Platform"** throughout the Comply365 slide deck and related components.
+On slide 12 (Messaging House), the category name "Operational Performance & Readiness Platform" is being cut off at the edges because the triangular roof shape clips the text.
 
----
+The current implementation uses a CSS `clipPath: polygon(50% 0%, 100% 100%, 0% 100%)` which creates a steep triangle where the text area is too narrow.
 
-## Summary
+## Solution
 
-| Metric | Count |
-|--------|-------|
-| Files to modify | 12 |
-| UI text replacements | ~45 instances |
-| Narration script updates | 12 slides |
+Apply multiple fixes to ensure the text fits within the roof visual:
 
----
-
-## Files to Update
-
-### 1. Narration Data (Priority - Source of Truth)
-
-**File: `src/data/slideNarration.ts`**
-
-| Slide | Line | Current | Updated |
-|-------|------|---------|---------|
-| 0 | 16 | "Operational Excellence and Readiness Platform" | "Operational Performance and Readiness Platform" |
-| 1 | 22 | "Operational Excellence and Readiness Platform" | "Operational Performance and Readiness Platform" |
-| 6 | 52 | "operational excellence" | "operational performance" |
-| 7 | 56, 58 | "Operational Excellence Roadmap", "predictive excellence" | "Operational Performance Roadmap", "predictive performance" |
-| 10 | 76 | "Operational Excellence and Readiness Platform" | "Operational Performance and Readiness Platform" |
-| 11 | 82 | Full script rewrite - "Operational Excellence" references | "Operational Performance" throughout |
-| 12 | 88 | "Operational Excellence and Readiness Platform" (2x) | "Operational Performance and Readiness Platform" |
+1. **Increase roof height** - Make the triangle taller so the text sits at a level where there's more horizontal space
+2. **Adjust the clip path** - Use a less steep triangle shape (wider at the apex)
+3. **Reduce text size** - Make the category name slightly smaller
+4. **Increase top padding** - Push the text lower into the triangle where it's wider
 
 ---
 
-### 2. Slide Components
+## File to Modify
 
-**File: `src/components/slides/Slide1StrategicShift.tsx`**
-
-| Line | Current | Updated |
-|------|---------|---------|
-| 77-78 | "Operational Excellence" | "Operational Performance" |
-| 107-108 | "Operational Excellence & Readiness Platform" | "Operational Performance & Readiness Platform" |
-
-**File: `src/components/slides/Slide2BeforeAfter.tsx`**
-
-| Line | Current | Updated |
-|------|---------|---------|
-| 166 | "Operational Excellence & Readiness Platform" | "Operational Performance & Readiness Platform" |
-
-**File: `src/components/slides/Slide4Transformation.tsx`**
-
-| Line | Current | Updated |
-|------|---------|---------|
-| 233 | "Operational excellence as competitive advantage" | "Operational performance as competitive advantage" |
-
-**File: `src/components/slides/Slide6Investors.tsx`**
-
-| Line | Current | Updated |
-|------|---------|---------|
-| 59 | "Operational Excellence & Readiness Platform" | "Operational Performance & Readiness Platform" |
-
-**File: `src/components/slides/Slide9CategoryRationale.tsx`**
-
-This slide requires structural content updates since "Operational Performance" is now the recommended name:
-
-| Line | Current | Updated |
-|------|---------|---------|
-| 17 | "'Operational Excellence' is how COOs talk" | "'Operational Performance' focuses on measurable outcomes COOs report to boards" |
-| 42-47 | "Operational Performance & Readiness Platform" listed as alternative | Swap: "Operational Excellence & Readiness Platform" becomes the alternative with verdict "Previous consideration" |
-| 73 | "Why 'Operational Excellence & Readiness Platform'" | "Why 'Operational Performance & Readiness Platform'" |
-| 90 | "Operational Excellence & Readiness Platform" | "Operational Performance & Readiness Platform" |
-| 147-149 | Closing statement referencing "Operational Excellence" | Update to "Operational Performance" |
-
-**File: `src/components/slides/SlideMessagingHouse.tsx`**
-
-| Line | Current | Updated |
-|------|---------|---------|
-| 22 | `name: "Operational Excellence & Readiness Platform"` | `name: "Operational Performance & Readiness Platform"` |
-| 187 | `subtitle: "...Operational Excellence & Readiness"` | `subtitle: "...Operational Performance & Readiness"` |
-| 368 | "operational excellence and readiness" | "operational performance and readiness" |
+**`src/components/slides/SlideMessagingHouse.tsx`** (lines 203-217)
 
 ---
 
-### 3. Page Components
+## Current Code (Lines 203-217)
 
-**File: `src/pages/SlideDeck.tsx`**
-
-| Line | Current | Updated |
-|------|---------|---------|
-| 26 | "Operational Excellence Roadmap" | "Operational Performance Roadmap" |
-
-**File: `src/pages/MaturityCurve.tsx`**
-
-| Line | Current | Updated |
-|------|---------|---------|
-| 14 | "Operational Excellence &" | "Operational Performance &" |
-| 15 | "The Operational Excellence Roadmap" | "The Operational Performance Roadmap" |
-| 30 | "Operational Excellence & Readiness Platform" | "Operational Performance & Readiness Platform" |
-
-**File: `src/components/CategoryPyramid.tsx`**
-
-| Line | Current | Updated |
-|------|---------|---------|
-| 264 | "Operational Excellence &" | "Operational Performance &" |
-| 371 | "Operational Excellence & Readiness Platform" | "Operational Performance & Readiness Platform" |
-
----
-
-## Slide 9 Content Restructure
-
-Since "Operational Performance" is now the recommended name, the alternatives table needs updating:
-
-```text
-Current alternatives array:
-1. "Operational Performance & Readiness Platform" - "Acceptable alternate"
-2. "Operational Performance Platform" - "Outcome language only"
-3. "Operational Assurance Platform" - "Supporting pillar"
-4. "Operational Performance & Resilience Platform" - "Campaign theme"
-5. "Continuous Improvement Operating System" - "Operating model name"
-
-Updated alternatives array:
-1. "Operational Excellence & Readiness Platform" - "Previous consideration" 
-   Risk: "Philosophy language; less measurable than 'performance'"
-2. "Operational Performance Platform" - "Outcome language only"
-3. "Operational Assurance Platform" - "Supporting pillar"  
-4. "Operational Performance & Resilience Platform" - "Campaign theme"
-5. "Continuous Improvement Operating System" - "Operating model name"
+```jsx
+{/* Rooftop: Category Position */}
+<div className="relative">
+  <div 
+    className="bg-gradient-to-r from-primary/20 via-primary/30 to-primary/20 border border-primary/40 rounded-lg p-4"
+    style={{
+      clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)"
+    }}
+  >
+    <div className="pt-6 pb-2 text-center">
+      <div className="text-xs uppercase tracking-widest text-primary/80 mb-1">Category Position</div>
+      <h3 className="text-sm sm:text-base font-bold text-foreground leading-tight">
+        {categoryPosition.name}
+      </h3>
+    </div>
+  </div>
+</div>
 ```
 
 ---
 
-## Narration Script Updates (Slide 11 - Category Name)
+## Updated Code
 
-The narration script for slide 11 needs a complete rewrite to explain why "Operational Performance" was chosen:
-
-```text
-"Why 'Operational Performance and Readiness Platform'? Because the name emphasizes measurable outcomes while protecting what makes us different.
-
-COO Clarity: 'Operational Performance' focuses on the measurable outcomes that COOs report to their boards. The language is results-oriented and executive-native.
-
-Scope Protection: 'Readiness' keeps training, competency, and proof central to the category. It prevents collapse into pure analytics or dashboard solutions.
-
-Cross-Industry Applicability: The name applies cleanly across aviation, rail, defense, maritime, and other regulated operations. It's not niche. It's horizontal.
-
-Differentiation: The name avoids module traps — we're not a manuals tool, a safety tool, or an LMS. And it avoids ops-control confusion — we're not a dashboard or monitoring platform.
-
-Analyst Legibility: AI is an accelerator inside the platform, not the category itself. This positions us safely with analysts and regulators.
-
-We considered 'Operational Excellence' but 'Performance' better captures the measurable outcomes focus. 'Operational Performance and Readiness Platform' is the clearest executive frame that still protects what makes Comply three six five different: connecting Safety, Content, and Training into a governed operating system that turns signals into outcomes and proof."
+```jsx
+{/* Rooftop: Category Position */}
+<div className="relative">
+  <div 
+    className="bg-gradient-to-r from-primary/20 via-primary/30 to-primary/20 border border-primary/40 rounded-lg p-4 min-h-[100px]"
+    style={{
+      clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)"
+    }}
+  >
+    <div className="pt-10 pb-2 text-center px-8">
+      <div className="text-[10px] uppercase tracking-widest text-primary/80 mb-1">Category Position</div>
+      <h3 className="text-xs sm:text-sm font-bold text-foreground leading-tight">
+        {categoryPosition.name}
+      </h3>
+    </div>
+  </div>
+</div>
 ```
 
 ---
 
-## Evidence Trail
+## Changes Summary
 
-After implementation, the category name change can be evidenced by:
-
-1. **Slide 11 (Category Rationale)** - Explicit discussion of why "Operational Performance" was chosen over alternatives including "Operational Excellence"
-2. **Consistent terminology** - Same name appears in Title, Strategic Shift, Before/After, Investors, Messaging House, and all narration scripts
-3. **Navigation labels** - TOC and page headers reflect the new terminology
-4. **Footers** - All page footers show the updated platform name
+| Element | Current | Updated | Reason |
+|---------|---------|---------|--------|
+| Outer div | No min-height | `min-h-[100px]` | Makes triangle taller so text sits where it's wider |
+| Inner div padding-top | `pt-6` | `pt-10` | Pushes text lower into the triangle where there's more width |
+| Inner div horizontal padding | None | `px-8` | Adds horizontal padding to keep text away from clipped edges |
+| "Category Position" label | `text-xs` | `text-[10px]` | Slightly smaller to give more room |
+| Category name heading | `text-sm sm:text-base` | `text-xs sm:text-sm` | Reduce font size by one step to fit better |
 
 ---
 
-## Implementation Order
+## Visual Effect
 
-1. Update `src/data/slideNarration.ts` (narration scripts - source of truth)
-2. Update `src/components/slides/Slide9CategoryRationale.tsx` (restructure alternatives)
-3. Update remaining slide components (Slide1, Slide2, Slide4, Slide6, SlideMessagingHouse)
-4. Update page components (SlideDeck, MaturityCurve, CategoryPyramid)
-5. Verify all instances replaced with codebase search
+```text
+BEFORE:                           AFTER:
+      ▲                                 ▲
+     /█\  ← Text clipped           /     \
+    /███\    at edges             /       \
+   /█████\                       /  TEXT   \
+  ─────────                     /   HERE    \
+                               ─────────────
+                               ↑ Taller triangle
+                                 Text positioned lower
+                                 where it's wider
+```
 
 ---
 
 ## Verification
 
-After implementation, run these searches to verify completeness:
-- `"Operational Excellence"` should return 0 matches (except in alternatives/historical references)
-- `"Operational Performance"` should return ~50+ matches
-
----
-
-## Technical Details
-
-- No dependency changes required
-- No API changes required  
-- No database changes required
-- Changes are purely text/content updates
-- Build will succeed after all file updates
+After implementation:
+- Navigate to slide 12 (Messaging House)
+- Confirm "Operational Performance & Readiness Platform" (or "Operational Intelligence & Readiness Platform" after rename) displays fully without cutoff
+- Verify the roof shape still looks like a triangle/house roof
+- Check responsiveness on mobile and desktop views
