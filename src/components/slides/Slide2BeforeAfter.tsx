@@ -163,7 +163,7 @@ const Slide2BeforeAfter = ({
               </div>
               <div>
                 <h3 className="text-xl font-bold text-primary">After</h3>
-                <span className="text-xs text-muted-foreground">Operational Excellence & Readiness Platform</span>
+                <span className="text-xs text-muted-foreground">Operational Performance & Readiness Platform</span>
               </div>
             </div>
 

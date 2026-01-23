@@ -9,8 +9,8 @@ const agendaItems = [
   { num: 3, label: "Operating Model", summary: "Detect → Trigger → Orchestrate → Prove" },
   { num: 4, label: "Platform Capabilities", summary: "The platform that powers it" },
   { num: 5, label: "Transformation", summary: "Cost center to value driver" },
-  { num: 6, label: "Operational Readiness Ladder", summary: "Building blocks of excellence" },
-  { num: 7, label: "Operational Excellence Roadmap", summary: "The measurable journey" },
+  { num: 6, label: "Operational Readiness Ladder", summary: "Building blocks of performance" },
+  { num: 7, label: "Operational Performance Roadmap", summary: "The measurable journey" },
   { num: 8, label: "Positioning", summary: "Where we stand vs. competitors" },
   { num: 9, label: "Customers", summary: "Measurable value delivery" },
   { num: 10, label: "Investors", summary: "Shareholder value creation" },
@@ -80,7 +80,7 @@ const Slide0Title = ({
             <span className="text-foreground">Defining the</span>
             <br />
             <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-              Operational Excellence
+              Operational Performance
             </span>
             <br />
             <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">

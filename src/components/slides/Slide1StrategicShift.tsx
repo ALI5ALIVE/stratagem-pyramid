@@ -75,7 +75,7 @@ const Slide1StrategicShift = ({
                   </div>
                 </div>
                 <span className="text-lg font-bold text-foreground block mb-1">
-                  Operational Excellence
+                  Operational Performance
                 </span>
                 <span className="text-sm text-primary font-medium">
                   & Readiness Platform
@@ -105,7 +105,7 @@ const Slide1StrategicShift = ({
           <div className="bg-primary/10 border border-primary/30 rounded-lg p-5">
             <p className="text-xs font-medium text-primary uppercase tracking-wide mb-2">Category we're defining:</p>
             <p className="text-xl font-bold text-foreground mb-2">
-              Operational Excellence & Readiness Platform
+              Operational Performance & Readiness Platform
             </p>
             <p className="text-sm text-muted-foreground">
               Connects safety, procedures, and training into an intelligent operating system, 

@@ -230,7 +230,7 @@ const Slide4Transformation = ({
                     <span className="text-primary font-semibold not-italic">Comply365 closes the loop.</span>
                   </p>
                   <div className="mt-1 text-[9px] text-muted-foreground">
-                    From compliance burden → Operational excellence as competitive advantage
+                    From compliance burden → Operational performance as competitive advantage
                   </div>
                 </div>
               </div>
