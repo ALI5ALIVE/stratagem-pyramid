@@ -261,8 +261,7 @@ const CategoryPyramid = () => {
         </p>
         <PageNavigation />
         <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-display font-bold text-foreground mb-2 sm:mb-4">
-          Operational Performance &<br />
-          <span className="text-gradient-primary">Readiness Platform</span>
+          <span className="text-gradient-primary">Operational Performance Platform</span>
         </h1>
         <p className="text-muted-foreground max-w-2xl mx-auto text-xs sm:text-sm md:text-base px-2">
           From fragmented point solutions to a connected platform that delivers measurable outcomes
@@ -368,7 +367,7 @@ const CategoryPyramid = () => {
       {/* Footer attribution */}
       <footer className="py-4 sm:py-6 text-center border-t border-border/50">
         <p className="text-[10px] sm:text-xs text-muted-foreground">
-          © 2026 Comply365 · Operational Performance & Readiness Platform
+          © 2026 Comply365 · Operational Performance Platform
         </p>
       </footer>
     </div>

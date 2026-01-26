@@ -56,7 +56,7 @@ const Slide6Investors = ({
   const pillars = {
     growth: {
       title: "Growth: Expand TAM and Increase Win Rates",
-      description: "By moving from point-solution comparisons to owning an Operational Performance & Readiness Platform, Comply365 competes on outcomes, not features.",
+      description: "By moving from point-solution comparisons to owning an Operational Performance Platform, Comply365 competes on outcomes, not features.",
       unlocks: [
         "Larger addressable market beyond 'compliance tooling'",
         "Clear differentiation in competitive sales cycles",

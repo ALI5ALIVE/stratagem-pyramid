@@ -26,7 +26,7 @@ const Slide7Customers = ({
       ],
     },
     {
-      title: "Readiness & Execution",
+      title: "Execution & Speed",
       icon: Clock,
       color: "bg-primary",
       borderColor: "border-primary/30",
@@ -63,7 +63,7 @@ const Slide7Customers = ({
     <SlideContainer
       id="slide-9"
       title="What This Means for Customers"
-      subtitle="Measurable outcomes: reliability, readiness, and audit-ready proof"
+      subtitle="Measurable outcomes: reliability, execution, and audit-ready proof"
       slideNumber={9}
       isPlaying={isPlaying}
       isLoading={isLoading}
