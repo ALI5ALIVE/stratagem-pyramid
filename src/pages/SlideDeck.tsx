@@ -14,6 +14,7 @@ import Slide9Customers from "@/components/slides/Slide7Customers";
 import Slide10Investors from "@/components/slides/Slide6Investors";
 import Slide11CategoryRationale from "@/components/slides/Slide9CategoryRationale";
 import SlideMessagingHouse from "@/components/slides/SlideMessagingHouse";
+import SlideCampaignIdeas from "@/components/slides/SlideCampaignIdeas";
 import SlideCategoryExcellence from "@/components/slides/category-options/SlideCategoryExcellence";
 import SlideCategoryOrchestration from "@/components/slides/category-options/SlideCategoryOrchestration";
 import SlideCategoryAssurance from "@/components/slides/category-options/SlideCategoryAssurance";
@@ -34,9 +35,10 @@ const slides = [
   { id: "slide-11", label: "Investors" },
   { id: "slide-12", label: "Category Name" },
   { id: "slide-13", label: "Messaging House" },
-  { id: "slide-14", label: "Category: Excellence" },
-  { id: "slide-15", label: "Category: Orchestration" },
-  { id: "slide-16", label: "Category: Assurance" },
+  { id: "slide-14", label: "Campaign Ideas" },
+  { id: "slide-15", label: "Category: Excellence" },
+  { id: "slide-16", label: "Category: Orchestration" },
+  { id: "slide-17", label: "Category: Assurance" },
 ];
 
 const SlideDeck = () => {
@@ -216,9 +218,10 @@ const SlideDeck = () => {
         <Slide10Investors {...getNarrationProps(11)} />
         <Slide11CategoryRationale {...getNarrationProps(12)} />
         <SlideMessagingHouse {...getNarrationProps(13)} />
-        <SlideCategoryExcellence {...getNarrationProps(14)} />
-        <SlideCategoryOrchestration {...getNarrationProps(15)} />
-        <SlideCategoryAssurance {...getNarrationProps(16)} />
+        <SlideCampaignIdeas {...getNarrationProps(14)} />
+        <SlideCategoryExcellence {...getNarrationProps(15)} />
+        <SlideCategoryOrchestration {...getNarrationProps(16)} />
+        <SlideCategoryAssurance {...getNarrationProps(17)} />
       </div>
     </div>
   );
