@@ -1,134 +1,91 @@
 
-
-# Plan: Fix Narration for Category Comparison Slides (13-15)
+# Plan: Update Title Slide Navigation to Match All 16 Slides
 
 ## Problem Summary
 
-The play button on slides 13, 14, and 15 throws errors because no narration scripts exist for these slides. The console logs show:
-- "No narration found for slide 13"
-- "No narration found for slide 14"  
-- "No narration found for slide 15"
+The title slide (Slide 0) agenda grid is out of sync with the actual slide deck:
+1. **Slide 6 label outdated**: Shows "Operational Readiness Ladder" but should be "Operational Performance Ladder"
+2. **Missing slides 13-15**: The three category comparison slides (Excellence, Orchestration, Assurance) are not in the navigation
 
-## Root Cause
+## Current vs Expected State
 
-The `slideNarrations` array in `src/data/slideNarration.ts` only contains entries for slides 0-12. The three category comparison slides have no narration scripts defined.
-
----
-
-## Files to Update
-
-| File | Change |
-|------|--------|
-| `src/data/slideNarration.ts` | Add narration scripts for slides 13, 14, 15 |
-| `src/hooks/useSimpleNarration.ts` | Update preload limit from 12 to 15 |
-| `src/components/slides/category-options/SlideCategoryAssurance.tsx` | Fix slide ID from 16 to 15 |
-
----
-
-## Narration Scripts to Add
-
-### Slide 13: Category Option - Excellence
-
-```text
-"This slide presents an alternative category positioning: the 'Operational Excellence Platform'.
-
-The core framing centers on philosophy and culture. The narrative spine is: Aspire, Embed, Sustain, Excel.
-
-The point of view: Excellence is no longer optional — it's the foundation of competitive advantage. Point solutions focus on tasks, not culture. The opportunity is a platform that makes excellence systematic, measurable, and embedded into every workflow.
-
-Pros of this positioning: Executive resonance — 'Excellence' is CEO and Board-level language. It supports cultural transformation narratives. It differentiates from tactical tool vendors. And it aligns with Lean and Six Sigma methodologies.
-
-Cons: 'Excellence' is subjective and hard to measure directly. It competes with consulting firms for mindshare. It may feel aspirational rather than actionable. And it lacks specificity.
-
-Executive rationale: Use 'Operational Excellence Platform' when the conversation is about culture change, strategic transformation, or board-level strategy. This frame works best when buyers are thinking long-term competitive advantage, not immediate operational fixes.
-
-The category promise: Make operational excellence systematic, sustainable, and provable."
-```
-
-### Slide 14: Category Option - Orchestration
-
-```text
-"This slide presents an alternative category positioning: the 'Operational Orchestration Platform'.
-
-The core framing centers on coordination and workflow automation. The narrative spine is: Connect, Coordinate, Execute, Verify.
-
-The point of view: Operations are increasingly complex. Success depends on coordination, not just individual tool performance. Siloed systems create handoff gaps, delays, and errors. The opportunity is a platform that owns the coordination layer.
-
-Pros of this positioning: Clear technical differentiation — 'Orchestration' is a defined market. It appeals to IT leaders and process owners. It's action-oriented and emphasizes execution. And it positions the platform as the coordination layer.
-
-Cons: Technical language that may not resonate with the C-suite. Risk of being categorized as middleware. 'Orchestration' implies complexity that may intimidate smaller teams. And it's purely functional positioning — less emotional.
-
-Executive rationale: Use 'Operational Orchestration Platform' when buyers are focused on process efficiency, system integration, and workflow coordination. This frame works best with IT leaders and organizations struggling with tool sprawl.
-
-The category promise: Orchestrate every operational workflow from signal to proof."
-```
-
-### Slide 15: Category Option - Assurance
-
-```text
-"This slide presents an alternative category positioning: the 'Operational Assurance Platform'.
-
-The core framing centers on compliance, governance, and proof. The narrative spine is: Govern, Control, Verify, Assure.
-
-The point of view: Regulatory scrutiny is intensifying. Organizations need continuous assurance, not point-in-time audits. Current compliance tools are reactive and siloed. The opportunity is a platform that provides continuous assurance and audit-readiness by default.
-
-Pros of this positioning: Strong regulatory and compliance resonance. It appeals to risk, legal, and compliance buyers. 'Assurance' implies trust and confidence. And it clearly differentiates in regulated industries.
-
-Cons: Backward-looking perception — focuses on proof, not improvement. It may pigeonhole the platform as a 'compliance tool'. Less appealing to forward-looking COOs focused on growth. And 'Assurance' sounds like audit, not operations.
-
-Executive rationale: Use 'Operational Assurance Platform' when the buyer's primary concern is regulatory compliance, audit preparation, or risk management. This frame works best with compliance officers, legal teams, and organizations facing regulatory pressure.
-
-The category promise: Deliver continuous assurance and audit-ready proof by default."
-```
+| Slide | Current Title Slide Label | Expected Label |
+|-------|---------------------------|----------------|
+| 1 | Strategic Shift | Strategic Shift |
+| 2 | Before & After | Before & After |
+| 3 | Operating Model | Operating Model |
+| 4 | Platform Capabilities | Platform Capabilities |
+| 5 | Transformation | Transformation |
+| 6 | Operational Readiness Ladder | **Operational Performance Ladder** |
+| 7 | Operational Performance Roadmap | Operational Performance Roadmap |
+| 8 | Positioning | Positioning |
+| 9 | Customers | Customers |
+| 10 | Investors | Investors |
+| 11 | Category Name | Category Name |
+| 12 | Messaging House | Messaging House |
+| 13 | (missing) | **Category: Excellence** |
+| 14 | (missing) | **Category: Orchestration** |
+| 15 | (missing) | **Category: Assurance** |
 
 ---
 
-## Code Changes
+## Changes Required
 
-### 1. `src/data/slideNarration.ts`
+### File: `src/components/slides/Slide0Title.tsx`
 
-Add three new entries to the `slideNarrations` array after slide 12:
+**1. Update the agendaItems array (lines 6-19):**
 
 ```typescript
-{
-  slideId: 13,
-  title: "Category: Excellence",
-  voiceId: DEFAULT_VOICE_ID,
-  script: "..." // Excellence narration script
-},
-{
-  slideId: 14,
-  title: "Category: Orchestration", 
-  voiceId: DEFAULT_VOICE_ID,
-  script: "..." // Orchestration narration script
-},
-{
-  slideId: 15,
-  title: "Category: Assurance",
-  voiceId: DEFAULT_VOICE_ID,
-  script: "..." // Assurance narration script
-},
+const agendaItems = [
+  { num: 1, label: "Strategic Shift", summary: "Why we're redefining the category" },
+  { num: 2, label: "Before & After", summary: "What's broken — and how we fix it" },
+  { num: 3, label: "Operating Model", summary: "Detect → Trigger → Orchestrate → Prove" },
+  { num: 4, label: "Platform Capabilities", summary: "The platform that powers it" },
+  { num: 5, label: "Transformation", summary: "Cost center to value driver" },
+  { num: 6, label: "Operational Performance Ladder", summary: "Building blocks of performance" },
+  { num: 7, label: "Operational Performance Roadmap", summary: "The measurable journey" },
+  { num: 8, label: "Positioning", summary: "Where we stand vs. competitors" },
+  { num: 9, label: "Customers", summary: "Measurable value delivery" },
+  { num: 10, label: "Investors", summary: "Shareholder value creation" },
+  { num: 11, label: "Category Name", summary: "Why this name wins" },
+  { num: 12, label: "Messaging House", summary: "Complete positioning framework" },
+  { num: 13, label: "Category: Excellence", summary: "Alternative: philosophy & culture" },
+  { num: 14, label: "Category: Orchestration", summary: "Alternative: coordination & workflow" },
+  { num: 15, label: "Category: Assurance", summary: "Alternative: compliance & proof" },
+];
 ```
 
-### 2. `src/hooks/useSimpleNarration.ts`
+**2. Update the grid layout (line 104):**
 
-Update the preload function limit:
+Change from `grid-cols-2 sm:grid-cols-4` to `grid-cols-3 sm:grid-cols-5` to accommodate 15 items in a cleaner arrangement:
 
 ```diff
-- if (nextSlideId <= 12 && !cacheRef.current.has(nextSlideId)) {
-+ if (nextSlideId <= 15 && !cacheRef.current.has(nextSlideId)) {
+- <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
++ <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3">
 ```
 
-### 3. `src/components/slides/category-options/SlideCategoryAssurance.tsx`
+This creates:
+- Mobile: 3 columns × 5 rows = 15 items
+- Desktop: 5 columns × 3 rows = 15 items
 
-Update the slide ID and number to match the new position:
+---
 
-```diff
-- id="slide-16"
-+ id="slide-15"
+## Visual Layout Preview
 
-- slideNumber={16}
-+ slideNumber={15}
+### Desktop (5 columns)
+```text
+Row 1: [01] [02] [03] [04] [05]
+Row 2: [06] [07] [08] [09] [10]
+Row 3: [11] [12] [13] [14] [15]
+```
+
+### Mobile (3 columns)
+```text
+Row 1: [01] [02] [03]
+Row 2: [04] [05] [06]
+Row 3: [07] [08] [09]
+Row 4: [10] [11] [12]
+Row 5: [13] [14] [15]
 ```
 
 ---
@@ -137,9 +94,9 @@ Update the slide ID and number to match the new position:
 
 | Metric | Count |
 |--------|-------|
-| Files modified | 3 |
-| Narration scripts added | 3 |
-| Line changes | ~30 |
+| Files modified | 1 |
+| Items updated | 1 (Slide 6 label) |
+| Items added | 3 (Slides 13, 14, 15) |
+| Grid layout change | Yes |
 
-After these changes, clicking the play button on slides 13, 14, and 15 will properly trigger narration that explains each alternative category option, including its pros, cons, and when to use it.
-
+After this change, clicking any of the 15 agenda items on the title slide will navigate directly to the corresponding slide, and all labels will match the actual slide content.
