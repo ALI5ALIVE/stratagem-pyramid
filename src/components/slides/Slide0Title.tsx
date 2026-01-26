@@ -13,13 +13,13 @@ const agendaItems = [
   { num: 7, label: "Operational Performance Roadmap", summary: "The measurable journey" },
   { num: 8, label: "Positioning", summary: "Where we stand vs. competitors" },
   { num: 9, label: "Customers", summary: "Measurable value delivery" },
-  { num: 10, label: "Investors", summary: "Shareholder value creation" },
-  { num: 11, label: "Category Name", summary: "Why this name wins" },
-  { num: 12, label: "Messaging House", summary: "Complete positioning framework" },
-  { num: 13, label: "Category: Excellence", summary: "Alternative: philosophy & culture" },
-  { num: 14, label: "Category: Orchestration", summary: "Alternative: coordination & workflow" },
-  { num: 15, label: "Category: Assurance", summary: "Alternative: compliance & proof" },
-  { num: 16, label: "AI Vision & Future", summary: "AI company positioning & roadmap" },
+  { num: 10, label: "AI Vision & Future", summary: "AI company positioning & roadmap" },
+  { num: 11, label: "Investors", summary: "Shareholder value creation" },
+  { num: 12, label: "Category Name", summary: "Why this name wins" },
+  { num: 13, label: "Messaging House", summary: "Complete positioning framework" },
+  { num: 14, label: "Category: Excellence", summary: "Alternative: philosophy & culture" },
+  { num: 15, label: "Category: Orchestration", summary: "Alternative: coordination & workflow" },
+  { num: 16, label: "Category: Assurance", summary: "Alternative: compliance & proof" },
 ];
 
 interface Slide0TitleProps extends SlideNarrationProps {
