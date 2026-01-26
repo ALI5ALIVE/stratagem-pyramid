@@ -1,92 +1,218 @@
 
-# Plan: Update Title Slide Navigation to Match All 16 Slides
 
-## Problem Summary
+# Plan: Add AI Vision & Future Roadmap Slide
 
-The title slide (Slide 0) agenda grid is out of sync with the actual slide deck:
-1. **Slide 6 label outdated**: Shows "Operational Readiness Ladder" but should be "Operational Performance Ladder"
-2. **Missing slides 13-15**: The three category comparison slides (Excellence, Orchestration, Assurance) are not in the navigation
+## Overview
 
-## Current vs Expected State
-
-| Slide | Current Title Slide Label | Expected Label |
-|-------|---------------------------|----------------|
-| 1 | Strategic Shift | Strategic Shift |
-| 2 | Before & After | Before & After |
-| 3 | Operating Model | Operating Model |
-| 4 | Platform Capabilities | Platform Capabilities |
-| 5 | Transformation | Transformation |
-| 6 | Operational Readiness Ladder | **Operational Performance Ladder** |
-| 7 | Operational Performance Roadmap | Operational Performance Roadmap |
-| 8 | Positioning | Positioning |
-| 9 | Customers | Customers |
-| 10 | Investors | Investors |
-| 11 | Category Name | Category Name |
-| 12 | Messaging House | Messaging House |
-| 13 | (missing) | **Category: Excellence** |
-| 14 | (missing) | **Category: Orchestration** |
-| 15 | (missing) | **Category: Assurance** |
+Create a new slide (Slide 16) titled **"The AI-Powered Future"** that showcases Comply365's current and future AI capabilities, positions the "Operational Intelligence Layer" as the AI story, and explores the journey to becoming an AI-first company including domain rebranding suggestions.
 
 ---
 
-## Changes Required
+## Slide Concept
 
-### File: `src/components/slides/Slide0Title.tsx`
+### Title
+**"The AI-Powered Future"**
 
-**1. Update the agendaItems array (lines 6-19):**
+### Subtitle
+*"From Operational Intelligence Layer to AI Company — the journey ahead"*
+
+### Core Narrative
+This slide positions the existing "Operational Intelligence Layer" (Slide 3: Detect → Trigger → Orchestrate → Prove) as the foundational AI story, then shows how AI capabilities evolve across the Performance Ladder stages, culminating in a vision of Comply365 as an AI-first company.
+
+---
+
+## Visual Layout (Two-Column Design)
+
+### Left Column: AI Evolution Journey
+
+A vertical timeline showing AI capability maturity aligned with the Performance Ladder:
+
+| Stage | AI Capability | Description |
+|-------|---------------|-------------|
+| **Today** (Stage 3-4) | Embedded Intelligence | Pattern detection, recommended actions, governance-aware automation |
+| **Near-term** (Stage 4-5) | Predictive Operations | Weak signal detection, proactive interventions, risk forecasting |
+| **Future** (Stage 5+) | Agentic Reliability | Autonomous orchestration, human-in-the-loop exceptions, continuous proof |
+
+Each stage shows:
+- Current capability status (Active / In Development / Vision)
+- Key AI features enabled at that stage
+- Connection to the Performance Ladder journey
+
+### Right Column: The AI Story & Brand Evolution
+
+**The Operational Intelligence Layer IS the AI Story**
+- Visual callback to the Detect → Trigger → Orchestrate → Prove model
+- Shows how AI is embedded at each stage (not bolted on)
+
+**Domain Rebranding Exploration**
+A card component showing domain alternatives with pros/cons:
+
+| Domain | Positioning | Notes |
+|--------|-------------|-------|
+| **comply365.ai** | AI-first signal | Clear AI company positioning, modern, memorable |
+| **comply.ai** | Premium AI brand | Shorter, cleaner, but less brand continuity |
+| **c365.ai** | Concise AI identifier | Tech-forward, may lose brand recognition |
+| **Keep comply365.com** | Stability | Established brand equity, add AI messaging layer |
+
+---
+
+## Interactive Elements
+
+1. **AI Capability Cards**: Click to expand details on each AI stage
+2. **Domain Selector**: Interactive cards showing hover states with pros/cons
+3. **Narration Sync**: Cards animate in sequence with voiceover progress
+
+---
+
+## Narration Script (for ElevenLabs "George" voice)
+
+```text
+"Let's talk about the future — and how Comply three six five becomes an AI company.
+
+The foundation is already in place. The Operational Intelligence Layer — Detect, Trigger, Orchestrate, Prove — isn't just a workflow model. It's an AI model. Every stage is powered by embedded intelligence that learns from operational data, detects patterns, and recommends actions.
+
+Today, we're at Stage Three and Four capability. AI detects weak signals from FOQA, ASAP, and crew reports. It recommends prioritised interventions. It assists with change execution and ensures governance-aware automation.
+
+Near-term — Stage Four to Five — we move to predictive operations. AI identifies risks before they become incidents. Proactive interventions replace reactive firefighting. Forecasting models compress decision cycles.
+
+The future is Stage Five and beyond: Agentic Reliability. AI handles routine orchestration autonomously. Humans govern exceptions. Continuous proof is generated automatically. Reliability becomes embedded — not enforced.
+
+This positions Comply three six five as more than a platform company. It positions us as an AI company.
+
+Should the brand reflect this? Consider: comply three six five dot AI. A clear signal that intelligence is core to what we do. Or comply dot AI — shorter, premium, unmistakably AI-first. Or keep comply three six five dot com and layer the AI story through the Operational Intelligence positioning.
+
+The domain is a choice. But the direction is clear. The Operational Intelligence Layer is our AI story. And this journey — from embedded intelligence to agentic reliability — is how we take customers up the Performance Ladder and position Comply three six five as a leader in AI-powered operational performance."
+```
+
+---
+
+## Files to Create/Update
+
+| File | Action | Description |
+|------|--------|-------------|
+| `src/components/slides/SlideAIVision.tsx` | **Create** | New slide component |
+| `src/pages/SlideDeck.tsx` | **Update** | Add import, update slides array, add component to render |
+| `src/components/slides/Slide0Title.tsx` | **Update** | Add slide 16 to agenda items |
+| `src/data/slideNarration.ts` | **Update** | Add narration script for slide 16 |
+| `src/hooks/useSimpleNarration.ts` | **Update** | Update preload limit from 15 to 16 |
+
+---
+
+## Technical Implementation
+
+### SlideAIVision.tsx Component Structure
 
 ```typescript
-const agendaItems = [
-  { num: 1, label: "Strategic Shift", summary: "Why we're redefining the category" },
-  { num: 2, label: "Before & After", summary: "What's broken — and how we fix it" },
-  { num: 3, label: "Operating Model", summary: "Detect → Trigger → Orchestrate → Prove" },
-  { num: 4, label: "Platform Capabilities", summary: "The platform that powers it" },
-  { num: 5, label: "Transformation", summary: "Cost center to value driver" },
-  { num: 6, label: "Operational Performance Ladder", summary: "Building blocks of performance" },
-  { num: 7, label: "Operational Performance Roadmap", summary: "The measurable journey" },
-  { num: 8, label: "Positioning", summary: "Where we stand vs. competitors" },
-  { num: 9, label: "Customers", summary: "Measurable value delivery" },
-  { num: 10, label: "Investors", summary: "Shareholder value creation" },
-  { num: 11, label: "Category Name", summary: "Why this name wins" },
-  { num: 12, label: "Messaging House", summary: "Complete positioning framework" },
-  { num: 13, label: "Category: Excellence", summary: "Alternative: philosophy & culture" },
-  { num: 14, label: "Category: Orchestration", summary: "Alternative: coordination & workflow" },
-  { num: 15, label: "Category: Assurance", summary: "Alternative: compliance & proof" },
+// Key data structures
+
+const aiStages = [
+  {
+    id: "today",
+    label: "Today",
+    stage: "Stage 3-4",
+    status: "Active",
+    title: "Embedded Intelligence",
+    capabilities: [
+      "Pattern detection from operational signals",
+      "Recommended actions with governance awareness",
+      "Assisted drafting and execution",
+      "Audit trail generation"
+    ],
+    color: "from-blue-500 to-cyan-400"
+  },
+  {
+    id: "nearterm",
+    label: "Near-term",
+    stage: "Stage 4-5",
+    status: "In Development",
+    title: "Predictive Operations",
+    capabilities: [
+      "Weak signal detection before incidents",
+      "Proactive intervention recommendations",
+      "Risk forecasting models",
+      "Compressed decision cycles"
+    ],
+    color: "from-cyan-400 to-teal-400"
+  },
+  {
+    id: "future",
+    label: "Future",
+    stage: "Stage 5+",
+    status: "Vision",
+    title: "Agentic Reliability",
+    capabilities: [
+      "Autonomous orchestration of routine tasks",
+      "Human-in-the-loop exception handling",
+      "Continuous automated proof generation",
+      "Self-optimizing operational workflows"
+    ],
+    color: "from-teal-400 to-emerald-400"
+  }
+];
+
+const domainOptions = [
+  {
+    domain: "comply365.ai",
+    position: "AI-First Signal",
+    pros: ["Clear AI company positioning", "Modern and memorable", "Brand continuity"],
+    cons: ["Requires domain acquisition", "Migration effort"],
+    recommended: true
+  },
+  {
+    domain: "comply.ai",
+    position: "Premium AI Brand",
+    pros: ["Shorter, cleaner", "Premium positioning"],
+    cons: ["Less brand continuity", "May be unavailable"],
+    recommended: false
+  },
+  {
+    domain: "c365.ai",
+    position: "Tech-Forward",
+    pros: ["Concise", "Modern tech aesthetic"],
+    cons: ["May lose brand recognition", "Less intuitive"],
+    recommended: false
+  },
+  {
+    domain: "comply365.com + AI layer",
+    position: "Stability",
+    pros: ["Established equity", "No migration", "Lower risk"],
+    cons: ["Doesn't signal AI shift", "Messaging-only change"],
+    recommended: false
+  }
 ];
 ```
 
-**2. Update the grid layout (line 104):**
+### Layout Components
 
-Change from `grid-cols-2 sm:grid-cols-4` to `grid-cols-3 sm:grid-cols-5` to accommodate 15 items in a cleaner arrangement:
+1. **AI Evolution Timeline**: Vertical timeline with expandable cards
+2. **Domain Options Grid**: 2x2 grid of domain cards with hover states
+3. **Intelligence Layer Callback**: Small visual reference to Slide 3 operating model
 
-```diff
-- <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
-+ <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3">
+### Narration Sync Timing
+
+```typescript
+const aiStageTimings = [
+  { index: 0, startPercent: 15 },  // Today
+  { index: 1, startPercent: 35 },  // Near-term
+  { index: 2, startPercent: 55 },  // Future
+];
+
+const domainTimings = [
+  { startPercent: 75 }  // Domain discussion
+];
 ```
-
-This creates:
-- Mobile: 3 columns × 5 rows = 15 items
-- Desktop: 5 columns × 3 rows = 15 items
 
 ---
 
-## Visual Layout Preview
+## Updated Slide Structure
 
-### Desktop (5 columns)
-```text
-Row 1: [01] [02] [03] [04] [05]
-Row 2: [06] [07] [08] [09] [10]
-Row 3: [11] [12] [13] [14] [15]
-```
-
-### Mobile (3 columns)
-```text
-Row 1: [01] [02] [03]
-Row 2: [04] [05] [06]
-Row 3: [07] [08] [09]
-Row 4: [10] [11] [12]
-Row 5: [13] [14] [15]
-```
+| # | Slide | Notes |
+|---|-------|-------|
+| 0-12 | Main deck | Core positioning |
+| 13 | Category: Excellence | Alternative |
+| 14 | Category: Orchestration | Alternative |
+| 15 | Category: Assurance | Alternative |
+| **16** | **AI Vision & Future** | **NEW: AI company positioning** |
 
 ---
 
@@ -94,9 +220,10 @@ Row 5: [13] [14] [15]
 
 | Metric | Count |
 |--------|-------|
-| Files modified | 1 |
-| Items updated | 1 (Slide 6 label) |
-| Items added | 3 (Slides 13, 14, 15) |
-| Grid layout change | Yes |
+| New files | 1 |
+| Files modified | 4 |
+| New narration script | 1 (~45 seconds) |
+| Total slides after | 17 |
 
-After this change, clicking any of the 15 agenda items on the title slide will navigate directly to the corresponding slide, and all labels will match the actual slide content.
+This slide ties together the existing Operational Intelligence Layer positioning with a forward-looking AI vision, demonstrates the customer journey up the Performance Ladder through AI capability evolution, and opens discussion on brand positioning to signal Comply365's AI-first future.
+
