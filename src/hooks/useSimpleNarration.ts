@@ -158,7 +158,7 @@ export const useSimpleNarration = () => {
   // Preload next slide's audio in background for faster playback
   const preloadNext = useCallback((currentSlideId: number) => {
     const nextSlideId = currentSlideId + 1;
-    if (nextSlideId <= 15 && !cacheRef.current.has(nextSlideId)) {
+    if (nextSlideId <= 16 && !cacheRef.current.has(nextSlideId)) {
       fetchAudio(nextSlideId).catch(() => {}); // Silent preload
     }
   }, []);
