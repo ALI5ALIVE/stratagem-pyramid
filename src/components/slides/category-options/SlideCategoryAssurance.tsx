@@ -16,11 +16,11 @@ const SlideCategoryAssurance = ({
 
   return (
     <SlideContainer
-      id="slide-16"
+      id="slide-15"
       title="Category Option: Assurance"
       subtitle="Compliance, governance & proof positioning"
       variant="dark"
-      slideNumber={16}
+      slideNumber={15}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}
