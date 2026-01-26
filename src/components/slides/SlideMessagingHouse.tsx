@@ -19,7 +19,7 @@ import type { SlideNarrationProps } from "@/types/slideProps";
 
 // Category Positioning Data
 const categoryPosition = {
-  name: "Operational Performance & Readiness Platform",
+  name: "Operational Performance Platform",
   definition: "Connects safety, content, and training into an intelligent operating system, turning signals into orchestrated change and audit-ready proof.",
   operatingModel: "Continuous Improvement Operating System",
   narrativeSpine: ["Detect", "Trigger", "Orchestrate", "Prove"]
@@ -184,7 +184,7 @@ const SlideMessagingHouse = ({
     <SlideContainer
       id="slide-12"
       title="Messaging House"
-      subtitle="Complete positioning architecture for Operational Performance & Readiness"
+      subtitle="Complete positioning architecture for Operational Performance"
       variant="dark"
       slideNumber={12}
       isPlaying={isPlaying}
@@ -365,7 +365,7 @@ const SlideMessagingHouse = ({
           <div className="mt-2 text-center">
             <div className="text-[9px] uppercase tracking-widest text-muted-foreground/60">Category Promise</div>
             <p className="text-xs font-semibold text-foreground/90 italic">
-              "Make operational performance and readiness predictable, measurable, and scalable."
+              "Make operational performance predictable, measurable, and provable."
             </p>
           </div>
         </div>

@@ -18,9 +18,9 @@ const Slide9CategoryRationale = ({
       icon: Target,
     },
     {
-      label: "Scope Protection",
-      description: "'Readiness' keeps Training + Competency + Proof central (prevents collapse into analytics)",
-      icon: Layers,
+      label: "Outcome Focus",
+      description: "Emphasizes what matters: reliability, efficiency, execution — not abstract concepts",
+      icon: BarChart3,
     },
     {
       label: "Cross-Industry",
@@ -41,24 +41,24 @@ const Slide9CategoryRationale = ({
 
   const alternatives = [
     {
-      name: "Operational Excellence & Readiness Platform",
+      name: "Operational Performance & Readiness Platform",
       verdict: "Previous consideration",
-      risk: "Philosophy language; less measurable than 'performance'",
+      risk: "'Readiness' adds scope complexity; 'Performance' already encompasses outcomes",
     },
     {
-      name: "Operational Performance Platform",
-      verdict: "Outcome language only",
-      risk: "Easily misclassified as analytics/ops-control; loses training + proof",
+      name: "Operational Excellence Platform",
+      verdict: "Philosophy language",
+      risk: "Less measurable; sounds like consulting methodology",
+    },
+    {
+      name: "Operational Intelligence Platform",
+      verdict: "AI-forward option",
+      risk: "May trigger AI skepticism with regulators; category not yet established",
     },
     {
       name: "Operational Assurance Platform",
       verdict: "Supporting pillar",
       risk: "Pulls perception back to compliance checking; backward-looking",
-    },
-    {
-      name: "Operational Performance & Resilience Platform",
-      verdict: "Campaign theme",
-      risk: "'Resilience' skews to crisis/IT/BCP; less about daily execution",
     },
     {
       name: "Continuous Improvement Operating System",
@@ -69,8 +69,8 @@ const Slide9CategoryRationale = ({
   return (
     <SlideContainer
       id="slide-11"
-      title="Why 'Operational Performance & Readiness Platform'"
-      subtitle="The name that emphasizes measurable outcomes and defines the category"
+      title="Why 'Operational Performance Platform'"
+      subtitle="The name that captures exactly what COOs and boards care about"
       slideNumber={11}
       isPlaying={isPlaying}
       isLoading={isLoading}
@@ -86,10 +86,10 @@ const Slide9CategoryRationale = ({
           Recommended Category Name
         </p>
         <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
-          Operational Performance & Readiness Platform
+          Operational Performance Platform
         </h3>
         <p className="text-xs sm:text-sm text-muted-foreground mt-2 max-w-2xl mx-auto">
-          Protects the full platform scope: Safety + Content + Training + Proof
+          Measurable outcomes: Reliability + Efficiency + Execution + Proof
         </p>
       </div>
 
@@ -143,9 +143,9 @@ const Slide9CategoryRationale = ({
       <div className="mt-4 sm:mt-6 bg-primary/10 border border-primary/30 rounded-lg p-4 sm:p-5">
         <p className="text-xs sm:text-sm text-foreground text-center leading-relaxed">
           <span className="font-semibold text-primary">What to say in the room:</span>{" "}
-          "We use 'Operational Performance & Readiness Platform' as the category because it emphasizes measurable outcomes 
-          while still protecting what makes Comply365 different: connecting Safety + Content + Training into a governed 
-          operating system that turns signals into outcomes and proof."
+          "We use 'Operational Performance Platform' as the category because it captures exactly what COOs and boards care about: 
+          measurable outcomes. It connects Safety + Content + Training into a governed operating system that turns signals into 
+          outcomes and proof."
         </p>
       </div>
     </SlideContainer>

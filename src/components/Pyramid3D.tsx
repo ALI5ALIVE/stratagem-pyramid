@@ -206,7 +206,7 @@ const Pyramid3D = ({
           <line x1={40} y1={900} x2={40} y2={80} stroke="hsl(var(--muted-foreground))" strokeWidth="3" strokeOpacity="0.6" />
           <polygon points="40,56 28,84 52,84" fill="hsl(var(--muted-foreground))" fillOpacity="0.6" />
           <text x={-500} y={20} transform="rotate(-90)" textAnchor="middle" fill="hsl(var(--muted-foreground))" fontSize="20" fontWeight="600" fontFamily="'Space Grotesk', sans-serif" letterSpacing="0.08em" className="uppercase">
-            Operational Performance & Readiness
+            Operational Performance
           </text>
         </g>
 

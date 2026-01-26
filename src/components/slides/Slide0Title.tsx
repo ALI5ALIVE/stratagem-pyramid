@@ -84,7 +84,7 @@ const Slide0Title = ({
             </span>
             <br />
             <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-              & Readiness Category
+              Platform
             </span>
           </h1>
           
