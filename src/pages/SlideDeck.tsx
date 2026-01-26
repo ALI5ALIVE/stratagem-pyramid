@@ -30,13 +30,13 @@ const slides = [
   { id: "slide-7", label: "Operational Performance Roadmap" },
   { id: "slide-8", label: "Positioning" },
   { id: "slide-9", label: "Customers" },
-  { id: "slide-10", label: "Investors" },
-  { id: "slide-11", label: "Category Name" },
-  { id: "slide-12", label: "Messaging House" },
-  { id: "slide-13", label: "Category: Excellence" },
-  { id: "slide-14", label: "Category: Orchestration" },
-  { id: "slide-15", label: "Category: Assurance" },
-  { id: "slide-16", label: "AI Vision & Future" },
+  { id: "slide-10", label: "AI Vision & Future" },
+  { id: "slide-11", label: "Investors" },
+  { id: "slide-12", label: "Category Name" },
+  { id: "slide-13", label: "Messaging House" },
+  { id: "slide-14", label: "Category: Excellence" },
+  { id: "slide-15", label: "Category: Orchestration" },
+  { id: "slide-16", label: "Category: Assurance" },
 ];
 
 const SlideDeck = () => {
@@ -212,13 +212,13 @@ const SlideDeck = () => {
         <Slide7MaturityCurve {...getNarrationProps(7)} />
         <Slide8PositioningMap {...getNarrationProps(8)} />
         <Slide9Customers {...getNarrationProps(9)} />
-        <Slide10Investors {...getNarrationProps(10)} />
-        <Slide11CategoryRationale {...getNarrationProps(11)} />
-        <SlideMessagingHouse {...getNarrationProps(12)} />
-        <SlideCategoryExcellence {...getNarrationProps(13)} />
-        <SlideCategoryOrchestration {...getNarrationProps(14)} />
-        <SlideCategoryAssurance {...getNarrationProps(15)} />
-        <SlideAIVision {...getNarrationProps(16)} />
+        <SlideAIVision {...getNarrationProps(10)} />
+        <Slide10Investors {...getNarrationProps(11)} />
+        <Slide11CategoryRationale {...getNarrationProps(12)} />
+        <SlideMessagingHouse {...getNarrationProps(13)} />
+        <SlideCategoryExcellence {...getNarrationProps(14)} />
+        <SlideCategoryOrchestration {...getNarrationProps(15)} />
+        <SlideCategoryAssurance {...getNarrationProps(16)} />
       </div>
     </div>
   );
