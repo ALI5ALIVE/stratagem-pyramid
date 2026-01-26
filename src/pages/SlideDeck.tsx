@@ -17,6 +17,7 @@ import SlideMessagingHouse from "@/components/slides/SlideMessagingHouse";
 import SlideCategoryExcellence from "@/components/slides/category-options/SlideCategoryExcellence";
 import SlideCategoryOrchestration from "@/components/slides/category-options/SlideCategoryOrchestration";
 import SlideCategoryAssurance from "@/components/slides/category-options/SlideCategoryAssurance";
+import SlideAIVision from "@/components/slides/SlideAIVision";
 
 const slides = [
   { id: "slide-0", label: "Title" },
@@ -35,6 +36,7 @@ const slides = [
   { id: "slide-13", label: "Category: Excellence" },
   { id: "slide-14", label: "Category: Orchestration" },
   { id: "slide-15", label: "Category: Assurance" },
+  { id: "slide-16", label: "AI Vision & Future" },
 ];
 
 const SlideDeck = () => {
@@ -216,6 +218,7 @@ const SlideDeck = () => {
         <SlideCategoryExcellence {...getNarrationProps(13)} />
         <SlideCategoryOrchestration {...getNarrationProps(14)} />
         <SlideCategoryAssurance {...getNarrationProps(15)} />
+        <SlideAIVision {...getNarrationProps(16)} />
       </div>
     </div>
   );

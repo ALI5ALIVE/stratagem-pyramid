@@ -19,6 +19,7 @@ const agendaItems = [
   { num: 13, label: "Category: Excellence", summary: "Alternative: philosophy & culture" },
   { num: 14, label: "Category: Orchestration", summary: "Alternative: coordination & workflow" },
   { num: 15, label: "Category: Assurance", summary: "Alternative: compliance & proof" },
+  { num: 16, label: "AI Vision & Future", summary: "AI company positioning & roadmap" },
 ];
 
 interface Slide0TitleProps extends SlideNarrationProps {
@@ -104,7 +105,7 @@ const Slide0Title = ({
             <div className="text-xs sm:text-sm text-muted-foreground uppercase tracking-widest mb-4">
               The Journey
             </div>
-            <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3">
+            <div className="grid grid-cols-4 sm:grid-cols-4 gap-2 sm:gap-3">
               {agendaItems.map((item) => (
                 <button 
                   key={item.num}
