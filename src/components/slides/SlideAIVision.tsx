@@ -118,9 +118,9 @@ const SlideAIVision = ({
 
   return (
     <SlideContainer
-      id="slide-16"
-      title="The AI-Powered Future"
-      subtitle="From Operational Intelligence Layer to AI Company — the journey ahead"
+      id="slide-10"
+      title="Becoming an AI Company"
+      subtitle="The intelligence layer that's already built — and the roadmap to what's next"
       variant="dark"
       slideNumber={16}
       isPlaying={isPlaying}
