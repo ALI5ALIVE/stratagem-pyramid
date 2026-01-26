@@ -9,13 +9,16 @@ const agendaItems = [
   { num: 3, label: "Operating Model", summary: "Detect → Trigger → Orchestrate → Prove" },
   { num: 4, label: "Platform Capabilities", summary: "The platform that powers it" },
   { num: 5, label: "Transformation", summary: "Cost center to value driver" },
-  { num: 6, label: "Operational Readiness Ladder", summary: "Building blocks of performance" },
+  { num: 6, label: "Operational Performance Ladder", summary: "Building blocks of performance" },
   { num: 7, label: "Operational Performance Roadmap", summary: "The measurable journey" },
   { num: 8, label: "Positioning", summary: "Where we stand vs. competitors" },
   { num: 9, label: "Customers", summary: "Measurable value delivery" },
   { num: 10, label: "Investors", summary: "Shareholder value creation" },
   { num: 11, label: "Category Name", summary: "Why this name wins" },
   { num: 12, label: "Messaging House", summary: "Complete positioning framework" },
+  { num: 13, label: "Category: Excellence", summary: "Alternative: philosophy & culture" },
+  { num: 14, label: "Category: Orchestration", summary: "Alternative: coordination & workflow" },
+  { num: 15, label: "Category: Assurance", summary: "Alternative: compliance & proof" },
 ];
 
 interface Slide0TitleProps extends SlideNarrationProps {
@@ -101,7 +104,7 @@ const Slide0Title = ({
             <div className="text-xs sm:text-sm text-muted-foreground uppercase tracking-widest mb-4">
               The Journey
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
+            <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3">
               {agendaItems.map((item) => (
                 <button 
                   key={item.num}
