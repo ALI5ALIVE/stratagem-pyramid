@@ -17,9 +17,10 @@ const agendaItems = [
   { num: 11, label: "Investors", summary: "Shareholder value creation" },
   { num: 12, label: "Category Name", summary: "Why this name wins" },
   { num: 13, label: "Messaging House", summary: "Complete positioning framework" },
-  { num: 14, label: "Category: Excellence", summary: "Alternative: philosophy & culture" },
-  { num: 15, label: "Category: Orchestration", summary: "Alternative: coordination & workflow" },
-  { num: 16, label: "Category: Assurance", summary: "Alternative: compliance & proof" },
+  { num: 14, label: "Campaign Ideas", summary: "Cementing category leadership" },
+  { num: 15, label: "Category: Excellence", summary: "Alternative: philosophy & culture" },
+  { num: 16, label: "Category: Orchestration", summary: "Alternative: coordination & workflow" },
+  { num: 17, label: "Category: Assurance", summary: "Alternative: compliance & proof" },
 ];
 
 interface Slide0TitleProps extends SlideNarrationProps {
