@@ -267,7 +267,7 @@ const Slide2BeforeAfter = ({
         <div className="bg-card border border-primary/30 rounded-xl p-5">
           <p className="text-sm text-muted-foreground">
             <span className="font-semibold text-primary">Unlike</span> point solutions that manage safety, content, or training in isolation, 
-            Comply365 connects all three into an intelligent operating system, turning signals into orchestrated change and audit-ready proof.
+            Comply365 connects all three into a connected, intelligent, and predictive platform — turning signals into orchestrated change and audit-ready proof.
           </p>
         </div>
       </div>

@@ -20,8 +20,8 @@ import type { SlideNarrationProps } from "@/types/slideProps";
 // Category Positioning Data
 const categoryPosition = {
   name: "Operational Performance Platform",
-  definition: "Connects safety, content, and training into an intelligent operating system, turning signals into orchestrated change and audit-ready proof.",
-  operatingModel: "Continuous Improvement Operating System",
+  definition: "A connected, intelligent, and predictive platform that turns signals into orchestrated change and audit-ready proof.",
+  operatingModel: "Continuous Improvement Operating Model",
   narrativeSpine: ["Detect", "Trigger", "Orchestrate", "Prove"]
 };
 
