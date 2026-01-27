@@ -70,18 +70,18 @@ const Slide4Transformation = ({
       onPause={onPause}
       onNextSlide={onNextSlide}
     >
-      <div className="h-full flex flex-col gap-3">
+      <div className="h-full flex flex-col gap-4">
         {/* Main comparison section */}
-        <div className="flex-1 grid lg:grid-cols-2 gap-4 items-start">
+        <div className="flex-1 grid lg:grid-cols-2 gap-6 items-start pt-4">
           {/* Before/After Comparison */}
           <div className="flex flex-col gap-3 relative">
             <div className="grid grid-cols-2 gap-3">
               {/* Before Column */}
               <div className="relative">
-                <div className="absolute -top-2.5 left-2 px-1.5 py-0.5 bg-destructive/20 border border-destructive/30 rounded text-[9px] font-semibold text-destructive uppercase tracking-wider">
+                <div className="absolute top-0 -translate-y-1/2 left-2 px-1.5 py-0.5 bg-destructive/20 border border-destructive/30 rounded text-[9px] font-semibold text-destructive uppercase tracking-wider z-10">
                   Point Tools
                 </div>
-                <div className="bg-card/30 border border-destructive/20 rounded-lg p-2.5 pt-4 space-y-2">
+                <div className="bg-card/30 border border-destructive/20 rounded-lg p-2.5 pt-5 space-y-2">
                   {beforeItems.map((item, i) => (
                     <div key={i} className="flex items-center gap-2 group">
                       <div className="w-6 h-6 rounded-md bg-destructive/10 border border-destructive/20 flex items-center justify-center">
@@ -105,10 +105,10 @@ const Slide4Transformation = ({
 
               {/* After Column */}
               <div className="relative">
-                <div className="absolute -top-2.5 left-2 px-1.5 py-0.5 bg-primary/20 border border-primary/30 rounded text-[9px] font-semibold text-primary uppercase tracking-wider">
+                <div className="absolute top-0 -translate-y-1/2 left-2 px-1.5 py-0.5 bg-primary/20 border border-primary/30 rounded text-[9px] font-semibold text-primary uppercase tracking-wider z-10">
                   Platform
                 </div>
-                <div className="bg-card/30 border border-primary/20 rounded-lg p-2.5 pt-4 space-y-2">
+                <div className="bg-card/30 border border-primary/20 rounded-lg p-2.5 pt-5 space-y-2">
                   {afterItems.map((item, i) => (
                     <div key={i} className="flex items-center gap-2 group">
                       <div className="w-6 h-6 rounded-md bg-primary/10 border border-primary/20 flex items-center justify-center">
