@@ -1,172 +1,126 @@
 
-
-# Plan: Update AI Vision Slide to Align with Maturity Model Stages
+# Plan: Align Pyramid and Maturity Curve Stage Names with AI Vision Terminology
 
 ## Summary
 
-Reframe the "Becoming an AI Company" slide to use the maturity model stage terminology, changing from generic AI evolution labels to the specific stage names that align with the Operational Performance Ladder.
+Update the pyramid (Value Pyramid slides) and maturity curve components to use consistent stage naming that aligns with the AI Vision slide:
+
+| Stage | Current Name | New Name |
+|-------|--------------|----------|
+| Stage 3 | Connected Governance | Connected Governance (no change) |
+| Stage 4 | Closed-Loop Operational Improvement | Intelligent Operations |
+| Stage 5 | Predictive & Agentic Reliability | Predictive Operations |
+
+This removes "Agentic" from Stage 5 and renames "Closed-Loop" to "Intelligent Operations" for consistency with the Intelligence Maturity Roadmap on the AI Vision slide.
 
 ---
 
-## Current vs. Proposed Stage Names
+## Files to Update
 
-| Timeline | Current Title | Current Stage | Proposed Title | Proposed Stage |
-|----------|--------------|---------------|----------------|----------------|
-| Today | Embedded Intelligence | Stage 3-4 | Connected Governance | Stage 3 |
-| Near-term | Predictive Operations | Stage 4-5 | Intelligent Operations | Stage 4 |
-| Future | Agentic Reliability | Stage 5+ | Predictive Intelligence | Stage 5 |
+### 1. MaturityCurveVisualization.tsx (Standalone page)
+**Location:** `src/components/MaturityCurveVisualization.tsx`
 
----
+| Line | Current | New |
+|------|---------|-----|
+| 137 | `headline: "Closed-Loop Operational Improvement"` | `headline: "Intelligent Operations"` |
+| 138 | `sublabel: "Intelligent Ops"` | `sublabel: "AI-Assisted Execution"` |
+| 170 | `id: "AGENTIC"` | `id: "PREDICTIVE"` |
+| 172 | `headline: "Predictive & Agentic Reliability"` | `headline: "Predictive Operations"` |
+| 173 | `sublabel: "Autonomous Reliability"` | `sublabel: "AI-Accelerated Performance"` |
 
-## Technical Changes
+### 2. Slide5MaturityCurve.tsx (Slide deck version)
+**Location:** `src/components/slides/Slide5MaturityCurve.tsx`
 
-**File:** `src/components/slides/SlideAIVision.tsx`
+| Line | Current | New |
+|------|---------|-----|
+| 115 | `headline: "Closed-Loop Operational Improvement"` | `headline: "Intelligent Operations"` |
+| 116 | `sublabel: "Intelligent Ops"` | `sublabel: "AI-Assisted Execution"` |
+| 148 | `id: "AGENTIC"` | `id: "PREDICTIVE"` |
+| 150 | `headline: "Predictive & Agentic Reliability"` | `headline: "Predictive Operations"` |
+| 151 | `sublabel: "Autonomous Reliability"` | `sublabel: "AI-Accelerated Performance"` |
+| 438-439 | Short label `"Predictive"` | Already correct |
 
-### Change 1: Update Stage 1 (Today) - Lines 6-22
+### 3. Slide4ValuePyramid.tsx (Pyramid slide in deck)
+**Location:** `src/components/slides/Slide4ValuePyramid.tsx`
 
-```tsx
-// From:
-{
-  id: "today",
-  label: "Today",
-  stage: "Stage 3-4",
-  status: "Active",
-  statusColor: "bg-emerald-500",
-  title: "Embedded Intelligence",
-  ...
-}
+| Line | Current | New |
+|------|---------|-----|
+| 12 | `headline: "Predictive & Agentic Reliability"` | `headline: "Predictive Operations"` |
+| 13 | `sublabel: "AI-Accelerated"` | `sublabel: "AI-Accelerated Performance"` |
+| 48 | `headline: "Closed-Loop Operational Improvement"` | `headline: "Intelligent Operations"` |
+| 49 | `sublabel: "Outcome Engine"` | `sublabel: "AI-Assisted Execution"` |
 
-// To:
-{
-  id: "today",
-  label: "Today",
-  stage: "Stage 3",
-  status: "Active",
-  statusColor: "bg-emerald-500",
-  title: "Connected Governance",
-  icon: Zap,
-  capabilities: [
-    "Unified data across Safety, Content, and Training",
-    "Governance-aware workflows with audit trails",
-    "Pattern detection from FOQA/ASAP/crew reports",
-    "Coordinated change management"
-  ],
-  gradient: "from-primary to-accent"
-}
-```
+### 4. CategoryPyramid.tsx (Standalone pyramid page)
+**Location:** `src/components/CategoryPyramid.tsx`
 
-### Change 2: Update Stage 2 (Near-term) - Lines 23-38
-
-```tsx
-// From:
-{
-  id: "nearterm",
-  label: "Near-term",
-  stage: "Stage 4-5",
-  status: "In Development",
-  statusColor: "bg-amber-500",
-  title: "Predictive Operations",
-  ...
-}
-
-// To:
-{
-  id: "nearterm",
-  label: "Near-term",
-  stage: "Stage 4",
-  status: "In Development",
-  statusColor: "bg-amber-500",
-  title: "Intelligent Operations",
-  icon: Lightbulb,
-  capabilities: [
-    "AI-assisted drafting and execution",
-    "Recommended actions with context awareness",
-    "Automated trigger orchestration",
-    "Compressed decision cycles"
-  ],
-  gradient: "from-accent to-cyan-400"
-}
-```
-
-### Change 3: Update Stage 3 (Future) - Lines 39-55
-
-```tsx
-// From:
-{
-  id: "future",
-  label: "Future",
-  stage: "Stage 5+",
-  status: "Vision",
-  statusColor: "bg-purple-500",
-  title: "Agentic Reliability",
-  ...
-}
-
-// To:
-{
-  id: "future",
-  label: "Future",
-  stage: "Stage 5",
-  status: "Vision",
-  statusColor: "bg-purple-500",
-  title: "Predictive Intelligence",
-  icon: Brain,
-  capabilities: [
-    "Weak signal detection before incidents",
-    "Proactive intervention recommendations",
-    "Risk forecasting models",
-    "Self-optimizing operational workflows"
-  ],
-  gradient: "from-cyan-400 to-emerald-400"
-}
-```
-
-### Change 4: Update Section Header - Line 110
-
-```tsx
-// From:
-<h3 className="text-sm font-semibold text-foreground uppercase tracking-wide">AI Evolution Journey</h3>
-
-// To:
-<h3 className="text-sm font-semibold text-foreground uppercase tracking-wide">Intelligence Maturity Roadmap</h3>
-```
-
-### Change 5: Update Right Column Callout Text - Line 251
-
-```tsx
-// From:
-The Operational Intelligence Layer powers Stage 3 → 4 → 5 progression. AI compresses decision and execution time while keeping humans in control.
-
-// To:
-Connected Governance → Intelligent Operations → Predictive Intelligence. AI compresses decision and execution time while keeping humans in control.
-```
+| Line | Current | New |
+|------|---------|-----|
+| 12 | `headline: "Predictive & Agentic Reliability"` | `headline: "Predictive Operations"` |
+| 13 | `sublabel: "AI-Accelerated"` | `sublabel: "AI-Accelerated Performance"` |
+| 48 | `headline: "Closed-Loop Operational Improvement"` | `headline: "Intelligent Operations"` |
+| 49 | `sublabel: "Outcome Engine"` | `sublabel: "AI-Assisted Execution"` |
 
 ---
 
-## Visual Impact
+## Updated Stage Terminology Reference
 
-The updated slide will now show a clear progression that directly maps to the Operational Performance Ladder:
+| Stage | Headline | Sublabel | Key Theme |
+|-------|----------|----------|-----------|
+| **1** | Fragmented & Reactive | Manual / Reactive | Starting point |
+| **2** | Managed (Siloed) Compliance | Silo Optimisation | Best-in-class products |
+| **3** | Connected Governance | Closed Loop | Platform foundation |
+| **4** | Intelligent Operations | AI-Assisted Execution | AI-assisted workflows |
+| **5** | Predictive Operations | AI-Accelerated Performance | Predictive + proactive |
 
-| Stage | Title | Focus |
-|-------|-------|-------|
-| **Stage 3** | Connected Governance | Data unification + governance foundation |
-| **Stage 4** | Intelligent Operations | AI-assisted execution + automation |
-| **Stage 5** | Predictive Intelligence | Anticipatory + self-optimizing |
+---
 
-This creates a seamless narrative connection between:
-- **Slide 6** (Operational Performance Ladder)
-- **Slide 7** (Operational Performance Roadmap)
-- **Slide 10** (Becoming an AI Company)
+## Technical Details
+
+### Change Summary by File
+
+**MaturityCurveVisualization.tsx:**
+- Line 137: Update Stage 4 headline
+- Line 138: Update Stage 4 sublabel
+- Line 170: Update Stage 5 id from "AGENTIC" to "PREDICTIVE_OPS"
+- Line 172: Update Stage 5 headline
+- Line 173: Update Stage 5 sublabel
+
+**Slide5MaturityCurve.tsx:**
+- Line 115: Update Stage 4 headline
+- Line 116: Update Stage 4 sublabel
+- Line 148: Update Stage 5 id from "AGENTIC" to "PREDICTIVE_OPS"
+- Line 150: Update Stage 5 headline
+- Line 151: Update Stage 5 sublabel
+
+**Slide4ValuePyramid.tsx:**
+- Line 12: Update Level 5 headline
+- Line 13: Update Level 5 sublabel
+- Line 48: Update Level 4 headline
+- Line 49: Update Level 4 sublabel
+
+**CategoryPyramid.tsx:**
+- Line 12: Update Level 1 (apex) headline
+- Line 13: Update Level 1 sublabel
+- Line 48: Update Level 2 headline
+- Line 49: Update Level 2 sublabel
 
 ---
 
 ## Narrative Alignment
 
-The updated terminology reinforces that AI is the **mechanism** for moving customers up the maturity ladder:
+After these changes, the full maturity progression will read:
 
-1. **Connected Governance (Stage 3)** - The platform creates the data foundation
-2. **Intelligent Operations (Stage 4)** - AI starts assisting and automating
-3. **Predictive Intelligence (Stage 5)** - AI becomes anticipatory and proactive
+```text
+Stage 1: Fragmented & Reactive
+Stage 2: Managed (Siloed) Compliance  
+Stage 3: Connected Governance ← Platform foundation
+Stage 4: Intelligent Operations ← AI-assisted execution
+Stage 5: Predictive Operations ← AI-accelerated performance
+```
 
-This positions Comply365's AI story as integral to the operational performance transformation, not a separate capability.
+This creates a seamless narrative connection between:
+- **Slide 6** (Operational Performance Ladder / Pyramid)
+- **Slide 7** (Operational Performance Roadmap / Curve)
+- **Slide 10** (Becoming an AI Company / Intelligence Maturity Roadmap)
 
+The terminology now consistently emphasizes "operations" and "intelligence" rather than "agentic" or "closed-loop", reinforcing the platform's value story of using data and AI to drive better operational performance.
