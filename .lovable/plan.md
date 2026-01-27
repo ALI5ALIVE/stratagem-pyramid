@@ -1,74 +1,172 @@
 
 
-# Plan: Reframe Y-Axis to Tell the Data/AI/Intelligence Value Story
+# Plan: Update AI Vision Slide to Align with Maturity Model Stages
 
 ## Summary
 
-Update the Strategic Matrix Y-axis from "Cost Center -> Revenue Generation" to "Manual Reporting -> Intelligent Operations" to better communicate the platform's intelligence-driven value differentiation.
+Reframe the "Becoming an AI Company" slide to use the maturity model stage terminology, changing from generic AI evolution labels to the specific stage names that align with the Operational Performance Ladder.
 
 ---
 
-## Changes Overview
+## Current vs. Proposed Stage Names
 
-| Element | Current | New |
-|---------|---------|-----|
-| Y-Axis Label | "Cost Center -> Revenue Generation" | "Manual Reporting -> Intelligent Operations" |
-| Y-Axis Name | "Strategic Value" | "Intelligence Maturity" |
-| Tooltip Field | "Depth: X/4.0" | "Intelligence: X/10" |
-| Bottom-Left Quadrant | "Task-level Value" | "Static Compliance" |
-| Bottom-Right Quadrant | "Breadth without Depth" | "Data without Intelligence" |
-| Top-Left Quadrant | "High Value, Narrow Domain" | "Deep Intelligence, Limited Scope" |
-| Top-Right Quadrant | "Full Capability + Strategic" | "Full Intelligence + Full Coverage" |
+| Timeline | Current Title | Current Stage | Proposed Title | Proposed Stage |
+|----------|--------------|---------------|----------------|----------------|
+| Today | Embedded Intelligence | Stage 3-4 | Connected Governance | Stage 3 |
+| Near-term | Predictive Operations | Stage 4-5 | Intelligent Operations | Stage 4 |
+| Future | Agentic Reliability | Stage 5+ | Predictive Intelligence | Stage 5 |
 
 ---
 
 ## Technical Changes
 
-**File:** `src/components/slides/Slide8PositioningMap.tsx`
+**File:** `src/components/slides/SlideAIVision.tsx`
 
-### Change 1: Update Tooltip (Lines 72-74)
-Change the tooltip label from "Depth" to "Intelligence" and update the scale display:
-
-```tsx
-// From:
-Depth: <span className="text-foreground">{data.depth.toFixed(1)}/4.0</span>
-
-// To:
-Intelligence: <span className="text-foreground">{data.depth.toFixed(1)}/10</span>
-```
-
-### Change 2: Update Y-Axis Configuration (Lines 221-236)
-Update the axis name and label to reflect intelligence maturity:
+### Change 1: Update Stage 1 (Today) - Lines 6-22
 
 ```tsx
 // From:
-name="Strategic Value"
-label={{ value: "Cost Center → Revenue Generation", ... }}
+{
+  id: "today",
+  label: "Today",
+  stage: "Stage 3-4",
+  status: "Active",
+  statusColor: "bg-emerald-500",
+  title: "Embedded Intelligence",
+  ...
+}
 
 // To:
-name="Intelligence Maturity"
-label={{ value: "Manual Reporting → Intelligent Operations", ... }}
+{
+  id: "today",
+  label: "Today",
+  stage: "Stage 3",
+  status: "Active",
+  statusColor: "bg-emerald-500",
+  title: "Connected Governance",
+  icon: Zap,
+  capabilities: [
+    "Unified data across Safety, Content, and Training",
+    "Governance-aware workflows with audit trails",
+    "Pattern detection from FOQA/ASAP/crew reports",
+    "Coordinated change management"
+  ],
+  gradient: "from-primary to-accent"
+}
 ```
 
-### Change 3: Update Quadrant Labels (Lines 241-272)
-Update each quadrant's sublabel to reinforce the intelligence narrative:
+### Change 2: Update Stage 2 (Near-term) - Lines 23-38
 
-- **Basic Tools** (bottom-left): "Task-level Value" -> "Static Compliance"
-- **Broad Tools** (bottom-right): "Breadth without Depth" -> "Data without Intelligence"
-- **Specialists** (top-left): "High Value, Narrow Domain" -> "Deep Intelligence, Limited Scope"
-- **Leaders** (top-right): "Full Capability + Strategic" -> "Full Intelligence + Full Coverage"
+```tsx
+// From:
+{
+  id: "nearterm",
+  label: "Near-term",
+  stage: "Stage 4-5",
+  status: "In Development",
+  statusColor: "bg-amber-500",
+  title: "Predictive Operations",
+  ...
+}
+
+// To:
+{
+  id: "nearterm",
+  label: "Near-term",
+  stage: "Stage 4",
+  status: "In Development",
+  statusColor: "bg-amber-500",
+  title: "Intelligent Operations",
+  icon: Lightbulb,
+  capabilities: [
+    "AI-assisted drafting and execution",
+    "Recommended actions with context awareness",
+    "Automated trigger orchestration",
+    "Compressed decision cycles"
+  ],
+  gradient: "from-accent to-cyan-400"
+}
+```
+
+### Change 3: Update Stage 3 (Future) - Lines 39-55
+
+```tsx
+// From:
+{
+  id: "future",
+  label: "Future",
+  stage: "Stage 5+",
+  status: "Vision",
+  statusColor: "bg-purple-500",
+  title: "Agentic Reliability",
+  ...
+}
+
+// To:
+{
+  id: "future",
+  label: "Future",
+  stage: "Stage 5",
+  status: "Vision",
+  statusColor: "bg-purple-500",
+  title: "Predictive Intelligence",
+  icon: Brain,
+  capabilities: [
+    "Weak signal detection before incidents",
+    "Proactive intervention recommendations",
+    "Risk forecasting models",
+    "Self-optimizing operational workflows"
+  ],
+  gradient: "from-cyan-400 to-emerald-400"
+}
+```
+
+### Change 4: Update Section Header - Line 110
+
+```tsx
+// From:
+<h3 className="text-sm font-semibold text-foreground uppercase tracking-wide">AI Evolution Journey</h3>
+
+// To:
+<h3 className="text-sm font-semibold text-foreground uppercase tracking-wide">Intelligence Maturity Roadmap</h3>
+```
+
+### Change 5: Update Right Column Callout Text - Line 251
+
+```tsx
+// From:
+The Operational Intelligence Layer powers Stage 3 → 4 → 5 progression. AI compresses decision and execution time while keeping humans in control.
+
+// To:
+Connected Governance → Intelligent Operations → Predictive Intelligence. AI compresses decision and execution time while keeping humans in control.
+```
 
 ---
 
 ## Visual Impact
 
-The updated Y-axis will communicate a clear intelligence maturity progression:
+The updated slide will now show a clear progression that directly maps to the Operational Performance Ladder:
 
-| Y Position | Intelligence Level | Description |
-|------------|-------------------|-------------|
-| 0-3 | Manual Reporting | Static data, manual processes, reactive compliance |
-| 4-6 | Connected Data | Integrated systems, emerging automation, basic analytics |
-| 7-10 | Intelligent Operations | AI-driven orchestration, predictive signals, closed-loop improvement |
+| Stage | Title | Focus |
+|-------|-------|-------|
+| **Stage 3** | Connected Governance | Data unification + governance foundation |
+| **Stage 4** | Intelligent Operations | AI-assisted execution + automation |
+| **Stage 5** | Predictive Intelligence | Anticipatory + self-optimizing |
 
-This positions Comply365 at the apex of intelligence maturity (8/10), reinforcing why competitors lack the platform architecture for true operational intelligence.
+This creates a seamless narrative connection between:
+- **Slide 6** (Operational Performance Ladder)
+- **Slide 7** (Operational Performance Roadmap)
+- **Slide 10** (Becoming an AI Company)
+
+---
+
+## Narrative Alignment
+
+The updated terminology reinforces that AI is the **mechanism** for moving customers up the maturity ladder:
+
+1. **Connected Governance (Stage 3)** - The platform creates the data foundation
+2. **Intelligent Operations (Stage 4)** - AI starts assisting and automating
+3. **Predictive Intelligence (Stage 5)** - AI becomes anticipatory and proactive
+
+This positions Comply365's AI story as integral to the operational performance transformation, not a separate capability.
 
