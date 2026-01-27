@@ -31,7 +31,7 @@ const SlidePlayButton = ({
   };
 
   return (
-    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-3">
+    <div className="absolute bottom-24 right-6 sm:bottom-28 sm:right-10 z-30 flex flex-col items-center gap-3">
       {/* Main play/pause button */}
       <button
         onClick={handleClick}

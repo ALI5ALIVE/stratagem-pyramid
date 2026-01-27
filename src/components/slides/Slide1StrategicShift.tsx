@@ -54,7 +54,7 @@ const Slide1StrategicShift = ({
               <div className="relative">
                 <div className="relative bg-card border border-destructive/40 rounded-lg p-5 text-center min-w-[160px]">
                   <GraduationCap className="w-8 h-8 mx-auto mb-2 text-destructive" />
-                  <span className="text-sm font-medium text-muted-foreground">LMS</span>
+                  <span className="text-sm font-medium text-muted-foreground">TMS</span>
                 </div>
               </div>
             </div>

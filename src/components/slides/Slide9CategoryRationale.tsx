@@ -29,7 +29,7 @@ const Slide9CategoryRationale = ({
     },
     {
       label: "Differentiation",
-      description: "Avoids module traps (manuals/safety/LMS) and ops-control/dashboard confusion",
+      description: "Avoids module traps (manuals/safety/TMS) and ops-control/dashboard confusion",
       icon: Sparkles,
     },
     {
