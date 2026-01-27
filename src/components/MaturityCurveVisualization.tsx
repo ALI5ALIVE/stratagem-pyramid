@@ -132,10 +132,10 @@ const stagesData: MaturityStage[] = [
     curveAnnotations: ["Safety→Change→Training", "Evidence by default", "Reliability improves"],
   },
   {
-    id: "PREDICTIVE",
+    id: "INTELLIGENT",
     stage: 4,
-    headline: "Closed-Loop Operational Improvement",
-    sublabel: "Intelligent Ops",
+    headline: "Intelligent Operations",
+    sublabel: "AI-Assisted Execution",
     whatItLooksLike: [
       "Operational signals trigger coordinated workflows",
       "Corrective actions drive controlled procedural change",
@@ -167,10 +167,10 @@ const stagesData: MaturityStage[] = [
     curveAnnotations: ["Weak-signal detection", "Prioritised interventions", "Faster decisions"],
   },
   {
-    id: "AGENTIC",
+    id: "PREDICTIVE",
     stage: 5,
-    headline: "Predictive & Agentic Reliability",
-    sublabel: "Autonomous Reliability",
+    headline: "Predictive Operations",
+    sublabel: "AI-Accelerated Performance",
     whatItLooksLike: [
       "AI detects weak signals early and forecasts risk patterns",
       "Prioritised recommendations and action plans",
