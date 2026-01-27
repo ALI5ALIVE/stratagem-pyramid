@@ -23,7 +23,7 @@ const Slide1StrategicShift = ({
     <SlideContainer
       id="slide-1"
       title="The Strategic Shift"
-      subtitle="From fragmented point tools to an intelligent operating system"
+      subtitle="From fragmented point tools to a connected, intelligent, and predictive platform"
       slideNumber={1}
       isPlaying={isPlaying}
       isLoading={isLoading}
@@ -108,8 +108,8 @@ const Slide1StrategicShift = ({
               Operational Performance Platform
             </p>
             <p className="text-sm text-muted-foreground">
-              Connects safety, procedures, and training into an intelligent operating system, 
-              turning signals into orchestrated change and audit-ready proof.
+              A connected, intelligent, and predictive platform that turns signals into 
+              orchestrated change and audit-ready proof.
             </p>
           </div>
         </div>
