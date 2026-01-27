@@ -23,10 +23,10 @@ import type { SlideNarrationProps } from "@/types/slideProps";
 
 const vendors = [
   { name: "Comply365", breadth: 8, depth: 8, color: "#0066ff", isHighlighted: true },
-  { name: "Ideagen", breadth: 7.5, depth: 4.2, color: "#10b981", isHighlighted: false },
-  { name: "TrustFlight Centrik", breadth: 6.0, depth: 3.4, color: "#8b5cf6", isHighlighted: false },
-  { name: "Hinfact", breadth: 4.5, depth: 4.0, color: "#f59e0b", isHighlighted: false },
-  { name: "Web Manuals", breadth: 4.0, depth: 4.4, color: "#ef4444", isHighlighted: false },
+  { name: "Ideagen", breadth: 5.5, depth: 3.5, color: "#10b981", isHighlighted: false },
+  { name: "TrustFlight Centrik", breadth: 4.5, depth: 2.8, color: "#8b5cf6", isHighlighted: false },
+  { name: "Hinfact", breadth: 3.0, depth: 3.2, color: "#f59e0b", isHighlighted: false },
+  { name: "Web Manuals", breadth: 2.8, depth: 3.0, color: "#ef4444", isHighlighted: false },
   { name: "Yonder", breadth: 2.0, depth: 2.5, color: "#ec4899", isHighlighted: false },
   { name: "Orlando", breadth: 1.5, depth: 2.5, color: "#14b8a6", isHighlighted: false },
 ];

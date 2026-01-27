@@ -48,15 +48,16 @@ const stagesData: MaturityStage[] = [
     sublabel: "Silo Optimisation",
     whatItLooksLike: [
       "Strong systems in specific departments",
+      "Best-in-class Comply365 products can get you here",
       "Compliance and training are structured but disconnected",
       "Investigations produce actions but follow-through is inconsistent",
     ],
     result: [
       "Compliance is managed, but performance does not systematically improve",
-      "Repeat issues persist",
+      "Repeat issues persist — platform required to progress",
     ],
     whyItMatters:
-      "Departments operate well individually, but lack of connection prevents organizational learning",
+      "Individual Comply365 products can reach this stage, but lack of connection prevents organizational learning",
     accentColor: "hsl(199 89% 48%)",
     behavioralShift: {
       from: "Firefighting with limited visibility",
@@ -70,7 +71,7 @@ const stagesData: MaturityStage[] = [
     },
     valueProof: {
       metrics: ["Dept compliance ↑", "Process consistency ↑", "Cross-func ROI limited"],
-      roiStatement: "Structured compliance, but limited cross-functional ROI",
+      roiStatement: "Structured compliance, but need full platform for cross-functional ROI",
     },
     curveAnnotations: ["Better process", "Still manual handoffs", "Slow change cycles"],
   },
@@ -116,7 +117,7 @@ const stagesData: MaturityStage[] = [
     whatItLooksLike: [
       "Operational signals trigger coordinated workflows",
       "Corrective actions drive controlled procedural change",
-      "Training is targeted and triggered by change",
+      "Training is targeted, personalized, and triggered by change",
       "Evidence captured automatically",
     ],
     result: [
@@ -366,6 +367,27 @@ const Slide5MaturityCurve = ({
                   <rect x="470" y="510" width="180" height="40" rx="6" fill="hsl(173 80% 40% / 0.2)" stroke="hsl(173 80% 40%)" strokeWidth="2" />
                   <text x="560" y="538" fill="hsl(173 80% 50%)" fontSize="18" fontWeight="600" textAnchor="middle" className="font-display">
                     PLATFORM SHIFT
+                  </text>
+                </g>
+              )}
+
+              {/* Inflection Point marker - above Stage 3, desktop only */}
+              {!isMobile && (
+                <g className={`transition-opacity duration-700 delay-700 ${isAnimated ? "opacity-100" : "opacity-0"}`}>
+                  <line x1="560" y1="460" x2="560" y2="380" stroke="hsl(173 80% 40%)" strokeWidth="2" strokeDasharray="4,4" />
+                  <rect x="485" y="340" width="150" height="36" rx="6" fill="hsl(45 93% 58% / 0.2)" stroke="hsl(45 93% 58%)" strokeWidth="2" />
+                  <text x="560" y="364" fill="hsl(45 93% 68%)" fontSize="14" fontWeight="600" textAnchor="middle" className="font-display">
+                    INFLECTION POINT
+                  </text>
+                </g>
+              )}
+
+              {/* Stage 2 annotation - desktop only */}
+              {!isMobile && (
+                <g className={`transition-opacity duration-700 delay-300 ${isAnimated ? "opacity-100" : "opacity-0"}`}>
+                  <rect x="260" y="590" width="200" height="28" rx="4" fill="hsl(199 89% 48% / 0.15)" stroke="hsl(199 89% 48%)" strokeWidth="1" />
+                  <text x="360" y="609" fill="hsl(199 89% 58%)" fontSize="11" textAnchor="middle">
+                    Best-in-class C365 products
                   </text>
                 </g>
               )}

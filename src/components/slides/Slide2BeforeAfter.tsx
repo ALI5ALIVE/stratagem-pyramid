@@ -128,7 +128,7 @@ const Slide2BeforeAfter = ({
                   <text x="150" y="118" textAnchor="middle" fill="hsl(var(--muted-foreground))" fontSize="8">orphaned</text>
                   
                   <text x="245" y="105" textAnchor="middle" fill="hsl(var(--destructive))" fontSize="11" fontWeight="bold">45K</text>
-                  <text x="245" y="118" textAnchor="middle" fill="hsl(var(--muted-foreground))" fontSize="8">stale</text>
+                  <text x="245" y="118" textAnchor="middle" fill="hsl(var(--muted-foreground))" fontSize="8">disconnected</text>
                 </g>
               </svg>
             </div>

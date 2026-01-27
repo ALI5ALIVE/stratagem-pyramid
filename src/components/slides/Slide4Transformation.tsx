@@ -21,8 +21,8 @@ const possibilities = [
     icon: Lightbulb, 
     title: "Earlier Detection", 
     desc: "AI detects weak signals before disruptions",
-    metric: "70%",
-    metricLabel: "faster"
+    metric: "∞",
+    metricLabel: "earlier"
   },
   { 
     icon: Clock, 

@@ -1,4 +1,4 @@
-import { Sparkles, Zap, Brain, CheckCircle2, Clock, Lightbulb, Star } from "lucide-react";
+import { Sparkles, Zap, Brain, CheckCircle2, Lightbulb } from "lucide-react";
 import SlideContainer from "./SlideContainer";
 import type { SlideNarrationProps } from "@/types/slideProps";
 import { cn } from "@/lib/utils";
@@ -13,10 +13,10 @@ const aiStages = [
     title: "Embedded Intelligence",
     icon: Zap,
     capabilities: [
-      "Pattern detection from operational signals",
+      "Pattern detection from FOQA/ASAP/crew reports",
       "Recommended actions with governance awareness",
-      "Assisted drafting and execution",
-      "Audit trail generation"
+      "Assisted drafting and execution (already deployed)",
+      "Audit trail generation by default"
     ],
     gradient: "from-primary to-accent"
   },
@@ -51,37 +51,6 @@ const aiStages = [
       "Self-optimizing operational workflows"
     ],
     gradient: "from-cyan-400 to-emerald-400"
-  }
-];
-
-const domainOptions = [
-  {
-    domain: "comply365.ai",
-    position: "AI-First Signal",
-    pros: ["Clear AI company positioning", "Modern and memorable", "Brand continuity"],
-    cons: ["Requires domain acquisition", "Migration effort"],
-    recommended: true
-  },
-  {
-    domain: "comply.ai",
-    position: "Premium AI Brand",
-    pros: ["Shorter, cleaner", "Premium positioning"],
-    cons: ["Less brand continuity", "May be unavailable"],
-    recommended: false
-  },
-  {
-    domain: "c365.ai",
-    position: "Tech-Forward",
-    pros: ["Concise", "Modern tech aesthetic"],
-    cons: ["May lose brand recognition", "Less intuitive"],
-    recommended: false
-  },
-  {
-    domain: "comply365.com",
-    position: "Stability + AI Layer",
-    pros: ["Established equity", "No migration", "Lower risk"],
-    cons: ["Doesn't signal AI shift"],
-    recommended: false
   }
 ];
 
@@ -222,7 +191,7 @@ const SlideAIVision = ({
           </div>
         </div>
 
-        {/* Right Column: AI Story & Brand Evolution */}
+        {/* Right Column: AI Story & Key Takeaways */}
         <div className="space-y-4">
           {/* Operating Model Callback */}
           <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg p-4">
@@ -252,67 +221,45 @@ const SlideAIVision = ({
             </p>
           </div>
 
-          {/* Domain Rebranding Section */}
-          <div className={cn(
-            "transition-all duration-500",
-            isNarrationControlled && !showDomainSection ? "opacity-40" : "opacity-100"
-          )}>
+          {/* What We're Already Doing */}
+          <div className="bg-card/50 backdrop-blur-sm border border-emerald-500/30 rounded-lg p-4">
             <div className="flex items-center gap-2 mb-3">
-              <Star className="w-4 h-4 text-accent" />
-              <h3 className="text-sm font-semibold text-foreground uppercase tracking-wide">Brand Evolution</h3>
+              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+              <h3 className="text-sm font-semibold text-foreground">Already Deployed Today</h3>
             </div>
+            <ul className="space-y-2">
+              <li className="flex items-start gap-2 text-xs text-muted-foreground">
+                <CheckCircle2 className="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" />
+                Pattern detection from Flight Ops Quality Assurance & Aviation Safety Action Program
+              </li>
+              <li className="flex items-start gap-2 text-xs text-muted-foreground">
+                <CheckCircle2 className="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" />
+                Assisted drafting of procedures and training triggers
+              </li>
+              <li className="flex items-start gap-2 text-xs text-muted-foreground">
+                <CheckCircle2 className="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" />
+                Governance-aware automation with audit trails
+              </li>
+            </ul>
+          </div>
 
-            <div className="grid grid-cols-2 gap-2">
-              {domainOptions.map((option) => (
-                <div
-                  key={option.domain}
-                  className={cn(
-                    "bg-card/50 backdrop-blur-sm border rounded-lg p-3 transition-all duration-300 hover:border-primary/50",
-                    option.recommended 
-                      ? "border-primary/30 bg-primary/5" 
-                      : "border-border/50"
-                  )}
-                >
-                  {option.recommended && (
-                    <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-medium bg-primary/20 text-primary mb-2">
-                      Recommended
-                    </span>
-                  )}
-                  
-                  <div className="font-mono text-sm font-semibold text-foreground mb-1">
-                    {option.domain}
-                  </div>
-                  
-                  <div className="text-[10px] text-muted-foreground mb-2">
-                    {option.position}
-                  </div>
-
-                  <div className="space-y-1">
-                    {option.pros.slice(0, 2).map((pro, index) => (
-                      <div key={index} className="flex items-center gap-1 text-[10px] text-accent">
-                        <CheckCircle2 className="w-2.5 h-2.5" />
-                        {pro}
-                      </div>
-                    ))}
-                    {option.cons.slice(0, 1).map((con, index) => (
-                      <div key={index} className="flex items-center gap-1 text-[10px] text-muted-foreground">
-                        <Clock className="w-2.5 h-2.5" />
-                        {con}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
+          {/* Connection to Prior Slides */}
+          <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-lg p-4">
+            <p className="text-sm text-foreground font-medium text-center">
+              This is how we take customers up the Performance Ladder
+            </p>
+            <p className="text-xs text-muted-foreground text-center mt-2">
+              The Operational Intelligence Layer powers Stage 3 → 4 → 5 progression. AI compresses decision and execution time while keeping humans in control.
+            </p>
           </div>
 
           {/* Key Message */}
-          <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-lg p-4">
+          <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg p-4">
             <p className="text-sm text-foreground font-medium text-center">
-              The domain is a choice. But the direction is clear.
+              More than a platform company — an <span className="text-primary">AI company</span>
             </p>
             <p className="text-xs text-muted-foreground text-center mt-1">
-              The Operational Intelligence Layer is our AI story — and this journey positions Comply365 as a leader in AI-powered operational performance.
+              The Operational Intelligence Layer is our AI story — positioning Comply365 as a leader in AI-powered operational performance.
             </p>
           </div>
         </div>
