@@ -128,7 +128,7 @@ const Slide2BeforeAfter = ({
                   <text x="150" y="118" textAnchor="middle" fill="hsl(var(--muted-foreground))" fontSize="8">orphaned</text>
                   
                   <text x="245" y="105" textAnchor="middle" fill="hsl(var(--destructive))" fontSize="11" fontWeight="bold">45K</text>
-                  <text x="245" y="118" textAnchor="middle" fill="hsl(var(--muted-foreground))" fontSize="8">disconnected</text>
+                  <text x="245" y="118" textAnchor="middle" fill="hsl(var(--muted-foreground))" fontSize="8">manual</text>
                 </g>
               </svg>
             </div>
@@ -148,7 +148,7 @@ const Slide2BeforeAfter = ({
                 <span className="text-xs font-semibold text-destructive uppercase">Data Locked</span>
               </div>
               <p className="text-xs text-muted-foreground">
-                65K+ data points trapped in silos, insights unavailable
+                65K+ data points managed manually, not automated or online
               </p>
             </div>
           </div>
@@ -240,7 +240,7 @@ const Slide2BeforeAfter = ({
             <div className="mt-4 p-3 bg-primary/10 rounded-lg border border-primary/20">
               <div className="flex items-center gap-2 mb-2">
                 <TrendingUp className="w-4 h-4 text-primary" />
-                <span className="text-xs font-semibold text-primary uppercase">Value Generated</span>
+                <span className="text-xs font-semibold text-primary uppercase">Target Outcomes*</span>
               </div>
               <div className="grid grid-cols-3 gap-2 text-center">
                 <div>
@@ -256,6 +256,7 @@ const Slide2BeforeAfter = ({
                   <p className="text-xs text-muted-foreground">Audit</p>
                 </div>
               </div>
+              <p className="text-[9px] text-muted-foreground text-center mt-2 opacity-70">*Based on customer projections</p>
             </div>
           </div>
         </div>

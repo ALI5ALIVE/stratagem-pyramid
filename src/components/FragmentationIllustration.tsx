@@ -10,7 +10,7 @@ const FragmentationIllustration = ({ onNodeClick }: FragmentationIllustrationPro
   // Evenly spread nodes across the full width
   const nodes = [
     { id: "docs", label: "Docs", x: 55, y: 40, icon: "📄" },
-    { id: "training", label: "LMS", x: 135, y: 40, icon: "🎓" },
+    { id: "training", label: "TMS", x: 135, y: 40, icon: "🎓" },
     { id: "comms", label: "Comms", x: 215, y: 40, icon: "📧" },
     { id: "audit", label: "Audit", x: 295, y: 40, icon: "📋" },
     { id: "safety", label: "Safety", x: 375, y: 40, icon: "⚠️" },
