@@ -7,31 +7,31 @@ const aiStages = [
   {
     id: "today",
     label: "Today",
-    stage: "Stage 3-4",
+    stage: "Stage 3",
     status: "Active",
     statusColor: "bg-emerald-500",
-    title: "Embedded Intelligence",
+    title: "Connected Governance",
     icon: Zap,
     capabilities: [
+      "Unified data across Safety, Content, and Training",
+      "Governance-aware workflows with audit trails",
       "Pattern detection from FOQA/ASAP/crew reports",
-      "Recommended actions with governance awareness",
-      "Assisted drafting and execution (already deployed)",
-      "Audit trail generation by default"
+      "Coordinated change management"
     ],
     gradient: "from-primary to-accent"
   },
   {
     id: "nearterm",
     label: "Near-term",
-    stage: "Stage 4-5",
+    stage: "Stage 4",
     status: "In Development",
     statusColor: "bg-amber-500",
-    title: "Predictive Operations",
+    title: "Intelligent Operations",
     icon: Lightbulb,
     capabilities: [
-      "Weak signal detection before incidents",
-      "Proactive intervention recommendations",
-      "Risk forecasting models",
+      "AI-assisted drafting and execution",
+      "Recommended actions with context awareness",
+      "Automated trigger orchestration",
       "Compressed decision cycles"
     ],
     gradient: "from-accent to-cyan-400"
@@ -39,15 +39,15 @@ const aiStages = [
   {
     id: "future",
     label: "Future",
-    stage: "Stage 5+",
+    stage: "Stage 5",
     status: "Vision",
     statusColor: "bg-purple-500",
-    title: "Agentic Reliability",
+    title: "Predictive Intelligence",
     icon: Brain,
     capabilities: [
-      "Autonomous orchestration of routine tasks",
-      "Human-in-the-loop exception handling",
-      "Continuous automated proof generation",
+      "Weak signal detection before incidents",
+      "Proactive intervention recommendations",
+      "Risk forecasting models",
       "Self-optimizing operational workflows"
     ],
     gradient: "from-cyan-400 to-emerald-400"
@@ -107,7 +107,7 @@ const SlideAIVision = ({
         <div className="space-y-3">
           <div className="flex items-center gap-2 mb-3">
             <Sparkles className="w-4 h-4 text-primary" />
-            <h3 className="text-sm font-semibold text-foreground uppercase tracking-wide">AI Evolution Journey</h3>
+            <h3 className="text-sm font-semibold text-foreground uppercase tracking-wide">Intelligence Maturity Roadmap</h3>
           </div>
 
           {/* AI Stages Timeline */}
@@ -248,7 +248,7 @@ const SlideAIVision = ({
               This is how we take customers up the Performance Ladder
             </p>
             <p className="text-xs text-muted-foreground text-center mt-2">
-              The Operational Intelligence Layer powers Stage 3 → 4 → 5 progression. AI compresses decision and execution time while keeping humans in control.
+              Connected Governance → Intelligent Operations → Predictive Intelligence. AI compresses decision and execution time while keeping humans in control.
             </p>
           </div>
 
