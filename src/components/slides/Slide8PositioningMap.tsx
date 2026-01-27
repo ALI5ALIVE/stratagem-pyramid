@@ -176,7 +176,7 @@ const Slide8PositioningMap = ({
       onPause={onPause}
       onNextSlide={onNextSlide}
     >
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-2">
         {/* Tab Toggle */}
         <div className="flex justify-center">
           <Tabs value={activeView} onValueChange={(v) => setActiveView(v as "matrix" | "radar")}>
@@ -192,9 +192,9 @@ const Slide8PositioningMap = ({
         </div>
 
         {/* Chart Container */}
-        <div className="bg-card rounded-xl border border-border p-4">
+        <div className="bg-card rounded-xl border border-border p-3">
           {activeView === "matrix" ? (
-            <div className="w-full max-w-[500px] aspect-square mx-auto">
+            <div className="w-full max-w-[700px] aspect-square mx-auto">
               <ResponsiveContainer width="100%" height="100%">
                 <ScatterChart margin={{ top: 50, right: 40, bottom: 110, left: 100 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -370,7 +370,7 @@ const Slide8PositioningMap = ({
               </div>
 
               {/* Radar Chart */}
-              <div className="w-full max-w-[420px] aspect-square mx-auto">
+              <div className="w-full max-w-[600px] aspect-square mx-auto">
                 <ResponsiveContainer width="100%" height="100%">
                   <RadarChart data={radarData} margin={{ top: 10, right: 20, bottom: 10, left: 20 }}>
                     <PolarGrid stroke="hsl(var(--border))" />
@@ -406,7 +406,7 @@ const Slide8PositioningMap = ({
 
         {/* Key Takeaway */}
         <div className="flex justify-center">
-          <div className="bg-primary/10 border border-primary/30 rounded-lg px-5 py-3 max-w-2xl text-center">
+          <div className="bg-primary/10 border border-primary/30 rounded-lg px-4 py-2 max-w-2xl text-center">
             <p className="text-xs text-foreground">
               <span className="font-semibold text-primary">Comply365</span> is the only vendor positioned in the{" "}
               <span className="font-semibold">Leaders quadrant</span> with comprehensive coverage across all 10 operational capabilities.
