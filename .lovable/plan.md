@@ -1,99 +1,62 @@
 
+## Goal
+Make the Competitive Positioning charts large on a large monitor, but never so large that they get clipped inside the slide (the slide uses `h-screen` + `overflow-hidden`).
 
-# Plan: Enlarge Competitive Positioning Map and Fix Vendor Chip Overlap
+## What’s causing the cut-off
+- `SlideContainer` locks each slide to one viewport (`h-screen`) and hides overflow (`overflow-hidden`).
+- The charts are currently sized primarily by width (`max-w-4xl` / `max-w-3xl`) with `aspect-square`.
+- On some viewport heights, a square at those widths becomes taller than the remaining vertical space (after title/subtitle, tabs, padding, and the takeaway banner), so the bottom gets cut off.
 
-## Problems Identified
+## Fix strategy (keep charts square, but height-aware)
+Instead of fixed `max-w-*`, we’ll size the square using CSS `min()` with a viewport-height-based cap:
+- Width becomes: `min(<desired max width>, calc(100vh - <reserved space>))`
+- Because it’s `aspect-square`, height matches width, so the chart will always fit vertically.
 
-1. **Chart too small** - The 700px max-width is still constraining the chart on large monitors
-2. **Vendor chips overlapping** - The vendor selector chips on the Radar view are overlapping each other
+This keeps the charts “as big as possible” without clipping.
 
----
+## Planned code changes
 
-## Solution Overview
+### 1) Strategic Matrix: replace `max-w-4xl` with a height-capped square
+**File:** `src/components/slides/Slide8PositioningMap.tsx`
 
-### 1. Make Chart Much Larger
-
-Since you're on a large monitor, we'll significantly increase the chart size:
-
-| Element | Current | Proposed |
-|---------|---------|----------|
-| Strategic Matrix container | `max-w-[700px]` | `max-w-4xl` (896px) |
-| Radar Chart container | `max-w-[600px]` | `max-w-3xl` (768px) |
-
-We'll also use CSS utility classes instead of fixed pixel values for better responsiveness.
-
-### 2. Fix Vendor Chip Overlap
-
-The vendor chips are using `flex-wrap justify-center gap-2` which can cause overlap on certain screen sizes. We'll:
-
-| Change | Current | Proposed |
-|--------|---------|----------|
-| Chip gap | `gap-2` | `gap-3` (more spacing) |
-| Chip padding | `px-3 py-1.5` | `px-2.5 py-1` (slightly smaller) |
-| Font size | `text-xs` | Keep `text-xs` |
-| Max container width | None | Add `max-w-3xl` to constrain wrapping |
-
----
-
-## File Changes
-
-**File: `src/components/slides/Slide8PositioningMap.tsx`**
-
-### Change 1: Increase Matrix Chart Size (Line 197)
+**Change:**
 ```tsx
 // From:
-<div className="w-full max-w-[700px] aspect-square mx-auto">
-
-// To:
 <div className="w-full max-w-4xl aspect-square mx-auto">
+
+// To (example values, tuned to fit within the slide header + tabs + padding):
+<div className="w-[min(56rem,calc(100vh-18rem))] max-w-full aspect-square mx-auto">
 ```
 
-### Change 2: Increase Radar Chart Size (Line 373)
+- `56rem` ~= 896px (same target as `max-w-4xl`)
+- `calc(100vh-18rem)` reserves space for the header, tabs, container padding, and takeaway so the square can’t exceed available height.
+
+### 2) Radar view: use a slightly stricter height cap (because chips + quick actions take space)
+**Change:**
 ```tsx
 // From:
-<div className="w-full max-w-[600px] aspect-square mx-auto">
-
-// To:
 <div className="w-full max-w-3xl aspect-square mx-auto">
-```
-
-### Change 3: Fix Vendor Chip Overlap (Line 349)
-```tsx
-// From:
-<div className="flex flex-wrap justify-center gap-2">
 
 // To:
-<div className="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto">
+<div className="w-[min(48rem,calc(100vh-24rem))] max-w-full aspect-square mx-auto">
 ```
 
-### Change 4: Adjust Chip Button Styling (Line 354)
-```tsx
-// From:
-className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all border-2 ${...}`}
+- `48rem` ~= 768px (same as `max-w-3xl`)
+- `calc(100vh-24rem)` reserves extra room for vendor chips + quick action row so the chart doesn’t get cut off.
 
-// To:
-className={`px-2.5 py-1 rounded-full text-xs font-medium transition-all border-2 whitespace-nowrap ${...}`}
-```
+### 3) (If needed) reclaim a little vertical space without shrinking the chart
+If anything is still tight after the height-aware sizing, we’ll make small spacing tweaks that don’t harm readability:
+- Reduce radar view wrapper gap from `gap-4` → `gap-3`
+- Reduce chart container padding from `p-3` → `p-2` (only if still necessary)
+These are “last-mile” adjustments and only needed if the reserved-space estimate is slightly off in your exact browser zoom/OS scaling.
 
-Adding `whitespace-nowrap` prevents the chip text from wrapping internally, which can contribute to overlap issues.
+## How we’ll verify
+1. Open Slide 8 in the deck.
+2. Toggle between “Strategic Matrix” and “Capability Radar”.
+3. Confirm:
+   - The full square chart is visible (no bottom clipping).
+   - Labels and chips are still readable.
+   - On large monitors, the chart expands up to the intended max size.
 
----
-
-## Size Comparison
-
-| Tailwind Class | Pixel Width | Improvement |
-|----------------|-------------|-------------|
-| `max-w-[700px]` | 700px | Current |
-| `max-w-4xl` | 896px | +28% larger |
-| `max-w-[600px]` | 600px | Current |
-| `max-w-3xl` | 768px | +28% larger |
-
----
-
-## Visual Impact
-
-- **Strategic Matrix**: ~28% larger, filling more of the large monitor viewport
-- **Radar Chart**: ~28% larger with better visibility
-- **Vendor Chips**: Properly spaced with no overlapping, constrained to a readable width
-- Both charts maintain square aspect ratio for proper visual proportions
-
+## Notes / tunables (fast follow if you want it even bigger)
+If you tell me your typical presentation resolution (e.g., 2560×1440, 3440×1440, 4K), we can fine-tune the reserved space numbers (`18rem`, `24rem`) to maximize chart size while guaranteeing no cut-off.
