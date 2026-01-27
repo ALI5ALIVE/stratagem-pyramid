@@ -279,13 +279,13 @@ const Slide5MaturityCurve = ({
       onPause={onPause}
       onNextSlide={onNextSlide}
     >
-      <div className="space-y-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+      <div className="space-y-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
           {/* LEFT: Hockey Stick Curve - 2x scaled */}
           <div className="bg-card/30 rounded-xl border border-border/30 p-4 md:p-6 flex items-center justify-center">
             <svg
               viewBox={viewBox}
-              className="w-full h-auto max-h-[400px]"
+              className="w-full h-auto max-h-[320px]"
               preserveAspectRatio="xMidYMid meet"
             >
               <defs>

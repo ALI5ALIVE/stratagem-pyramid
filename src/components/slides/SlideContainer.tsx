@@ -43,7 +43,7 @@ const SlideContainer = ({
     <section
       id={id}
       className={cn(
-        "min-h-screen w-full flex flex-col px-6 sm:px-10 lg:px-16 py-16 sm:py-20 snap-start relative",
+        "h-screen w-full flex flex-col px-6 sm:px-10 lg:px-16 py-10 sm:py-14 snap-start relative overflow-hidden",
         variant === "light" ? "slide-light bg-white text-foreground" : "bg-background",
         className
       )}
@@ -85,7 +85,7 @@ const SlideContainer = ({
 
       <div className="max-w-7xl w-full mx-auto flex-1 flex flex-col">
         {/* Header section - left aligned like PPT template */}
-        <div className="mb-8 sm:mb-12">
+        <div className="mb-4 sm:mb-6">
           <h2 className={cn(
             "text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight mb-2",
             variant === "light" ? "text-foreground" : "text-foreground"
@@ -105,7 +105,7 @@ const SlideContainer = ({
         </div>
 
         {/* Content area */}
-        <div className="w-full flex-1">{children}</div>
+        <div className="w-full flex-1 overflow-hidden">{children}</div>
       </div>
     </section>
   );

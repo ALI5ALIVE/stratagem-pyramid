@@ -65,7 +65,7 @@ const Slide0Title = ({
       />
 
       {/* Content */}
-      <div className="relative z-10 max-w-5xl w-full text-center space-y-8 sm:space-y-12">
+      <div className="relative z-10 max-w-5xl w-full text-center space-y-4 sm:space-y-6">
         {/* Logo */}
         <div className="flex justify-center">
           <img 
@@ -97,12 +97,12 @@ const Slide0Title = ({
         </div>
 
         {/* Agenda Grid */}
-        <div className="pt-4 sm:pt-8">
+        <div className="pt-2 sm:pt-4">
           <div className="inline-block">
-            <div className="text-xs sm:text-sm text-muted-foreground uppercase tracking-widest mb-4">
+            <div className="text-xs sm:text-sm text-muted-foreground uppercase tracking-widest mb-2">
               The Journey
             </div>
-            <div className="grid grid-cols-4 sm:grid-cols-4 gap-2 sm:gap-3">
+            <div className="grid grid-cols-4 sm:grid-cols-4 gap-1.5 sm:gap-2">
               {agendaItems.map((item) => (
                 <button 
                   key={item.num}
@@ -129,7 +129,7 @@ const Slide0Title = ({
         </div>
 
         {/* Context */}
-        <div className="pt-4 sm:pt-8 space-y-1">
+        <div className="pt-2 sm:pt-4 space-y-1">
           <p className="text-muted-foreground text-sm sm:text-base font-medium">
             Board Strategy Session
           </p>

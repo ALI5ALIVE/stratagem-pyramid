@@ -38,9 +38,9 @@ const DetailsPanel = ({ layer, highlightedModule }: DetailsPanelProps) => {
   const highlightedItems = highlightedModule ? moduleHighlights[highlightedModule] || [] : [];
 
   return (
-    <div className="details-panel h-full animate-fade-in space-y-1.5">
+    <div className="details-panel h-full animate-fade-in space-y-1">
       {/* Header */}
-      <div className="mb-1.5">
+      <div className="mb-1">
         <div className="flex items-center gap-1 mb-0.5">
           <span
             className="inline-flex items-center justify-center w-3 h-3 rounded text-[8px] font-bold"
@@ -61,7 +61,7 @@ const DetailsPanel = ({ layer, highlightedModule }: DetailsPanelProps) => {
       </div>
 
       {/* What it looks like */}
-      <div className="mb-1.5">
+      <div className="mb-1">
         <div className="flex items-center gap-1 mb-1">
           <Eye className="w-2.5 h-2.5" style={{ color: layer.accentColor }} />
           <span className="text-[8px] font-semibold uppercase tracking-widest text-muted-foreground">
@@ -93,7 +93,7 @@ const DetailsPanel = ({ layer, highlightedModule }: DetailsPanelProps) => {
       </div>
 
       {/* Result */}
-      <div className="mb-1.5">
+      <div className="mb-1">
         <div className="flex items-center gap-1 mb-1">
           <Target className="w-2.5 h-2.5" style={{ color: layer.accentColor }} />
           <span className="text-[8px] font-semibold uppercase tracking-widest text-muted-foreground">
@@ -116,7 +116,7 @@ const DetailsPanel = ({ layer, highlightedModule }: DetailsPanelProps) => {
       </div>
 
       {/* Value Proof */}
-      <div className="mb-1.5">
+      <div className="mb-1">
         <div className="flex items-center gap-1 mb-1">
           <TrendingUp className="w-2.5 h-2.5" style={{ color: layer.accentColor }} />
           <span className="text-[8px] font-semibold uppercase tracking-widest text-muted-foreground">
@@ -153,7 +153,7 @@ const DetailsPanel = ({ layer, highlightedModule }: DetailsPanelProps) => {
 
       {/* Why it matters */}
       <div
-        className="relative p-1.5 rounded-lg border mb-1.5"
+        className="relative p-1.5 rounded-lg border mb-1"
         style={{
           borderColor: `${layer.accentColor}30`,
           background: `linear-gradient(135deg, ${layer.accentColor}08 0%, transparent 100%)`,

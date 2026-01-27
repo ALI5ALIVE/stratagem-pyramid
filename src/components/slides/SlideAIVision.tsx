@@ -101,17 +101,17 @@ const SlideAIVision = ({
     >
 
       {/* Two-column layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 max-w-6xl mx-auto">
         
         {/* Left Column: AI Evolution Journey */}
-        <div className="space-y-4">
+        <div className="space-y-3">
           <div className="flex items-center gap-2 mb-3">
             <Sparkles className="w-4 h-4 text-primary" />
             <h3 className="text-sm font-semibold text-foreground uppercase tracking-wide">AI Evolution Journey</h3>
           </div>
 
           {/* AI Stages Timeline */}
-          <div className="relative space-y-3">
+          <div className="relative space-y-2">
             {/* Vertical line */}
             <div className="absolute left-[15px] top-6 bottom-6 w-0.5 bg-border" />
 
@@ -145,7 +145,7 @@ const SlideAIVision = ({
 
                   {/* Stage card */}
                   <div className={cn(
-                    "bg-card/50 backdrop-blur-sm border rounded-lg p-3 transition-all duration-300",
+                    "bg-card/50 backdrop-blur-sm border rounded-lg p-2.5 transition-all duration-300",
                     isCurrentStage 
                       ? "border-primary/50 bg-card/80 shadow-lg shadow-primary/10" 
                       : "border-border/50"
@@ -191,7 +191,7 @@ const SlideAIVision = ({
         </div>
 
         {/* Right Column: AI Story & Key Takeaways */}
-        <div className="space-y-4">
+        <div className="space-y-3">
           {/* Operating Model Callback */}
           <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg p-4">
             <div className="flex items-center gap-2 mb-3">

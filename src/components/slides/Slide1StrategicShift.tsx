@@ -33,7 +33,7 @@ const Slide1StrategicShift = ({
       onPause={onPause}
       onNextSlide={onNextSlide}
     >
-      <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+      <div className="grid lg:grid-cols-2 gap-4 lg:gap-6 items-start">
         {/* Visual: Category Shift */}
         <div className="relative">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8">
@@ -86,7 +86,7 @@ const Slide1StrategicShift = ({
         </div>
 
         {/* Content: Why Now */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div>
             <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5 text-amber-500" />
