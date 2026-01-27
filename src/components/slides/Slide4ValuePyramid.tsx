@@ -192,11 +192,11 @@ const layerOrder = ["FRAGMENTED", "MANAGED", "CONNECTED", "CLOSED_LOOP", "PREDIC
 
 // Timing markers for narration-synced stage changes
 const stageTimings = [
-  { stage: "FRAGMENTED", startPercent: 8 },
-  { stage: "MANAGED", startPercent: 22 },
-  { stage: "CONNECTED", startPercent: 35 },
-  { stage: "CLOSED_LOOP", startPercent: 52 },
-  { stage: "PREDICTIVE", startPercent: 70 },
+  { stage: "FRAGMENTED", startPercent: 10 },
+  { stage: "MANAGED", startPercent: 24 },
+  { stage: "CONNECTED", startPercent: 38 },
+  { stage: "CLOSED_LOOP", startPercent: 55 },
+  { stage: "PREDICTIVE", startPercent: 72 },
 ];
 
 const Slide4ValuePyramid = ({

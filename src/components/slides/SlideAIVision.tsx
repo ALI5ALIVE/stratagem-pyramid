@@ -74,10 +74,9 @@ const SlideAIVision = ({
 }: SlideAIVisionProps) => {
   // Determine which stage to highlight based on narration progress
   const getActiveStageIndex = () => {
-    if (progress < 15) return -1;
-    if (progress < 35) return 0;
-    if (progress < 55) return 1;
-    if (progress < 75) return 2;
+    if (progress < 18) return -1;
+    if (progress < 40) return 0;
+    if (progress < 62) return 1;
     return 2;
   };
 
