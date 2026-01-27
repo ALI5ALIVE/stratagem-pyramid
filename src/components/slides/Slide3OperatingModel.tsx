@@ -7,10 +7,10 @@ import type { SlideNarrationProps } from "@/types/slideProps";
 // Timing markers for narration-synced step highlighting
 // Timing markers synced to narration script phases
 const stepTimings = [
-  { index: 0, startPercent: 10 },  // Detect - "First, Detect"
-  { index: 1, startPercent: 25 },  // Trigger - "Then, Trigger"
-  { index: 2, startPercent: 40 },  // Orchestrate - "Next, Orchestrate"
-  { index: 3, startPercent: 55 },  // Prove - "Finally, Prove"
+  { index: 0, startPercent: 12 },  // Detect - "First, Detect"
+  { index: 1, startPercent: 28 },  // Trigger - "Then, Trigger"
+  { index: 2, startPercent: 45 },  // Orchestrate - "Next, Orchestrate"
+  { index: 3, startPercent: 62 },  // Prove - "Finally, Prove"
 ];
 
 const Slide3OperatingModel = ({
