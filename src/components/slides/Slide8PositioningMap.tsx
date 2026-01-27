@@ -70,7 +70,7 @@ const CustomTooltip = ({ active, payload }: any) => {
           Breadth: <span className="text-foreground">{data.breadth}%</span>
         </p>
         <p className="text-xs text-muted-foreground">
-          Depth: <span className="text-foreground">{data.depth.toFixed(1)}/4.0</span>
+          Intelligence: <span className="text-foreground">{data.depth.toFixed(1)}/10</span>
         </p>
       </div>
     );
@@ -223,11 +223,11 @@ const Slide8PositioningMap = ({
                     dataKey="depth"
                     domain={[0, 10]}
                     ticks={[0, 2, 4, 6, 8, 10]}
-                    name="Strategic Value"
+                    name="Intelligence Maturity"
                     tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
                     axisLine={{ stroke: 'hsl(var(--border))' }}
                     label={{
-                      value: "Cost Center → Revenue Generation",
+                      value: "Manual Reporting → Intelligent Operations",
                       angle: -90,
                       position: "left",
                       offset: 20,
@@ -244,7 +244,7 @@ const Slide8PositioningMap = ({
                     fillOpacity={0.15}
                     stroke="#6b7280"
                     strokeOpacity={0.3}
-                    label={<QuadrantLabel label="Basic Tools" sublabel="Task-level Value" position="bottom-left" />}
+                    label={<QuadrantLabel label="Basic Tools" sublabel="Static Compliance" position="bottom-left" />}
                   />
                   <ReferenceArea
                     x1={5} x2={10} y1={0} y2={5}
@@ -252,7 +252,7 @@ const Slide8PositioningMap = ({
                     fillOpacity={0.15}
                     stroke="#9ca3af"
                     strokeOpacity={0.3}
-                    label={<QuadrantLabel label="Broad Tools" sublabel="Breadth without Depth" position="bottom-right" />}
+                    label={<QuadrantLabel label="Broad Tools" sublabel="Data without Intelligence" position="bottom-right" />}
                   />
                   <ReferenceArea
                     x1={0} x2={5} y1={5} y2={10}
@@ -260,7 +260,7 @@ const Slide8PositioningMap = ({
                     fillOpacity={0.15}
                     stroke="#8b5cf6"
                     strokeOpacity={0.3}
-                    label={<QuadrantLabel label="Specialists" sublabel="High Value, Narrow Domain" position="top-left" />}
+                    label={<QuadrantLabel label="Specialists" sublabel="Deep Intelligence, Limited Scope" position="top-left" />}
                   />
                   <ReferenceArea
                     x1={5} x2={10} y1={5} y2={10}
@@ -268,7 +268,7 @@ const Slide8PositioningMap = ({
                     fillOpacity={0.2}
                     stroke="#0066ff"
                     strokeOpacity={0.4}
-                    label={<QuadrantLabel label="Leaders" sublabel="Full Capability + Strategic" position="top-right" />}
+                    label={<QuadrantLabel label="Leaders" sublabel="Full Intelligence + Full Coverage" position="top-right" />}
                   />
 
                   {/* Vendors rendered AFTER quadrants so they appear on top */}
