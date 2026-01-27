@@ -1,284 +1,129 @@
 
-# Plan: Comprehensive Slide Deck Feedback Implementation
+
+# Plan: Hide Investor Slide and Category Alternatives
 
 ## Overview
 
-This plan addresses all feedback points from the review, organized by slide page number. The changes span talk track updates, visual adjustments, metric alignment, and narration synchronization fixes.
+Remove the Investor slide and the three Category Alternative slides from the deck while preserving the code files for potential future use. This will reduce the deck from 18 slides to 14 slides.
 
 ---
 
-## Page-by-Page Changes
+## Slides to Remove
 
-### Page 2: Strategic Shift (Slide 1)
-
-**Feedback**: The bullets on the right are more powerful than the talk track. Use more of the bullets in talk track.
-
-| File | Change |
-|------|--------|
-| `src/data/slideNarration.ts` | Enhance script for slideId 1 to incorporate the stronger bullet points verbatim |
-
-**Current bullets in code** (`Slide1StrategicShift.tsx`):
-- "Signals scattered across siloed systems — no unified view of operational risk"
-- "No automated trigger when a procedure, training, or safety gap is detected"
-- "Manual coordination slows change — handoffs, spreadsheets, email approvals"
-- "Procedural drift between what's documented, trained, and actually done"
-- "Audit evidence gathered reactively — duplicated effort, incomplete proof"
-
-**Updated script** will include these exact phrases for more impact.
+| Current Position | Slide ID | Label | Action |
+|------------------|----------|-------|--------|
+| 11 | slide-11 | Investors | Hide |
+| 15 | slide-15 | Category: Excellence | Hide |
+| 16 | slide-16 | Category: Orchestration | Hide |
+| 17 | slide-17 | Category: Assurance | Hide |
 
 ---
 
-### Page 3: Before & After (Slide 2)
+## New Slide Sequence
 
-**Feedback**:
-1. Should we have more compelling value generated (like revenue protection)?
-2. "Workforce readiness" unclear as a metric
-3. Training records are disconnected, not "stale"
-4. Talk track pauses between "Comply" and "365" — it's one word
+After removal, the deck will have **14 slides** (0-13):
 
-| File | Change |
-|------|--------|
-| `src/components/slides/Slide2BeforeAfter.tsx` | Change "45K stale" to "45K disconnected"; update metrics to include revenue protection language |
-| `src/data/slideNarration.ts` | Update slideId 2: Change "forty-five thousand records going stale" to "disconnected from operational signals"; explain "Workforce readiness" means "trained and assessed for current procedures"; confirm "Comply three six five" pronunciation is correct (already is) |
-
-**Visual updates**:
-- Change Training silo label from "45K stale" → "45K disconnected"
-- Add "disconnected from operational signals" sub-label
+| New Position | Label |
+|--------------|-------|
+| 0 | Title |
+| 1 | Strategic Shift |
+| 2 | Before & After |
+| 3 | Operating Model |
+| 4 | Platform Capabilities |
+| 5 | Transformation |
+| 6 | Operational Performance Ladder |
+| 7 | Operational Performance Roadmap |
+| 8 | Positioning |
+| 9 | Customers |
+| 10 | AI Vision & Future |
+| 11 | Category Name |
+| 12 | Messaging House |
+| 13 | Campaign Ideas |
 
 ---
 
-### Page 4: Operating Model (Slide 3)
+## Files to Update
 
-**Feedback**:
-1. Talk track should not spell out FOQA and ASAP letter by letter — use their names
-2. Talk track does not match when Detect/Trigger/Orchestrate/Prove light up
-3. Metrics consistency question
+### 1. `src/pages/SlideDeck.tsx`
 
-| File | Change |
-|------|--------|
-| `src/data/slideNarration.ts` | Update slideId 3: Change "F-O-Q-A, A-S-A-P" to "Flight Ops Quality Assurance" and "Aviation Safety Action Program" (or simply speak naturally without spelling); adjust timing references to match step timings |
-| `src/components/slides/Slide3OperatingModel.tsx` | Adjust `stepTimings` array to better sync with narration content |
+**Changes:**
+- Remove Investor slide import (`Slide10Investors`)
+- Remove Category Alternative imports (`SlideCategoryExcellence`, `SlideCategoryOrchestration`, `SlideCategoryAssurance`)
+- Update `slides` array to remove the 4 entries
+- Update slide ID numbering to maintain sequential order (11-13 instead of 12-14)
+- Remove the 4 slide component renderings from JSX
 
-**Current timings**:
+### 2. `src/components/slides/Slide0Title.tsx`
+
+**Changes:**
+- Remove agenda items 11 (Investors), 15, 16, 17 from `agendaItems` array
+- Renumber remaining agenda items to be sequential (1-13)
+
+### 3. `src/data/slideNarration.ts`
+
+**Changes:**
+- Remove narration entry for slideId 11 (Investors)
+- Remove narration entries for slideIds 15, 16, 17
+- Update slideId numbers for slides after the removed Investor slide:
+  - Category Name: 12 → 11
+  - Messaging House: 13 → 12
+  - Campaign Ideas: 14 → 13
+
+---
+
+## Technical Details
+
+### SlideDeck.tsx - Updated slides array
+
 ```tsx
-const stepTimings = [
-  { index: 0, startPercent: 15 },  // Detect
-  { index: 1, startPercent: 30 },  // Trigger
-  { index: 2, startPercent: 50 },  // Orchestrate
-  { index: 3, startPercent: 70 },  // Prove
+const slides = [
+  { id: "slide-0", label: "Title" },
+  { id: "slide-1", label: "Strategic Shift" },
+  { id: "slide-2", label: "Before & After" },
+  { id: "slide-3", label: "Operating Model" },
+  { id: "slide-4", label: "Platform Capabilities" },
+  { id: "slide-5", label: "Transformation" },
+  { id: "slide-6", label: "Operational Performance Ladder" },
+  { id: "slide-7", label: "Operational Performance Roadmap" },
+  { id: "slide-8", label: "Positioning" },
+  { id: "slide-9", label: "Customers" },
+  { id: "slide-10", label: "AI Vision & Future" },
+  { id: "slide-11", label: "Category Name" },
+  { id: "slide-12", label: "Messaging House" },
+  { id: "slide-13", label: "Campaign Ideas" },
 ];
 ```
 
-Will adjust to align with where each step is mentioned in the script.
+### Slide0Title.tsx - Updated agendaItems
 
----
-
-### Page 5: Platform Capabilities (Slide 4)
-
-**Feedback**:
-1. Talk track and boxes sync to be fixed
-2. Did we use any science behind the benefits or are these hypotheses?
-
-| File | Change |
-|------|--------|
-| `src/components/slides/SlidePlatformCapabilities.tsx` | Adjust `capabilityTimings` to better sync with narration |
-| Consider adding footnote | "Based on customer outcomes and industry benchmarks" or similar disclaimer |
-
-**Current timings**:
 ```tsx
-const capabilityTimings = [
-  { index: 0, startPercent: 15 },  // Data That Connects
-  { index: 1, startPercent: 40 },  // Automation That Adapts
-  { index: 2, startPercent: 65 },  // AI That Drives
+const agendaItems = [
+  { num: 1, label: "Strategic Shift", summary: "Why we're redefining the category" },
+  { num: 2, label: "Before & After", summary: "What's broken — and how we fix it" },
+  { num: 3, label: "Operating Model", summary: "Detect → Trigger → Orchestrate → Prove" },
+  { num: 4, label: "Platform Capabilities", summary: "The platform that powers it" },
+  { num: 5, label: "Transformation", summary: "Cost center to value driver" },
+  { num: 6, label: "Operational Performance Ladder", summary: "Building blocks of performance" },
+  { num: 7, label: "Operational Performance Roadmap", summary: "The measurable journey" },
+  { num: 8, label: "Positioning", summary: "Where we stand vs. competitors" },
+  { num: 9, label: "Customers", summary: "Measurable value delivery" },
+  { num: 10, label: "Becoming an AI Company", summary: "The intelligence layer & roadmap" },
+  { num: 11, label: "Category Name", summary: "Why this name wins" },
+  { num: 12, label: "Messaging House", summary: "Complete positioning framework" },
+  { num: 13, label: "Campaign Ideas", summary: "Cementing category leadership" },
 ];
 ```
-
-Will analyze script to realign.
-
----
-
-### Page 6: Transformation (Slide 5)
-
-**Feedback**:
-- AI finding weak signals 70% faster — would change to "infinitely faster"
-
-| File | Change |
-|------|--------|
-| `src/components/slides/Slide4Transformation.tsx` | Update `possibilities[0]` from "70%" and "faster" to a qualitative statement like "∞" with "earlier" or reframe as "Impossible without AI" |
-| `src/data/slideNarration.ts` | Update slideId 5 to match new language |
-
----
-
-### Page 7: Operational Performance Ladder (Slide 6)
-
-**Feedback**:
-1. Increase font size of "where time goes"
-2. Say that one or two products from Comply365 can take you to Stage 2
-3. In Stage 4, says Training is targeted and personalized
-4. Align talk track with clicks
-5. Final sentence — "makes this journey possible" (not "accelerate")
-6. Each stage has valuable bullets that talk track skips — consider expanding
-
-| File | Change |
-|------|--------|
-| `src/components/slides/Slide4ValuePyramid.tsx` | Increase font sizes in time allocation section |
-| `src/components/slides/Slide4ValuePyramid.tsx` | Add note to Stage 2 data: "Individual best-in-class products from Comply365 can get you here" |
-| `src/components/slides/Slide4ValuePyramid.tsx` | Stage 4 already mentions "Training is targeted and triggered by change" — verify personalization language |
-| `src/data/slideNarration.ts` | Update slideId 6: Change "accelerates this journey" to "makes this journey possible"; expand to cover more stage-specific bullets; adjust timing sync |
-
----
-
-### Page 8: Operational Performance Roadmap (Slide 7)
-
-**Feedback**:
-1. Are pages 7 and 8 additive or alternative?
-2. Continue green line above Stage 3 and add "Inflection Point" box
-3. In Stage 2, note that individual Comply365 systems can get you there
-4. Include "where teams spend time" graphic if alternative
-
-| File | Change |
-|------|--------|
-| `src/components/slides/Slide5MaturityCurve.tsx` | Add "INFLECTION POINT" marker above Stage 3 (similar to "PLATFORM SHIFT" but positioned above the curve) |
-| `src/components/slides/Slide5MaturityCurve.tsx` | Add annotation to Stage 2: "Best-in-class Comply365 products" |
-| Consider | Add time allocation bars to this slide as well (duplicating from Slide 6) |
-| `src/data/slideNarration.ts` | Update slideId 7 to reference Stage 2 annotation and inflection point |
-
----
-
-### Page 9: Competitive Positioning (Slide 8)
-
-**Feedback**:
-- Making some competitors bigger than they are (Web Manuals, Hinfact, Centrik, Ideagen). Revise and resize.
-- Page 9 is for potential investors and lower priority.
-
-| File | Change |
-|------|--------|
-| `src/components/slides/Slide8PositioningMap.tsx` | Adjust vendor positions to be more realistic |
-
-**Current positions**:
-```tsx
-{ name: "Comply365", breadth: 8, depth: 8 },
-{ name: "Ideagen", breadth: 7.5, depth: 4.2 },
-{ name: "TrustFlight Centrik", breadth: 6.0, depth: 3.4 },
-{ name: "Hinfact", breadth: 4.5, depth: 4.0 },
-{ name: "Web Manuals", breadth: 4.0, depth: 4.4 },
-```
-
-**Revised positions** (smaller/lower):
-```tsx
-{ name: "Ideagen", breadth: 5.5, depth: 3.5 },
-{ name: "TrustFlight Centrik", breadth: 4.5, depth: 2.8 },
-{ name: "Hinfact", breadth: 3.0, depth: 3.2 },
-{ name: "Web Manuals", breadth: 2.8, depth: 3.0 },
-```
-
----
-
-### Page 10: Customers (Slide 9)
-
-**Feedback**:
-1. Talk track says audit prep time reduces by 30% but graph shows 80%
-2. What is the idea behind Benchmarking program — do we offer it today?
-
-| File | Change |
-|------|--------|
-| `src/data/slideNarration.ts` | Update slideId 9: Change "thirty percent" to "eighty percent" to match visual, OR update visual to 30% |
-| `src/components/slides/Slide7Customers.tsx` | Add clarifying note to Benchmarking section: "(Available now)" or "(Coming soon)" |
-
-**Decision needed**: Which metric is correct — 30% or 80%? Plan will align both to same value.
-
----
-
-### Page 11: AI Vision / Becoming an AI Company (Slide 10)
-
-**Feedback**:
-1. What's the objective? Seems disconnected from prior slides
-2. Consider changing platform name to "ComplAI.365"
-3. Delete the Brand Evolution section so slide can be used
-4. Some Stage 5+ items we're already doing — communicate this
-5. Don't spell out FOQA and ASAP
-
-| File | Change |
-|------|--------|
-| `src/components/slides/SlideAIVision.tsx` | Remove the "Brand Evolution" section (right column domain options) |
-| `src/components/slides/SlideAIVision.tsx` | Update "Today" stage to highlight capabilities already deployed |
-| `src/data/slideNarration.ts` | Update slideId 10: Remove domain discussion; add connection to prior slides; don't spell out FOQA/ASAP |
-
-**New slide layout**: Remove domain options grid, expand AI Evolution Journey to full width, add stronger connection to prior content.
-
----
-
-### Page 12: Category Rationale (Slide 11)
-
-**Feedback**:
-- Quarter circles do not match the square being discussed
-
-| File | Change |
-|------|--------|
-| `src/components/slides/Slide9CategoryRationale.tsx` | Review visual elements to ensure shapes align with content discussion |
-
-Need to review specific visual issue — may be referring to the criteria check icons or alternative table layout.
-
----
-
-### Page 14: Messaging House (Slide 13 - actually labeled as slide 12)
-
-**Feedback**:
-1. Add "personalized training" to key messages for Training Leader
-2. If we add value KPIs and change title, it can become a nice conclusion page
-
-| File | Change |
-|------|--------|
-| `src/components/slides/SlideMessagingHouse.tsx` | Add "Personalized training based on role and risk" to Training Leader key messages |
-| Consider | Add value KPI summary banner at bottom and consider retitling as conclusion slide |
-
----
-
-## File Summary
-
-| File | Changes |
-|------|---------|
-| `src/data/slideNarration.ts` | Major updates to scripts for slides 1, 2, 3, 5, 6, 7, 9, 10 |
-| `src/components/slides/Slide2BeforeAfter.tsx` | Change "stale" → "disconnected", update metric labels |
-| `src/components/slides/Slide3OperatingModel.tsx` | Adjust step timings for sync |
-| `src/components/slides/Slide4Transformation.tsx` | Update 70% → "∞" or qualitative statement |
-| `src/components/slides/SlidePlatformCapabilities.tsx` | Adjust capability timings, add metrics footnote |
-| `src/components/slides/Slide4ValuePyramid.tsx` | Increase font sizes, add Stage 2 note |
-| `src/components/slides/Slide5MaturityCurve.tsx` | Add inflection point marker, Stage 2 annotation |
-| `src/components/slides/Slide7Customers.tsx` | Align audit metric, clarify benchmarking availability |
-| `src/components/slides/Slide8PositioningMap.tsx` | Reduce competitor sizes/positions |
-| `src/components/slides/SlideAIVision.tsx` | Remove Brand Evolution section |
-| `src/components/slides/Slide9CategoryRationale.tsx` | Fix visual alignment issue |
-| `src/components/slides/SlideMessagingHouse.tsx` | Add personalized training message |
-
----
-
-## Implementation Priority
-
-| Priority | Changes |
-|----------|---------|
-| **High** | Talk track pronunciation fixes (FOQA/ASAP), metric alignment (30% vs 80%), competitor sizing |
-| **Medium** | Animation sync fixes, content updates (stale→disconnected, 70%→∞), Stage 2 annotations |
-| **Lower** | Brand Evolution removal (slide 10), font size increases, conclusion slide consideration |
-
----
-
-## Questions for Clarification
-
-1. **Page 10 audit metric**: Should it be 30% or 80%? Plan will align both to whichever is correct.
-2. **Benchmarking program**: Is this currently available or coming soon?
-3. **Pages 7 & 8**: Should both slides remain (additive), or should one be removed (alternative)?
-4. **Benefits science**: Should we add a footnote indicating "Based on customer outcomes" or similar?
 
 ---
 
 ## Summary
 
-| Metric | Count |
-|--------|-------|
-| Files to update | 12 |
-| Talk track scripts to revise | 8 |
-| Visual components to adjust | 9 |
-| Timing syncs to fix | 3 |
-| Competitor positions to revise | 4 |
+| Metric | Before | After |
+|--------|--------|-------|
+| Total slides | 18 | 14 |
+| Agenda items | 17 | 13 |
+| Narration entries | 18 | 14 |
+| Files updated | - | 3 |
+
+**Note:** The component files for the hidden slides (`Slide6Investors.tsx`, `SlideCategoryExcellence.tsx`, `SlideCategoryOrchestration.tsx`, `SlideCategoryAssurance.tsx`) will be preserved in the codebase and can be easily restored if needed in the future.
 
