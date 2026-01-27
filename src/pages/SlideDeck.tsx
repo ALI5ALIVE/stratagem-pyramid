@@ -11,6 +11,7 @@ import Slide6ValuePyramid from "@/components/slides/Slide4ValuePyramid";
 import Slide7MaturityCurve from "@/components/slides/Slide5MaturityCurve";
 import Slide8PositioningMap from "@/components/slides/Slide8PositioningMap";
 import Slide9Customers from "@/components/slides/Slide7Customers";
+import Slide10Investors from "@/components/slides/Slide6Investors";
 import Slide11CategoryRationale from "@/components/slides/Slide9CategoryRationale";
 import SlideMessagingHouse from "@/components/slides/SlideMessagingHouse";
 import SlideCampaignIdeas from "@/components/slides/SlideCampaignIdeas";
@@ -27,10 +28,11 @@ const slides = [
   { id: "slide-7", label: "Operational Performance Roadmap" },
   { id: "slide-8", label: "Positioning" },
   { id: "slide-9", label: "Customers" },
-  { id: "slide-10", label: "AI Vision & Future" },
-  { id: "slide-11", label: "Category Name" },
-  { id: "slide-12", label: "Messaging House" },
-  { id: "slide-13", label: "Campaign Ideas" },
+  { id: "slide-10", label: "Investors" },
+  { id: "slide-11", label: "AI Vision & Future" },
+  { id: "slide-12", label: "Category Name" },
+  { id: "slide-13", label: "Messaging House" },
+  { id: "slide-14", label: "Campaign Ideas" },
 ];
 
 const SlideDeck = () => {
@@ -206,10 +208,11 @@ const SlideDeck = () => {
         <Slide7MaturityCurve {...getNarrationProps(7)} />
         <Slide8PositioningMap {...getNarrationProps(8)} />
         <Slide9Customers {...getNarrationProps(9)} />
-        <SlideAIVision {...getNarrationProps(10)} />
-        <Slide11CategoryRationale {...getNarrationProps(11)} />
-        <SlideMessagingHouse {...getNarrationProps(12)} />
-        <SlideCampaignIdeas {...getNarrationProps(13)} />
+        <Slide10Investors {...getNarrationProps(10)} />
+        <SlideAIVision {...getNarrationProps(11)} />
+        <Slide11CategoryRationale {...getNarrationProps(12)} />
+        <SlideMessagingHouse {...getNarrationProps(13)} />
+        <SlideCampaignIdeas {...getNarrationProps(14)} />
       </div>
     </div>
   );
