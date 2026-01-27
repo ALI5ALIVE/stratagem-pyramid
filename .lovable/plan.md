@@ -1,81 +1,99 @@
 
-# Plan: Make Competitive Positioning Map Much Larger
 
-## Problem
+# Plan: Enlarge Competitive Positioning Map and Fix Vendor Chip Overlap
 
-The Strategic Matrix and Radar charts are currently constrained to small max-widths:
-- Matrix: `max-w-[500px]`  
-- Radar: `max-w-[420px]`
+## Problems Identified
 
-This makes both charts appear squashed and too small for the available viewport space.
+1. **Chart too small** - The 700px max-width is still constraining the chart on large monitors
+2. **Vendor chips overlapping** - The vendor selector chips on the Radar view are overlapping each other
 
-## Solution
+---
 
-Significantly increase the chart container sizes to use more of the available screen real estate.
+## Solution Overview
+
+### 1. Make Chart Much Larger
+
+Since you're on a large monitor, we'll significantly increase the chart size:
+
+| Element | Current | Proposed |
+|---------|---------|----------|
+| Strategic Matrix container | `max-w-[700px]` | `max-w-4xl` (896px) |
+| Radar Chart container | `max-w-[600px]` | `max-w-3xl` (768px) |
+
+We'll also use CSS utility classes instead of fixed pixel values for better responsiveness.
+
+### 2. Fix Vendor Chip Overlap
+
+The vendor chips are using `flex-wrap justify-center gap-2` which can cause overlap on certain screen sizes. We'll:
+
+| Change | Current | Proposed |
+|--------|---------|----------|
+| Chip gap | `gap-2` | `gap-3` (more spacing) |
+| Chip padding | `px-3 py-1.5` | `px-2.5 py-1` (slightly smaller) |
+| Font size | `text-xs` | Keep `text-xs` |
+| Max container width | None | Add `max-w-3xl` to constrain wrapping |
+
+---
+
+## File Changes
 
 **File: `src/components/slides/Slide8PositioningMap.tsx`**
 
-| Chart | Current | Proposed |
-|-------|---------|----------|
-| Strategic Matrix (line 197) | `max-w-[500px]` | `max-w-[700px]` |
-| Radar Chart (line 373) | `max-w-[420px]` | `max-w-[600px]` |
-
-**Additional adjustments:**
-- Reduce chart container padding from `p-4` to `p-3` to give more room to the chart itself
-- Reduce outer gap from `gap-3` to `gap-2` to maximize chart area
-- Reduce bottom takeaway padding from `py-3` to `py-2`
-
-## Specific Changes
-
-### Line 179: Reduce outer container gap
+### Change 1: Increase Matrix Chart Size (Line 197)
 ```tsx
 // From:
-<div className="flex flex-col gap-3">
-
-// To:
-<div className="flex flex-col gap-2">
-```
-
-### Line 195: Reduce chart container padding
-```tsx
-// From:
-<div className="bg-card rounded-xl border border-border p-4">
-
-// To:
-<div className="bg-card rounded-xl border border-border p-3">
-```
-
-### Line 197: Increase Matrix size
-```tsx
-// From:
-<div className="w-full max-w-[500px] aspect-square mx-auto">
-
-// To:
 <div className="w-full max-w-[700px] aspect-square mx-auto">
-```
-
-### Line 373: Increase Radar size
-```tsx
-// From:
-<div className="w-full max-w-[420px] aspect-square mx-auto">
 
 // To:
+<div className="w-full max-w-4xl aspect-square mx-auto">
+```
+
+### Change 2: Increase Radar Chart Size (Line 373)
+```tsx
+// From:
 <div className="w-full max-w-[600px] aspect-square mx-auto">
-```
-
-### Line 409: Reduce takeaway banner padding
-```tsx
-// From:
-<div className="bg-primary/10 border border-primary/30 rounded-lg px-5 py-3 max-w-2xl text-center">
 
 // To:
-<div className="bg-primary/10 border border-primary/30 rounded-lg px-4 py-2 max-w-2xl text-center">
+<div className="w-full max-w-3xl aspect-square mx-auto">
 ```
+
+### Change 3: Fix Vendor Chip Overlap (Line 349)
+```tsx
+// From:
+<div className="flex flex-wrap justify-center gap-2">
+
+// To:
+<div className="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto">
+```
+
+### Change 4: Adjust Chip Button Styling (Line 354)
+```tsx
+// From:
+className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all border-2 ${...}`}
+
+// To:
+className={`px-2.5 py-1 rounded-full text-xs font-medium transition-all border-2 whitespace-nowrap ${...}`}
+```
+
+Adding `whitespace-nowrap` prevents the chip text from wrapping internally, which can contribute to overlap issues.
+
+---
+
+## Size Comparison
+
+| Tailwind Class | Pixel Width | Improvement |
+|----------------|-------------|-------------|
+| `max-w-[700px]` | 700px | Current |
+| `max-w-4xl` | 896px | +28% larger |
+| `max-w-[600px]` | 600px | Current |
+| `max-w-3xl` | 768px | +28% larger |
+
+---
 
 ## Visual Impact
 
-- Charts will be approximately 40% larger (500px → 700px for Matrix)
-- Both charts will maintain their square aspect ratio
-- More of the viewport will be utilized for the visual content
-- Quadrant labels and vendor positions will be easier to read
-- The key takeaway banner will remain visible but more compact
+- **Strategic Matrix**: ~28% larger, filling more of the large monitor viewport
+- **Radar Chart**: ~28% larger with better visibility
+- **Vendor Chips**: Properly spaced with no overlapping, constrained to a readable width
+- Both charts maintain square aspect ratio for proper visual proportions
+
