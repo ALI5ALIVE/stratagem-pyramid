@@ -1,113 +1,100 @@
 
 
-# Plan: Hide the "Why 'Operational Performance Platform'" Slide
+# Plan: Update to "Connected, Intelligent, and Predictive Platform" Terminology
 
 ## Summary
 
-Remove the Category Name slide (Slide9CategoryRationale.tsx) from the active deck while preserving the component file for future use. This reduces the deck from 15 slides to 14 slides.
+Replace all instances of "intelligent operating system" with "connected, intelligent, and predictive platform" to align the messaging with the pyramid's maturity stages (Connected → Intelligent → Predictive).
 
 ---
 
-## Current vs. Updated Slide Sequence
+## Files to Update
 
-| Position | Current | Updated |
-|----------|---------|---------|
-| 0 | Title | Title |
-| 1 | Strategic Shift | Strategic Shift |
-| 2 | Before & After | Before & After |
-| 3 | Operating Model | Operating Model |
-| 4 | Platform Capabilities | Platform Capabilities |
-| 5 | Transformation | Transformation |
-| 6 | Operational Performance Ladder | Operational Performance Ladder |
-| 7 | Operational Performance Roadmap | Operational Performance Roadmap |
-| 8 | Positioning | Positioning |
-| 9 | Customers | Customers |
-| 10 | Investors | Investors |
-| 11 | AI Vision & Future | AI Vision & Future |
-| 12 | **Category Name** | Messaging House |
-| 13 | Messaging House | Campaign Ideas |
-| 14 | Campaign Ideas | — |
+### 1. `src/components/slides/Slide1StrategicShift.tsx`
+
+**Line 26 - Subtitle:**
+- Current: `"From fragmented point tools to an intelligent operating system"`
+- New: `"From fragmented point tools to a connected, intelligent, and predictive platform"`
+
+**Lines 110-113 - Category Definition:**
+- Current: `"Connects safety, procedures, and training into an intelligent operating system, turning signals into orchestrated change and audit-ready proof."`
+- New: `"A connected, intelligent, and predictive platform that turns signals into orchestrated change and audit-ready proof."`
 
 ---
 
-## Technical Changes
+### 2. `src/components/slides/Slide2BeforeAfter.tsx`
 
-### File: `src/pages/SlideDeck.tsx`
-
-**Change 1: Remove Import (Line 15)**
-Remove the Category Rationale import:
-```tsx
-// Remove this line:
-import Slide11CategoryRationale from "@/components/slides/Slide9CategoryRationale";
-```
-
-**Change 2: Update Slides Array (Lines 20-36)**
-Remove the Category Name entry and renumber:
-```tsx
-const slides = [
-  { id: "slide-0", label: "Title" },
-  { id: "slide-1", label: "Strategic Shift" },
-  { id: "slide-2", label: "Before & After" },
-  { id: "slide-3", label: "Operating Model" },
-  { id: "slide-4", label: "Platform Capabilities" },
-  { id: "slide-5", label: "Transformation" },
-  { id: "slide-6", label: "Operational Performance Ladder" },
-  { id: "slide-7", label: "Operational Performance Roadmap" },
-  { id: "slide-8", label: "Positioning" },
-  { id: "slide-9", label: "Customers" },
-  { id: "slide-10", label: "Investors" },
-  { id: "slide-11", label: "AI Vision & Future" },
-  { id: "slide-12", label: "Messaging House" },
-  { id: "slide-13", label: "Campaign Ideas" },
-];
-```
-
-**Change 3: Update Slide Container (Lines 201-215)**
-Remove the Category Rationale component and renumber narration props:
-```tsx
-<Slide0Title onNavigateToSlide={scrollToSlide} {...getNarrationProps(0)} />
-<Slide1StrategicShift {...getNarrationProps(1)} />
-<Slide2BeforeAfter {...getNarrationProps(2)} />
-<Slide3OperatingModel {...getNarrationProps(3)} />
-<Slide4PlatformCapabilities {...getNarrationProps(4)} />
-<Slide5Transformation {...getNarrationProps(5)} />
-<Slide6ValuePyramid {...getNarrationProps(6)} />
-<Slide7MaturityCurve {...getNarrationProps(7)} />
-<Slide8PositioningMap {...getNarrationProps(8)} />
-<Slide9Customers {...getNarrationProps(9)} />
-<Slide10Investors {...getNarrationProps(10)} />
-<SlideAIVision {...getNarrationProps(11)} />
-<SlideMessagingHouse {...getNarrationProps(12)} />
-<SlideCampaignIdeas {...getNarrationProps(13)} />
-```
+**Line 270 - Unlike Callout:**
+- Current: `"...Comply365 connects all three into an intelligent operating system, turning signals into orchestrated change and audit-ready proof."`
+- New: `"...Comply365 connects all three into a connected, intelligent, and predictive platform — turning signals into orchestrated change and audit-ready proof."`
 
 ---
 
-### File: `src/components/slides/Slide0Title.tsx`
+### 3. `src/components/slides/SlideMessagingHouse.tsx`
 
-**Change 4: Update Agenda Items**
-Remove the "Category Name" entry and renumber:
-```tsx
-const agendaItems = [
-  { num: 1, label: "Strategic Shift", summary: "Why we're redefining the category" },
-  { num: 2, label: "Before & After", summary: "What's broken — and how we fix it" },
-  { num: 3, label: "Operating Model", summary: "Detect → Trigger → Orchestrate → Prove" },
-  { num: 4, label: "Platform Capabilities", summary: "The platform that powers it" },
-  { num: 5, label: "Transformation", summary: "Cost center to value driver" },
-  { num: 6, label: "Operational Performance Ladder", summary: "Building blocks of performance" },
-  { num: 7, label: "Operational Performance Roadmap", summary: "The measurable journey" },
-  { num: 8, label: "Positioning", summary: "Where we stand vs. competitors" },
-  { num: 9, label: "Customers", summary: "Measurable value delivery" },
-  { num: 10, label: "Investors", summary: "Why this builds shareholder value" },
-  { num: 11, label: "Becoming an AI Company", summary: "The intelligence layer & roadmap" },
-  { num: 12, label: "Messaging House", summary: "Complete positioning framework" },
-  { num: 13, label: "Campaign Ideas", summary: "Cementing category leadership" },
-];
-```
+**Line 23 - Category Definition:**
+- Current: `"Connects safety, content, and training into an intelligent operating system, turning signals into orchestrated change and audit-ready proof."`
+- New: `"A connected, intelligent, and predictive platform that turns signals into orchestrated change and audit-ready proof."`
+
+**Line 24 - Operating Model Label:**
+- Current: `"Continuous Improvement Operating System"`
+- New: `"Continuous Improvement Operating Model"`
+
+---
+
+### 4. `src/data/slideNarration.ts`
+
+**Slide 0 (Title) - Line 16:**
+- Current: `"...an intelligent operating system that connects safety, content, and training into one governed system."`
+- New: `"...a connected, intelligent, and predictive platform that unifies safety, content, and training into one governed system."`
+
+**Slide 1 (Strategic Shift) - Line 22:**
+- Current: `"An intelligent operating system that connects safety, content, and training — turning operational signals into orchestrated change and audit-ready proof."`
+- New: `"A connected, intelligent, and predictive platform that turns operational signals into orchestrated change and audit-ready proof."`
+
+**Slide 11 (Category Name) - Line 82:**
+- Current: `"...connecting Safety, Content, and Training into a governed operating system that turns signals into outcomes and proof."`
+- New: `"...connecting Safety, Content, and Training into a connected, intelligent, and predictive platform that turns signals into outcomes and proof."`
+
+**Slide 12 (Messaging House) - Line 88:**
+- Current: `"An intelligent operating system that connects safety, content, and training — turning signals into orchestrated change and audit-ready proof."`
+- New: `"A connected, intelligent, and predictive platform that turns signals into orchestrated change and audit-ready proof."`
+
+---
+
+## Technical Details
+
+| File | Line(s) | Change Type |
+|------|---------|-------------|
+| `Slide1StrategicShift.tsx` | 26, 110-113 | Subtitle + body text |
+| `Slide2BeforeAfter.tsx` | 270 | Unlike callout text |
+| `SlideMessagingHouse.tsx` | 23, 24 | Category definition + operating model label |
+| `slideNarration.ts` | 16, 22, 82, 88 | Voice narration scripts (4 slides) |
+
+---
+
+## Why This Terminology Works
+
+The phrase "connected, intelligent, and predictive platform" directly maps to the pyramid's maturity stages:
+
+| Pyramid Stage | Platform Attribute |
+|---------------|-------------------|
+| Stage 3: Connected Governance | **Connected** |
+| Stage 4: Intelligent Operations | **Intelligent** |
+| Stage 5: Predictive Operations | **Predictive** |
+
+This creates narrative consistency between:
+- The Strategic Shift slide's promise
+- The Value Pyramid's maturity journey
+- The Messaging House's positioning framework
 
 ---
 
 ## Result
 
-After implementation, the deck will have **14 slides** (0-13). The "Why 'Operational Performance Platform'" slide will be hidden from the active presentation but the component file (`Slide9CategoryRationale.tsx`) will be preserved in the codebase for potential future use.
+After implementation:
+- All visual slides will use "connected, intelligent, and predictive platform"
+- All narration scripts will use consistent terminology
+- The messaging aligns directly with the pyramid's maturity stages
+- "Operating System" is fully replaced with "Platform" language
 
