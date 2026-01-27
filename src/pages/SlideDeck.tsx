@@ -11,13 +11,9 @@ import Slide6ValuePyramid from "@/components/slides/Slide4ValuePyramid";
 import Slide7MaturityCurve from "@/components/slides/Slide5MaturityCurve";
 import Slide8PositioningMap from "@/components/slides/Slide8PositioningMap";
 import Slide9Customers from "@/components/slides/Slide7Customers";
-import Slide10Investors from "@/components/slides/Slide6Investors";
 import Slide11CategoryRationale from "@/components/slides/Slide9CategoryRationale";
 import SlideMessagingHouse from "@/components/slides/SlideMessagingHouse";
 import SlideCampaignIdeas from "@/components/slides/SlideCampaignIdeas";
-import SlideCategoryExcellence from "@/components/slides/category-options/SlideCategoryExcellence";
-import SlideCategoryOrchestration from "@/components/slides/category-options/SlideCategoryOrchestration";
-import SlideCategoryAssurance from "@/components/slides/category-options/SlideCategoryAssurance";
 import SlideAIVision from "@/components/slides/SlideAIVision";
 
 const slides = [
@@ -32,13 +28,9 @@ const slides = [
   { id: "slide-8", label: "Positioning" },
   { id: "slide-9", label: "Customers" },
   { id: "slide-10", label: "AI Vision & Future" },
-  { id: "slide-11", label: "Investors" },
-  { id: "slide-12", label: "Category Name" },
-  { id: "slide-13", label: "Messaging House" },
-  { id: "slide-14", label: "Campaign Ideas" },
-  { id: "slide-15", label: "Category: Excellence" },
-  { id: "slide-16", label: "Category: Orchestration" },
-  { id: "slide-17", label: "Category: Assurance" },
+  { id: "slide-11", label: "Category Name" },
+  { id: "slide-12", label: "Messaging House" },
+  { id: "slide-13", label: "Campaign Ideas" },
 ];
 
 const SlideDeck = () => {
@@ -215,13 +207,9 @@ const SlideDeck = () => {
         <Slide8PositioningMap {...getNarrationProps(8)} />
         <Slide9Customers {...getNarrationProps(9)} />
         <SlideAIVision {...getNarrationProps(10)} />
-        <Slide10Investors {...getNarrationProps(11)} />
-        <Slide11CategoryRationale {...getNarrationProps(12)} />
-        <SlideMessagingHouse {...getNarrationProps(13)} />
-        <SlideCampaignIdeas {...getNarrationProps(14)} />
-        <SlideCategoryExcellence {...getNarrationProps(15)} />
-        <SlideCategoryOrchestration {...getNarrationProps(16)} />
-        <SlideCategoryAssurance {...getNarrationProps(17)} />
+        <Slide11CategoryRationale {...getNarrationProps(11)} />
+        <SlideMessagingHouse {...getNarrationProps(12)} />
+        <SlideCampaignIdeas {...getNarrationProps(13)} />
       </div>
     </div>
   );

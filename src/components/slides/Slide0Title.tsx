@@ -14,13 +14,9 @@ const agendaItems = [
   { num: 8, label: "Positioning", summary: "Where we stand vs. competitors" },
   { num: 9, label: "Customers", summary: "Measurable value delivery" },
   { num: 10, label: "Becoming an AI Company", summary: "The intelligence layer & roadmap" },
-  { num: 11, label: "Investors", summary: "Shareholder value creation" },
-  { num: 12, label: "Category Name", summary: "Why this name wins" },
-  { num: 13, label: "Messaging House", summary: "Complete positioning framework" },
-  { num: 14, label: "Campaign Ideas", summary: "Cementing category leadership" },
-  { num: 15, label: "Category: Excellence", summary: "Alternative: philosophy & culture" },
-  { num: 16, label: "Category: Orchestration", summary: "Alternative: coordination & workflow" },
-  { num: 17, label: "Category: Assurance", summary: "Alternative: compliance & proof" },
+  { num: 11, label: "Category Name", summary: "Why this name wins" },
+  { num: 12, label: "Messaging House", summary: "Complete positioning framework" },
+  { num: 13, label: "Campaign Ideas", summary: "Cementing category leadership" },
 ];
 
 interface Slide0TitleProps extends SlideNarrationProps {
