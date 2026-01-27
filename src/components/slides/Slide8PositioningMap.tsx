@@ -194,7 +194,7 @@ const Slide8PositioningMap = ({
         {/* Chart Container */}
         <div className="bg-card rounded-xl border border-border p-3">
           {activeView === "matrix" ? (
-            <div className="w-full max-w-[700px] aspect-square mx-auto">
+            <div className="w-full max-w-4xl aspect-square mx-auto">
               <ResponsiveContainer width="100%" height="100%">
                 <ScatterChart margin={{ top: 50, right: 40, bottom: 110, left: 100 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -346,12 +346,12 @@ const Slide8PositioningMap = ({
               </div>
 
               {/* Vendor Selector Chips */}
-              <div className="flex flex-wrap justify-center gap-2">
+              <div className="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto">
                 {vendors.map((vendor) => (
                   <button
                     key={vendor.name}
                     onClick={() => toggleVendor(vendor.name)}
-                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all border-2 ${
+                    className={`px-2.5 py-1 rounded-full text-xs font-medium transition-all border-2 whitespace-nowrap ${
                       selectedVendors.has(vendor.name)
                         ? "opacity-100"
                         : "opacity-40 grayscale"
@@ -370,7 +370,7 @@ const Slide8PositioningMap = ({
               </div>
 
               {/* Radar Chart */}
-              <div className="w-full max-w-[600px] aspect-square mx-auto">
+              <div className="w-full max-w-3xl aspect-square mx-auto">
                 <ResponsiveContainer width="100%" height="100%">
                   <RadarChart data={radarData} margin={{ top: 10, right: 20, bottom: 10, left: 20 }}>
                     <PolarGrid stroke="hsl(var(--border))" />
