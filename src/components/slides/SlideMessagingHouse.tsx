@@ -124,9 +124,9 @@ const personas = [
     valueProposition: "Increase workforce readiness and reduce operational variability by linking training directly to real operational risk, change, and procedural updates.",
     keyMessages: [
       "Training targeted to risk & operational change",
+      "Personalized training based on role and risk",
       "Faster rollout with validated adoption",
-      "Reduced time-to-competency",
-      "Evidence and reporting always available"
+      "Reduced time-to-competency"
     ]
   },
   {

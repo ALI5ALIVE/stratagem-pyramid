@@ -5,10 +5,11 @@ import platformEcosystem from "@/assets/comply365-platform-ecosystem.png";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 // Timing markers for narration-synced capability expansion
+// Timing markers synced to narration script phases
 const capabilityTimings = [
-  { index: 0, startPercent: 15 },  // Data That Connects
-  { index: 1, startPercent: 40 },  // Automation That Adapts
-  { index: 2, startPercent: 65 },  // AI That Drives
+  { index: 0, startPercent: 12 },  // Data That Connects - "First: Data That Connects"
+  { index: 1, startPercent: 35 },  // Automation That Adapts - "Second: Automation"
+  { index: 2, startPercent: 55 },  // AI That Drives - "Third: AI That Drives"
 ];
 
 const capabilities = [

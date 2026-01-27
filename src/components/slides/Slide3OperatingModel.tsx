@@ -5,11 +5,12 @@ import CoreSolutionsInfinity from "../CoreSolutionsInfinity";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 // Timing markers for narration-synced step highlighting
+// Timing markers synced to narration script phases
 const stepTimings = [
-  { index: 0, startPercent: 15 },  // Detect
-  { index: 1, startPercent: 30 },  // Trigger
-  { index: 2, startPercent: 50 },  // Orchestrate
-  { index: 3, startPercent: 70 },  // Prove
+  { index: 0, startPercent: 10 },  // Detect - "First, Detect"
+  { index: 1, startPercent: 25 },  // Trigger - "Then, Trigger"
+  { index: 2, startPercent: 40 },  // Orchestrate - "Next, Orchestrate"
+  { index: 3, startPercent: 55 },  // Prove - "Finally, Prove"
 ];
 
 const Slide3OperatingModel = ({
