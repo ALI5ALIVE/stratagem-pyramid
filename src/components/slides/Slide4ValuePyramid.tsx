@@ -9,8 +9,8 @@ const layersData: LayerData[] = [
   {
     id: "PREDICTIVE",
     level: 5,
-    headline: "Predictive & Agentic Reliability",
-    sublabel: "AI-Accelerated",
+    headline: "Predictive Operations",
+    sublabel: "AI-Accelerated Performance",
     whatItLooksLike: [
       "AI detects weak signals early and forecasts risk patterns",
       "Prioritised recommendations and action plans",
@@ -43,10 +43,10 @@ const layersData: LayerData[] = [
     },
   },
   {
-    id: "CLOSED_LOOP",
+    id: "INTELLIGENT",
     level: 4,
-    headline: "Closed-Loop Operational Improvement",
-    sublabel: "Outcome Engine",
+    headline: "Intelligent Operations",
+    sublabel: "AI-Assisted Execution",
     whatItLooksLike: [
       "Operational signals trigger coordinated workflows",
       "Corrective actions drive controlled procedural change",
@@ -182,13 +182,13 @@ const layersData: LayerData[] = [
 
 const glowClasses: Record<string, string> = {
   PREDICTIVE: "glow-transformational",
-  CLOSED_LOOP: "glow-commercial",
+  INTELLIGENT: "glow-commercial",
   CONNECTED: "glow-operational",
   MANAGED: "glow-foundation",
   FRAGMENTED: "glow-fragmentation",
 };
 
-const layerOrder = ["FRAGMENTED", "MANAGED", "CONNECTED", "CLOSED_LOOP", "PREDICTIVE"];
+const layerOrder = ["FRAGMENTED", "MANAGED", "CONNECTED", "INTELLIGENT", "PREDICTIVE"];
 
 // Timing markers for narration-synced stage changes
 const stageTimings = [
