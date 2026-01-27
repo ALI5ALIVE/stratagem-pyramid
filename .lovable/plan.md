@@ -2,152 +2,73 @@
 
 # Plan: Reframe Y-Axis to Tell the Data/AI/Intelligence Value Story
 
-## Current State
+## Summary
 
-The Strategic Matrix Y-axis currently shows:
-
-| Axis | Current Label | Current Meaning |
-|------|---------------|-----------------|
-| Y-Axis | "Cost Center → Revenue Generation" | Generic business value framing |
-| X-Axis | "Point Solutions → Full 360° Coverage" | Breadth of capabilities |
-
-While accurate, this Y-axis doesn't explicitly communicate the **intelligence-driven value** that differentiates Comply365.
+Update the Strategic Matrix Y-axis from "Cost Center -> Revenue Generation" to "Manual Reporting -> Intelligent Operations" to better communicate the platform's intelligence-driven value differentiation.
 
 ---
 
-## Proposed Y-Axis Reframe Options
+## Changes Overview
 
-Based on the platform's core narrative (Operational Intelligence Layer, Detect-Trigger-Orchestrate-Prove, AI acceleration), here are three options:
-
-### Option A: Intelligence Maturity Focus
-**Label:** `"Manual Reporting → Intelligent Operations"`
-
-| Level | Description |
-|-------|-------------|
-| 0-3 | Static data, manual processes, reactive compliance |
-| 4-6 | Connected data, workflow automation, basic analytics |
-| 7-10 | Predictive signals, AI-driven orchestration, closed-loop improvement |
-
-**Pros:** Directly aligns with the 5-stage maturity model (Fragmented → Predictive)
-**Best for:** Audiences focused on digital transformation
+| Element | Current | New |
+|---------|---------|-----|
+| Y-Axis Label | "Cost Center -> Revenue Generation" | "Manual Reporting -> Intelligent Operations" |
+| Y-Axis Name | "Strategic Value" | "Intelligence Maturity" |
+| Tooltip Field | "Depth: X/4.0" | "Intelligence: X/10" |
+| Bottom-Left Quadrant | "Task-level Value" | "Static Compliance" |
+| Bottom-Right Quadrant | "Breadth without Depth" | "Data without Intelligence" |
+| Top-Left Quadrant | "High Value, Narrow Domain" | "Deep Intelligence, Limited Scope" |
+| Top-Right Quadrant | "Full Capability + Strategic" | "Full Intelligence + Full Coverage" |
 
 ---
 
-### Option B: Data-to-Decision Value Chain
-**Label:** `"Data Silos → Actionable Intelligence"`
+## Technical Changes
 
-| Level | Description |
-|-------|-------------|
-| 0-3 | Fragmented data, disconnected systems |
-| 4-6 | Integrated data, visibility across operations |
-| 7-10 | Real-time signals trigger automated actions, AI-assisted decisions |
+**File:** `src/components/slides/Slide8PositioningMap.tsx`
 
-**Pros:** Emphasizes the "operational intelligence layer" concept
-**Best for:** Technical/operational audiences
-
----
-
-### Option C: Performance Outcome Focus
-**Label:** `"Compliance Cost → Performance Advantage"`
-
-| Level | Description |
-|-------|-------------|
-| 0-3 | Compliance as overhead, reactive firefighting |
-| 4-6 | Compliance embedded in operations |
-| 7-10 | Reliability as competitive advantage, predictive excellence |
-
-**Pros:** Board-level language, aligns with "Operational Performance Platform" category
-**Best for:** Executive/investor audiences
-
----
-
-## Recommended Choice: Option A
-
-**"Manual Reporting → Intelligent Operations"** best captures the data/AI/intelligence story because:
-
-1. **Aligns with existing narrative** - Maps directly to the 5-stage maturity curve
-2. **Emphasizes differentiation** - Only Comply365 reaches "Intelligent Operations" level
-3. **Tells the transformation story** - Clear before/after positioning
-4. **Supports AI messaging** - Sets up the "Becoming an AI Company" slide
-
----
-
-## Technical Implementation
-
-### File: `src/components/slides/Slide8PositioningMap.tsx`
-
-### Change 1: Update Y-Axis Label (Line 229-235)
+### Change 1: Update Tooltip (Lines 72-74)
+Change the tooltip label from "Depth" to "Intelligence" and update the scale display:
 
 ```tsx
 // From:
-<YAxis
-  ...
-  name="Strategic Value"
-  ...
-  label={{
-    value: "Cost Center → Revenue Generation",
-    ...
-  }}
-/>
+Depth: <span className="text-foreground">{data.depth.toFixed(1)}/4.0</span>
 
 // To:
-<YAxis
-  ...
-  name="Intelligence Maturity"
-  ...
-  label={{
-    value: "Manual Reporting → Intelligent Operations",
-    ...
-  }}
-/>
+Intelligence: <span className="text-foreground">{data.depth.toFixed(1)}/10</span>
 ```
 
-### Change 2: Update Quadrant Labels (Lines 241-272)
-
-Adjust the quadrant sublabels to reinforce the intelligence narrative:
-
-| Quadrant | Current Sublabel | Proposed Sublabel |
-|----------|------------------|-------------------|
-| Basic Tools (bottom-left) | "Task-level Value" | "Static Compliance" |
-| Broad Tools (bottom-right) | "Breadth without Depth" | "Data without Intelligence" |
-| Specialists (top-left) | "High Value, Narrow Domain" | "Deep Intelligence, Limited Scope" |
-| Leaders (top-right) | "Full Capability + Strategic" | "Full Intelligence + Full Coverage" |
-
-### Change 3: Update Tooltip (Line 73)
+### Change 2: Update Y-Axis Configuration (Lines 221-236)
+Update the axis name and label to reflect intelligence maturity:
 
 ```tsx
 // From:
-<p className="text-xs text-muted-foreground">
-  Depth: <span className="text-foreground">{data.depth.toFixed(1)}/4.0</span>
-</p>
+name="Strategic Value"
+label={{ value: "Cost Center → Revenue Generation", ... }}
 
 // To:
-<p className="text-xs text-muted-foreground">
-  Intelligence: <span className="text-foreground">{data.depth.toFixed(1)}/10</span>
-</p>
+name="Intelligence Maturity"
+label={{ value: "Manual Reporting → Intelligent Operations", ... }}
 ```
+
+### Change 3: Update Quadrant Labels (Lines 241-272)
+Update each quadrant's sublabel to reinforce the intelligence narrative:
+
+- **Basic Tools** (bottom-left): "Task-level Value" -> "Static Compliance"
+- **Broad Tools** (bottom-right): "Breadth without Depth" -> "Data without Intelligence"
+- **Specialists** (top-left): "High Value, Narrow Domain" -> "Deep Intelligence, Limited Scope"
+- **Leaders** (top-right): "Full Capability + Strategic" -> "Full Intelligence + Full Coverage"
 
 ---
 
 ## Visual Impact
 
-The Y-axis will now directly communicate:
-- **Bottom (0-3):** Manual, reactive, compliance-as-cost
-- **Middle (4-6):** Connected data, emerging automation
-- **Top (7-10):** AI-driven, closed-loop, predictive operations
+The updated Y-axis will communicate a clear intelligence maturity progression:
 
-This positions Comply365 at the apex of intelligence maturity, reinforcing why competitors "can't follow" - they lack the platform architecture for true operational intelligence.
+| Y Position | Intelligence Level | Description |
+|------------|-------------------|-------------|
+| 0-3 | Manual Reporting | Static data, manual processes, reactive compliance |
+| 4-6 | Connected Data | Integrated systems, emerging automation, basic analytics |
+| 7-10 | Intelligent Operations | AI-driven orchestration, predictive signals, closed-loop improvement |
 
----
-
-## Alternative: Dual-Axis Annotation
-
-If you want to keep "Revenue Generation" visible for business audiences while adding the intelligence story, we could add a secondary annotation or gradient legend showing:
-
-```text
-Y-Axis Label: "Intelligence Maturity"
-Gradient annotation: "Reactive Compliance → Predictive Performance"
-```
-
-This gives you both the technical (intelligence) and business (performance) framing.
+This positions Comply365 at the apex of intelligence maturity (8/10), reinforcing why competitors lack the platform architecture for true operational intelligence.
 
