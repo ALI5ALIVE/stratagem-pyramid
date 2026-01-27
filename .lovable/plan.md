@@ -1,126 +1,130 @@
 
-# Plan: Align Pyramid and Maturity Curve Stage Names with AI Vision Terminology
+
+# Plan: Add Investor Slide Back to the Deck
 
 ## Summary
 
-Update the pyramid (Value Pyramid slides) and maturity curve components to use consistent stage naming that aligns with the AI Vision slide:
-
-| Stage | Current Name | New Name |
-|-------|--------------|----------|
-| Stage 3 | Connected Governance | Connected Governance (no change) |
-| Stage 4 | Closed-Loop Operational Improvement | Intelligent Operations |
-| Stage 5 | Predictive & Agentic Reliability | Predictive Operations |
-
-This removes "Agentic" from Stage 5 and renames "Closed-Loop" to "Intelligent Operations" for consistency with the Intelligence Maturity Roadmap on the AI Vision slide.
+Re-add the Investor slide (`Slide6Investors.tsx`) to the slide deck. Based on the previous structure and the memory context noting it was "previously 11", the logical placement is after the Customers slide and before the AI Vision slide, making it the new slide 10 (with subsequent slides renumbered).
 
 ---
 
-## Files to Update
+## Current vs. Updated Slide Sequence
 
-### 1. MaturityCurveVisualization.tsx (Standalone page)
-**Location:** `src/components/MaturityCurveVisualization.tsx`
-
-| Line | Current | New |
-|------|---------|-----|
-| 137 | `headline: "Closed-Loop Operational Improvement"` | `headline: "Intelligent Operations"` |
-| 138 | `sublabel: "Intelligent Ops"` | `sublabel: "AI-Assisted Execution"` |
-| 170 | `id: "AGENTIC"` | `id: "PREDICTIVE"` |
-| 172 | `headline: "Predictive & Agentic Reliability"` | `headline: "Predictive Operations"` |
-| 173 | `sublabel: "Autonomous Reliability"` | `sublabel: "AI-Accelerated Performance"` |
-
-### 2. Slide5MaturityCurve.tsx (Slide deck version)
-**Location:** `src/components/slides/Slide5MaturityCurve.tsx`
-
-| Line | Current | New |
-|------|---------|-----|
-| 115 | `headline: "Closed-Loop Operational Improvement"` | `headline: "Intelligent Operations"` |
-| 116 | `sublabel: "Intelligent Ops"` | `sublabel: "AI-Assisted Execution"` |
-| 148 | `id: "AGENTIC"` | `id: "PREDICTIVE"` |
-| 150 | `headline: "Predictive & Agentic Reliability"` | `headline: "Predictive Operations"` |
-| 151 | `sublabel: "Autonomous Reliability"` | `sublabel: "AI-Accelerated Performance"` |
-| 438-439 | Short label `"Predictive"` | Already correct |
-
-### 3. Slide4ValuePyramid.tsx (Pyramid slide in deck)
-**Location:** `src/components/slides/Slide4ValuePyramid.tsx`
-
-| Line | Current | New |
-|------|---------|-----|
-| 12 | `headline: "Predictive & Agentic Reliability"` | `headline: "Predictive Operations"` |
-| 13 | `sublabel: "AI-Accelerated"` | `sublabel: "AI-Accelerated Performance"` |
-| 48 | `headline: "Closed-Loop Operational Improvement"` | `headline: "Intelligent Operations"` |
-| 49 | `sublabel: "Outcome Engine"` | `sublabel: "AI-Assisted Execution"` |
-
-### 4. CategoryPyramid.tsx (Standalone pyramid page)
-**Location:** `src/components/CategoryPyramid.tsx`
-
-| Line | Current | New |
-|------|---------|-----|
-| 12 | `headline: "Predictive & Agentic Reliability"` | `headline: "Predictive Operations"` |
-| 13 | `sublabel: "AI-Accelerated"` | `sublabel: "AI-Accelerated Performance"` |
-| 48 | `headline: "Closed-Loop Operational Improvement"` | `headline: "Intelligent Operations"` |
-| 49 | `sublabel: "Outcome Engine"` | `sublabel: "AI-Assisted Execution"` |
+| Position | Current | Updated |
+|----------|---------|---------|
+| 0 | Title | Title |
+| 1 | Strategic Shift | Strategic Shift |
+| 2 | Before & After | Before & After |
+| 3 | Operating Model | Operating Model |
+| 4 | Platform Capabilities | Platform Capabilities |
+| 5 | Transformation | Transformation |
+| 6 | Operational Performance Ladder | Operational Performance Ladder |
+| 7 | Operational Performance Roadmap | Operational Performance Roadmap |
+| 8 | Positioning | Positioning |
+| 9 | Customers | Customers |
+| 10 | AI Vision & Future | **Investors** ← NEW |
+| 11 | Category Name | AI Vision & Future |
+| 12 | Messaging House | Category Name |
+| 13 | Campaign Ideas | Messaging House |
+| 14 | — | Campaign Ideas |
 
 ---
 
-## Updated Stage Terminology Reference
+## Technical Changes
 
-| Stage | Headline | Sublabel | Key Theme |
-|-------|----------|----------|-----------|
-| **1** | Fragmented & Reactive | Manual / Reactive | Starting point |
-| **2** | Managed (Siloed) Compliance | Silo Optimisation | Best-in-class products |
-| **3** | Connected Governance | Closed Loop | Platform foundation |
-| **4** | Intelligent Operations | AI-Assisted Execution | AI-assisted workflows |
-| **5** | Predictive Operations | AI-Accelerated Performance | Predictive + proactive |
+### File: `src/pages/SlideDeck.tsx`
 
----
-
-## Technical Details
-
-### Change Summary by File
-
-**MaturityCurveVisualization.tsx:**
-- Line 137: Update Stage 4 headline
-- Line 138: Update Stage 4 sublabel
-- Line 170: Update Stage 5 id from "AGENTIC" to "PREDICTIVE_OPS"
-- Line 172: Update Stage 5 headline
-- Line 173: Update Stage 5 sublabel
-
-**Slide5MaturityCurve.tsx:**
-- Line 115: Update Stage 4 headline
-- Line 116: Update Stage 4 sublabel
-- Line 148: Update Stage 5 id from "AGENTIC" to "PREDICTIVE_OPS"
-- Line 150: Update Stage 5 headline
-- Line 151: Update Stage 5 sublabel
-
-**Slide4ValuePyramid.tsx:**
-- Line 12: Update Level 5 headline
-- Line 13: Update Level 5 sublabel
-- Line 48: Update Level 4 headline
-- Line 49: Update Level 4 sublabel
-
-**CategoryPyramid.tsx:**
-- Line 12: Update Level 1 (apex) headline
-- Line 13: Update Level 1 sublabel
-- Line 48: Update Level 2 headline
-- Line 49: Update Level 2 sublabel
-
----
-
-## Narrative Alignment
-
-After these changes, the full maturity progression will read:
-
-```text
-Stage 1: Fragmented & Reactive
-Stage 2: Managed (Siloed) Compliance  
-Stage 3: Connected Governance ← Platform foundation
-Stage 4: Intelligent Operations ← AI-assisted execution
-Stage 5: Predictive Operations ← AI-accelerated performance
+**Change 1: Add Import (Line 14)**
+Add the Investor slide component import:
+```tsx
+import Slide10Investors from "@/components/slides/Slide6Investors";
 ```
 
-This creates a seamless narrative connection between:
-- **Slide 6** (Operational Performance Ladder / Pyramid)
-- **Slide 7** (Operational Performance Roadmap / Curve)
-- **Slide 10** (Becoming an AI Company / Intelligence Maturity Roadmap)
+**Change 2: Update Slides Array (Lines 19-34)**
+Add the Investors slide entry and renumber subsequent slides:
+```tsx
+const slides = [
+  { id: "slide-0", label: "Title" },
+  { id: "slide-1", label: "Strategic Shift" },
+  { id: "slide-2", label: "Before & After" },
+  { id: "slide-3", label: "Operating Model" },
+  { id: "slide-4", label: "Platform Capabilities" },
+  { id: "slide-5", label: "Transformation" },
+  { id: "slide-6", label: "Operational Performance Ladder" },
+  { id: "slide-7", label: "Operational Performance Roadmap" },
+  { id: "slide-8", label: "Positioning" },
+  { id: "slide-9", label: "Customers" },
+  { id: "slide-10", label: "Investors" },  // ← NEW
+  { id: "slide-11", label: "AI Vision & Future" },
+  { id: "slide-12", label: "Category Name" },
+  { id: "slide-13", label: "Messaging House" },
+  { id: "slide-14", label: "Campaign Ideas" },
+];
+```
 
-The terminology now consistently emphasizes "operations" and "intelligence" rather than "agentic" or "closed-loop", reinforcing the platform's value story of using data and AI to drive better operational performance.
+**Change 3: Update Slide Container (Lines 199-212)**
+Add the Investors slide component and renumber narration props:
+```tsx
+<Slide0Title onNavigateToSlide={scrollToSlide} {...getNarrationProps(0)} />
+<Slide1StrategicShift {...getNarrationProps(1)} />
+<Slide2BeforeAfter {...getNarrationProps(2)} />
+<Slide3OperatingModel {...getNarrationProps(3)} />
+<Slide4PlatformCapabilities {...getNarrationProps(4)} />
+<Slide5Transformation {...getNarrationProps(5)} />
+<Slide6ValuePyramid {...getNarrationProps(6)} />
+<Slide7MaturityCurve {...getNarrationProps(7)} />
+<Slide8PositioningMap {...getNarrationProps(8)} />
+<Slide9Customers {...getNarrationProps(9)} />
+<Slide10Investors {...getNarrationProps(10)} />  {/* NEW */}
+<SlideAIVision {...getNarrationProps(11)} />
+<Slide11CategoryRationale {...getNarrationProps(12)} />
+<SlideMessagingHouse {...getNarrationProps(13)} />
+<SlideCampaignIdeas {...getNarrationProps(14)} />
+```
+
+---
+
+### File: `src/components/slides/Slide6Investors.tsx`
+
+**Change 4: Update SlideContainer Props (Lines 133-137)**
+Update the slide ID and number to match the new position:
+```tsx
+<SlideContainer
+  id="slide-10"
+  title="Why the Platform + New Category Builds Shareholder Value"
+  subtitle="How category leadership compounds into shareholder value"
+  slideNumber={11}  // Visual display: slide 11 of 15
+  ...
+```
+
+---
+
+### File: `src/components/slides/Slide0Title.tsx`
+
+**Change 5: Update Agenda Items (Lines 6-20)**
+Add the Investors item to the navigation grid and renumber:
+```tsx
+const agendaItems = [
+  { num: 1, label: "Strategic Shift", summary: "Why we're redefining the category" },
+  { num: 2, label: "Before & After", summary: "What's broken — and how we fix it" },
+  { num: 3, label: "Operating Model", summary: "Detect → Trigger → Orchestrate → Prove" },
+  { num: 4, label: "Platform Capabilities", summary: "The platform that powers it" },
+  { num: 5, label: "Transformation", summary: "Cost center to value driver" },
+  { num: 6, label: "Operational Performance Ladder", summary: "Building blocks of performance" },
+  { num: 7, label: "Operational Performance Roadmap", summary: "The measurable journey" },
+  { num: 8, label: "Positioning", summary: "Where we stand vs. competitors" },
+  { num: 9, label: "Customers", summary: "Measurable value delivery" },
+  { num: 10, label: "Investors", summary: "Why this builds shareholder value" },  // NEW
+  { num: 11, label: "Becoming an AI Company", summary: "The intelligence layer & roadmap" },
+  { num: 12, label: "Category Name", summary: "Why this name wins" },
+  { num: 13, label: "Messaging House", summary: "Complete positioning framework" },
+  { num: 14, label: "Campaign Ideas", summary: "Cementing category leadership" },
+];
+```
+
+---
+
+## Result
+
+After implementation, the deck will have **15 slides** (0-14) with the Investors slide restored at position 10, featuring the interactive Shareholder Value flywheel that syncs with narration progress to highlight each of the four value pillars: Growth, Revenue Quality, Defensibility, and AI Multiplier.
+
