@@ -194,7 +194,7 @@ const Slide8PositioningMap = ({
         {/* Chart Container */}
         <div className="bg-card rounded-xl border border-border p-3">
           {activeView === "matrix" ? (
-            <div className="w-full max-w-4xl aspect-square mx-auto">
+            <div className="w-[min(56rem,calc(100vh-18rem))] max-w-full aspect-square mx-auto">
               <ResponsiveContainer width="100%" height="100%">
                 <ScatterChart margin={{ top: 50, right: 40, bottom: 110, left: 100 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -327,7 +327,7 @@ const Slide8PositioningMap = ({
               </ResponsiveContainer>
             </div>
           ) : (
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3">
               {/* Quick Actions */}
               <div className="flex justify-center gap-3">
                 <button
@@ -370,7 +370,7 @@ const Slide8PositioningMap = ({
               </div>
 
               {/* Radar Chart */}
-              <div className="w-full max-w-3xl aspect-square mx-auto">
+              <div className="w-[min(48rem,calc(100vh-24rem))] max-w-full aspect-square mx-auto">
                 <ResponsiveContainer width="100%" height="100%">
                   <RadarChart data={radarData} margin={{ top: 10, right: 20, bottom: 10, left: 20 }}>
                     <PolarGrid stroke="hsl(var(--border))" />
