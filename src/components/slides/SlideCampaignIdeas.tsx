@@ -131,10 +131,10 @@ const SlideCampaignIdeas = ({
       onPause={onPause}
       onNextSlide={onNextSlide}
     >
-      <div className="flex flex-col h-full gap-4">
+      <div className="flex flex-col h-full gap-3">
         {/* Campaign Hierarchy Strip */}
-        <div className="bg-card/40 backdrop-blur-sm border border-border/50 rounded-lg p-3">
-          <div className="grid grid-cols-3 gap-4">
+        <div className="bg-card/40 backdrop-blur-sm border border-border/50 rounded-lg p-2.5">
+          <div className="grid grid-cols-3 gap-3">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <TrendingUp className="w-4 h-4 text-primary" />
@@ -160,13 +160,13 @@ const SlideCampaignIdeas = ({
         </div>
 
         {/* Flagship Campaigns Row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
           {flagshipCampaigns.map((campaign, index) => {
             const Icon = campaign.icon;
             return (
               <div 
                 key={index}
-                className="bg-card/60 backdrop-blur-sm border border-border/50 rounded-lg p-4 hover:border-primary/50 transition-colors"
+                className="bg-card/60 backdrop-blur-sm border border-border/50 rounded-lg p-3 hover:border-primary/50 transition-colors"
               >
                 <div className="flex items-start gap-3 mb-3">
                   <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
@@ -203,7 +203,7 @@ const SlideCampaignIdeas = ({
         </div>
 
         {/* Supporting Campaigns Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-1.5">
           {supportingCampaigns.map((campaign, index) => {
             const Icon = campaign.icon;
             return (

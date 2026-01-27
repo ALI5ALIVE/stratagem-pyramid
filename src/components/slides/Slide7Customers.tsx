@@ -74,7 +74,7 @@ const Slide7Customers = ({
       onNextSlide={onNextSlide}
     >
       {/* Executive Value Proposition */}
-      <div className="max-w-4xl mx-auto mb-8">
+      <div className="max-w-4xl mx-auto mb-4">
         <div className="bg-card border border-primary/30 rounded-lg p-5 text-center">
           <p className="text-xs font-medium text-primary uppercase tracking-wide mb-2">Executive Value Proposition:</p>
           <p className="text-base text-foreground leading-relaxed">
@@ -84,7 +84,7 @@ const Slide7Customers = ({
       </div>
 
       {/* Cost Center to Revenue Generation Visual */}
-      <div className="max-w-4xl mx-auto mb-6">
+      <div className="max-w-4xl mx-auto mb-3">
         <div className="bg-card border border-border rounded-lg p-4">
           <div className="flex items-center justify-between gap-3">
             
@@ -126,13 +126,13 @@ const Slide7Customers = ({
       </div>
 
       {/* COO Outcomes Dashboard */}
-      <div className="grid md:grid-cols-3 gap-5 mb-8">
+      <div className="grid md:grid-cols-3 gap-3 mb-4">
         {kpiCategories.map((category, index) => {
           const Icon = category.icon;
           return (
             <div
               key={index}
-              className={`relative bg-card border ${category.borderColor} rounded-xl p-5 overflow-visible`}
+              className={`relative bg-card border ${category.borderColor} rounded-xl p-4 overflow-visible`}
             >
               {/* Header */}
               <div className="flex items-center gap-3 mb-4">
@@ -143,7 +143,7 @@ const Slide7Customers = ({
               </div>
 
               {/* Gauge visual */}
-              <div className="h-32 mb-3">
+              <div className="h-24 mb-2">
                 <svg viewBox="0 0 200 120" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
                   <defs>
                     <linearGradient id={`gauge${index}`} x1="0%" y1="0%" x2="100%" y2="0%">

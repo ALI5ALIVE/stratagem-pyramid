@@ -197,12 +197,12 @@ const SlideMessagingHouse = ({
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 h-full">
         {/* Left Column: House Structure */}
-        <div className="lg:col-span-7 flex flex-col gap-3">
+        <div className="lg:col-span-7 flex flex-col gap-2">
           
           {/* Rooftop: Category Position */}
           <div className="relative">
             <div 
-              className="bg-gradient-to-r from-primary/20 via-primary/30 to-primary/20 border border-primary/40 rounded-lg p-4 min-h-[100px]"
+              className="bg-gradient-to-r from-primary/20 via-primary/30 to-primary/20 border border-primary/40 rounded-lg p-3 min-h-[80px]"
               style={{
                 clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)"
               }}

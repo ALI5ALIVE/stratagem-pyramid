@@ -122,11 +122,11 @@ const SlidePlatformCapabilities = ({
         {/* Main content - Two column layout */}
         <div className="grid lg:grid-cols-2 gap-8 flex-1 items-center">
           {/* Left: Visual - Ecosystem Image with Capability Labels */}
-          <div className="flex items-center justify-center py-8">
+          <div className="flex items-center justify-center py-4">
             <img 
               src={platformEcosystem} 
               alt="Comply365 Platform Ecosystem" 
-              className="w-72 h-72 lg:w-80 lg:h-80 object-contain"
+              className="w-56 h-56 lg:w-64 lg:h-64 object-contain"
             />
           </div>
 
@@ -195,7 +195,7 @@ const SlidePlatformCapabilities = ({
         </div>
 
         {/* Bottom: Value Outcomes Banner */}
-        <div className="mt-6 pt-5 border-t border-border/50">
+        <div className="mt-3 pt-3 border-t border-border/50">
           <div className="grid grid-cols-3 gap-4">
             {outcomes.map((outcome, index) => {
               const Icon = outcome.icon;

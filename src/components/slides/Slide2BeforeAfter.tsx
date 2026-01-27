@@ -52,7 +52,7 @@ const Slide2BeforeAfter = ({
       onPause={onPause}
       onNextSlide={onNextSlide}
     >
-      <div className="grid md:grid-cols-2 gap-6 lg:gap-10">
+      <div className="grid md:grid-cols-2 gap-4 lg:gap-6">
         {/* Before */}
         <div className="relative">
           <div className="relative bg-card border border-destructive/30 rounded-xl p-6 sm:p-8">
@@ -67,7 +67,7 @@ const Slide2BeforeAfter = ({
             </div>
 
             {/* Data Fragmentation Visual */}
-            <div className="relative h-48 mb-6">
+            <div className="relative h-36 mb-4">
               <svg viewBox="0 0 300 140" className="w-full h-full">
                 <defs>
                   <filter id="siloGlow" x="-50%" y="-50%" width="200%" height="200%">
@@ -168,7 +168,7 @@ const Slide2BeforeAfter = ({
             </div>
 
             {/* Connected data visual with flow */}
-            <div className="relative h-48 mb-6">
+            <div className="relative h-36 mb-4">
               <svg viewBox="0 0 300 140" className="w-full h-full">
                 <defs>
                   <linearGradient id="connectionGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -263,7 +263,7 @@ const Slide2BeforeAfter = ({
       </div>
 
       {/* Unlike callout */}
-      <div className="mt-6 max-w-4xl mx-auto">
+      <div className="mt-3 max-w-4xl mx-auto">
         <div className="bg-card border border-primary/30 rounded-xl p-5">
           <p className="text-sm text-muted-foreground">
             <span className="font-semibold text-primary">Unlike</span> point solutions that manage safety, content, or training in isolation, 

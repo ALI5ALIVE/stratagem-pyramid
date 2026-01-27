@@ -120,12 +120,12 @@ const Slide3OperatingModel = ({
       onNextSlide={onNextSlide}
     >
       {/* Core Solutions Infinity Model */}
-      <div className="mb-4">
+      <div className="mb-2">
         <CoreSolutionsInfinity />
       </div>
 
       {/* Data Sources Row */}
-      <div className="max-w-4xl mx-auto mb-3">
+      <div className="max-w-4xl mx-auto mb-2">
         <div className="flex items-center justify-center gap-1.5 flex-wrap">
           <div className="flex items-center gap-1 mr-1.5">
             <Database className="w-3 h-3 text-muted-foreground" />
@@ -222,7 +222,7 @@ const Slide3OperatingModel = ({
       </div>
 
       {/* Value Generated Row */}
-      <div className="mt-4 max-w-4xl mx-auto">
+      <div className="mt-2 max-w-4xl mx-auto">
         <div className="flex items-center justify-center gap-1.5 mb-2">
           <TrendingUp className="w-3 h-3 text-primary" />
           <span className="text-[10px] text-primary uppercase tracking-wide font-semibold">Value Generated</span>

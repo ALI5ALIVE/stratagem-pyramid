@@ -81,7 +81,7 @@ const Slide9CategoryRationale = ({
       onNextSlide={onNextSlide}
     >
       {/* Hero Banner */}
-      <div className="bg-primary/15 border-2 border-primary rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 text-center">
+      <div className="bg-primary/15 border-2 border-primary rounded-xl p-3 sm:p-4 mb-3 sm:mb-4 text-center">
         <p className="text-xs font-medium text-primary uppercase tracking-wide mb-2">
           Recommended Category Name
         </p>
@@ -140,7 +140,7 @@ const Slide9CategoryRationale = ({
       </div>
 
       {/* Closing Statement */}
-      <div className="mt-4 sm:mt-6 bg-primary/10 border border-primary/30 rounded-lg p-4 sm:p-5">
+      <div className="mt-3 sm:mt-4 bg-primary/10 border border-primary/30 rounded-lg p-3 sm:p-4">
         <p className="text-xs sm:text-sm text-foreground text-center leading-relaxed">
           <span className="font-semibold text-primary">What to say in the room:</span>{" "}
           "We use 'Operational Performance Platform' as the category because it captures exactly what COOs and boards care about: 
