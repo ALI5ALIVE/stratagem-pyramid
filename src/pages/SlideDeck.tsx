@@ -12,7 +12,6 @@ import Slide7MaturityCurve from "@/components/slides/Slide5MaturityCurve";
 import Slide8PositioningMap from "@/components/slides/Slide8PositioningMap";
 import Slide9Customers from "@/components/slides/Slide7Customers";
 import Slide10Investors from "@/components/slides/Slide6Investors";
-import Slide11CategoryRationale from "@/components/slides/Slide9CategoryRationale";
 import SlideMessagingHouse from "@/components/slides/SlideMessagingHouse";
 import SlideCampaignIdeas from "@/components/slides/SlideCampaignIdeas";
 import SlideAIVision from "@/components/slides/SlideAIVision";
@@ -30,9 +29,8 @@ const slides = [
   { id: "slide-9", label: "Customers" },
   { id: "slide-10", label: "Investors" },
   { id: "slide-11", label: "AI Vision & Future" },
-  { id: "slide-12", label: "Category Name" },
-  { id: "slide-13", label: "Messaging House" },
-  { id: "slide-14", label: "Campaign Ideas" },
+  { id: "slide-12", label: "Messaging House" },
+  { id: "slide-13", label: "Campaign Ideas" },
 ];
 
 const SlideDeck = () => {
@@ -210,9 +208,8 @@ const SlideDeck = () => {
         <Slide9Customers {...getNarrationProps(9)} />
         <Slide10Investors {...getNarrationProps(10)} />
         <SlideAIVision {...getNarrationProps(11)} />
-        <Slide11CategoryRationale {...getNarrationProps(12)} />
-        <SlideMessagingHouse {...getNarrationProps(13)} />
-        <SlideCampaignIdeas {...getNarrationProps(14)} />
+        <SlideMessagingHouse {...getNarrationProps(12)} />
+        <SlideCampaignIdeas {...getNarrationProps(13)} />
       </div>
     </div>
   );
