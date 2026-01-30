@@ -47,9 +47,10 @@ const Slide3OperatingModel = ({
       id: "detect",
       icon: Radio,
       label: "Detect",
-      description: "Capture operational signals earlier — FOQA exceedances, ASAP reports, audit findings, crew feedback",
+      description: "FOQA exceedance triggers automatic alert. Signal captured with flight ID, crew, and timestamp.",
       metric: "12K",
       metricLabel: "signals/mo",
+      auditTrail: "Signal ID: FOQA-2024-00847 logged",
       color: "text-amber-500",
       bgColor: "bg-amber-500/10",
       borderColor: "border-amber-500/50",
@@ -58,9 +59,10 @@ const Slide3OperatingModel = ({
       id: "trigger",
       icon: Bell,
       label: "Trigger",
-      description: "Convert signals into coordinated actions — automatic workflow initiation, not email chains",
+      description: "Procedure review workflow initiated. Linked to source signal, assigned owner, due date set.",
       metric: "850",
       metricLabel: "actions",
+      auditTrail: "Workflow WF-3421 created → Owner: J.Smith",
       color: "text-orange-500",
       bgColor: "bg-orange-500/10",
       borderColor: "border-orange-500/50",
@@ -69,9 +71,10 @@ const Slide3OperatingModel = ({
       id: "orchestrate",
       icon: GitBranch,
       label: "Orchestrate",
-      description: "Controlled procedural change + targeted training — linked updates across manuals, bulletins, and qualifications",
+      description: "SOP 4.2.1 updated. Training module activated for affected crew. All changes version-controlled.",
       metric: "340",
       metricLabel: "changes",
+      auditTrail: "SOP v4.2.1 published → 47 crew assigned",
       color: "text-primary",
       bgColor: "bg-primary/10",
       borderColor: "border-primary/50",
@@ -80,9 +83,10 @@ const Slide3OperatingModel = ({
       id: "prove",
       icon: ShieldCheck,
       label: "Prove",
-      description: "Audit-ready evidence and readiness proof by default — version history, completion tracking, approval trails",
+      description: "Complete audit trail generated. Signal → change → training → completion linked and exportable.",
       metric: "100%",
       metricLabel: "tracked",
+      auditTrail: "Audit report AR-2024-0847 ready",
       color: "text-emerald-500",
       bgColor: "bg-emerald-500/10",
       borderColor: "border-emerald-500/50",
@@ -206,6 +210,13 @@ const Slide3OperatingModel = ({
                   <p className={`text-[10px] text-center transition-colors duration-300 ${isStepActive ? 'text-foreground' : 'text-muted-foreground/50'}`}>
                     {step.description}
                   </p>
+
+                  {/* Audit Trail */}
+                  {isStepActive && step.auditTrail && (
+                    <p className="text-[9px] text-center mt-1 font-mono text-primary/80 bg-primary/5 rounded px-1 py-0.5">
+                      {step.auditTrail}
+                    </p>
+                  )}
 
                   {/* Step number */}
                   <div className={`

@@ -80,6 +80,9 @@ const Slide1StrategicShift = ({
                 <span className="text-sm text-primary font-medium">
                   Platform
                 </span>
+                <span className="text-xs text-muted-foreground mt-2 block">
+                  for Safety, Content, and Training
+                </span>
               </div>
             </div>
           </div>
@@ -107,9 +110,13 @@ const Slide1StrategicShift = ({
             <p className="text-xl font-bold text-foreground mb-2">
               Operational Performance Platform
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground mb-3">
               A connected, intelligent, and predictive platform that turns signals into 
-              orchestrated change and audit-ready proof.
+              orchestrated change and measurable outcomes.
+            </p>
+            <p className="text-xs text-foreground/80 italic border-t border-primary/20 pt-3">
+              Unlike point solutions that manage safety, content, or training in isolation, 
+              Comply365 connects all three into one governed platform.
             </p>
           </div>
         </div>
