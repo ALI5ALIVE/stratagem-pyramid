@@ -5,7 +5,7 @@ import { ChevronDown, Search } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
 
 const navItems = [
-  { label: "Platform", href: "/platform", hasDropdown: false },
+  { label: "Platform", href: "/homepage-mockup", hasDropdown: false },
   { 
     label: "Solutions", 
     hasDropdown: true,
