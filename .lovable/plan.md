@@ -1,165 +1,152 @@
 
 
-# Plan: Implement GM Feedback Refinements
+# Plan: Messaging Application Slides — Contextualizing "Operational Performance"
 
 ## Summary
 
-Address valid feedback from Neil, Alan, and Wayne while maintaining the strategic positioning integrity. Focus on precision, defensibility, and clarity without diluting the category-defining language.
+Create two new slides that demonstrate how the "Operational Performance Platform" messaging applies in practice, addressing the concern that "operational performance" could be confused with airline OPS metrics (OTP, fuel burn, turnaround times). The slides will:
+
+1. **Slide A: "Messaging in Context"** — Show how the platform terminology maps to Safety, Training, and Content domains with clear contextual language examples
+2. **Slide B: "Platform Experience Mockup"** — A visual homepage/dashboard mockup that shows how the messaging appears in the actual product experience
 
 ---
 
-## Changes to Implement
+## The Core Concern
 
-### 1. Slide 2 (Before/After): Audit Prep Metric Enhancement
+In airlines, "Operational Performance" commonly refers to:
+- On-Time Performance (OTP)
+- Fuel efficiency
+- Turnaround times
+- Delay minutes
+- Load factors
 
-**File:** `src/components/slides/Slide2BeforeAfter.tsx`
+The concern is that using "Operational Performance Platform" without context could create confusion with existing OCC/NOC dashboards or Ops Control tools.
 
-**Current (Line 256):**
-```
-<p className="text-xs text-muted-foreground">Audit</p>
-```
-
-**Change:** Update the metric context and disclaimer
-
-- Change "Target Outcomes" label to "Illustrative Target Outcomes*"
-- Ensure the "2hr" audit metric is understood as the improvement, not the absolute time
-- The asterisk disclaimer already says "*Based on customer projections" - this is sufficient
-
-**Lines affected:** 243, 259
+**Our solution:** Show that when applied to Safety, Training, and Content domains, the term "Operational Performance" takes on specific, unambiguous meaning — and the platform UI reinforces this through clear domain framing.
 
 ---
 
-### 2. Slide 2 (Before/After): Strengthen Disclaimer Language
+## Slide A: "Messaging in Context"
 
-**File:** `src/components/slides/Slide2BeforeAfter.tsx`
+**Title:** Operational Performance — In Context  
+**Subtitle:** How the category applies across Safety, Training, and Content
 
-**Current (Line 259):**
-```
-*Based on customer projections
-```
+### Layout
+A three-column layout showing how "Operational Performance" contextualizes differently for each domain:
 
-**New:**
-```
-*Illustrative outcomes based on customer goals and mature deployments
-```
+| Domain | What "Performance" Means | Key Metric Examples |
+|--------|-------------------------|---------------------|
+| **Safety Performance** | Fewer incidents, reduced recurrence, faster investigation closure | Investigation closure time, repeat findings, ASAP submission rate |
+| **Content Performance** | Faster procedural change cycles, reduced drift, compliance alignment | Time-to-change, revision currency, controlled distribution |
+| **Training Performance** | Higher readiness, targeted qualification, faster time-to-competency | Qualification currency, assessment pass rates, training activation speed |
 
-**Lines affected:** 259
+### Visual Element
+A horizontal timeline showing the "Detect → Trigger → Orchestrate → Prove" flow with domain-specific examples at each stage:
+- **Detect:** FOQA exceedance detected in Safety domain
+- **Trigger:** Procedure update triggered in Content domain
+- **Orchestrate:** Targeted training activated in Training domain
+- **Prove:** Audit evidence generated across all three
 
----
-
-### 3. Slide 3 (Operating Model): Add Concrete Examples
-
-**File:** `src/components/slides/Slide3OperatingModel.tsx`
-
-**Enhancement:** Expand the step descriptions to include concrete operational examples
-
-| Step | Current Description | Enhanced Description |
-|------|---------------------|---------------------|
-| Detect | "Capture operational signals earlier (risk + issues + drift)" | "Capture operational signals earlier — FOQA exceedances, ASAP reports, audit findings, crew feedback" |
-| Trigger | "Convert signals into coordinated actions (not manual handoffs)" | "Convert signals into coordinated actions — automatic workflow initiation, not email chains" |
-| Orchestrate | "Controlled procedural change + targeted training activation" | "Controlled procedural change + targeted training activation — linked updates across manuals, bulletins, and qualifications" |
-| Prove | "Audit-ready evidence and readiness proof by default" | "Audit-ready evidence and readiness proof by default — version history, completion tracking, approval trails" |
-
-**Lines affected:** 48, 56, 64, 72
+### Key Callout Box
+> "Operational Performance is not OTP or dispatch reliability. It's the coordinated execution of Safety, Content, and Training — the internal processes that protect and enable OTP."
 
 ---
 
-### 4. Slide 5 (Maturity Curve) or Slide 6 (Value Pyramid): Clarify Individual Solution Value
+## Slide B: "Platform Experience" (Homepage Mockup)
 
-**File:** `src/components/slides/Slide5MaturityCurve.tsx` or `src/components/slides/Slide4ValuePyramid.tsx`
+**Title:** The Platform Experience  
+**Subtitle:** How messaging appears in the product
 
-**Issue:** Current language implies you need the full platform to progress beyond Stage 2, which may discourage sales of individual products.
+### Layout
+A mock dashboard/homepage wireframe showing:
 
-**Current language (in narration):**
-> "Even with best-in-class Comply365 products — as you can see annotated on the curve — you can reach Stage Two. But to progress beyond, you need the full platform."
+**Left Sidebar Navigation:**
+- Safety Performance
+- Content Performance  
+- Training Performance
+- Governance & Proof
+- AI Insights
 
-**Recommended clarification:** Add a visual annotation or text callout that states:
-> "Individual solutions deliver departmental value at Stage 2. Platform integration unlocks Stages 3-5 with compounding returns."
+**Main Content Area:**
+A simplified dashboard with three domain cards:
 
-This preserves the strategic message while acknowledging that single-product sales still provide value.
+1. **Safety Performance Card**
+   - "47 open investigations"
+   - "Recurrence rate: 4.2% ↓"
+   - "Avg. closure time: 12 days"
 
-**Location:** Add to the pyramid slide details panel or as a footnote callout
+2. **Content Performance Card**
+   - "23 procedures pending update"
+   - "Time-to-change: 8 days avg"
+   - "Currency rate: 96.4%"
 
----
+3. **Training Performance Card**
+   - "Workforce readiness: 94%"
+   - "Overdue qualifications: 127"
+   - "Training activations this month: 342"
 
-### 5. Narration Script Updates
+**Bottom Banner:**
+The "Detect → Trigger → Orchestrate → Prove" flow as a visual progress indicator
 
-**File:** `src/data/slideNarration.ts`
+**Right Sidebar:**
+"Recent Actions" or "AI Recommendations" panel:
+- "⚡ New FOQA trend detected — 3 procedures flagged for review"
+- "📋 Procedure SOP-2847 updated — 847 crew require re-acknowledgment"
+- "🎓 Targeted training activated for 23 crew based on performance data"
 
-**Slide 2 (Before/After) - Line 28:**
-Update "weeks to hours" reference to "months to hours":
-
-**Current:**
-> "And audit preparation reduced to two hours."
-
-**New:**
-> "And audit preparation reduced from months of scrambling to just two hours."
-
-**Slide 6 (Maturity Roadmap) - Line 52:**
-Add clarifying language about individual solution value:
-
-**Current:**
-> "Even with best-in-class Comply three six five products... you can reach Stage Two."
-
-**New:**
-> "Even with individual Comply three six five solutions like Content Manager or Safety Manager, you'll see real departmental improvement at Stage Two. But to unlock Stages Three through Five — where the compounding value lives — you need the full platform."
-
----
-
-## Changes NOT Recommended (Push Back)
-
-### 1. Alternative Category Names
-
-**Feedback:** Alan suggests "AI Operations Platform" or "Operational Intelligence Platform" as alternatives.
-
-**Response:** The category name "Operational Performance Platform" was deliberately chosen because:
-- "Performance" is the language COOs and boards use to measure operational success
-- It avoids "AI-first" positioning which creates regulatory and analyst skepticism
-- It's cross-industry applicable (aviation, rail, defense, maritime)
-- It differentiates from NOC/OCC tools which focus on monitoring, not orchestration
-
-Changing the category name at this stage would undermine months of positioning work and require a complete narrative rewrite.
+### Design Notes
+- Use the existing Comply365 color scheme (primary blue, accent teal)
+- Show the logo in the top-left
+- Style as a "product screenshot" wireframe, not a full UI implementation
+- Include subtle browser chrome to make it feel like a real product view
 
 ---
 
-### 2. Softening "Proof by Default"
+## Files to Create
 
-**Feedback:** Alan suggests "Audit-ready proof captured automatically where possible" to avoid sounding absolute.
+### 1. `src/components/slides/SlideMessagingContext.tsx`
+New slide component showing messaging application across domains
 
-**Response:** The phrase "Proof generated by default" is intentionally assertive. Adding "where possible" creates doubt and weakens the value proposition. The existing disclaimer "*Based on customer projections" provides sufficient defensibility without diluting the message.
+### 2. `src/components/slides/SlidePlatformExperience.tsx`
+New slide component with the homepage mockup visualization
 
-If specificity is needed, it can be addressed in sales conversations, not in the positioning deck which is designed to be aspirational.
+### 3. Update `src/pages/SlideDeck.tsx`
+- Add imports for both new slides
+- Add entries to the `slides` array (as Slides 14 and 15)
+- Add components to the render section
 
----
-
-### 3. Strategy-Reality Gap (Wayne)
-
-**Feedback:** Wayne notes the gap between the platform promise and internal reality (limited data integration, inconsistent UX).
-
-**Response:** This is an execution concern, not a positioning concern. A positioning deck is aspirational by design — it defines where we're going, not where we are today. The AI Vision slide (Slide 11) already separates "Active", "In Development", and "Vision" to address this.
-
-The solution is internal alignment and product roadmap execution, not softening the external message.
+### 4. Update `src/data/slideNarration.ts`
+- Add narration scripts for both new slides
 
 ---
 
 ## Technical Details
 
-| File | Lines | Change Type |
-|------|-------|-------------|
-| `Slide2BeforeAfter.tsx` | 243, 259 | Label + disclaimer text |
-| `Slide3OperatingModel.tsx` | 48, 56, 64, 72 | Step descriptions with concrete examples |
-| `Slide4ValuePyramid.tsx` or related | TBD | Add clarification about individual solution value |
-| `slideNarration.ts` | 28, 52 | Script updates for months→hours and solution value clarification |
+| File | Action | Description |
+|------|--------|-------------|
+| `SlideMessagingContext.tsx` | Create | Three-column domain breakdown + DTOP flow with examples |
+| `SlidePlatformExperience.tsx` | Create | Dashboard mockup with sidebar, domain cards, and AI panel |
+| `SlideDeck.tsx` | Update | Add imports, slides array entries (14-15), and render components |
+| `slideNarration.ts` | Update | Add narration scripts for slides 14 and 15 |
+| `Slide0Title.tsx` | Update | Add new agenda items for the two new slides |
 
 ---
 
-## Summary
+## Narration Scripts
 
-This plan addresses the valid feedback points while defending the strategic positioning decisions. The changes focus on:
+### Slide 14 (Messaging in Context)
+> "A common question we get: doesn't 'Operational Performance' already mean something in airlines — like on-time performance or dispatch reliability? The answer is yes — and that's precisely why we use it. But in the context of Safety, Content, and Training, performance takes on specific, measurable meaning. Safety Performance means fewer incidents, reduced recurrence, and faster investigation closure. Content Performance means faster procedural change cycles, reduced drift, and compliance alignment. Training Performance means higher workforce readiness, targeted qualification, and faster time-to-competency. The Detect, Trigger, Orchestrate, Prove flow connects all three. A safety signal detects an issue. A content update is triggered. Training is orchestrated to close the gap. And proof is generated automatically. This is what we mean by Operational Performance. Not OTP or dispatch reliability — but the internal execution of Safety, Content, and Training that protects and enables those outcomes."
 
-1. **Precision** - Concrete examples for Detect/Trigger/Orchestrate/Prove
-2. **Defensibility** - Stronger disclaimer language for metrics
-3. **Sales enablement** - Clarification that individual solutions still deliver value
+### Slide 15 (Platform Experience)
+> "Here's how this messaging appears in the actual platform experience. The navigation doesn't say 'Safety Management System' or 'Learning Management System.' It says Safety Performance, Content Performance, Training Performance. Each domain has its own performance dashboard — with metrics that matter to that function. Safety shows investigation status and recurrence rates. Content shows procedural change cycles and currency. Training shows workforce readiness and qualification status. The AI recommendations panel surfaces cross-domain insights: a new trend detected in safety data, a procedure flagged for review, targeted training activated based on performance signals. And at the bottom, the Detect, Trigger, Orchestrate, Prove flow visualizes the connected operating model. This isn't just positioning language. It's how the product works. The messaging and the experience are aligned."
 
-The category name, assertive language, and aspirational framing remain intact as these are core to the positioning strategy.
+---
+
+## Result
+
+After implementation:
+- Two new slides (14-15) that directly address the "performance can mean other things" concern
+- Clear domain-specific application of the "Operational Performance" terminology
+- A tangible product mockup that makes the messaging concrete
+- Narration scripts that explain the contextual application
 
