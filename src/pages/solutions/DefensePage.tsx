@@ -1,5 +1,6 @@
 import MainNavigation from "@/components/MainNavigation";
 import IndustryHero from "@/components/solutions/IndustryHero";
+import IndustryTrustBar from "@/components/solutions/IndustryTrustBar";
 import IndustryChallenge from "@/components/solutions/IndustryChallenge";
 import IndustryDTOP from "@/components/solutions/IndustryDTOP";
 import IndustryPillars from "@/components/solutions/IndustryPillars";
@@ -99,6 +100,14 @@ const DefensePage = () => {
         badgeText="For Military Aviation & Defense"
         scopeLine="for Safety, Content, and Training"
         subhead="Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes for defense operations."
+      />
+      
+      <IndustryTrustBar
+        industry="Defense"
+        primaryStat="Trusted by military aviation"
+        primaryLabel="across multiple allied nations"
+        secondaryStat="100K+"
+        secondaryLabel="qualified personnel"
       />
       
       <IndustryChallenge
