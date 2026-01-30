@@ -25,11 +25,24 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-const navItems = [
-  { label: "Platform", hasDropdown: true },
-  { label: "Solutions", hasDropdown: true },
-  { label: "Customers", hasDropdown: false },
-  { label: "Resources", hasDropdown: true },
+const navItems: Array<{
+  label: string;
+  href?: string;
+  hasDropdown: boolean;
+  dropdownItems?: Array<{ label: string; href: string }>;
+}> = [
+  { label: "Platform", href: "/homepage-mockup", hasDropdown: false },
+  { 
+    label: "Solutions", 
+    hasDropdown: true,
+    dropdownItems: [
+      { label: "Airlines", href: "/solutions/airlines" },
+      { label: "Defense", href: "/solutions/defense" },
+      { label: "Rail", href: "/solutions/rail" },
+    ]
+  },
+  { label: "Customers", href: "/homepage-mockup", hasDropdown: false },
+  { label: "Resources", href: "/homepage-mockup", hasDropdown: false },
 ];
 
 const pillars = [
@@ -189,13 +202,35 @@ const HomepageMockup = () => {
           <img src={complyLogo} alt="Comply365" className="h-8 w-auto" />
           <nav className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
-              <button
-                key={item.label}
-                className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {item.label}
-                {item.hasDropdown && <ChevronDown className="w-4 h-4" />}
-              </button>
+              item.hasDropdown ? (
+                <div key={item.label} className="relative group">
+                  <button className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    {item.label}
+                    <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
+                  </button>
+                  <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                    <div className="bg-background border border-border rounded-lg shadow-lg py-2 min-w-[160px]">
+                      {item.dropdownItems?.map((dropdownItem) => (
+                        <Link
+                          key={dropdownItem.href}
+                          to={dropdownItem.href}
+                          className="block px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                        >
+                          {dropdownItem.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  key={item.label}
+                  to={item.href || "/homepage-mockup"}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {item.label}
+                </Link>
+              )
             ))}
           </nav>
           <div className="flex items-center gap-4">
