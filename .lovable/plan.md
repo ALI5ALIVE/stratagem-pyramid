@@ -1,258 +1,118 @@
 
 
-# Plan: Update Homepage Badge + Create Industry Solutions Pages
+# Plan: Fix Top Navigation for Solutions Pages
 
-## Summary
+## Problem
 
-1. **Quick Fix**: Update the homepage badge from "For Airlines & Aviation Operations" to "For mission-critical, regulated operations"
-2. **New Pages**: Create three industry-specific solution pages (Airlines, Defense, Rail) that apply the Operational Performance Platform messaging from the deck
+The `HomepageMockup.tsx` navigation currently uses plain `<button>` elements that don't navigate anywhere. The "Solutions" dropdown should link to the actual solution pages (`/solutions/airlines`, `/solutions/defense`, `/solutions/rail`).
 
----
+## Current State
 
-## Part 1: Homepage Badge Update
-
-### File: `src/pages/HomepageMockup.tsx`
-**Line 227**
-
-| Current | New |
-|---------|-----|
-| `For Airlines & Aviation Operations` | `For mission-critical, regulated operations` |
-
----
-
-## Part 2: Industry Solutions Page Template
-
-Each industry page will follow a consistent structure inspired by the deck messaging, particularly:
-- **Slide 0**: Category definition
-- **Slide 3**: Operating Model (Detect → Trigger → Orchestrate → Prove)
-- **Slide 12**: Messaging House (pillars, value propositions)
-
-### Page Structure (Common to All)
-
-```text
-┌─────────────────────────────────────────────────────────┐
-│  HERO SECTION                                           │
-│  - Industry-specific headline                           │
-│  - Core platform definition                             │
-│  - CTA buttons                                          │
-├─────────────────────────────────────────────────────────┤
-│  CUSTOMER LOGOS BAR                                     │
-│  - Trusted by [industry] leaders                        │
-├─────────────────────────────────────────────────────────┤
-│  INDUSTRY CHALLENGE SECTION                             │
-│  - Before/After comparison                              │
-│  - Industry-specific pain points                        │
-├─────────────────────────────────────────────────────────┤
-│  OPERATING MODEL (DTOP)                                 │
-│  - Detect → Trigger → Orchestrate → Prove               │
-│  - Industry-specific examples for each step             │
-├─────────────────────────────────────────────────────────┤
-│  THREE PERFORMANCE PILLARS                              │
-│  - Safety Performance (industry-specific)               │
-│  - Content Performance (industry-specific)              │
-│  - Training Performance (industry-specific)             │
-├─────────────────────────────────────────────────────────┤
-│  PLATFORM CAPABILITIES                                  │
-│  - Connected Foundation                                 │
-│  - Continuous Improvement                               │
-│  - Proof at Scale                                       │
-│  - AI Accelerator                                       │
-├─────────────────────────────────────────────────────────┤
-│  CASE STUDY / CUSTOMER QUOTE                            │
-│  - Industry-specific success story                      │
-├─────────────────────────────────────────────────────────┤
-│  CTA SECTION                                            │
-│  - Request demo / Calculate ROI                         │
-├─────────────────────────────────────────────────────────┤
-│  FOOTER                                                 │
-└─────────────────────────────────────────────────────────┘
+**Lines 28-33 in HomepageMockup.tsx:**
+```tsx
+const navItems = [
+  { label: "Platform", hasDropdown: true },
+  { label: "Solutions", hasDropdown: true },
+  { label: "Customers", hasDropdown: false },
+  { label: "Resources", hasDropdown: true },
+];
 ```
 
----
+**Lines 191-199:**
+```tsx
+{navItems.map((item) => (
+  <button
+    key={item.label}
+    className="..."
+  >
+    {item.label}
+    {item.hasDropdown && <ChevronDown className="w-4 h-4" />}
+  </button>
+))}
+```
 
-## Part 3: Industry-Specific Content
+These are just buttons with no navigation functionality.
 
-### Airlines Page (`/solutions/airlines`)
+## Solution
 
-**Hero:**
-- Headline: "Operational Performance for Airlines"
-- Subhead: "A connected, intelligent, and predictive platform that turns signals into orchestrated change and measurable outcomes."
+Replace the generic navigation with working links that include a dropdown for Solutions:
 
-**Industry Challenge:**
-| Point Solutions | Connected Platform |
-|-----------------|-------------------|
-| FOQA data sits in isolation | Safety signals trigger procedure updates |
-| Manual coordination between departments | Automated workflows across safety, content, training |
-| Audit scrambles before inspections | Continuous proof of compliance |
-| Reactive training schedules | Training targeted to actual operational risk |
+### 1. Update Navigation Structure (lines 28-33)
 
-**DTOP Examples:**
-- **Detect**: FOQA exceedance, ASAP report, audit finding
-- **Trigger**: Automatic procedure review, training requirement
-- **Orchestrate**: Coordinated updates to manuals, targeted crew training
-- **Prove**: FAA/EASA audit-ready documentation
+Replace the `navItems` array with a more detailed structure that includes links:
 
-**Performance Metrics:**
-- Safety: "50% faster investigation closure"
-- Content: "60% faster regulatory change cycles"
-- Training: "94% workforce readiness score"
+```tsx
+const navItems = [
+  { label: "Platform", href: "/homepage-mockup", hasDropdown: false },
+  { 
+    label: "Solutions", 
+    hasDropdown: true,
+    dropdownItems: [
+      { label: "Airlines", href: "/solutions/airlines" },
+      { label: "Defense", href: "/solutions/defense" },
+      { label: "Rail", href: "/solutions/rail" },
+    ]
+  },
+  { label: "Customers", href: "/homepage-mockup", hasDropdown: false },
+  { label: "Resources", href: "/homepage-mockup", hasDropdown: false },
+];
+```
 
-**Customer Logos:** Delta, British Airways, Qantas, Southwest
+### 2. Create Dropdown Component for Solutions (new component within file)
 
----
+Add a dropdown menu that appears on hover/click for the Solutions nav item.
 
-### Defense Page (`/solutions/defense`)
+### 3. Update Navigation Rendering (lines 190-200)
 
-**Hero:**
-- Headline: "Operational Performance for Defense"
-- Subhead: "A connected, intelligent, and predictive platform that turns signals into orchestrated change and measurable outcomes."
+Replace the simple button rendering with logic that handles both regular links and dropdown menus:
 
-**Industry Positioning:**
-- "Force multiplier" language
-- Mission-readiness focus
-- Warfighter enablement
-
-**Industry Challenge:**
-| Point Solutions | Connected Platform |
-|-----------------|-------------------|
-| Maintenance data disconnected from training | Safety signals drive qualification updates |
-| Manual airworthiness documentation | Automated configuration control |
-| Disparate training systems | Unified competency management |
-| Reactive maintenance schedules | Predictive readiness posture |
-
-**DTOP Examples:**
-- **Detect**: Maintenance event, safety incident, configuration change
-- **Trigger**: Automatic procedure update, qualification requirement
-- **Orchestrate**: Technical order updates, targeted technician training
-- **Prove**: Airworthiness authority compliance documentation
-
-**Performance Metrics:**
-- Safety: "Mission-critical incident reduction"
-- Content: "Configuration control accuracy"
-- Training: "Warfighter readiness assurance"
-
-**Customer Logos:** UK MoD, Royal Air Force, Australian Defence
-
----
-
-### Rail Page (`/solutions/rail`)
-
-**Hero:**
-- Headline: "Operational Performance for Rail"
-- Subhead: "A connected, intelligent, and predictive platform that turns signals into orchestrated change and measurable outcomes."
-
-**Industry Positioning:**
-- Network reliability focus
-- Passenger safety emphasis
-- Regulatory compliance (ORR, ERA)
-
-**Industry Challenge:**
-| Point Solutions | Connected Platform |
-|-----------------|-------------------|
-| Signal failures logged separately from procedures | Safety events trigger procedure reviews |
-| Manual driver competency tracking | Automated route competency management |
-| Disparate safety and training systems | Unified operational governance |
-| Reactive audit preparation | Continuous compliance evidence |
-
-**DTOP Examples:**
-- **Detect**: SPAD incident, maintenance event, near-miss report
-- **Trigger**: Automatic rule book update, driver briefing
-- **Orchestrate**: Procedure distribution, targeted driver training
-- **Prove**: ORR/ERA audit-ready documentation
-
-**Performance Metrics:**
-- Safety: "SPAD incident reduction"
-- Content: "Rule book change cycle time"
-- Training: "Driver competency readiness"
-
----
-
-## Files to Create
-
-| File | Description |
-|------|-------------|
-| `src/pages/solutions/AirlinesPage.tsx` | Airlines industry solution page |
-| `src/pages/solutions/DefensePage.tsx` | Defense industry solution page |
-| `src/pages/solutions/RailPage.tsx` | Rail industry solution page |
-| `src/components/solutions/IndustryHero.tsx` | Reusable hero component |
-| `src/components/solutions/IndustryChallenge.tsx` | Before/After comparison |
-| `src/components/solutions/IndustryDTOP.tsx` | DTOP flow with industry examples |
-| `src/components/solutions/IndustryPillars.tsx` | Three performance pillars |
-| `src/components/solutions/IndustryCapabilities.tsx` | Platform capabilities section |
-| `src/components/solutions/IndustryCTA.tsx` | Call-to-action section |
+```tsx
+<nav className="hidden md:flex items-center gap-8">
+  {navItems.map((item) => (
+    item.hasDropdown ? (
+      <div key={item.label} className="relative group">
+        <button className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors">
+          {item.label}
+          <ChevronDown className="w-4 h-4" />
+        </button>
+        <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+          <div className="bg-background border border-border rounded-lg shadow-lg py-2 min-w-[160px]">
+            {item.dropdownItems?.map((dropdownItem) => (
+              <Link
+                key={dropdownItem.href}
+                to={dropdownItem.href}
+                className="block px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+              >
+                {dropdownItem.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    ) : (
+      <Link
+        key={item.label}
+        to={item.href}
+        className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        {item.label}
+      </Link>
+    )
+  ))}
+</nav>
+```
 
 ## Files to Modify
 
 | File | Change |
 |------|--------|
-| `src/pages/HomepageMockup.tsx` | Update badge text (line 227) |
-| `src/App.tsx` | Add routes for `/solutions/airlines`, `/solutions/defense`, `/solutions/rail` |
-
----
-
-## Technical Details
-
-### Routing Updates (App.tsx)
-
-```tsx
-import AirlinesPage from "./pages/solutions/AirlinesPage";
-import DefensePage from "./pages/solutions/DefensePage";
-import RailPage from "./pages/solutions/RailPage";
-
-// Add routes:
-<Route path="/solutions/airlines" element={<AirlinesPage />} />
-<Route path="/solutions/defense" element={<DefensePage />} />
-<Route path="/solutions/rail" element={<RailPage />} />
-```
-
-### Shared Components Architecture
-
-Each industry page will import shared components and pass industry-specific content as props:
-
-```tsx
-<IndustryHero
-  industry="Airlines"
-  headline="Operational Performance for Airlines"
-  subhead="A connected, intelligent, and predictive platform..."
-  ctaPrimary="See the Platform"
-  ctaSecondary="Calculate Your Impact"
-/>
-
-<IndustryDTOP
-  examples={[
-    { step: "Detect", example: "FOQA exceedance captured" },
-    { step: "Trigger", example: "Procedure review initiated" },
-    ...
-  ]}
-/>
-```
-
-### Design Consistency
-
-- Uses existing Tailwind classes from HomepageMockup
-- Reuses UI components (Button, Card, Badge)
-- Maintains dark theme with gradient accents
-- Follows existing animation patterns
-
----
-
-## Implementation Order
-
-1. Update homepage badge text (quick fix)
-2. Create shared solution page components
-3. Create Airlines page (use as template)
-4. Create Defense page (adapt from Airlines)
-5. Create Rail page (adapt from Airlines)
-6. Add routes to App.tsx
-
----
+| `src/pages/HomepageMockup.tsx` | Update `navItems` structure and navigation rendering to include working dropdown links |
 
 ## Result
 
 After implementation:
-- Homepage speaks to all regulated industries, not just aviation
-- Three industry-specific pages demonstrate deep domain understanding
-- Consistent "Operational Performance Platform" messaging across all pages
-- DTOP operating model applied with industry-specific examples
-- Each page tells a coherent story: Problem → Operating Model → Capabilities → Proof → CTA
+- Clicking "Airlines", "Defense", or "Rail" in the Solutions dropdown navigates to the respective pages
+- Solutions dropdown appears on hover with smooth transitions
+- Navigation is consistent between homepage and solution pages
+- Logo links back to homepage mockup
 
