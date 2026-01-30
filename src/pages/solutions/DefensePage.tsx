@@ -1,3 +1,4 @@
+import MainNavigation from "@/components/MainNavigation";
 import IndustryHero from "@/components/solutions/IndustryHero";
 import IndustryChallenge from "@/components/solutions/IndustryChallenge";
 import IndustryDTOP from "@/components/solutions/IndustryDTOP";
@@ -91,6 +92,7 @@ const DefensePage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <MainNavigation />
       <IndustryHero
         industry="Defense"
         headline="Operational Performance for Defense"

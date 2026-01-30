@@ -1,3 +1,4 @@
+import MainNavigation from "@/components/MainNavigation";
 import IndustryHero from "@/components/solutions/IndustryHero";
 import IndustryChallenge from "@/components/solutions/IndustryChallenge";
 import IndustryDTOP from "@/components/solutions/IndustryDTOP";
@@ -72,6 +73,7 @@ const AirlinesPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <MainNavigation />
       <IndustryHero
         industry="Airlines"
         headline="Operational Performance for Airlines"
