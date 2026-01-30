@@ -17,6 +17,8 @@ const agendaItems = [
   { num: 11, label: "Becoming an AI Company", summary: "The intelligence layer & roadmap" },
   { num: 12, label: "Messaging House", summary: "Complete positioning framework" },
   { num: 13, label: "Campaign Ideas", summary: "Cementing category leadership" },
+  { num: 14, label: "Messaging in Context", summary: "How the category applies across domains" },
+  { num: 15, label: "Platform Experience", summary: "How messaging appears in the product" },
 ];
 
 interface Slide0TitleProps extends SlideNarrationProps {
