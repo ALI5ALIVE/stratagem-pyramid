@@ -6,6 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SlideDeck from "./pages/SlideDeck";
 import HomepageMockup from "./pages/HomepageMockup";
 import NotFound from "./pages/NotFound";
+import AirlinesPage from "./pages/solutions/AirlinesPage";
+import DefensePage from "./pages/solutions/DefensePage";
+import RailPage from "./pages/solutions/RailPage";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +21,9 @@ const App = () => (
         <Routes>
           <Route path="/" element={<SlideDeck />} />
           <Route path="/homepage-mockup" element={<HomepageMockup />} />
+          <Route path="/solutions/airlines" element={<AirlinesPage />} />
+          <Route path="/solutions/defense" element={<DefensePage />} />
+          <Route path="/solutions/rail" element={<RailPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

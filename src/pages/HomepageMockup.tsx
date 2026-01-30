@@ -224,7 +224,7 @@ const HomepageMockup = () => {
             <div className="max-w-xl">
               {/* Badge qualifier */}
               <Badge variant="outline" className="mb-6 px-4 py-1.5 text-sm border-primary/30 text-primary bg-primary/5">
-                For Airlines & Aviation Operations
+                For mission-critical, regulated operations
               </Badge>
               
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground mb-6 leading-[1.1]">
