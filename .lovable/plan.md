@@ -1,117 +1,167 @@
 
-# Plan: Align Industry Solution Page Hero Copy with Homepage Messaging
+# Plan: Fix Trust Signals for Homepage and Solution Pages
 
-## Current Gap Analysis
+## Current Issue
 
-| Element | Homepage (Correct) | Solution Pages (Current) |
-|---------|-------------------|-------------------------|
-| Headline | "The Operational Performance **Platform**" | "Operational Performance **for [Industry]**" |
-| Scope line | "for Safety, Content, and Training" | *(missing)* |
-| Subhead | "Connect safety, content, and training into an intelligent operating platform. **Turn signals into orchestrated change and measurable outcomes.**" | "A connected, intelligent, and predictive platform that turns signals into orchestrated change and measurable outcomes." |
-
-The solution pages need to follow the homepage's lead by:
-1. Adding the "for Safety, Content, and Training" scope line
-2. Restructuring the subhead to start with "Connect safety, content, and training..."
-3. Keeping the industry-specific headline but making it clearer it's the *same platform*
+| Page | Current Trust Signal | Problem |
+|------|---------------------|---------|
+| Homepage | "Trusted by 50+ airlines including 7 of the top 10 in North America" | **Too aviation-specific** - doesn't represent rail or defense |
+| Solution Pages | *(none)* | **Missing entirely** - no trust signals on industry pages |
 
 ---
 
-## Files to Modify
+## Solution Overview
 
-### 1. `src/components/solutions/IndustryHero.tsx`
+1. **Homepage**: Update trust bar to be cross-industry, mentioning all sectors served
+2. **Solution Pages**: Add an `IndustryTrustBar` component with industry-specific trust signals
 
-**Add scope line prop and display it between headline and subhead:**
+---
+
+## Files to Create/Modify
+
+### 1. Create `src/components/solutions/IndustryTrustBar.tsx` (NEW)
+
+A reusable trust bar component that accepts industry-specific props:
 
 ```tsx
-interface IndustryHeroProps {
+interface IndustryTrustBarProps {
   industry: string;
-  headline: string;
-  subhead: string;
-  badgeText?: string;
-  scopeLine?: string;  // NEW PROP
-  ctaPrimary?: string;
-  ctaSecondary?: string;
+  primaryStat: string;
+  primaryLabel: string;
+  secondaryStat: string;
+  secondaryLabel: string;
+  tertiaryStat?: string;
+  tertiaryLabel?: string;
 }
 
-// In the JSX, add scope line display after h1:
-<h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground mb-2 leading-[1.1]">
-  {headline}
-</h1>
-
-{/* NEW: Scope line anchoring Safety, Content, and Training */}
-<p className="text-sm md:text-base text-primary font-medium mb-6">
-  {scopeLine || "for Safety, Content, and Training"}
-</p>
-
-<p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto">
-  {subhead}
-</p>
+const IndustryTrustBar = ({
+  industry,
+  primaryStat,
+  primaryLabel,
+  secondaryStat,
+  secondaryLabel,
+  tertiaryStat = "99.9%",
+  tertiaryLabel = "uptime",
+}: IndustryTrustBarProps) => {
+  return (
+    <section className="py-6 border-y border-border bg-muted/30">
+      <div className="container mx-auto px-6">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
+          <p className="text-sm text-muted-foreground text-center md:text-left">
+            <span className="font-semibold text-foreground">{primaryStat}</span> {primaryLabel}
+          </p>
+          <div className="hidden md:block w-px h-6 bg-border" />
+          <div className="flex items-center gap-6 text-sm text-muted-foreground">
+            <span><strong className="text-foreground">{secondaryStat}</strong> {secondaryLabel}</span>
+            {tertiaryStat && (
+              <>
+                <span className="hidden sm:inline">|</span>
+                <span className="hidden sm:inline"><strong className="text-foreground">{tertiaryStat}</strong> {tertiaryLabel}</span>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
 ```
 
 ---
 
-### 2. `src/pages/solutions/AirlinesPage.tsx`
+### 2. Update `src/pages/HomepageMockup.tsx` (Lines 234-249)
 
-**Update hero props to match homepage pattern:**
+Change from airlines-only to cross-industry:
+
+**Current:**
+```tsx
+<span className="font-semibold text-foreground">Trusted by 50+ airlines</span> including 7 of the top 10 in North America
+...
+<span><strong className="text-foreground">500K+</strong> crew members</span>
+```
+
+**Updated:**
+```tsx
+<span className="font-semibold text-foreground">Trusted across aviation, rail, and defense</span> for mission-critical operations
+...
+<span><strong className="text-foreground">1M+</strong> frontline workers</span>
+<span><strong className="text-foreground">99.9%</strong> uptime</span>
+```
+
+---
+
+### 3. Update `src/pages/solutions/AirlinesPage.tsx`
+
+Add the trust bar after the hero:
 
 ```tsx
-<IndustryHero
+import IndustryTrustBar from "@/components/solutions/IndustryTrustBar";
+
+// After IndustryHero:
+<IndustryTrustBar
   industry="Airlines"
-  headline="The Operational Performance Platform"  // Match homepage
-  badgeText="For Commercial Aviation"
-  scopeLine="for Safety, Content, and Training"   // NEW
-  subhead="Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes for airlines."
+  primaryStat="Trusted by 50+ airlines"
+  primaryLabel="including 7 of the top 10 in North America"
+  secondaryStat="500K+"
+  secondaryLabel="crew members"
 />
 ```
 
 ---
 
-### 3. `src/pages/solutions/DefensePage.tsx`
+### 4. Update `src/pages/solutions/DefensePage.tsx`
 
-**Update hero props:**
+Add defense-specific trust signals:
 
 ```tsx
-<IndustryHero
+import IndustryTrustBar from "@/components/solutions/IndustryTrustBar";
+
+// After IndustryHero:
+<IndustryTrustBar
   industry="Defense"
-  headline="The Operational Performance Platform"  // Match homepage
-  badgeText="For Military Aviation & Defense"
-  scopeLine="for Safety, Content, and Training"   // NEW
-  subhead="Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes for defense operations."
+  primaryStat="Trusted by military aviation"
+  primaryLabel="across multiple allied nations"
+  secondaryStat="100K+"
+  secondaryLabel="qualified personnel"
 />
 ```
 
 ---
 
-### 4. `src/pages/solutions/RailPage.tsx`
+### 5. Update `src/pages/solutions/RailPage.tsx`
 
-**Update hero props:**
+Add rail-specific trust signals:
 
 ```tsx
-<IndustryHero
+import IndustryTrustBar from "@/components/solutions/IndustryTrustBar";
+
+// After IndustryHero:
+<IndustryTrustBar
   industry="Rail"
-  headline="The Operational Performance Platform"  // Match homepage
-  badgeText="For Rail Operations"
-  scopeLine="for Safety, Content, and Training"   // NEW
-  subhead="Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes for rail."
+  primaryStat="Trusted by rail operators"
+  primaryLabel="for network-wide safety and compliance"
+  secondaryStat="50K+"
+  secondaryLabel="rail personnel"
 />
 ```
 
 ---
 
-## Messaging Alignment Summary
+## Summary of Trust Signals
 
-| Element | Homepage | Airlines | Defense | Rail |
-|---------|----------|----------|---------|------|
-| Headline | The Operational Performance Platform | The Operational Performance Platform | The Operational Performance Platform | The Operational Performance Platform |
-| Scope line | for Safety, Content, and Training | for Safety, Content, and Training | for Safety, Content, and Training | for Safety, Content, and Training |
-| Badge | For mission-critical, regulated operations | For Commercial Aviation | For Military Aviation & Defense | For Rail Operations |
-| Subhead | Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes. | ...and measurable outcomes **for airlines**. | ...and measurable outcomes **for defense operations**. | ...and measurable outcomes **for rail**. |
+| Page | Primary Trust Signal | Secondary Stats |
+|------|---------------------|-----------------|
+| **Homepage** | "Trusted across aviation, rail, and defense" | 1M+ frontline workers, 99.9% uptime |
+| **Airlines** | "Trusted by 50+ airlines" (7 of top 10 NA) | 500K+ crew members, 99.9% uptime |
+| **Defense** | "Trusted by military aviation" (allied nations) | 100K+ qualified personnel, 99.9% uptime |
+| **Rail** | "Trusted by rail operators" | 50K+ rail personnel, 99.9% uptime |
 
 ---
 
 ## Rationale
 
-1. **Consistent category positioning** - All pages now anchor "Operational Performance Platform" as the category name
-2. **Scope clarity** - "for Safety, Content, and Training" appears prominently on every page, avoiding confusion with airline ops metrics (OTP, fuel burn)
-3. **Industry differentiation** - The badge and subhead ending provide industry-specific context without fragmenting the core message
-4. **Pattern from homepage** - The solution pages now follow the exact structure established on the homepage, just with industry-specific badges
+1. **Homepage broadening** - Reflects the platform's multi-industry positioning without over-indexing on aviation
+2. **Industry-specific pages** - Each vertical gets tailored trust signals that resonate with that audience
+3. **Consistent component** - `IndustryTrustBar` provides a reusable pattern for future industry pages
+4. **Maintains credibility** - Aviation page keeps the strong "50+ airlines" stat while other industries get appropriate equivalents
+
