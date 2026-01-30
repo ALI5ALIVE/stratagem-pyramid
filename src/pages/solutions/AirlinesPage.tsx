@@ -76,9 +76,10 @@ const AirlinesPage = () => {
       <MainNavigation />
       <IndustryHero
         industry="Airlines"
-        headline="Operational Performance for Airlines"
-        subhead="A connected, intelligent, and predictive platform that turns signals into orchestrated change and measurable outcomes."
+        headline="The Operational Performance Platform"
         badgeText="For Commercial Aviation"
+        scopeLine="for Safety, Content, and Training"
+        subhead="Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes for airlines."
       />
       
       <IndustryChallenge

@@ -95,9 +95,10 @@ const RailPage = () => {
       <MainNavigation />
       <IndustryHero
         industry="Rail"
-        headline="Operational Performance for Rail"
-        subhead="A connected, intelligent, and predictive platform that turns signals into orchestrated change and measurable outcomes."
+        headline="The Operational Performance Platform"
         badgeText="For Rail Operations"
+        scopeLine="for Safety, Content, and Training"
+        subhead="Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes for rail."
       />
       
       <IndustryChallenge
