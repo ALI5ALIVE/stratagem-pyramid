@@ -1,240 +1,194 @@
 
 
-# Plan: Recreate Platform Ecosystem Diagram as SVG Component
+# Plan: Fix Platform Ecosystem Diagram Arrows and AI-POWERED Text
 
 ## Summary
 
-Create a custom SVG component that recreates the `comply365-platform-ecosystem.png` diagram. This will be a fully animated, scalable vector graphic showing the three Manager products connected in a cycle around the Comply365 hub, surrounded by the AI-powered outer ring featuring CoAuthor, CoAnalyst, and CoTrainer.
+Fix two issues with the `PlatformEcosystemDiagram` component:
+1. **Arrows cutting through center**: Change from Bezier curves to proper SVG arc paths that follow the circle
+2. **AI-POWERED text cut off**: Adjust the viewBox and text path positions to ensure all content is visible
 
 ---
 
-## Visual Structure (from the PNG)
+## Issue 1: Arrows Not Following the Circle
 
-The diagram consists of three concentric zones:
+### Current Problem
+The `getArrowPath` function creates a quadratic Bezier curve with a control point pulled toward the center:
+```tsx
+const controlRadius = radius * 0.6;  // Control point at 60% of radius
+return `M ${start.x} ${start.y} Q ${control.x} ${control.y} ${end.x} ${end.y}`;
+```
 
+This creates a chord-like path that cuts through the inner area rather than following the circular arc.
+
+### Solution
+Replace the Bezier curve with an SVG arc command (`A`) that follows the circumference:
+
+```tsx
+// Generate arc path that follows the circle between two angles
+const getArcPath = (startAngle: number, endAngle: number, radius: number) => {
+  const start = getPosition(startAngle, radius);
+  const end = getPosition(endAngle, radius);
+  
+  // Determine if we need the large arc (more than 180 degrees)
+  const angleDiff = Math.abs(endAngle - startAngle);
+  const largeArc = angleDiff > 180 ? 1 : 0;
+  
+  // Sweep direction (1 = clockwise, 0 = counter-clockwise)
+  const sweep = endAngle > startAngle ? 1 : 0;
+  
+  // SVG Arc: A rx ry x-axis-rotation large-arc-flag sweep-flag x y
+  return `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeArc} ${sweep} ${end.x} ${end.y}`;
+};
+```
+
+---
+
+## Issue 2: AI-POWERED Text Being Cut Off
+
+### Current Problem
+The viewBox is `0 0 400 400` with center at (200, 200). The AI-POWERED text paths are positioned at radius 165, meaning:
+- Top text: `cy - 165 = 35` pixels from top
+- The arc sweeps from `(100, 35)` to `(300, 35)` 
+
+But the text has `letterSpacing="3"` which makes it wider, and part of it gets clipped by the viewBox edge.
+
+### Solution
+1. **Increase viewBox padding**: Change from `0 0 400 400` to `viewBox="-10 -10 420 420"` to add 10px margin on all sides
+2. **Alternatively**, bring the AI-POWERED text paths slightly inward to radius ~160
+
+I'll use the second approach to keep the viewBox clean:
+
+```tsx
+// Adjust radius for text paths from 165 to 158
+<path
+  id="aiPoweredTop"
+  d={`M ${cx - 90} ${cy - 158} A 158 158 0 0 1 ${cx + 90} ${cy - 158}`}
+  fill="none"
+/>
+```
+
+---
+
+## Files to Modify
+
+| File | Change |
+|------|--------|
+| `src/components/PlatformEcosystemDiagram.tsx` | Replace Bezier arrow paths with arc paths; adjust AI-POWERED text path positions |
+
+---
+
+## Technical Changes
+
+### 1. New Arc Path Function (replace lines 64-74)
+
+```tsx
+// Generate arc path that follows the circle between two angles
+const getArcPath = (startAngle: number, endAngle: number, radius: number) => {
+  const start = getPosition(startAngle, radius);
+  const end = getPosition(endAngle, radius);
+  
+  // For our clockwise flow around the triangle, we use sweep=1
+  // The arc should be less than 180 degrees, so largeArc=0
+  return `M ${start.x} ${start.y} A ${radius} ${radius} 0 0 1 ${end.x} ${end.y}`;
+};
+```
+
+### 2. Update AI-POWERED Text Paths (replace lines 170-189)
+
+```tsx
+{/* Curved text paths for AI-POWERED - brought slightly inward */}
+<path
+  id="aiPoweredTop"
+  d={`M ${cx - 85} ${cy - 160} A 160 160 0 0 1 ${cx + 85} ${cy - 160}`}
+  fill="none"
+/>
+<path
+  id="aiPoweredBottom"
+  d={`M ${cx + 85} ${cy + 160} A 160 160 0 0 1 ${cx - 85} ${cy + 160}`}
+  fill="none"
+/>
+<path
+  id="aiPoweredLeft"
+  d={`M ${cx - 160} ${cy + 70} A 160 160 0 0 1 ${cx - 160} ${cy - 70}`}
+  fill="none"
+/>
+<path
+  id="aiPoweredRight"
+  d={`M ${cx + 160} ${cy - 70} A 160 160 0 0 1 ${cx + 160} ${cy + 70}`}
+  fill="none"
+/>
+```
+
+### 3. Update Arrow Paths (lines 263-291)
+
+Replace calls to `getArrowPath` with `getArcPath` and use a radius that sits between the product cards (around 95-100):
+
+```tsx
+{/* Safety -> Content (clockwise arc) */}
+<path
+  d={getArcPath(240 + 20, 360 - 20, 95)}
+  fill="none"
+  stroke="url(#pinkArrowGradient)"
+  strokeWidth="3"
+  strokeLinecap="round"
+  markerEnd="url(#arrowHeadPink)"
+/>
+
+{/* Content -> Training */}
+<path
+  d={getArcPath(0 + 20, 120 - 20, 95)}
+  fill="none"
+  stroke="url(#blueArrowGradient)"
+  strokeWidth="3"
+  strokeLinecap="round"
+  markerEnd="url(#arrowHeadBlue)"
+/>
+
+{/* Training -> Safety */}
+<path
+  d={getArcPath(120 + 20, 240 - 20, 95)}
+  fill="none"
+  stroke="url(#tealArrowGradient)"
+  strokeWidth="3"
+  strokeLinecap="round"
+  markerEnd="url(#arrowHeadTeal)"
+/>
+```
+
+### 4. Update Animated Dots (lines 293-316)
+
+Update the animated dots to follow the same arc paths.
+
+---
+
+## Visual Result
+
+Before:
 ```text
-┌──────────────────────────────────────────────────────────────────┐
-│                                                                  │
-│     ╭──────────────────────────────────────────────────────╮     │
-│     │                    OUTER RING                         │     │
-│     │   Dark blue gradient with "AI-POWERED" labels         │     │
-│     │   CoAuthor (top-left), CoAnalyst (right),             │     │
-│     │   CoTrainer (bottom)                                  │     │
-│     │                                                       │     │
-│     │     ╭────────────────────────────────────────╮        │     │
-│     │     │            INNER RING                   │        │     │
-│     │     │   Light blue/gray background            │        │     │
-│     │     │                                         │        │     │
-│     │     │     Safety ──(pink arrow)──▶ Content    │        │     │
-│     │     │     Manager                  Manager    │        │     │
-│     │     │       365                      365      │        │     │
-│     │     │                                         │        │     │
-│     │     │       ▲                        │        │        │     │
-│     │     │       │                        ▼        │        │     │
-│     │     │       │    ╭──────────╮        │        │        │     │
-│     │     │       │    │ COMPLY   │        │        │        │     │
-│     │     │       │    │   365    │        │        │        │     │
-│     │     │       │    │  (logo)  │        │        │        │     │
-│     │     │       │    ╰──────────╯        │        │        │     │
-│     │     │       │                        │        │        │     │
-│     │     │       ╰────── Training ◀───────╯        │        │     │
-│     │     │                Manager                   │        │     │
-│     │     │                  365                     │        │     │
-│     │     ╰────────────────────────────────────────╯        │     │
-│     ╰──────────────────────────────────────────────────────╯     │
-│                                                                  │
-└──────────────────────────────────────────────────────────────────┘
+      Safety
+         \
+          \______ Content  (chord cuts through)
+         /
+      Training
 ```
 
----
-
-## Component Structure
-
-### New File: `src/components/PlatformEcosystemDiagram.tsx`
-
-A self-contained SVG component with:
-
-1. **Outer Ring** (AI-Powered layer)
-   - Gradient from dark navy to deep blue
-   - "AI-POWERED" text labels curved along the ring (4 positions)
-   - Three AI assistant labels with star decorations:
-     - CoAuthor (top-left, ~135° position)
-     - CoAnalyst (right, ~45° position)
-     - CoTrainer (bottom, ~270° position)
-
-2. **Inner Ring** (Product layer)
-   - Light gray/blue background circle
-   - Three Manager 365 products positioned in a triangle:
-     - Safety Manager 365 (top-left, ~120° position) - Pink icon
-     - Content Manager 365 (top-right, ~60° position) - Blue icon
-     - Training Manager 365 (bottom, ~270° position) - Teal icon
-   - Curved arrows connecting them in a clockwise cycle:
-     - Safety → Content (pink gradient arrow)
-     - Content → Training (teal gradient arrow)
-     - Training → Safety (teal gradient arrow)
-
-3. **Center Hub**
-   - Dark blue circle
-   - Comply365 logo (icon + text)
-
-4. **Animations**
-   - Subtle pulsing glow on the outer ring
-   - Optional: Flowing dots along the arrow paths
-   - Hover states on the three manager products
-
----
-
-## Technical Implementation
-
-### SVG Structure
-
-```tsx
-<svg viewBox="0 0 400 400">
-  <defs>
-    {/* Gradients */}
-    <linearGradient id="outerRingGradient">...</linearGradient>
-    <linearGradient id="pinkArrowGradient">...</linearGradient>
-    <linearGradient id="tealArrowGradient">...</linearGradient>
-    
-    {/* Glow filters */}
-    <filter id="hubGlow">...</filter>
-    
-    {/* Arrow marker */}
-    <marker id="arrowHead">...</marker>
-  </defs>
-
-  {/* Outer ring - dark blue gradient */}
-  <circle cx="200" cy="200" r="190" fill="url(#outerRingGradient)" />
-  
-  {/* AI-POWERED labels (curved text paths) */}
-  <path id="aiPoweredPath" d="..." />
-  <text><textPath href="#aiPoweredPath">AI-POWERED</textPath></text>
-  
-  {/* CoAuthor, CoAnalyst, CoTrainer labels */}
-  <text transform="rotate(-45, 200, 200)">CoAuthor ✦</text>
-  <text transform="rotate(45, 200, 200)">CoAnalyst ✦</text>
-  <text transform="rotate(180, 200, 200)">CoTrainer ✦</text>
-  
-  {/* Inner ring - light background */}
-  <circle cx="200" cy="200" r="140" fill="#e8ecf4" />
-  
-  {/* Curved arrows between products */}
-  <path d="..." stroke="url(#pinkArrowGradient)" marker-end="url(#arrowHead)" />
-  <path d="..." stroke="url(#tealArrowGradient)" marker-end="url(#arrowHead)" />
-  <path d="..." stroke="url(#tealArrowGradient)" marker-end="url(#arrowHead)" />
-  
-  {/* Three Manager products */}
-  <g transform="translate(120, 100)">
-    <rect rx="8" fill="white" />
-    <text>Safety Manager 365</text>
-  </g>
-  {/* ... Content Manager, Training Manager */}
-  
-  {/* Center hub */}
-  <circle cx="200" cy="200" r="50" fill="#1e3a5f" filter="url(#hubGlow)" />
-  <text>COMPLY365</text>
-</svg>
+After:
+```text
+      Safety
+    ↘ (arc) ↘
+              Content  (follows the circle)
+    ↗ (arc) ↗
+      Training
 ```
-
-### Color Palette (from PNG)
-
-| Element | Color |
-|---------|-------|
-| Outer ring (dark) | `hsl(220, 50%, 15%)` to `hsl(220, 70%, 25%)` |
-| Inner ring (light) | `hsl(220, 20%, 90%)` |
-| Center hub | `hsl(220, 60%, 25%)` |
-| Safety Manager (pink) | `hsl(330, 80%, 55%)` |
-| Content Manager (blue) | `hsl(210, 80%, 55%)` |
-| Training Manager (teal) | `hsl(180, 70%, 45%)` |
-| Pink arrow | `hsl(340, 75%, 60%)` gradient |
-| Teal arrows | `hsl(180, 70%, 50%)` gradient |
-| AI-POWERED text | `hsla(0, 0%, 100%, 0.5)` |
-| CoAuthor/CoAnalyst/CoTrainer | White with star decorations |
-
----
-
-## Files to Create/Modify
-
-| File | Action | Description |
-|------|--------|-------------|
-| `src/components/PlatformEcosystemDiagram.tsx` | Create | New SVG component recreating the ecosystem diagram |
-| `src/pages/HomepageMockup.tsx` | Update | Replace current hero visual with new component |
-
----
-
-## Implementation Details
-
-### Manager Product Cards
-
-Each manager will be rendered as a small card with:
-- White/light background with rounded corners
-- Small product icon (colored square with icon)
-- Product name in two lines ("Safety" / "Manager 365")
-- Hover effect for interactivity
-
-### Curved Arrows
-
-Using SVG `<path>` elements with quadratic Bezier curves:
-- Safety → Content: Arc curving upward
-- Content → Training: Arc curving right/down  
-- Training → Safety: Arc curving left
-
-### AI-POWERED Labels
-
-Using `<textPath>` for curved text along arc paths, positioned at:
-- Top center
-- Left side (vertical)
-- Right side (vertical)
-- Bottom center
-
-### Animations
-
-```css
-@keyframes subtle-pulse {
-  0%, 100% { opacity: 0.8; }
-  50% { opacity: 1; }
-}
-
-@keyframes flow-dot {
-  0% { offset-distance: 0%; }
-  100% { offset-distance: 100%; }
-}
-```
-
----
-
-## Integration into Hero
-
-Replace lines 256-297 in `HomepageMockup.tsx`:
-
-```tsx
-{/* Hero Visual - Platform Ecosystem Diagram */}
-<div className="relative">
-  <div className="max-w-lg mx-auto">
-    <PlatformEcosystemDiagram />
-  </div>
-</div>
-```
-
----
-
-## Benefits
-
-- **Scalable**: Vector graphics look sharp at any size
-- **Animatable**: Can add flowing connections, hover states
-- **Editable**: Easy to update text, colors, positions
-- **Lightweight**: No image file to load
-- **Interactive**: Can add click handlers to products
-- **Brand-consistent**: Matches existing SVG component patterns in codebase
 
 ---
 
 ## Result
 
 After implementation:
-- Hero section displays a pixel-perfect recreation of the platform ecosystem diagram
-- Three Manager 365 products clearly visible with connecting arrows
-- AI-powered outer ring with CoAuthor, CoAnalyst, CoTrainer
-- Subtle animations add polish without being distracting
-- Fully responsive and scales to any container size
+- All three connection arrows follow the circular arc between products
+- "AI-POWERED" text labels are fully visible within the viewBox
+- Animated dots follow the curved arc paths correctly
+- The diagram looks polished and professional
 
