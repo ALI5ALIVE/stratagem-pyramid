@@ -60,17 +60,14 @@ const PlatformEcosystemDiagram = ({ className = "" }: PlatformEcosystemDiagramPr
     };
   };
 
-  // Generate curved arrow path between two angles
-  const getArrowPath = (startAngle: number, endAngle: number, radius: number) => {
+  // Generate arc path that follows the circle between two angles
+  const getArcPath = (startAngle: number, endAngle: number, radius: number) => {
     const start = getPosition(startAngle, radius);
     const end = getPosition(endAngle, radius);
     
-    // Control point for the curve (pulled toward center)
-    const midAngle = (startAngle + endAngle) / 2;
-    const controlRadius = radius * 0.6;
-    const control = getPosition(midAngle, controlRadius);
-    
-    return `M ${start.x} ${start.y} Q ${control.x} ${control.y} ${end.x} ${end.y}`;
+    // For clockwise flow around the triangle, use sweep=1
+    // Arc should be less than 180 degrees, so largeArc=0
+    return `M ${start.x} ${start.y} A ${radius} ${radius} 0 0 1 ${end.x} ${end.y}`;
   };
 
   // Product card dimensions
@@ -166,25 +163,25 @@ const PlatformEcosystemDiagram = ({ className = "" }: PlatformEcosystemDiagramPr
           <path d="M 0 0 L 8 4 L 0 8 Z" fill="hsl(200, 85%, 60%)" />
         </marker>
 
-        {/* Curved text paths for AI-POWERED */}
+        {/* Curved text paths for AI-POWERED - brought slightly inward */}
         <path
           id="aiPoweredTop"
-          d={`M ${cx - 100} ${cy - 165} A 165 165 0 0 1 ${cx + 100} ${cy - 165}`}
+          d={`M ${cx - 85} ${cy - 160} A 160 160 0 0 1 ${cx + 85} ${cy - 160}`}
           fill="none"
         />
         <path
           id="aiPoweredBottom"
-          d={`M ${cx + 100} ${cy + 165} A 165 165 0 0 1 ${cx - 100} ${cy + 165}`}
+          d={`M ${cx + 85} ${cy + 160} A 160 160 0 0 1 ${cx - 85} ${cy + 160}`}
           fill="none"
         />
         <path
           id="aiPoweredLeft"
-          d={`M ${cx - 165} ${cy + 80} A 165 165 0 0 1 ${cx - 165} ${cy - 80}`}
+          d={`M ${cx - 160} ${cy + 70} A 160 160 0 0 1 ${cx - 160} ${cy - 70}`}
           fill="none"
         />
         <path
           id="aiPoweredRight"
-          d={`M ${cx + 165} ${cy - 80} A 165 165 0 0 1 ${cx + 165} ${cy + 80}`}
+          d={`M ${cx + 160} ${cy - 70} A 160 160 0 0 1 ${cx + 160} ${cy + 70}`}
           fill="none"
         />
       </defs>
@@ -259,10 +256,10 @@ const PlatformEcosystemDiagram = ({ className = "" }: PlatformEcosystemDiagramPr
         fill="url(#innerRingGradient)"
       />
 
-      {/* Connection arrows between products */}
+      {/* Connection arrows between products - following circular arc */}
       {/* Safety -> Content */}
       <path
-        d={getArrowPath(240 + 15, 0 - 15, 95)}
+        d={getArcPath(240 + 20, 360 - 20, 95)}
         fill="none"
         stroke="url(#pinkArrowGradient)"
         strokeWidth="3"
@@ -272,7 +269,7 @@ const PlatformEcosystemDiagram = ({ className = "" }: PlatformEcosystemDiagramPr
 
       {/* Content -> Training */}
       <path
-        d={getArrowPath(0 + 15, 120 - 15, 95)}
+        d={getArcPath(0 + 20, 120 - 20, 95)}
         fill="none"
         stroke="url(#blueArrowGradient)"
         strokeWidth="3"
@@ -282,7 +279,7 @@ const PlatformEcosystemDiagram = ({ className = "" }: PlatformEcosystemDiagramPr
 
       {/* Training -> Safety */}
       <path
-        d={getArrowPath(120 + 15, 240 - 15, 95)}
+        d={getArcPath(120 + 20, 240 - 20, 95)}
         fill="none"
         stroke="url(#tealArrowGradient)"
         strokeWidth="3"
@@ -290,12 +287,12 @@ const PlatformEcosystemDiagram = ({ className = "" }: PlatformEcosystemDiagramPr
         markerEnd="url(#arrowHeadTeal)"
       />
 
-      {/* Flowing dots animation along paths */}
+      {/* Flowing dots animation along arc paths */}
       <circle r="4" fill="hsl(330, 80%, 65%)">
         <animateMotion
           dur="3s"
           repeatCount="indefinite"
-          path={getArrowPath(240 + 15, 0 - 15, 95)}
+          path={getArcPath(240 + 20, 360 - 20, 95)}
         />
       </circle>
       <circle r="4" fill="hsl(210, 80%, 60%)">
@@ -303,7 +300,7 @@ const PlatformEcosystemDiagram = ({ className = "" }: PlatformEcosystemDiagramPr
           dur="3s"
           repeatCount="indefinite"
           begin="1s"
-          path={getArrowPath(0 + 15, 120 - 15, 95)}
+          path={getArcPath(0 + 20, 120 - 20, 95)}
         />
       </circle>
       <circle r="4" fill="hsl(180, 70%, 50%)">
@@ -311,7 +308,7 @@ const PlatformEcosystemDiagram = ({ className = "" }: PlatformEcosystemDiagramPr
           dur="3s"
           repeatCount="indefinite"
           begin="2s"
-          path={getArrowPath(120 + 15, 240 - 15, 95)}
+          path={getArcPath(120 + 20, 240 - 20, 95)}
         />
       </circle>
 
