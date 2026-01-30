@@ -190,9 +190,12 @@ const HomepageMockup = () => {
                 For mission-critical, regulated operations
               </Badge>
               
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground mb-6 leading-[1.1]">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground mb-4 leading-[1.1]">
                 The Operational Performance Platform
               </h1>
+              <p className="text-sm text-primary font-medium mb-4">
+                for Safety, Content, and Training
+              </p>
               
               <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
                 Connect safety, content, and training into an intelligent operating platform.{" "}

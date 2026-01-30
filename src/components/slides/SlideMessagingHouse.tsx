@@ -20,7 +20,8 @@ import type { SlideNarrationProps } from "@/types/slideProps";
 // Category Positioning Data
 const categoryPosition = {
   name: "Operational Performance Platform",
-  definition: "A connected, intelligent, and predictive platform that turns signals into orchestrated change and audit-ready proof.",
+  scope: "for Safety, Content, and Training",
+  definition: "A connected, intelligent, and predictive platform that turns signals into orchestrated change and measurable outcomes.",
   operatingModel: "Continuous Improvement Operating Model",
   narrativeSpine: ["Detect", "Trigger", "Orchestrate", "Prove"]
 };
@@ -212,6 +213,9 @@ const SlideMessagingHouse = ({
                 <h3 className="text-xs sm:text-sm font-bold text-foreground leading-tight">
                   {categoryPosition.name}
                 </h3>
+                <p className="text-[10px] text-muted-foreground mt-0.5">
+                  {categoryPosition.scope}
+                </p>
               </div>
             </div>
           </div>

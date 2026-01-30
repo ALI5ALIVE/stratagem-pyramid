@@ -92,9 +92,9 @@ const Slide0Title = ({
           </h1>
           
           <p className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-            A connected, intelligent, and predictive platform that turns 
+            Connect safety, content, and training into an intelligent operating platform.
             <br className="hidden sm:block" />
-            signals into <span className="text-primary font-medium">orchestrated change and measurable outcomes.</span>
+            <span className="text-primary font-medium">Turn signals into orchestrated change and measurable outcomes.</span>
           </p>
         </div>
 
