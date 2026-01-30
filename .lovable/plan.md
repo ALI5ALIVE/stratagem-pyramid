@@ -1,93 +1,113 @@
 
 
-# Plan: Update Slide Numbering and Descriptions on Title Slide
+# Plan: Remove Narration Button and Sync Hero Copy on Slide 15
 
-## Current Issue
+## Summary
 
-The agenda items in `Slide0Title.tsx` need to be verified and aligned with the actual slide sequence in `SlideDeck.tsx`. There are minor inconsistencies in labels and descriptions.
+This plan removes the play/narration button from the Homepage Experience slide (Slide 15) and updates the mini-preview hero copy to exactly match the actual homepage mockup.
 
 ---
 
 ## Files to Modify
 
-### `src/components/slides/Slide0Title.tsx`
+### `src/components/slides/SlidePlatformExperience.tsx`
 
-**Lines 6-22** - Update the `agendaItems` array to match the current slide deck structure:
+**Change 1: Remove narration imports and props (Lines 2-4, 36-44)**
 
-**Current:**
+Remove the SlidePlayButton import and SlideNarrationProps type since they're no longer needed:
+
 ```tsx
-const agendaItems = [
-  { num: 1, label: "Strategic Shift", summary: "Why we're redefining the category" },
-  { num: 2, label: "Before & After", summary: "What's broken — and how we fix it" },
-  { num: 3, label: "Operating Model", summary: "Detect → Trigger → Orchestrate → Prove" },
-  { num: 4, label: "Platform Capabilities", summary: "The platform that powers it" },
-  { num: 5, label: "Transformation", summary: "Cost center to value driver" },
-  { num: 6, label: "Operational Performance Ladder", summary: "Building blocks of performance" },
-  { num: 7, label: "Operational Performance Roadmap", summary: "The measurable journey" },
-  { num: 8, label: "Positioning", summary: "Where we stand vs. competitors" },
-  { num: 9, label: "Customers", summary: "Measurable value delivery" },
-  { num: 10, label: "Investors", summary: "Why this builds shareholder value" },
-  { num: 11, label: "Becoming an AI Company", summary: "The intelligence layer & roadmap" },
-  { num: 12, label: "Messaging House", summary: "Complete positioning framework" },
-  { num: 13, label: "Campaign Ideas", summary: "Cementing category leadership" },
-  { num: 14, label: "Messaging in Context", summary: "How the category applies across domains" },
-  { num: 15, label: "Platform Experience", summary: "How messaging appears in the product" },
-];
+// REMOVE these imports
+import SlidePlayButton from "@/components/SlidePlayButton";
+import type { SlideNarrationProps } from "@/types/slideProps";
 ```
 
-**Updated:**
+Simplify the component props (no longer needs narration props):
+
 ```tsx
-const agendaItems = [
-  { num: 1, label: "Strategic Shift", summary: "Why we're defining the category" },
-  { num: 2, label: "Before & After", summary: "Fragmentation vs. connected operations" },
-  { num: 3, label: "Operating Model", summary: "Detect → Trigger → Orchestrate → Prove" },
-  { num: 4, label: "Platform Capabilities", summary: "The intelligent operating layer" },
-  { num: 5, label: "Transformation", summary: "From cost center to value driver" },
-  { num: 6, label: "Value Ladder", summary: "How value compounds with maturity" },
-  { num: 7, label: "Maturity Roadmap", summary: "The measurable performance journey" },
-  { num: 8, label: "Positioning", summary: "Competitive landscape & differentiation" },
-  { num: 9, label: "Customers", summary: "Real-world measurable outcomes" },
-  { num: 10, label: "Investors", summary: "Building shareholder value" },
-  { num: 11, label: "AI Vision", summary: "The intelligence layer roadmap" },
-  { num: 12, label: "Messaging House", summary: "Complete positioning framework" },
-  { num: 13, label: "Campaign Ideas", summary: "Category leadership campaigns" },
-  { num: 14, label: "Messaging in Context", summary: "How positioning applies across domains" },
-  { num: 15, label: "Homepage Experience", summary: "Category positioning in the product" },
-];
+// CHANGE FROM:
+const SlidePlatformExperience = ({
+  isPlaying = false,
+  isLoading = false,
+  progress = 0,
+  hasCompleted = false,
+  onPlay,
+  onPause,
+  onNextSlide,
+}: SlideNarrationProps) => {
+
+// CHANGE TO:
+const SlidePlatformExperience = () => {
+```
+
+**Change 2: Remove play button JSX (Lines 53-64)**
+
+Remove the entire play button block:
+
+```tsx
+// REMOVE this entire block
+{/* Play button */}
+{onPlay && (
+  <SlidePlayButton
+    isPlaying={isPlaying}
+    isLoading={isLoading}
+    progress={progress}
+    hasCompleted={hasCompleted}
+    onPlay={onPlay}
+    onPause={onPause ?? (() => {})}
+    onNextSlide={onNextSlide}
+  />
+)}
+```
+
+**Change 3: Update hero copy to match homepage mockup (Lines 96-108)**
+
+Update the mini-preview hero section to match the homepage:
+
+```tsx
+{/* Hero Preview */}
+<div className="text-center mb-6">
+  <h2 className="text-xl font-display font-bold text-foreground mb-1">
+    The Operational Performance Platform
+  </h2>
+  <p className="text-xs text-primary font-medium mb-3">
+    for Safety, Content, and Training
+  </p>
+  <p className="text-sm text-muted-foreground mb-4 max-w-lg mx-auto">
+    Connect safety, content, and training into an intelligent operating platform.{" "}
+    <span className="text-foreground font-medium">Turn signals into orchestrated change and measurable outcomes.</span>
+  </p>
+  <div className="flex items-center justify-center gap-2">
+    <div className="px-3 py-1 bg-primary rounded text-xs text-primary-foreground">See the Platform</div>
+    <div className="px-3 py-1 border border-border rounded text-xs text-foreground">Calculate Your Impact</div>
+  </div>
+</div>
 ```
 
 ---
 
-## Summary of Changes
+## Side-by-Side Comparison
 
-| # | Current Label | Updated Label | Current Summary | Updated Summary |
-|---|---------------|---------------|-----------------|-----------------|
-| 1 | Strategic Shift | Strategic Shift | "Why we're redefining the category" | "Why we're defining the category" |
-| 2 | Before & After | Before & After | "What's broken — and how we fix it" | "Fragmentation vs. connected operations" |
-| 4 | Platform Capabilities | Platform Capabilities | "The platform that powers it" | "The intelligent operating layer" |
-| 5 | Transformation | Transformation | "Cost center to value driver" | "From cost center to value driver" |
-| 6 | Operational Performance Ladder | **Value Ladder** | "Building blocks of performance" | "How value compounds with maturity" |
-| 7 | Operational Performance Roadmap | **Maturity Roadmap** | "The measurable journey" | "The measurable performance journey" |
-| 8 | Positioning | Positioning | "Where we stand vs. competitors" | "Competitive landscape & differentiation" |
-| 9 | Customers | Customers | "Measurable value delivery" | "Real-world measurable outcomes" |
-| 10 | Investors | Investors | "Why this builds shareholder value" | "Building shareholder value" |
-| 11 | Becoming an AI Company | **AI Vision** | "The intelligence layer & roadmap" | "The intelligence layer roadmap" |
-| 13 | Campaign Ideas | Campaign Ideas | "Cementing category leadership" | "Category leadership campaigns" |
-| 14 | Messaging in Context | Messaging in Context | "How the category applies across domains" | "How positioning applies across domains" |
-| 15 | Platform Experience | **Homepage Experience** | "How messaging appears in the product" | "Category positioning in the product" |
+| Element | Current (Slide) | Updated (Matches Homepage) |
+|---------|-----------------|---------------------------|
+| Headline | "The Operational Performance Platform" | "The Operational Performance Platform" |
+| Scope line | *(missing)* | "for Safety, Content, and Training" |
+| Description | "Connect Safety, Content, and Training into one governed system." | "Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes." |
+| Button 1 | "See Platform" | "See the Platform" |
+| Button 2 | "Calculate Impact" | "Calculate Your Impact" |
 
 ---
 
-## Rationale
+## Impact on SlideDeck.tsx
 
-1. **Shortened labels** (6, 7, 15) - "Operational Performance Ladder" → "Value Ladder" fits better in the grid layout
-2. **Consistent terminology** - "AI Vision" aligns with the slide label in SlideDeck.tsx
-3. **Clearer summaries** - Updated descriptions are more specific and action-oriented
-4. **"Defining" vs "Redefining"** - We're creating a new category, not redefining an existing one
+The parent component `SlideDeck.tsx` currently passes narration props via `getNarrationProps(15)`. After this change, those props will simply be ignored (React handles unused props gracefully), so no changes are required there. The slide will render without the play button.
 
 ---
 
-## Visual Impact
+## User Experience
 
-The title slide agenda grid will display shorter, more scannable labels while maintaining navigation functionality. The 4-column layout will render more cleanly with concise text.
+- Slide 15 will no longer show the circular play/pause button
+- Users simply click the "View Full Homepage Mockup" button to navigate to the full experience
+- The mini-preview now accurately reflects what users will see on the actual homepage mockup
+- Cleaner slide design without the narration controls competing for attention
 
