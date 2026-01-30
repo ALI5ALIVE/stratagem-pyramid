@@ -1,93 +1,41 @@
 
-# Plan: Create Master Navigation Component
+# Plan: Move "Back to Deck" Button Below Navigation
 
 ## Problem
 
-There are two separate navigation implementations:
-1. **HomepageMockup.tsx** (lines 197-248): Full navigation with dropdown, search, login, and CTA
-2. **IndustryHero.tsx** (lines 29-42): Simplified navigation with just solution links
-
-This causes duplication and inconsistency between pages.
+The "Back to Deck" button is positioned at `top-4 left-4` and overlaps with the MainNavigation logo. Both have `z-50`, but since the navigation comes after in the DOM, its logo covers the button.
 
 ## Solution
 
-Create a single shared `MainNavigation` component that both the homepage and solution pages use.
+Move the "Back to Deck" button down below the navigation header so it doesn't overlap with the logo.
 
 ---
 
-## Files to Create
-
-### `src/components/MainNavigation.tsx`
-
-A reusable navigation component that includes:
-- Logo linking to `/homepage-mockup`
-- Platform, Solutions (dropdown), Customers, Resources links
-- Search icon, Login button, Request Demo CTA
-- Sticky header with scroll-aware background
-
-```tsx
-// Key features:
-- Same navItems structure from HomepageMockup
-- Solutions dropdown with Airlines, Defense, Rail
-- Responsive design (hidden on mobile)
-- Scroll-aware styling (transparent → solid background)
-```
-
----
-
-## Files to Modify
+## File to Modify
 
 ### `src/pages/HomepageMockup.tsx`
 
-**Changes:**
-- Remove the `navItems` constant (lines 28-46)
-- Remove the inline header/navigation (lines 197-249)
-- Import and use `<MainNavigation />` instead
+**Lines 167-175** - Change the positioning from `top-4` to `top-20` (approximately 80px down, below the navigation header which is about 64-72px tall):
 
-### `src/components/solutions/IndustryHero.tsx`
+| Current | New |
+|---------|-----|
+| `fixed top-4 left-4 z-50` | `fixed top-20 left-4 z-50` |
 
-**Changes:**
-- Remove the inline navigation (lines 29-42)
-- Import and use `<MainNavigation />` at the top of the page (outside the hero section)
-- Adjust hero section to account for fixed navigation
-
-### `src/pages/solutions/AirlinesPage.tsx`
-
-**Changes:**
-- Import `MainNavigation`
-- Add `<MainNavigation />` at the top of the page, before `<IndustryHero />`
-
-### `src/pages/solutions/DefensePage.tsx`
-
-**Changes:**
-- Import `MainNavigation`
-- Add `<MainNavigation />` at the top of the page
-
-### `src/pages/solutions/RailPage.tsx`
-
-**Changes:**
-- Import `MainNavigation`
-- Add `<MainNavigation />` at the top of the page
+This positions the button below the fixed navigation header, making it fully visible and clickable.
 
 ---
 
-## Component Architecture
+## Visual Layout
 
 ```text
-MainNavigation (shared)
-├── Logo → /homepage-mockup
-├── Nav Links
-│   ├── Platform
-│   ├── Solutions (dropdown)
-│   │   ├── Airlines → /solutions/airlines
-│   │   ├── Defense → /solutions/defense
-│   │   └── Rail → /solutions/rail
-│   ├── Customers
-│   └── Resources
-└── Actions
-    ├── Search
-    ├── Login
-    └── Request Demo (CTA)
+┌─────────────────────────────────────────────────────┐
+│  [Logo]     Platform | Solutions | ...    [Actions] │  ← Navigation (fixed, top-0)
+├─────────────────────────────────────────────────────┤
+│  [← Back to Deck]                                   │  ← Button (fixed, top-20)
+│                                                     │
+│                    Hero Section                     │
+│                                                     │
+└─────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -95,7 +43,7 @@ MainNavigation (shared)
 ## Result
 
 After implementation:
-- Single source of truth for navigation across all pages
-- Consistent navigation experience whether on homepage or solution pages
-- Easy to update navigation in one place
-- Solution pages will have the full navigation with dropdown (not just direct links)
+- "Back to Deck" button is clearly visible below the navigation header
+- No overlap with the logo
+- Button is fully clickable
+- Maintains the fixed positioning so it stays visible while scrolling
