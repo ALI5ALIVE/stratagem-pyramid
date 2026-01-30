@@ -97,8 +97,7 @@ const DefensePage = () => {
       <IndustryHero
         industry="Defense"
         headline="The Operational Performance Platform"
-        badgeText="For Military Aviation & Defense"
-        scopeLine="for Safety, Content, and Training"
+        scopeLine="Defense Safety, Content, and Training"
         subhead="Mission readiness demands connected systems. Unify maintenance signals, technical orders, and qualification management across platforms. Maintain continuous airworthiness, accelerate time-to-qualified, and deliver authority-ready compliance evidence."
       />
       
