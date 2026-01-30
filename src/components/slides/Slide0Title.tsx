@@ -4,21 +4,21 @@ import SlidePlayButton from "@/components/SlidePlayButton";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 const agendaItems = [
-  { num: 1, label: "Strategic Shift", summary: "Why we're redefining the category" },
-  { num: 2, label: "Before & After", summary: "What's broken — and how we fix it" },
+  { num: 1, label: "Strategic Shift", summary: "Why we're defining the category" },
+  { num: 2, label: "Before & After", summary: "Fragmentation vs. connected operations" },
   { num: 3, label: "Operating Model", summary: "Detect → Trigger → Orchestrate → Prove" },
-  { num: 4, label: "Platform Capabilities", summary: "The platform that powers it" },
-  { num: 5, label: "Transformation", summary: "Cost center to value driver" },
-  { num: 6, label: "Operational Performance Ladder", summary: "Building blocks of performance" },
-  { num: 7, label: "Operational Performance Roadmap", summary: "The measurable journey" },
-  { num: 8, label: "Positioning", summary: "Where we stand vs. competitors" },
-  { num: 9, label: "Customers", summary: "Measurable value delivery" },
-  { num: 10, label: "Investors", summary: "Why this builds shareholder value" },
-  { num: 11, label: "Becoming an AI Company", summary: "The intelligence layer & roadmap" },
+  { num: 4, label: "Platform Capabilities", summary: "The intelligent operating layer" },
+  { num: 5, label: "Transformation", summary: "From cost center to value driver" },
+  { num: 6, label: "Value Ladder", summary: "How value compounds with maturity" },
+  { num: 7, label: "Maturity Roadmap", summary: "The measurable performance journey" },
+  { num: 8, label: "Positioning", summary: "Competitive landscape & differentiation" },
+  { num: 9, label: "Customers", summary: "Real-world measurable outcomes" },
+  { num: 10, label: "Investors", summary: "Building shareholder value" },
+  { num: 11, label: "AI Vision", summary: "The intelligence layer roadmap" },
   { num: 12, label: "Messaging House", summary: "Complete positioning framework" },
-  { num: 13, label: "Campaign Ideas", summary: "Cementing category leadership" },
-  { num: 14, label: "Messaging in Context", summary: "How the category applies across domains" },
-  { num: 15, label: "Platform Experience", summary: "How messaging appears in the product" },
+  { num: 13, label: "Campaign Ideas", summary: "Category leadership campaigns" },
+  { num: 14, label: "Messaging in Context", summary: "How positioning applies across domains" },
+  { num: 15, label: "Homepage Experience", summary: "Category positioning in the product" },
 ];
 
 interface Slide0TitleProps extends SlideNarrationProps {
