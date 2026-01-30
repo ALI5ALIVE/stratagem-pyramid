@@ -1,113 +1,117 @@
 
+# Plan: Align Industry Solution Page Hero Copy with Homepage Messaging
 
-# Plan: Remove Narration Button and Sync Hero Copy on Slide 15
+## Current Gap Analysis
 
-## Summary
+| Element | Homepage (Correct) | Solution Pages (Current) |
+|---------|-------------------|-------------------------|
+| Headline | "The Operational Performance **Platform**" | "Operational Performance **for [Industry]**" |
+| Scope line | "for Safety, Content, and Training" | *(missing)* |
+| Subhead | "Connect safety, content, and training into an intelligent operating platform. **Turn signals into orchestrated change and measurable outcomes.**" | "A connected, intelligent, and predictive platform that turns signals into orchestrated change and measurable outcomes." |
 
-This plan removes the play/narration button from the Homepage Experience slide (Slide 15) and updates the mini-preview hero copy to exactly match the actual homepage mockup.
+The solution pages need to follow the homepage's lead by:
+1. Adding the "for Safety, Content, and Training" scope line
+2. Restructuring the subhead to start with "Connect safety, content, and training..."
+3. Keeping the industry-specific headline but making it clearer it's the *same platform*
 
 ---
 
 ## Files to Modify
 
-### `src/components/slides/SlidePlatformExperience.tsx`
+### 1. `src/components/solutions/IndustryHero.tsx`
 
-**Change 1: Remove narration imports and props (Lines 2-4, 36-44)**
-
-Remove the SlidePlayButton import and SlideNarrationProps type since they're no longer needed:
+**Add scope line prop and display it between headline and subhead:**
 
 ```tsx
-// REMOVE these imports
-import SlidePlayButton from "@/components/SlidePlayButton";
-import type { SlideNarrationProps } from "@/types/slideProps";
-```
+interface IndustryHeroProps {
+  industry: string;
+  headline: string;
+  subhead: string;
+  badgeText?: string;
+  scopeLine?: string;  // NEW PROP
+  ctaPrimary?: string;
+  ctaSecondary?: string;
+}
 
-Simplify the component props (no longer needs narration props):
+// In the JSX, add scope line display after h1:
+<h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground mb-2 leading-[1.1]">
+  {headline}
+</h1>
 
-```tsx
-// CHANGE FROM:
-const SlidePlatformExperience = ({
-  isPlaying = false,
-  isLoading = false,
-  progress = 0,
-  hasCompleted = false,
-  onPlay,
-  onPause,
-  onNextSlide,
-}: SlideNarrationProps) => {
+{/* NEW: Scope line anchoring Safety, Content, and Training */}
+<p className="text-sm md:text-base text-primary font-medium mb-6">
+  {scopeLine || "for Safety, Content, and Training"}
+</p>
 
-// CHANGE TO:
-const SlidePlatformExperience = () => {
-```
-
-**Change 2: Remove play button JSX (Lines 53-64)**
-
-Remove the entire play button block:
-
-```tsx
-// REMOVE this entire block
-{/* Play button */}
-{onPlay && (
-  <SlidePlayButton
-    isPlaying={isPlaying}
-    isLoading={isLoading}
-    progress={progress}
-    hasCompleted={hasCompleted}
-    onPlay={onPlay}
-    onPause={onPause ?? (() => {})}
-    onNextSlide={onNextSlide}
-  />
-)}
-```
-
-**Change 3: Update hero copy to match homepage mockup (Lines 96-108)**
-
-Update the mini-preview hero section to match the homepage:
-
-```tsx
-{/* Hero Preview */}
-<div className="text-center mb-6">
-  <h2 className="text-xl font-display font-bold text-foreground mb-1">
-    The Operational Performance Platform
-  </h2>
-  <p className="text-xs text-primary font-medium mb-3">
-    for Safety, Content, and Training
-  </p>
-  <p className="text-sm text-muted-foreground mb-4 max-w-lg mx-auto">
-    Connect safety, content, and training into an intelligent operating platform.{" "}
-    <span className="text-foreground font-medium">Turn signals into orchestrated change and measurable outcomes.</span>
-  </p>
-  <div className="flex items-center justify-center gap-2">
-    <div className="px-3 py-1 bg-primary rounded text-xs text-primary-foreground">See the Platform</div>
-    <div className="px-3 py-1 border border-border rounded text-xs text-foreground">Calculate Your Impact</div>
-  </div>
-</div>
+<p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto">
+  {subhead}
+</p>
 ```
 
 ---
 
-## Side-by-Side Comparison
+### 2. `src/pages/solutions/AirlinesPage.tsx`
 
-| Element | Current (Slide) | Updated (Matches Homepage) |
-|---------|-----------------|---------------------------|
-| Headline | "The Operational Performance Platform" | "The Operational Performance Platform" |
-| Scope line | *(missing)* | "for Safety, Content, and Training" |
-| Description | "Connect Safety, Content, and Training into one governed system." | "Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes." |
-| Button 1 | "See Platform" | "See the Platform" |
-| Button 2 | "Calculate Impact" | "Calculate Your Impact" |
+**Update hero props to match homepage pattern:**
 
----
-
-## Impact on SlideDeck.tsx
-
-The parent component `SlideDeck.tsx` currently passes narration props via `getNarrationProps(15)`. After this change, those props will simply be ignored (React handles unused props gracefully), so no changes are required there. The slide will render without the play button.
+```tsx
+<IndustryHero
+  industry="Airlines"
+  headline="The Operational Performance Platform"  // Match homepage
+  badgeText="For Commercial Aviation"
+  scopeLine="for Safety, Content, and Training"   // NEW
+  subhead="Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes for airlines."
+/>
+```
 
 ---
 
-## User Experience
+### 3. `src/pages/solutions/DefensePage.tsx`
 
-- Slide 15 will no longer show the circular play/pause button
-- Users simply click the "View Full Homepage Mockup" button to navigate to the full experience
-- The mini-preview now accurately reflects what users will see on the actual homepage mockup
-- Cleaner slide design without the narration controls competing for attention
+**Update hero props:**
 
+```tsx
+<IndustryHero
+  industry="Defense"
+  headline="The Operational Performance Platform"  // Match homepage
+  badgeText="For Military Aviation & Defense"
+  scopeLine="for Safety, Content, and Training"   // NEW
+  subhead="Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes for defense operations."
+/>
+```
+
+---
+
+### 4. `src/pages/solutions/RailPage.tsx`
+
+**Update hero props:**
+
+```tsx
+<IndustryHero
+  industry="Rail"
+  headline="The Operational Performance Platform"  // Match homepage
+  badgeText="For Rail Operations"
+  scopeLine="for Safety, Content, and Training"   // NEW
+  subhead="Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes for rail."
+/>
+```
+
+---
+
+## Messaging Alignment Summary
+
+| Element | Homepage | Airlines | Defense | Rail |
+|---------|----------|----------|---------|------|
+| Headline | The Operational Performance Platform | The Operational Performance Platform | The Operational Performance Platform | The Operational Performance Platform |
+| Scope line | for Safety, Content, and Training | for Safety, Content, and Training | for Safety, Content, and Training | for Safety, Content, and Training |
+| Badge | For mission-critical, regulated operations | For Commercial Aviation | For Military Aviation & Defense | For Rail Operations |
+| Subhead | Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes. | ...and measurable outcomes **for airlines**. | ...and measurable outcomes **for defense operations**. | ...and measurable outcomes **for rail**. |
+
+---
+
+## Rationale
+
+1. **Consistent category positioning** - All pages now anchor "Operational Performance Platform" as the category name
+2. **Scope clarity** - "for Safety, Content, and Training" appears prominently on every page, avoiding confusion with airline ops metrics (OTP, fuel burn)
+3. **Industry differentiation** - The badge and subhead ending provide industry-specific context without fragmenting the core message
+4. **Pattern from homepage** - The solution pages now follow the exact structure established on the homepage, just with industry-specific badges
