@@ -1,243 +1,93 @@
 
 
-# Plan: Strengthen "Operational Performance Platform" Positioning
+# Plan: Update Slide Numbering and Descriptions on Title Slide
 
-Based on the GM feedback document and codebase review, this plan addresses three key areas:
-1. Add scope clarity to prevent confusion with airline ops metrics
-2. Ground the DTOP framework in concrete, auditable examples
-3. Elevate the key differentiator earlier in the narrative
+## Current Issue
 
----
-
-## Summary of Changes
-
-| Area | Current Issue | Solution |
-|------|---------------|----------|
-| Category clarity | "Operational Performance" risks confusion with OTP/fuel metrics | Add "for Safety, Content, and Training" scope line immediately after category name |
-| DTOP framework | Abstract steps without auditable context | Add concrete airline examples showing the audit trail at each step |
-| Differentiation | Key differentiator appears late (Slide 12) | Elevate "Unlike point solutions..." line to Title slide and Slide 1 |
-| Definition consistency | Some slides use "audit-ready proof", others "measurable outcomes" | Standardize to "measurable outcomes" per existing alignment |
+The agenda items in `Slide0Title.tsx` need to be verified and aligned with the actual slide sequence in `SlideDeck.tsx`. There are minor inconsistencies in labels and descriptions.
 
 ---
 
 ## Files to Modify
 
-### 1. `src/components/slides/Slide0Title.tsx`
+### `src/components/slides/Slide0Title.tsx`
 
-**Lines 94-98** - Add scope clarification and differentiation line after the category tagline:
+**Lines 6-22** - Update the `agendaItems` array to match the current slide deck structure:
 
+**Current:**
 ```tsx
-<p className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-  Connect safety, content, and training into an intelligent operating platform.
-  <br className="hidden sm:block" />
-  <span className="text-primary font-medium">Turn signals into orchestrated change and measurable outcomes.</span>
-</p>
-```
-
-This aligns the title slide with the homepage hero copy that was just updated.
-
----
-
-### 2. `src/components/slides/Slide1StrategicShift.tsx`
-
-**Lines 77-82** - Add scope subtitle under category name:
-
-```tsx
-<span className="text-lg font-bold text-foreground block mb-1">
-  Operational Performance
-</span>
-<span className="text-sm text-primary font-medium">
-  Platform
-</span>
-<span className="text-xs text-muted-foreground mt-2 block">
-  for Safety, Content, and Training
-</span>
-```
-
-**Lines 105-113** - Add differentiation line to the category callout box:
-
-```tsx
-<div className="bg-primary/10 border border-primary/30 rounded-lg p-5">
-  <p className="text-xs font-medium text-primary uppercase tracking-wide mb-2">Category we're defining:</p>
-  <p className="text-xl font-bold text-foreground mb-2">
-    Operational Performance Platform
-  </p>
-  <p className="text-sm text-muted-foreground mb-3">
-    A connected, intelligent, and predictive platform that turns signals into 
-    orchestrated change and measurable outcomes.
-  </p>
-  <p className="text-xs text-foreground/80 italic border-t border-primary/20 pt-3">
-    Unlike point solutions that manage safety, content, or training in isolation, 
-    Comply365 connects all three into one governed platform.
-  </p>
-</div>
-```
-
----
-
-### 3. `src/components/slides/Slide3OperatingModel.tsx`
-
-**Lines 45-90** - Update DTOP steps with concrete auditable examples:
-
-```tsx
-const steps = [
-  {
-    id: "detect",
-    icon: Radio,
-    label: "Detect",
-    description: "FOQA exceedance triggers automatic alert. Signal captured with flight ID, crew, and timestamp.",
-    metric: "12K",
-    metricLabel: "signals/mo",
-    auditTrail: "Signal ID: FOQA-2024-00847 logged",
-    // ... existing colors
-  },
-  {
-    id: "trigger",
-    icon: Bell,
-    label: "Trigger",
-    description: "Procedure review workflow initiated. Linked to source signal, assigned owner, due date set.",
-    metric: "850",
-    metricLabel: "actions",
-    auditTrail: "Workflow WF-3421 created → Owner: J.Smith",
-    // ... existing colors
-  },
-  {
-    id: "orchestrate",
-    icon: GitBranch,
-    label: "Orchestrate",
-    description: "SOP 4.2.1 updated. Training module activated for affected crew. All changes version-controlled.",
-    metric: "340",
-    metricLabel: "changes",
-    auditTrail: "SOP v4.2.1 published → 47 crew assigned",
-    // ... existing colors
-  },
-  {
-    id: "prove",
-    icon: ShieldCheck,
-    label: "Prove",
-    description: "Complete audit trail generated. Signal → change → training → completion linked and exportable.",
-    metric: "100%",
-    metricLabel: "tracked",
-    auditTrail: "Audit report AR-2024-0847 ready",
-    // ... existing colors
-  },
+const agendaItems = [
+  { num: 1, label: "Strategic Shift", summary: "Why we're redefining the category" },
+  { num: 2, label: "Before & After", summary: "What's broken — and how we fix it" },
+  { num: 3, label: "Operating Model", summary: "Detect → Trigger → Orchestrate → Prove" },
+  { num: 4, label: "Platform Capabilities", summary: "The platform that powers it" },
+  { num: 5, label: "Transformation", summary: "Cost center to value driver" },
+  { num: 6, label: "Operational Performance Ladder", summary: "Building blocks of performance" },
+  { num: 7, label: "Operational Performance Roadmap", summary: "The measurable journey" },
+  { num: 8, label: "Positioning", summary: "Where we stand vs. competitors" },
+  { num: 9, label: "Customers", summary: "Measurable value delivery" },
+  { num: 10, label: "Investors", summary: "Why this builds shareholder value" },
+  { num: 11, label: "Becoming an AI Company", summary: "The intelligence layer & roadmap" },
+  { num: 12, label: "Messaging House", summary: "Complete positioning framework" },
+  { num: 13, label: "Campaign Ideas", summary: "Cementing category leadership" },
+  { num: 14, label: "Messaging in Context", summary: "How the category applies across domains" },
+  { num: 15, label: "Platform Experience", summary: "How messaging appears in the product" },
 ];
 ```
 
-Add audit trail display to each step card (around line 205):
-
+**Updated:**
 ```tsx
-{/* Description */}
-<p className={`text-[10px] text-center transition-colors duration-300 ${isStepActive ? 'text-foreground' : 'text-muted-foreground/50'}`}>
-  {step.description}
-</p>
-
-{/* Audit Trail - NEW */}
-{isStepActive && step.auditTrail && (
-  <p className="text-[9px] text-center mt-1 font-mono text-primary/80 bg-primary/5 rounded px-1 py-0.5">
-    {step.auditTrail}
-  </p>
-)}
+const agendaItems = [
+  { num: 1, label: "Strategic Shift", summary: "Why we're defining the category" },
+  { num: 2, label: "Before & After", summary: "Fragmentation vs. connected operations" },
+  { num: 3, label: "Operating Model", summary: "Detect → Trigger → Orchestrate → Prove" },
+  { num: 4, label: "Platform Capabilities", summary: "The intelligent operating layer" },
+  { num: 5, label: "Transformation", summary: "From cost center to value driver" },
+  { num: 6, label: "Value Ladder", summary: "How value compounds with maturity" },
+  { num: 7, label: "Maturity Roadmap", summary: "The measurable performance journey" },
+  { num: 8, label: "Positioning", summary: "Competitive landscape & differentiation" },
+  { num: 9, label: "Customers", summary: "Real-world measurable outcomes" },
+  { num: 10, label: "Investors", summary: "Building shareholder value" },
+  { num: 11, label: "AI Vision", summary: "The intelligence layer roadmap" },
+  { num: 12, label: "Messaging House", summary: "Complete positioning framework" },
+  { num: 13, label: "Campaign Ideas", summary: "Category leadership campaigns" },
+  { num: 14, label: "Messaging in Context", summary: "How positioning applies across domains" },
+  { num: 15, label: "Homepage Experience", summary: "Category positioning in the product" },
+];
 ```
 
 ---
 
-### 4. `src/components/slides/SlideMessagingHouse.tsx`
+## Summary of Changes
 
-**Lines 22-26** - Update category definition to use "measurable outcomes":
-
-```tsx
-const categoryPosition = {
-  name: "Operational Performance Platform",
-  scope: "for Safety, Content, and Training",
-  definition: "A connected, intelligent, and predictive platform that turns signals into orchestrated change and measurable outcomes.",
-  operatingModel: "Continuous Improvement Operating Model",
-  narrativeSpine: ["Detect", "Trigger", "Orchestrate", "Prove"]
-};
-```
-
-**Lines 212-215** - Display scope in the rooftop section:
-
-```tsx
-<h3 className="text-xs sm:text-sm font-bold text-foreground leading-tight">
-  {categoryPosition.name}
-</h3>
-<p className="text-[10px] text-muted-foreground mt-0.5">
-  {categoryPosition.scope}
-</p>
-```
+| # | Current Label | Updated Label | Current Summary | Updated Summary |
+|---|---------------|---------------|-----------------|-----------------|
+| 1 | Strategic Shift | Strategic Shift | "Why we're redefining the category" | "Why we're defining the category" |
+| 2 | Before & After | Before & After | "What's broken — and how we fix it" | "Fragmentation vs. connected operations" |
+| 4 | Platform Capabilities | Platform Capabilities | "The platform that powers it" | "The intelligent operating layer" |
+| 5 | Transformation | Transformation | "Cost center to value driver" | "From cost center to value driver" |
+| 6 | Operational Performance Ladder | **Value Ladder** | "Building blocks of performance" | "How value compounds with maturity" |
+| 7 | Operational Performance Roadmap | **Maturity Roadmap** | "The measurable journey" | "The measurable performance journey" |
+| 8 | Positioning | Positioning | "Where we stand vs. competitors" | "Competitive landscape & differentiation" |
+| 9 | Customers | Customers | "Measurable value delivery" | "Real-world measurable outcomes" |
+| 10 | Investors | Investors | "Why this builds shareholder value" | "Building shareholder value" |
+| 11 | Becoming an AI Company | **AI Vision** | "The intelligence layer & roadmap" | "The intelligence layer roadmap" |
+| 13 | Campaign Ideas | Campaign Ideas | "Cementing category leadership" | "Category leadership campaigns" |
+| 14 | Messaging in Context | Messaging in Context | "How the category applies across domains" | "How positioning applies across domains" |
+| 15 | Platform Experience | **Homepage Experience** | "How messaging appears in the product" | "Category positioning in the product" |
 
 ---
 
-### 5. `src/pages/HomepageMockup.tsx`
+## Rationale
 
-**Lines ~190-200** - Add scope line under the main headline (no code change needed - hero copy already updated, but add scope clarification):
-
-```tsx
-<h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground mb-4 leading-tight">
-  The Operational Performance
-  <br />
-  <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-    Platform
-  </span>
-</h1>
-<p className="text-sm text-primary font-medium mb-4">
-  for Safety, Content, and Training
-</p>
-```
+1. **Shortened labels** (6, 7, 15) - "Operational Performance Ladder" → "Value Ladder" fits better in the grid layout
+2. **Consistent terminology** - "AI Vision" aligns with the slide label in SlideDeck.tsx
+3. **Clearer summaries** - Updated descriptions are more specific and action-oriented
+4. **"Defining" vs "Redefining"** - We're creating a new category, not redefining an existing one
 
 ---
 
-## Rationale Alignment with GM Feedback
+## Visual Impact
 
-| Feedback Point | How Addressed |
-|----------------|---------------|
-| Neil: "Operational Performance" confusion with OTP | Scope line "for Safety, Content, and Training" immediately clarifies domain |
-| Alan: DTOP needs concrete examples | Each step now includes an "audit trail" showing the actual record created |
-| Team: Differentiation not prominent | "Unlike point solutions..." line now appears on Slide 1, not just Slide 12 |
-| Team: Consistency | "Measurable outcomes" used consistently (not "audit-ready proof") |
-
----
-
-## Visual Summary
-
-```text
-Title Slide (0)
-┌─────────────────────────────────────────┐
-│   Operational Performance Platform      │
-│   for Safety, Content, and Training     │  ← NEW scope line
-│                                         │
-│   Connect safety, content, and training │  ← Updated tagline
-│   into an intelligent operating platform│
-└─────────────────────────────────────────┘
-
-Strategic Shift (1)
-┌─────────────────────────────────────────┐
-│   Category: Operational Performance     │
-│            Platform                     │
-│   for Safety, Content, and Training     │  ← NEW scope line
-│                                         │
-│   Unlike point solutions that manage    │  ← NEW differentiator
-│   safety, content, or training in       │
-│   isolation, Comply365 connects all     │
-│   three into one governed platform.     │
-└─────────────────────────────────────────┘
-
-Operating Model (3)
-┌─────────────────────────────────────────┐
-│   Detect → Trigger → Orchestrate → Prove│
-│                                         │
-│   Each step now shows:                  │
-│   • Concrete airline scenario           │
-│   • Audit trail record created          │  ← NEW audit visibility
-└─────────────────────────────────────────┘
-```
-
----
-
-## Implementation Notes
-
-- All changes maintain existing visual styling and component structure
-- Narration timings in Slide3OperatingModel remain unchanged
-- Memory context should be updated after implementation to reflect new scope line pattern
+The title slide agenda grid will display shorter, more scannable labels while maintaining navigation functionality. The 4-column layout will render more cleanly with concise text.
 
