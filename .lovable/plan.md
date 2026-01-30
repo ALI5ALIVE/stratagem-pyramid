@@ -1,152 +1,126 @@
 
 
-# Plan: Messaging Application Slides — Contextualizing "Operational Performance"
+# Plan: Transform Platform Experience to Homepage Mockup
 
 ## Summary
 
-Create two new slides that demonstrate how the "Operational Performance Platform" messaging applies in practice, addressing the concern that "operational performance" could be confused with airline OPS metrics (OTP, fuel burn, turnaround times). The slides will:
-
-1. **Slide A: "Messaging in Context"** — Show how the platform terminology maps to Safety, Training, and Content domains with clear contextual language examples
-2. **Slide B: "Platform Experience Mockup"** — A visual homepage/dashboard mockup that shows how the messaging appears in the actual product experience
+Transform Slide 15 from a product dashboard mockup to a **marketing homepage mockup** that showcases how the "Operational Performance Platform" positioning and messaging would appear on the Comply365 website. This better demonstrates messaging application in a customer-facing context.
 
 ---
 
-## The Core Concern
+## The Change
 
-In airlines, "Operational Performance" commonly refers to:
-- On-Time Performance (OTP)
-- Fuel efficiency
-- Turnaround times
-- Delay minutes
-- Load factors
+**Current:** Product dashboard mockup showing internal navigation (Safety Performance, Content Performance, Training Performance) with operational metrics
 
-The concern is that using "Operational Performance Platform" without context could create confusion with existing OCC/NOC dashboards or Ops Control tools.
-
-**Our solution:** Show that when applied to Safety, Training, and Content domains, the term "Operational Performance" takes on specific, unambiguous meaning — and the platform UI reinforces this through clear domain framing.
+**New:** Marketing homepage mockup showing:
+- Hero section with category positioning ("The Operational Performance Platform")
+- Value proposition messaging
+- Domain performance pillars (Safety, Content, Training)
+- Customer case study snippets with measurable outcomes
+- Call-to-action demonstrating messaging consistency
 
 ---
 
-## Slide A: "Messaging in Context"
+## Homepage Mockup Layout
 
-**Title:** Operational Performance — In Context  
-**Subtitle:** How the category applies across Safety, Training, and Content
+### Browser Chrome
+- Same browser window styling (red/yellow/green dots, URL bar)
+- URL: `comply365.com` (not `app.comply365.com/dashboard`)
 
-### Layout
-A three-column layout showing how "Operational Performance" contextualizes differently for each domain:
+### Header Navigation
+- Logo (left)
+- Nav: Platform | Solutions | Customers | Resources | Request Demo (right)
 
-| Domain | What "Performance" Means | Key Metric Examples |
-|--------|-------------------------|---------------------|
-| **Safety Performance** | Fewer incidents, reduced recurrence, faster investigation closure | Investigation closure time, repeat findings, ASAP submission rate |
-| **Content Performance** | Faster procedural change cycles, reduced drift, compliance alignment | Time-to-change, revision currency, controlled distribution |
-| **Training Performance** | Higher readiness, targeted qualification, faster time-to-competency | Qualification currency, assessment pass rates, training activation speed |
+### Hero Section
+- Headline: "The Operational Performance Platform"
+- Subhead: "Connect Safety, Content, and Training into one governed system. Turn operational signals into measurable performance."
+- CTA buttons: "See the Platform" | "Calculate Your Impact"
+- Hero graphic: Simplified DTOP flow visualization
 
-### Visual Element
-A horizontal timeline showing the "Detect → Trigger → Orchestrate → Prove" flow with domain-specific examples at each stage:
-- **Detect:** FOQA exceedance detected in Safety domain
-- **Trigger:** Procedure update triggered in Content domain
-- **Orchestrate:** Targeted training activated in Training domain
-- **Prove:** Audit evidence generated across all three
+### Three Pillars Section
+- "Safety Performance" | "Content Performance" | "Training Performance"
+- Each with icon, short value statement, and sample metric
+- Uses the same terminology as the product UI (demonstrating alignment)
 
-### Key Callout Box
-> "Operational Performance is not OTP or dispatch reliability. It's the coordinated execution of Safety, Content, and Training — the internal processes that protect and enable OTP."
+### Case Study Banner
+- "How [Airline] improved on-time performance 3.2% in 12 months"
+- Or a generic "Featured Case Study" with key metrics
+- Shows how messaging translates to customer proof
 
----
-
-## Slide B: "Platform Experience" (Homepage Mockup)
-
-**Title:** The Platform Experience  
-**Subtitle:** How messaging appears in the product
-
-### Layout
-A mock dashboard/homepage wireframe showing:
-
-**Left Sidebar Navigation:**
-- Safety Performance
-- Content Performance  
-- Training Performance
-- Governance & Proof
-- AI Insights
-
-**Main Content Area:**
-A simplified dashboard with three domain cards:
-
-1. **Safety Performance Card**
-   - "47 open investigations"
-   - "Recurrence rate: 4.2% ↓"
-   - "Avg. closure time: 12 days"
-
-2. **Content Performance Card**
-   - "23 procedures pending update"
-   - "Time-to-change: 8 days avg"
-   - "Currency rate: 96.4%"
-
-3. **Training Performance Card**
-   - "Workforce readiness: 94%"
-   - "Overdue qualifications: 127"
-   - "Training activations this month: 342"
-
-**Bottom Banner:**
-The "Detect → Trigger → Orchestrate → Prove" flow as a visual progress indicator
-
-**Right Sidebar:**
-"Recent Actions" or "AI Recommendations" panel:
-- "⚡ New FOQA trend detected — 3 procedures flagged for review"
-- "📋 Procedure SOP-2847 updated — 847 crew require re-acknowledgment"
-- "🎓 Targeted training activated for 23 crew based on performance data"
-
-### Design Notes
-- Use the existing Comply365 color scheme (primary blue, accent teal)
-- Show the logo in the top-left
-- Style as a "product screenshot" wireframe, not a full UI implementation
-- Include subtle browser chrome to make it feel like a real product view
+### Footer CTA
+- "Point solutions manage silos. Comply365 closes the loop."
+- Reinforces positioning tagline
 
 ---
 
-## Files to Create
+## Narration Update
 
-### 1. `src/components/slides/SlideMessagingContext.tsx`
-New slide component showing messaging application across domains
+Update the narration script to explain:
+- This is how the messaging appears on the website
+- The terminology is consistent across marketing, sales, and product
+- Case studies reinforce the "performance" language with measurable outcomes
+- The differentiation tagline ("Point solutions manage silos. Comply365 closes the loop.") appears throughout
 
-### 2. `src/components/slides/SlidePlatformExperience.tsx`
-New slide component with the homepage mockup visualization
+---
 
-### 3. Update `src/pages/SlideDeck.tsx`
-- Add imports for both new slides
-- Add entries to the `slides` array (as Slides 14 and 15)
-- Add components to the render section
+## Files to Modify
 
-### 4. Update `src/data/slideNarration.ts`
-- Add narration scripts for both new slides
+| File | Change |
+|------|--------|
+| `src/components/slides/SlidePlatformExperience.tsx` | Complete rewrite to show marketing homepage mockup instead of product dashboard |
+| `src/data/slideNarration.ts` | Update Slide 15 script to describe homepage messaging application |
 
 ---
 
 ## Technical Details
 
-| File | Action | Description |
-|------|--------|-------------|
-| `SlideMessagingContext.tsx` | Create | Three-column domain breakdown + DTOP flow with examples |
-| `SlidePlatformExperience.tsx` | Create | Dashboard mockup with sidebar, domain cards, and AI panel |
-| `SlideDeck.tsx` | Update | Add imports, slides array entries (14-15), and render components |
-| `slideNarration.ts` | Update | Add narration scripts for slides 14 and 15 |
-| `Slide0Title.tsx` | Update | Add new agenda items for the two new slides |
+### `SlidePlatformExperience.tsx` Structure
+
+```
+Browser Chrome (comply365.com)
+├── Header Nav
+│   ├── Logo
+│   └── Platform | Solutions | Customers | Resources | Request Demo
+├── Hero Section
+│   ├── "The Operational Performance Platform"
+│   ├── Subhead with value proposition
+│   └── CTAs: See the Platform | Calculate Your Impact
+├── Three Pillars (Safety | Content | Training Performance)
+│   ├── Icon + title for each
+│   ├── Short value statement
+│   └── Sample outcome metric
+├── Case Study Banner
+│   ├── Airline logo placeholder or "Featured Customer"
+│   ├── "3.2% OTP improvement" or similar
+│   └── "Read the full story →"
+└── Footer CTA
+    └── "Point solutions manage silos. Comply365 closes the loop."
+```
+
+### New Narration Script (Slide 15)
+
+"Here's how the Operational Performance Platform messaging appears on the website — not just in the product. The hero leads with the category: 'The Operational Performance Platform.' The subhead explains the value: connecting Safety, Content, and Training into one governed system. Notice the three pillars: Safety Performance, Content Performance, Training Performance. This is the same language customers will see in the product navigation — terminology that's consistent from marketing to sales to daily use. The case study section shows how messaging translates to proof: real outcomes like on-time performance improvement and audit preparation time reduction. And the footer reinforces our differentiation: 'Point solutions manage silos. Comply365 closes the loop.' This isn't just a tagline. It's the category promise. The messaging is aligned across every touchpoint — website, sales deck, product experience. That consistency builds category ownership."
 
 ---
 
-## Narration Scripts
+## Visual Comparison
 
-### Slide 14 (Messaging in Context)
-> "A common question we get: doesn't 'Operational Performance' already mean something in airlines — like on-time performance or dispatch reliability? The answer is yes — and that's precisely why we use it. But in the context of Safety, Content, and Training, performance takes on specific, measurable meaning. Safety Performance means fewer incidents, reduced recurrence, and faster investigation closure. Content Performance means faster procedural change cycles, reduced drift, and compliance alignment. Training Performance means higher workforce readiness, targeted qualification, and faster time-to-competency. The Detect, Trigger, Orchestrate, Prove flow connects all three. A safety signal detects an issue. A content update is triggered. Training is orchestrated to close the gap. And proof is generated automatically. This is what we mean by Operational Performance. Not OTP or dispatch reliability — but the internal execution of Safety, Content, and Training that protects and enables those outcomes."
-
-### Slide 15 (Platform Experience)
-> "Here's how this messaging appears in the actual platform experience. The navigation doesn't say 'Safety Management System' or 'Learning Management System.' It says Safety Performance, Content Performance, Training Performance. Each domain has its own performance dashboard — with metrics that matter to that function. Safety shows investigation status and recurrence rates. Content shows procedural change cycles and currency. Training shows workforce readiness and qualification status. The AI recommendations panel surfaces cross-domain insights: a new trend detected in safety data, a procedure flagged for review, targeted training activated based on performance signals. And at the bottom, the Detect, Trigger, Orchestrate, Prove flow visualizes the connected operating model. This isn't just positioning language. It's how the product works. The messaging and the experience are aligned."
+| Element | Current (Dashboard) | New (Homepage) |
+|---------|---------------------|----------------|
+| URL | app.comply365.com/dashboard | comply365.com |
+| Purpose | Show internal product UI | Show external marketing |
+| Focus | Operational metrics | Positioning & value |
+| Case studies | None | Featured customer |
+| CTA | None | "See the Platform" |
 
 ---
 
 ## Result
 
 After implementation:
-- Two new slides (14-15) that directly address the "performance can mean other things" concern
-- Clear domain-specific application of the "Operational Performance" terminology
-- A tangible product mockup that makes the messaging concrete
-- Narration scripts that explain the contextual application
+- Slide 15 becomes a marketing homepage mockup that demonstrates messaging application
+- Shows how "Operational Performance" terminology appears on the public website
+- Includes case study proof that reinforces the performance language
+- Demonstrates consistency between marketing and product messaging
+- Updated narration explains the importance of messaging alignment across touchpoints
 
