@@ -97,7 +97,7 @@ const RailPage = () => {
       <IndustryHero
         industry="Rail"
         headline="The Operational Performance Platform"
-        scopeLine="Rail Safety, Content, and Training"
+        scopeLine="for Rail Safety, Content, and Training"
         subhead="From SPAD incident to driver action — governed and traceable. Connect safety events, rule book updates, and route competency management across your network. Reduce response times, maintain driver readiness, and stay inspection-ready for ORR and ERA."
       />
       
