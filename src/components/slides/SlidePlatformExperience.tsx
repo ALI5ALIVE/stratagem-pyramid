@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
 import SlideContainer from "./SlideContainer";
-import SlidePlayButton from "@/components/SlidePlayButton";
-import type { SlideNarrationProps } from "@/types/slideProps";
 import complyLogo from "@/assets/comply365-logo-white.png";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,15 +31,7 @@ const pillars = [
   },
 ];
 
-const SlidePlatformExperience = ({
-  isPlaying = false,
-  isLoading = false,
-  progress = 0,
-  hasCompleted = false,
-  onPlay,
-  onPause,
-  onNextSlide,
-}: SlideNarrationProps) => {
+const SlidePlatformExperience = () => {
   return (
     <SlideContainer 
       id="slide-15" 
@@ -50,18 +40,6 @@ const SlidePlatformExperience = ({
       subtitle="See how messaging translates to the website"
       slideNumber={15}
     >
-      {/* Play button */}
-      {onPlay && (
-        <SlidePlayButton
-          isPlaying={isPlaying}
-          isLoading={isLoading}
-          progress={progress}
-          hasCompleted={hasCompleted}
-          onPlay={onPlay}
-          onPause={onPause ?? (() => {})}
-          onNextSlide={onNextSlide}
-        />
-      )}
 
       <div className="flex flex-col items-center justify-center flex-1 max-w-4xl mx-auto">
         {/* Thumbnail Preview */}
@@ -95,15 +73,19 @@ const SlidePlatformExperience = ({
 
             {/* Hero Preview */}
             <div className="text-center mb-6">
-              <h2 className="text-xl font-display font-bold text-foreground mb-2">
+              <h2 className="text-xl font-display font-bold text-foreground mb-1">
                 The Operational Performance Platform
               </h2>
+              <p className="text-xs text-primary font-medium mb-3">
+                for Safety, Content, and Training
+              </p>
               <p className="text-sm text-muted-foreground mb-4 max-w-lg mx-auto">
-                Connect Safety, Content, and Training into one governed system.
+                Connect safety, content, and training into an intelligent operating platform.{" "}
+                <span className="text-foreground font-medium">Turn signals into orchestrated change and measurable outcomes.</span>
               </p>
               <div className="flex items-center justify-center gap-2">
-                <div className="px-3 py-1 bg-primary rounded text-xs text-primary-foreground">See Platform</div>
-                <div className="px-3 py-1 border border-border rounded text-xs text-foreground">Calculate Impact</div>
+                <div className="px-3 py-1 bg-primary rounded text-xs text-primary-foreground">See the Platform</div>
+                <div className="px-3 py-1 border border-border rounded text-xs text-foreground">Calculate Your Impact</div>
               </div>
             </div>
 
