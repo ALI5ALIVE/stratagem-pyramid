@@ -99,7 +99,7 @@ const DefensePage = () => {
         headline="The Operational Performance Platform"
         badgeText="For Military Aviation & Defense"
         scopeLine="for Safety, Content, and Training"
-        subhead="Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes for defense operations."
+        subhead="Mission readiness demands connected systems. Unify maintenance signals, technical orders, and qualification management across platforms. Maintain continuous airworthiness, accelerate time-to-qualified, and deliver authority-ready compliance evidence."
       />
       
       <IndustryTrustBar

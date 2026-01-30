@@ -99,7 +99,7 @@ const RailPage = () => {
         headline="The Operational Performance Platform"
         badgeText="For Rail Operations"
         scopeLine="for Safety, Content, and Training"
-        subhead="Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes for rail."
+        subhead="From SPAD incident to driver action — governed and traceable. Connect safety events, rule book updates, and route competency management across your network. Reduce response times, maintain driver readiness, and stay inspection-ready for ORR and ERA."
       />
       
       <IndustryTrustBar

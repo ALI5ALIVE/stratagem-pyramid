@@ -80,7 +80,7 @@ const AirlinesPage = () => {
         headline="The Operational Performance Platform"
         badgeText="For Commercial Aviation"
         scopeLine="for Safety, Content, and Training"
-        subhead="Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes for airlines."
+        subhead="From FOQA signal to crew action — automatically. Connect safety events, procedure updates, and targeted training into one governed system. Close investigations faster, eliminate audit scrambles, and prove continuous improvement to FAA and EASA."
       />
       
       <IndustryTrustBar
