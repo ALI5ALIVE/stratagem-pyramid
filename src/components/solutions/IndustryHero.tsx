@@ -7,6 +7,7 @@ interface IndustryHeroProps {
   headline: string;
   subhead: string;
   badgeText?: string;
+  scopeLine?: string;
   ctaPrimary?: string;
   ctaSecondary?: string;
 }
@@ -16,6 +17,7 @@ const IndustryHero = ({
   headline,
   subhead,
   badgeText,
+  scopeLine,
   ctaPrimary = "See the Platform",
   ctaSecondary = "Calculate Your Impact",
 }: IndustryHeroProps) => {
@@ -31,9 +33,13 @@ const IndustryHero = ({
             {badgeText || `For ${industry}`}
           </Badge>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground mb-6 leading-[1.1]">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground mb-2 leading-[1.1]">
             {headline}
           </h1>
+          
+          <p className="text-sm md:text-base text-primary font-medium mb-6">
+            {scopeLine || "for Safety, Content, and Training"}
+          </p>
           
           <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto">
             {subhead}
