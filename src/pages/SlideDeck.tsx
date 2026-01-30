@@ -215,7 +215,7 @@ const SlideDeck = () => {
         <SlideMessagingHouse {...getNarrationProps(12)} />
         <SlideCampaignIdeas {...getNarrationProps(13)} />
         <SlideMessagingContext {...getNarrationProps(14)} />
-        <SlidePlatformExperience {...getNarrationProps(15)} />
+        <SlidePlatformExperience />
       </div>
     </div>
   );
