@@ -1,100 +1,165 @@
 
 
-# Plan: Update to "Connected, Intelligent, and Predictive Platform" Terminology
+# Plan: Implement GM Feedback Refinements
 
 ## Summary
 
-Replace all instances of "intelligent operating system" with "connected, intelligent, and predictive platform" to align the messaging with the pyramid's maturity stages (Connected → Intelligent → Predictive).
+Address valid feedback from Neil, Alan, and Wayne while maintaining the strategic positioning integrity. Focus on precision, defensibility, and clarity without diluting the category-defining language.
 
 ---
 
-## Files to Update
+## Changes to Implement
 
-### 1. `src/components/slides/Slide1StrategicShift.tsx`
+### 1. Slide 2 (Before/After): Audit Prep Metric Enhancement
 
-**Line 26 - Subtitle:**
-- Current: `"From fragmented point tools to an intelligent operating system"`
-- New: `"From fragmented point tools to a connected, intelligent, and predictive platform"`
+**File:** `src/components/slides/Slide2BeforeAfter.tsx`
 
-**Lines 110-113 - Category Definition:**
-- Current: `"Connects safety, procedures, and training into an intelligent operating system, turning signals into orchestrated change and audit-ready proof."`
-- New: `"A connected, intelligent, and predictive platform that turns signals into orchestrated change and audit-ready proof."`
+**Current (Line 256):**
+```
+<p className="text-xs text-muted-foreground">Audit</p>
+```
 
----
+**Change:** Update the metric context and disclaimer
 
-### 2. `src/components/slides/Slide2BeforeAfter.tsx`
+- Change "Target Outcomes" label to "Illustrative Target Outcomes*"
+- Ensure the "2hr" audit metric is understood as the improvement, not the absolute time
+- The asterisk disclaimer already says "*Based on customer projections" - this is sufficient
 
-**Line 270 - Unlike Callout:**
-- Current: `"...Comply365 connects all three into an intelligent operating system, turning signals into orchestrated change and audit-ready proof."`
-- New: `"...Comply365 connects all three into a connected, intelligent, and predictive platform — turning signals into orchestrated change and audit-ready proof."`
-
----
-
-### 3. `src/components/slides/SlideMessagingHouse.tsx`
-
-**Line 23 - Category Definition:**
-- Current: `"Connects safety, content, and training into an intelligent operating system, turning signals into orchestrated change and audit-ready proof."`
-- New: `"A connected, intelligent, and predictive platform that turns signals into orchestrated change and audit-ready proof."`
-
-**Line 24 - Operating Model Label:**
-- Current: `"Continuous Improvement Operating System"`
-- New: `"Continuous Improvement Operating Model"`
+**Lines affected:** 243, 259
 
 ---
 
-### 4. `src/data/slideNarration.ts`
+### 2. Slide 2 (Before/After): Strengthen Disclaimer Language
 
-**Slide 0 (Title) - Line 16:**
-- Current: `"...an intelligent operating system that connects safety, content, and training into one governed system."`
-- New: `"...a connected, intelligent, and predictive platform that unifies safety, content, and training into one governed system."`
+**File:** `src/components/slides/Slide2BeforeAfter.tsx`
 
-**Slide 1 (Strategic Shift) - Line 22:**
-- Current: `"An intelligent operating system that connects safety, content, and training — turning operational signals into orchestrated change and audit-ready proof."`
-- New: `"A connected, intelligent, and predictive platform that turns operational signals into orchestrated change and audit-ready proof."`
+**Current (Line 259):**
+```
+*Based on customer projections
+```
 
-**Slide 11 (Category Name) - Line 82:**
-- Current: `"...connecting Safety, Content, and Training into a governed operating system that turns signals into outcomes and proof."`
-- New: `"...connecting Safety, Content, and Training into a connected, intelligent, and predictive platform that turns signals into outcomes and proof."`
+**New:**
+```
+*Illustrative outcomes based on customer goals and mature deployments
+```
 
-**Slide 12 (Messaging House) - Line 88:**
-- Current: `"An intelligent operating system that connects safety, content, and training — turning signals into orchestrated change and audit-ready proof."`
-- New: `"A connected, intelligent, and predictive platform that turns signals into orchestrated change and audit-ready proof."`
+**Lines affected:** 259
+
+---
+
+### 3. Slide 3 (Operating Model): Add Concrete Examples
+
+**File:** `src/components/slides/Slide3OperatingModel.tsx`
+
+**Enhancement:** Expand the step descriptions to include concrete operational examples
+
+| Step | Current Description | Enhanced Description |
+|------|---------------------|---------------------|
+| Detect | "Capture operational signals earlier (risk + issues + drift)" | "Capture operational signals earlier — FOQA exceedances, ASAP reports, audit findings, crew feedback" |
+| Trigger | "Convert signals into coordinated actions (not manual handoffs)" | "Convert signals into coordinated actions — automatic workflow initiation, not email chains" |
+| Orchestrate | "Controlled procedural change + targeted training activation" | "Controlled procedural change + targeted training activation — linked updates across manuals, bulletins, and qualifications" |
+| Prove | "Audit-ready evidence and readiness proof by default" | "Audit-ready evidence and readiness proof by default — version history, completion tracking, approval trails" |
+
+**Lines affected:** 48, 56, 64, 72
+
+---
+
+### 4. Slide 5 (Maturity Curve) or Slide 6 (Value Pyramid): Clarify Individual Solution Value
+
+**File:** `src/components/slides/Slide5MaturityCurve.tsx` or `src/components/slides/Slide4ValuePyramid.tsx`
+
+**Issue:** Current language implies you need the full platform to progress beyond Stage 2, which may discourage sales of individual products.
+
+**Current language (in narration):**
+> "Even with best-in-class Comply365 products — as you can see annotated on the curve — you can reach Stage Two. But to progress beyond, you need the full platform."
+
+**Recommended clarification:** Add a visual annotation or text callout that states:
+> "Individual solutions deliver departmental value at Stage 2. Platform integration unlocks Stages 3-5 with compounding returns."
+
+This preserves the strategic message while acknowledging that single-product sales still provide value.
+
+**Location:** Add to the pyramid slide details panel or as a footnote callout
+
+---
+
+### 5. Narration Script Updates
+
+**File:** `src/data/slideNarration.ts`
+
+**Slide 2 (Before/After) - Line 28:**
+Update "weeks to hours" reference to "months to hours":
+
+**Current:**
+> "And audit preparation reduced to two hours."
+
+**New:**
+> "And audit preparation reduced from months of scrambling to just two hours."
+
+**Slide 6 (Maturity Roadmap) - Line 52:**
+Add clarifying language about individual solution value:
+
+**Current:**
+> "Even with best-in-class Comply three six five products... you can reach Stage Two."
+
+**New:**
+> "Even with individual Comply three six five solutions like Content Manager or Safety Manager, you'll see real departmental improvement at Stage Two. But to unlock Stages Three through Five — where the compounding value lives — you need the full platform."
+
+---
+
+## Changes NOT Recommended (Push Back)
+
+### 1. Alternative Category Names
+
+**Feedback:** Alan suggests "AI Operations Platform" or "Operational Intelligence Platform" as alternatives.
+
+**Response:** The category name "Operational Performance Platform" was deliberately chosen because:
+- "Performance" is the language COOs and boards use to measure operational success
+- It avoids "AI-first" positioning which creates regulatory and analyst skepticism
+- It's cross-industry applicable (aviation, rail, defense, maritime)
+- It differentiates from NOC/OCC tools which focus on monitoring, not orchestration
+
+Changing the category name at this stage would undermine months of positioning work and require a complete narrative rewrite.
+
+---
+
+### 2. Softening "Proof by Default"
+
+**Feedback:** Alan suggests "Audit-ready proof captured automatically where possible" to avoid sounding absolute.
+
+**Response:** The phrase "Proof generated by default" is intentionally assertive. Adding "where possible" creates doubt and weakens the value proposition. The existing disclaimer "*Based on customer projections" provides sufficient defensibility without diluting the message.
+
+If specificity is needed, it can be addressed in sales conversations, not in the positioning deck which is designed to be aspirational.
+
+---
+
+### 3. Strategy-Reality Gap (Wayne)
+
+**Feedback:** Wayne notes the gap between the platform promise and internal reality (limited data integration, inconsistent UX).
+
+**Response:** This is an execution concern, not a positioning concern. A positioning deck is aspirational by design — it defines where we're going, not where we are today. The AI Vision slide (Slide 11) already separates "Active", "In Development", and "Vision" to address this.
+
+The solution is internal alignment and product roadmap execution, not softening the external message.
 
 ---
 
 ## Technical Details
 
-| File | Line(s) | Change Type |
-|------|---------|-------------|
-| `Slide1StrategicShift.tsx` | 26, 110-113 | Subtitle + body text |
-| `Slide2BeforeAfter.tsx` | 270 | Unlike callout text |
-| `SlideMessagingHouse.tsx` | 23, 24 | Category definition + operating model label |
-| `slideNarration.ts` | 16, 22, 82, 88 | Voice narration scripts (4 slides) |
+| File | Lines | Change Type |
+|------|-------|-------------|
+| `Slide2BeforeAfter.tsx` | 243, 259 | Label + disclaimer text |
+| `Slide3OperatingModel.tsx` | 48, 56, 64, 72 | Step descriptions with concrete examples |
+| `Slide4ValuePyramid.tsx` or related | TBD | Add clarification about individual solution value |
+| `slideNarration.ts` | 28, 52 | Script updates for months→hours and solution value clarification |
 
 ---
 
-## Why This Terminology Works
+## Summary
 
-The phrase "connected, intelligent, and predictive platform" directly maps to the pyramid's maturity stages:
+This plan addresses the valid feedback points while defending the strategic positioning decisions. The changes focus on:
 
-| Pyramid Stage | Platform Attribute |
-|---------------|-------------------|
-| Stage 3: Connected Governance | **Connected** |
-| Stage 4: Intelligent Operations | **Intelligent** |
-| Stage 5: Predictive Operations | **Predictive** |
+1. **Precision** - Concrete examples for Detect/Trigger/Orchestrate/Prove
+2. **Defensibility** - Stronger disclaimer language for metrics
+3. **Sales enablement** - Clarification that individual solutions still deliver value
 
-This creates narrative consistency between:
-- The Strategic Shift slide's promise
-- The Value Pyramid's maturity journey
-- The Messaging House's positioning framework
-
----
-
-## Result
-
-After implementation:
-- All visual slides will use "connected, intelligent, and predictive platform"
-- All narration scripts will use consistent terminology
-- The messaging aligns directly with the pyramid's maturity stages
-- "Operating System" is fully replaced with "Platform" language
+The category name, assertive language, and aspirational framing remain intact as these are core to the positioning strategy.
 
