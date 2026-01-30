@@ -386,6 +386,11 @@ const Slide4ValuePyramid = ({
             <p className="text-[9px] text-muted-foreground mt-1.5 text-center">
               Stage {currentIndex + 1} of {layerOrder.length} · {isAutoCycling ? "Click pyramid or pause to explore" : "Click play to resume"}
             </p>
+            
+            {/* Individual solution value clarification */}
+            <p className="text-[8px] text-muted-foreground/70 mt-2 text-center italic border-t border-border/20 pt-2">
+              Individual solutions deliver departmental value at Stage 2. Platform integration unlocks Stages 3-5 with compounding returns.
+            </p>
           </div>
         </div>
       </div>

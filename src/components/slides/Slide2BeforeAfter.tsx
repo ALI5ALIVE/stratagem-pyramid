@@ -240,7 +240,7 @@ const Slide2BeforeAfter = ({
             <div className="mt-4 p-3 bg-primary/10 rounded-lg border border-primary/20">
               <div className="flex items-center gap-2 mb-2">
                 <TrendingUp className="w-4 h-4 text-primary" />
-                <span className="text-xs font-semibold text-primary uppercase">Target Outcomes*</span>
+                <span className="text-xs font-semibold text-primary uppercase">Illustrative Target Outcomes*</span>
               </div>
               <div className="grid grid-cols-3 gap-2 text-center">
                 <div>
@@ -252,11 +252,11 @@ const Slide2BeforeAfter = ({
                   <p className="text-xs text-muted-foreground">Ready</p>
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-primary">2hr</p>
-                  <p className="text-xs text-muted-foreground">Audit</p>
+                  <p className="text-sm font-bold text-primary">Months→2hr</p>
+                  <p className="text-xs text-muted-foreground">Audit Prep</p>
                 </div>
               </div>
-              <p className="text-[9px] text-muted-foreground text-center mt-2 opacity-70">*Based on customer projections</p>
+              <p className="text-[9px] text-muted-foreground text-center mt-2 opacity-70">*Illustrative outcomes based on customer goals and mature deployments</p>
             </div>
           </div>
         </div>
