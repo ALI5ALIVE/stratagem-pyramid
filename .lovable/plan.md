@@ -1,128 +1,83 @@
 
 
-# Plan: Create Industry-Tailored Hero Copy for Solution Pages
+# Plan: Move Industry Context to Scope Line
 
 ## Goal
 
-Update the hero subhead on each solution page to be tailored to the specific pains and value of that industry, while maintaining alignment with the core platform positioning (Operational Performance Platform for Safety, Content, and Training).
+Remove the industry badge ("For Commercial Aviation", etc.) and instead integrate the industry context into the blue scope line beneath the headline.
 
 ---
 
-## Current State (Generic Copy)
+## Current State
 
-All three solution pages currently use nearly identical hero subheads with only the industry name changed:
-
-| Page | Current Subhead |
-|------|-----------------|
-| Airlines | "Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes **for airlines**." |
-| Defense | "Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes **for defense operations**." |
-| Rail | "Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes **for rail**." |
-
-**Problem**: These are too generic and don't speak to the specific pains each industry faces.
+| Element | Airlines | Defense | Rail |
+|---------|----------|---------|------|
+| Badge | "For Commercial Aviation" | "For Military Aviation & Defense" | "For Rail Operations" |
+| Scope line | "for Safety, Content, and Training" | "for Safety, Content, and Training" | "for Safety, Content, and Training" |
 
 ---
 
-## Proposed Industry-Tailored Hero Copy
+## Proposed Changes
 
-### Airlines Page
+**Remove the badge entirely** and update the scope line to include both the industry and the three pillars:
 
-**Pain points** (from challenges):
-- FOQA data isolation
-- Manual coordination between safety/content/training teams
-- Audit scrambles before FAA/EASA inspections
-- Reactive training schedules
+| Industry | New Scope Line |
+|----------|----------------|
+| Airlines | "Airline Safety, Content, and Training" |
+| Defense | "Defense Safety, Content, and Training" |
+| Rail | "Rail Safety, Content, and Training" |
 
-**Proposed subhead**:
-> "From FOQA signal to crew action — automatically. Connect safety events, procedure updates, and targeted training into one governed system. Close investigations faster, eliminate audit scrambles, and prove continuous improvement to FAA and EASA."
-
----
-
-### Defense Page
-
-**Pain points** (from challenges):
-- Maintenance data disconnected from training
-- Manual airworthiness documentation
-- Disparate training across units/platforms
-- Reactive maintenance schedules
-
-**Proposed subhead**:
-> "Mission readiness demands connected systems. Unify maintenance signals, technical orders, and qualification management across platforms. Maintain continuous airworthiness, accelerate time-to-qualified, and deliver authority-ready compliance evidence."
-
----
-
-### Rail Page
-
-**Pain points** (from challenges):
-- Signal failures logged separately from procedures
-- Manual driver competency tracking
-- Disparate safety reporting and training
-- Reactive audit preparation for ORR/ERA
-
-**Proposed subhead**:
-> "From SPAD incident to driver action — governed and traceable. Connect safety events, rule book updates, and route competency management across your network. Reduce response times, maintain driver readiness, and stay inspection-ready for ORR and ERA."
+This creates a cleaner hero without the redundant badge while anchoring the industry in the primary scope statement.
 
 ---
 
 ## Files to Modify
 
-### 1. `src/pages/solutions/AirlinesPage.tsx` (Line 83)
+### 1. `src/components/solutions/IndustryHero.tsx`
 
-**Current:**
-```tsx
-subhead="Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes for airlines."
+**Remove the Badge component entirely** from the JSX (lines 31-34), as the industry context will now be in the scope line.
+
+### 2. `src/pages/solutions/AirlinesPage.tsx`
+
+**Update IndustryHero props:**
+- Remove: `badgeText="For Commercial Aviation"`
+- Update: `scopeLine="Airline Safety, Content, and Training"`
+
+### 3. `src/pages/solutions/DefensePage.tsx`
+
+**Update IndustryHero props:**
+- Remove: `badgeText="For Military Aviation & Defense"`
+- Update: `scopeLine="Defense Safety, Content, and Training"`
+
+### 4. `src/pages/solutions/RailPage.tsx`
+
+**Update IndustryHero props:**
+- Remove: `badgeText="For Rail Operations"`
+- Update: `scopeLine="Rail Safety, Content, and Training"`
+
+---
+
+## Visual Result
+
+**Before:**
+```
+[For Commercial Aviation] ← badge
+
+The Operational Performance Platform
+
+for Safety, Content, and Training ← scope line
 ```
 
-**Updated:**
-```tsx
-subhead="From FOQA signal to crew action — automatically. Connect safety events, procedure updates, and targeted training into one governed system. Close investigations faster, eliminate audit scrambles, and prove continuous improvement to FAA and EASA."
+**After:**
+```
+The Operational Performance Platform
+
+Airline Safety, Content, and Training ← combined scope line
 ```
 
 ---
 
-### 2. `src/pages/solutions/DefensePage.tsx` (Line 102)
+## Technical Details
 
-**Current:**
-```tsx
-subhead="Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes for defense operations."
-```
-
-**Updated:**
-```tsx
-subhead="Mission readiness demands connected systems. Unify maintenance signals, technical orders, and qualification management across platforms. Maintain continuous airworthiness, accelerate time-to-qualified, and deliver authority-ready compliance evidence."
-```
-
----
-
-### 3. `src/pages/solutions/RailPage.tsx` (Line 102)
-
-**Current:**
-```tsx
-subhead="Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes for rail."
-```
-
-**Updated:**
-```tsx
-subhead="From SPAD incident to driver action — governed and traceable. Connect safety events, rule book updates, and route competency management across your network. Reduce response times, maintain driver readiness, and stay inspection-ready for ORR and ERA."
-```
-
----
-
-## Copy Comparison Summary
-
-| Industry | Pain Hook | Value Proposition | Proof/Regulatory |
-|----------|-----------|-------------------|------------------|
-| **Airlines** | FOQA signal to crew action | Close investigations faster, eliminate audit scrambles | FAA and EASA |
-| **Defense** | Mission readiness demands | Maintain airworthiness, accelerate time-to-qualified | Authority-ready evidence |
-| **Rail** | SPAD incident to driver action | Reduce response times, maintain driver readiness | ORR and ERA |
-
----
-
-## Alignment with Platform Positioning
-
-Each tailored subhead maintains alignment with the core platform narrative:
-
-1. **"Operational Performance"** - Each speaks to performance outcomes (faster closure, readiness, reduced response times)
-2. **"for Safety, Content, and Training"** - Each mentions the three domains in industry-specific terms
-3. **"Turn signals into orchestrated change"** - Each starts with a signal and ends with coordinated action
-4. **"Measurable outcomes"** - Each includes specific, tangible results (investigations, airworthiness, driver readiness)
+The `IndustryHero` component will be simplified by removing the Badge import and the badge rendering code. The `badgeText` prop can be removed from the interface since it will no longer be used.
 
