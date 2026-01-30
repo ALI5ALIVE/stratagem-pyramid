@@ -15,6 +15,8 @@ import Slide10Investors from "@/components/slides/Slide6Investors";
 import SlideMessagingHouse from "@/components/slides/SlideMessagingHouse";
 import SlideCampaignIdeas from "@/components/slides/SlideCampaignIdeas";
 import SlideAIVision from "@/components/slides/SlideAIVision";
+import SlideMessagingContext from "@/components/slides/SlideMessagingContext";
+import SlidePlatformExperience from "@/components/slides/SlidePlatformExperience";
 
 const slides = [
   { id: "slide-0", label: "Title" },
@@ -31,6 +33,8 @@ const slides = [
   { id: "slide-11", label: "AI Vision & Future" },
   { id: "slide-12", label: "Messaging House" },
   { id: "slide-13", label: "Campaign Ideas" },
+  { id: "slide-14", label: "Messaging in Context" },
+  { id: "slide-15", label: "Platform Experience" },
 ];
 
 const SlideDeck = () => {
@@ -210,6 +214,8 @@ const SlideDeck = () => {
         <SlideAIVision {...getNarrationProps(11)} />
         <SlideMessagingHouse {...getNarrationProps(12)} />
         <SlideCampaignIdeas {...getNarrationProps(13)} />
+        <SlideMessagingContext {...getNarrationProps(14)} />
+        <SlidePlatformExperience {...getNarrationProps(15)} />
       </div>
     </div>
   );
