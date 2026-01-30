@@ -1,194 +1,150 @@
 
 
-# Plan: Fix Platform Ecosystem Diagram Arrows and AI-POWERED Text
+# Plan: Consistency Updates with "Measurable Outcomes"
 
 ## Summary
 
-Fix two issues with the `PlatformEcosystemDiagram` component:
-1. **Arrows cutting through center**: Change from Bezier curves to proper SVG arc paths that follow the circle
-2. **AI-POWERED text cut off**: Adjust the viewBox and text path positions to ensure all content is visible
+Apply the key messaging statement consistently across the deck and homepage, using **"measurable outcomes"** instead of "audit-ready proof" as requested.
+
+**Target Statement:** *"A connected, intelligent, and predictive platform that turns signals into orchestrated change and measurable outcomes."*
 
 ---
 
-## Issue 1: Arrows Not Following the Circle
+## Changes to Implement
 
-### Current Problem
-The `getArrowPath` function creates a quadratic Bezier curve with a control point pulled toward the center:
+### 1. Homepage Hero Section
+**File:** `src/pages/HomepageMockup.tsx` (lines 234-237)
+
+**Current:**
 ```tsx
-const controlRadius = radius * 0.6;  // Control point at 60% of radius
-return `M ${start.x} ${start.y} Q ${control.x} ${control.y} ${end.x} ${end.y}`;
+<p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
+  Connect Safety, Content, and Training into one governed system.{" "}
+  <span className="text-foreground font-medium">Turn operational signals into measurable outcomes.</span>
+</p>
 ```
 
-This creates a chord-like path that cuts through the inner area rather than following the circular arc.
-
-### Solution
-Replace the Bezier curve with an SVG arc command (`A`) that follows the circumference:
-
+**New:**
 ```tsx
-// Generate arc path that follows the circle between two angles
-const getArcPath = (startAngle: number, endAngle: number, radius: number) => {
-  const start = getPosition(startAngle, radius);
-  const end = getPosition(endAngle, radius);
-  
-  // Determine if we need the large arc (more than 180 degrees)
-  const angleDiff = Math.abs(endAngle - startAngle);
-  const largeArc = angleDiff > 180 ? 1 : 0;
-  
-  // Sweep direction (1 = clockwise, 0 = counter-clockwise)
-  const sweep = endAngle > startAngle ? 1 : 0;
-  
-  // SVG Arc: A rx ry x-axis-rotation large-arc-flag sweep-flag x y
-  return `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeArc} ${sweep} ${end.x} ${end.y}`;
-};
+<p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
+  A connected, intelligent, and predictive platform.{" "}
+  <span className="text-foreground font-medium">Turn signals into orchestrated change and measurable outcomes.</span>
+</p>
 ```
 
 ---
 
-## Issue 2: AI-POWERED Text Being Cut Off
+### 2. Homepage "How It Works" Section
+**File:** `src/pages/HomepageMockup.tsx` (lines 391-393)
 
-### Current Problem
-The viewBox is `0 0 400 400` with center at (200, 200). The AI-POWERED text paths are positioned at radius 165, meaning:
-- Top text: `cy - 165 = 35` pixels from top
-- The arc sweeps from `(100, 35)` to `(300, 35)` 
-
-But the text has `letterSpacing="3"` which makes it wider, and part of it gets clipped by the viewBox edge.
-
-### Solution
-1. **Increase viewBox padding**: Change from `0 0 400 400` to `viewBox="-10 -10 420 420"` to add 10px margin on all sides
-2. **Alternatively**, bring the AI-POWERED text paths slightly inward to radius ~160
-
-I'll use the second approach to keep the viewBox clean:
-
+**Current:**
 ```tsx
-// Adjust radius for text paths from 165 to 158
-<path
-  id="aiPoweredTop"
-  d={`M ${cx - 90} ${cy - 158} A 158 158 0 0 1 ${cx + 90} ${cy - 158}`}
-  fill="none"
-/>
+<p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+  When a signal is detected, the platform doesn't just log it — it closes the loop automatically.
+</p>
+```
+
+**New:**
+```tsx
+<p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+  A connected, intelligent, and predictive operating layer — turning signals into orchestrated change and measurable outcomes.
+</p>
 ```
 
 ---
 
-## Files to Modify
+### 3. Homepage CTA Section
+**File:** `src/pages/HomepageMockup.tsx` (lines 592-594)
 
-| File | Change |
-|------|--------|
-| `src/components/PlatformEcosystemDiagram.tsx` | Replace Bezier arrow paths with arc paths; adjust AI-POWERED text path positions |
+**Current:**
+```tsx
+<h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-6">
+  Ready to see connected operational performance?
+</h2>
+```
+
+**New:**
+```tsx
+<h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-6">
+  Ready for a connected, intelligent, and predictive platform?
+</h2>
+```
 
 ---
 
-## Technical Changes
+### 4. Homepage Footer Tagline
+**File:** `src/pages/HomepageMockup.tsx` (lines 645-647)
 
-### 1. New Arc Path Function (replace lines 64-74)
-
+**Current:**
 ```tsx
-// Generate arc path that follows the circle between two angles
-const getArcPath = (startAngle: number, endAngle: number, radius: number) => {
-  const start = getPosition(startAngle, radius);
-  const end = getPosition(endAngle, radius);
-  
-  // For our clockwise flow around the triangle, we use sweep=1
-  // The arc should be less than 180 degrees, so largeArc=0
-  return `M ${start.x} ${start.y} A ${radius} ${radius} 0 0 1 ${end.x} ${end.y}`;
-};
+<p className="text-sm text-muted-foreground mb-4">
+  The Operational Performance Platform for aviation.
+</p>
 ```
 
-### 2. Update AI-POWERED Text Paths (replace lines 170-189)
-
+**New:**
 ```tsx
-{/* Curved text paths for AI-POWERED - brought slightly inward */}
-<path
-  id="aiPoweredTop"
-  d={`M ${cx - 85} ${cy - 160} A 160 160 0 0 1 ${cx + 85} ${cy - 160}`}
-  fill="none"
-/>
-<path
-  id="aiPoweredBottom"
-  d={`M ${cx + 85} ${cy + 160} A 160 160 0 0 1 ${cx - 85} ${cy + 160}`}
-  fill="none"
-/>
-<path
-  id="aiPoweredLeft"
-  d={`M ${cx - 160} ${cy + 70} A 160 160 0 0 1 ${cx - 160} ${cy - 70}`}
-  fill="none"
-/>
-<path
-  id="aiPoweredRight"
-  d={`M ${cx + 160} ${cy - 70} A 160 160 0 0 1 ${cx + 160} ${cy + 70}`}
-  fill="none"
-/>
+<p className="text-sm text-muted-foreground mb-4">
+  A connected, intelligent, and predictive platform for aviation operations.
+</p>
 ```
-
-### 3. Update Arrow Paths (lines 263-291)
-
-Replace calls to `getArrowPath` with `getArcPath` and use a radius that sits between the product cards (around 95-100):
-
-```tsx
-{/* Safety -> Content (clockwise arc) */}
-<path
-  d={getArcPath(240 + 20, 360 - 20, 95)}
-  fill="none"
-  stroke="url(#pinkArrowGradient)"
-  strokeWidth="3"
-  strokeLinecap="round"
-  markerEnd="url(#arrowHeadPink)"
-/>
-
-{/* Content -> Training */}
-<path
-  d={getArcPath(0 + 20, 120 - 20, 95)}
-  fill="none"
-  stroke="url(#blueArrowGradient)"
-  strokeWidth="3"
-  strokeLinecap="round"
-  markerEnd="url(#arrowHeadBlue)"
-/>
-
-{/* Training -> Safety */}
-<path
-  d={getArcPath(120 + 20, 240 - 20, 95)}
-  fill="none"
-  stroke="url(#tealArrowGradient)"
-  strokeWidth="3"
-  strokeLinecap="round"
-  markerEnd="url(#arrowHeadTeal)"
-/>
-```
-
-### 4. Update Animated Dots (lines 293-316)
-
-Update the animated dots to follow the same arc paths.
 
 ---
 
-## Visual Result
+### 5. Slide 3 Operating Model Subtitle
+**File:** `src/components/slides/Slide3OperatingModel.tsx` (lines 111-112)
 
-Before:
-```text
-      Safety
-         \
-          \______ Content  (chord cuts through)
-         /
-      Training
+**Current:**
+```tsx
+title="The Operational Intelligence Layer"
+subtitle="Transforming operations from cost center to value driver"
 ```
 
-After:
-```text
-      Safety
-    ↘ (arc) ↘
-              Content  (follows the circle)
-    ↗ (arc) ↗
-      Training
+**New:**
+```tsx
+title="The Operational Intelligence Layer"
+subtitle="A connected, intelligent, and predictive platform turning signals into orchestrated change and measurable outcomes"
 ```
+
+---
+
+### 6. Slide 0 Title Page Description
+**File:** `src/components/slides/Slide0Title.tsx` (lines 94-98)
+
+**Current:**
+```tsx
+<p className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+  From fragmented compliance tools to a connected platform 
+  <br className="hidden sm:block" />
+  that delivers <span className="text-primary font-medium">operational performance</span> at scale.
+</p>
+```
+
+**New:**
+```tsx
+<p className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+  A connected, intelligent, and predictive platform that turns 
+  <br className="hidden sm:block" />
+  signals into <span className="text-primary font-medium">orchestrated change and measurable outcomes.</span>
+</p>
+```
+
+---
+
+## Files Modified
+
+| File | Changes |
+|------|---------|
+| `src/pages/HomepageMockup.tsx` | 4 text updates (hero, how-it-works, CTA, footer) |
+| `src/components/slides/Slide3OperatingModel.tsx` | 1 subtitle update |
+| `src/components/slides/Slide0Title.tsx` | 1 description update |
 
 ---
 
 ## Result
 
 After implementation:
-- All three connection arrows follow the circular arc between products
-- "AI-POWERED" text labels are fully visible within the viewBox
-- Animated dots follow the curved arc paths correctly
-- The diagram looks polished and professional
+- The key messaging appears consistently across title slide, operating model slide, and homepage
+- "Connected, intelligent, and predictive" language is reinforced at every major touchpoint
+- "Signals into orchestrated change and measurable outcomes" is the consistent outcome language
+- Users encounter the same value proposition whether viewing the deck or website
 
