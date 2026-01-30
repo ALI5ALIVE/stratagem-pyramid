@@ -1,167 +1,128 @@
 
-# Plan: Fix Trust Signals for Homepage and Solution Pages
 
-## Current Issue
+# Plan: Create Industry-Tailored Hero Copy for Solution Pages
 
-| Page | Current Trust Signal | Problem |
-|------|---------------------|---------|
-| Homepage | "Trusted by 50+ airlines including 7 of the top 10 in North America" | **Too aviation-specific** - doesn't represent rail or defense |
-| Solution Pages | *(none)* | **Missing entirely** - no trust signals on industry pages |
+## Goal
+
+Update the hero subhead on each solution page to be tailored to the specific pains and value of that industry, while maintaining alignment with the core platform positioning (Operational Performance Platform for Safety, Content, and Training).
 
 ---
 
-## Solution Overview
+## Current State (Generic Copy)
 
-1. **Homepage**: Update trust bar to be cross-industry, mentioning all sectors served
-2. **Solution Pages**: Add an `IndustryTrustBar` component with industry-specific trust signals
+All three solution pages currently use nearly identical hero subheads with only the industry name changed:
 
----
+| Page | Current Subhead |
+|------|-----------------|
+| Airlines | "Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes **for airlines**." |
+| Defense | "Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes **for defense operations**." |
+| Rail | "Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes **for rail**." |
 
-## Files to Create/Modify
-
-### 1. Create `src/components/solutions/IndustryTrustBar.tsx` (NEW)
-
-A reusable trust bar component that accepts industry-specific props:
-
-```tsx
-interface IndustryTrustBarProps {
-  industry: string;
-  primaryStat: string;
-  primaryLabel: string;
-  secondaryStat: string;
-  secondaryLabel: string;
-  tertiaryStat?: string;
-  tertiaryLabel?: string;
-}
-
-const IndustryTrustBar = ({
-  industry,
-  primaryStat,
-  primaryLabel,
-  secondaryStat,
-  secondaryLabel,
-  tertiaryStat = "99.9%",
-  tertiaryLabel = "uptime",
-}: IndustryTrustBarProps) => {
-  return (
-    <section className="py-6 border-y border-border bg-muted/30">
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
-          <p className="text-sm text-muted-foreground text-center md:text-left">
-            <span className="font-semibold text-foreground">{primaryStat}</span> {primaryLabel}
-          </p>
-          <div className="hidden md:block w-px h-6 bg-border" />
-          <div className="flex items-center gap-6 text-sm text-muted-foreground">
-            <span><strong className="text-foreground">{secondaryStat}</strong> {secondaryLabel}</span>
-            {tertiaryStat && (
-              <>
-                <span className="hidden sm:inline">|</span>
-                <span className="hidden sm:inline"><strong className="text-foreground">{tertiaryStat}</strong> {tertiaryLabel}</span>
-              </>
-            )}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-```
+**Problem**: These are too generic and don't speak to the specific pains each industry faces.
 
 ---
 
-### 2. Update `src/pages/HomepageMockup.tsx` (Lines 234-249)
+## Proposed Industry-Tailored Hero Copy
 
-Change from airlines-only to cross-industry:
+### Airlines Page
+
+**Pain points** (from challenges):
+- FOQA data isolation
+- Manual coordination between safety/content/training teams
+- Audit scrambles before FAA/EASA inspections
+- Reactive training schedules
+
+**Proposed subhead**:
+> "From FOQA signal to crew action — automatically. Connect safety events, procedure updates, and targeted training into one governed system. Close investigations faster, eliminate audit scrambles, and prove continuous improvement to FAA and EASA."
+
+---
+
+### Defense Page
+
+**Pain points** (from challenges):
+- Maintenance data disconnected from training
+- Manual airworthiness documentation
+- Disparate training across units/platforms
+- Reactive maintenance schedules
+
+**Proposed subhead**:
+> "Mission readiness demands connected systems. Unify maintenance signals, technical orders, and qualification management across platforms. Maintain continuous airworthiness, accelerate time-to-qualified, and deliver authority-ready compliance evidence."
+
+---
+
+### Rail Page
+
+**Pain points** (from challenges):
+- Signal failures logged separately from procedures
+- Manual driver competency tracking
+- Disparate safety reporting and training
+- Reactive audit preparation for ORR/ERA
+
+**Proposed subhead**:
+> "From SPAD incident to driver action — governed and traceable. Connect safety events, rule book updates, and route competency management across your network. Reduce response times, maintain driver readiness, and stay inspection-ready for ORR and ERA."
+
+---
+
+## Files to Modify
+
+### 1. `src/pages/solutions/AirlinesPage.tsx` (Line 83)
 
 **Current:**
 ```tsx
-<span className="font-semibold text-foreground">Trusted by 50+ airlines</span> including 7 of the top 10 in North America
-...
-<span><strong className="text-foreground">500K+</strong> crew members</span>
+subhead="Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes for airlines."
 ```
 
 **Updated:**
 ```tsx
-<span className="font-semibold text-foreground">Trusted across aviation, rail, and defense</span> for mission-critical operations
-...
-<span><strong className="text-foreground">1M+</strong> frontline workers</span>
-<span><strong className="text-foreground">99.9%</strong> uptime</span>
+subhead="From FOQA signal to crew action — automatically. Connect safety events, procedure updates, and targeted training into one governed system. Close investigations faster, eliminate audit scrambles, and prove continuous improvement to FAA and EASA."
 ```
 
 ---
 
-### 3. Update `src/pages/solutions/AirlinesPage.tsx`
+### 2. `src/pages/solutions/DefensePage.tsx` (Line 102)
 
-Add the trust bar after the hero:
-
+**Current:**
 ```tsx
-import IndustryTrustBar from "@/components/solutions/IndustryTrustBar";
-
-// After IndustryHero:
-<IndustryTrustBar
-  industry="Airlines"
-  primaryStat="Trusted by 50+ airlines"
-  primaryLabel="including 7 of the top 10 in North America"
-  secondaryStat="500K+"
-  secondaryLabel="crew members"
-/>
+subhead="Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes for defense operations."
 ```
 
----
-
-### 4. Update `src/pages/solutions/DefensePage.tsx`
-
-Add defense-specific trust signals:
-
+**Updated:**
 ```tsx
-import IndustryTrustBar from "@/components/solutions/IndustryTrustBar";
-
-// After IndustryHero:
-<IndustryTrustBar
-  industry="Defense"
-  primaryStat="Trusted by military aviation"
-  primaryLabel="across multiple allied nations"
-  secondaryStat="100K+"
-  secondaryLabel="qualified personnel"
-/>
+subhead="Mission readiness demands connected systems. Unify maintenance signals, technical orders, and qualification management across platforms. Maintain continuous airworthiness, accelerate time-to-qualified, and deliver authority-ready compliance evidence."
 ```
 
 ---
 
-### 5. Update `src/pages/solutions/RailPage.tsx`
+### 3. `src/pages/solutions/RailPage.tsx` (Line 102)
 
-Add rail-specific trust signals:
-
+**Current:**
 ```tsx
-import IndustryTrustBar from "@/components/solutions/IndustryTrustBar";
+subhead="Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes for rail."
+```
 
-// After IndustryHero:
-<IndustryTrustBar
-  industry="Rail"
-  primaryStat="Trusted by rail operators"
-  primaryLabel="for network-wide safety and compliance"
-  secondaryStat="50K+"
-  secondaryLabel="rail personnel"
-/>
+**Updated:**
+```tsx
+subhead="From SPAD incident to driver action — governed and traceable. Connect safety events, rule book updates, and route competency management across your network. Reduce response times, maintain driver readiness, and stay inspection-ready for ORR and ERA."
 ```
 
 ---
 
-## Summary of Trust Signals
+## Copy Comparison Summary
 
-| Page | Primary Trust Signal | Secondary Stats |
-|------|---------------------|-----------------|
-| **Homepage** | "Trusted across aviation, rail, and defense" | 1M+ frontline workers, 99.9% uptime |
-| **Airlines** | "Trusted by 50+ airlines" (7 of top 10 NA) | 500K+ crew members, 99.9% uptime |
-| **Defense** | "Trusted by military aviation" (allied nations) | 100K+ qualified personnel, 99.9% uptime |
-| **Rail** | "Trusted by rail operators" | 50K+ rail personnel, 99.9% uptime |
+| Industry | Pain Hook | Value Proposition | Proof/Regulatory |
+|----------|-----------|-------------------|------------------|
+| **Airlines** | FOQA signal to crew action | Close investigations faster, eliminate audit scrambles | FAA and EASA |
+| **Defense** | Mission readiness demands | Maintain airworthiness, accelerate time-to-qualified | Authority-ready evidence |
+| **Rail** | SPAD incident to driver action | Reduce response times, maintain driver readiness | ORR and ERA |
 
 ---
 
-## Rationale
+## Alignment with Platform Positioning
 
-1. **Homepage broadening** - Reflects the platform's multi-industry positioning without over-indexing on aviation
-2. **Industry-specific pages** - Each vertical gets tailored trust signals that resonate with that audience
-3. **Consistent component** - `IndustryTrustBar` provides a reusable pattern for future industry pages
-4. **Maintains credibility** - Aviation page keeps the strong "50+ airlines" stat while other industries get appropriate equivalents
+Each tailored subhead maintains alignment with the core platform narrative:
+
+1. **"Operational Performance"** - Each speaks to performance outcomes (faster closure, readiness, reduced response times)
+2. **"for Safety, Content, and Training"** - Each mentions the three domains in industry-specific terms
+3. **"Turn signals into orchestrated change"** - Each starts with a signal and ends with coordinated action
+4. **"Measurable outcomes"** - Each includes specific, tangible results (investigations, airworthiness, driver readiness)
 
