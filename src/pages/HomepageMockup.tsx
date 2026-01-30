@@ -195,7 +195,7 @@ const HomepageMockup = () => {
               </h1>
               
               <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
-                A connected, intelligent, and predictive platform.{" "}
+                Connect safety, content, and training into an intelligent operating platform.{" "}
                 <span className="text-foreground font-medium">Turn signals into orchestrated change and measurable outcomes.</span>
               </p>
               
