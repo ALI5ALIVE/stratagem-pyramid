@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import complyLogo from "@/assets/comply365-logo-white.png";
+import PlatformEcosystemDiagram from "@/components/PlatformEcosystemDiagram";
 import {
   Shield,
   FileText,
@@ -252,47 +253,12 @@ const HomepageMockup = () => {
               </div>
             </div>
 
-            {/* Hero Visual - Improvement #2: Animated DTOP flow */}
+            {/* Hero Visual - Platform Ecosystem Diagram */}
             <div className="relative">
-              <div className="aspect-square max-w-lg mx-auto">
-                {/* Animated ring */}
-                <div className="absolute inset-0 rounded-full border-2 border-primary/20 animate-pulse" />
-                <div className="absolute inset-4 rounded-full border border-primary/30" />
-                
-                {/* Central platform */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="relative">
-                    {/* Three domains orbiting */}
-                    <div className="absolute -top-20 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-float">
-                      <div className="w-14 h-14 rounded-xl bg-red-500/20 border border-red-500/40 flex items-center justify-center">
-                        <Shield className="w-7 h-7 text-red-400" />
-                      </div>
-                      <span className="text-xs font-medium text-muted-foreground">Safety</span>
-                    </div>
-                    
-                    <div className="absolute -bottom-16 -left-20 flex flex-col items-center gap-2 animate-float-delayed">
-                      <div className="w-14 h-14 rounded-xl bg-sky-500/20 border border-sky-500/40 flex items-center justify-center">
-                        <FileText className="w-7 h-7 text-sky-400" />
-                      </div>
-                      <span className="text-xs font-medium text-muted-foreground">Content</span>
-                    </div>
-                    
-                    <div className="absolute -bottom-16 -right-20 flex flex-col items-center gap-2 animate-float-delayed-2">
-                      <div className="w-14 h-14 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center">
-                        <GraduationCap className="w-7 h-7 text-emerald-400" />
-                      </div>
-                      <span className="text-xs font-medium text-muted-foreground">Training</span>
-                    </div>
-
-                    {/* Central hub */}
-                    <div className="w-32 h-32 rounded-2xl bg-gradient-to-br from-primary/30 to-primary/10 border-2 border-primary/40 flex items-center justify-center shadow-lg shadow-primary/20">
-                      <div className="text-center">
-                        <div className="text-2xl font-display font-bold text-primary">DTOP</div>
-                        <div className="text-xs text-muted-foreground mt-1">Connected Flow</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div className="max-w-lg mx-auto">
+                {/* Subtle glow backdrop */}
+                <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full scale-75" />
+                <PlatformEcosystemDiagram className="relative" />
               </div>
             </div>
           </div>
