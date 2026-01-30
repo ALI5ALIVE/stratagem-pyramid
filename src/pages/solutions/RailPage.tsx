@@ -1,5 +1,6 @@
 import MainNavigation from "@/components/MainNavigation";
 import IndustryHero from "@/components/solutions/IndustryHero";
+import IndustryTrustBar from "@/components/solutions/IndustryTrustBar";
 import IndustryChallenge from "@/components/solutions/IndustryChallenge";
 import IndustryDTOP from "@/components/solutions/IndustryDTOP";
 import IndustryPillars from "@/components/solutions/IndustryPillars";
@@ -99,6 +100,14 @@ const RailPage = () => {
         badgeText="For Rail Operations"
         scopeLine="for Safety, Content, and Training"
         subhead="Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes for rail."
+      />
+      
+      <IndustryTrustBar
+        industry="Rail"
+        primaryStat="Trusted by rail operators"
+        primaryLabel="for network-wide safety and compliance"
+        secondaryStat="50K+"
+        secondaryLabel="rail personnel"
       />
       
       <IndustryChallenge

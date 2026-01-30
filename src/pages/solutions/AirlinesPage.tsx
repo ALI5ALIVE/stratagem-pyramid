@@ -1,5 +1,6 @@
 import MainNavigation from "@/components/MainNavigation";
 import IndustryHero from "@/components/solutions/IndustryHero";
+import IndustryTrustBar from "@/components/solutions/IndustryTrustBar";
 import IndustryChallenge from "@/components/solutions/IndustryChallenge";
 import IndustryDTOP from "@/components/solutions/IndustryDTOP";
 import IndustryPillars from "@/components/solutions/IndustryPillars";
@@ -80,6 +81,14 @@ const AirlinesPage = () => {
         badgeText="For Commercial Aviation"
         scopeLine="for Safety, Content, and Training"
         subhead="Connect safety, content, and training into an intelligent operating platform. Turn signals into orchestrated change and measurable outcomes for airlines."
+      />
+      
+      <IndustryTrustBar
+        industry="Airlines"
+        primaryStat="Trusted by 50+ airlines"
+        primaryLabel="including 7 of the top 10 in North America"
+        secondaryStat="500K+"
+        secondaryLabel="crew members"
       />
       
       <IndustryChallenge

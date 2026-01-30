@@ -231,16 +231,16 @@ const HomepageMockup = () => {
         </div>
       </section>
 
-      {/* Trust Bar - Improvement #3: More specific + stat-based */}
+      {/* Trust Bar - Improvement #3: Cross-industry trust signals */}
       <section className="py-6 border-y border-border bg-muted/30">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
             <p className="text-sm text-muted-foreground text-center md:text-left">
-              <span className="font-semibold text-foreground">Trusted by 50+ airlines</span> including 7 of the top 10 in North America
+              <span className="font-semibold text-foreground">Trusted across aviation, rail, and defense</span> for mission-critical operations
             </p>
             <div className="hidden md:block w-px h-6 bg-border" />
             <div className="flex items-center gap-6 text-sm text-muted-foreground">
-              <span><strong className="text-foreground">500K+</strong> crew members</span>
+              <span><strong className="text-foreground">1M+</strong> frontline workers</span>
               <span className="hidden sm:inline">|</span>
               <span className="hidden sm:inline"><strong className="text-foreground">99.9%</strong> uptime</span>
             </div>
