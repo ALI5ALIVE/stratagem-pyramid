@@ -165,7 +165,7 @@ const HomepageMockup = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* Back to Deck Button */}
-      <div className="fixed top-4 left-4 z-50">
+      <div className="fixed top-20 left-4 z-50">
         <Link to="/">
           <Button variant="outline" size="sm" className="gap-2 backdrop-blur-sm bg-background/80">
             <ArrowLeft className="w-4 h-4" />
