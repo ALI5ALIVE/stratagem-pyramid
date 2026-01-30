@@ -78,8 +78,7 @@ const AirlinesPage = () => {
       <IndustryHero
         industry="Airlines"
         headline="The Operational Performance Platform"
-        badgeText="For Commercial Aviation"
-        scopeLine="for Safety, Content, and Training"
+        scopeLine="Airline Safety, Content, and Training"
         subhead="From FOQA signal to crew action — automatically. Connect safety events, procedure updates, and targeted training into one governed system. Close investigations faster, eliminate audit scrambles, and prove continuous improvement to FAA and EASA."
       />
       

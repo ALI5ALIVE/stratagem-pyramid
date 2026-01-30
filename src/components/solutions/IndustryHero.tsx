@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
 
@@ -6,7 +5,6 @@ interface IndustryHeroProps {
   industry: string;
   headline: string;
   subhead: string;
-  badgeText?: string;
   scopeLine?: string;
   ctaPrimary?: string;
   ctaSecondary?: string;
@@ -16,7 +14,6 @@ const IndustryHero = ({
   industry,
   headline,
   subhead,
-  badgeText,
   scopeLine,
   ctaPrimary = "See the Platform",
   ctaSecondary = "Calculate Your Impact",
@@ -28,10 +25,6 @@ const IndustryHero = ({
       
       <div className="container mx-auto px-6 relative pt-20">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Badge */}
-          <Badge variant="outline" className="mb-6 px-4 py-1.5 text-sm border-primary/30 text-primary bg-primary/5">
-            {badgeText || `For ${industry}`}
-          </Badge>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground mb-2 leading-[1.1]">
             {headline}
