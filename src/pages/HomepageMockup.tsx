@@ -232,8 +232,8 @@ const HomepageMockup = () => {
               </h1>
               
               <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
-                Connect Safety, Content, and Training into one governed system.{" "}
-                <span className="text-foreground font-medium">Turn operational signals into measurable outcomes.</span>
+                A connected, intelligent, and predictive platform.{" "}
+                <span className="text-foreground font-medium">Turn signals into orchestrated change and measurable outcomes.</span>
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -389,7 +389,7 @@ const HomepageMockup = () => {
                 How It Works
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                When a signal is detected, the platform doesn't just log it — it closes the loop automatically.
+                A connected, intelligent, and predictive operating layer — turning signals into orchestrated change and measurable outcomes.
               </p>
             </div>
 
@@ -590,7 +590,7 @@ const HomepageMockup = () => {
         <section className="py-20 md:py-24 bg-gradient-to-b from-primary/10 to-primary/5">
           <div className="container mx-auto px-6 text-center">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-6">
-              Ready to see connected operational performance?
+              Ready for a connected, intelligent, and predictive platform?
             </h2>
             
             <p className="text-lg md:text-xl text-muted-foreground mb-4 max-w-2xl mx-auto">
@@ -643,7 +643,7 @@ const HomepageMockup = () => {
             <div className="col-span-2 md:col-span-1">
               <img src={complyLogo} alt="Comply365" className="h-8 w-auto mb-4" />
               <p className="text-sm text-muted-foreground mb-4">
-                The Operational Performance Platform for aviation.
+                A connected, intelligent, and predictive platform for aviation operations.
               </p>
               {/* Social links */}
               <div className="flex gap-4">

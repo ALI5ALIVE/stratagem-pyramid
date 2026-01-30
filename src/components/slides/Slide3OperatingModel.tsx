@@ -109,7 +109,7 @@ const Slide3OperatingModel = ({
     <SlideContainer
       id="slide-3"
       title="The Operational Intelligence Layer"
-      subtitle="Transforming operations from cost center to value driver"
+      subtitle="A connected, intelligent, and predictive platform turning signals into orchestrated change and measurable outcomes"
       slideNumber={3}
       isPlaying={isPlaying}
       isLoading={isLoading}
