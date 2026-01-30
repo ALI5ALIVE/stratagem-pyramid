@@ -101,9 +101,9 @@ export const slideNarrations: SlideNarration[] = [
   },
   {
     slideId: 15,
-    title: "Platform Experience",
+    title: "Homepage Experience",
     voiceId: DEFAULT_VOICE_ID,
-    script: "Here's how this messaging appears in the actual platform experience. The navigation doesn't say 'Safety Management System' or 'Learning Management System.' It says Safety Performance, Content Performance, Training Performance. Each domain has its own performance dashboard — with metrics that matter to that function. Safety shows investigation status and recurrence rates. Content shows procedural change cycles and currency. Training shows workforce readiness and qualification status. The AI recommendations panel surfaces cross-domain insights: a new trend detected in safety data, a procedure flagged for review, targeted training activated based on performance signals. And at the bottom, the Detect, Trigger, Orchestrate, Prove flow visualizes the connected operating model. This isn't just positioning language. It's how the product works. The messaging and the experience are aligned."
+    script: "Here's how the Operational Performance Platform messaging appears on the website — not just in the product. The hero leads with the category: 'The Operational Performance Platform.' The subhead explains the value: connecting Safety, Content, and Training into one governed system. Notice the three pillars: Safety Performance, Content Performance, Training Performance. This is the same language customers will see in the product navigation — terminology that's consistent from marketing to sales to daily use. The case study section shows how messaging translates to proof: real outcomes like on-time performance improvement and audit preparation time reduction. And the footer reinforces our differentiation: 'Point solutions manage silos. Comply three six five closes the loop.' This isn't just a tagline. It's the category promise. The messaging is aligned across every touchpoint — website, sales deck, product experience. That consistency builds category ownership."
   },
 ];
 
