@@ -9,7 +9,8 @@ import {
   GraduationCap, 
   FileText, 
   CheckCircle2, 
-  Zap 
+  Zap,
+  GitBranch
 } from "lucide-react";
 import type { SlideNarrationProps } from "@/types/slideProps";
 import { cn } from "@/lib/utils";
@@ -28,6 +29,11 @@ interface UseCase {
     label: string;
     description: string;
     trigger: string;
+  };
+  orchestrate: {
+    label: string;
+    description: string;
+    deliverable: string;
   };
   outcome: {
     label: string;
@@ -52,6 +58,11 @@ const useCases: UseCase[] = [
       description: "Platform identifies pilot-airport correlation, cross-references with training records and weather patterns",
       trigger: "Automated retraining trigger generated",
     },
+    orchestrate: {
+      label: "Training Deployment",
+      description: "Personalized competency module created, assigned to affected pilots with completion deadline",
+      deliverable: "47 pilots enrolled in targeted program",
+    },
     outcome: {
       label: "Targeted Retraining",
       description: "Affected pilots receive personalized competency improvement — not generic refresher courses",
@@ -73,6 +84,11 @@ const useCases: UseCase[] = [
       description: "AI correlates reports with operational context: location, time, weather conditions, aircraft type",
       trigger: "Procedure review triggered automatically",
     },
+    orchestrate: {
+      label: "Procedure Update",
+      description: "De-icing SOP updated with new ventilation protocols and ground crew positioning requirements",
+      deliverable: "SOP v2.3 published → 120 ground crew notified",
+    },
     outcome: {
       label: "Procedural Change",
       description: "De-icing procedure modified at affected hub. Training deployed to ground crews within 48 hours",
@@ -93,6 +109,11 @@ const useCases: UseCase[] = [
       label: "Pattern Recognition",
       description: "Platform detects procedure-specific trend, flags potential design issue in current SOP",
       trigger: "Content team alerted + procedure review initiated",
+    },
+    orchestrate: {
+      label: "Content Revision",
+      description: "Hydraulic switch procedure rewritten with clearer step sequence, visual aids, and confirmation checkpoints",
+      deliverable: "Checklist v4.1 deployed to all 737 crew",
     },
     outcome: {
       label: "Proactive Prevention",
@@ -221,7 +242,7 @@ const SlideUseCases = ({
                     )}
                   </div>
 
-                  {/* Action (Trigger + Orchestrate) */}
+                  {/* Action (Trigger) */}
                   <div className="relative pl-4 border-l-2 border-accent/50">
                     <div className="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-accent" />
                     <div className="text-[10px] font-semibold uppercase tracking-wider text-accent mb-1">
@@ -234,8 +255,28 @@ const SlideUseCases = ({
                       <div className="text-[11px] text-muted-foreground animate-fade-in">
                         {useCase.action.description}
                         <div className="flex items-center gap-1 mt-1">
-                          <GraduationCap className="w-3 h-3 text-cyan-500" />
-                          <span className="text-[10px] text-cyan-500">{useCase.action.trigger}</span>
+                          <TrendingDown className="w-3 h-3 text-accent" />
+                          <span className="text-[10px] text-accent">{useCase.action.trigger}</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Orchestrate */}
+                  <div className="relative pl-4 border-l-2 border-cyan-500/50">
+                    <div className="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-cyan-500" />
+                    <div className="text-[10px] font-semibold uppercase tracking-wider text-cyan-500 mb-1">
+                      Change Orchestrated
+                    </div>
+                    <div className="text-xs font-medium text-foreground mb-0.5">
+                      {useCase.orchestrate.label}
+                    </div>
+                    {(isExpanded || isHighlighted) && (
+                      <div className="text-[11px] text-muted-foreground animate-fade-in">
+                        {useCase.orchestrate.description}
+                        <div className="flex items-center gap-1 mt-1">
+                          <GitBranch className="w-3 h-3 text-cyan-500" />
+                          <span className="text-[10px] text-cyan-500">{useCase.orchestrate.deliverable}</span>
                         </div>
                       </div>
                     )}
