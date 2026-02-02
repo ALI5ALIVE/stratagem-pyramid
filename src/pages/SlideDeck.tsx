@@ -5,7 +5,7 @@ import Slide0Title from "@/components/slides/Slide0Title";
 import Slide1StrategicShift from "@/components/slides/Slide1StrategicShift";
 import Slide2BeforeAfter from "@/components/slides/Slide2BeforeAfter";
 import Slide3OperatingModel from "@/components/slides/Slide3OperatingModel";
-import Slide4PlatformCapabilities from "@/components/slides/SlidePlatformCapabilities";
+// import Slide4PlatformCapabilities from "@/components/slides/SlidePlatformCapabilities"; // HIDDEN - consolidated into Operating Model
 import Slide5Transformation from "@/components/slides/Slide4Transformation";
 import SlideUseCases from "@/components/slides/SlideUseCases";
 import Slide6ValuePyramid from "@/components/slides/Slide4ValuePyramid";
@@ -25,7 +25,7 @@ const slides = [
   { id: "slide-1", label: "Strategic Shift" },
   { id: "slide-2", label: "Before & After" },
   { id: "slide-3", label: "Operating Model" },
-  { id: "slide-4", label: "Platform Capabilities" },
+  // { id: "slide-4", label: "Platform Capabilities" }, // HIDDEN - consolidated into Operating Model
   { id: "slide-5", label: "Transformation" },
   { id: "slide-6", label: "Use Cases" },
   { id: "slide-7", label: "Value Ladder" },
@@ -206,18 +206,18 @@ const SlideDeck = () => {
         <Slide1StrategicShift {...getNarrationProps(1)} />
         <Slide2BeforeAfter {...getNarrationProps(2)} />
         <Slide3OperatingModel {...getNarrationProps(3)} />
-        <Slide4PlatformCapabilities {...getNarrationProps(4)} />
-        <Slide5Transformation {...getNarrationProps(5)} />
-        <SlideUseCases {...getNarrationProps(6)} />
-        <Slide6ValuePyramid {...getNarrationProps(7)} />
-        <Slide7MaturityCurve {...getNarrationProps(8)} />
-        <Slide9Customers {...getNarrationProps(9)} />
-        <SlideAIVision {...getNarrationProps(10)} />
-        <SlideMessagingHouse {...getNarrationProps(11)} />
-        <SlideCampaignIdeas {...getNarrationProps(12)} />
-        <SlideMessagingContext {...getNarrationProps(13)} />
+        {/* HIDDEN: <Slide4PlatformCapabilities {...getNarrationProps(4)} /> - consolidated into Operating Model */}
+        <Slide5Transformation {...getNarrationProps(4)} />
+        <SlideUseCases {...getNarrationProps(5)} />
+        <Slide6ValuePyramid {...getNarrationProps(6)} />
+        <Slide7MaturityCurve {...getNarrationProps(7)} />
+        <Slide9Customers {...getNarrationProps(8)} />
+        <SlideAIVision {...getNarrationProps(9)} />
+        <SlideMessagingHouse {...getNarrationProps(10)} />
+        <SlideCampaignIdeas {...getNarrationProps(11)} />
+        <SlideMessagingContext {...getNarrationProps(12)} />
         <SlidePlatformExperience />
-        <SlideConclusion {...getNarrationProps(15)} />
+        <SlideConclusion {...getNarrationProps(14)} />
       </div>
     </div>
   );
