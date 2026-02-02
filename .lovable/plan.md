@@ -1,163 +1,116 @@
-# Comprehensive Plan: Slide Deck Enhancement Based on Stakeholder Feedback
 
-## Status: ✅ COMPLETED
 
-## Executive Summary
+# Plan: Update Slide 4 Visual and Hide Slide 5
 
-This plan addresses all key feedback from the Tomorrow People strategy session, transforming the deck from an internal positioning document into a customer-centric sales narrative with real-world use cases, reframed AI messaging, updated value metrics, and streamlined slide flow.
+## Goal
 
----
-
-## Phase 1: Add Real-Life Use Cases Slide ✅ DONE
-
-**Goal:** Create a new "Use Cases in Action" slide showcasing three concrete customer scenarios mentioned in the transcript.
-
-### Created: `src/components/slides/SlideUseCases.tsx`
-
-**Use Cases Featured:**
-
-| Use Case | Signal | Action | Outcome |
-|----------|--------|--------|---------|
-| **Personalized Pilot Training** | FOQA data shows hard landing trend for specific pilots at particular airports | AI identifies pattern, triggers targeted retraining | 78% reduction in repeat events |
-| **Smoke & Fumes Detection** | Elevated smoke/fumes reports cluster around specific hub + de-icing operations | AI correlates reports with operational context | 92% reduction in reports |
-| **Hydraulic Switch Error** | Safety reports show recurring procedural confusion on hydraulic switch | Pattern detection triggers procedure review and training update | 100% incident prevention |
+1. Replace the "CoreSolutionsInfinity" component (3 circles with infinity loop) on Slide 4 "The Operational Intelligence Layer" with the `PlatformEcosystemDiagram` SVG component from the homepage mockup
+2. Hide Slide 5 "The Platform That Powers It" (`SlidePlatformCapabilities`) from the deck
 
 ---
 
-## Phase 2: Reframe AI Vision Slide ✅ DONE
+## Current State
 
-**Goal:** Transform from internal positioning ("Becoming an AI Company") to customer-centric benefits ("Your Intelligence Journey").
+### Slide 4: The Operational Intelligence Layer
+- **File**: `src/components/slides/Slide3OperatingModel.tsx`
+- **Current Visual**: Uses `CoreSolutionsInfinity` component (3 circles: Safety, Content, Training with infinity loop and DTOP stages)
+- **Location in deck**: Position 4 (slide-3 in code)
 
-### Modified: `src/components/slides/SlideAIVision.tsx`
+### Slide 5: The Platform That Powers It  
+- **File**: `src/components/slides/SlidePlatformCapabilities.tsx`
+- **Current Visual**: Uses static ecosystem diagram image + capability cards
+- **Location in deck**: Position 5 (slide-4 in code)
 
-**Changes Made:**
-
-| Element | Before | After |
-|---------|--------|-------|
-| Title | "Becoming an AI Company" | "Your Intelligence Journey" |
-| Subtitle | "The intelligence layer that's already built..." | "How AI accelerates your path to operational excellence" |
-| Stage labels | "Today", "Near-term", "Future" | "What You Get Today", "What's Coming", "Where You're Headed" |
-| Key Message | "More than a platform company — an AI company" | "AI that works for your operations — embedded, trusted, controlled" |
-
----
-
-## Phase 3: Update Transformation Slide Value Metrics ✅ DONE
-
-**Goal:** Replace generic OTP metrics with four distinct value areas as discussed in transcript.
-
-### Modified: `src/components/slides/Slide4Transformation.tsx`
-
-**Replaced "New Possibilities Unlocked" with Four Value Boxes:**
-
-| Value Area | Icon | Description | Metric |
-|------------|------|-------------|--------|
-| **Schedule Protection** | Shield | Fewer disruptions, faster recovery | OTP ↑ 3% |
-| **Revenue Protection** | DollarSign | Protected revenue through operational reliability | $2.3M saved |
-| **Cost Savings** | TrendingUp | Reduced admin overhead and audit scrambles | 70% less admin |
-| **Customer Loyalty** | Users | Trust through consistent, reliable operations | NPS ↑ |
+### Homepage Visual
+- **Component**: `PlatformEcosystemDiagram` from `src/components/PlatformEcosystemDiagram.tsx`
+- **Features**: Interactive SVG with Safety/Content/Training cards, AI assistant labels, animated flowing dots along circular arrows, central Comply365 hub
 
 ---
 
-## Phase 4: Hide Internal/Competitive Slides ✅ DONE
+## Changes
 
-**Goal:** Remove slides that are too internally focused or give competitors too much credit.
+### 1. Update `src/components/slides/Slide3OperatingModel.tsx`
 
-### Modified: `src/pages/SlideDeck.tsx`
+**Replace the CoreSolutionsInfinity import and usage with PlatformEcosystemDiagram:**
 
-**Slides Hidden (not deleted - components preserved):**
+```tsx
+// Before
+import CoreSolutionsInfinity from "../CoreSolutionsInfinity";
 
-1. **Competitive Positioning (Slide8PositioningMap)** - Shows competitors in favorable positions, internal-focused
-2. **Investor Slide (Slide6Investors)** - Shareholder value messaging not for customer presentations
-
-**New Slide Sequence (16 slides):**
-
-```
-0. Title
-1. Strategic Shift
-2. Before & After
-3. Operating Model
-4. Platform Capabilities
-5. Transformation
-6. Use Cases (NEW)
-7. Value Ladder
-8. Maturity Roadmap
-9. Customers
-10. AI Journey (RENAMED from "AI Vision")
-11. Messaging House
-12. Campaign Ideas
-13. Messaging in Context
-14. Platform Experience
-15. Next Steps (NEW CTA slide)
+// After
+import PlatformEcosystemDiagram from "../PlatformEcosystemDiagram";
 ```
 
----
+**Update the visual section (around line 127-129):**
 
-## Phase 5: Add Use Cases to Maturity Curve ⏭️ DEFERRED
+```tsx
+// Before
+<div className="mb-2">
+  <CoreSolutionsInfinity />
+</div>
 
-**Status:** Deferred - The use cases are now showcased in their own dedicated slide (Phase 1), making explicit examples on the maturity curve redundant.
+// After
+<div className="mb-2 flex justify-center">
+  <div className="w-48 h-48 lg:w-56 lg:h-56">
+    <PlatformEcosystemDiagram />
+  </div>
+</div>
+```
 
----
-
-## Phase 6: Create Conclusion/CTA Slide ✅ DONE
-
-**Goal:** End the deck with a clear call to action and "join the journey" messaging.
-
-### Created: `src/components/slides/SlideConclusion.tsx`
-
-**Content:**
-
-1. **Headline:** "Transform Operational Performance Together"
-2. **Three Key Takeaways:**
-   - Point solutions manage silos. Comply365 closes the loop.
-   - AI that's embedded, not bolted on — trusted and controlled.
-   - Measurable outcomes: reliability, speed, and proof.
-3. **Next Steps CTAs:**
-   - "See the Platform in Action" (demo request)
-   - "Calculate Your Impact" (ROI assessment)
-   - "Start Your Journey" (maturity assessment)
+**Keep everything else intact:**
+- Data Sources row
+- DTOP Pipeline cards (Detect → Trigger → Orchestrate → Prove)
+- Value Generated metrics row
 
 ---
 
-## Phase 7: Enhance Operating Model Visual ⏭️ DEFERRED
+### 2. Update `src/pages/SlideDeck.tsx`
 
-**Status:** Deferred - The existing CoreSolutionsInfinity component already has animated signal dots flowing along the infinity path. Further animation enhancement can be done in a future iteration.
+**Comment out or remove Slide 5 from the deck:**
 
----
+**Update slides array (around lines 23-40):**
+```tsx
+const slides = [
+  { id: "slide-0", label: "Title" },
+  { id: "slide-1", label: "Strategic Shift" },
+  { id: "slide-2", label: "Before & After" },
+  { id: "slide-3", label: "Operating Model" },
+  // { id: "slide-4", label: "Platform Capabilities" }, // HIDDEN
+  { id: "slide-5", label: "Transformation" },
+  { id: "slide-6", label: "Use Cases" },
+  // ... rest of slides renumbered
+];
+```
 
-## Phase 8: Update Narration Scripts ✅ DONE
+**Comment out the component render (around line 209):**
+```tsx
+<Slide3OperatingModel {...getNarrationProps(3)} />
+{/* HIDDEN: <Slide4PlatformCapabilities {...getNarrationProps(4)} /> */}
+<Slide5Transformation {...getNarrationProps(4)} />
+```
 
-**Goal:** Update narration for modified/new slides.
-
-### Modified: `src/data/slideNarration.ts`
-
-**Scripts Added/Updated:**
-
-1. ✅ **Use Cases Slide (slideId: 6)** - New narration walking through three real-world examples
-2. ✅ **AI Vision Slide (slideId: 10)** - Reframed from internal to customer-centric language
-3. ✅ **Conclusion Slide (slideId: 15)** - New narration with key takeaways and CTAs
-4. ✅ **Updated slide IDs** - Renumbered to match new deck sequence
-
----
-
-## Files Summary
-
-### New Files Created:
-1. ✅ `src/components/slides/SlideUseCases.tsx`
-2. ✅ `src/components/slides/SlideConclusion.tsx`
-
-### Files Modified:
-1. ✅ `src/pages/SlideDeck.tsx` - Added new slides, updated sequence, hidden internal slides
-2. ✅ `src/components/slides/SlideAIVision.tsx` - Reframed title and content
-3. ✅ `src/components/slides/Slide4Transformation.tsx` - Updated value boxes
-4. ✅ `src/data/slideNarration.ts` - Added/updated narration scripts
+**Update slide numbering for narration props** to maintain correct sequence.
 
 ---
 
-## Expected Outcomes
+## Summary of File Changes
 
-After implementation:
-- ✅ **Customer-Centric:** Deck focused on customer journey and outcomes, not internal positioning
-- ✅ **Concrete Examples:** Three real-world use cases ground the abstract platform story
-- ✅ **Cleaner Flow:** Removed internal/competitive slides for external presentations
-- ✅ **Actionable Ending:** Clear CTA and next steps for engagement
-- ⏭️ **Enhanced Visuals:** Infinity loop animation enhancement deferred for future iteration
+| File | Change |
+|------|--------|
+| `src/components/slides/Slide3OperatingModel.tsx` | Replace `CoreSolutionsInfinity` with `PlatformEcosystemDiagram` |
+| `src/pages/SlideDeck.tsx` | Comment out `SlidePlatformCapabilities` from slides array and render |
+
+---
+
+## Visual Result
+
+**Before**: Slide 4 shows a horizontal infinity loop with 3 circles and DTOP stage indicators
+
+**After**: Slide 4 shows the circular platform ecosystem diagram with:
+- Dark outer ring with "AI-POWERED" text
+- AI assistant labels (CoAuthor, CoAnalyst, CoTrainer)
+- Safety/Content/Training product cards with flowing arrow animations
+- Central Comply365 hub
+
+The new visual better represents the platform ecosystem and matches the homepage branding while keeping all the DTOP pipeline content and metrics below it.
+
