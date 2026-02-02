@@ -26,8 +26,8 @@ const slides = [
   { id: "slide-2", label: "Before & After" },
   { id: "slide-3", label: "Operating Model" },
   // { id: "slide-4", label: "Platform Capabilities" }, // HIDDEN - consolidated into Operating Model
-  { id: "slide-5", label: "Transformation" },
-  { id: "slide-6", label: "Use Cases" },
+  { id: "slide-5", label: "Use Cases" },
+  { id: "slide-6", label: "Transformation" },
   { id: "slide-7", label: "Value Ladder" },
   { id: "slide-8", label: "Maturity Roadmap" },
   { id: "slide-9", label: "Customers" },
@@ -207,8 +207,8 @@ const SlideDeck = () => {
         <Slide2BeforeAfter {...getNarrationProps(2)} />
         <Slide3OperatingModel {...getNarrationProps(3)} />
         {/* HIDDEN: <Slide4PlatformCapabilities {...getNarrationProps(4)} /> - consolidated into Operating Model */}
-        <Slide5Transformation {...getNarrationProps(4)} />
-        <SlideUseCases {...getNarrationProps(5)} />
+        <SlideUseCases {...getNarrationProps(4)} />
+        <Slide5Transformation {...getNarrationProps(5)} />
         <Slide6ValuePyramid {...getNarrationProps(6)} />
         <Slide7MaturityCurve {...getNarrationProps(7)} />
         <Slide9Customers {...getNarrationProps(8)} />
