@@ -1,230 +1,260 @@
 
+# Comprehensive Plan: Slide Deck Enhancement Based on Stakeholder Feedback
 
-# Plan: Create Platform Page with Z-Page Format
+## Executive Summary
 
-## Goal
-
-Create a dedicated `/platform` page that showcases the platform capabilities in a Z-page scrolling format, incorporating all key messages from the slide deck. This page will serve as the primary platform marketing page, distinct from the industry-specific solution pages.
-
----
-
-## What is a Z-Page Format?
-
-A "Z-page" layout creates a natural reading pattern with alternating left-right content sections as users scroll. Each section features:
-- A visual/diagram on one side
-- Descriptive copy on the other side
-- The visual and copy alternate sides as users scroll down
+This plan addresses all key feedback from the Tomorrow People strategy session, transforming the deck from an internal positioning document into a customer-centric sales narrative with real-world use cases, reframed AI messaging, updated value metrics, and streamlined slide flow.
 
 ---
 
-## Page Structure
+## Phase 1: Add Real-Life Use Cases Slide
 
-| Section | Visual Side | Copy Side | Key Message Source |
-|---------|-------------|-----------|-------------------|
-| **Hero** | Platform Ecosystem Diagram | Category positioning + value prop | Slide 0, Messaging House |
-| **The Problem** | Fragmentation illustration | Before/after bullets | Slide 1, Slide 2 |
-| **Operating Model** | Infinity loop visual | DTOP explanation | Slide 3 |
-| **Platform Capabilities** | Three pillars visual | Data, Automation, AI cards | Slide 4 |
-| **Value Ladder** | Maturity curve graphic | 5 stages explained | Slide 6, Slide 7 |
-| **Transformation** | Time allocation bars | Before/after outcomes | Slide 5 |
-| **AI Story** | AI roadmap timeline | Today/Near-term/Future | Slide 11 (AI Vision) |
-| **Proof Points** | Customer logos/metrics | Trust signals + stats | Slide 9 (Customers) |
-| **CTA** | N/A | Final call to action | Standard |
+**Goal:** Create a new "Use Cases in Action" slide showcasing three concrete customer scenarios mentioned in the transcript.
+
+### New Component: `src/components/slides/SlideUseCases.tsx`
+
+**Use Cases to Feature:**
+
+| Use Case | Signal | Action | Outcome |
+|----------|--------|--------|---------|
+| **Personalized Pilot Training** | FOQA data shows hard landing trend for specific pilots at particular airports | AI identifies pattern, triggers targeted retraining | Reduced hard landing incidents, personalized competency improvement |
+| **Smoke & Fumes Detection** | Elevated smoke/fumes reports cluster around specific hub + de-icing operations | AI correlates reports with operational context (location, time, conditions) | Root cause identified, procedural change implemented |
+| **Hydraulic Switch Error** | Safety reports show recurring procedural confusion on hydraulic switch | Pattern detection triggers procedure review and training update | Incident prevention through proactive procedure change |
+
+**Design Pattern:**
+- Three-card horizontal layout
+- Each card: Signal icon → Action arrow → Outcome
+- Clickable cards with expanded detail view
+- Visual connection to DTOP framework (Detect → Trigger → Orchestrate → Prove)
+
+### File Changes
+
+1. **Create:** `src/components/slides/SlideUseCases.tsx`
+2. **Modify:** `src/pages/SlideDeck.tsx` - Add import and route the new slide into the deck sequence
+3. **Modify:** `src/data/slideNarration.ts` - Add narration script for use cases slide
 
 ---
 
-## Files to Create
+## Phase 2: Reframe AI Vision Slide
 
-### 1. `src/pages/PlatformPage.tsx` (NEW - Main Page)
+**Goal:** Transform from internal positioning ("Becoming an AI Company") to customer-centric benefits ("Your Intelligence Journey").
 
-The main platform page that imports and composes all section components.
+### Modify: `src/components/slides/SlideAIVision.tsx`
+
+**Current State:**
+- Title: "Becoming an AI Company"
+- Subtitle: "The intelligence layer that's already built — and the roadmap to what's next"
+- Focus: Internal Comply365 positioning
+
+**Proposed Changes:**
+
+| Element | Before | After |
+|---------|--------|-------|
+| Title | "Becoming an AI Company" | "Your Intelligence Journey" |
+| Subtitle | "The intelligence layer that's already built..." | "How AI accelerates your path to operational excellence" |
+| Focus | Internal Comply365 story | Customer transformation journey |
+| Key Message | "More than a platform company — an AI company" | "AI that works for your operations — embedded, trusted, controlled" |
+
+**Content Restructure:**
+- Reframe stages from Comply365 capabilities to customer benefits
+- Stage 3: "What You Get Today" (not "What We Deploy")
+- Stage 4: "What's Coming" (customer-focused roadmap)
+- Stage 5: "Where You're Headed" (vision of autonomous reliability)
+
+---
+
+## Phase 3: Update Transformation Slide Value Metrics
+
+**Goal:** Replace generic OTP metrics with four distinct value areas as discussed in transcript.
+
+### Modify: `src/components/slides/Slide4Transformation.tsx`
+
+**Current "New Possibilities Unlocked" Section:**
+- Earlier Detection
+- Faster Cycles
+- Proof by Default
+- Exception-led
+
+**Proposed Replacement - Four Value Boxes:**
+
+| Value Area | Icon | Description | Metric |
+|------------|------|-------------|--------|
+| **Schedule Protection** | Shield | Fewer disruptions, faster recovery | OTP ↑ 3% |
+| **Revenue Protection** | DollarSign | Protected revenue through operational reliability | $2.3M saved |
+| **Cost Savings** | TrendingDown | Reduced admin overhead and audit scrambles | 70% less admin |
+| **Customer Loyalty** | Heart | Trust through consistent, reliable operations | NPS ↑ |
+
+**Visual Update:**
+- Replace 2x2 grid of abstract metrics with 4 horizontal value boxes
+- Each box shows: Icon + Title + Description + Quantified Impact
+- Color-coded to match the transformation narrative
+
+---
+
+## Phase 4: Hide Internal/Competitive Slides
+
+**Goal:** Remove slides that are too internally focused or give competitors too much credit.
+
+### Modify: `src/pages/SlideDeck.tsx`
+
+**Slides to Hide (not delete):**
+
+1. **Competitive Positioning (Slide 8)** - `Slide8PositioningMap`
+   - Reason: Shows competitors in favorable positions, internal-focused
+   - Action: Comment out from render, keep component for internal use
+
+2. **Investor Slide (Slide 10)** - `Slide6Investors`
+   - Reason: Shareholder value messaging not for customer presentations
+   - Action: Comment out from render, preserve for investor deck variant
+
+### Update Slide Array:
 
 ```tsx
-import MainNavigation from "@/components/MainNavigation";
-import PlatformHero from "@/components/platform/PlatformHero";
-import PlatformProblem from "@/components/platform/PlatformProblem";
-import PlatformOperatingModel from "@/components/platform/PlatformOperatingModel";
-import PlatformCapabilities from "@/components/platform/PlatformCapabilities";
-import PlatformValueLadder from "@/components/platform/PlatformValueLadder";
-import PlatformTransformation from "@/components/platform/PlatformTransformation";
-import PlatformAIStory from "@/components/platform/PlatformAIStory";
-import PlatformProofPoints from "@/components/platform/PlatformProofPoints";
-import PlatformCTA from "@/components/platform/PlatformCTA";
-
-const PlatformPage = () => {
-  return (
-    <div className="min-h-screen bg-background">
-      <MainNavigation />
-      <PlatformHero />
-      <PlatformProblem />
-      <PlatformOperatingModel />
-      <PlatformCapabilities />
-      <PlatformValueLadder />
-      <PlatformTransformation />
-      <PlatformAIStory />
-      <PlatformProofPoints />
-      <PlatformCTA />
-    </div>
-  );
-};
-
-export default PlatformPage;
+const slides = [
+  { id: "slide-0", label: "Title" },
+  { id: "slide-1", label: "Strategic Shift" },
+  { id: "slide-2", label: "Before & After" },
+  { id: "slide-3", label: "Operating Model" },
+  { id: "slide-4", label: "Platform Capabilities" },
+  { id: "slide-5", label: "Transformation" },
+  { id: "slide-6", label: "Use Cases" },        // NEW
+  { id: "slide-7", label: "Value Ladder" },
+  { id: "slide-8", label: "Maturity Roadmap" },
+  // { id: "slide-9", label: "Positioning" },   // HIDDEN
+  { id: "slide-10", label: "Customers" },
+  // { id: "slide-11", label: "Investors" },    // HIDDEN
+  { id: "slide-12", label: "AI Journey" },      // RENAMED
+  { id: "slide-13", label: "Messaging House" },
+  { id: "slide-14", label: "Campaign Ideas" },
+  { id: "slide-15", label: "Next Steps" },      // NEW CTA slide
+];
 ```
 
 ---
 
-### 2. `src/components/platform/PlatformHero.tsx`
+## Phase 5: Add Use Cases to Maturity Curve
 
-**Layout**: Full-width hero with ecosystem diagram
-**Content**: Category positioning from messaging house
-- Headline: "The Operational Performance Platform"
-- Scope line: "for Safety, Content, and Training"
-- Definition: "A connected, intelligent, and predictive platform..."
-- Trust bar with cross-industry signals
+**Goal:** Ground each maturity stage with a concrete use case example.
 
----
+### Modify: `src/components/slides/Slide5MaturityCurve.tsx`
 
-### 3. `src/components/platform/PlatformProblem.tsx`
+**Add `useCaseExample` property to each stage in `stagesData`:**
 
-**Layout**: Visual LEFT, Copy RIGHT (first Z)
-**Content**: From Slide 1 (Strategic Shift) and Slide 2 (Before/After)
-- Headline: "The Fragmentation Problem"
-- Visual: Siloed tools illustration (Safety/Manuals/TMS boxes)
-- Bullets: The 5 operational gaps point tools can't close
-- Stat callout: "$2.3M lost annually"
+| Stage | Use Case Example |
+|-------|-----------------|
+| Stage 1 | "Incident reports filed but no connection to training records" |
+| Stage 2 | "Safety team tracks events in Safety Manager, but procedure updates are manual" |
+| Stage 3 | "Smoke & fumes pattern detected → procedure review triggered → training assigned automatically" |
+| Stage 4 | "Hard landing trend triggers personalized retraining for affected pilots within 48 hours" |
+| Stage 5 | "AI predicts hydraulic confusion pattern → proactive procedure change before first incident" |
 
----
-
-### 4. `src/components/platform/PlatformOperatingModel.tsx`
-
-**Layout**: Copy LEFT, Visual RIGHT (second Z)
-**Content**: From Slide 3 (Operating Model)
-- Headline: "The Continuous Improvement Operating Model"
-- Subhead: "Detect → Trigger → Orchestrate → Prove"
-- Visual: Core Solutions Infinity loop diagram
-- DTOP steps with metrics (12K signals/mo, etc.)
-- Value Generated metrics bar
+**Visual Update:**
+- Add a small "Example" callout below each stage in the MaturityStageDetails panel
+- Use the concrete scenarios from the transcript to make each stage tangible
 
 ---
 
-### 5. `src/components/platform/PlatformCapabilities.tsx`
+## Phase 6: Create Conclusion/CTA Slide
 
-**Layout**: Visual LEFT, Copy RIGHT (third Z)
-**Content**: From Slide 4 (Platform Capabilities)
-- Headline: "The Platform That Powers It"
-- Visual: Platform ecosystem diagram
-- Three capability cards:
-  - Data That Connects
-  - Automation That Adapts
-  - AI That Drives
-- Outcome metrics: Revenue Protection, Efficiency, Advantage
+**Goal:** End the deck with a clear call to action and "join the journey" messaging.
 
----
+### New Component: `src/components/slides/SlideConclusion.tsx`
 
-### 6. `src/components/platform/PlatformValueLadder.tsx`
+**Content Structure:**
 
-**Layout**: Copy LEFT, Visual RIGHT (fourth Z)
-**Content**: From Slides 6 & 7 (Value Pyramid, Maturity Curve)
-- Headline: "The Operational Performance Ladder"
-- Visual: Simplified maturity curve graphic
-- 5 stages with brief descriptions:
-  1. Fragmented & Reactive
-  2. Managed Compliance
-  3. Connected Governance ← Platform shift
-  4. Intelligent Operations
-  5. Predictive Operations
-- Note about individual products vs full platform
+1. **Headline:** "Transform Operational Performance Together"
+
+2. **Three Key Takeaways:**
+   - Point solutions manage silos. Comply365 closes the loop.
+   - AI that's embedded, not bolted on — trusted and controlled.
+   - Measurable outcomes: reliability, speed, and proof.
+
+3. **Next Steps CTAs:**
+   - "See the Platform in Action" (demo request)
+   - "Calculate Your Impact" (ROI assessment)
+   - "Start Your Journey" (maturity assessment)
+
+4. **Contact/Follow-up info**
 
 ---
 
-### 7. `src/components/platform/PlatformTransformation.tsx`
+## Phase 7: Enhance Operating Model Visual
 
-**Layout**: Visual LEFT, Copy RIGHT (fifth Z)
-**Content**: From Slide 5 (Transformation)
-- Headline: "The Transformation"
-- Subhead: "From cost center to competitive advantage"
-- Visual: Time allocation before/after bars
-- Before/after comparison grid
-- "New Possibilities Unlocked" metrics
+**Goal:** Add animation and interactivity to the DTOP infinity loop as suggested ("flowing electrons").
 
----
+### Modify: `src/components/CoreSolutionsInfinity.tsx`
 
-### 8. `src/components/platform/PlatformAIStory.tsx`
+**Enhancements:**
+- Add animated particle/dot flow along the infinity loop path
+- Particles flow continuously to represent data/signals moving through the system
+- Color-coded particles matching each DTOP stage
+- Subtle glow effect as particles pass through each node
 
-**Layout**: Copy LEFT, Visual RIGHT (sixth Z)
-**Content**: From Slide 11 (AI Vision)
-- Headline: "Becoming an AI Company"
-- Subhead: "Intelligence that's embedded, not bolted on"
-- Visual: AI maturity timeline (Today → Near-term → Future)
-- Already deployed capabilities
-- Key message: "More than a platform company — an AI company"
+**Technical Approach:**
+- Use SVG `<animateMotion>` or CSS keyframe animations
+- Create small circles that follow the infinity path
+- Stagger timing for continuous flow effect
 
 ---
 
-### 9. `src/components/platform/PlatformProofPoints.tsx`
+## Phase 8: Update Narration Scripts
 
-**Layout**: Full-width section
-**Content**: From Slides 9 (Customers) and trust signals
-- Headline: "Trusted Across Industries"
-- Cross-industry trust bar (Aviation, Rail, Defense)
-- Metrics: 1M+ frontline workers, 99.9% uptime, 50+ airlines
-- Optional: Customer testimonial quote
+**Goal:** Update narration for modified/new slides.
 
----
+### Modify: `src/data/slideNarration.ts`
 
-### 10. `src/components/platform/PlatformCTA.tsx`
+**Scripts to Add/Update:**
 
-**Layout**: Centered full-width
-**Content**: Final call to action
-- Headline: "Ready to transform operational performance?"
-- Two CTAs: "See the Platform" / "Calculate Your Impact"
+1. **Use Cases Slide** (new):
+   - Script focusing on the three real-world examples
+   - Conversational tone walking through each scenario
 
----
+2. **AI Vision Slide** (updated):
+   - Reframe from internal to customer-centric language
+   - Focus on customer journey, not Comply365 evolution
 
-## File to Modify
-
-### `src/App.tsx`
-
-Add route for the new platform page:
-
-```tsx
-import PlatformPage from "./pages/PlatformPage";
-
-// In Routes:
-<Route path="/platform" element={<PlatformPage />} />
-```
+3. **Conclusion Slide** (new):
+   - Summarize key messages
+   - Clear call to action
 
 ---
 
-## Key Design Patterns
+## Implementation Sequence
 
-1. **Z-Pattern Layout**: Alternating `grid lg:grid-cols-2` with visual/copy flipping sides
-2. **Scroll Animations**: Reuse `AnimatedSection` pattern from HomepageMockup
-3. **Consistent Styling**: Follow existing solution page section patterns
-4. **Responsive**: Mobile stacks vertically, desktop alternates
-5. **Brand Consistency**: Use existing color tokens and typography
-
----
-
-## Content Mapping from Slides
-
-| Platform Section | Slide Source(s) | Key Messages |
-|------------------|-----------------|--------------|
-| Hero | Slide 0, Messaging House | Category definition, scope line |
-| Problem | Slide 1, 2 | 5 gaps, fragmentation cost |
-| Operating Model | Slide 3 | DTOP framework, infinity visual |
-| Capabilities | Slide 4 | Data, Automation, AI pillars |
-| Value Ladder | Slide 6, 7 | 5 maturity stages, platform shift |
-| Transformation | Slide 5 | Before/after, time allocation |
-| AI Story | Slide 11 | Today/Near-term/Future roadmap |
-| Proof Points | Slide 9 | Trust signals, metrics |
+| Phase | Priority | Effort | Dependencies |
+|-------|----------|--------|--------------|
+| Phase 1: Use Cases Slide | High | Medium | None |
+| Phase 2: Reframe AI Vision | High | Low | None |
+| Phase 3: Update Value Metrics | High | Low | None |
+| Phase 4: Hide Internal Slides | High | Low | None |
+| Phase 5: Maturity Use Cases | Medium | Low | Phase 1 |
+| Phase 6: Conclusion Slide | Medium | Medium | Phases 1-4 |
+| Phase 7: Infinity Animation | Low | Medium | None |
+| Phase 8: Update Narration | Medium | Medium | Phases 1, 2, 6 |
 
 ---
 
-## Technical Implementation Notes
+## Files Summary
 
-1. **Reuse Existing Components**: Where possible, adapt components like `PlatformEcosystemDiagram`, `CoreSolutionsInfinity`, and visual elements from slides
-2. **New Section Components**: Create dedicated `/platform` folder for clean organization
-3. **Scroll Reveal**: Apply the existing `useScrollReveal` hook pattern from HomepageMockup
-4. **Mobile-First**: Ensure all Z-sections stack properly on mobile
+### New Files to Create:
+1. `src/components/slides/SlideUseCases.tsx`
+2. `src/components/slides/SlideConclusion.tsx`
 
+### Files to Modify:
+1. `src/pages/SlideDeck.tsx` - Add new slides, update sequence, hide internal slides
+2. `src/components/slides/SlideAIVision.tsx` - Reframe title and content
+3. `src/components/slides/Slide4Transformation.tsx` - Update value boxes
+4. `src/components/slides/Slide5MaturityCurve.tsx` - Add use case examples
+5. `src/components/CoreSolutionsInfinity.tsx` - Add animation
+6. `src/data/slideNarration.ts` - Add/update narration scripts
+
+---
+
+## Expected Outcomes
+
+After implementation:
+- **Customer-Centric:** Deck focused on customer journey and outcomes, not internal positioning
+- **Concrete Examples:** Three real-world use cases ground the abstract platform story
+- **Cleaner Flow:** Removed internal/competitive slides for external presentations
+- **Actionable Ending:** Clear CTA and next steps for engagement
+- **Enhanced Visuals:** Animated infinity loop reinforces the continuous improvement narrative
