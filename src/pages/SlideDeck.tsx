@@ -7,16 +7,18 @@ import Slide2BeforeAfter from "@/components/slides/Slide2BeforeAfter";
 import Slide3OperatingModel from "@/components/slides/Slide3OperatingModel";
 import Slide4PlatformCapabilities from "@/components/slides/SlidePlatformCapabilities";
 import Slide5Transformation from "@/components/slides/Slide4Transformation";
+import SlideUseCases from "@/components/slides/SlideUseCases";
 import Slide6ValuePyramid from "@/components/slides/Slide4ValuePyramid";
 import Slide7MaturityCurve from "@/components/slides/Slide5MaturityCurve";
-import Slide8PositioningMap from "@/components/slides/Slide8PositioningMap";
+// import Slide8PositioningMap from "@/components/slides/Slide8PositioningMap"; // HIDDEN - too internal
 import Slide9Customers from "@/components/slides/Slide7Customers";
-import Slide10Investors from "@/components/slides/Slide6Investors";
+// import Slide10Investors from "@/components/slides/Slide6Investors"; // HIDDEN - not for customer presentations
 import SlideMessagingHouse from "@/components/slides/SlideMessagingHouse";
 import SlideCampaignIdeas from "@/components/slides/SlideCampaignIdeas";
 import SlideAIVision from "@/components/slides/SlideAIVision";
 import SlideMessagingContext from "@/components/slides/SlideMessagingContext";
 import SlidePlatformExperience from "@/components/slides/SlidePlatformExperience";
+import SlideConclusion from "@/components/slides/SlideConclusion";
 
 const slides = [
   { id: "slide-0", label: "Title" },
@@ -25,16 +27,16 @@ const slides = [
   { id: "slide-3", label: "Operating Model" },
   { id: "slide-4", label: "Platform Capabilities" },
   { id: "slide-5", label: "Transformation" },
-  { id: "slide-6", label: "Operational Performance Ladder" },
-  { id: "slide-7", label: "Operational Performance Roadmap" },
-  { id: "slide-8", label: "Positioning" },
+  { id: "slide-6", label: "Use Cases" },
+  { id: "slide-7", label: "Value Ladder" },
+  { id: "slide-8", label: "Maturity Roadmap" },
   { id: "slide-9", label: "Customers" },
-  { id: "slide-10", label: "Investors" },
-  { id: "slide-11", label: "AI Vision & Future" },
-  { id: "slide-12", label: "Messaging House" },
-  { id: "slide-13", label: "Campaign Ideas" },
-  { id: "slide-14", label: "Messaging in Context" },
-  { id: "slide-15", label: "Platform Experience" },
+  { id: "slide-10", label: "AI Journey" },
+  { id: "slide-11", label: "Messaging House" },
+  { id: "slide-12", label: "Campaign Ideas" },
+  { id: "slide-13", label: "Messaging in Context" },
+  { id: "slide-14", label: "Platform Experience" },
+  { id: "slide-15", label: "Next Steps" },
 ];
 
 const SlideDeck = () => {
@@ -206,16 +208,16 @@ const SlideDeck = () => {
         <Slide3OperatingModel {...getNarrationProps(3)} />
         <Slide4PlatformCapabilities {...getNarrationProps(4)} />
         <Slide5Transformation {...getNarrationProps(5)} />
-        <Slide6ValuePyramid {...getNarrationProps(6)} />
-        <Slide7MaturityCurve {...getNarrationProps(7)} />
-        <Slide8PositioningMap {...getNarrationProps(8)} />
+        <SlideUseCases {...getNarrationProps(6)} />
+        <Slide6ValuePyramid {...getNarrationProps(7)} />
+        <Slide7MaturityCurve {...getNarrationProps(8)} />
         <Slide9Customers {...getNarrationProps(9)} />
-        <Slide10Investors {...getNarrationProps(10)} />
-        <SlideAIVision {...getNarrationProps(11)} />
-        <SlideMessagingHouse {...getNarrationProps(12)} />
-        <SlideCampaignIdeas {...getNarrationProps(13)} />
-        <SlideMessagingContext {...getNarrationProps(14)} />
+        <SlideAIVision {...getNarrationProps(10)} />
+        <SlideMessagingHouse {...getNarrationProps(11)} />
+        <SlideCampaignIdeas {...getNarrationProps(12)} />
+        <SlideMessagingContext {...getNarrationProps(13)} />
         <SlidePlatformExperience />
+        <SlideConclusion {...getNarrationProps(15)} />
       </div>
     </div>
   );

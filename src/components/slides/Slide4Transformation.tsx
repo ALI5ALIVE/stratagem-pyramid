@@ -1,5 +1,5 @@
 import SlideContainer from "./SlideContainer";
-import { ArrowRight, AlertTriangle, Zap, DollarSign, TrendingUp, Lock, Unlock, ClipboardCheck, Target, Clock, Lightbulb, Shield, Users } from "lucide-react";
+import { ArrowRight, AlertTriangle, Zap, DollarSign, TrendingUp, Lock, Unlock, ClipboardCheck, Target, Clock, Shield, Users } from "lucide-react";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 const beforeItems = [
@@ -16,34 +16,46 @@ const afterItems = [
   { icon: Target, label: "Strategic", desc: "Improvement focus" },
 ];
 
-const possibilities = [
-  { 
-    icon: Lightbulb, 
-    title: "Earlier Detection", 
-    desc: "AI detects weak signals before disruptions",
-    metric: "∞",
-    metricLabel: "earlier"
-  },
-  { 
-    icon: Clock, 
-    title: "Faster Cycles", 
-    desc: "60% reduction in time-to-change",
-    metric: "60%",
-    metricLabel: "faster"
-  },
+const valueBoxes = [
   { 
     icon: Shield, 
-    title: "Proof by Default", 
-    desc: "Audit evidence generated automatically",
-    metric: "100%",
-    metricLabel: "coverage"
+    title: "Schedule Protection", 
+    desc: "Fewer disruptions, faster recovery",
+    metric: "OTP ↑ 3%",
+    bgClass: "bg-primary/10",
+    borderClass: "border-primary/20",
+    hoverBgClass: "group-hover:bg-primary/20",
+    textClass: "text-primary"
+  },
+  { 
+    icon: DollarSign, 
+    title: "Revenue Protection", 
+    desc: "Protected revenue through operational reliability",
+    metric: "$2.3M saved",
+    bgClass: "bg-accent/10",
+    borderClass: "border-accent/20",
+    hoverBgClass: "group-hover:bg-accent/20",
+    textClass: "text-accent"
+  },
+  { 
+    icon: TrendingUp, 
+    title: "Cost Savings", 
+    desc: "Reduced admin overhead and audit scrambles",
+    metric: "70% less admin",
+    bgClass: "bg-cyan-500/10",
+    borderClass: "border-cyan-500/20",
+    hoverBgClass: "group-hover:bg-cyan-500/20",
+    textClass: "text-cyan-500"
   },
   { 
     icon: Users, 
-    title: "Exception-led", 
-    desc: "Humans govern, AI handles routine",
-    metric: "10x",
-    metricLabel: "leverage"
+    title: "Customer Loyalty", 
+    desc: "Trust through consistent, reliable operations",
+    metric: "NPS ↑",
+    bgClass: "bg-emerald-500/10",
+    borderClass: "border-emerald-500/20",
+    hoverBgClass: "group-hover:bg-emerald-500/20",
+    textClass: "text-emerald-500"
   },
 ];
 
@@ -188,33 +200,32 @@ const Slide4Transformation = ({
             </div>
           </div>
 
-          {/* New Possibilities */}
+          {/* Value Boxes */}
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-1.5">
               <Zap className="w-3 h-3 text-accent" />
               <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                New Possibilities Unlocked
+                Value Delivered
               </span>
             </div>
             
             <div className="grid grid-cols-2 gap-2">
-              {possibilities.map((item, i) => (
+              {valueBoxes.map((item, i) => (
                 <div 
                   key={i}
-                  className="group bg-card/40 border border-border/50 hover:border-primary/30 rounded-lg p-2.5 transition-all duration-300"
+                  className="group bg-card/40 border border-border/50 hover:border-primary/30 rounded-lg p-3 transition-all duration-300"
                 >
-                  <div className="flex items-start gap-2 mb-2">
-                    <div className="w-7 h-7 rounded-md bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                      <item.icon className="w-3.5 h-3.5 text-primary" />
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className={`w-8 h-8 rounded-md ${item.bgClass} border ${item.borderClass} flex items-center justify-center ${item.hoverBgClass} transition-colors`}>
+                      <item.icon className={`w-4 h-4 ${item.textClass}`} />
                     </div>
                     <div>
                       <div className="text-xs font-semibold text-foreground">{item.title}</div>
                       <div className="text-[9px] text-muted-foreground leading-tight">{item.desc}</div>
                     </div>
                   </div>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-lg font-bold text-primary">{item.metric}</span>
-                    <span className="text-[9px] text-muted-foreground">{item.metricLabel}</span>
+                  <div className="flex items-center justify-end">
+                    <span className={`text-lg font-bold ${item.textClass}`}>{item.metric}</span>
                   </div>
                 </div>
               ))}
