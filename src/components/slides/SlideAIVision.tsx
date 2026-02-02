@@ -6,49 +6,49 @@ import { cn } from "@/lib/utils";
 const aiStages = [
   {
     id: "today",
-    label: "Today",
+    label: "What You Get Today",
     stage: "Stage 3",
     status: "Active",
     statusColor: "bg-emerald-500",
     title: "Connected Governance",
     icon: Zap,
     capabilities: [
-      "Unified data across Safety, Content, and Training",
-      "Governance-aware workflows with audit trails",
+      "Unified view across Safety, Content, and Training",
+      "Automatic audit trails for every change",
       "Pattern detection from FOQA/ASAP/crew reports",
-      "Coordinated change management"
+      "One source of truth for operational decisions"
     ],
     gradient: "from-primary to-accent"
   },
   {
     id: "nearterm",
-    label: "Near-term",
+    label: "What's Coming",
     stage: "Stage 4",
     status: "In Development",
     statusColor: "bg-amber-500",
     title: "Intelligent Operations",
     icon: Lightbulb,
     capabilities: [
-      "AI-assisted drafting and execution",
-      "Recommended actions with context awareness",
-      "Automated trigger orchestration",
-      "Compressed decision cycles"
+      "AI-assisted procedure drafting",
+      "Recommended actions with full context",
+      "Automated workflow orchestration",
+      "60% faster time-to-change"
     ],
     gradient: "from-accent to-cyan-400"
   },
   {
     id: "future",
-    label: "Future",
+    label: "Where You're Headed",
     stage: "Stage 5",
     status: "Vision",
     statusColor: "bg-purple-500",
-    title: "Predictive Intelligence",
+    title: "Predictive Operations",
     icon: Brain,
     capabilities: [
-      "Weak signal detection before incidents",
+      "Early warning before incidents occur",
       "Proactive intervention recommendations",
-      "Risk forecasting models",
-      "Self-optimizing operational workflows"
+      "Risk forecasting and prevention",
+      "Continuous improvement on autopilot"
     ],
     gradient: "from-cyan-400 to-emerald-400"
   }
@@ -87,8 +87,8 @@ const SlideAIVision = ({
   return (
     <SlideContainer
       id="slide-10"
-      title="Becoming an AI Company"
-      subtitle="The intelligence layer that's already built — and the roadmap to what's next"
+      title="Your Intelligence Journey"
+      subtitle="How AI accelerates your path to operational excellence"
       variant="dark"
       slideNumber={16}
       isPlaying={isPlaying}
@@ -255,10 +255,10 @@ const SlideAIVision = ({
           {/* Key Message */}
           <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg p-4">
             <p className="text-sm text-foreground font-medium text-center">
-              More than a platform company — an <span className="text-primary">AI company</span>
+              AI that works for your operations — <span className="text-primary">embedded, trusted, controlled</span>
             </p>
             <p className="text-xs text-muted-foreground text-center mt-1">
-              The Operational Intelligence Layer is our AI story — positioning Comply365 as a leader in AI-powered operational performance.
+              Intelligence that accelerates outcomes while keeping your teams in control of every decision.
             </p>
           </div>
         </div>
