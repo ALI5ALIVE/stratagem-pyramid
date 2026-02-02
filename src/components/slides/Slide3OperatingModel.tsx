@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import SlideContainer from "./SlideContainer";
 import { Radio, Bell, GitBranch, ShieldCheck, ArrowRight, Database, TrendingUp, Users, Clock, CheckCircle } from "lucide-react";
-import CoreSolutionsInfinity from "../CoreSolutionsInfinity";
+import PlatformEcosystemDiagram from "../PlatformEcosystemDiagram";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 // Timing markers for narration-synced step highlighting
@@ -123,9 +123,11 @@ const Slide3OperatingModel = ({
       onPause={onPause}
       onNextSlide={onNextSlide}
     >
-      {/* Core Solutions Infinity Model */}
-      <div className="mb-2">
-        <CoreSolutionsInfinity />
+      {/* Platform Ecosystem Diagram */}
+      <div className="mb-2 flex justify-center">
+        <div className="w-48 h-48 lg:w-56 lg:h-56">
+          <PlatformEcosystemDiagram />
+        </div>
       </div>
 
       {/* Data Sources Row */}
