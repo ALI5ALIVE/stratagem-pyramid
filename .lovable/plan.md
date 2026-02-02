@@ -1,116 +1,128 @@
 
 
-# Plan: Update Slide 4 Visual and Hide Slide 5
+# Plan: Add Orchestrate Step to Use Cases Slide
 
-## Goal
+## Problem
 
-1. Replace the "CoreSolutionsInfinity" component (3 circles with infinity loop) on Slide 4 "The Operational Intelligence Layer" with the `PlatformEcosystemDiagram` SVG component from the homepage mockup
-2. Hide Slide 5 "The Platform That Powers It" (`SlidePlatformCapabilities`) from the deck
+The current Use Cases slide only shows 3 steps per use case:
+1. **Signal Detected** (Detect)
+2. **Action Triggered** (Trigger) 
+3. **Outcome Proven** (Prove)
 
----
-
-## Current State
-
-### Slide 4: The Operational Intelligence Layer
-- **File**: `src/components/slides/Slide3OperatingModel.tsx`
-- **Current Visual**: Uses `CoreSolutionsInfinity` component (3 circles: Safety, Content, Training with infinity loop and DTOP stages)
-- **Location in deck**: Position 4 (slide-3 in code)
-
-### Slide 5: The Platform That Powers It  
-- **File**: `src/components/slides/SlidePlatformCapabilities.tsx`
-- **Current Visual**: Uses static ecosystem diagram image + capability cards
-- **Location in deck**: Position 5 (slide-4 in code)
-
-### Homepage Visual
-- **Component**: `PlatformEcosystemDiagram` from `src/components/PlatformEcosystemDiagram.tsx`
-- **Features**: Interactive SVG with Safety/Content/Training cards, AI assistant labels, animated flowing dots along circular arrows, central Comply365 hub
+The **Orchestrate** step is missing, which breaks alignment with the full DTOP framework (Detect → Trigger → Orchestrate → Prove) shown in the legend at the top of the slide and used consistently in the Operating Model slide.
 
 ---
 
-## Changes
+## Solution
 
-### 1. Update `src/components/slides/Slide3OperatingModel.tsx`
-
-**Replace the CoreSolutionsInfinity import and usage with PlatformEcosystemDiagram:**
-
-```tsx
-// Before
-import CoreSolutionsInfinity from "../CoreSolutionsInfinity";
-
-// After
-import PlatformEcosystemDiagram from "../PlatformEcosystemDiagram";
-```
-
-**Update the visual section (around line 127-129):**
-
-```tsx
-// Before
-<div className="mb-2">
-  <CoreSolutionsInfinity />
-</div>
-
-// After
-<div className="mb-2 flex justify-center">
-  <div className="w-48 h-48 lg:w-56 lg:h-56">
-    <PlatformEcosystemDiagram />
-  </div>
-</div>
-```
-
-**Keep everything else intact:**
-- Data Sources row
-- DTOP Pipeline cards (Detect → Trigger → Orchestrate → Prove)
-- Value Generated metrics row
+Add an explicit **Orchestrate** step to each use case, positioned between Trigger and Prove.
 
 ---
 
-### 2. Update `src/pages/SlideDeck.tsx`
+## Changes to `src/components/slides/SlideUseCases.tsx`
 
-**Comment out or remove Slide 5 from the deck:**
+### 1. Update the UseCase interface
 
-**Update slides array (around lines 23-40):**
-```tsx
-const slides = [
-  { id: "slide-0", label: "Title" },
-  { id: "slide-1", label: "Strategic Shift" },
-  { id: "slide-2", label: "Before & After" },
-  { id: "slide-3", label: "Operating Model" },
-  // { id: "slide-4", label: "Platform Capabilities" }, // HIDDEN
-  { id: "slide-5", label: "Transformation" },
-  { id: "slide-6", label: "Use Cases" },
-  // ... rest of slides renumbered
-];
+Add a new `orchestrate` property to the interface:
+
+```typescript
+interface UseCase {
+  id: string;
+  title: string;
+  icon: React.ElementType;
+  iconColor: string;
+  signal: {
+    label: string;
+    description: string;
+    source: string;
+  };
+  action: {
+    label: string;
+    description: string;
+    trigger: string;
+  };
+  orchestrate: {           // NEW
+    label: string;
+    description: string;
+    deliverable: string;
+  };
+  outcome: {
+    label: string;
+    description: string;
+    metric?: string;
+  };
+}
 ```
 
-**Comment out the component render (around line 209):**
-```tsx
-<Slide3OperatingModel {...getNarrationProps(3)} />
-{/* HIDDEN: <Slide4PlatformCapabilities {...getNarrationProps(4)} /> */}
-<Slide5Transformation {...getNarrationProps(4)} />
-```
+### 2. Add orchestrate data for each use case
 
-**Update slide numbering for narration props** to maintain correct sequence.
+| Use Case | Orchestrate Label | Description | Deliverable |
+|----------|------------------|-------------|-------------|
+| **Personalized Pilot Training** | Training Deployment | Personalized training module created and assigned to affected pilots | 47 pilots enrolled in targeted program |
+| **Smoke & Fumes Detection** | Procedure Update | De-icing SOP updated with new ventilation protocols | SOP v2.3 published → 120 ground crew notified |
+| **Hydraulic Switch Error** | Content Revision | Procedure rewritten with clearer step-by-step sequence and visual aids | Checklist v4.1 deployed to all 737 crew |
+
+### 3. Add Orchestrate visual section in the card
+
+Insert a new step between "Action Triggered" and "Outcome Proven":
+
+```text
+┌─────────────────────────────────────┐
+│  ● Signal Detected (Detect)         │  ← primary color
+│  ● Action Triggered (Trigger)       │  ← accent/orange color
+│  ● Change Orchestrated (Orchestrate)│  ← cyan color  ← NEW
+│  ● Outcome Proven (Prove)           │  ← emerald color
+└─────────────────────────────────────┘
+```
 
 ---
 
-## Summary of File Changes
+## Updated Use Case Data
+
+### Use Case 1: Personalized Pilot Training
+```typescript
+orchestrate: {
+  label: "Training Deployment",
+  description: "Personalized competency module created, assigned to affected pilots with completion deadline",
+  deliverable: "47 pilots enrolled in targeted program",
+}
+```
+
+### Use Case 2: Smoke & Fumes Detection
+```typescript
+orchestrate: {
+  label: "Procedure Update",
+  description: "De-icing SOP updated with new ventilation protocols and ground crew positioning requirements",
+  deliverable: "SOP v2.3 published → 120 ground crew notified",
+}
+```
+
+### Use Case 3: Hydraulic Switch Error
+```typescript
+orchestrate: {
+  label: "Content Revision",
+  description: "Hydraulic switch procedure rewritten with clearer step sequence, visual aids, and confirmation checkpoints",
+  deliverable: "Checklist v4.1 deployed to all 737 crew",
+}
+```
+
+---
+
+## Visual Styling for Orchestrate Step
+
+Matching the legend and Operating Model slide:
+- **Border color**: `border-cyan-500/50`
+- **Dot color**: `bg-cyan-500`
+- **Text color**: `text-cyan-500`
+- **Icon**: `GitBranch` (same as Operating Model)
+
+---
+
+## Summary
 
 | File | Change |
 |------|--------|
-| `src/components/slides/Slide3OperatingModel.tsx` | Replace `CoreSolutionsInfinity` with `PlatformEcosystemDiagram` |
-| `src/pages/SlideDeck.tsx` | Comment out `SlidePlatformCapabilities` from slides array and render |
+| `src/components/slides/SlideUseCases.tsx` | Add `orchestrate` property to interface, add data for each use case, add visual section in card |
 
----
-
-## Visual Result
-
-**Before**: Slide 4 shows a horizontal infinity loop with 3 circles and DTOP stage indicators
-
-**After**: Slide 4 shows the circular platform ecosystem diagram with:
-- Dark outer ring with "AI-POWERED" text
-- AI assistant labels (CoAuthor, CoAnalyst, CoTrainer)
-- Safety/Content/Training product cards with flowing arrow animations
-- Central Comply365 hub
-
-The new visual better represents the platform ecosystem and matches the homepage branding while keeping all the DTOP pipeline content and metrics below it.
+This ensures each use case follows the complete **Detect → Trigger → Orchestrate → Prove** loop, matching the DTOP legend at the top and maintaining consistency with the Operating Model slide.
 
