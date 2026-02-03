@@ -1,184 +1,91 @@
 import { useState, useEffect } from "react";
 import SlideContainer from "./SlideContainer";
-import MaturityStageDetails from "@/components/MaturityStageDetails";
+import UseCaseStageDetails from "@/components/UseCaseStageDetails";
 import MaturitySummaryBanner from "@/components/MaturitySummaryBanner";
 import { useIsMobile } from "@/hooks/use-mobile";
-import type { MaturityStage } from "@/components/MaturityCurveVisualization";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
-const stagesData: MaturityStage[] = [
+interface UseCase {
+  scenario: string;
+  problem: string;
+  outcome: string;
+}
+
+interface MaturityStageWithUseCase {
+  id: string;
+  stage: number;
+  headline: string;
+  sublabel: string;
+  accentColor: string;
+  curveAnnotations: string[];
+  useCase: UseCase;
+}
+
+const stagesData: MaturityStageWithUseCase[] = [
   {
     id: "FRAGMENTED",
     stage: 1,
     headline: "Fragmented & Reactive",
     sublabel: "Manual / Reactive",
-    whatItLooksLike: [
-      "Disconnected systems across safety, procedures, training",
-      "Investigations and changes happen manually",
-      "Training not tied to operational signals",
-      "Evidence assembled late and inconsistently",
-    ],
-    result: [
-      "High variability and repeat issues",
-      "Slow recovery and inconsistent readiness proof",
-    ],
-    whyItMatters:
-      "Fragmentation creates blind spots, slows response times, and increases operational risk — this is where most organizations start",
     accentColor: "hsl(0 70% 50%)",
-    behavioralShift: {
-      from: "Firefighting across disconnected systems",
-      to: "Reactive compliance just to keep up",
-      culturalMarker: "Compliance is a burden; issues recur",
-    },
-    timeAllocation: {
-      coordination: 60,
-      administration: 30,
-      improvement: 10,
-    },
-    valueProof: {
-      metrics: ["Variability ↑", "Recovery time ↑", "Risk exposure ↑"],
-      roiStatement: "Hidden costs: repeat work, audit scrambles, inconsistent readiness",
-    },
     curveAnnotations: ["Disconnected tools", "No traceability", "High audit effort"],
+    useCase: {
+      scenario: "Crew Fatigue Incident",
+      problem: "Fatigue reports are scattered across email threads and separate systems. No one connects the pattern until after an incident occurs. The investigation takes 3 weeks.",
+      outcome: "This is where most organizations start — reactive, fragmented, and slow.",
+    },
   },
   {
     id: "MANAGED",
     stage: 2,
     headline: "Managed (Siloed) Compliance",
     sublabel: "Silo Optimisation",
-    whatItLooksLike: [
-      "Strong systems in specific departments",
-      "Best-in-class Comply365 products can get you here",
-      "Compliance and training are structured but disconnected",
-      "Investigations produce actions but follow-through is inconsistent",
-    ],
-    result: [
-      "Compliance is managed, but performance does not systematically improve",
-      "Repeat issues persist — platform required to progress",
-    ],
-    whyItMatters:
-      "Individual Comply365 products can reach this stage, but lack of connection prevents organizational learning",
     accentColor: "hsl(199 89% 48%)",
-    behavioralShift: {
-      from: "Firefighting with limited visibility",
-      to: "Structured processes within each silo",
-      culturalMarker: "We're compliant, but not learning",
-    },
-    timeAllocation: {
-      coordination: 45,
-      administration: 35,
-      improvement: 20,
-    },
-    valueProof: {
-      metrics: ["Dept compliance ↑", "Process consistency ↑", "Cross-func ROI limited"],
-      roiStatement: "Structured compliance, but need full platform for cross-functional ROI",
-    },
     curveAnnotations: ["Better process", "Still manual handoffs", "Slow change cycles"],
+    useCase: {
+      scenario: "Runway Incursion Investigation",
+      problem: "After a runway incursion, the safety team completes a thorough investigation. But training never gets updated. Six months later, the same issue recurs with different crew.",
+      outcome: "Strong departments, but no connection between them. Lessons don't transfer.",
+    },
   },
   {
     id: "CONNECTED",
     stage: 3,
     headline: "Connected Governance",
     sublabel: "Closed Loop",
-    whatItLooksLike: [
-      "Safety, procedures, training unified into one governed system of record",
-      "Traceability and approvals established",
-      "Visibility improves; fragmentation reduces",
-    ],
-    result: [
-      "Improved governance and confidence",
-      "Audit readiness increases",
-      "Foundation for closed-loop improvement is in place",
-    ],
-    whyItMatters:
-      "Eliminates handoffs and creates one version of operational truth",
     accentColor: "hsl(173 80% 40%)",
-    behavioralShift: {
-      from: "Chasing information across systems and meetings",
-      to: "Single source of truth, async collaboration",
-      culturalMarker: "We can see what's happening across the operation",
-    },
-    timeAllocation: {
-      coordination: 30,
-      administration: 35,
-      improvement: 35,
-    },
-    valueProof: {
-      metrics: ["Audit prep ↓ 30%", "Handoffs ↓ 50%", "Visibility ↑"],
-      roiStatement: "Single source of truth reduces coordination overhead by 40%",
-    },
     curveAnnotations: ["Safety→Change→Training", "Evidence by default", "Reliability improves"],
+    useCase: {
+      scenario: "MEL Procedure Update",
+      problem: "A Minimum Equipment List change is published. Automatically, the platform triggers procedure revision, reassigns affected training, and creates a complete audit trail.",
+      outcome: "No manual handoffs required. Full traceability by default.",
+    },
   },
   {
     id: "INTELLIGENT",
     stage: 4,
     headline: "Intelligent Operations",
     sublabel: "AI-Assisted Execution",
-    whatItLooksLike: [
-      "Operational signals trigger coordinated workflows",
-      "Corrective actions drive controlled procedural change",
-      "Training is targeted, personalized, and triggered by change",
-      "Evidence captured automatically",
-    ],
-    result: [
-      "Reduced recurrence and drift",
-      "Faster time-to-change",
-      "Measurable reliability and readiness KPI improvement",
-    ],
-    whyItMatters:
-      "Turns operational signals into controlled execution, not just reporting",
     accentColor: "hsl(280 65% 55%)",
-    behavioralShift: {
-      from: "Reactive fixes and compliance checklists",
-      to: "Proactive improvement with outcome ownership",
-      culturalMarker: "Issues drive real change, not just reports",
-    },
-    timeAllocation: {
-      coordination: 20,
-      administration: 30,
-      improvement: 50,
-    },
-    valueProof: {
-      metrics: ["Recurrence ↓ 50%", "Time-to-change ↓ 60%", "KPI lift ↑"],
-      roiStatement: "50% reduction in repeat issues, measurable readiness lift",
-    },
     curveAnnotations: ["Weak-signal detection", "Prioritised interventions", "Faster decisions"],
+    useCase: {
+      scenario: "Hard Landing Detection",
+      problem: "FOQA data flags a hard landing trend at a specific airport. The platform identifies 47 affected pilots and deploys targeted simulator training automatically.",
+      outcome: "78% reduction in repeat events. Protected maintenance costs and schedule.",
+    },
   },
   {
     id: "PREDICTIVE",
     stage: 5,
     headline: "Predictive Operations",
     sublabel: "AI-Accelerated Performance",
-    whatItLooksLike: [
-      "AI detects weak signals early and forecasts risk patterns",
-      "Prioritised recommendations and action plans",
-      "Assisted drafting of procedures and training triggers",
-      "Exception-led oversight with humans governing approvals",
-      "Continuous proof and reporting",
-    ],
-    result: [
-      "Reliability becomes proactive, scalable, and continuously improving",
-      "Customer experience strengthens as an operational outcome",
-      "Teams shift from administration to performance leadership",
-    ],
-    whyItMatters:
-      "AI compresses decision + execution time while keeping humans in control — reliability becomes a competitive advantage",
     accentColor: "hsl(45 93% 58%)",
-    behavioralShift: {
-      from: "Administration and process gatekeeping",
-      to: "Performance leadership and strategic focus",
-      culturalMarker: "Reliability is a competitive advantage",
-    },
-    timeAllocation: {
-      coordination: 10,
-      administration: 20,
-      improvement: 70,
-    },
-    valueProof: {
-      metrics: ["OTP ↑ 15%", "Delay mins ↓ 40%", "Admin hours ↓ 70%"],
-      roiStatement: "70% less time on administration, 30% faster decision cycles",
-    },
     curveAnnotations: ["AI-led orchestration", "Human-in-loop control", "Continuous proof"],
+    useCase: {
+      scenario: "Smoke & Fumes Prevention",
+      problem: "AI analyzes thousands of reports and detects a weak signal cluster — smoke and fumes incidents clustering around a specific hub. Before any reportable event occurs, the de-icing SOP is revised proactively.",
+      outcome: "Zero incidents. Prevention, not reaction. This is operational intelligence.",
+    },
   },
 ];
 
@@ -487,9 +394,15 @@ const Slide5MaturityCurve = ({
             </svg>
           </div>
 
-          {/* RIGHT: Stage Details - 2x scaled container */}
+          {/* RIGHT: Stage Details - Use Case Display */}
           <div className={`overflow-y-auto bg-card/30 rounded-lg p-3 border border-border/30 max-h-[400px] transition-all duration-500 ${isNarrationControlled ? 'animate-fade-in' : ''}`}>
-            <MaturityStageDetails stage={selectedStage} />
+            <UseCaseStageDetails 
+              stage={selectedStage.stage}
+              headline={selectedStage.headline}
+              sublabel={selectedStage.sublabel}
+              accentColor={selectedStage.accentColor}
+              useCase={selectedStage.useCase}
+            />
           </div>
         </div>
 
