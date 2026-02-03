@@ -1,187 +1,120 @@
 
-
-# Plan: Transform "What This Means for Customers" Slide (Slide 10)
+# Plan: Update Use Cases Narration Script and Align Slide-Narration Indices
 
 ## Problem Analysis
 
-Based on the transcript, the current slide is "too theoretical" and needs to:
-1. Replace abstract KPI gauges with tangible business value stories
-2. Connect platform capabilities to real business outcomes customers can relate to
-3. Add **Cost Savings** as a 4th value pillar (currently missing)
-4. Reframe metrics as: Schedule Protection, Revenue Protection, Cost Savings, Customer Loyalty
-5. Ground value in specific examples (like the use cases on the previous slide)
+After reviewing the transcript and codebase, I identified two issues:
+
+1. **Index Mismatch**: The `SlideUseCases` component receives `getNarrationProps(4)`, but the narration script has `slideId: 6` for "Use Cases in Action". This means the narration isn't playing correctly for this slide.
+
+2. **Narration Script Content**: While the current script mentions all three use cases, the transcript feedback suggests:
+   - Emphasize the DTOP framework more explicitly throughout each use case
+   - Add cost savings and revenue protection language
+   - Make the connection to tangible business outcomes clearer
+   - Ground each example in the "Signal → Action → Outcome" pattern
 
 ---
 
-## New Slide Design: Four Value Boxes
+## Current Deck Structure vs Narration Index
 
-Replace the three abstract gauge cards with **four concrete value boxes** that tell a story customers can immediately understand:
+| Deck Position | Component | getNarrationProps | Expected slideId |
+|---------------|-----------|-------------------|------------------|
+| 0 | Slide0Title | 0 | 0 |
+| 1 | Slide1StrategicShift | 1 | 1 |
+| 2 | Slide2BeforeAfter | 2 | 2 |
+| 3 | Slide3OperatingModel | 3 | 3 |
+| 4 | SlideUseCases | 4 | **Should be 4** |
+| 5 | Slide5Transformation | 5 | 5 |
+| ... | ... | ... | ... |
 
-```text
-+------------------+------------------+------------------+------------------+
-|  SCHEDULE        |  REVENUE         |  COST            |  CUSTOMER        |
-|  PROTECTION      |  PROTECTION      |  SAVINGS         |  LOYALTY         |
-|                  |                  |                  |                  |
-|  Fewer cancelled |  Protected $$    |  Less wear &     |  Trust through   |
-|  flights, faster |  through fewer   |  tear, fewer     |  consistent      |
-|  recovery        |  disruptions     |  claims, less    |  operations      |
-|                  |                  |  rework          |                  |
-|  Example:        |  Example:        |  Example:        |  Example:        |
-|  Hard landing    |  Charlotte hub   |  Landing gear    |  On-time =       |
-|  trend detected  |  de-icing fixed  |  savings from    |  repeat          |
-|  → fewer delays  |  → schedule kept |  better training |  bookings        |
-+------------------+------------------+------------------+------------------+
+The narration data currently has Use Cases at `slideId: 6`, but the component expects index 4.
+
+---
+
+## Technical Changes
+
+### File 1: `src/data/slideNarration.ts`
+
+#### Change 1: Update slideId for Use Cases from 6 to 4
+
+Update the entry at lines 48-53 to change `slideId: 6` to `slideId: 4`.
+
+#### Change 2: Rewrite Use Cases narration script
+
+Replace the current script with a DTOP-aligned version that:
+- Opens with the DTOP framework context
+- Walks through each use case following the Detect → Trigger → Orchestrate → Prove pattern
+- Emphasizes cost savings and revenue protection outcomes
+- Uses the specific details from the transcript (Charlotte hub, 92% reduction, etc.)
+
+**New script:**
+
+```
+"Let me show you what the DTOP operating model looks like in practice — three real examples that demonstrate how signals become outcomes.
+
+First: Personalized Pilot Training. Detect: FOQA data reveals elevated hard landing rates for specific pilots at specific airports. Trigger: The platform cross-references training records and identifies forty-seven affected crew. Orchestrate: Personalized competency modules are created and assigned — not generic refresher courses, but targeted training addressing the exact issue. Prove: Seventy-eight percent reduction in repeat events. And the hidden benefit? Less tire wear, less landing gear damage, fewer maintenance delays — cost savings that protect both the schedule and the bottom line.
+
+Second: Smoke and Fumes Detection. Detect: AI analyzes thousands of smoke and fumes reports and uncovers a cluster around Charlotte hub during de-icing operations — a pattern no human analyst had time to find. Trigger: A procedure review is initiated automatically. Orchestrate: The de-icing SOP is updated with new ventilation protocols. One hundred twenty ground crew are retrained within forty-eight hours. Prove: Ninety-two percent reduction in reports. Workers' compensation claims drop. Aircraft damage incidents eliminated. Revenue protected.
+
+Third: Hydraulic Switch Error. Detect: Safety reports show recurring confusion about the hydraulic switch sequence on seven-thirty-sevens during preflight. Trigger: Before any incident occurs, the platform flags the pattern and initiates a procedure review. Orchestrate: The content team rewrites the checklist with clearer step sequence and confirmation checkpoints. All affected crew are retrained proactively. Prove: One hundred percent incident prevention. Zero hydraulic failures. Zero disruptions.
+
+Notice the pattern: each use case follows Detect, Trigger, Orchestrate, Prove. And each delivers the same outcomes — protected schedules, reduced costs, and revenue that stays in your pocket instead of paying for preventable damage. This is what a platform — not point tools — makes possible."
 ```
 
----
+#### Change 3: Shift subsequent slideIds to maintain correct sequencing
 
-## Technical Implementation
-
-### File: `src/components/slides/Slide7Customers.tsx`
-
-### 1. Replace KPI categories with value outcomes
-
-Replace the current `kpiCategories` array (lines 14-53) with a new `valueOutcomes` structure:
-
-```tsx
-const valueOutcomes = [
-  {
-    title: "Schedule Protection",
-    subtitle: "Fewer disruptions, faster recovery",
-    icon: Clock,
-    color: "bg-primary",
-    borderColor: "border-primary/30",
-    bgColor: "bg-primary/5",
-    textColor: "text-primary",
-    example: {
-      signal: "Hard landing trend detected in FOQA data",
-      action: "Targeted pilot retraining deployed",
-      result: "Fewer maintenance delays, protected departures",
-    },
-    metrics: ["Reduced delays", "Faster recovery", "Protected departures"],
-  },
-  {
-    title: "Revenue Protection",
-    subtitle: "Protect the schedule, protect the revenue",
-    icon: TrendingUp,
-    color: "bg-emerald-500",
-    borderColor: "border-emerald-500/30",
-    bgColor: "bg-emerald-500/5",
-    textColor: "text-emerald-400",
-    example: {
-      signal: "Smoke & fumes cluster at regional hub",
-      action: "De-icing procedure revised, ground crew retrained",
-      result: "92% fewer incidents, schedule maintained",
-    },
-    metrics: ["Protected revenue", "Maintained schedule", "Reduced cancellations"],
-  },
-  {
-    title: "Cost Savings",
-    subtitle: "Less wear, fewer claims, less rework",
-    icon: DollarSign,
-    color: "bg-amber-500",
-    borderColor: "border-amber-500/30",
-    bgColor: "bg-amber-500/5",
-    textColor: "text-amber-400",
-    example: {
-      signal: "Training gaps identified via performance data",
-      action: "Personalized competency modules assigned",
-      result: "Reduced tire wear, fewer landing gear repairs",
-    },
-    metrics: ["Equipment savings", "Reduced workers comp", "Less damage"],
-  },
-  {
-    title: "Customer Loyalty",
-    subtitle: "Trust through consistent operations",
-    icon: Heart,
-    color: "bg-violet-500",
-    borderColor: "border-violet-500/30",
-    bgColor: "bg-violet-500/5",
-    textColor: "text-violet-400",
-    example: {
-      signal: "Procedure confusion pattern detected",
-      action: "SOP rewritten with clarity, crew retrained",
-      result: "Zero incidents, on-time performance maintained",
-    },
-    metrics: ["Customer satisfaction", "Repeat bookings", "Brand trust"],
-  },
-];
-```
-
-### 2. Redesign the value cards layout
-
-Replace the gauge-based cards with story-driven value boxes:
-- Each box shows: Title, subtitle, a mini "Signal → Action → Result" flow, and key metrics
-- More compact, fitting 4 cards in a 2x2 or 4-column grid
-- Uses icons and color coding for quick scanning
-
-### 3. Update Executive Value Proposition (line 77-84)
-
-Simplify the value prop to focus on outcomes:
-```tsx
-<p className="text-base text-foreground leading-relaxed">
-  Connect <span className="text-primary font-semibold">safety signals to business outcomes</span>: 
-  protected schedules, protected revenue, lower costs, and loyal customers.
-</p>
-```
-
-### 4. Simplify the Cost Center → Revenue flow
-
-Keep the 3-stage visual but make it more compact (reduce padding).
-
-### 5. Remove or simplify the Benchmarking section
-
-The benchmarking program at the bottom can be made more compact or moved to a small footnote, freeing space for the new value boxes.
+After Use Cases moves to slideId 4, the following slides need to shift:
+- Transformation: slideId 5 (stays same)
+- Operational Performance Ladder: slideId 6 (was 7)
+- Operational Performance Roadmap: slideId 7 (was 8)
+- Customers: slideId 8 (was 9)
+- Your Intelligence Journey: slideId 9 (was 10)
+- Messaging House: slideId 10 (was 11)
+- Campaign Ideas: slideId 11 (was 12)
+- Messaging in Context: slideId 12 (was 13)
+- Next Steps: slideId 13 (was 15)
 
 ---
 
-## Summary of Changes
+## Alignment Verification
 
-| Current Element | New Element | Why |
-|-----------------|-------------|-----|
-| 3 abstract KPI gauges | 4 value outcome boxes | More tangible, connected to real examples |
-| Generic metrics (OTP ↑, Delay ↓) | Specific value stories | Shows platform → outcome connection |
-| Missing Cost Savings | Added Cost Savings pillar | Key business value was missing |
-| "Reliability & Disruption" | "Schedule Protection" | Customer-centric language |
-| Gauge percentages | Mini Signal → Action → Result | Grounds value in platform capability |
+After changes, the narration indices will correctly map to deck positions:
 
----
-
-## Visual Layout
-
-```text
-┌────────────────────────────────────────────────────────────────────────┐
-│  "Connect safety signals to business outcomes"                          │
-└────────────────────────────────────────────────────────────────────────┘
-
-┌──────────────┐   ┌──────────────┐   ┌──────────────┐
-│ Cost Center  │ → │ Operational  │ → │ Revenue      │
-│              │   │ Performance  │   │ Generation   │
-└──────────────┘   └──────────────┘   └──────────────┘
-
-┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐
-│ SCHEDULE        │ │ REVENUE         │ │ COST            │ │ CUSTOMER        │
-│ PROTECTION      │ │ PROTECTION      │ │ SAVINGS         │ │ LOYALTY         │
-│                 │ │                 │ │                 │ │                 │
-│ Signal:         │ │ Signal:         │ │ Signal:         │ │ Signal:         │
-│ Hard landing    │ │ Smoke cluster   │ │ Training gaps   │ │ Procedure       │
-│ trend           │ │ at hub          │ │ identified      │ │ confusion       │
-│                 │ │                 │ │                 │ │                 │
-│ Result:         │ │ Result:         │ │ Result:         │ │ Result:         │
-│ Protected       │ │ 92% fewer       │ │ Equipment       │ │ Zero incidents  │
-│ departures      │ │ incidents       │ │ savings         │ │                 │
-└─────────────────┘ └─────────────────┘ └─────────────────┘ └─────────────────┘
-
-┌────────────────────────────────────────────────────────────────────────┐
-│  Benchmarking Program (compact single line)                             │
-└────────────────────────────────────────────────────────────────────────┘
-```
+| Deck Position | Slide Label | slideId in Narration |
+|---------------|-------------|----------------------|
+| 0 | Title | 0 |
+| 1 | Strategic Shift | 1 |
+| 2 | Before & After | 2 |
+| 3 | Operating Model | 3 |
+| 4 | Use Cases | 4 |
+| 5 | Transformation | 5 |
+| 6 | Value Ladder | 6 |
+| 7 | Maturity Roadmap | 7 |
+| 8 | AI Journey | 8 |
+| 9 | Customers | 9 |
+| 10 | Messaging House | 10 |
+| 11 | Campaign Ideas | 11 |
+| 12 | Messaging in Context | 12 |
+| 13 | Platform Experience | — |
+| 14 | Next Steps | 13 |
 
 ---
 
-## File Changed
+## Summary of Script Improvements
 
-| File | Change |
-|------|--------|
-| `src/components/slides/Slide7Customers.tsx` | Complete redesign with 4 value outcome boxes featuring Signal → Result stories |
+| Current Script Element | Updated Script Element |
+|------------------------|------------------------|
+| Generic "three real examples" intro | DTOP framework context opening |
+| Result metrics only at end | Metrics + business outcomes (cost savings, revenue protection) |
+| Linear description | Explicit Detect → Trigger → Orchestrate → Prove structure for each |
+| Smoke/Fumes: generic "specific hub" | Charlotte hub specifically named |
+| No cost savings language | Workers' comp, tire wear, damage prevention emphasized |
+| Ends with "closed-loop response" | Ends with platform differentiator and outcomes summary |
 
+---
+
+## Files Changed
+
+| File | Changes |
+|------|---------|
+| `src/data/slideNarration.ts` | Update slideId for Use Cases to 4; rewrite script with DTOP pattern; shift subsequent slideIds |
