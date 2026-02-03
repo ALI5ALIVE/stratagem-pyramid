@@ -195,7 +195,7 @@ const stageTimings = [
   { stage: "FRAGMENTED", startPercent: 10 },
   { stage: "MANAGED", startPercent: 24 },
   { stage: "CONNECTED", startPercent: 38 },
-  { stage: "CLOSED_LOOP", startPercent: 55 },
+  { stage: "INTELLIGENT", startPercent: 55 },
   { stage: "PREDICTIVE", startPercent: 72 },
 ];
 
