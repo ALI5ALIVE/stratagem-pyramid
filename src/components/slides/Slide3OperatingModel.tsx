@@ -125,7 +125,7 @@ const Slide3OperatingModel = ({
     >
       {/* Platform Ecosystem Diagram */}
       <div className="mb-2 flex justify-center">
-        <div className="w-48 h-48 lg:w-56 lg:h-56">
+        <div className="w-64 h-64 lg:w-80 lg:h-80">
           <PlatformEcosystemDiagram />
         </div>
       </div>
@@ -183,7 +183,7 @@ const Slide3OperatingModel = ({
                 <button 
                   onClick={() => setActiveStep(index === activeStep ? null : index)}
                   className={`
-                    relative w-full p-3 rounded-lg border transition-all duration-300 text-left
+                    relative w-full p-2 rounded-lg border transition-all duration-300 text-left
                     ${isStepActive ? `${step.bgColor} ${step.borderColor}` : 'bg-card/30 border-border hover:border-muted-foreground/50'}
                     ${isCurrentStep ? 'ring-2 ring-offset-2 ring-offset-background ring-primary' : ''}
                     ${isNarrationControlled && isCurrentStep ? 'animate-fade-in' : ''}
@@ -191,21 +191,21 @@ const Slide3OperatingModel = ({
                 >
                   {/* Icon */}
                   <div className={`
-                    w-8 h-8 mx-auto mb-1.5 rounded-md flex items-center justify-center transition-all duration-300
+                    w-6 h-6 mx-auto mb-1 rounded-md flex items-center justify-center transition-all duration-300
                     ${isStepActive ? `${step.bgColor} ${step.borderColor} border` : 'bg-muted/30 border-border border'}
                   `}>
-                    <Icon className={`w-4 h-4 transition-colors duration-300 ${isStepActive ? step.color : 'text-muted-foreground/50'}`} />
+                    <Icon className={`w-3 h-3 transition-colors duration-300 ${isStepActive ? step.color : 'text-muted-foreground/50'}`} />
                   </div>
 
                   {/* Label */}
-                  <h3 className={`text-sm font-bold text-center mb-0.5 transition-colors duration-300 ${isStepActive ? step.color : 'text-muted-foreground/50'}`}>
+                  <h3 className={`text-xs font-bold text-center mb-0.5 transition-colors duration-300 ${isStepActive ? step.color : 'text-muted-foreground/50'}`}>
                     {step.label}
                   </h3>
 
                   {/* Metric */}
-                  <div className={`text-center mb-1 ${isStepActive ? 'opacity-100' : 'opacity-50'}`}>
-                    <span className={`text-lg font-bold ${step.color}`}>{step.metric}</span>
-                    <span className="text-[10px] text-muted-foreground ml-1">{step.metricLabel}</span>
+                  <div className={`text-center mb-0.5 ${isStepActive ? 'opacity-100' : 'opacity-50'}`}>
+                    <span className={`text-sm font-bold ${step.color}`}>{step.metric}</span>
+                    <span className="text-[9px] text-muted-foreground ml-1">{step.metricLabel}</span>
                   </div>
 
                   {/* Description */}
