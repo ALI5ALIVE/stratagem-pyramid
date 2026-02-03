@@ -136,10 +136,11 @@ const SlideUseCases = ({
 
   // Determine which use case to highlight based on narration progress
   const getActiveIndex = () => {
-    if (progress < 20) return -1;
-    if (progress < 45) return 0;
-    if (progress < 70) return 1;
-    return 2;
+    if (progress < 8) return -1;   // Introduction
+    if (progress < 35) return 0;   // Pilot Training
+    if (progress < 62) return 1;   // Smoke & Fumes
+    if (progress < 88) return 2;   // Hydraulic Switch
+    return -1;                     // Closing - all cards visible
   };
 
   const activeIndex = getActiveIndex();
@@ -150,7 +151,7 @@ const SlideUseCases = ({
       id="slide-use-cases"
       title="Use Cases in Action"
       subtitle="Real-world examples of the DTOP operating model delivering outcomes"
-      slideNumber={6}
+      slideNumber={5}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}
@@ -159,7 +160,7 @@ const SlideUseCases = ({
       onPause={onPause}
       onNextSlide={onNextSlide}
     >
-      <div className="h-full flex flex-col gap-4">
+      <div className="h-full flex flex-col gap-3">
         {/* DTOP Legend */}
         <div className="flex items-center justify-center gap-2 mb-1">
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/30">
@@ -184,7 +185,7 @@ const SlideUseCases = ({
         </div>
 
         {/* Use Cases Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0 overflow-y-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0 overflow-visible">
           {useCases.map((useCase, index) => {
             const Icon = useCase.icon;
             const isExpanded = expandedCase === useCase.id;
@@ -318,7 +319,7 @@ const SlideUseCases = ({
         </div>
 
         {/* Bottom callout */}
-        <div className="bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20 rounded-lg p-2">
+        <div className="bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20 rounded-lg p-2 mt-auto shrink-0">
           <p className="text-xs text-center text-foreground">
             <span className="font-semibold text-primary">These aren't hypotheticals.</span>{" "}
             They're real patterns our customers experience — and the closed-loop response that a platform makes possible.
