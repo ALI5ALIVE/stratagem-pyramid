@@ -161,7 +161,7 @@ const SlideUseCases = ({
     >
       <div className="h-full flex flex-col gap-4">
         {/* DTOP Legend */}
-        <div className="flex items-center justify-center gap-3 mb-2">
+        <div className="flex items-center justify-center gap-2 mb-1">
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/30">
             <Zap className="w-3.5 h-3.5 text-primary" />
             <span className="text-xs font-medium text-primary">Detect</span>
@@ -184,7 +184,7 @@ const SlideUseCases = ({
         </div>
 
         {/* Use Cases Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0 overflow-y-auto">
           {useCases.map((useCase, index) => {
             const Icon = useCase.icon;
             const isExpanded = expandedCase === useCase.id;
@@ -195,7 +195,7 @@ const SlideUseCases = ({
               <div
                 key={useCase.id}
                 className={cn(
-                  "bg-card/50 backdrop-blur-sm border rounded-xl p-4 cursor-pointer transition-all duration-500",
+                  "bg-card/50 backdrop-blur-sm border rounded-xl p-3 cursor-pointer transition-all duration-500 overflow-visible",
                   isHighlighted 
                     ? "border-primary/50 shadow-lg shadow-primary/20 scale-[1.02]" 
                     : isExpanded 
@@ -206,7 +206,7 @@ const SlideUseCases = ({
                 onClick={() => setExpandedCase(isExpanded ? null : useCase.id)}
               >
                 {/* Header */}
-                <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center gap-3 mb-3">
                   <div 
                     className="w-10 h-10 rounded-lg flex items-center justify-center"
                     style={{ backgroundColor: `${useCase.iconColor}20` }}
@@ -222,7 +222,7 @@ const SlideUseCases = ({
                 </div>
 
                 {/* Signal → Action → Outcome Flow */}
-                <div className="space-y-3">
+                <div className="space-y-2">
                   {/* Signal (Detect) */}
                   <div className="relative pl-4 border-l-2 border-primary/50">
                     <div className="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-primary" />
@@ -318,7 +318,7 @@ const SlideUseCases = ({
         </div>
 
         {/* Bottom callout */}
-        <div className="bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20 rounded-lg p-3">
+        <div className="bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20 rounded-lg p-2">
           <p className="text-xs text-center text-foreground">
             <span className="font-semibold text-primary">These aren't hypotheticals.</span>{" "}
             They're real patterns our customers experience — and the closed-loop response that a platform makes possible.
