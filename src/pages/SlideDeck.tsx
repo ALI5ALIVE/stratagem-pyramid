@@ -30,8 +30,8 @@ const slides = [
   { id: "slide-6", label: "Transformation" },
   { id: "slide-7", label: "Value Ladder" },
   { id: "slide-8", label: "Maturity Roadmap" },
-  { id: "slide-9", label: "Customers" },
-  { id: "slide-10", label: "AI Journey" },
+  { id: "slide-9", label: "AI Journey" },
+  { id: "slide-10", label: "Customers" },
   { id: "slide-11", label: "Messaging House" },
   { id: "slide-12", label: "Campaign Ideas" },
   { id: "slide-13", label: "Messaging in Context" },
@@ -211,8 +211,8 @@ const SlideDeck = () => {
         <Slide5Transformation {...getNarrationProps(5)} />
         <Slide6ValuePyramid {...getNarrationProps(6)} />
         <Slide7MaturityCurve {...getNarrationProps(7)} />
-        <Slide9Customers {...getNarrationProps(8)} />
-        <SlideAIVision {...getNarrationProps(9)} />
+        <SlideAIVision {...getNarrationProps(8)} />
+        <Slide9Customers {...getNarrationProps(9)} />
         <SlideMessagingHouse {...getNarrationProps(10)} />
         <SlideCampaignIdeas {...getNarrationProps(11)} />
         <SlideMessagingContext {...getNarrationProps(12)} />
