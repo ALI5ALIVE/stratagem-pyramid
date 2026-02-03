@@ -1,91 +1,136 @@
 
-# Plan: Align Animation and Narration Timings on Operational Performance Roadmap
 
-## Analysis
+# Plan: Fix Pyramid Timings and Align Homepage Agenda with Deck Structure
 
-The current narration script for Slide 7 (slideId: 7) has this structure:
+## Issues Identified
 
-| Section | Content Start | Approximate Word Count |
-|---------|---------------|------------------------|
-| Introduction | "This roadmap shows..." | ~20 words |
-| Stage 1 | "Stage One: Fragmented and Reactive" | ~45 words |
-| Stage 2 | "Stage Two: Managed but Siloed" | ~40 words |
-| Stage 3 | "Stage Three: Connected Governance" | ~40 words |
-| Stage 4 | "Stage Four: Intelligent Operations" | ~40 words |
-| Stage 5 | "Stage Five: Predictive Operations" | ~45 words |
-| Closing | "Without the platform..." | ~35 words |
+### Issue 1: Pyramid Stage Timings Bug
 
-**Total: ~265 words (~100 seconds at natural pace)**
+In `Slide4ValuePyramid.tsx`, the `stageTimings` array references a stage ID that doesn't exist:
 
-## Refined Timing Calculation
+```typescript
+// Current (BROKEN)
+const stageTimings = [
+  { stage: "FRAGMENTED", startPercent: 10 },
+  { stage: "MANAGED", startPercent: 24 },
+  { stage: "CONNECTED", startPercent: 38 },
+  { stage: "CLOSED_LOOP", startPercent: 55 },  // ❌ This ID doesn't exist!
+  { stage: "PREDICTIVE", startPercent: 72 },
+];
+```
 
-Based on word distribution and natural speech pacing:
+The layer IDs are: `FRAGMENTED`, `MANAGED`, `CONNECTED`, `INTELLIGENT`, `PREDICTIVE`
 
-| Stage | Current % | New % | Trigger Point |
-|-------|-----------|-------|---------------|
-| 1 | 8% | 5% | "Stage One: Fragmented" |
-| 2 | 22% | 22% | "Stage Two: Managed" |
-| 3 | 38% | 40% | "Stage Three: Connected" |
-| 4 | 55% | 58% | "Stage Four: Intelligent" |
-| 5 | 73% | 75% | "Stage Five: Predictive" |
+**Fix**: Change `CLOSED_LOOP` to `INTELLIGENT`
+
+---
+
+### Issue 2: Title Slide Agenda Mismatch
+
+The agenda items in `Slide0Title.tsx` don't match the actual slide sequence in `SlideDeck.tsx`.
+
+**Current Agenda (Slide0Title.tsx):**
+| # | Label | Summary |
+|---|-------|---------|
+| 1 | Strategic Shift | Why we're defining the category |
+| 2 | Before & After | Fragmentation vs. connected operations |
+| 3 | Operating Model | Detect → Trigger → Orchestrate → Prove |
+| 4 | Platform Capabilities | The intelligent operating layer |
+| 5 | Transformation | From cost center to value driver |
+| 6 | Value Ladder | How value compounds with maturity |
+| 7 | Maturity Roadmap | The measurable performance journey |
+| 8 | Positioning | Competitive landscape & differentiation |
+| 9 | Customers | Real-world measurable outcomes |
+| 10 | Investors | Building shareholder value |
+| 11 | AI Vision | The intelligence layer roadmap |
+| 12 | Messaging House | Complete positioning framework |
+| 13 | Campaign Ideas | Category leadership campaigns |
+| 14 | Messaging in Context | How positioning applies across domains |
+| 15 | Homepage Experience | Category positioning in the product |
+
+**Actual Deck Order (SlideDeck.tsx slides array):**
+| Index | ID | Label | Component |
+|-------|-----|-------|-----------|
+| 0 | slide-0 | Title | Slide0Title |
+| 1 | slide-1 | Strategic Shift | Slide1StrategicShift |
+| 2 | slide-2 | Before & After | Slide2BeforeAfter |
+| 3 | slide-3 | Operating Model | Slide3OperatingModel |
+| 4 | slide-5 | Use Cases | SlideUseCases |
+| 5 | slide-6 | Transformation | Slide5Transformation |
+| 6 | slide-7 | Value Ladder | Slide6ValuePyramid |
+| 7 | slide-8 | Maturity Roadmap | Slide7MaturityCurve |
+| 8 | slide-9 | AI Journey | SlideAIVision |
+| 9 | slide-10 | Customers | Slide9Customers |
+| 10 | slide-11 | Messaging House | SlideMessagingHouse |
+| 11 | slide-12 | Campaign Ideas | SlideCampaignIdeas |
+| 12 | slide-13 | Messaging in Context | SlideMessagingContext |
+| 13 | slide-14 | Platform Experience | SlidePlatformExperience |
+| 14 | slide-15 | Next Steps | SlideConclusion |
+
+**Mismatches:**
+- Item 4: Agenda says "Platform Capabilities" but deck has "Use Cases"
+- Item 8: Agenda says "Positioning" but that slide is hidden
+- Item 9: Agenda says "Customers" but that's now at position 10
+- Item 10: Agenda says "Investors" but that slide is hidden
+- Item 11: Agenda says "AI Vision" but that's now at position 9
+- Item 15: Agenda says "Homepage Experience" but deck says "Next Steps"
 
 ---
 
 ## Technical Changes
 
-### File: `src/components/slides/Slide5MaturityCurve.tsx`
+### File 1: `src/components/slides/Slide4ValuePyramid.tsx`
 
-#### Update `stageTimings` array (lines 93-99)
+**Change**: Fix the stage ID mismatch in `stageTimings` (line 198)
 
-Adjust the timing percentages to better align with when each stage is verbally mentioned:
-
-**Current:**
 ```typescript
-const stageTimings = [
-  { stage: 1, startPercent: 8 },
-  { stage: 2, startPercent: 22 },
-  { stage: 3, startPercent: 38 },
-  { stage: 4, startPercent: 55 },
-  { stage: 5, startPercent: 73 },
-];
-```
+// Before
+{ stage: "CLOSED_LOOP", startPercent: 55 },
 
-**New:**
-```typescript
-const stageTimings = [
-  { stage: 1, startPercent: 5 },   // "Stage One: Fragmented..."
-  { stage: 2, startPercent: 22 },  // "Stage Two: Managed..."
-  { stage: 3, startPercent: 40 },  // "Stage Three: Connected..."
-  { stage: 4, startPercent: 58 },  // "Stage Four: Intelligent..."
-  { stage: 5, startPercent: 75 },  // "Stage Five: Predictive..."
-];
+// After
+{ stage: "INTELLIGENT", startPercent: 55 },
 ```
 
 ---
 
-## Updated Memory Reference
+### File 2: `src/components/slides/Slide0Title.tsx`
 
-The existing memory at `features/narration-animation-sync-timings` should be updated to reflect:
-- Slide 7 (Roadmap) timings: [5%, 22%, 40%, 58%, 75%]
+**Change**: Update `agendaItems` array to match actual deck structure (lines 6-22)
+
+```typescript
+const agendaItems = [
+  { num: 1, label: "Strategic Shift", summary: "Why we're defining the category" },
+  { num: 2, label: "Before & After", summary: "Fragmentation vs. connected operations" },
+  { num: 3, label: "Operating Model", summary: "Detect → Trigger → Orchestrate → Prove" },
+  { num: 4, label: "Use Cases", summary: "DTOP in action across real scenarios" },
+  { num: 5, label: "Transformation", summary: "From cost center to value driver" },
+  { num: 6, label: "Value Ladder", summary: "How value compounds with maturity" },
+  { num: 7, label: "Maturity Roadmap", summary: "The measurable performance journey" },
+  { num: 8, label: "AI Journey", summary: "Your intelligence acceleration path" },
+  { num: 9, label: "Customers", summary: "Real-world measurable outcomes" },
+  { num: 10, label: "Messaging House", summary: "Complete positioning framework" },
+  { num: 11, label: "Campaign Ideas", summary: "Category leadership campaigns" },
+  { num: 12, label: "Messaging in Context", summary: "How positioning applies across domains" },
+  { num: 13, label: "Homepage Experience", summary: "Category positioning in the product" },
+  { num: 14, label: "Next Steps", summary: "Your path forward" },
+];
+```
+
+**Note**: The grid layout may need adjustment from `grid-cols-4` to accommodate 14 items cleanly.
 
 ---
 
-## Expected Behavior
-
-| Narration Progress | Visual Animation |
-|--------------------|------------------|
-| 0-5% | Introduction - Stage 1 pre-selected |
-| 5-22% | Stage 1 highlighted (Crew Fatigue use case) |
-| 22-40% | Stage 2 highlighted (Runway Incursion use case) |
-| 40-58% | Stage 3 highlighted (MEL Procedure use case) |
-| 58-75% | Stage 4 highlighted (Hard Landing use case) |
-| 75-95% | Stage 5 highlighted (Smoke & Fumes use case) |
-| 95-100% | Closing summary |
-
----
-
-## Files Changed
+## Summary of Changes
 
 | File | Change |
 |------|--------|
-| `src/components/slides/Slide5MaturityCurve.tsx` | Update `stageTimings` percentages to 5%, 22%, 40%, 58%, 75% |
+| `src/components/slides/Slide4ValuePyramid.tsx` | Fix `CLOSED_LOOP` → `INTELLIGENT` in stageTimings |
+| `src/components/slides/Slide0Title.tsx` | Update agendaItems to match actual 14-slide deck structure |
+
+---
+
+## Expected Outcome
+
+1. **Pyramid narration sync**: Stage 4 (Intelligent Operations) will now correctly highlight when the narration mentions it
+2. **Agenda alignment**: Title slide clickable items will navigate to the correct slides and show accurate labels
+
