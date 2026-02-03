@@ -1,152 +1,58 @@
 
 
-# Plan: Fix Use Cases Narration-Animation Sync and Layout Issues
+# Plan: Resize Platform Diagram and DTOP Cards on Operating Model Slide
 
-## Issues Identified
+## Current State
 
-1. **DTOP not read out fully**: The script says "DTOP operating model" which TTS will read as individual letters
-2. **Animation timing mismatch**: Current thresholds (20%, 45%, 70%) don't align with the new longer script
-3. **Bottom callout overlap**: The stat box overlaps expanded card content due to `flex-1` on the grid
+The Operating Model slide (Slide 3) currently has:
+- **Platform diagram**: `w-48 h-48 lg:w-56 lg:h-56` (relatively small)
+- **DTOP cards**: `p-3` padding with various elements inside taking up significant space
 
----
+## Proposed Changes
 
-## Changes Required
+### File: `src/components/slides/Slide3OperatingModel.tsx`
 
-### File 1: `src/data/slideNarration.ts`
+#### Change 1: Make Platform Ecosystem Diagram Larger (line 128)
 
-#### Update DTOP pronunciation (line 40)
-
-Replace "DTOP operating model" with "Detect, Trigger, Orchestrate, Prove operating model" so TTS reads it naturally.
-
-**Current:**
-```
-"Let me show you what the DTOP operating model looks like in practice..."
-```
-
-**New:**
-```
-"Let me show you what the Detect, Trigger, Orchestrate, Prove operating model looks like in practice..."
-```
-
-Also at the end of the script, update the closing line from:
-```
-"Notice the pattern: each use case follows Detect, Trigger, Orchestrate, Prove."
-```
-This is already spelled out, so no change needed there.
-
----
-
-### File 2: `src/components/slides/SlideUseCases.tsx`
-
-#### Change 1: Refine animation timing thresholds (lines 138-143)
-
-The new script is approximately 90 seconds long. Based on the content timing:
-- **0-8%**: Introduction ("Let me show you what the Detect, Trigger, Orchestrate, Prove operating model looks like...")
-- **8-35%**: First use case (Personalized Pilot Training) - starts around "First: Personalized Pilot Training"
-- **35-62%**: Second use case (Smoke & Fumes) - starts around "Second: Smoke and Fumes Detection"
-- **62-88%**: Third use case (Hydraulic Switch) - starts around "Third: Hydraulic Switch Error"
-- **88-100%**: Closing ("Notice the pattern...")
-
-**Current code:**
-```tsx
-const getActiveIndex = () => {
-  if (progress < 20) return -1;
-  if (progress < 45) return 0;
-  if (progress < 70) return 1;
-  return 2;
-};
-```
-
-**New code:**
-```tsx
-const getActiveIndex = () => {
-  if (progress < 8) return -1;   // Introduction
-  if (progress < 35) return 0;   // Pilot Training
-  if (progress < 62) return 1;   // Smoke & Fumes
-  if (progress < 88) return 2;   // Hydraulic Switch
-  return -1;                     // Closing - all cards visible
-};
-```
-
-#### Change 2: Fix bottom callout overlap (lines 162, 187, 320-326)
-
-The issue is that the grid has `flex-1` which makes it grow to fill space, but when cards expand they can push the bottom callout off-screen or overlap.
-
-**Solution**: 
-1. Give the Use Cases Grid a `max-h` constraint
-2. Move the bottom callout outside the flex container to prevent overlap
-3. Add `pb-4` padding to ensure space for the callout
-
-**Current structure:**
-```tsx
-<div className="h-full flex flex-col gap-4">
-  {/* DTOP Legend */}
-  <div>...</div>
-  
-  {/* Use Cases Grid - flex-1 causes it to grow */}
-  <div className="grid ... flex-1 min-h-0 overflow-y-auto">
-    ...
-  </div>
-  
-  {/* Bottom callout - can overlap */}
-  <div className="bg-gradient-to-r ...">
-    ...
-  </div>
-</div>
-```
-
-**New structure:**
-```tsx
-<div className="h-full flex flex-col gap-3">
-  {/* DTOP Legend */}
-  <div>...</div>
-  
-  {/* Use Cases Grid - constrained height */}
-  <div className="grid ... flex-1 min-h-0 overflow-visible">
-    ...
-  </div>
-  
-  {/* Bottom callout - more padding, always visible */}
-  <div className="bg-gradient-to-r ... mt-auto shrink-0">
-    ...
-  </div>
-</div>
-```
-
-#### Change 3: Update slideNumber prop (line 153)
-
-The slide is currently showing `slideNumber={6}` but it's at deck position 5.
+Increase the diagram container size from `w-48 h-48 lg:w-56 lg:h-56` to `w-64 h-64 lg:w-80 lg:h-80`:
 
 **Current:**
 ```tsx
-slideNumber={6}
+<div className="w-48 h-48 lg:w-56 lg:h-56">
 ```
 
 **New:**
 ```tsx
-slideNumber={5}
+<div className="w-64 h-64 lg:w-80 lg:h-80">
 ```
 
+#### Change 2: Reduce DTOP Card Size (lines 183-230)
+
+Make the DTOP cards more compact:
+1. Reduce padding from `p-3` to `p-2`
+2. Reduce icon size from `w-8 h-8` to `w-6 h-6`
+3. Reduce inner icon from `w-4 h-4` to `w-3 h-3`
+4. Reduce label font from `text-sm` to `text-xs`
+5. Reduce metric font from `text-lg` to `text-sm`
+6. Tighten margins throughout
+
 ---
 
-## Summary of Changes
+## Visual Comparison
 
-| File | Change | Purpose |
-|------|--------|---------|
-| `src/data/slideNarration.ts` | Replace "DTOP" with "Detect, Trigger, Orchestrate, Prove" | TTS reads full phrase |
-| `src/components/slides/SlideUseCases.tsx` | Update `getActiveIndex()` thresholds to 8%, 35%, 62%, 88% | Sync card highlights with narration |
-| `src/components/slides/SlideUseCases.tsx` | Fix bottom callout with `mt-auto shrink-0` | Prevent overlap with expanded cards |
-| `src/components/slides/SlideUseCases.tsx` | Update slideNumber from 6 to 5 | Correct slide numbering |
+| Element | Current | New |
+|---------|---------|-----|
+| Platform diagram | 192px / 224px (lg) | 256px / 320px (lg) |
+| Card padding | 12px | 8px |
+| Icon container | 32px | 24px |
+| Label font | 14px (text-sm) | 12px (text-xs) |
+| Metric font | 18px (text-lg) | 14px (text-sm) |
 
 ---
 
-## Visual Animation Flow
+## Files Changed
 
-| Progress | Active Card | Visual State |
-|----------|-------------|--------------|
-| 0-8% | None | All cards dimmed, intro plays |
-| 8-35% | Pilot Training | Card 1 highlighted + expanded |
-| 35-62% | Smoke & Fumes | Card 2 highlighted + expanded |
-| 62-88% | Hydraulic Switch | Card 3 highlighted + expanded |
-| 88-100% | None | All cards visible, closing summary |
+| File | Changes |
+|------|---------|
+| `src/components/slides/Slide3OperatingModel.tsx` | Increase platform diagram size, reduce DTOP card dimensions |
 
