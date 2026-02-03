@@ -91,11 +91,11 @@ const stagesData: MaturityStageWithUseCase[] = [
 
 // Timing markers for narration-synced stage changes
 const stageTimings = [
-  { stage: 1, startPercent: 8 },
-  { stage: 2, startPercent: 22 },
-  { stage: 3, startPercent: 38 },
-  { stage: 4, startPercent: 55 },
-  { stage: 5, startPercent: 73 },
+  { stage: 1, startPercent: 5 },   // "Stage One: Fragmented..."
+  { stage: 2, startPercent: 22 },  // "Stage Two: Managed..."
+  { stage: 3, startPercent: 40 },  // "Stage Three: Connected..."
+  { stage: 4, startPercent: 58 },  // "Stage Four: Intelligent..."
+  { stage: 5, startPercent: 75 },  // "Stage Five: Predictive..."
 ];
 
 const Slide5MaturityCurve = ({
