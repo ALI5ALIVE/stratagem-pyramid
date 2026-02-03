@@ -1,5 +1,5 @@
 import SlideContainer from "./SlideContainer";
-import { TrendingUp, Clock, Shield, BarChart3, CheckCircle2, DollarSign, Activity, ArrowRight } from "lucide-react";
+import { TrendingUp, Clock, DollarSign, Heart, ArrowRight, Activity, Zap } from "lucide-react";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 const Slide7Customers = ({
@@ -11,60 +11,71 @@ const Slide7Customers = ({
   onPause,
   onNextSlide,
 }: SlideNarrationProps) => {
-  const kpiCategories = [
+  const valueOutcomes = [
     {
-      title: "Reliability & Disruption",
-      icon: TrendingUp,
-      color: "bg-emerald-500",
-      borderColor: "border-emerald-500/30",
-      textColor: "text-emerald-400",
-      metrics: [
-        { label: "OTP", direction: "up", value: "↑" },
-        { label: "Delay mins", direction: "down", value: "↓" },
-        { label: "Cancellations", direction: "down", value: "↓" },
-        { label: "Recovery time", direction: "down", value: "↓" },
-      ],
-    },
-    {
-      title: "Execution & Speed",
+      title: "Schedule Protection",
+      subtitle: "Fewer disruptions, faster recovery",
       icon: Clock,
       color: "bg-primary",
       borderColor: "border-primary/30",
+      bgColor: "bg-primary/5",
       textColor: "text-primary",
-      metrics: [
-        { label: "Time-to-change", direction: "down", value: "↓" },
-        { label: "Time-to-competency", direction: "down", value: "↓" },
-        { label: "Change adoption", direction: "up", value: "↑" },
-      ],
+      example: {
+        signal: "Hard landing trend detected in FOQA data",
+        action: "Targeted pilot retraining deployed",
+        result: "Fewer maintenance delays, protected departures",
+      },
     },
     {
-      title: "Governance & Proof",
-      icon: Shield,
+      title: "Revenue Protection",
+      subtitle: "Protect the schedule, protect the revenue",
+      icon: TrendingUp,
+      color: "bg-emerald-500",
+      borderColor: "border-emerald-500/30",
+      bgColor: "bg-emerald-500/5",
+      textColor: "text-emerald-400",
+      example: {
+        signal: "Smoke & fumes cluster at regional hub",
+        action: "De-icing procedure revised, ground crew retrained",
+        result: "92% fewer incidents, schedule maintained",
+      },
+    },
+    {
+      title: "Cost Savings",
+      subtitle: "Less wear, fewer claims, less rework",
+      icon: DollarSign,
+      color: "bg-amber-500",
+      borderColor: "border-amber-500/30",
+      bgColor: "bg-amber-500/5",
+      textColor: "text-amber-400",
+      example: {
+        signal: "Training gaps identified via performance data",
+        action: "Personalized competency modules assigned",
+        result: "Reduced tire wear, fewer landing gear repairs",
+      },
+    },
+    {
+      title: "Customer Loyalty",
+      subtitle: "Trust through consistent operations",
+      icon: Heart,
       color: "bg-violet-500",
       borderColor: "border-violet-500/30",
+      bgColor: "bg-violet-500/5",
       textColor: "text-violet-400",
-      metrics: [
-        { label: "Audit prep time", direction: "down", value: "↓" },
-        { label: "Evidence readiness", direction: "down", value: "↓" },
-        { label: "Repeat findings", direction: "down", value: "↓" },
-        { label: "Manual reporting", direction: "down", value: "↓" },
-      ],
+      example: {
+        signal: "Procedure confusion pattern detected",
+        action: "SOP rewritten with clarity, crew retrained",
+        result: "Zero incidents, on-time performance maintained",
+      },
     },
-  ];
-
-  const programSteps = [
-    "Maturity score benchmarking",
-    "Peer comparison analysis",
-    "Gap analysis and priorities",
-    "Executive-ready 30/60/90 roadmap",
   ];
 
   return (
     <SlideContainer
-      id="slide-9"
+      id="slide-10"
       title="What This Means for Customers"
-      subtitle="Measurable outcomes: reliability, execution, and audit-ready proof"
-      slideNumber={9}
+      subtitle="Connecting safety signals to measurable business outcomes"
+      slideNumber={10}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}
@@ -75,145 +86,117 @@ const Slide7Customers = ({
     >
       {/* Executive Value Proposition */}
       <div className="max-w-4xl mx-auto mb-4">
-        <div className="bg-card border border-primary/30 rounded-lg p-5 text-center">
-          <p className="text-xs font-medium text-primary uppercase tracking-wide mb-2">Executive Value Proposition:</p>
+        <div className="bg-card border border-primary/30 rounded-lg p-4 text-center">
           <p className="text-base text-foreground leading-relaxed">
-            We help leaders <span className="text-primary font-semibold">reduce disruption, protect revenue, and improve customer experience</span> by accelerating the speed and control of operational change across safety, content, and training — through one connected, governed platform.
+            Connect <span className="text-primary font-semibold">safety signals to business outcomes</span>: 
+            protected schedules, protected revenue, lower costs, and loyal customers.
           </p>
         </div>
       </div>
 
-      {/* Cost Center to Revenue Generation Visual */}
-      <div className="max-w-4xl mx-auto mb-3">
-        <div className="bg-card border border-border rounded-lg p-4">
-          <div className="flex items-center justify-between gap-3">
-            
+      {/* Cost Center to Revenue Generation Visual - Compact */}
+      <div className="max-w-3xl mx-auto mb-4">
+        <div className="bg-card border border-border rounded-lg p-3">
+          <div className="flex items-center justify-between gap-2">
             {/* Stage 1: Cost Center */}
-            <div className="flex-1 text-center p-3 rounded-lg bg-muted/30 border border-muted">
-              <DollarSign className="w-5 h-5 mx-auto text-muted-foreground mb-1.5" />
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Cost Center</p>
-              <p className="text-[10px] text-muted-foreground mt-1">Reactive • Siloed • Manual</p>
+            <div className="flex-1 text-center p-2 rounded-lg bg-muted/30 border border-muted">
+              <DollarSign className="w-4 h-4 mx-auto text-muted-foreground mb-1" />
+              <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">Cost Center</p>
+              <p className="text-[9px] text-muted-foreground mt-0.5">Reactive • Siloed</p>
             </div>
             
             {/* Arrow 1 */}
-            <div className="flex flex-col items-center shrink-0">
-              <ArrowRight className="w-5 h-5 text-primary" />
-              <span className="text-[9px] text-muted-foreground mt-0.5">through</span>
-            </div>
+            <ArrowRight className="w-4 h-4 text-primary shrink-0" />
             
             {/* Stage 2: Operational Performance */}
-            <div className="flex-1 text-center p-3 rounded-lg bg-primary/10 border border-primary/30">
-              <Activity className="w-5 h-5 mx-auto text-primary mb-1.5" />
-              <p className="text-xs font-semibold text-primary uppercase tracking-wide">Operational Performance</p>
-              <p className="text-[10px] text-muted-foreground mt-1">Fewer disruptions • Faster recovery</p>
+            <div className="flex-1 text-center p-2 rounded-lg bg-primary/10 border border-primary/30">
+              <Activity className="w-4 h-4 mx-auto text-primary mb-1" />
+              <p className="text-[10px] font-semibold text-primary uppercase tracking-wide">Operational Performance</p>
+              <p className="text-[9px] text-muted-foreground mt-0.5">Connected • Proactive</p>
             </div>
             
             {/* Arrow 2 */}
-            <div className="flex flex-col items-center shrink-0">
-              <ArrowRight className="w-5 h-5 text-emerald-500" />
-              <span className="text-[9px] text-muted-foreground mt-0.5">drives</span>
-            </div>
+            <ArrowRight className="w-4 h-4 text-emerald-500 shrink-0" />
             
             {/* Stage 3: Revenue Generation */}
-            <div className="flex-1 text-center p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30">
-              <TrendingUp className="w-5 h-5 mx-auto text-emerald-400 mb-1.5" />
-              <p className="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Revenue Generation</p>
-              <p className="text-[10px] text-muted-foreground mt-1">Protected revenue • Increased trust</p>
+            <div className="flex-1 text-center p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30">
+              <TrendingUp className="w-4 h-4 mx-auto text-emerald-400 mb-1" />
+              <p className="text-[10px] font-semibold text-emerald-400 uppercase tracking-wide">Revenue Driver</p>
+              <p className="text-[9px] text-muted-foreground mt-0.5">Protected • Growing</p>
             </div>
-            
           </div>
         </div>
       </div>
 
-      {/* COO Outcomes Dashboard */}
-      <div className="grid md:grid-cols-3 gap-3 mb-4">
-        {kpiCategories.map((category, index) => {
-          const Icon = category.icon;
+      {/* Four Value Outcome Boxes */}
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+        {valueOutcomes.map((outcome, index) => {
+          const Icon = outcome.icon;
           return (
             <div
               key={index}
-              className={`relative bg-card border ${category.borderColor} rounded-xl p-4 overflow-visible`}
+              className={`bg-card border ${outcome.borderColor} rounded-xl p-4 ${outcome.bgColor}`}
             >
               {/* Header */}
-              <div className="flex items-center gap-3 mb-4">
-                <div className={`w-9 h-9 rounded-lg ${category.color} flex items-center justify-center`}>
+              <div className="flex items-center gap-2 mb-3">
+                <div className={`w-8 h-8 rounded-lg ${outcome.color} flex items-center justify-center`}>
                   <Icon className="w-4 h-4 text-white" />
                 </div>
-                <h3 className={`text-sm font-semibold ${category.textColor}`}>{category.title}</h3>
+                <div>
+                  <h3 className={`text-sm font-semibold ${outcome.textColor}`}>{outcome.title}</h3>
+                  <p className="text-[10px] text-muted-foreground">{outcome.subtitle}</p>
+                </div>
               </div>
 
-              {/* Gauge visual */}
-              <div className="h-24 mb-2">
-                <svg viewBox="0 0 200 120" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
-                  <defs>
-                    <linearGradient id={`gauge${index}`} x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="hsl(var(--muted))" />
-                      <stop offset="100%" stopColor="hsl(var(--primary))" />
-                    </linearGradient>
-                  </defs>
-                  {/* Background arc */}
-                  <path
-                    d="M 20 95 A 80 80 0 0 1 180 95"
-                    fill="none"
-                    stroke="hsl(var(--border))"
-                    strokeWidth="10"
-                    strokeLinecap="round"
-                  />
-                  {/* Progress arc */}
-                  <path
-                    d="M 20 95 A 80 80 0 0 1 180 95"
-                    fill="none"
-                    stroke={`url(#gauge${index})`}
-                    strokeWidth="10"
-                    strokeLinecap="round"
-                    strokeDasharray="251"
-                    strokeDashoffset={251 - (251 * (0.6 + index * 0.1))}
-                    className="transition-all duration-1000"
-                  />
-                  {/* Center value */}
-                  <text x="100" y="88" textAnchor="middle" fill="hsl(var(--foreground))" fontSize="18" fontWeight="bold">
-                    {Math.round((0.6 + index * 0.1) * 100)}%
-                  </text>
-                  <text x="100" y="102" textAnchor="middle" fill="hsl(var(--muted-foreground))" fontSize="9">
-                    improvement
-                  </text>
-                </svg>
-              </div>
-
-              {/* Metrics */}
-              <div className="grid grid-cols-2 gap-1.5">
-                {category.metrics.map((metric, mIndex) => (
-                  <div key={mIndex} className="flex items-center gap-2 text-xs">
-                    <span className={metric.direction === 'up' ? 'text-emerald-400' : 'text-primary'}>
-                      {metric.value}
-                    </span>
-                    <span className="text-muted-foreground">{metric.label}</span>
+              {/* Signal → Action → Result Flow */}
+              <div className="space-y-2">
+                {/* Signal */}
+                <div className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0" />
+                  <div>
+                    <p className="text-[9px] uppercase font-medium text-amber-500 tracking-wide">Signal</p>
+                    <p className="text-[10px] text-muted-foreground leading-tight">{outcome.example.signal}</p>
                   </div>
-                ))}
+                </div>
+                
+                {/* Action */}
+                <div className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
+                  <div>
+                    <p className="text-[9px] uppercase font-medium text-primary tracking-wide">Action</p>
+                    <p className="text-[10px] text-muted-foreground leading-tight">{outcome.example.action}</p>
+                  </div>
+                </div>
+                
+                {/* Result */}
+                <div className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
+                  <div>
+                    <p className="text-[9px] uppercase font-medium text-emerald-500 tracking-wide">Result</p>
+                    <p className="text-[10px] text-foreground font-medium leading-tight">{outcome.example.result}</p>
+                  </div>
+                </div>
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* Benchmarking Program */}
+      {/* Benchmarking Program - Compact */}
       <div className="max-w-3xl mx-auto">
-        <div className="bg-card border border-primary/30 rounded-lg p-5">
-          <div className="flex items-center gap-3 mb-3">
-            <BarChart3 className="w-5 h-5 text-primary" />
-            <h3 className="text-sm font-semibold text-foreground">Benchmarking Program</h3>
+        <div className="bg-card border border-primary/20 rounded-lg p-3 flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+            <Zap className="w-4 h-4 text-primary" />
           </div>
-          <p className="text-xs text-muted-foreground mb-3">
-            Benchmarking turns the platform story into a measurable transformation program:
-          </p>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {programSteps.map((step, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
-                <span className="text-xs text-foreground">{step}</span>
-              </div>
-            ))}
+          <div className="flex-1">
+            <p className="text-xs font-medium text-foreground">Benchmarking Program</p>
+            <p className="text-[10px] text-muted-foreground">
+              Maturity scoring • Peer comparison • Gap analysis • Executive-ready 30/60/90 roadmap
+            </p>
           </div>
+          <span className="text-[9px] px-2 py-0.5 bg-primary/10 text-primary rounded-full font-medium shrink-0">
+            Coming Soon
+          </span>
         </div>
       </div>
     </SlideContainer>
