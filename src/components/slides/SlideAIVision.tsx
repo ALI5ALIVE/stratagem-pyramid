@@ -5,20 +5,20 @@ import { cn } from "@/lib/utils";
 
 const aiStages = [
   {
-    id: "today",
-    label: "What You Get Today",
-    stage: "Stage 3",
-    status: "Active",
-    statusColor: "bg-emerald-500",
-    title: "Connected Governance",
-    icon: Zap,
+    id: "future",
+    label: "Where You're Headed",
+    stage: "Stage 5",
+    status: "Vision",
+    statusColor: "bg-purple-500",
+    title: "Predictive Operations",
+    icon: Brain,
     capabilities: [
-      "Unified view across Safety, Content, and Training",
-      "Automatic audit trails for every change",
-      "Pattern detection from FOQA/ASAP/crew reports",
-      "One source of truth for operational decisions"
+      "Early warning before incidents occur",
+      "Proactive intervention recommendations",
+      "Risk forecasting and prevention",
+      "Continuous improvement on autopilot"
     ],
-    gradient: "from-primary to-accent"
+    gradient: "from-cyan-400 to-emerald-400"
   },
   {
     id: "nearterm",
@@ -37,20 +37,20 @@ const aiStages = [
     gradient: "from-accent to-cyan-400"
   },
   {
-    id: "future",
-    label: "Where You're Headed",
-    stage: "Stage 5",
-    status: "Vision",
-    statusColor: "bg-purple-500",
-    title: "Predictive Operations",
-    icon: Brain,
+    id: "today",
+    label: "What You Get Today",
+    stage: "Stage 3",
+    status: "Active",
+    statusColor: "bg-emerald-500",
+    title: "Connected Governance",
+    icon: Zap,
     capabilities: [
-      "Early warning before incidents occur",
-      "Proactive intervention recommendations",
-      "Risk forecasting and prevention",
-      "Continuous improvement on autopilot"
+      "Unified view across Safety, Content, and Training",
+      "Automatic audit trails for every change",
+      "Pattern detection from FOQA/ASAP/crew reports",
+      "One source of truth for operational decisions"
     ],
-    gradient: "from-cyan-400 to-emerald-400"
+    gradient: "from-primary to-accent"
   }
 ];
 
