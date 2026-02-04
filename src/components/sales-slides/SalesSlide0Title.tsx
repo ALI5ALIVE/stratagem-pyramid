@@ -57,11 +57,11 @@ const SalesSlide0Title = ({
         {/* Customer-centric headline */}
         <div className="space-y-3">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-foreground leading-tight">
-            What if every <span className="text-primary">safety signal</span><br />
-            became a <span className="text-primary">solved problem</span>?
+            What if <span className="text-primary">operational performance</span><br />
+            was <span className="text-primary">predictable</span>?
           </h1>
           <p className="text-lg sm:text-xl text-muted-foreground">
-            What if every procedure change was tracked, trained, and proven?
+            What if every signal was tracked, trained, and proven — automatically?
           </p>
         </div>
 
@@ -133,7 +133,7 @@ const SalesSlide0Title = ({
         {/* Tagline */}
         <div className="pt-2">
           <p className="text-xl sm:text-2xl font-semibold text-foreground">
-            That's what <span className="text-primary">closing the loop</span> looks like.
+            Close the loop. <span className="text-primary">Predict the outcome</span>.
           </p>
         </div>
 

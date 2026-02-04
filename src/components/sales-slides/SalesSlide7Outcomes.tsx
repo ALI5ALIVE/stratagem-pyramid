@@ -72,7 +72,7 @@ const SalesSlide7Outcomes = ({
   return (
     <SalesSlideContainer
       id="sales-slide-7"
-      title="Measurable Value Across Four Pillars"
+      title="What Predictable Performance Delivers"
       slideNumber={slideNumber}
       isPlaying={isPlaying}
       isLoading={isLoading}
@@ -181,8 +181,8 @@ const SalesSlide7Outcomes = ({
         {/* Cultural shift quote */}
         <div className="text-center">
           <p className="text-base font-medium text-foreground">
-            <span className="text-muted-foreground">Point solutions manage silos.</span>{" "}
-            <span className="text-primary">Comply365 closes the loop.</span>
+            <span className="text-muted-foreground">Close the loop.</span>{" "}
+            <span className="text-primary">Predict the outcome.</span>
           </p>
         </div>
       </div>

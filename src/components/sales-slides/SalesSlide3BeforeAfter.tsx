@@ -52,7 +52,7 @@ const SalesSlide3BeforeAfter = ({
   return (
     <SalesSlideContainer
       id="sales-slide-3"
-      title="From Fragmentation to Connected Operations"
+      title="From Reactive to Predictable Operations"
       slideNumber={slideNumber}
       isPlaying={isPlaying}
       isLoading={isLoading}
@@ -143,7 +143,7 @@ const SalesSlide3BeforeAfter = ({
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-emerald-500">After</h3>
-                <span className="text-xs text-muted-foreground">Connected Platform</span>
+                <span className="text-xs text-muted-foreground">Predictable Performance</span>
               </div>
             </div>
 
