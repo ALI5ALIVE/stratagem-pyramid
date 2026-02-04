@@ -1,139 +1,89 @@
 
+# Plan: Address Stakeholder Feedback
 
-# Plan: Implement Option A - Metric Cards Transformation
+## Summary of Feedback
 
-## Overview
+The stakeholder feedback covers four areas:
 
-Replace the current `FragmentationIllustration → PlatformEcosystemDiagram` visual with a **value-focused metric cards transformation** that shows concrete pain metrics shifting to value outcomes.
+1. **Replace "Charlotte" with "LaGuardia"** - Charlotte is a hub for one specific airline (American Airlines), which could reveal the customer. LaGuardia has three major airlines (Delta, American, United) plus others, making it safer.
 
----
+2. **Check product name spacing** - Ensure consistency between "Comply365" (no space) and "Manager 365" (has a space). The recommendation is to use "Manager365" without a space.
 
-## Visual Design
+3. **Replace "FOQA" with "Foqua" in narration** - For text-to-speech pronunciation. The acronym should remain "FOQA" in visible UI text but be spelled phonetically as "Foqua" in narration scripts so the TTS engine pronounces it correctly.
 
-```text
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                                                                                 │
-│   ┌─────────────────────┐              ┌─────────────────────┐                 │
-│   │      TODAY          │      →       │      TOMORROW       │                 │
-│   │  (Pain Metrics)     │              │  (Value Outcomes)   │                 │
-│   ├─────────────────────┤              ├─────────────────────┤                 │
-│   │ ✗ 3 weeks           │              │ ✓ 48 hours          │                 │
-│   │   to investigate    │              │   to resolution     │                 │
-│   ├─────────────────────┤              ├─────────────────────┤                 │
-│   │ ✗ 60% time on       │              │ ✓ 70% time on       │                 │
-│   │   coordination      │              │   improvement       │                 │
-│   ├─────────────────────┤              ├─────────────────────┤                 │
-│   │ ✗ Months of         │              │ ✓ 2 hours           │                 │
-│   │   audit prep        │              │   audit-ready       │                 │
-│   └─────────────────────┘              └─────────────────────┘                 │
-│                                                                                 │
-└─────────────────────────────────────────────────────────────────────────────────┘
-```
+4. **"OPP" abbreviation concern** - Good news: The abbreviation "OPP" is **not used anywhere** in the current codebase. The platform is always referred to by its full name "Operational Performance Platform." No changes required, but this should remain a "do not use" rule going forward.
 
 ---
 
-## Technical Changes
+## Files to Modify
 
-### File: `src/components/sales-slides/SalesSlide0Title.tsx`
+### 1. `src/data/slideNarration.ts`
 
-**1. Update imports:**
-```typescript
-// Remove
-import FragmentationIllustration from "@/components/FragmentationIllustration";
-import PlatformEcosystemDiagram from "@/components/PlatformEcosystemDiagram";
+**Charlotte to LaGuardia** (2 changes):
+- Line 40: `"...uncovers a cluster around Charlotte hub during de-icing operations..."` → `"...uncovers a cluster around LaGuardia hub during de-icing operations..."`
+- Line 58: `"...When smoke and fumes cluster at Charlotte hub, de-icing procedures are revised..."` → `"...When smoke and fumes cluster at LaGuardia hub, de-icing procedures are revised..."`
 
-// Add
-import { ArrowRight, XCircle, CheckCircle2 } from "lucide-react";
-```
+**FOQA to Foqua** (4 changes):
+- Line 34: `"...from Flight Ops Quality Assurance..."` (already expanded - keep as is for explanation)
+- Line 40: `"Detect: FOQA data reveals..."` → `"Detect: Foqua data reveals..."`
+- Line 52: `"Flight Ops Quality Assurance data flags..."` (already expanded - keep as is)
+- Line 58: `"When FOQA detects..."` → `"When Foqua detects..."`
+- Line 64: `"Pattern detection from FOQA/ASAP/crew reports..."` → `"Pattern detection from Foqua, ASAP, and crew reports..."`
 
-**2. Replace visual transformation section (lines 70-93):**
+### 2. `src/data/salesDeckNarration.ts`
 
-Replace with metric cards showing:
+**FOQA to Foqua** (3 changes):
+- Line 13: `"FOQA flags a hard landing trend on Monday..."` → `"Foqua flags a hard landing trend on Monday..."`
+- Line 25: `"...Detect surfaces signals from across your operation — FOQA, ASAP, audits, ops data..."` → `"...Detect surfaces signals from across your operation — Foqua, ASAP, audits, ops data..."`
+- Line 29: `"Hard landing detection: FOQA flags a trend..."` → `"Hard landing detection: Foqua flags a trend..."`
 
-| Today (Pain) | Tomorrow (Value) |
-|--------------|------------------|
-| 3 weeks to investigate | 48 hours to resolution |
-| 60% coordination time | 70% improvement time |
-| Months of audit prep | 2 hours audit-ready |
+### 3. `src/components/PlatformEcosystemDiagram.tsx`
 
-**3. New component structure:**
-
-```tsx
-{/* Visual transformation: Pain Metrics → Value Outcomes */}
-<div className="flex items-center justify-center gap-6 sm:gap-10 py-6">
-  {/* Today: Pain Metrics */}
-  <div className="flex flex-col items-center">
-    <div className="text-xs text-destructive font-semibold uppercase tracking-wide mb-3">Today</div>
-    <div className="space-y-2">
-      {/* Pain metric card 1 */}
-      <div className="flex items-center gap-2 bg-destructive/10 border border-destructive/30 rounded-lg px-4 py-2">
-        <XCircle className="w-4 h-4 text-destructive" />
-        <div className="text-left">
-          <div className="text-lg font-bold text-destructive">3 weeks</div>
-          <div className="text-xs text-muted-foreground">to investigate</div>
-        </div>
-      </div>
-      {/* Pain metric card 2 */}
-      <div className="...">60% / coordination time</div>
-      {/* Pain metric card 3 */}
-      <div className="...">Months / audit prep</div>
-    </div>
-  </div>
-
-  {/* Arrow */}
-  <div className="flex flex-col items-center gap-1">
-    <ArrowRight className="w-8 h-8 text-primary" />
-    <span className="text-xs text-muted-foreground">Transform</span>
-  </div>
-
-  {/* Tomorrow: Value Outcomes */}
-  <div className="flex flex-col items-center">
-    <div className="text-xs text-emerald-500 font-semibold uppercase tracking-wide mb-3">Tomorrow</div>
-    <div className="space-y-2">
-      {/* Value card 1 */}
-      <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 rounded-lg px-4 py-2">
-        <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-        <div className="text-left">
-          <div className="text-lg font-bold text-emerald-500">48 hours</div>
-          <div className="text-xs text-muted-foreground">to resolution</div>
-        </div>
-      </div>
-      {/* Value card 2 */}
-      <div className="...">70% / improvement time</div>
-      {/* Value card 3 */}
-      <div className="...">2 hours / audit-ready</div>
-    </div>
-  </div>
-</div>
-```
+**Manager 365 to Manager365** (3 changes):
+- Line 24: `subtitle: "Manager 365"` → `subtitle: "Manager365"`
+- Line 32: `subtitle: "Manager 365"` → `subtitle: "Manager365"`
+- Line 40: `subtitle: "Manager 365"` → `subtitle: "Manager365"`
 
 ---
 
-## Metric Cards Data
+## What Stays the Same
 
-| Position | Pain Label | Pain Sublabel | Value Label | Value Sublabel |
-|----------|------------|---------------|-------------|----------------|
-| 1 | 3 weeks | to investigate | 48 hours | to resolution |
-| 2 | 60% | coordination time | 70% | improvement time |
-| 3 | Months | audit prep | 2 hours | audit-ready |
+The following **UI components** display "FOQA" as visible text and should **remain unchanged** (only narration scripts get the phonetic spelling):
+
+| File | Context |
+|------|---------|
+| `src/pages/HomepageMockup.tsx` | DTOP step detail |
+| `src/pages/solutions/AirlinesPage.tsx` | Industry-specific content |
+| `src/components/slides/Slide3OperatingModel.tsx` | DTOP operating model |
+| `src/components/slides/SlideUseCases.tsx` | Use case cards |
+| `src/components/slides/SlideAIVision.tsx` | AI vision slide |
+| `src/components/sales-slides/SalesSlide1Problem.tsx` | Problem timeline |
+| `src/components/sales-slides/SalesSlide4Solution.tsx` | Solution slide |
+| `src/components/sales-slides/SalesSlide5UseCase.tsx` | Use case slide |
+
+These use "FOQA" as a professional industry acronym in the visual presentation - it's only the spoken narration that needs the phonetic spelling.
 
 ---
 
-## Styling Details
+## "OPP" Abbreviation Status
 
-- **Pain cards**: `bg-destructive/10`, `border-destructive/30`, red icons and text
-- **Value cards**: `bg-emerald-500/10`, `border-emerald-500/30`, green icons and text
-- **Card layout**: Consistent width, left-aligned text within cards
-- **Responsive**: Stack vertically on very small screens if needed
+**Current state:** Not used in the codebase.
+
+**Recommendation:** The platform is consistently referred to as:
+- "Operational Performance Platform" (full name)
+- "The platform" (shorthand)
+- "DTOP" (for the operating model: Detect, Trigger, Orchestrate, Prove)
+
+No code changes needed, but this feedback should inform future content decisions. The abbreviation "OPP" should be avoided.
 
 ---
 
-## Summary
+## Summary of Changes
 
-| Aspect | Before | After |
-|--------|--------|-------|
-| Left visual | FragmentationIllustration (abstract tools) | Concrete pain metrics with numbers |
-| Right visual | PlatformEcosystemDiagram (product) | Value outcomes customers care about |
-| Message | "We connect your tools" | "We save you time and reduce risk" |
-| Emotional impact | Technical/abstract | Tangible/relatable |
-
+| File | Change Type | Count |
+|------|-------------|-------|
+| `src/data/slideNarration.ts` | Charlotte → LaGuardia | 2 |
+| `src/data/slideNarration.ts` | FOQA → Foqua | 3 |
+| `src/data/salesDeckNarration.ts` | FOQA → Foqua | 3 |
+| `src/components/PlatformEcosystemDiagram.tsx` | Manager 365 → Manager365 | 3 |
+| **Total** | | **11 text changes** |
