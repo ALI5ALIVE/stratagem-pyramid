@@ -10,7 +10,7 @@ export const salesDeckNarration: SalesNarrationSlide[] = [
   },
   {
     slideId: "sales-slide-1",
-    text: "Here's the reality most operations face. FOQA flags a hard landing trend on Monday. By Friday, safety has opened an investigation. Two weeks later, content gets notified via email. A month in, training is still waiting for scope. And when audit comes knocking? You're scrambling for evidence. Point tools can't close this loop because they were never designed to. Sound familiar?",
+    text: "Here's the reality most operations face. Foqua flags a hard landing trend on Monday. By Friday, safety has opened an investigation. Two weeks later, content gets notified via email. A month in, training is still waiting for scope. And when audit comes knocking? You're scrambling for evidence. Point tools can't close this loop because they were never designed to. Sound familiar?",
   },
   {
     slideId: "sales-slide-2",
@@ -22,11 +22,11 @@ export const salesDeckNarration: SalesNarrationSlide[] = [
   },
   {
     slideId: "sales-slide-4",
-    text: "Our platform follows a simple but powerful operating model: Detect, Trigger, Orchestrate, Prove. Detect surfaces signals from across your operation — FOQA, ASAP, audits, ops data. Trigger automatically initiates the right workflows. Orchestrate coordinates the response across training, content, and compliance. And Prove documents everything for audit-ready evidence. Signals become outcomes — by default.",
+    text: "Our platform follows a simple but powerful operating model: Detect, Trigger, Orchestrate, Prove. Detect surfaces signals from across your operation — Foqua, ASAP, audits, ops data. Trigger automatically initiates the right workflows. Orchestrate coordinates the response across training, content, and compliance. And Prove documents everything for audit-ready evidence. Signals become outcomes — by default.",
   },
   {
     slideId: "sales-slide-5",
-    text: "Let me show you what this looks like in practice. Hard landing detection: FOQA flags a trend, the platform identifies affected pilots, targeted simulator training deploys within forty-eight hours. Result: seventy-eight percent reduction in repeat events within ninety days. Smoke and fumes detection: report clusters trigger root cause analysis, procedures update automatically, ground crews retrain immediately. Result: ninety-two percent reduction in reports. These aren't hypotheticals — they're real patterns our customers experience.",
+    text: "Let me show you what this looks like in practice. Hard landing detection: Foqua flags a trend, the platform identifies affected pilots, targeted simulator training deploys within forty-eight hours. Result: seventy-eight percent reduction in repeat events within ninety days. Smoke and fumes detection: report clusters trigger root cause analysis, procedures update automatically, ground crews retrain immediately. Result: ninety-two percent reduction in reports. These aren't hypotheticals — they're real patterns our customers experience.",
   },
   {
     slideId: "sales-slide-6",

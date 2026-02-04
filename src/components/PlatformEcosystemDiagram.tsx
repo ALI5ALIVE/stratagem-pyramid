@@ -21,7 +21,7 @@ const PlatformEcosystemDiagram = ({ className = "" }: PlatformEcosystemDiagramPr
     {
       id: "safety",
       name: "Safety",
-      subtitle: "Manager 365",
+      subtitle: "Manager365",
       angle: 240, // top-left
       color: "hsl(330, 80%, 55%)",
       iconColor: "hsl(330, 80%, 55%)",
@@ -29,7 +29,7 @@ const PlatformEcosystemDiagram = ({ className = "" }: PlatformEcosystemDiagramPr
     {
       id: "content",
       name: "Content",
-      subtitle: "Manager 365",
+      subtitle: "Manager365",
       angle: 0, // right
       color: "hsl(210, 80%, 55%)",
       iconColor: "hsl(210, 80%, 55%)",
@@ -37,7 +37,7 @@ const PlatformEcosystemDiagram = ({ className = "" }: PlatformEcosystemDiagramPr
     {
       id: "training",
       name: "Training",
-      subtitle: "Manager 365",
+      subtitle: "Manager365",
       angle: 120, // bottom
       color: "hsl(180, 70%, 45%)",
       iconColor: "hsl(180, 70%, 45%)",
