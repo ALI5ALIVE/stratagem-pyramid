@@ -1,89 +1,234 @@
 
-# Plan: Address Stakeholder Feedback
+# Hybrid Performance Messaging Implementation
 
-## Summary of Feedback
+## Overview
 
-The stakeholder feedback covers four areas:
-
-1. **Replace "Charlotte" with "LaGuardia"** - Charlotte is a hub for one specific airline (American Airlines), which could reveal the customer. LaGuardia has three major airlines (Delta, American, United) plus others, making it safer.
-
-2. **Check product name spacing** - Ensure consistency between "Comply365" (no space) and "Manager 365" (has a space). The recommendation is to use "Manager365" without a space.
-
-3. **Replace "FOQA" with "Foqua" in narration** - For text-to-speech pronunciation. The acronym should remain "FOQA" in visible UI text but be spelled phonetically as "Foqua" in narration scripts so the TTS engine pronounces it correctly.
-
-4. **"OPP" abbreviation concern** - Good news: The abbreviation "OPP" is **not used anywhere** in the current codebase. The platform is always referred to by its full name "Operational Performance Platform." No changes required, but this should remain a "do not use" rule going forward.
+This plan implements the **hybrid approach** across all sales deck slides: keeping "closing the loop" as the **mechanism** (how we work) while introducing "predictable, measurable, and provable" as the **outcome** (what customers get).
 
 ---
 
-## Files to Modify
+## Narrative Arc
 
-### 1. `src/data/slideNarration.ts`
-
-**Charlotte to LaGuardia** (2 changes):
-- Line 40: `"...uncovers a cluster around Charlotte hub during de-icing operations..."` → `"...uncovers a cluster around LaGuardia hub during de-icing operations..."`
-- Line 58: `"...When smoke and fumes cluster at Charlotte hub, de-icing procedures are revised..."` → `"...When smoke and fumes cluster at LaGuardia hub, de-icing procedures are revised..."`
-
-**FOQA to Foqua** (4 changes):
-- Line 34: `"...from Flight Ops Quality Assurance..."` (already expanded - keep as is for explanation)
-- Line 40: `"Detect: FOQA data reveals..."` → `"Detect: Foqua data reveals..."`
-- Line 52: `"Flight Ops Quality Assurance data flags..."` (already expanded - keep as is)
-- Line 58: `"When FOQA detects..."` → `"When Foqua detects..."`
-- Line 64: `"Pattern detection from FOQA/ASAP/crew reports..."` → `"Pattern detection from Foqua, ASAP, and crew reports..."`
-
-### 2. `src/data/salesDeckNarration.ts`
-
-**FOQA to Foqua** (3 changes):
-- Line 13: `"FOQA flags a hard landing trend on Monday..."` → `"Foqua flags a hard landing trend on Monday..."`
-- Line 25: `"...Detect surfaces signals from across your operation — FOQA, ASAP, audits, ops data..."` → `"...Detect surfaces signals from across your operation — Foqua, ASAP, audits, ops data..."`
-- Line 29: `"Hard landing detection: FOQA flags a trend..."` → `"Hard landing detection: Foqua flags a trend..."`
-
-### 3. `src/components/PlatformEcosystemDiagram.tsx`
-
-**Manager 365 to Manager365** (3 changes):
-- Line 24: `subtitle: "Manager 365"` → `subtitle: "Manager365"`
-- Line 32: `subtitle: "Manager 365"` → `subtitle: "Manager365"`
-- Line 40: `subtitle: "Manager 365"` → `subtitle: "Manager365"`
+```text
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  MECHANISM: "Close the Loop"    →    OUTCOME: "Predictable, Measurable, Provable" │
+│                                                                                   │
+│  Slide 0: Hook with outcome promise                                              │
+│  Slide 1: Why operations stay unpredictable                                      │
+│  Slide 3: From reactive to predictable                                           │
+│  Slide 7: What predictable performance delivers                                  │
+│  Slide 8: Category promise (anchor)                                              │
+│  Slide 9: CTA with performance promise                                           │
+└─────────────────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## What Stays the Same
+## File Changes
 
-The following **UI components** display "FOQA" as visible text and should **remain unchanged** (only narration scripts get the phonetic spelling):
+### 1. `src/components/sales-slides/SalesSlide0Title.tsx`
 
-| File | Context |
-|------|---------|
-| `src/pages/HomepageMockup.tsx` | DTOP step detail |
-| `src/pages/solutions/AirlinesPage.tsx` | Industry-specific content |
-| `src/components/slides/Slide3OperatingModel.tsx` | DTOP operating model |
-| `src/components/slides/SlideUseCases.tsx` | Use case cards |
-| `src/components/slides/SlideAIVision.tsx` | AI vision slide |
-| `src/components/sales-slides/SalesSlide1Problem.tsx` | Problem timeline |
-| `src/components/sales-slides/SalesSlide4Solution.tsx` | Solution slide |
-| `src/components/sales-slides/SalesSlide5UseCase.tsx` | Use case slide |
+**Headline Update (lines 59-62):**
+```tsx
+// Current:
+What if every <span className="text-primary">safety signal</span>
+became a <span className="text-primary">solved problem</span>?
 
-These use "FOQA" as a professional industry acronym in the visual presentation - it's only the spoken narration that needs the phonetic spelling.
+// New:
+What if <span className="text-primary">operational performance</span>
+was <span className="text-primary">predictable</span>?
+```
+
+**Subhead Update (lines 63-65):**
+```tsx
+// Current:
+What if every procedure change was tracked, trained, and proven?
+
+// New:
+What if every signal was tracked, trained, and proven — automatically?
+```
+
+**Tagline Update (lines 135-137):**
+```tsx
+// Current:
+That's what <span className="text-primary">closing the loop</span> looks like.
+
+// New:
+Close the loop. <span className="text-primary">Predict the outcome</span>.
+```
 
 ---
 
-## "OPP" Abbreviation Status
+### 2. `src/components/sales-slides/SalesSlide1Problem.tsx`
 
-**Current state:** Not used in the codebase.
+**Title Update (line 59):**
+```tsx
+// Current:
+title="Point Tools Can't Close the Loop"
 
-**Recommendation:** The platform is consistently referred to as:
-- "Operational Performance Platform" (full name)
-- "The platform" (shorthand)
-- "DTOP" (for the operating model: Detect, Trigger, Orchestrate, Prove)
+// New:
+title="Why Operations Stay Unpredictable"
+```
 
-No code changes needed, but this feedback should inform future content decisions. The abbreviation "OPP" should be avoided.
+---
+
+### 3. `src/components/sales-slides/SalesSlide3BeforeAfter.tsx`
+
+**Title Update (line 55):**
+```tsx
+// Current:
+title="From Fragmentation to Connected Operations"
+
+// New:
+title="From Reactive to Predictable Operations"
+```
+
+**After Panel Header Update (lines 145-146):**
+```tsx
+// Current:
+<h3 className="...">After</h3>
+<span className="...">Connected Platform</span>
+
+// New:
+<h3 className="...">After</h3>
+<span className="...">Predictable Performance</span>
+```
+
+---
+
+### 4. `src/components/sales-slides/SalesSlide7Outcomes.tsx`
+
+**Title Update (line 75):**
+```tsx
+// Current:
+title="Measurable Value Across Four Pillars"
+
+// New:
+title="What Predictable Performance Delivers"
+```
+
+**Cultural Shift Quote Update (lines 183-186):**
+```tsx
+// Current:
+<span className="text-muted-foreground">Point solutions manage silos.</span>
+<span className="text-primary">Comply365 closes the loop.</span>
+
+// New:
+<span className="text-muted-foreground">Close the loop.</span>
+<span className="text-primary">Predict the outcome.</span>
+```
+
+---
+
+### 5. `src/components/sales-slides/SalesSlide9NextSteps.tsx`
+
+**Headline Update (lines 69-72):**
+```tsx
+// Current:
+<span className="text-foreground">Let's Build</span>
+<span className="text-primary">Your Roadmap</span>
+
+// New:
+<span className="text-foreground">Let's Make Your Operations</span>
+<span className="text-primary">Predictable</span>
+```
+
+---
+
+### 6. `src/data/salesDeckNarration.ts`
+
+**Slide 0 Narration (lines 8-10):**
+```typescript
+// Current:
+"What if every safety signal in your operation became a solved problem?..."
+
+// New:
+"What if operational performance was predictable? What if every signal was automatically tracked, trained, and proven? That's not a vision — that's what happens when you close the loop between safety, content, and training. Today, let me show you how."
+```
+
+**Slide 1 Narration (lines 12-14):**
+```typescript
+// Current:
+"Here's the reality most operations face..."
+
+// New:
+"Here's why most operations stay unpredictable. Foqua flags a hard landing trend on Monday. By Friday, safety has opened an investigation. Two weeks later, content gets notified via email. A month in, training is still waiting for scope. And when audit comes knocking? You're scrambling for evidence. Point tools can't close this loop because they were never designed to. Sound familiar?"
+```
+
+**Slide 3 Narration (lines 20-22):**
+```typescript
+// Current:
+"The transformation is clear. Before: disconnected silos..."
+
+// New:
+"The transformation from reactive to predictable is clear. Before: disconnected silos, manual handoffs, reactive responses, scattered evidence. After: a connected operating model where signals drive execution and proof is generated by default. The result? Predictable on-time performance, workforce readiness at ninety-four percent, and audit prep that takes hours instead of months."
+```
+
+**Slide 7 Narration (lines 36-38):**
+```typescript
+// Current:
+"The value shows up in four pillars..."
+
+// New:
+"Here's what predictable performance delivers. Schedule protection: hard landing trends detected early mean protected departures. Revenue protection: fatigue risks flagged proactively avoid costly cancellations. Cost savings: automated content updates eliminate rework cycles. Customer loyalty: compliance gaps closed immediately maintain trust. Close the loop. Predict the outcome."
+```
+
+**Slide 9 Narration (lines 44-46):**
+```typescript
+// Current:
+"Your operation has unique signals. Let's map them together..."
+
+// New:
+"Your operation has unique signals. Let's make them predictable. In a discovery session, we'll assess where you are on the maturity journey, identify your highest-impact opportunities, and build a custom ROI model for your operation. Detect, Trigger, Orchestrate, Prove — predictable performance starts now."
+```
 
 ---
 
 ## Summary of Changes
 
-| File | Change Type | Count |
-|------|-------------|-------|
-| `src/data/slideNarration.ts` | Charlotte → LaGuardia | 2 |
-| `src/data/slideNarration.ts` | FOQA → Foqua | 3 |
-| `src/data/salesDeckNarration.ts` | FOQA → Foqua | 3 |
-| `src/components/PlatformEcosystemDiagram.tsx` | Manager 365 → Manager365 | 3 |
-| **Total** | | **11 text changes** |
+| Location | Current | Updated |
+|----------|---------|---------|
+| Slide 0 headline | "safety signal → solved problem" | "operational performance → predictable" |
+| Slide 0 tagline | "closing the loop" | "Close the loop. Predict the outcome." |
+| Slide 1 title | "Point Tools Can't Close the Loop" | "Why Operations Stay Unpredictable" |
+| Slide 3 title | "Fragmentation to Connected" | "Reactive to Predictable" |
+| Slide 3 After label | "Connected Platform" | "Predictable Performance" |
+| Slide 7 title | "Measurable Value Across Four Pillars" | "What Predictable Performance Delivers" |
+| Slide 7 quote | "Comply365 closes the loop" | "Close the loop. Predict the outcome." |
+| Slide 9 headline | "Let's Build Your Roadmap" | "Let's Make Your Operations Predictable" |
+| Narration | 5 script updates | Aligned with performance messaging |
+
+---
+
+## New Core Message Flow
+
+```text
+SLIDE 0:  "What if operational performance was predictable?"
+             ↓
+SLIDE 1:  "Here's why operations stay unpredictable..."
+             ↓
+SLIDE 3:  "From Reactive to Predictable Operations"
+             ↓
+SLIDE 7:  "What Predictable Performance Delivers"
+             ↓
+SLIDE 8:  "Predictable, measurable, and provable" (unchanged - anchor)
+             ↓
+SLIDE 9:  "Let's Make Your Operations Predictable"
+```
+
+The hybrid approach retains "closing the loop" as the mechanism (slide 0 tagline, slide 8 differentiator) while elevating "predictable" as the customer-facing promise throughout.
+
+---
+
+## Technical Details
+
+| File | Lines Modified | Type |
+|------|----------------|------|
+| `SalesSlide0Title.tsx` | 59-65, 135-137 | JSX text content |
+| `SalesSlide1Problem.tsx` | 59 | Prop value |
+| `SalesSlide3BeforeAfter.tsx` | 55, 145-146 | Prop value, JSX text |
+| `SalesSlide7Outcomes.tsx` | 75, 183-186 | Prop value, JSX text |
+| `SalesSlide9NextSteps.tsx` | 69-72 | JSX text content |
+| `salesDeckNarration.ts` | 8-10, 12-14, 20-22, 36-38, 44-46 | String values |
+
+Total: **6 files**, **~15 discrete edits**
