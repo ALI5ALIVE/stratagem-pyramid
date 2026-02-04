@@ -1,5 +1,6 @@
-import { AlertTriangle, FileX, Clock, RefreshCcw, ClipboardList } from "lucide-react";
+import { AlertTriangle, FileX, Clock, RefreshCcw, ClipboardList, Quote } from "lucide-react";
 import SalesSlideContainer from "./SalesSlideContainer";
+import FragmentationIllustration from "@/components/FragmentationIllustration";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 const painPoints = [
@@ -30,6 +31,14 @@ const painPoints = [
   },
 ];
 
+const dayInTheLife = [
+  { time: "8:47 AM", event: "FOQA flags hard landing trend", color: "text-amber-500" },
+  { time: "Day 3", event: "Safety team opens investigation", color: "text-orange-500" },
+  { time: "Week 2", event: "Content team notified via email", color: "text-destructive" },
+  { time: "Week 4", event: "Training team still waiting for scope", color: "text-destructive" },
+  { time: "Week 8", event: "Audit asks for evidence trail", color: "text-destructive" },
+];
+
 interface SalesSlide1ProblemProps extends SlideNarrationProps {
   slideNumber?: number;
 }
@@ -57,40 +66,59 @@ const SalesSlide1Problem = ({
       onPause={onPause}
       onNextSlide={onNextSlide}
     >
-      <div className="flex-1 flex flex-col justify-center">
-        {/* Visual: Three disconnected silos */}
-        <div className="flex justify-center gap-4 sm:gap-8 mb-8 sm:mb-12">
-          {["Safety", "Content", "Training"].map((silo, i) => (
-            <div key={silo} className="relative">
-              <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-xl bg-destructive/10 border-2 border-destructive/30 flex items-center justify-center">
-                <span className="text-destructive font-semibold text-sm sm:text-base">{silo}</span>
+      <div className="flex-1 flex flex-col justify-center gap-6">
+        {/* Fragmentation Illustration */}
+        <div className="flex justify-center">
+          <div className="w-full max-w-lg h-24">
+            <FragmentationIllustration />
+          </div>
+        </div>
+
+        {/* Day in the Life Timeline */}
+        <div className="max-w-3xl mx-auto w-full">
+          <p className="text-xs text-muted-foreground uppercase tracking-wider mb-3 text-center">
+            A Day in the Life
+          </p>
+          <div className="flex items-center justify-between gap-2">
+            {dayInTheLife.map((item, i) => (
+              <div key={i} className="flex-1 text-center">
+                <div className="relative">
+                  <div className={`text-xs font-bold ${item.color}`}>{item.time}</div>
+                  <div className="text-[10px] text-muted-foreground mt-1 leading-tight">{item.event}</div>
+                  {i < dayInTheLife.length - 1 && (
+                    <div className="absolute top-1 -right-2 w-4 h-px bg-destructive/30" />
+                  )}
+                </div>
               </div>
-              {i < 2 && (
-                <div className="absolute top-1/2 -right-2 sm:-right-4 w-4 sm:w-8 border-t-2 border-dashed border-destructive/40" />
-              )}
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Pain points grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4 max-w-4xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 max-w-4xl mx-auto">
           {painPoints.map((point) => (
             <div
               key={point.label}
-              className="bg-card/50 border border-border/50 rounded-lg p-4 text-center hover:border-destructive/30 transition-colors"
+              className="bg-card/50 border border-border/50 rounded-lg p-3 text-center hover:border-destructive/30 transition-colors"
             >
-              <point.icon className="w-6 h-6 mx-auto mb-2 text-destructive/70" />
-              <div className="text-sm font-medium text-foreground mb-1">{point.label}</div>
-              <div className="text-xs text-muted-foreground">{point.description}</div>
+              <point.icon className="w-5 h-5 mx-auto mb-1.5 text-destructive/70" />
+              <div className="text-xs font-medium text-foreground mb-0.5">{point.label}</div>
+              <div className="text-[10px] text-muted-foreground">{point.description}</div>
             </div>
           ))}
         </div>
 
-        {/* Emotional hook */}
-        <div className="text-center mt-8 sm:mt-12">
-          <p className="text-xl sm:text-2xl text-muted-foreground italic">
-            "Sound familiar?"
-          </p>
+        {/* Emotional quote */}
+        <div className="text-center max-w-2xl mx-auto">
+          <div className="bg-destructive/5 border border-destructive/20 rounded-xl p-4">
+            <Quote className="w-5 h-5 text-destructive/50 mx-auto mb-2" />
+            <p className="text-sm text-muted-foreground italic">
+              "We're always one step behind. By the time we fix something, it's already happened again."
+            </p>
+            <p className="text-lg sm:text-xl text-foreground font-medium mt-3">
+              Sound familiar?
+            </p>
+          </div>
         </div>
       </div>
     </SalesSlideContainer>

@@ -1,5 +1,7 @@
-import { ChevronDown } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import complyLogo from "@/assets/comply365-logo-white.png";
+import FragmentationIllustration from "@/components/FragmentationIllustration";
+import PlatformEcosystemDiagram from "@/components/PlatformEcosystemDiagram";
 import SlidePlayButton from "@/components/SlidePlayButton";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
@@ -35,52 +37,75 @@ const SalesSlide0Title = ({
         />
       )}
 
-      {/* Decorative gradient orbs */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
+      {/* Decorative background gradient */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[150px] pointer-events-none" />
 
-      {/* Content */}
-      <div className="relative z-10 max-w-4xl w-full text-center space-y-8">
-        {/* Logo */}
-        <div className="flex justify-center">
-          <img
-            src={complyLogo}
-            alt="Comply365"
-            className="h-12 sm:h-16 w-auto"
-          />
+      {/* Logo - top right */}
+      <div className="absolute top-6 right-6 sm:top-8 sm:right-10">
+        <img src={complyLogo} alt="Comply365" className="h-6 sm:h-8 w-auto opacity-90" />
+      </div>
+
+      {/* Slide number - bottom right */}
+      {slideNumber !== undefined && (
+        <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-10">
+          <span className="text-sm font-medium text-muted-foreground">
+            {String(slideNumber).padStart(2, '0')}
+          </span>
+        </div>
+      )}
+
+      {/* Main Content */}
+      <div className="relative z-10 max-w-5xl w-full text-center space-y-6">
+        {/* Customer-centric headline */}
+        <div className="space-y-3">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-foreground leading-tight">
+            What if every <span className="text-primary">safety signal</span><br />
+            became a <span className="text-primary">solved problem</span>?
+          </h1>
+          <p className="text-lg sm:text-xl text-muted-foreground">
+            What if every procedure change was tracked, trained, and proven?
+          </p>
         </div>
 
-        {/* Headline */}
-        <div className="space-y-6">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight">
-            <span className="text-foreground">The</span>
-            <br />
-            <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-              Operational Performance
-            </span>
-            <br />
-            <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-              Platform
-            </span>
-          </h1>
+        {/* Visual transformation: Fragmentation → Connected */}
+        <div className="flex items-center justify-center gap-4 sm:gap-8 py-6">
+          {/* Before: Fragmentation */}
+          <div className="w-40 sm:w-52">
+            <div className="text-xs text-destructive/70 font-medium mb-2 uppercase tracking-wide">Today</div>
+            <div className="h-20 sm:h-24">
+              <FragmentationIllustration />
+            </div>
+          </div>
 
-          <p className="text-muted-foreground text-xl sm:text-2xl font-medium tracking-wide">
-            Connected. Intelligent. Predictive.
-          </p>
+          {/* Arrow */}
+          <div className="flex flex-col items-center gap-1">
+            <ArrowRight className="w-8 h-8 text-primary" />
+            <span className="text-xs text-muted-foreground">Transform</span>
+          </div>
+
+          {/* After: Connected Platform */}
+          <div className="w-32 sm:w-40">
+            <div className="text-xs text-primary/70 font-medium mb-2 uppercase tracking-wide">Tomorrow</div>
+            <div className="h-24 sm:h-28">
+              <PlatformEcosystemDiagram className="scale-75 -mt-4" />
+            </div>
+          </div>
         </div>
 
         {/* Tagline */}
-        <div className="pt-4">
-          <p className="text-muted-foreground/80 text-base sm:text-lg max-w-2xl mx-auto">
-            Turn signals into orchestrated change and measurable outcomes
+        <div className="pt-2">
+          <p className="text-xl sm:text-2xl font-semibold text-foreground">
+            That's what <span className="text-primary">closing the loop</span> looks like.
           </p>
         </div>
-      </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground/50 animate-pulse">
-        <span className="text-xs uppercase tracking-widest">Begin</span>
-        <ChevronDown className="w-5 h-5" />
+        {/* Trust bar */}
+        <div className="pt-6 border-t border-border/30">
+          <p className="text-sm text-muted-foreground">
+            Trusted by <span className="text-primary font-semibold">50+ airlines</span> for{" "}
+            <span className="text-primary font-semibold">1M+ frontline workers</span>
+          </p>
+        </div>
       </div>
     </section>
   );
