@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SlideDeck from "./pages/SlideDeck";
+import SalesDeck from "./pages/SalesDeck";
 import HomepageMockup from "./pages/HomepageMockup";
 import NotFound from "./pages/NotFound";
 import AirlinesPage from "./pages/solutions/AirlinesPage";
@@ -20,6 +21,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<SlideDeck />} />
+          <Route path="/sales-deck" element={<SalesDeck />} />
           <Route path="/homepage-mockup" element={<HomepageMockup />} />
           <Route path="/solutions/airlines" element={<AirlinesPage />} />
           <Route path="/solutions/defense" element={<DefensePage />} />
