@@ -56,7 +56,7 @@ const SalesSlide1Problem = ({
   return (
     <SalesSlideContainer
       id="sales-slide-1"
-      title="Point Tools Can't Close the Loop"
+      title="Why Operations Stay Unpredictable"
       slideNumber={slideNumber}
       isPlaying={isPlaying}
       isLoading={isLoading}

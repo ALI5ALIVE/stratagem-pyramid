@@ -67,8 +67,8 @@ const SalesSlide9NextSteps = ({
       <div className="relative z-10 max-w-3xl w-full text-center space-y-6">
         {/* Headline */}
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">
-          <span className="text-foreground">Let's Build</span>{" "}
-          <span className="text-primary">Your Roadmap</span>
+          <span className="text-foreground">Let's Make Your Operations</span>{" "}
+          <span className="text-primary">Predictable</span>
         </h2>
 
         {/* Personalization prompt */}
