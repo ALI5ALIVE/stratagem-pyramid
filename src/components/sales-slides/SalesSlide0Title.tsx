@@ -1,7 +1,5 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, XCircle, CheckCircle2 } from "lucide-react";
 import complyLogo from "@/assets/comply365-logo-white.png";
-import FragmentationIllustration from "@/components/FragmentationIllustration";
-import PlatformEcosystemDiagram from "@/components/PlatformEcosystemDiagram";
 import SlidePlayButton from "@/components/SlidePlayButton";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
@@ -67,13 +65,33 @@ const SalesSlide0Title = ({
           </p>
         </div>
 
-        {/* Visual transformation: Fragmentation → Connected */}
-        <div className="flex items-center justify-center gap-4 sm:gap-8 py-6">
-          {/* Before: Fragmentation */}
-          <div className="w-40 sm:w-52">
-            <div className="text-xs text-destructive/70 font-medium mb-2 uppercase tracking-wide">Today</div>
-            <div className="h-20 sm:h-24">
-              <FragmentationIllustration />
+        {/* Visual transformation: Pain Metrics → Value Outcomes */}
+        <div className="flex items-center justify-center gap-6 sm:gap-10 py-6">
+          {/* Today: Pain Metrics */}
+          <div className="flex flex-col items-center">
+            <div className="text-xs text-destructive font-semibold uppercase tracking-wide mb-3">Today</div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-3 bg-destructive/10 border border-destructive/30 rounded-lg px-4 py-2 min-w-[160px]">
+                <XCircle className="w-4 h-4 text-destructive shrink-0" />
+                <div className="text-left">
+                  <div className="text-lg font-bold text-destructive">3 weeks</div>
+                  <div className="text-xs text-muted-foreground">to investigate</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 bg-destructive/10 border border-destructive/30 rounded-lg px-4 py-2 min-w-[160px]">
+                <XCircle className="w-4 h-4 text-destructive shrink-0" />
+                <div className="text-left">
+                  <div className="text-lg font-bold text-destructive">60%</div>
+                  <div className="text-xs text-muted-foreground">coordination time</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 bg-destructive/10 border border-destructive/30 rounded-lg px-4 py-2 min-w-[160px]">
+                <XCircle className="w-4 h-4 text-destructive shrink-0" />
+                <div className="text-left">
+                  <div className="text-lg font-bold text-destructive">Months</div>
+                  <div className="text-xs text-muted-foreground">audit prep</div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -83,11 +101,31 @@ const SalesSlide0Title = ({
             <span className="text-xs text-muted-foreground">Transform</span>
           </div>
 
-          {/* After: Connected Platform */}
-          <div className="w-32 sm:w-40">
-            <div className="text-xs text-primary/70 font-medium mb-2 uppercase tracking-wide">Tomorrow</div>
-            <div className="h-24 sm:h-28">
-              <PlatformEcosystemDiagram className="scale-75 -mt-4" />
+          {/* Tomorrow: Value Outcomes */}
+          <div className="flex flex-col items-center">
+            <div className="text-xs text-emerald-500 font-semibold uppercase tracking-wide mb-3">Tomorrow</div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg px-4 py-2 min-w-[160px]">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                <div className="text-left">
+                  <div className="text-lg font-bold text-emerald-500">48 hours</div>
+                  <div className="text-xs text-muted-foreground">to resolution</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg px-4 py-2 min-w-[160px]">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                <div className="text-left">
+                  <div className="text-lg font-bold text-emerald-500">70%</div>
+                  <div className="text-xs text-muted-foreground">improvement time</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg px-4 py-2 min-w-[160px]">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                <div className="text-left">
+                  <div className="text-lg font-bold text-emerald-500">2 hours</div>
+                  <div className="text-xs text-muted-foreground">audit-ready</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
