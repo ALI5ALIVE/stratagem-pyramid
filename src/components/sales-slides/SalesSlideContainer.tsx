@@ -67,7 +67,7 @@ const SalesSlideContainer = ({
         <img
           src={complyLogo}
           alt="Comply365"
-          className="h-6 sm:h-8 w-auto opacity-90"
+          className="h-5 sm:h-6 w-auto opacity-80"
         />
       </div>
 
@@ -86,7 +86,7 @@ const SalesSlideContainer = ({
       <div className="max-w-6xl w-full mx-auto flex-1 flex flex-col">
         {/* Header section */}
         {showHeader && title && (
-          <div className="mb-6 sm:mb-8">
+          <div className="mt-4 sm:mt-6 mb-6 sm:mb-8">
             <h2 className={cn(
               "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-tight",
               variant === "light" ? "text-foreground" : "text-foreground"
