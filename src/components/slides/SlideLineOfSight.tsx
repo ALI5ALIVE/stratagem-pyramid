@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Crown, TrendingUp, Settings, ArrowDown, ArrowUp, ChevronDown, ChevronUp, AlertTriangle, Gauge, Plane, Building2 } from "lucide-react";
+import { Crown, TrendingUp, Settings, ArrowDown, ArrowUp, ChevronDown, ChevronUp, AlertTriangle, Gauge, Plane, Building2, Info } from "lucide-react";
 import {
   executiveOutcomes,
   leadingMeasures,
@@ -8,6 +8,7 @@ import {
   computeUseCaseCostImpact,
   computeScaledCostMidpoint,
   airlinePresets,
+  sourceCitations,
   type AirlineProfile,
 } from "@/data/lineOfSightData";
 import { cn } from "@/lib/utils";
@@ -15,6 +16,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface SlideLineOfSightProps {
   useCaseValues: Record<string, number>;
@@ -399,9 +401,24 @@ const SlideLineOfSight = ({
 
                             {/* Cost impact */}
                             <div className="flex items-center justify-between">
-                              <span className="text-[10px] text-muted-foreground">
-                                {formatCurrency(scaledCost)} per {uc.input.unit === "%" ? "point" : uc.input.unit.replace(/s$/, "")}
-                              </span>
+                              <div className="flex items-center gap-1">
+                                <span className="text-[10px] text-muted-foreground">
+                                  {formatCurrency(scaledCost)} per {uc.input.unit === "%" ? "point" : uc.input.unit.replace(/s$/, "")}
+                                </span>
+                                {sourceCitations[uc.id] && (
+                                  <TooltipProvider>
+                                    <Tooltip>
+                                      <TooltipTrigger asChild>
+                                        <Info className="w-3 h-3 text-muted-foreground/50 hover:text-muted-foreground cursor-help" />
+                                      </TooltipTrigger>
+                                      <TooltipContent side="top" className="max-w-[250px] text-[10px]">
+                                        <p className="font-medium mb-0.5">Source</p>
+                                        <p>{sourceCitations[uc.id]}</p>
+                                      </TooltipContent>
+                                    </Tooltip>
+                                  </TooltipProvider>
+                                )}
+                              </div>
                               {costImpact > 0 && (
                                 <span className="text-[10px] font-medium text-emerald-400">
                                   Saving {formatCurrency(costImpact)}/yr
@@ -451,6 +468,13 @@ const SlideLineOfSight = ({
               );
             })}
           </Tabs>
+
+          {/* Source Footnote Bar */}
+          <div className="mt-6 pt-4 border-t border-border/20">
+            <p className="text-[10px] text-muted-foreground/60 text-center italic">
+              Cost ranges sourced from EUROCONTROL, IATA, SITA, A4A, and WTW industry reports (2024–2025). Figures are illustrative and scaled to your airline profile.
+            </p>
+          </div>
         </div>
       </div>
     </div>

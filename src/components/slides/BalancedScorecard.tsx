@@ -167,6 +167,13 @@ const BalancedScorecard = ({ useCaseValues, leadingValues, totalCostAvoidance, a
           ${(totalCostAvoidance / 1_000_000).toFixed(1)}M
         </div>
       </div>
+
+      {/* Source Footnote */}
+      <div className="pt-2">
+        <p className="text-[10px] text-muted-foreground/60 text-center italic">
+          Cost ranges sourced from EUROCONTROL, IATA, SITA, A4A, and WTW industry reports (2024–2025). Figures are illustrative and scaled to your airline profile.
+        </p>
+      </div>
     </div>
   );
 };
