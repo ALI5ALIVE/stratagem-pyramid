@@ -30,7 +30,7 @@ const SalesSlide9NextSteps = ({
 }: SalesSlide9NextStepsProps) => {
   return (
     <section
-      id="sales-slide-9"
+      id="sales-slide-10"
       className="h-screen w-full flex flex-col items-center justify-center px-6 sm:px-10 lg:px-16 py-16 snap-start relative overflow-hidden bg-background"
     >
       {/* Play button */}

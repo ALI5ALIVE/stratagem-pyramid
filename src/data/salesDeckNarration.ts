@@ -38,10 +38,14 @@ export const salesDeckNarration: SalesNarrationSlide[] = [
   },
   {
     slideId: "sales-slide-8",
-    text: "Why Comply365? Three differentiators. First, a connected foundation — one version of truth across sixty-five thousand data points. Second, embedded intelligence — AI trained on over ten years of aviation operational data, not bolted on. Third, proof by default — every action logged, every change traced, always audit-ready. Point solutions manage silos. We close the loop.",
+    text: "Every use case we've discussed has a measurable cost impact. Go-arounds, unscheduled maintenance, delays, fuel degradation, injuries, regulatory findings, insurance premiums, baggage mishandling — each one maps to leading operational measures and ultimately to executive outcomes your CFO, CEO, and COO care about. This is our Line of Sight model. For a mid-size carrier, the total cost avoidance opportunity exceeds forty million dollars annually. And this isn't a generic estimate — we can build a custom model using your airline's fleet size, fuel spend, and operational data. Let's make these numbers yours.",
   },
   {
     slideId: "sales-slide-9",
+    text: "Why Comply365? Three differentiators. First, a connected foundation — one version of truth across sixty-five thousand data points. Second, embedded intelligence — AI trained on over ten years of aviation operational data, not bolted on. Third, proof by default — every action logged, every change traced, always audit-ready. Point solutions manage silos. We close the loop.",
+  },
+  {
+    slideId: "sales-slide-10",
     text: "Your operation has unique signals. Let's make them predictable. In a discovery session, we'll assess where you are on the maturity journey, identify your highest-impact opportunities, and build a custom ROI model for your operation. Detect, Trigger, Orchestrate, Prove — predictable performance starts now.",
   },
 ];
