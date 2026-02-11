@@ -71,8 +71,8 @@ const SalesSlide6Journey = ({
     >
       <div className="flex-1 flex flex-col gap-4">
         {/* Maturity Curve SVG */}
-        <div className="flex-1 flex justify-center items-center">
-          <svg viewBox="0 0 500 380" className="w-full max-w-3xl h-auto">
+        <div className="flex justify-center items-center max-h-[50vh]">
+          <svg viewBox="0 0 500 380" className="w-full max-w-3xl h-auto max-h-[320px]">
             <defs>
               <linearGradient id="salesCurveGradient" x1="0%" y1="100%" x2="100%" y2="0%">
                 <stop offset="0%" stopColor="hsl(0 70% 50%)" />
