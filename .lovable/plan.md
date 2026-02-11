@@ -1,118 +1,97 @@
 
 
-# Add Airline Profile Setup to Line of Sight Calculator
+# Add KPI Connection Tree Visualization
 
-## The Problem
+## Overview
 
-Currently, the cost calculations use fixed midpoint values (e.g., $12,500 per go-around, $80,000 per AOG day). These are generic industry averages. A real sales conversation needs the prospect's own numbers -- fleet size, fuel spend, passenger volume -- to produce credible, airline-specific dollar outcomes.
+Create a new visual slide that renders the entire Line of Sight cascade as an interactive **tree diagram** -- use cases at the bottom, leading measures in the middle, executive outcomes at the top -- with animated connection lines showing exactly how each use case flows through to executive KPIs. This becomes a companion view to the existing calculator, accessible via a toggle or tab on the same page.
 
-## Solution: "Your Airline" Configuration Panel
-
-Add a collapsible setup panel at the top of the page where users enter 4-5 simple inputs about their airline. These inputs then **scale** all the cost calculations throughout the page, making every dollar figure specific to that airline.
-
-### Airline Profile Inputs
-
-| Input | Label | Default | Unit | Why It Matters |
-|-------|-------|---------|------|----------------|
-| Fleet Size | Number of aircraft | 50 | aircraft | Scales AOG cost (lost revenue per aircraft), go-around frequency, maintenance events |
-| Annual Fuel Spend | Total fuel budget | 500 | $M/year | Converts fuel variance % into real dollars (1% of $500M = $5M) |
-| Daily Departures | Average flights per day | 150 | flights | Scales delay cost (more flights = more cascade), go-around frequency |
-| Annual Passengers | Passengers per year | 20 | M pax | Scales baggage mishandling cost, injury frequency, passenger compensation |
-| Average Revenue per Flight | Revenue per departure | 25,000 | $/flight | Scales AOG lost revenue and delay impact |
-
-### How Scaling Works
-
-Instead of using fixed `costMidpoint` values, the cost-per-event becomes a function of the airline profile. For example:
-
-- **Fuel Degradation**: `fuelVariance% * annualFuelSpend` instead of fixed $12.5M per %
-- **AOG**: `avgRevenuePerFlight * dailyDepartures / fleetSize` for lost revenue per AOG day
-- **Baggage**: `costPerBag * (annualPassengers / 12 / 1000)` for monthly volume scaling
-- **Delays**: `costPerMinute * dailyDepartures` for network-wide delay cost
-
-The use case baselines also scale with fleet/volume (e.g., a 200-aircraft airline has more go-arounds than a 50-aircraft one).
-
-## UI Layout
+## Layout
 
 ```text
-+----------------------------------------------------------+
-| YOUR AIRLINE                                    [Collapse]|
-| Fleet: [50] aircraft  |  Fuel: [$500M]/yr                |
-| Departures: [150]/day |  Passengers: [20M]/yr            |
-| Revenue/flight: [$25K]                                    |
-+----------------------------------------------------------+
-|                                                           |
-| [CFO] [CEO] [COO]  tabs...                               |
-| Tier 1: Executive Outcomes (now with real $ values)       |
-| Cost Banner: "Your estimated annual savings: $24.3M"      |
-| Tier 2: Leading Measures                                  |
-| Tier 3: Use Case Sliders (costs now airline-specific)     |
-+----------------------------------------------------------+
+                     +------------------+
+                     | EXECUTIVE        |
+                     | OUTCOMES         |
+                     |  CFO  CEO  COO   |
+                     +--------+---------+
+                              |
+                    connection lines (SVG)
+                              |
+              +------+------+------+------+------+------+
+              | Fuel | Fleet| OTP  |Safety|Audit |Pax   |
+              | Var  | Avail|      |Recur |Ready |Exp   |
+              +--+---+--+---+--+---+--+---+--+---+--+---+
+                 |        |        |        |        |
+               connection lines (SVG, weighted thickness)
+                 |        |        |        |        |
+     +-----+-----+-----+-----+-----+-----+-----+-----+
+     |Go   |AOG  |Delay|Fuel |Injry|Reg  |Ins  |Bags |
+     |Arnd |     |& OTP|Perf |     |Fine |Prem |     |
+     +-----+-----+-----+-----+-----+-----+-----+-----+
 ```
 
-### Airline Profile Panel Design
-- Appears above the tabs as a compact, collapsible card
-- Styled with a subtle gradient border to distinguish it as a configuration area
-- Inputs use number fields (not sliders) for precise entry
-- Includes preset buttons: **Regional** (25 aircraft), **Mid-Size** (80 aircraft), **Tier 1** (200 aircraft) for quick setup
-- Collapsed state shows a summary line: "50 aircraft | $500M fuel | 150 flights/day | 20M pax/yr"
+## What Gets Built
 
-## Data Model Changes (`src/data/lineOfSightData.ts`)
+### 1. New Component: `src/components/slides/LineOfSightTree.tsx`
 
-### New Interface: `AirlineProfile`
-```typescript
-export interface AirlineProfile {
-  fleetSize: number;
-  annualFuelSpendM: number;    // in $M
-  dailyDepartures: number;
-  annualPassengersM: number;   // in millions
-  revenuePerFlight: number;    // in $
-}
-```
+A full-screen SVG + HTML hybrid visualization:
 
-### New: `defaultProfiles` presets
-Three pre-built profiles (Regional, Mid-Size, Tier 1) for quick selection.
+**Three horizontal rows of nodes:**
+- **Top row**: 3 stakeholder cards (CFO, CEO, COO), each containing their 3 lagging metrics
+- **Middle row**: 6 leading measure nodes (compact pills showing label + current value)
+- **Bottom row**: 8 use case nodes (compact cards showing label + current input value)
 
-### Updated: `computeScaledCostMidpoint` function
-Takes a use case and airline profile, returns a scaled cost-per-event value. Each use case has a scaling formula:
-- uc1 (Go-arounds): scales with daily departures
-- uc2 (AOG): scales with revenue per flight
-- uc3 (Delays): scales with daily departures
-- uc4 (Fuel): scales directly with annual fuel spend
-- uc5 (Injuries): scales with annual passengers
-- uc6 (Regulatory): fixed (doesn't scale much)
-- uc7 (Insurance): scales with fleet size
-- uc8 (Baggage): scales with annual passengers
+**Connection lines (SVG):**
+- Lines from use case nodes to leading measure nodes, based on `impactOnMeasures` weights
+- Lines from leading measure nodes to executive outcome nodes, based on `metric.weights`
+- Line thickness proportional to the weight value
+- Line color reflects the stakeholder (emerald for CFO connections, amber for CEO, sky for COO)
+- Lines animate/highlight on hover of any node, dimming unrelated paths
 
-### Updated: `computeUseCaseCostImpact`
-Now accepts airline profile parameter and uses scaled cost instead of fixed midpoint.
+**Interactive behavior:**
+- Hovering a use case highlights all paths upward to the executive outcomes it impacts
+- Hovering an executive metric highlights all paths downward to the use cases that drive it
+- Hovering a leading measure highlights both directions
+- Current computed values display on each node (reusing the same state from the calculator)
+- Nodes with improvement from baseline show a green glow
 
-## Component Changes (`src/components/slides/SlideLineOfSight.tsx`)
+### 2. Modified: `src/pages/LineOfSightPage.tsx`
 
-### New: `AirlineProfilePanel` section
-- Collapsible panel with 5 number inputs
-- 3 preset buttons (Regional / Mid-Size / Tier 1)
-- Collapsed summary line
-- State: `airlineProfile` stored in component state
+Add a view toggle (two buttons: "Calculator" / "Tree View") at the top of the page. Both views share the same `useCaseValues` and `airlineProfile` state, so adjustments in the calculator are reflected in the tree and vice versa.
 
-### Updated: All cost calculations
-- `computeUseCaseCostImpact` calls now pass airline profile
-- Cost-per-event display on each use case card updates dynamically
-- Total cost avoidance banner uses scaled values
-- Executive outcome dollar metrics ($M) scale with airline size
+### 3. Modified: `src/components/slides/SlideLineOfSight.tsx`
+
+Extract the state management (`useCaseValues`, `airlineProfile`, computed values) up to the page level so both the calculator and tree views can share it. The component receives these as props instead of managing them internally.
+
+## Technical Approach
+
+**Node positioning**: Use a responsive grid layout. Each row is a flex container. Nodes are positioned with refs, and a `useLayoutEffect` reads their bounding rects to compute SVG line endpoints.
+
+**SVG overlay**: An absolutely-positioned SVG layer sits behind the nodes, drawing curved paths (`<path>` with cubic bezier) between connected nodes. Lines use `stroke-width` proportional to weight (e.g., weight 0.5 = 3px, weight 0.1 = 1px).
+
+**Hover highlighting**: On hover, set a `highlightedNode` state. All connections involving that node get full opacity; others fade to 10% opacity. A CSS transition makes this smooth.
+
+**Responsiveness**: On smaller screens, the tree scrolls horizontally or scales down. The SVG recalculates on window resize.
 
 ## Files Changed
 
 | File | Change |
 |------|--------|
-| `src/data/lineOfSightData.ts` | Add `AirlineProfile` interface, `defaultProfiles` presets, `computeScaledCostMidpoint` function, update `computeUseCaseCostImpact` signature |
-| `src/components/slides/SlideLineOfSight.tsx` | Add airline profile panel with inputs and presets, pass profile through all cost calculations, update display strings |
+| `src/components/slides/LineOfSightTree.tsx` | **Create** -- Tree visualization component (~250 lines) |
+| `src/pages/LineOfSightPage.tsx` | **Modify** -- Lift state up, add Calculator/Tree toggle |
+| `src/components/slides/SlideLineOfSight.tsx` | **Modify** -- Accept shared state as props instead of internal state |
 
-## User Experience Flow
+## State Architecture
 
-1. User lands on /line-of-sight, sees the airline profile panel open by default
-2. They either type in their airline's numbers or click a preset (e.g., "Tier 1")
-3. All dollar figures throughout the page immediately reflect their airline's scale
-4. They adjust use case sliders to model improvements
-5. The cost avoidance banner shows a credible, airline-specific savings figure
-6. In a sales meeting, the rep enters the prospect's real numbers and the page becomes a live business case
+```text
+LineOfSightPage (owns state)
+  |-- useCaseValues: Record<string, number>
+  |-- airlineProfile: AirlineProfile
+  |-- computed leadingValues, totalCostAvoidance
+  |
+  +-- [Calculator View] SlideLineOfSight (receives props)
+  +-- [Tree View] LineOfSightTree (receives props)
+```
+
+Both views stay in sync because they share the same state from the parent.
 
