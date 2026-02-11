@@ -25,11 +25,17 @@ export interface LeadingMeasure {
   shortLabel: string;
   baselineValue: number;
   unit: string;
+  direction: "down";
+  connectedOutcomes: string[];
+}
+
+export interface UseCaseInput {
+  label: string;
+  unit: string;
+  baselineValue: number;
   min: number;
   max: number;
   step: number;
-  direction: "down";
-  connectedOutcomes: string[];
 }
 
 export interface UseCase {
@@ -38,6 +44,8 @@ export interface UseCase {
   description: string;
   connectedMeasures: string[];
   methodology: string;
+  input: UseCaseInput;
+  impactOnMeasures: Record<string, number>; // leading measure id → weight
 }
 
 export const executiveOutcomes: ExecutiveOutcome[] = [
@@ -149,9 +157,6 @@ export const leadingMeasures: LeadingMeasure[] = [
     shortLabel: "Change Cycle",
     baselineValue: 45,
     unit: "days",
-    min: 5,
-    max: 90,
-    step: 1,
     direction: "down",
     connectedOutcomes: ["ceo", "coo"],
   },
@@ -161,9 +166,6 @@ export const leadingMeasures: LeadingMeasure[] = [
     shortLabel: "Repeat Events",
     baselineValue: 12,
     unit: "%",
-    min: 0,
-    max: 25,
-    step: 0.5,
     direction: "down",
     connectedOutcomes: ["ceo", "cfo"],
   },
@@ -173,9 +175,6 @@ export const leadingMeasures: LeadingMeasure[] = [
     shortLabel: "Training Gap",
     baselineValue: 18,
     unit: "%",
-    min: 0,
-    max: 40,
-    step: 1,
     direction: "down",
     connectedOutcomes: ["ceo", "coo"],
   },
@@ -185,9 +184,6 @@ export const leadingMeasures: LeadingMeasure[] = [
     shortLabel: "Response Time",
     baselineValue: 48,
     unit: "hrs",
-    min: 2,
-    max: 96,
-    step: 1,
     direction: "down",
     connectedOutcomes: ["coo", "cfo"],
   },
@@ -197,9 +193,6 @@ export const leadingMeasures: LeadingMeasure[] = [
     shortLabel: "Doc Currency",
     baselineValue: 15,
     unit: "%",
-    min: 0,
-    max: 30,
-    step: 0.5,
     direction: "down",
     connectedOutcomes: ["ceo", "cfo"],
   },
@@ -209,9 +202,6 @@ export const leadingMeasures: LeadingMeasure[] = [
     shortLabel: "Audit Prep",
     baselineValue: 120,
     unit: "hrs",
-    min: 10,
-    max: 200,
-    step: 5,
     direction: "down",
     connectedOutcomes: ["cfo", "coo"],
   },
@@ -226,6 +216,15 @@ export const useCases: UseCase[] = [
     connectedMeasures: ["lm2", "lm4", "lm6"],
     methodology:
       "We shift your average response time and recurrence rate — moving the performance distribution toward best-case outcomes.",
+    input: {
+      label: "Smoke/fumes events per month",
+      unit: "events",
+      baselineValue: 8,
+      min: 0,
+      max: 20,
+      step: 1,
+    },
+    impactOnMeasures: { lm2: 0.35, lm4: 0.25, lm6: 0.15 },
   },
   {
     id: "uc2",
@@ -235,6 +234,15 @@ export const useCases: UseCase[] = [
     connectedMeasures: ["lm2", "lm4", "lm5"],
     methodology:
       "We reduce worst-case occurrences by ensuring every hard landing triggers the right follow-up — automatically.",
+    input: {
+      label: "Hard landings per month",
+      unit: "events",
+      baselineValue: 6,
+      min: 0,
+      max: 15,
+      step: 1,
+    },
+    impactOnMeasures: { lm2: 0.3, lm4: 0.3, lm5: 0.15 },
   },
   {
     id: "uc3",
@@ -244,6 +252,15 @@ export const useCases: UseCase[] = [
     connectedMeasures: ["lm1", "lm3", "lm5"],
     methodology:
       "We compress the change cycle by connecting the trigger to the outcome — eliminating manual handoffs.",
+    input: {
+      label: "Procedure changes per quarter",
+      unit: "changes",
+      baselineValue: 12,
+      min: 0,
+      max: 30,
+      step: 1,
+    },
+    impactOnMeasures: { lm1: 0.4, lm3: 0.2, lm5: 0.2 },
   },
   {
     id: "uc4",
@@ -253,6 +270,15 @@ export const useCases: UseCase[] = [
     connectedMeasures: ["lm3", "lm1"],
     methodology:
       "We shift training from generic scheduling to targeted, signal-driven activation — improving completion and relevance.",
+    input: {
+      label: "Untrained crew per cycle",
+      unit: "crew",
+      baselineValue: 45,
+      min: 0,
+      max: 100,
+      step: 1,
+    },
+    impactOnMeasures: { lm3: 0.45, lm1: 0.15 },
   },
   {
     id: "uc5",
@@ -262,6 +288,15 @@ export const useCases: UseCase[] = [
     connectedMeasures: ["lm4", "lm1", "lm6"],
     methodology:
       "We accelerate recovery by orchestrating cross-functional response — reducing delay minutes and cost impact.",
+    input: {
+      label: "AOG events per month",
+      unit: "events",
+      baselineValue: 3,
+      min: 0,
+      max: 10,
+      step: 1,
+    },
+    impactOnMeasures: { lm4: 0.35, lm1: 0.15, lm6: 0.2 },
   },
   {
     id: "uc6",
@@ -271,6 +306,15 @@ export const useCases: UseCase[] = [
     connectedMeasures: ["lm2", "lm4", "lm5"],
     methodology:
       "We close the loop between detection and action — ensuring every signal drives measurable improvement.",
+    input: {
+      label: "FOQA exceedances per month",
+      unit: "events",
+      baselineValue: 15,
+      min: 0,
+      max: 40,
+      step: 1,
+    },
+    impactOnMeasures: { lm2: 0.25, lm4: 0.2, lm5: 0.25 },
   },
   {
     id: "uc7",
@@ -280,6 +324,15 @@ export const useCases: UseCase[] = [
     connectedMeasures: ["lm1", "lm5", "lm6"],
     methodology:
       "We eliminate the gap between regulatory change and operational compliance — with full traceability.",
+    input: {
+      label: "Regulatory changes per quarter",
+      unit: "changes",
+      baselineValue: 8,
+      min: 0,
+      max: 20,
+      step: 1,
+    },
+    impactOnMeasures: { lm1: 0.25, lm5: 0.3, lm6: 0.25 },
   },
   {
     id: "uc8",
@@ -289,9 +342,46 @@ export const useCases: UseCase[] = [
     connectedMeasures: ["lm3", "lm6", "lm2"],
     methodology:
       "We make compliance provable by default — shifting from reactive evidence assembly to continuous proof.",
+    input: {
+      label: "Outstanding cabin findings",
+      unit: "findings",
+      baselineValue: 22,
+      min: 0,
+      max: 50,
+      step: 1,
+    },
+    impactOnMeasures: { lm3: 0.25, lm6: 0.3, lm2: 0.15 },
   },
 ];
 
+/**
+ * Compute a leading measure's current value based on use case input adjustments.
+ * When a use case input decreases from baseline, it improves connected leading measures.
+ */
+export function computeLeadingMeasureValue(
+  measure: LeadingMeasure,
+  ucInputValues: Record<string, number>
+): number {
+  let totalImprovementPct = 0;
+
+  for (const uc of useCases) {
+    const weight = uc.impactOnMeasures[measure.id];
+    if (!weight) continue;
+
+    const current = ucInputValues[uc.id] ?? uc.input.baselineValue;
+    const improvementPct =
+      ((uc.input.baselineValue - current) / uc.input.baselineValue) * 100;
+    totalImprovementPct += weight * improvementPct;
+  }
+
+  // Leading measures go down when improved
+  const newValue = measure.baselineValue * (1 - totalImprovementPct / 100);
+  return Math.round(Math.max(0, newValue) * 10) / 10;
+}
+
+/**
+ * Compute a lagging metric's current value based on leading measure values.
+ */
 export function computeMetricValue(
   metric: LaggingMetric,
   measureValues: Record<string, number>,
