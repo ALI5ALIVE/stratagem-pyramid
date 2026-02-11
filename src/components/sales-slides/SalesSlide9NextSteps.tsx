@@ -51,7 +51,7 @@ const SalesSlide9NextSteps = ({
 
       {/* Logo - top right */}
       <div className="absolute top-6 right-6 sm:top-8 sm:right-10">
-        <img src={complyLogo} alt="Comply365" className="h-6 sm:h-8 w-auto opacity-90" />
+        <img src={complyLogo} alt="Comply365" className="h-5 sm:h-6 w-auto opacity-80" />
       </div>
 
       {/* Slide number - bottom right */}
