@@ -67,8 +67,8 @@ export const useCases: UseCase[] = [
       min: 0,
       max: 30,
       step: 1,
-      costPerEvent: "$5K–$20K per event",
-      costMidpoint: 12500,
+      costPerEvent: "$5K–$25K per event",
+      costMidpoint: 15000,
       annualisationFactor: 12,
       costComponents: [
         "Additional fuel burn",
@@ -95,8 +95,8 @@ export const useCases: UseCase[] = [
       min: 0,
       max: 20,
       step: 1,
-      costPerEvent: "$10K–$150K per day",
-      costMidpoint: 80000,
+      costPerEvent: "$100K–$500K per day",
+      costMidpoint: 300000,
       annualisationFactor: 12,
       costComponents: [
         "Lost revenue",
@@ -123,8 +123,8 @@ export const useCases: UseCase[] = [
       min: 0,
       max: 120,
       step: 1,
-      costPerEvent: "$75–$200 per minute",
-      costMidpoint: 137.5,
+      costPerEvent: "$80–$200 per minute",
+      costMidpoint: 140,
       annualisationFactor: 365,
       costComponents: [
         "Crew overtime",
@@ -207,8 +207,8 @@ export const useCases: UseCase[] = [
       min: 0,
       max: 15,
       step: 1,
-      costPerEvent: "$50K–$5M per finding",
-      costMidpoint: 500000,
+      costPerEvent: "$50K–$2M per finding",
+      costMidpoint: 400000,
       annualisationFactor: 1,
       costComponents: [
         "Direct financial penalties",
@@ -259,9 +259,9 @@ export const useCases: UseCase[] = [
     input: {
       inputLabel: "Mishandled bags per 1,000 pax",
       unit: "bags",
-      baseline: 8,
+      baseline: 6.5,
       min: 0,
-      max: 20,
+      max: 15,
       step: 0.5,
       costPerEvent: "$100–$350 per bag",
       costMidpoint: 225,
@@ -280,6 +280,21 @@ export const useCases: UseCase[] = [
       "We connect ground operations, crew coordination, and passenger systems to reduce mishandling at source.",
   },
 ];
+
+// ─── Source Citations ─────────────────────────────────────────────────
+
+export const sourceCitations: Record<string, string> = {
+  uc1: "EUROCONTROL delay cost reference values v4.1; airline fuel burn data",
+  uc2: "OxMaint Aviation Management Guide 2026; industry estimates $10K–$150K/hr including lost revenue",
+  uc3: "EUROCONTROL Standard Inputs; A4A US Carrier Delay Costs 2024 ($100.76/min average)",
+  uc4: "IATA Global Outlook for Air Transport 2024; scaled to carrier fuel spend",
+  uc5: "Industry compensation and legal cost benchmarks",
+  uc6: "DOT/FAA Civil Penalty Guidelines 2024; EASA enforcement data",
+  uc7: "WTW Airline Insurance Market Renewal Outlook Q4 2025",
+  uc8: "SITA Baggage IT Insights 2024 (6.3/1000 global average)",
+  lm2: "IATA Maintenance Cost Report FY2023; fleet availability distinct from dispatch reliability",
+  lm3: "Cirium On-Time Performance Review 2024",
+};
 
 // ─── Leading Measures (Computed from Use Cases) ───────────────────────
 
@@ -504,8 +519,9 @@ export function computeMetricValue(
   }
 
   if (metric.unit === "$M") {
-    // For dollar metrics, compute as a portion of total cost avoidance
-    return Math.round(totalImprovement * 0.5 * 10) / 10; // scale factor
+    // For dollar metrics, scale improvement percentage to a reasonable dollar figure
+    // totalImprovement is a weighted percentage; convert to $M assuming each % point ≈ $0.3M
+    return Math.round(totalImprovement * 0.3 * 10) / 10;
   }
 
   if (metric.direction === "up") {
@@ -658,7 +674,7 @@ export const balancedScorecardPerspectives: ScorecardPerspective[] = [
       {
         id: "bsc-bag-rate",
         label: "Mishandled Baggage",
-        baselineValue: 8,
+        baselineValue: 6.5,
         unit: "/1000",
         direction: "down",
         weights: { lm6: 0.35 },
