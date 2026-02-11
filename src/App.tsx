@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import AirlinesPage from "./pages/solutions/AirlinesPage";
 import DefensePage from "./pages/solutions/DefensePage";
 import RailPage from "./pages/solutions/RailPage";
+import LineOfSightPage from "./pages/LineOfSightPage";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/solutions/airlines" element={<AirlinesPage />} />
           <Route path="/solutions/defense" element={<DefensePage />} />
           <Route path="/solutions/rail" element={<RailPage />} />
+          <Route path="/line-of-sight" element={<LineOfSightPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
