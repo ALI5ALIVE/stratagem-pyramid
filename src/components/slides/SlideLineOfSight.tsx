@@ -1,11 +1,10 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { Crown, TrendingUp, Settings, X, ArrowDown, ArrowUp } from "lucide-react";
 import {
   executiveOutcomes,
   leadingMeasures,
   useCases,
   computeMetricValue,
-  computeLeadingMeasureValue,
   type UseCase,
 } from "@/data/lineOfSightData";
 import { cn } from "@/lib/utils";
@@ -44,25 +43,16 @@ const tabColors: Record<string, { active: string; text: string; border: string; 
 
 const SlideLineOfSight = () => {
   const [selectedUseCase, setSelectedUseCase] = useState<UseCase | null>(null);
-  const [ucInputValues, setUcInputValues] = useState<Record<string, number>>(() => {
+  const [measureValues, setMeasureValues] = useState<Record<string, number>>(() => {
     const initial: Record<string, number> = {};
-    useCases.forEach((uc) => {
-      initial[uc.id] = uc.input.baselineValue;
+    leadingMeasures.forEach((m) => {
+      initial[m.id] = m.baselineValue;
     });
     return initial;
   });
 
-  // Compute leading measure values from use case inputs
-  const computedMeasureValues = useMemo(() => {
-    const values: Record<string, number> = {};
-    leadingMeasures.forEach((lm) => {
-      values[lm.id] = computeLeadingMeasureValue(lm, ucInputValues);
-    });
-    return values;
-  }, [ucInputValues]);
-
-  const handleUcSliderChange = (ucId: string, value: number[]) => {
-    setUcInputValues((prev) => ({ ...prev, [ucId]: value[0] }));
+  const handleSliderChange = (measureId: string, value: number[]) => {
+    setMeasureValues((prev) => ({ ...prev, [measureId]: value[0] }));
   };
 
   return (
@@ -119,7 +109,7 @@ const SlideLineOfSight = () => {
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                       {eo.metrics.map((metric) => {
-                        const computed = computeMetricValue(metric, computedMeasureValues, leadingMeasures);
+                        const computed = computeMetricValue(metric, measureValues, leadingMeasures);
                         const delta = computed - metric.baselineValue;
                         const improved = metric.direction === "up" ? delta > 0.05 : delta < -0.05;
                         return (
@@ -168,131 +158,93 @@ const SlideLineOfSight = () => {
                     </div>
                   </div>
 
-                  {/* Tier 2: Leading Measures (read-only, computed) */}
+                  {/* Tier 2: Leading Measures with Sliders */}
                   <div>
                     <h3 className={cn("text-xs font-semibold uppercase tracking-wider mb-3", colors.text)}>
-                      Leading Measures — Computed from Use Cases
+                      Leading Measures — Adjust to See Impact
                     </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {connectedMeasures.map((lm) => {
-                        const currentVal = computedMeasureValues[lm.id] ?? lm.baselineValue;
-                        const delta = currentVal - lm.baselineValue;
-                        const improved = delta < -0.05;
+                        const currentVal = measureValues[lm.id] ?? lm.baselineValue;
+                        const improved = currentVal < lm.baselineValue;
                         return (
                           <div
                             key={lm.id}
                             className="rounded-lg border border-border/40 bg-card/30 p-4"
                           >
-                            <p className="text-xs text-muted-foreground mb-1">
-                              {lm.shortLabel}
-                            </p>
-                            <div className="flex items-baseline gap-2">
-                              <span className="text-xl font-bold text-foreground">
-                                {currentVal.toFixed(1)}{lm.unit}
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-sm font-medium text-foreground">
+                                {lm.shortLabel}
                               </span>
-                              {Math.abs(delta) > 0.05 && (
+                              <div className="flex items-center gap-1.5">
                                 <span
                                   className={cn(
-                                    "flex items-center gap-0.5 text-xs font-medium",
-                                    improved ? "text-emerald-400" : "text-red-400"
+                                    "text-sm font-semibold",
+                                    improved ? "text-emerald-400" : "text-foreground"
                                   )}
                                 >
-                                  {improved ? (
-                                    <ArrowDown className="w-3 h-3" />
-                                  ) : (
-                                    <ArrowUp className="w-3 h-3" />
-                                  )}
-                                  {Math.abs(delta).toFixed(1)}{lm.unit}
+                                  {currentVal}
+                                  {lm.unit}
                                 </span>
-                              )}
+                                {improved && (
+                                  <ArrowDown className="w-3 h-3 text-emerald-400" />
+                                )}
+                              </div>
                             </div>
-                            <p className="text-[10px] text-muted-foreground mt-1">
-                              Baseline: {lm.baselineValue}{lm.unit}
-                            </p>
+                            <Slider
+                              value={[currentVal]}
+                              min={lm.min}
+                              max={lm.max}
+                              step={lm.step}
+                              onValueChange={(v) => handleSliderChange(lm.id, v)}
+                              className={cn("cursor-pointer", colors.slider)}
+                            />
+                            <div className="flex justify-between mt-1">
+                              <span className="text-[10px] text-muted-foreground">
+                                Best: {lm.min}
+                                {lm.unit}
+                              </span>
+                              <span className="text-[10px] text-muted-foreground">
+                                Baseline: {lm.baselineValue}
+                                {lm.unit}
+                              </span>
+                            </div>
                           </div>
                         );
                       })}
                     </div>
                   </div>
 
-                  {/* Tier 3: Use Case Inputs with Sliders */}
+                  {/* Tier 3: Use Cases */}
                   <div>
                     <h3 className={cn("text-xs font-semibold uppercase tracking-wider mb-3", colors.text)}>
-                      Platform Use Cases — Adjust Inputs
+                      Platform Use Cases
                     </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                       {useCases.map((uc) => {
                         const isConnected = connectedUseCases.some((c) => c.id === uc.id);
                         const isSelected = selectedUseCase?.id === uc.id;
-                        const currentVal = ucInputValues[uc.id] ?? uc.input.baselineValue;
-                        const improved = currentVal < uc.input.baselineValue;
-
                         return (
-                          <div
+                          <button
                             key={uc.id}
+                            onClick={() =>
+                              setSelectedUseCase((prev) =>
+                                prev?.id === uc.id ? null : uc
+                              )
+                            }
                             className={cn(
-                              "rounded-lg border p-4 transition-all duration-300",
+                              "rounded-md border p-2 text-left transition-all duration-300 cursor-pointer",
                               isSelected
-                                ? "border-primary bg-primary/10"
+                                ? "border-primary bg-primary/15 shadow-[0_0_15px_hsl(217_100%_50%/0.15)]"
                                 : isConnected
-                                  ? "border-border/50 bg-card/40"
+                                  ? "border-border/50 bg-card/50 hover:border-primary/40 hover:bg-primary/5"
                                   : "border-border/20 bg-card/20 opacity-30"
                             )}
                           >
-                            <button
-                              onClick={() =>
-                                setSelectedUseCase((prev) =>
-                                  prev?.id === uc.id ? null : uc
-                                )
-                              }
-                              className="w-full text-left mb-3 cursor-pointer"
-                            >
-                              <span className="text-sm font-medium text-foreground">
-                                {uc.label}
-                              </span>
-                              <p className="text-[10px] text-muted-foreground mt-0.5">
-                                {uc.input.label}
-                              </p>
-                            </button>
-                            {isConnected && (
-                              <>
-                                <div className="flex items-center justify-between mb-2">
-                                  <span className="text-[10px] text-muted-foreground">
-                                    {uc.input.label}
-                                  </span>
-                                  <div className="flex items-center gap-1.5">
-                                    <span
-                                      className={cn(
-                                        "text-sm font-semibold",
-                                        improved ? "text-emerald-400" : "text-foreground"
-                                      )}
-                                    >
-                                      {currentVal} {uc.input.unit}
-                                    </span>
-                                    {improved && (
-                                      <ArrowDown className="w-3 h-3 text-emerald-400" />
-                                    )}
-                                  </div>
-                                </div>
-                                <Slider
-                                  value={[currentVal]}
-                                  min={uc.input.min}
-                                  max={uc.input.max}
-                                  step={uc.input.step}
-                                  onValueChange={(v) => handleUcSliderChange(uc.id, v)}
-                                  className={cn("cursor-pointer", colors.slider)}
-                                />
-                                <div className="flex justify-between mt-1">
-                                  <span className="text-[10px] text-muted-foreground">
-                                    Best: {uc.input.min} {uc.input.unit}
-                                  </span>
-                                  <span className="text-[10px] text-muted-foreground">
-                                    Baseline: {uc.input.baselineValue} {uc.input.unit}
-                                  </span>
-                                </div>
-                              </>
-                            )}
-                          </div>
+                            <span className="text-xs font-medium text-foreground">
+                              {uc.label}
+                            </span>
+                          </button>
                         );
                       })}
                     </div>
