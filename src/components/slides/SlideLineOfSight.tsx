@@ -354,7 +354,7 @@ const SlideLineOfSight = ({
                               "rounded-lg border p-4 transition-all duration-300",
                               isConnected
                                 ? "border-border/50 bg-card/40"
-                                : "border-border/20 bg-card/20 opacity-30"
+                                : "border-border/30 bg-card/30 opacity-50"
                             )}
                           >
                             {/* Header */}
