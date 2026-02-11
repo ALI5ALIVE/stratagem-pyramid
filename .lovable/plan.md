@@ -1,50 +1,75 @@
 
 
-# Add Line of Sight Interactive Page
+# Make Leading Measures Use-Case-Specific
 
-## Overview
+## The Problem
 
-Add a new standalone page at `/line-of-sight` featuring an interactive three-tier cascade visualization: **Use Cases** → **Leading Measures** (with sliders) → **Executive Outcomes** (CFO/CEO/COO). Users adjust operational leading measures and see real-time impact on executive-level lagging metrics.
+Currently, the leading measures are abstract sliders (e.g., "Change Cycle: 45 days") disconnected from specific use cases. The user wants each **use case to have its own concrete input** (e.g., "Number of Hard Landings per month") that then drives the leading measures, which in turn flow up to lagging executive outcomes.
 
-## Files to Create
+## New Three-Tier Flow
 
-### 1. `src/data/lineOfSightData.ts`
-The data file as provided — interfaces, executive outcomes (CFO/CEO/COO), 6 leading measures with slider configs, 8 use cases, and the `computeMetricValue` function. This file is clean and will be used as-is.
+```text
+USE CASE INPUTS (new)          LEADING MEASURES (computed)       LAGGING OUTCOMES (computed)
+-------------------------------  ----------------------------     --------------------------
+Hard Landings / month: [slider]  --> Repeat Events: X%            --> Cost Reduction: Y%
+Smoke Events / month: [slider]   --> Response Time: X hrs         --> Revenue Protection: $YM
+Procedure Changes / qtr: [slider]--> Change Cycle: X days         --> On-Time Performance: Y%
+...                               --> Training Gap: X%            --> Fleet Readiness: Y%
+```
 
-### 2. `src/components/slides/SlideLineOfSight.tsx`
-The interactive component. Since the JSX was stripped in the paste, I will reconstruct it faithfully from the provided structure:
+## Data Model Changes (lineOfSightData.ts)
 
-- **Header**: "Line of Sight" title with subtitle
-- **Tabs** (shadcn Tabs): CFO / CEO / COO tabs with color-coded styling (emerald/amber/sky)
-- **Tier 1 — Lagging Measures**: Cards showing computed metric values with delta indicators (up/down arrows, green/red coloring based on improvement)
-- **Tier 2 — Leading Measures**: Sliders for each connected measure, showing current value and improvement indicator
-- **Tier 3 — Use Cases**: Clickable cards for connected use cases, with an expandable detail panel showing description, impacted measures (as badges), and methodology quote
-- All existing dependencies are already installed (Tabs, Slider, lucide-react, cn utility)
+### New Interface: `UseCaseInput`
+Each use case gets a concrete, adjustable input with a slider:
 
-### 3. `src/pages/LineOfSightPage.tsx`
-A simple page wrapper that renders `SlideLineOfSight` full-screen with the dark background theme.
+| Use Case | Input Label | Unit | Baseline | Min | Max |
+|----------|-------------|------|----------|-----|-----|
+| Smoke & Fumes | Smoke/fumes events per month | events | 8 | 0 | 20 |
+| Hard Landing | Hard landings per month | events | 6 | 0 | 15 |
+| Procedure Change | Procedure changes per quarter | changes | 12 | 0 | 30 |
+| Crew Training | Untrained crew per cycle | crew | 45 | 0 | 100 |
+| AOG Response | AOG events per month | events | 3 | 0 | 10 |
+| Flight Data Monitoring | FOQA exceedances per month | events | 15 | 0 | 40 |
+| Regulatory Change | Regulatory changes per quarter | changes | 8 | 0 | 20 |
+| Cabin Safety | Outstanding cabin findings | findings | 22 | 0 | 50 |
 
-## File to Modify
+### New: `impactOnMeasures` per UseCase
+Each use case input defines how reducing it improves the leading measures. For example, Hard Landing Response reducing from 6 to 3 events/month would improve "Repeat Events" by a weighted amount and "Response Time" by another weighted amount.
 
-### 4. `src/App.tsx`
-Add route: `<Route path="/line-of-sight" element={<LineOfSightPage />} />`
+### Leading Measures Become Computed
+Leading measures are no longer directly adjustable -- they are **computed from** the use case inputs. The existing `computeMetricValue` continues to compute lagging metrics from leading measures, creating a clean three-tier cascade.
 
-## Component Behavior
+## UI Changes (SlideLineOfSight.tsx)
 
-- Selecting a **CFO/CEO/COO tab** filters the view to show only connected leading measures and use cases
-- Dragging a **leading measure slider** recalculates all lagging metrics in real-time via the weighted formula in `computeMetricValue`
-- Clicking a **use case card** expands a detail panel showing description, connected measure badges, and methodology text
-- Dimmed (opacity-30) use case cards indicate they aren't connected to the current stakeholder's measures
-- Delta indicators show improvement from baseline with colored arrows
+### Tier 3 (bottom): Use Case Inputs with Sliders
+- Replace the static use case buttons with **slider cards** -- each showing the use case name, a concrete input label, and an adjustable slider
+- Example: "Hard Landing Response -- Hard landings per month: [====6====]"
+- Connected/dimmed logic stays the same per stakeholder tab
 
-## Technical Details
+### Tier 2 (middle): Leading Measures Become Read-Only Gauges
+- Remove sliders from leading measures
+- Show them as computed values with improvement deltas (similar to current lagging metrics display)
+- They update automatically when use case inputs change
 
-| File | Action | Lines |
-|------|--------|-------|
-| `src/data/lineOfSightData.ts` | Create | ~230 lines |
-| `src/components/slides/SlideLineOfSight.tsx` | Create | ~300 lines |
-| `src/pages/LineOfSightPage.tsx` | Create | ~15 lines |
-| `src/App.tsx` | Add import + route | 2 lines |
+### Tier 1 (top): Lagging Outcomes -- No Change
+- Continue showing computed executive outcomes with delta indicators
+- Still uses existing `computeMetricValue` weighted formula
 
-All dependencies (Tabs, Slider, lucide-react, Tailwind utilities) are already installed. No new packages needed.
+### Detail Panel
+- Clicking a use case card still opens the detail panel with description, methodology, and connected measures
+
+## Computation Flow
+
+1. User adjusts a use case input (e.g., hard landings from 6 to 2)
+2. Each use case's `impactOnMeasures` weights are used to compute new leading measure values
+3. Multiple use cases can contribute to the same leading measure (contributions are summed)
+4. Leading measure values feed into `computeMetricValue` to produce lagging outcomes
+5. All three tiers update in real-time
+
+## Files Changed
+
+| File | Change |
+|------|--------|
+| `src/data/lineOfSightData.ts` | Add `UseCaseInput` interface, add `input` and `impactOnMeasures` fields to each use case, add `computeLeadingMeasure` function |
+| `src/components/slides/SlideLineOfSight.tsx` | Tier 3 becomes slider cards for use case inputs; Tier 2 becomes read-only computed gauges; state tracks use case input values instead of leading measure values |
 
