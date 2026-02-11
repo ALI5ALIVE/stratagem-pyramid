@@ -409,7 +409,9 @@ const SlideLineOfSight = ({
                                   <TooltipProvider>
                                     <Tooltip>
                                       <TooltipTrigger asChild>
-                                        <Info className="w-3 h-3 text-muted-foreground/50 hover:text-muted-foreground cursor-help" />
+                                        <span className="inline-flex cursor-help">
+                                          <Info className="w-3 h-3 text-muted-foreground/50 hover:text-muted-foreground" />
+                                        </span>
                                       </TooltipTrigger>
                                       <TooltipContent side="top" className="max-w-[250px] text-[10px]">
                                         <p className="font-medium mb-0.5">Source</p>
