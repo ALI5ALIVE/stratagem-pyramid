@@ -1,20 +1,20 @@
 
 
-# Fix: Sales Deck Logo Size and Header Spacing
+# Fix: Operational Performance Roadmap Graph Overflow
 
 ## Problem
 
-The Comply365 logo in the top-right corner is too large (`h-6 sm:h-8`), and the slide title sits too close to it because the content area starts at the same vertical position as the logo without enough top margin.
+The SVG chart uses `flex-1` which lets it expand to fill all available space, pushing the timeline comparison boxes below it out of the viewport.
 
 ## Changes
 
-### File: `src/components/sales-slides/SalesSlideContainer.tsx`
+### File: `src/components/sales-slides/SalesSlide6Journey.tsx`
 
-Two adjustments:
+1. **Line 74** — Replace `flex-1` on the SVG wrapper with a max-height constraint so the chart doesn't greedily consume all vertical space:
+   - Change `className="flex-1 flex justify-center items-center"` to `className="flex justify-center items-center max-h-[50vh]"`
 
-1. **Reduce logo size** (line 70): Change `h-6 sm:h-8` to `h-5 sm:h-6` and reduce opacity from `0.90` to `0.80` — this matches the memory guideline for sales deck layout separation.
+2. **Line 75** — Add a max-height to the SVG itself:
+   - Change `className="w-full max-w-3xl h-auto"` to `className="w-full max-w-3xl h-auto max-h-[320px]"`
 
-2. **Add top margin to header** (line 89): Add `mt-4 sm:mt-6` to the header `<div>` so the title text clears the logo area and doesn't crowd it.
-
-These two small tweaks will make the logo feel like a subtle brand mark rather than competing with the slide title, and give enough breathing room between the two elements.
+These two constraints cap the chart at a reasonable size, ensuring the timeline comparison boxes and bottom note always remain visible within the viewport.
 
