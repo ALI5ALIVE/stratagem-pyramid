@@ -1,16 +1,13 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { Crown, TrendingUp, Settings, ArrowDown, ArrowUp, ChevronDown, ChevronUp, AlertTriangle, Gauge, Plane, Building2 } from "lucide-react";
 import {
   executiveOutcomes,
   leadingMeasures,
   useCases,
-  computeLeadingMeasure,
   computeMetricValue,
   computeUseCaseCostImpact,
   computeScaledCostMidpoint,
-  defaultProfile,
   airlinePresets,
-  type UseCase,
   type AirlineProfile,
 } from "@/data/lineOfSightData";
 import { cn } from "@/lib/utils";
@@ -18,6 +15,15 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+
+interface SlideLineOfSightProps {
+  useCaseValues: Record<string, number>;
+  setUseCaseValues: React.Dispatch<React.SetStateAction<Record<string, number>>>;
+  airlineProfile: AirlineProfile;
+  setAirlineProfile: React.Dispatch<React.SetStateAction<AirlineProfile>>;
+  leadingValues: Record<string, number>;
+  totalCostAvoidance: number;
+}
 
 const stakeholderIcons: Record<string, React.ReactNode> = {
   Crown: <Crown className="w-4 h-4" />,
@@ -69,34 +75,16 @@ function formatCompact(value: number, unit: string): string {
   return `${value}`;
 }
 
-const SlideLineOfSight = () => {
-  const [useCaseValues, setUseCaseValues] = useState<Record<string, number>>(() => {
-    const initial: Record<string, number> = {};
-    useCases.forEach((uc) => {
-      initial[uc.id] = uc.input.baseline;
-    });
-    return initial;
-  });
+const SlideLineOfSight = ({
+  useCaseValues,
+  setUseCaseValues,
+  airlineProfile,
+  setAirlineProfile,
+  leadingValues,
+  totalCostAvoidance,
+}: SlideLineOfSightProps) => {
   const [expandedUseCase, setExpandedUseCase] = useState<string | null>(null);
-  const [airlineProfile, setAirlineProfile] = useState<AirlineProfile>({ ...defaultProfile });
   const [profileOpen, setProfileOpen] = useState(true);
-
-  // Compute leading measure values from use case inputs
-  const leadingValues = useMemo(() => {
-    const values: Record<string, number> = {};
-    leadingMeasures.forEach((lm) => {
-      values[lm.id] = computeLeadingMeasure(lm, useCaseValues, useCases);
-    });
-    return values;
-  }, [useCaseValues]);
-
-  // Total annualised cost avoidance (scaled)
-  const totalCostAvoidance = useMemo(() => {
-    return useCases.reduce(
-      (sum, uc) => sum + computeUseCaseCostImpact(uc, useCaseValues[uc.id] ?? uc.input.baseline, airlineProfile),
-      0
-    );
-  }, [useCaseValues, airlineProfile]);
 
   const handleUseCaseChange = (ucId: string, value: number[]) => {
     setUseCaseValues((prev) => ({ ...prev, [ucId]: value[0] }));
