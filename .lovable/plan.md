@@ -1,234 +1,50 @@
 
-# Hybrid Performance Messaging Implementation
+
+# Add Line of Sight Interactive Page
 
 ## Overview
 
-This plan implements the **hybrid approach** across all sales deck slides: keeping "closing the loop" as the **mechanism** (how we work) while introducing "predictable, measurable, and provable" as the **outcome** (what customers get).
+Add a new standalone page at `/line-of-sight` featuring an interactive three-tier cascade visualization: **Use Cases** → **Leading Measures** (with sliders) → **Executive Outcomes** (CFO/CEO/COO). Users adjust operational leading measures and see real-time impact on executive-level lagging metrics.
 
----
+## Files to Create
 
-## Narrative Arc
+### 1. `src/data/lineOfSightData.ts`
+The data file as provided — interfaces, executive outcomes (CFO/CEO/COO), 6 leading measures with slider configs, 8 use cases, and the `computeMetricValue` function. This file is clean and will be used as-is.
 
-```text
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│  MECHANISM: "Close the Loop"    →    OUTCOME: "Predictable, Measurable, Provable" │
-│                                                                                   │
-│  Slide 0: Hook with outcome promise                                              │
-│  Slide 1: Why operations stay unpredictable                                      │
-│  Slide 3: From reactive to predictable                                           │
-│  Slide 7: What predictable performance delivers                                  │
-│  Slide 8: Category promise (anchor)                                              │
-│  Slide 9: CTA with performance promise                                           │
-└─────────────────────────────────────────────────────────────────────────────────┘
-```
+### 2. `src/components/slides/SlideLineOfSight.tsx`
+The interactive component. Since the JSX was stripped in the paste, I will reconstruct it faithfully from the provided structure:
 
----
+- **Header**: "Line of Sight" title with subtitle
+- **Tabs** (shadcn Tabs): CFO / CEO / COO tabs with color-coded styling (emerald/amber/sky)
+- **Tier 1 — Lagging Measures**: Cards showing computed metric values with delta indicators (up/down arrows, green/red coloring based on improvement)
+- **Tier 2 — Leading Measures**: Sliders for each connected measure, showing current value and improvement indicator
+- **Tier 3 — Use Cases**: Clickable cards for connected use cases, with an expandable detail panel showing description, impacted measures (as badges), and methodology quote
+- All existing dependencies are already installed (Tabs, Slider, lucide-react, cn utility)
 
-## File Changes
+### 3. `src/pages/LineOfSightPage.tsx`
+A simple page wrapper that renders `SlideLineOfSight` full-screen with the dark background theme.
 
-### 1. `src/components/sales-slides/SalesSlide0Title.tsx`
+## File to Modify
 
-**Headline Update (lines 59-62):**
-```tsx
-// Current:
-What if every <span className="text-primary">safety signal</span>
-became a <span className="text-primary">solved problem</span>?
+### 4. `src/App.tsx`
+Add route: `<Route path="/line-of-sight" element={<LineOfSightPage />} />`
 
-// New:
-What if <span className="text-primary">operational performance</span>
-was <span className="text-primary">predictable</span>?
-```
+## Component Behavior
 
-**Subhead Update (lines 63-65):**
-```tsx
-// Current:
-What if every procedure change was tracked, trained, and proven?
-
-// New:
-What if every signal was tracked, trained, and proven — automatically?
-```
-
-**Tagline Update (lines 135-137):**
-```tsx
-// Current:
-That's what <span className="text-primary">closing the loop</span> looks like.
-
-// New:
-Close the loop. <span className="text-primary">Predict the outcome</span>.
-```
-
----
-
-### 2. `src/components/sales-slides/SalesSlide1Problem.tsx`
-
-**Title Update (line 59):**
-```tsx
-// Current:
-title="Point Tools Can't Close the Loop"
-
-// New:
-title="Why Operations Stay Unpredictable"
-```
-
----
-
-### 3. `src/components/sales-slides/SalesSlide3BeforeAfter.tsx`
-
-**Title Update (line 55):**
-```tsx
-// Current:
-title="From Fragmentation to Connected Operations"
-
-// New:
-title="From Reactive to Predictable Operations"
-```
-
-**After Panel Header Update (lines 145-146):**
-```tsx
-// Current:
-<h3 className="...">After</h3>
-<span className="...">Connected Platform</span>
-
-// New:
-<h3 className="...">After</h3>
-<span className="...">Predictable Performance</span>
-```
-
----
-
-### 4. `src/components/sales-slides/SalesSlide7Outcomes.tsx`
-
-**Title Update (line 75):**
-```tsx
-// Current:
-title="Measurable Value Across Four Pillars"
-
-// New:
-title="What Predictable Performance Delivers"
-```
-
-**Cultural Shift Quote Update (lines 183-186):**
-```tsx
-// Current:
-<span className="text-muted-foreground">Point solutions manage silos.</span>
-<span className="text-primary">Comply365 closes the loop.</span>
-
-// New:
-<span className="text-muted-foreground">Close the loop.</span>
-<span className="text-primary">Predict the outcome.</span>
-```
-
----
-
-### 5. `src/components/sales-slides/SalesSlide9NextSteps.tsx`
-
-**Headline Update (lines 69-72):**
-```tsx
-// Current:
-<span className="text-foreground">Let's Build</span>
-<span className="text-primary">Your Roadmap</span>
-
-// New:
-<span className="text-foreground">Let's Make Your Operations</span>
-<span className="text-primary">Predictable</span>
-```
-
----
-
-### 6. `src/data/salesDeckNarration.ts`
-
-**Slide 0 Narration (lines 8-10):**
-```typescript
-// Current:
-"What if every safety signal in your operation became a solved problem?..."
-
-// New:
-"What if operational performance was predictable? What if every signal was automatically tracked, trained, and proven? That's not a vision — that's what happens when you close the loop between safety, content, and training. Today, let me show you how."
-```
-
-**Slide 1 Narration (lines 12-14):**
-```typescript
-// Current:
-"Here's the reality most operations face..."
-
-// New:
-"Here's why most operations stay unpredictable. Foqua flags a hard landing trend on Monday. By Friday, safety has opened an investigation. Two weeks later, content gets notified via email. A month in, training is still waiting for scope. And when audit comes knocking? You're scrambling for evidence. Point tools can't close this loop because they were never designed to. Sound familiar?"
-```
-
-**Slide 3 Narration (lines 20-22):**
-```typescript
-// Current:
-"The transformation is clear. Before: disconnected silos..."
-
-// New:
-"The transformation from reactive to predictable is clear. Before: disconnected silos, manual handoffs, reactive responses, scattered evidence. After: a connected operating model where signals drive execution and proof is generated by default. The result? Predictable on-time performance, workforce readiness at ninety-four percent, and audit prep that takes hours instead of months."
-```
-
-**Slide 7 Narration (lines 36-38):**
-```typescript
-// Current:
-"The value shows up in four pillars..."
-
-// New:
-"Here's what predictable performance delivers. Schedule protection: hard landing trends detected early mean protected departures. Revenue protection: fatigue risks flagged proactively avoid costly cancellations. Cost savings: automated content updates eliminate rework cycles. Customer loyalty: compliance gaps closed immediately maintain trust. Close the loop. Predict the outcome."
-```
-
-**Slide 9 Narration (lines 44-46):**
-```typescript
-// Current:
-"Your operation has unique signals. Let's map them together..."
-
-// New:
-"Your operation has unique signals. Let's make them predictable. In a discovery session, we'll assess where you are on the maturity journey, identify your highest-impact opportunities, and build a custom ROI model for your operation. Detect, Trigger, Orchestrate, Prove — predictable performance starts now."
-```
-
----
-
-## Summary of Changes
-
-| Location | Current | Updated |
-|----------|---------|---------|
-| Slide 0 headline | "safety signal → solved problem" | "operational performance → predictable" |
-| Slide 0 tagline | "closing the loop" | "Close the loop. Predict the outcome." |
-| Slide 1 title | "Point Tools Can't Close the Loop" | "Why Operations Stay Unpredictable" |
-| Slide 3 title | "Fragmentation to Connected" | "Reactive to Predictable" |
-| Slide 3 After label | "Connected Platform" | "Predictable Performance" |
-| Slide 7 title | "Measurable Value Across Four Pillars" | "What Predictable Performance Delivers" |
-| Slide 7 quote | "Comply365 closes the loop" | "Close the loop. Predict the outcome." |
-| Slide 9 headline | "Let's Build Your Roadmap" | "Let's Make Your Operations Predictable" |
-| Narration | 5 script updates | Aligned with performance messaging |
-
----
-
-## New Core Message Flow
-
-```text
-SLIDE 0:  "What if operational performance was predictable?"
-             ↓
-SLIDE 1:  "Here's why operations stay unpredictable..."
-             ↓
-SLIDE 3:  "From Reactive to Predictable Operations"
-             ↓
-SLIDE 7:  "What Predictable Performance Delivers"
-             ↓
-SLIDE 8:  "Predictable, measurable, and provable" (unchanged - anchor)
-             ↓
-SLIDE 9:  "Let's Make Your Operations Predictable"
-```
-
-The hybrid approach retains "closing the loop" as the mechanism (slide 0 tagline, slide 8 differentiator) while elevating "predictable" as the customer-facing promise throughout.
-
----
+- Selecting a **CFO/CEO/COO tab** filters the view to show only connected leading measures and use cases
+- Dragging a **leading measure slider** recalculates all lagging metrics in real-time via the weighted formula in `computeMetricValue`
+- Clicking a **use case card** expands a detail panel showing description, connected measure badges, and methodology text
+- Dimmed (opacity-30) use case cards indicate they aren't connected to the current stakeholder's measures
+- Delta indicators show improvement from baseline with colored arrows
 
 ## Technical Details
 
-| File | Lines Modified | Type |
-|------|----------------|------|
-| `SalesSlide0Title.tsx` | 59-65, 135-137 | JSX text content |
-| `SalesSlide1Problem.tsx` | 59 | Prop value |
-| `SalesSlide3BeforeAfter.tsx` | 55, 145-146 | Prop value, JSX text |
-| `SalesSlide7Outcomes.tsx` | 75, 183-186 | Prop value, JSX text |
-| `SalesSlide9NextSteps.tsx` | 69-72 | JSX text content |
-| `salesDeckNarration.ts` | 8-10, 12-14, 20-22, 36-38, 44-46 | String values |
+| File | Action | Lines |
+|------|--------|-------|
+| `src/data/lineOfSightData.ts` | Create | ~230 lines |
+| `src/components/slides/SlideLineOfSight.tsx` | Create | ~300 lines |
+| `src/pages/LineOfSightPage.tsx` | Create | ~15 lines |
+| `src/App.tsx` | Add import + route | 2 lines |
 
-Total: **6 files**, **~15 discrete edits**
+All dependencies (Tabs, Slider, lucide-react, Tailwind utilities) are already installed. No new packages needed.
+
