@@ -1,97 +1,88 @@
 
 
-# Add KPI Connection Tree Visualization
+# Add Balanced Scorecard Tab
 
 ## Overview
 
-Create a new visual slide that renders the entire Line of Sight cascade as an interactive **tree diagram** -- use cases at the bottom, leading measures in the middle, executive outcomes at the top -- with animated connection lines showing exactly how each use case flows through to executive KPIs. This becomes a companion view to the existing calculator, accessible via a toggle or tab on the same page.
+Add a third tab -- "Scorecard" -- to the Line of Sight page that presents a classic Balanced Scorecard view. Instead of being organized by stakeholder role (CFO/CEO/COO), it is organized by **four strategic perspectives**: Financial, Customer, Internal Processes, and Learning & Growth. Each perspective contains strategic objectives with KPIs that are computed from the existing use case and leading measure data.
+
+## Balanced Scorecard Perspectives
+
+| Perspective | Strategic Objectives | KPIs (computed from existing data) |
+|---|---|---|
+| **Financial** | Reduce operating cost per ASK; Protect revenue | Fuel Cost Savings ($M) driven by lm1; IrOps Cost Avoidance ($M) driven by lm2+lm3; Insurance Savings ($M) driven by lm4+lm5 |
+| **Customer** | Improve schedule reliability; Enhance passenger experience | On-Time Performance (%) driven by lm3; Pax Experience Score (pts) driven by lm6; Mishandled baggage rate (from uc8 input) |
+| **Internal Processes** | Increase fleet utilisation; Reduce safety event recurrence; Accelerate compliance readiness | Fleet Availability (%) driven by lm2; Safety Recurrence Rate (%) driven by lm4; Audit Readiness (hrs) driven by lm5 |
+| **Learning & Growth** | Shift from reactive to predictive operations; Close the detect-to-action loop | Fuel Variance (%) driven by lm1; Regulatory Standing (%) driven by lm5+lm4 |
+
+## UI Design
+
+Each perspective is a card with a coloured left border:
+- **Financial** -- emerald
+- **Customer** -- blue
+- **Internal Processes** -- amber
+- **Learning & Growth** -- purple
+
+Inside each card:
+- Perspective title and 1-line description
+- A row of KPI tiles, each showing: KPI name, baseline value, current computed value, improvement delta (with green/red arrow), and a small progress bar showing % improvement from baseline
+
+At the top of the scorecard, a summary strip shows overall improvement across all four perspectives as a simple average percentage.
 
 ## Layout
 
 ```text
-                     +------------------+
-                     | EXECUTIVE        |
-                     | OUTCOMES         |
-                     |  CFO  CEO  COO   |
-                     +--------+---------+
-                              |
-                    connection lines (SVG)
-                              |
-              +------+------+------+------+------+------+
-              | Fuel | Fleet| OTP  |Safety|Audit |Pax   |
-              | Var  | Avail|      |Recur |Ready |Exp   |
-              +--+---+--+---+--+---+--+---+--+---+--+---+
-                 |        |        |        |        |
-               connection lines (SVG, weighted thickness)
-                 |        |        |        |        |
-     +-----+-----+-----+-----+-----+-----+-----+-----+
-     |Go   |AOG  |Delay|Fuel |Injry|Reg  |Ins  |Bags |
-     |Arnd |     |& OTP|Perf |     |Fine |Prem |     |
-     +-----+-----+-----+-----+-----+-----+-----+-----+
++-----------------------------------------------------------+
+| OVERALL IMPROVEMENT: +14.2%                                |
++-----------------------------------------------------------+
+| [green] FINANCIAL                                          |
+|  Objective: Reduce operating cost, protect revenue         |
+|  +------------+ +------------+ +------------+              |
+|  |Fuel Savings| |IrOps Avoid | |Insurance   |              |
+|  |  $4.2M     | |  $8.1M     | |  $1.9M     |              |
+|  | +$4.2M     | | +$8.1M     | | +$1.9M     |              |
+|  +------------+ +------------+ +------------+              |
++-----------------------------------------------------------+
+| [blue] CUSTOMER                                            |
+|  Objective: Improve reliability & passenger experience     |
+|  +------------+ +------------+ +------------+              |
+|  |OTP         | |Pax Score   | |Bag Rate    |              |
+|  |  82.3%     | |  76.1 pts  | |  5.2/1000  |              |
+|  | +4.3pp     | | +4.1 pts   | | -2.8       |              |
+|  +------------+ +------------+ +------------+              |
++-----------------------------------------------------------+
+| [amber] INTERNAL PROCESSES                                 |
+|  ...                                                       |
++-----------------------------------------------------------+
+| [purple] LEARNING & GROWTH                                 |
+|  ...                                                       |
++-----------------------------------------------------------+
 ```
 
-## What Gets Built
+## Technical Details
 
-### 1. New Component: `src/components/slides/LineOfSightTree.tsx`
+### Data (`src/data/lineOfSightData.ts`)
 
-A full-screen SVG + HTML hybrid visualization:
+Add a new exported `balancedScorecardPerspectives` array defining the four perspectives. Each perspective references existing leading measures and use case data by ID, plus has its own set of KPI definitions with weights mapping to leading measures (reusing the existing `LaggingMetric` interface pattern).
 
-**Three horizontal rows of nodes:**
-- **Top row**: 3 stakeholder cards (CFO, CEO, COO), each containing their 3 lagging metrics
-- **Middle row**: 6 leading measure nodes (compact pills showing label + current value)
-- **Bottom row**: 8 use case nodes (compact cards showing label + current input value)
+### New Component (`src/components/slides/BalancedScorecard.tsx`)
 
-**Connection lines (SVG):**
-- Lines from use case nodes to leading measure nodes, based on `impactOnMeasures` weights
-- Lines from leading measure nodes to executive outcome nodes, based on `metric.weights`
-- Line thickness proportional to the weight value
-- Line color reflects the stakeholder (emerald for CFO connections, amber for CEO, sky for COO)
-- Lines animate/highlight on hover of any node, dimming unrelated paths
+- Receives the same shared props as the other views: `useCaseValues`, `leadingValues`, `totalCostAvoidance`, `airlineProfile`
+- Computes KPI values using the existing `computeMetricValue` function from `lineOfSightData.ts`
+- Renders four perspective cards with KPI tiles
+- Each KPI tile shows baseline, current value, delta, and a progress bar
 
-**Interactive behavior:**
-- Hovering a use case highlights all paths upward to the executive outcomes it impacts
-- Hovering an executive metric highlights all paths downward to the use cases that drive it
-- Hovering a leading measure highlights both directions
-- Current computed values display on each node (reusing the same state from the calculator)
-- Nodes with improvement from baseline show a green glow
+### Page (`src/pages/LineOfSightPage.tsx`)
 
-### 2. Modified: `src/pages/LineOfSightPage.tsx`
-
-Add a view toggle (two buttons: "Calculator" / "Tree View") at the top of the page. Both views share the same `useCaseValues` and `airlineProfile` state, so adjustments in the calculator are reflected in the tree and vice versa.
-
-### 3. Modified: `src/components/slides/SlideLineOfSight.tsx`
-
-Extract the state management (`useCaseValues`, `airlineProfile`, computed values) up to the page level so both the calculator and tree views can share it. The component receives these as props instead of managing them internally.
-
-## Technical Approach
-
-**Node positioning**: Use a responsive grid layout. Each row is a flex container. Nodes are positioned with refs, and a `useLayoutEffect` reads their bounding rects to compute SVG line endpoints.
-
-**SVG overlay**: An absolutely-positioned SVG layer sits behind the nodes, drawing curved paths (`<path>` with cubic bezier) between connected nodes. Lines use `stroke-width` proportional to weight (e.g., weight 0.5 = 3px, weight 0.1 = 1px).
-
-**Hover highlighting**: On hover, set a `highlightedNode` state. All connections involving that node get full opacity; others fade to 10% opacity. A CSS transition makes this smooth.
-
-**Responsiveness**: On smaller screens, the tree scrolls horizontally or scales down. The SVG recalculates on window resize.
+- Add a third view option: `"calculator" | "tree" | "scorecard"`
+- Add a "Scorecard" button to the toggle bar (using `LayoutGrid` icon from lucide)
+- Render `BalancedScorecard` when selected, passing the same shared state
 
 ## Files Changed
 
 | File | Change |
 |------|--------|
-| `src/components/slides/LineOfSightTree.tsx` | **Create** -- Tree visualization component (~250 lines) |
-| `src/pages/LineOfSightPage.tsx` | **Modify** -- Lift state up, add Calculator/Tree toggle |
-| `src/components/slides/SlideLineOfSight.tsx` | **Modify** -- Accept shared state as props instead of internal state |
-
-## State Architecture
-
-```text
-LineOfSightPage (owns state)
-  |-- useCaseValues: Record<string, number>
-  |-- airlineProfile: AirlineProfile
-  |-- computed leadingValues, totalCostAvoidance
-  |
-  +-- [Calculator View] SlideLineOfSight (receives props)
-  +-- [Tree View] LineOfSightTree (receives props)
-```
-
-Both views stay in sync because they share the same state from the parent.
+| `src/data/lineOfSightData.ts` | Add `balancedScorecardPerspectives` data definition |
+| `src/components/slides/BalancedScorecard.tsx` | **Create** -- Scorecard component with four perspective cards |
+| `src/pages/LineOfSightPage.tsx` | Add third tab button and render scorecard view |
 
