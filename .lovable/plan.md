@@ -1,152 +1,118 @@
 
 
-# Redesign Line of Sight with Real Use Cases and Cost Data
+# Add Airline Profile Setup to Line of Sight Calculator
 
-## Overview
+## The Problem
 
-Replace the current abstract use cases and leading measures with the 8 real, costed use cases provided. The new model inverts the interaction: users adjust **use case frequency sliders** (e.g., "Go-arounds per month"), which compute **leading operational measures**, which flow up to **executive lagging outcomes** aligned to the 4 cost centres (Fuel, Asset Utilisation, Labour, Irregular Ops).
+Currently, the cost calculations use fixed midpoint values (e.g., $12,500 per go-around, $80,000 per AOG day). These are generic industry averages. A real sales conversation needs the prospect's own numbers -- fleet size, fuel spend, passenger volume -- to produce credible, airline-specific dollar outcomes.
 
-## New Three-Tier Architecture
+## Solution: "Your Airline" Configuration Panel
+
+Add a collapsible setup panel at the top of the page where users enter 4-5 simple inputs about their airline. These inputs then **scale** all the cost calculations throughout the page, making every dollar figure specific to that airline.
+
+### Airline Profile Inputs
+
+| Input | Label | Default | Unit | Why It Matters |
+|-------|-------|---------|------|----------------|
+| Fleet Size | Number of aircraft | 50 | aircraft | Scales AOG cost (lost revenue per aircraft), go-around frequency, maintenance events |
+| Annual Fuel Spend | Total fuel budget | 500 | $M/year | Converts fuel variance % into real dollars (1% of $500M = $5M) |
+| Daily Departures | Average flights per day | 150 | flights | Scales delay cost (more flights = more cascade), go-around frequency |
+| Annual Passengers | Passengers per year | 20 | M pax | Scales baggage mishandling cost, injury frequency, passenger compensation |
+| Average Revenue per Flight | Revenue per departure | 25,000 | $/flight | Scales AOG lost revenue and delay impact |
+
+### How Scaling Works
+
+Instead of using fixed `costMidpoint` values, the cost-per-event becomes a function of the airline profile. For example:
+
+- **Fuel Degradation**: `fuelVariance% * annualFuelSpend` instead of fixed $12.5M per %
+- **AOG**: `avgRevenuePerFlight * dailyDepartures / fleetSize` for lost revenue per AOG day
+- **Baggage**: `costPerBag * (annualPassengers / 12 / 1000)` for monthly volume scaling
+- **Delays**: `costPerMinute * dailyDepartures` for network-wide delay cost
+
+The use case baselines also scale with fleet/volume (e.g., a 200-aircraft airline has more go-arounds than a 50-aircraft one).
+
+## UI Layout
 
 ```text
-TIER 3: USE CASE INPUTS (sliders)         TIER 2: LEADING MEASURES (computed)     TIER 1: EXECUTIVE OUTCOMES (computed)
-----------------------------------         ---------------------------------       ----------------------------------
-Go-arounds / month: [====12====]    --->   Fuel variance: X%               --->    Fuel Cost Savings: $XM
-AOG days / month: [====4====]       --->   Fleet availability: X%          --->    Asset Utilisation Gain: $XM
-Delay minutes / day: [====45====]   --->   OTP: X%                         --->    IrOps Cost Reduction: $XM
-Fuel variance %: [====3.2====]      --->   Safety event recurrence: X%     --->    Labour Effectiveness: X%
-Injuries / quarter: [====2====]     --->   Audit readiness: X hrs          --->    Insurance Savings: $XM
-Regulatory findings / year: [===3=] --->   Regulatory compliance: X%       --->    Revenue Protection: $XM
-Insurance escalation %: [====5====]
-Mishandled bags / 1000: [====8====]
++----------------------------------------------------------+
+| YOUR AIRLINE                                    [Collapse]|
+| Fleet: [50] aircraft  |  Fuel: [$500M]/yr                |
+| Departures: [150]/day |  Passengers: [20M]/yr            |
+| Revenue/flight: [$25K]                                    |
++----------------------------------------------------------+
+|                                                           |
+| [CFO] [CEO] [COO]  tabs...                               |
+| Tier 1: Executive Outcomes (now with real $ values)       |
+| Cost Banner: "Your estimated annual savings: $24.3M"      |
+| Tier 2: Leading Measures                                  |
+| Tier 3: Use Case Sliders (costs now airline-specific)     |
++----------------------------------------------------------+
 ```
+
+### Airline Profile Panel Design
+- Appears above the tabs as a compact, collapsible card
+- Styled with a subtle gradient border to distinguish it as a configuration area
+- Inputs use number fields (not sliders) for precise entry
+- Includes preset buttons: **Regional** (25 aircraft), **Mid-Size** (80 aircraft), **Tier 1** (200 aircraft) for quick setup
+- Collapsed state shows a summary line: "50 aircraft | $500M fuel | 150 flights/day | 20M pax/yr"
 
 ## Data Model Changes (`src/data/lineOfSightData.ts`)
 
-### Replace Use Cases with 8 Costed Use Cases
-
-Each use case gains concrete input parameters and cost data:
-
-| # | Use Case | Input Slider | Unit | Baseline | Min | Max | Cost Per Event |
-|---|----------|-------------|------|----------|-----|-----|---------------|
-| 1 | Go-Around Events | Go-arounds per month | events | 12 | 0 | 30 | $5K-$20K |
-| 2 | AOG & Unscheduled Maintenance | AOG days per month | days | 8 | 0 | 20 | $10K-$150K/day |
-| 3 | Flight Delays & OTP | Avg delay minutes per day | mins | 45 | 0 | 120 | $75-$200/min |
-| 4 | Fuel Performance Degradation | Fuel variance above plan | % | 3.2 | 0 | 8 | 1% = $5M-$20M/yr |
-| 5 | Crew & Passenger Injury | Injury incidents per quarter | incidents | 4 | 0 | 12 | $20K-$250K |
-| 6 | Regulatory Fines & Findings | Findings per year | findings | 5 | 0 | 15 | $50K-$5M |
-| 7 | Insurance Premium Escalation | Premium increase | % | 6 | 0 | 15 | $1M-$10M/yr |
-| 8 | Baggage & Passenger Misalignment | Mishandled bags per 1,000 pax | bags | 8 | 0 | 20 | $100-$350/bag |
-
-### New `UseCaseInput` Interface
-
+### New Interface: `AirlineProfile`
 ```typescript
-export interface UseCaseInput {
-  inputLabel: string;
-  unit: string;
-  baseline: number;
-  min: number;
-  max: number;
-  step: number;
-  costPerEvent: string;        // display string e.g. "$5K-$20K per event"
-  costComponents: string[];    // e.g. ["Additional fuel burn", "Crew duty-time impact"]
-  severity: string;            // e.g. "Medium", "High", "Very High"
-  frequency: string;           // e.g. "High frequency", "Low frequency"
+export interface AirlineProfile {
+  fleetSize: number;
+  annualFuelSpendM: number;    // in $M
+  dailyDepartures: number;
+  annualPassengersM: number;   // in millions
+  revenuePerFlight: number;    // in $
 }
 ```
 
-Each `UseCase` gets an `input` field of this type plus `impactOnMeasures: Record<string, number>` defining weighted contribution to leading measures.
+### New: `defaultProfiles` presets
+Three pre-built profiles (Regional, Mid-Size, Tier 1) for quick selection.
 
-### Redesign Leading Measures (Now Computed, Not Adjustable)
+### Updated: `computeScaledCostMidpoint` function
+Takes a use case and airline profile, returns a scaled cost-per-event value. Each use case has a scaling formula:
+- uc1 (Go-arounds): scales with daily departures
+- uc2 (AOG): scales with revenue per flight
+- uc3 (Delays): scales with daily departures
+- uc4 (Fuel): scales directly with annual fuel spend
+- uc5 (Injuries): scales with annual passengers
+- uc6 (Regulatory): fixed (doesn't scale much)
+- uc7 (Insurance): scales with fleet size
+- uc8 (Baggage): scales with annual passengers
 
-Replace current abstract measures with ones tied to the 4 cost centres:
+### Updated: `computeUseCaseCostImpact`
+Now accepts airline profile parameter and uses scaled cost instead of fixed midpoint.
 
-| ID | Leading Measure | Unit | Baseline | Driven By |
-|----|----------------|------|----------|-----------|
-| lm1 | Fuel variance above plan | % | 3.2 | Go-arounds, Fuel degradation, Delays |
-| lm2 | Fleet availability rate | % | 91 | AOG, Delays |
-| lm3 | On-time performance | % | 78 | Delays, AOG, Go-arounds |
-| lm4 | Safety event recurrence rate | % | 12 | Injuries, Go-arounds, Fuel |
-| lm5 | Audit & compliance readiness | hrs | 120 | Regulatory findings, Insurance |
-| lm6 | Passenger experience score | pts | 72 | Baggage, Delays, Injuries |
+## Component Changes (`src/components/slides/SlideLineOfSight.tsx`)
 
-### New `computeLeadingMeasure` Function
+### New: `AirlineProfilePanel` section
+- Collapsible panel with 5 number inputs
+- 3 preset buttons (Regional / Mid-Size / Tier 1)
+- Collapsed summary line
+- State: `airlineProfile` stored in component state
 
-Computes each leading measure value as a function of use case input reductions:
-
-```typescript
-export function computeLeadingMeasure(
-  measure: LeadingMeasure,
-  useCaseInputValues: Record<string, number>,
-  useCases: UseCase[]
-): number {
-  // Sum weighted improvements from all use cases that impact this measure
-  // When a use case input decreases from baseline, it improves the connected leading measure
-}
-```
-
-### Redesign Executive Outcomes (Lagging Metrics)
-
-Align to the 4 cost centres plus cross-cutting outcomes:
-
-**CFO tab:**
-- Fuel Cost Savings ($M) -- driven by lm1
-- IrOps Cost Avoidance ($M) -- driven by lm2, lm3
-- Insurance Premium Reduction ($M) -- driven by lm4, lm5
-
-**CEO tab:**
-- Brand & Reputation Score (pts) -- driven by lm4, lm6
-- Regulatory Standing (%) -- driven by lm5, lm4
-- Revenue Protection ($M) -- driven by lm3, lm6
-
-**COO tab:**
-- On-Time Performance (%) -- driven by lm3, lm2
-- Fleet Readiness (%) -- driven by lm2
-- Labour Effectiveness (%) -- driven by lm3, lm4
-
-### New: Annualised Cost Impact Display
-
-Add a summary banner showing total estimated annual cost impact based on the use case input reductions. Each use case contributes: `(baseline - current) * midpoint_cost_per_event * 12` (or appropriate annualisation).
-
-## UI Changes (`src/components/slides/SlideLineOfSight.tsx`)
-
-### Tier 3 (Bottom) -- Use Case Input Sliders
-
-Replace the static use case buttons with interactive slider cards:
-- Each card shows: use case name, severity/frequency badges, input slider, cost-per-event range, cost components list
-- Slider adjusts the use case frequency (lower = improvement)
-- Connected/dimmed logic per stakeholder tab remains
-- Clicking the card header expands the detail panel (description, methodology, cost breakdown)
-
-### Tier 2 (Middle) -- Leading Measures Become Read-Only Gauges
-
-- Remove sliders from leading measures
-- Show as computed cards with current value, baseline, and improvement delta
-- Auto-update when any use case input changes
-
-### Tier 1 (Top) -- Executive Outcomes with Cost Impact
-
-- Keep existing card layout but update metrics to match the new cost-centre-aligned outcomes
-- Add an annualised dollar-impact estimate where applicable
-
-### New: Cost Impact Summary Banner
-
-A banner between Tier 1 and Tier 2 showing:
-- Total estimated annual cost avoidance (sum across all use case reductions)
-- Labelled as "Illustrative Target Outcomes*" with a footnote for defensibility
+### Updated: All cost calculations
+- `computeUseCaseCostImpact` calls now pass airline profile
+- Cost-per-event display on each use case card updates dynamically
+- Total cost avoidance banner uses scaled values
+- Executive outcome dollar metrics ($M) scale with airline size
 
 ## Files Changed
 
 | File | Change |
 |------|--------|
-| `src/data/lineOfSightData.ts` | Full rewrite: new interfaces, 8 costed use cases with inputs, redesigned leading measures, new cost-centre-aligned executive outcomes, new computation functions |
-| `src/components/slides/SlideLineOfSight.tsx` | Refactor: Tier 3 becomes slider cards with cost data, Tier 2 becomes read-only computed gauges, add cost impact summary banner, state tracks use case inputs |
+| `src/data/lineOfSightData.ts` | Add `AirlineProfile` interface, `defaultProfiles` presets, `computeScaledCostMidpoint` function, update `computeUseCaseCostImpact` signature |
+| `src/components/slides/SlideLineOfSight.tsx` | Add airline profile panel with inputs and presets, pass profile through all cost calculations, update display strings |
 
-## Computation Flow
+## User Experience Flow
 
-1. User adjusts a use case input (e.g., go-arounds from 12 to 5 per month)
-2. Each use case's `impactOnMeasures` weights compute new leading measure values via `computeLeadingMeasure`
-3. Leading measure values feed into existing `computeMetricValue` for lagging outcomes
-4. Annualised cost impact banner sums: `(baseline - current) * costMidpoint * annualisationFactor` across all use cases
-5. All three tiers and the cost banner update in real-time
+1. User lands on /line-of-sight, sees the airline profile panel open by default
+2. They either type in their airline's numbers or click a preset (e.g., "Tier 1")
+3. All dollar figures throughout the page immediately reflect their airline's scale
+4. They adjust use case sliders to model improvements
+5. The cost avoidance banner shows a credible, airline-specific savings figure
+6. In a sales meeting, the rep enters the prospect's real numbers and the page becomes a live business case
 
