@@ -22,9 +22,9 @@ const slides = [
   { id: "sales-slide-3", label: "Before/After", component: SalesSlide3BeforeAfter },
   { id: "sales-slide-4", label: "Solution", component: SalesSlide4Solution },
   { id: "sales-slide-5", label: "Use Case", component: SalesSlide5UseCase },
-  { id: "sales-slide-6", label: "Journey", component: SalesSlide6Journey },
-  { id: "sales-slide-7", label: "Outcomes", component: SalesSlide7Outcomes },
-  { id: "sales-slide-8", label: "Line of Sight", component: SalesSlide8LineOfSight },
+  { id: "sales-slide-6", label: "Line of Sight", component: SalesSlide8LineOfSight },
+  { id: "sales-slide-7", label: "Journey", component: SalesSlide6Journey },
+  { id: "sales-slide-8", label: "Outcomes", component: SalesSlide7Outcomes },
   { id: "sales-slide-9", label: "Why Us", component: SalesSlide8WhyUs },
   { id: "sales-slide-10", label: "Next Steps", component: SalesSlide9NextSteps },
 ];
