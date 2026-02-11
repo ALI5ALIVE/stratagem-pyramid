@@ -11,6 +11,7 @@ import SalesSlide4Solution from "@/components/sales-slides/SalesSlide4Solution";
 import SalesSlide5UseCase from "@/components/sales-slides/SalesSlide5UseCase";
 import SalesSlide6Journey from "@/components/sales-slides/SalesSlide6Journey";
 import SalesSlide7Outcomes from "@/components/sales-slides/SalesSlide7Outcomes";
+import SalesSlide8LineOfSight from "@/components/sales-slides/SalesSlide8LineOfSight";
 import SalesSlide8WhyUs from "@/components/sales-slides/SalesSlide8WhyUs";
 import SalesSlide9NextSteps from "@/components/sales-slides/SalesSlide9NextSteps";
 
@@ -23,8 +24,9 @@ const slides = [
   { id: "sales-slide-5", label: "Use Case", component: SalesSlide5UseCase },
   { id: "sales-slide-6", label: "Journey", component: SalesSlide6Journey },
   { id: "sales-slide-7", label: "Outcomes", component: SalesSlide7Outcomes },
-  { id: "sales-slide-8", label: "Why Us", component: SalesSlide8WhyUs },
-  { id: "sales-slide-9", label: "Next Steps", component: SalesSlide9NextSteps },
+  { id: "sales-slide-8", label: "Line of Sight", component: SalesSlide8LineOfSight },
+  { id: "sales-slide-9", label: "Why Us", component: SalesSlide8WhyUs },
+  { id: "sales-slide-10", label: "Next Steps", component: SalesSlide9NextSteps },
 ];
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;

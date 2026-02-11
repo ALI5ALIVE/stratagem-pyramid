@@ -54,7 +54,7 @@ const SalesSlide8WhyUs = ({
 }: SalesSlide8WhyUsProps) => {
   return (
     <SalesSlideContainer
-      id="sales-slide-8"
+      id="sales-slide-9"
       title="Why Comply365"
       subtitle="Point solutions manage silos. We close the loop."
       slideNumber={slideNumber}
