@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { Crown, TrendingUp, Settings, ArrowDown, ArrowUp, ChevronDown, ChevronUp, AlertTriangle, Gauge } from "lucide-react";
+import { Crown, TrendingUp, Settings, ArrowDown, ArrowUp, ChevronDown, ChevronUp, AlertTriangle, Gauge, Plane, Building2 } from "lucide-react";
 import {
   executiveOutcomes,
   leadingMeasures,
@@ -7,11 +7,17 @@ import {
   computeLeadingMeasure,
   computeMetricValue,
   computeUseCaseCostImpact,
+  computeScaledCostMidpoint,
+  defaultProfile,
+  airlinePresets,
   type UseCase,
+  type AirlineProfile,
 } from "@/data/lineOfSightData";
 import { cn } from "@/lib/utils";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Slider } from "@/components/ui/slider";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const stakeholderIcons: Record<string, React.ReactNode> = {
   Crown: <Crown className="w-4 h-4" />,
@@ -56,6 +62,13 @@ function formatCurrency(value: number): string {
   return `$${value.toFixed(0)}`;
 }
 
+function formatCompact(value: number, unit: string): string {
+  if (unit === "$M") return `$${value}M`;
+  if (unit === "$/flight") return `$${(value / 1000).toFixed(0)}K`;
+  if (unit === "M pax") return `${value}M`;
+  return `${value}`;
+}
+
 const SlideLineOfSight = () => {
   const [useCaseValues, setUseCaseValues] = useState<Record<string, number>>(() => {
     const initial: Record<string, number> = {};
@@ -65,6 +78,8 @@ const SlideLineOfSight = () => {
     return initial;
   });
   const [expandedUseCase, setExpandedUseCase] = useState<string | null>(null);
+  const [airlineProfile, setAirlineProfile] = useState<AirlineProfile>({ ...defaultProfile });
+  const [profileOpen, setProfileOpen] = useState(true);
 
   // Compute leading measure values from use case inputs
   const leadingValues = useMemo(() => {
@@ -75,16 +90,23 @@ const SlideLineOfSight = () => {
     return values;
   }, [useCaseValues]);
 
-  // Total annualised cost avoidance
+  // Total annualised cost avoidance (scaled)
   const totalCostAvoidance = useMemo(() => {
     return useCases.reduce(
-      (sum, uc) => sum + computeUseCaseCostImpact(uc, useCaseValues[uc.id] ?? uc.input.baseline),
+      (sum, uc) => sum + computeUseCaseCostImpact(uc, useCaseValues[uc.id] ?? uc.input.baseline, airlineProfile),
       0
     );
-  }, [useCaseValues]);
+  }, [useCaseValues, airlineProfile]);
 
   const handleUseCaseChange = (ucId: string, value: number[]) => {
     setUseCaseValues((prev) => ({ ...prev, [ucId]: value[0] }));
+  };
+
+  const handleProfileField = (field: keyof AirlineProfile, value: string) => {
+    const num = parseFloat(value);
+    if (!isNaN(num) && num >= 0) {
+      setAirlineProfile((prev) => ({ ...prev, [field]: num }));
+    }
   };
 
   // Determine which use cases are connected to a stakeholder via leading measures
@@ -111,6 +133,14 @@ const SlideLineOfSight = () => {
     );
   };
 
+  const profileInputs: { field: keyof AirlineProfile; label: string; unit: string; step: number }[] = [
+    { field: "fleetSize", label: "Aircraft", unit: "aircraft", step: 1 },
+    { field: "annualFuelSpendM", label: "Fuel Spend", unit: "$M/yr", step: 10 },
+    { field: "dailyDepartures", label: "Departures", unit: "/day", step: 5 },
+    { field: "annualPassengersM", label: "Passengers", unit: "M/yr", step: 1 },
+    { field: "revenuePerFlight", label: "Rev/Flight", unit: "$", step: 1000 },
+  ];
+
   return (
     <div className="h-full w-full flex flex-col">
       <div className="flex-1 overflow-y-auto">
@@ -123,6 +153,68 @@ const SlideLineOfSight = () => {
             <p className="text-primary text-base sm:text-lg mt-2 max-w-2xl">
               From platform use case to executive outcome
             </p>
+          </div>
+
+          {/* Airline Profile Panel */}
+          <div className="mb-6 rounded-lg border border-primary/30 bg-gradient-to-br from-primary/5 to-primary/10 overflow-hidden">
+            <button
+              onClick={() => setProfileOpen(!profileOpen)}
+              className="w-full flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-primary/5 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <Building2 className="w-4 h-4 text-primary" />
+                <span className="text-sm font-semibold text-foreground">Your Airline</span>
+                {!profileOpen && (
+                  <span className="text-xs text-muted-foreground ml-2">
+                    {airlineProfile.fleetSize} aircraft · ${airlineProfile.annualFuelSpendM}M fuel · {airlineProfile.dailyDepartures} flights/day · {airlineProfile.annualPassengersM}M pax/yr
+                  </span>
+                )}
+              </div>
+              {profileOpen ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
+            </button>
+
+            {profileOpen && (
+              <div className="px-4 pb-4 space-y-3">
+                {/* Presets */}
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Presets:</span>
+                  {airlinePresets.map((preset) => (
+                    <Button
+                      key={preset.label}
+                      variant="outline"
+                      size="sm"
+                      className="h-7 text-xs border-border/50 hover:border-primary/50 hover:bg-primary/10"
+                      onClick={() => setAirlineProfile({ ...preset.profile })}
+                    >
+                      <Plane className="w-3 h-3 mr-1" />
+                      {preset.label}
+                    </Button>
+                  ))}
+                </div>
+
+                {/* Input fields */}
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                  {profileInputs.map(({ field, label, unit, step }) => (
+                    <div key={field} className="space-y-1">
+                      <label className="text-[10px] font-medium text-muted-foreground">{label}</label>
+                      <div className="relative">
+                        <Input
+                          type="number"
+                          value={airlineProfile[field]}
+                          onChange={(e) => handleProfileField(field, e.target.value)}
+                          step={step}
+                          min={0}
+                          className="h-8 text-sm pr-12 bg-card/50 border-border/40"
+                        />
+                        <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground pointer-events-none">
+                          {unit}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           <Tabs defaultValue="cfo" className="w-full">
@@ -201,14 +293,14 @@ const SlideLineOfSight = () => {
                     <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-4 flex items-center justify-between">
                       <div>
                         <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-1">
-                          Total Estimated Annual Cost Avoidance*
+                          Your Estimated Annual Cost Avoidance*
                         </p>
                         <p className="text-3xl font-bold text-emerald-300">
                           {formatCurrency(totalCostAvoidance)}
                         </p>
                       </div>
                       <p className="text-[10px] text-muted-foreground max-w-[200px] text-right italic">
-                        *Illustrative Target Outcomes based on customer goals and mature deployments
+                        *Illustrative Target Outcomes based on your airline profile and mature deployments
                       </p>
                     </div>
                   )}
@@ -261,7 +353,8 @@ const SlideLineOfSight = () => {
                         const isConnected = connectedUseCaseIds.has(uc.id);
                         const currentVal = useCaseValues[uc.id] ?? uc.input.baseline;
                         const improved = currentVal < uc.input.baseline;
-                        const costImpact = computeUseCaseCostImpact(uc, currentVal);
+                        const costImpact = computeUseCaseCostImpact(uc, currentVal, airlineProfile);
+                        const scaledCost = computeScaledCostMidpoint(uc, airlineProfile);
                         const isExpanded = expandedUseCase === uc.id;
 
                         return (
@@ -318,7 +411,9 @@ const SlideLineOfSight = () => {
 
                             {/* Cost impact */}
                             <div className="flex items-center justify-between">
-                              <span className="text-[10px] text-muted-foreground">{uc.input.costPerEvent}</span>
+                              <span className="text-[10px] text-muted-foreground">
+                                {formatCurrency(scaledCost)} per {uc.input.unit === "%" ? "point" : uc.input.unit.replace(/s$/, "")}
+                              </span>
                               {costImpact > 0 && (
                                 <span className="text-[10px] font-medium text-emerald-400">
                                   Saving {formatCurrency(costImpact)}/yr

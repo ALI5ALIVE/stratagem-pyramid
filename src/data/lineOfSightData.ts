@@ -522,14 +522,99 @@ export function computeMetricValue(
   );
 }
 
+// ─── Airline Profile ──────────────────────────────────────────────────
+
+export interface AirlineProfile {
+  fleetSize: number;
+  annualFuelSpendM: number; // in $M
+  dailyDepartures: number;
+  annualPassengersM: number; // in millions
+  revenuePerFlight: number; // in $
+}
+
+export const defaultProfile: AirlineProfile = {
+  fleetSize: 50,
+  annualFuelSpendM: 500,
+  dailyDepartures: 150,
+  annualPassengersM: 20,
+  revenuePerFlight: 25000,
+};
+
+export const airlinePresets: { label: string; profile: AirlineProfile }[] = [
+  {
+    label: "Regional",
+    profile: {
+      fleetSize: 25,
+      annualFuelSpendM: 120,
+      dailyDepartures: 60,
+      annualPassengersM: 5,
+      revenuePerFlight: 12000,
+    },
+  },
+  {
+    label: "Mid-Size",
+    profile: {
+      fleetSize: 80,
+      annualFuelSpendM: 600,
+      dailyDepartures: 200,
+      annualPassengersM: 30,
+      revenuePerFlight: 28000,
+    },
+  },
+  {
+    label: "Tier 1",
+    profile: {
+      fleetSize: 200,
+      annualFuelSpendM: 2000,
+      dailyDepartures: 500,
+      annualPassengersM: 80,
+      revenuePerFlight: 35000,
+    },
+  },
+];
+
+/**
+ * Scale a use case's cost-per-event based on the airline profile.
+ */
+export function computeScaledCostMidpoint(
+  uc: UseCase,
+  profile: AirlineProfile
+): number {
+  const def = defaultProfile;
+  switch (uc.id) {
+    case "uc1": // Go-arounds — scales with daily departures
+      return uc.input.costMidpoint * (profile.dailyDepartures / def.dailyDepartures);
+    case "uc2": // AOG — scales with revenue per flight
+      return uc.input.costMidpoint * (profile.revenuePerFlight / def.revenuePerFlight);
+    case "uc3": // Delays — scales with daily departures
+      return uc.input.costMidpoint * (profile.dailyDepartures / def.dailyDepartures);
+    case "uc4": // Fuel — scales directly with annual fuel spend
+      return (profile.annualFuelSpendM * 1_000_000) / 100; // 1% of fuel spend
+    case "uc5": // Injuries — scales with passengers
+      return uc.input.costMidpoint * (profile.annualPassengersM / def.annualPassengersM);
+    case "uc6": // Regulatory — relatively fixed
+      return uc.input.costMidpoint;
+    case "uc7": // Insurance — scales with fleet size
+      return uc.input.costMidpoint * (profile.fleetSize / def.fleetSize);
+    case "uc8": // Baggage — scales with passengers
+      return uc.input.costMidpoint * (profile.annualPassengersM / def.annualPassengersM);
+    default:
+      return uc.input.costMidpoint;
+  }
+}
+
 /**
  * Compute annualised cost avoidance for a single use case input reduction.
  */
 export function computeUseCaseCostImpact(
   uc: UseCase,
-  currentValue: number
+  currentValue: number,
+  profile?: AirlineProfile
 ): number {
   const reduction = uc.input.baseline - currentValue;
   if (reduction <= 0) return 0;
-  return reduction * uc.input.costMidpoint * uc.input.annualisationFactor;
+  const midpoint = profile
+    ? computeScaledCostMidpoint(uc, profile)
+    : uc.input.costMidpoint;
+  return reduction * midpoint * uc.input.annualisationFactor;
 }
