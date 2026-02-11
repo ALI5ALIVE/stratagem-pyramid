@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Crown, TrendingUp, Settings, ArrowDown, ArrowUp, ChevronDown, ChevronUp, AlertTriangle, Gauge, Plane, Building2, Info } from "lucide-react";
+import React, { useState } from "react";
+import { Crown, TrendingUp, Settings, ArrowDown, ArrowUp, ChevronDown, ChevronUp, AlertTriangle, Gauge, Plane, Building2, Info, Search, Zap, CheckCircle } from "lucide-react";
 import {
   executiveOutcomes,
   leadingMeasures,
@@ -459,6 +459,36 @@ const SlideLineOfSight = ({
                                 <p className="text-[10px] italic text-muted-foreground pt-1 border-t border-border/20">
                                   {uc.methodology}
                                 </p>
+
+                                {/* DTOP Platform Mechanism */}
+                                <div className="pt-2 border-t border-border/20">
+                                  <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Platform Mechanism — DTOP</span>
+                                  <div className="flex items-center gap-1 mt-1.5 flex-wrap">
+                                    {(() => {
+                                      const steps = uc.platformMechanism.split("→").map(s => s.trim());
+                                      const stepIcons = [Search, Zap, Settings, CheckCircle];
+                                      const stepColors = [
+                                        "text-accent",
+                                        "text-primary",
+                                        "text-sky-400",
+                                        "text-emerald-400",
+                                      ];
+                                      return steps.map((step, i) => (
+                                        <span key={i} className="flex items-center gap-1">
+                                          {React.createElement(stepIcons[i] || Search, { className: `w-2.5 h-2.5 ${stepColors[i] || "text-muted-foreground"}` })}
+                                          <span className={cn("text-[9px] font-medium", stepColors[i] || "text-muted-foreground")}>{step}</span>
+                                          {i < steps.length - 1 && <span className="text-[9px] text-muted-foreground/40 mx-0.5">→</span>}
+                                        </span>
+                                      ));
+                                    })()}
+                                  </div>
+                                </div>
+
+                                {/* Point Solution Gap */}
+                                <div className="rounded-md bg-primary/5 border border-primary/20 p-2 mt-1">
+                                  <span className="text-[10px] font-semibold uppercase tracking-wider text-primary/70">Why Point Solutions Fall Short</span>
+                                  <p className="text-[10px] text-muted-foreground mt-0.5 leading-relaxed">{uc.pointSolutionGap}</p>
+                                </div>
                               </div>
                             )}
                           </div>
