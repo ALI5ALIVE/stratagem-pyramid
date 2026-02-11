@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import SalesSlideContainer from "./SalesSlideContainer";
 import type { SlideNarrationProps } from "@/types/slideProps";
-import { Zap } from "lucide-react";
+import { Target, AlertTriangle, CheckCircle } from "lucide-react";
 
 interface MaturityStage {
   stage: number;
@@ -20,6 +20,35 @@ const stages: MaturityStage[] = [
   { stage: 4, label: "Intelligent", sublabel: "AI-Assisted", useCase: "Hard Landing", color: "hsl(280 65% 55%)", x: 330, y: 120 },
   { stage: 5, label: "Predictive", sublabel: "AI-Accelerated", useCase: "Smoke & Fumes", color: "hsl(45 93% 58%)", x: 420, y: 50 },
 ];
+
+const useCases = [
+  {
+    scenario: "Crew Fatigue Incident",
+    problem: "Fatigue reports are scattered across email threads and separate systems. No one connects the pattern until after an incident occurs. The investigation takes 3 weeks.",
+    outcome: "Reactive, fragmented, slow",
+  },
+  {
+    scenario: "Runway Incursion Investigation",
+    problem: "Safety team investigates the incursion thoroughly, but training department never updates procedures. The same contributing factors appear again 6 months later.",
+    outcome: "Strong departments, no connection between them",
+  },
+  {
+    scenario: "MEL Procedure Update",
+    problem: "Platform auto-triggers procedure revision, assigns targeted retraining to affected crew, and creates a complete audit trail — no manual handoffs required.",
+    outcome: "No manual handoffs, full traceability",
+  },
+  {
+    scenario: "Hard Landing Detection",
+    problem: "FOQA data flags a developing trend. The platform automatically identifies 47 affected pilots and schedules targeted simulator training before any incident occurs.",
+    outcome: "78% reduction in repeat events",
+  },
+  {
+    scenario: "Smoke & Fumes Prevention",
+    problem: "AI detects a weak-signal cluster across maintenance logs, crew reports, and environmental data. De-icing SOP is revised proactively before any incident materialises.",
+    outcome: "Zero incidents — prevention, not reaction",
+  },
+];
+
 
 interface SalesSlide6JourneyProps extends SlideNarrationProps {
   slideNumber?: number;
@@ -173,32 +202,53 @@ const SalesSlide6Journey = ({
           </svg>
         </div>
 
-        {/* Timeline comparison */}
-        <div className="max-w-2xl mx-auto w-full">
-          <div className="grid grid-cols-2 gap-4">
-            {/* Traditional */}
-            <div className="bg-destructive/10 border border-destructive/30 rounded-xl p-4">
-              <div className="text-xs font-semibold text-destructive uppercase tracking-wider mb-2">Traditional Path</div>
-              <div className="flex items-center gap-2">
-                <div className="flex-1 h-3 bg-destructive/30 rounded" />
-                <span className="text-lg font-bold text-destructive">5-7 years</span>
+        {/* Use Case Detail Card */}
+        {(() => {
+          const currentStage = stages[activeStage - 1];
+          const currentUseCase = useCases[activeStage - 1];
+          const isProblemStage = activeStage <= 2;
+          return (
+            <div className="max-w-2xl mx-auto w-full">
+              <div
+                className="rounded-lg p-4 space-y-3"
+                style={{ backgroundColor: `${currentStage.color}10`, borderLeft: `3px solid ${currentStage.color}` }}
+              >
+                {/* Header */}
+                <div className="flex items-start gap-2">
+                  <div
+                    className="flex-shrink-0 w-6 h-6 rounded-md flex items-center justify-center text-sm font-bold text-white"
+                    style={{ background: `linear-gradient(135deg, ${currentStage.color}, ${currentStage.color}80)` }}
+                  >
+                    {activeStage}
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-foreground leading-tight">{currentStage.label}</h3>
+                    <p className="text-xs font-medium mt-0.5" style={{ color: currentStage.color }}>{currentStage.sublabel}</p>
+                  </div>
+                </div>
+                {/* Scenario */}
+                <div className="flex items-center gap-2">
+                  <Target className="w-4 h-4 flex-shrink-0" style={{ color: currentStage.color }} />
+                  <span className="text-sm font-semibold text-foreground">{currentUseCase.scenario}</span>
+                </div>
+                {/* Problem */}
+                <div className="flex items-start gap-2">
+                  {isProblemStage ? (
+                    <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 text-muted-foreground" />
+                  ) : (
+                    <CheckCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" style={{ color: currentStage.color }} />
+                  )}
+                  <p className="text-xs text-muted-foreground leading-relaxed">{currentUseCase.problem}</p>
+                </div>
+                {/* Outcome */}
+                <div className="flex items-center gap-2 pt-2 border-t" style={{ borderColor: `${currentStage.color}30` }}>
+                  <span className="text-xs font-medium" style={{ color: currentStage.color }}>➜</span>
+                  <p className="text-xs font-medium text-foreground">{currentUseCase.outcome}</p>
+                </div>
               </div>
-              <p className="text-[10px] text-muted-foreground mt-1">Manual coordination, siloed systems</p>
             </div>
-
-            {/* With Platform */}
-            <div className="bg-primary/10 border border-primary/30 rounded-xl p-4">
-              <div className="text-xs font-semibold text-primary uppercase tracking-wider mb-2 flex items-center gap-1">
-                <Zap className="w-3 h-3" /> With Platform
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-1/3 h-3 bg-primary rounded" />
-                <span className="text-lg font-bold text-primary">18-24 months</span>
-              </div>
-              <p className="text-[10px] text-muted-foreground mt-1">Connected, intelligent, predictive</p>
-            </div>
-          </div>
-        </div>
+          );
+        })()}
 
         {/* Bottom note */}
         <div className="text-center">
