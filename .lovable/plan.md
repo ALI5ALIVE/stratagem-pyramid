@@ -1,16 +1,30 @@
 
-# Fix: Logo Size on Title and Next Steps Slides
 
-## Problem
+# Move "Line of Sight" Slide After "From Signal to Outcome"
 
-Two sales deck slides render their own Comply365 logo instead of using `SalesSlideContainer`, and still have the old larger size (`h-6 sm:h-8`, `opacity-90`).
+## What's Changing
 
-## Changes
+The "Line of Sight" slide currently sits at position 8 in the sales deck (after "Outcomes"). It will move to position 6, directly after "From Signal to Outcome" (currently position 5).
 
-### 1. `src/components/sales-slides/SalesSlide0Title.tsx` (line 43)
-- Change `className="h-6 sm:h-8 w-auto opacity-90"` to `className="h-5 sm:h-6 w-auto opacity-80"`
+### New slide order:
 
-### 2. `src/components/sales-slides/SalesSlide9NextSteps.tsx` (line 54)
-- Change `className="h-6 sm:h-8 w-auto opacity-90"` to `className="h-5 sm:h-6 w-auto opacity-80"`
+| Position | Slide |
+|----------|-------|
+| 0 | Title |
+| 1 | Problem |
+| 2 | Why Now |
+| 3 | Before/After |
+| 4 | Solution |
+| 5 | Use Case (From Signal to Outcome) |
+| 6 | **Line of Sight** (moved up) |
+| 7 | Journey |
+| 8 | Outcomes |
+| 9 | Why Us |
+| 10 | Next Steps |
 
-Both changes match the already-fixed `SalesSlideContainer.tsx` values so all slides are consistent.
+## Technical Details
+
+### File: `src/pages/SalesDeck.tsx`
+
+Move the Line of Sight entry in the `slides` array from index 8 to index 6 (right after the Use Case entry). No other file changes needed -- the slide numbers are assigned dynamically by array index.
+
