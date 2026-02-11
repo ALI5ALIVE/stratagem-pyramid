@@ -1,10 +1,12 @@
-import { useState } from "react";
-import { Crown, TrendingUp, Settings, X, ArrowDown, ArrowUp } from "lucide-react";
+import { useState, useMemo } from "react";
+import { Crown, TrendingUp, Settings, ArrowDown, ArrowUp, ChevronDown, ChevronUp, AlertTriangle, Gauge } from "lucide-react";
 import {
   executiveOutcomes,
   leadingMeasures,
   useCases,
+  computeLeadingMeasure,
   computeMetricValue,
+  computeUseCaseCostImpact,
   type UseCase,
 } from "@/data/lineOfSightData";
 import { cn } from "@/lib/utils";
@@ -41,18 +43,72 @@ const tabColors: Record<string, { active: string; text: string; border: string; 
   },
 };
 
+const severityColors: Record<string, string> = {
+  Low: "bg-sky-500/15 text-sky-300 border-sky-500/30",
+  Medium: "bg-amber-500/15 text-amber-300 border-amber-500/30",
+  High: "bg-orange-500/15 text-orange-300 border-orange-500/30",
+  "Very High": "bg-red-500/15 text-red-300 border-red-500/30",
+};
+
+function formatCurrency(value: number): string {
+  if (value >= 1_000_000) return `$${(value / 1_000_000).toFixed(1)}M`;
+  if (value >= 1_000) return `$${(value / 1_000).toFixed(0)}K`;
+  return `$${value.toFixed(0)}`;
+}
+
 const SlideLineOfSight = () => {
-  const [selectedUseCase, setSelectedUseCase] = useState<UseCase | null>(null);
-  const [measureValues, setMeasureValues] = useState<Record<string, number>>(() => {
+  const [useCaseValues, setUseCaseValues] = useState<Record<string, number>>(() => {
     const initial: Record<string, number> = {};
-    leadingMeasures.forEach((m) => {
-      initial[m.id] = m.baselineValue;
+    useCases.forEach((uc) => {
+      initial[uc.id] = uc.input.baseline;
     });
     return initial;
   });
+  const [expandedUseCase, setExpandedUseCase] = useState<string | null>(null);
 
-  const handleSliderChange = (measureId: string, value: number[]) => {
-    setMeasureValues((prev) => ({ ...prev, [measureId]: value[0] }));
+  // Compute leading measure values from use case inputs
+  const leadingValues = useMemo(() => {
+    const values: Record<string, number> = {};
+    leadingMeasures.forEach((lm) => {
+      values[lm.id] = computeLeadingMeasure(lm, useCaseValues, useCases);
+    });
+    return values;
+  }, [useCaseValues]);
+
+  // Total annualised cost avoidance
+  const totalCostAvoidance = useMemo(() => {
+    return useCases.reduce(
+      (sum, uc) => sum + computeUseCaseCostImpact(uc, useCaseValues[uc.id] ?? uc.input.baseline),
+      0
+    );
+  }, [useCaseValues]);
+
+  const handleUseCaseChange = (ucId: string, value: number[]) => {
+    setUseCaseValues((prev) => ({ ...prev, [ucId]: value[0] }));
+  };
+
+  // Determine which use cases are connected to a stakeholder via leading measures
+  const getConnectedUseCaseIds = (outcomeId: string): Set<string> => {
+    const connectedMeasureIds = new Set(
+      executiveOutcomes
+        .find((eo) => eo.id === outcomeId)
+        ?.metrics.flatMap((m) => Object.keys(m.weights)) ?? []
+    );
+    return new Set(
+      useCases
+        .filter((uc) =>
+          Object.keys(uc.impactOnMeasures).some((mId) => connectedMeasureIds.has(mId))
+        )
+        .map((uc) => uc.id)
+    );
+  };
+
+  const getConnectedMeasureIds = (outcomeId: string): Set<string> => {
+    return new Set(
+      executiveOutcomes
+        .find((eo) => eo.id === outcomeId)
+        ?.metrics.flatMap((m) => Object.keys(m.weights)) ?? []
+    );
   };
 
   return (
@@ -69,7 +125,6 @@ const SlideLineOfSight = () => {
             </p>
           </div>
 
-          {/* Tabs */}
           <Tabs defaultValue="cfo" className="w-full">
             <TabsList className="bg-card/50 border border-border/30 mb-6">
               {executiveOutcomes.map((eo) => {
@@ -78,10 +133,7 @@ const SlideLineOfSight = () => {
                   <TabsTrigger
                     key={eo.id}
                     value={eo.id}
-                    className={cn(
-                      "gap-2 border border-transparent transition-all",
-                      colors.active
-                    )}
+                    className={cn("gap-2 border border-transparent transition-all", colors.active)}
                   >
                     {stakeholderIcons[eo.icon]}
                     {eo.stakeholder}
@@ -92,37 +144,28 @@ const SlideLineOfSight = () => {
 
             {executiveOutcomes.map((eo) => {
               const colors = tabColors[eo.accentColor];
-              const connectedMeasures = leadingMeasures.filter((lm) =>
-                lm.connectedOutcomes.includes(eo.id)
-              );
-              const connectedMeasureIds = new Set(connectedMeasures.map((m) => m.id));
-              const connectedUseCases = useCases.filter((uc) =>
-                uc.connectedMeasures.some((mId) => connectedMeasureIds.has(mId))
-              );
+              const connectedMeasureIds = getConnectedMeasureIds(eo.id);
+              const connectedUseCaseIds = getConnectedUseCaseIds(eo.id);
+              const connectedMeasures = leadingMeasures.filter((lm) => connectedMeasureIds.has(lm.id));
 
               return (
                 <TabsContent key={eo.id} value={eo.id} className="space-y-6">
-                  {/* Tier 1: Lagging Metrics */}
+                  {/* Tier 1: Executive Outcomes */}
                   <div>
                     <h3 className={cn("text-xs font-semibold uppercase tracking-wider mb-3", colors.text)}>
-                      Lagging Measures — {eo.stakeholder} Outcomes
+                      Executive Outcomes — {eo.stakeholder}
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                       {eo.metrics.map((metric) => {
-                        const computed = computeMetricValue(metric, measureValues, leadingMeasures);
+                        const computed = computeMetricValue(metric, leadingValues, leadingMeasures);
                         const delta = computed - metric.baselineValue;
                         const improved = metric.direction === "up" ? delta > 0.05 : delta < -0.05;
                         return (
                           <div
                             key={metric.id}
-                            className={cn(
-                              "rounded-lg border bg-gradient-to-br p-4",
-                              eo.color
-                            )}
+                            className={cn("rounded-lg border bg-gradient-to-br p-4", eo.color)}
                           >
-                            <p className="text-xs text-muted-foreground mb-1">
-                              {metric.label}
-                            </p>
+                            <p className="text-xs text-muted-foreground mb-1">{metric.label}</p>
                             <div className="flex items-baseline gap-2">
                               <span className="text-2xl font-bold text-foreground">
                                 {metric.unit === "$M"
@@ -136,21 +179,71 @@ const SlideLineOfSight = () => {
                                     improved ? "text-emerald-400" : "text-red-400"
                                   )}
                                 >
-                                  {improved ? (
-                                    <ArrowUp className="w-3 h-3" />
-                                  ) : (
-                                    <ArrowDown className="w-3 h-3" />
-                                  )}
+                                  {improved ? <ArrowUp className="w-3 h-3" /> : <ArrowDown className="w-3 h-3" />}
                                   {Math.abs(delta).toFixed(1)}
                                   {metric.unit === "$M" ? "M" : metric.unit}
                                 </span>
                               )}
                             </div>
-                            <p className="text-[10px] text-muted-foreground mt-1">
-                              Baseline:{" "}
-                              {metric.unit === "$M"
-                                ? `$${metric.baselineValue}M`
-                                : `${metric.baselineValue}${metric.unit}`}
+                            {metric.baselineValue > 0 && (
+                              <p className="text-[10px] text-muted-foreground mt-1">
+                                Baseline: {metric.unit === "$M" ? `$${metric.baselineValue}M` : `${metric.baselineValue}${metric.unit}`}
+                              </p>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Cost Impact Banner */}
+                  {totalCostAvoidance > 0 && (
+                    <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-4 flex items-center justify-between">
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-1">
+                          Total Estimated Annual Cost Avoidance*
+                        </p>
+                        <p className="text-3xl font-bold text-emerald-300">
+                          {formatCurrency(totalCostAvoidance)}
+                        </p>
+                      </div>
+                      <p className="text-[10px] text-muted-foreground max-w-[200px] text-right italic">
+                        *Illustrative Target Outcomes based on customer goals and mature deployments
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Tier 2: Leading Measures (Read-Only Gauges) */}
+                  <div>
+                    <h3 className={cn("text-xs font-semibold uppercase tracking-wider mb-3", colors.text)}>
+                      Leading Operational Measures
+                    </h3>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                      {connectedMeasures.map((lm) => {
+                        const current = leadingValues[lm.id];
+                        const delta = lm.direction === "down"
+                          ? lm.baselineValue - current
+                          : current - lm.baselineValue;
+                        const improved = delta > 0.01;
+                        return (
+                          <div key={lm.id} className="rounded-lg border border-border/40 bg-card/30 p-3">
+                            <div className="flex items-center gap-1.5 mb-1">
+                              <Gauge className="w-3 h-3 text-muted-foreground" />
+                              <span className="text-xs font-medium text-foreground">{lm.shortLabel}</span>
+                            </div>
+                            <div className="flex items-baseline gap-2">
+                              <span className={cn("text-lg font-bold", improved ? "text-emerald-400" : "text-foreground")}>
+                                {current.toFixed(1)}{lm.unit}
+                              </span>
+                              {improved && (
+                                <span className="flex items-center gap-0.5 text-[10px] font-medium text-emerald-400">
+                                  {lm.direction === "down" ? <ArrowDown className="w-2.5 h-2.5" /> : <ArrowUp className="w-2.5 h-2.5" />}
+                                  {delta.toFixed(1)}{lm.unit}
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-[10px] text-muted-foreground">
+                              Baseline: {lm.baselineValue}{lm.unit}
                             </p>
                           </div>
                         );
@@ -158,141 +251,119 @@ const SlideLineOfSight = () => {
                     </div>
                   </div>
 
-                  {/* Tier 2: Leading Measures with Sliders */}
+                  {/* Tier 3: Use Case Input Sliders */}
                   <div>
                     <h3 className={cn("text-xs font-semibold uppercase tracking-wider mb-3", colors.text)}>
-                      Leading Measures — Adjust to See Impact
+                      Platform Use Cases — Adjust Frequency to See Impact
                     </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {connectedMeasures.map((lm) => {
-                        const currentVal = measureValues[lm.id] ?? lm.baselineValue;
-                        const improved = currentVal < lm.baselineValue;
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {useCases.map((uc) => {
+                        const isConnected = connectedUseCaseIds.has(uc.id);
+                        const currentVal = useCaseValues[uc.id] ?? uc.input.baseline;
+                        const improved = currentVal < uc.input.baseline;
+                        const costImpact = computeUseCaseCostImpact(uc, currentVal);
+                        const isExpanded = expandedUseCase === uc.id;
+
                         return (
                           <div
-                            key={lm.id}
-                            className="rounded-lg border border-border/40 bg-card/30 p-4"
+                            key={uc.id}
+                            className={cn(
+                              "rounded-lg border p-4 transition-all duration-300",
+                              isConnected
+                                ? "border-border/50 bg-card/40"
+                                : "border-border/20 bg-card/20 opacity-30"
+                            )}
                           >
-                            <div className="flex items-center justify-between mb-2">
-                              <span className="text-sm font-medium text-foreground">
-                                {lm.shortLabel}
-                              </span>
+                            {/* Header */}
+                            <button
+                              onClick={() => setExpandedUseCase(isExpanded ? null : uc.id)}
+                              className="w-full flex items-start justify-between mb-2 cursor-pointer"
+                            >
+                              <div className="flex items-center gap-2">
+                                <AlertTriangle className="w-3.5 h-3.5 text-muted-foreground shrink-0 mt-0.5" />
+                                <span className="text-sm font-semibold text-foreground text-left">{uc.label}</span>
+                              </div>
                               <div className="flex items-center gap-1.5">
-                                <span
-                                  className={cn(
-                                    "text-sm font-semibold",
-                                    improved ? "text-emerald-400" : "text-foreground"
-                                  )}
-                                >
-                                  {currentVal}
-                                  {lm.unit}
+                                <span className={cn("inline-flex items-center rounded-full border px-1.5 py-0.5 text-[9px] font-medium", severityColors[uc.input.severity])}>
+                                  {uc.input.severity}
                                 </span>
-                                {improved && (
-                                  <ArrowDown className="w-3 h-3 text-emerald-400" />
-                                )}
+                                {isExpanded ? <ChevronUp className="w-3.5 h-3.5 text-muted-foreground" /> : <ChevronDown className="w-3.5 h-3.5 text-muted-foreground" />}
+                              </div>
+                            </button>
+
+                            {/* Slider */}
+                            <div className="mb-2">
+                              <div className="flex items-center justify-between mb-1">
+                                <span className="text-[10px] text-muted-foreground">{uc.input.inputLabel}</span>
+                                <div className="flex items-center gap-1">
+                                  <span className={cn("text-sm font-semibold", improved ? "text-emerald-400" : "text-foreground")}>
+                                    {currentVal}{uc.input.unit}
+                                  </span>
+                                  {improved && <ArrowDown className="w-3 h-3 text-emerald-400" />}
+                                </div>
+                              </div>
+                              <Slider
+                                value={[currentVal]}
+                                min={uc.input.min}
+                                max={uc.input.max}
+                                step={uc.input.step}
+                                onValueChange={(v) => handleUseCaseChange(uc.id, v)}
+                                className={cn("cursor-pointer", colors.slider)}
+                              />
+                              <div className="flex justify-between mt-1">
+                                <span className="text-[9px] text-muted-foreground">Best: {uc.input.min}{uc.input.unit}</span>
+                                <span className="text-[9px] text-muted-foreground">Baseline: {uc.input.baseline}{uc.input.unit}</span>
                               </div>
                             </div>
-                            <Slider
-                              value={[currentVal]}
-                              min={lm.min}
-                              max={lm.max}
-                              step={lm.step}
-                              onValueChange={(v) => handleSliderChange(lm.id, v)}
-                              className={cn("cursor-pointer", colors.slider)}
-                            />
-                            <div className="flex justify-between mt-1">
-                              <span className="text-[10px] text-muted-foreground">
-                                Best: {lm.min}
-                                {lm.unit}
-                              </span>
-                              <span className="text-[10px] text-muted-foreground">
-                                Baseline: {lm.baselineValue}
-                                {lm.unit}
-                              </span>
+
+                            {/* Cost impact */}
+                            <div className="flex items-center justify-between">
+                              <span className="text-[10px] text-muted-foreground">{uc.input.costPerEvent}</span>
+                              {costImpact > 0 && (
+                                <span className="text-[10px] font-medium text-emerald-400">
+                                  Saving {formatCurrency(costImpact)}/yr
+                                </span>
+                              )}
                             </div>
+
+                            {/* Expandable detail */}
+                            {isExpanded && (
+                              <div className="mt-3 pt-3 border-t border-border/30 space-y-2">
+                                <p className="text-xs text-muted-foreground">{uc.description}</p>
+                                <div>
+                                  <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Cost Components</span>
+                                  <ul className="mt-1 space-y-0.5">
+                                    {uc.input.costComponents.map((c, i) => (
+                                      <li key={i} className="text-[10px] text-muted-foreground flex items-center gap-1">
+                                        <span className="w-1 h-1 rounded-full bg-muted-foreground/50" />
+                                        {c}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                                <div>
+                                  <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Measures Impacted</span>
+                                  <div className="flex flex-wrap gap-1 mt-1">
+                                    {Object.keys(uc.impactOnMeasures).map((mId) => {
+                                      const measure = leadingMeasures.find((m) => m.id === mId);
+                                      return measure ? (
+                                        <span key={mId} className={cn("inline-flex items-center rounded-full border px-1.5 py-0.5 text-[9px] font-medium", colors.badge)}>
+                                          {measure.shortLabel}
+                                        </span>
+                                      ) : null;
+                                    })}
+                                  </div>
+                                </div>
+                                <p className="text-[10px] italic text-muted-foreground pt-1 border-t border-border/20">
+                                  {uc.methodology}
+                                </p>
+                              </div>
+                            )}
                           </div>
                         );
                       })}
                     </div>
                   </div>
-
-                  {/* Tier 3: Use Cases */}
-                  <div>
-                    <h3 className={cn("text-xs font-semibold uppercase tracking-wider mb-3", colors.text)}>
-                      Platform Use Cases
-                    </h3>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                      {useCases.map((uc) => {
-                        const isConnected = connectedUseCases.some((c) => c.id === uc.id);
-                        const isSelected = selectedUseCase?.id === uc.id;
-                        return (
-                          <button
-                            key={uc.id}
-                            onClick={() =>
-                              setSelectedUseCase((prev) =>
-                                prev?.id === uc.id ? null : uc
-                              )
-                            }
-                            className={cn(
-                              "rounded-md border p-2 text-left transition-all duration-300 cursor-pointer",
-                              isSelected
-                                ? "border-primary bg-primary/15 shadow-[0_0_15px_hsl(217_100%_50%/0.15)]"
-                                : isConnected
-                                  ? "border-border/50 bg-card/50 hover:border-primary/40 hover:bg-primary/5"
-                                  : "border-border/20 bg-card/20 opacity-30"
-                            )}
-                          >
-                            <span className="text-xs font-medium text-foreground">
-                              {uc.label}
-                            </span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Detail Panel */}
-                  {selectedUseCase && (
-                    <div className="relative rounded-lg border border-primary/30 bg-primary/5 p-5">
-                      <button
-                        onClick={() => setSelectedUseCase(null)}
-                        className="absolute top-2 right-2 text-muted-foreground hover:text-foreground"
-                      >
-                        <X className="w-4 h-4" />
-                      </button>
-                      <h4 className="text-lg font-semibold text-foreground mb-2">
-                        {selectedUseCase.label}
-                      </h4>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        {selectedUseCase.description}
-                      </p>
-                      <div className="mb-3">
-                        <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                          Measures Impacted
-                        </span>
-                        <div className="flex flex-wrap gap-1.5 mt-1.5">
-                          {selectedUseCase.connectedMeasures.map((mId) => {
-                            const measure = leadingMeasures.find((m) => m.id === mId);
-                            return measure ? (
-                              <span
-                                key={mId}
-                                className={cn(
-                                  "inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-medium",
-                                  colors.badge
-                                )}
-                              >
-                                {measure.shortLabel}
-                              </span>
-                            ) : null;
-                          })}
-                        </div>
-                      </div>
-                      <div className="border-t border-border/30 pt-3">
-                        <p className="text-xs italic text-muted-foreground">
-                          {selectedUseCase.methodology}
-                        </p>
-                      </div>
-                    </div>
-                  )}
                 </TabsContent>
               );
             })}
