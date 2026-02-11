@@ -1,7 +1,8 @@
 import { useState, useMemo } from "react";
-import { Calculator, GitBranch } from "lucide-react";
+import { Calculator, GitBranch, LayoutGrid } from "lucide-react";
 import SlideLineOfSight from "@/components/slides/SlideLineOfSight";
 import LineOfSightTree from "@/components/slides/LineOfSightTree";
+import BalancedScorecard from "@/components/slides/BalancedScorecard";
 import { Button } from "@/components/ui/button";
 import {
   useCases,
@@ -13,7 +14,7 @@ import {
 } from "@/data/lineOfSightData";
 
 const LineOfSightPage = () => {
-  const [view, setView] = useState<"calculator" | "tree">("calculator");
+  const [view, setView] = useState<"calculator" | "tree" | "scorecard">("calculator");
 
   const [useCaseValues, setUseCaseValues] = useState<Record<string, number>>(() => {
     const initial: Record<string, number> = {};
@@ -63,6 +64,15 @@ const LineOfSightPage = () => {
             <GitBranch className="w-3.5 h-3.5" />
             KPI Tree
           </Button>
+          <Button
+            variant={view === "scorecard" ? "default" : "ghost"}
+            size="sm"
+            className="gap-1.5 text-xs"
+            onClick={() => setView("scorecard")}
+          >
+            <LayoutGrid className="w-3.5 h-3.5" />
+            Scorecard
+          </Button>
         </div>
       </div>
 
@@ -75,8 +85,15 @@ const LineOfSightPage = () => {
           leadingValues={leadingValues}
           totalCostAvoidance={totalCostAvoidance}
         />
-      ) : (
+      ) : view === "tree" ? (
         <LineOfSightTree
+          useCaseValues={useCaseValues}
+          leadingValues={leadingValues}
+          totalCostAvoidance={totalCostAvoidance}
+          airlineProfile={airlineProfile}
+        />
+      ) : (
+        <BalancedScorecard
           useCaseValues={useCaseValues}
           leadingValues={leadingValues}
           totalCostAvoidance={totalCostAvoidance}

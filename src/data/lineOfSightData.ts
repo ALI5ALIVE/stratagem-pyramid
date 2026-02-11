@@ -573,6 +573,161 @@ export const airlinePresets: { label: string; profile: AirlineProfile }[] = [
   },
 ];
 
+// ─── Balanced Scorecard Perspectives ──────────────────────────────────
+
+export interface ScorecardKPI {
+  id: string;
+  label: string;
+  baselineValue: number;
+  unit: string;
+  direction: "up" | "down";
+  weights: Record<string, number>; // leading measure id -> weight
+  /** Optional: directly linked use case input for raw metric display */
+  directUseCaseId?: string;
+}
+
+export interface ScorecardPerspective {
+  id: string;
+  title: string;
+  objective: string;
+  color: string; // tailwind border color class
+  accentHsl: string; // HSL for fills
+  icon: string;
+  kpis: ScorecardKPI[];
+}
+
+export const balancedScorecardPerspectives: ScorecardPerspective[] = [
+  {
+    id: "financial",
+    title: "Financial",
+    objective: "Reduce operating cost per ASK and protect revenue",
+    color: "border-emerald-500",
+    accentHsl: "160 84% 39%",
+    icon: "TrendingUp",
+    kpis: [
+      {
+        id: "bsc-fuel-savings",
+        label: "Fuel Cost Savings",
+        baselineValue: 0,
+        unit: "$M",
+        direction: "up",
+        weights: { lm1: 0.6 },
+      },
+      {
+        id: "bsc-irops-avoidance",
+        label: "IrOps Cost Avoidance",
+        baselineValue: 0,
+        unit: "$M",
+        direction: "up",
+        weights: { lm2: 0.3, lm3: 0.4 },
+      },
+      {
+        id: "bsc-insurance-savings",
+        label: "Insurance Savings",
+        baselineValue: 0,
+        unit: "$M",
+        direction: "up",
+        weights: { lm4: 0.3, lm5: 0.3 },
+      },
+    ],
+  },
+  {
+    id: "customer",
+    title: "Customer",
+    objective: "Improve schedule reliability and passenger experience",
+    color: "border-blue-500",
+    accentHsl: "217 100% 50%",
+    icon: "Users",
+    kpis: [
+      {
+        id: "bsc-otp",
+        label: "On-Time Performance",
+        baselineValue: 78,
+        unit: "%",
+        direction: "up",
+        weights: { lm3: 0.5, lm2: 0.2 },
+      },
+      {
+        id: "bsc-pax-score",
+        label: "Pax Experience Score",
+        baselineValue: 72,
+        unit: "pts",
+        direction: "up",
+        weights: { lm6: 0.4, lm4: 0.2 },
+      },
+      {
+        id: "bsc-bag-rate",
+        label: "Mishandled Baggage",
+        baselineValue: 8,
+        unit: "/1000",
+        direction: "down",
+        weights: { lm6: 0.35 },
+        directUseCaseId: "uc8",
+      },
+    ],
+  },
+  {
+    id: "internal",
+    title: "Internal Processes",
+    objective: "Increase fleet utilisation, reduce safety recurrence, accelerate compliance",
+    color: "border-amber-500",
+    accentHsl: "38 92% 50%",
+    icon: "Settings",
+    kpis: [
+      {
+        id: "bsc-fleet-avail",
+        label: "Fleet Availability",
+        baselineValue: 91,
+        unit: "%",
+        direction: "up",
+        weights: { lm2: 0.5 },
+      },
+      {
+        id: "bsc-safety-recur",
+        label: "Safety Recurrence Rate",
+        baselineValue: 12,
+        unit: "%",
+        direction: "down",
+        weights: { lm4: 0.5 },
+      },
+      {
+        id: "bsc-audit-ready",
+        label: "Audit Readiness",
+        baselineValue: 120,
+        unit: "hrs",
+        direction: "down",
+        weights: { lm5: 0.5 },
+      },
+    ],
+  },
+  {
+    id: "learning",
+    title: "Learning & Growth",
+    objective: "Shift from reactive to predictive operations, close the detect-to-action loop",
+    color: "border-purple-500",
+    accentHsl: "270 70% 55%",
+    icon: "Lightbulb",
+    kpis: [
+      {
+        id: "bsc-fuel-var",
+        label: "Fuel Variance",
+        baselineValue: 3.2,
+        unit: "%",
+        direction: "down",
+        weights: { lm1: 0.5 },
+      },
+      {
+        id: "bsc-reg-standing",
+        label: "Regulatory Standing",
+        baselineValue: 85,
+        unit: "%",
+        direction: "up",
+        weights: { lm5: 0.4, lm4: 0.2 },
+      },
+    ],
+  },
+];
+
 /**
  * Scale a use case's cost-per-event based on the airline profile.
  */
