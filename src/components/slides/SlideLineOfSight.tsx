@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Crown, TrendingUp, Settings, ArrowDown, ArrowUp, ChevronDown, ChevronUp, AlertTriangle, Gauge, Plane, Building2, Info, Search, Zap, CheckCircle } from "lucide-react";
+import { Crown, TrendingUp, Settings, ArrowDown, ArrowUp, ChevronDown, ChevronUp, AlertTriangle, Plane, Building2, Info, Search, Zap, CheckCircle } from "lucide-react";
 import {
   executiveOutcomes,
   leadingMeasures,
@@ -222,113 +222,85 @@ const SlideLineOfSight = ({
               const connectedMeasures = leadingMeasures.filter((lm) => connectedMeasureIds.has(lm.id));
 
               return (
-                <TabsContent key={eo.id} value={eo.id} className="space-y-3">
-                  {/* Tier 1: Executive Outcomes */}
-                  <div>
-                    <h3 className={cn("text-xs font-semibold uppercase tracking-wider mb-3", colors.text)}>
-                      Executive Outcomes — {eo.stakeholder}
-                    </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                      {eo.metrics.map((metric) => {
-                        const computed = computeMetricValue(metric, leadingValues, leadingMeasures);
-                        const delta = computed - metric.baselineValue;
-                        const improved = metric.direction === "up" ? delta > 0.05 : delta < -0.05;
-                        return (
-                          <div
-                            key={metric.id}
-                            className={cn("rounded-lg border bg-gradient-to-br p-2.5", eo.color)}
-                          >
-                            <p className="text-xs text-muted-foreground mb-1">{metric.label}</p>
-                            <div className="flex items-baseline gap-2">
-                              <span className="text-2xl font-bold text-foreground">
-                                {metric.unit === "$M"
-                                  ? `$${computed.toFixed(1)}M`
-                                  : `${computed.toFixed(1)}${metric.unit}`}
+                <TabsContent key={eo.id} value={eo.id} className="space-y-2">
+                  {/* Tier 1: Executive Outcomes + Cost Avoidance merged */}
+                  <div className="grid grid-cols-1 sm:grid-cols-4 gap-2">
+                    {eo.metrics.map((metric) => {
+                      const computed = computeMetricValue(metric, leadingValues, leadingMeasures);
+                      const delta = computed - metric.baselineValue;
+                      const improved = metric.direction === "up" ? delta > 0.05 : delta < -0.05;
+                      return (
+                        <div
+                          key={metric.id}
+                          className={cn("rounded-lg border bg-gradient-to-br p-2", eo.color)}
+                        >
+                          <p className="text-[10px] text-muted-foreground mb-0.5">{metric.label}</p>
+                          <div className="flex items-baseline gap-1.5">
+                            <span className="text-xl font-bold text-foreground">
+                              {metric.unit === "$M"
+                                ? `$${computed.toFixed(1)}M`
+                                : `${computed.toFixed(1)}${metric.unit}`}
+                            </span>
+                            {Math.abs(delta) > 0.05 && (
+                              <span
+                                className={cn(
+                                  "flex items-center gap-0.5 text-[10px] font-medium",
+                                  improved ? "text-emerald-400" : "text-red-400"
+                                )}
+                              >
+                                {improved ? <ArrowUp className="w-2.5 h-2.5" /> : <ArrowDown className="w-2.5 h-2.5" />}
+                                {Math.abs(delta).toFixed(1)}
+                                {metric.unit === "$M" ? "M" : metric.unit}
                               </span>
-                              {Math.abs(delta) > 0.05 && (
-                                <span
-                                  className={cn(
-                                    "flex items-center gap-0.5 text-xs font-medium",
-                                    improved ? "text-emerald-400" : "text-red-400"
-                                  )}
-                                >
-                                  {improved ? <ArrowUp className="w-3 h-3" /> : <ArrowDown className="w-3 h-3" />}
-                                  {Math.abs(delta).toFixed(1)}
-                                  {metric.unit === "$M" ? "M" : metric.unit}
-                                </span>
-                              )}
-                            </div>
-                            {metric.baselineValue > 0 && (
-                              <p className="text-[10px] text-muted-foreground mt-1">
-                                Baseline: {metric.unit === "$M" ? `$${metric.baselineValue}M` : `${metric.baselineValue}${metric.unit}`}
-                              </p>
                             )}
                           </div>
-                        );
-                      })}
-                    </div>
+                        </div>
+                      );
+                    })}
+                    {/* Cost Avoidance as 4th card */}
+                    {totalCostAvoidance > 0 && (
+                      <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-2">
+                        <p className="text-[10px] text-emerald-400 font-semibold mb-0.5">Annual Cost Avoidance*</p>
+                        <span className="text-xl font-bold text-emerald-300">{formatCurrency(totalCostAvoidance)}</span>
+                      </div>
+                    )}
                   </div>
 
-                  {/* Cost Impact Banner */}
-                  {totalCostAvoidance > 0 && (
-                    <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-2.5 flex items-center justify-between">
-                      <div>
-                        <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-1">
-                          Your Estimated Annual Cost Avoidance*
-                        </p>
-                        <p className="text-3xl font-bold text-emerald-300">
-                          {formatCurrency(totalCostAvoidance)}
-                        </p>
-                      </div>
-                      <p className="text-[10px] text-muted-foreground max-w-[200px] text-right italic">
-                        *Illustrative Target Outcomes based on your airline profile and mature deployments
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Tier 2: Leading Measures (Read-Only Gauges) */}
-                  <div>
-                    <h3 className={cn("text-xs font-semibold uppercase tracking-wider mb-3", colors.text)}>
-                      Leading Operational Measures
-                    </h3>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                      {connectedMeasures.map((lm) => {
-                        const current = leadingValues[lm.id];
-                        const delta = lm.direction === "down"
-                          ? lm.baselineValue - current
-                          : current - lm.baselineValue;
-                        const improved = delta > 0.01;
-                        return (
-                          <div key={lm.id} className="rounded-lg border border-border/40 bg-card/30 p-2">
-                            <div className="flex items-center gap-1.5 mb-1">
-                              <Gauge className="w-3 h-3 text-muted-foreground" />
-                              <span className="text-xs font-medium text-foreground">{lm.shortLabel}</span>
-                            </div>
-                            <div className="flex items-baseline gap-2">
-                              <span className={cn("text-lg font-bold", improved ? "text-emerald-400" : "text-foreground")}>
-                                {current.toFixed(1)}{lm.unit}
+                  {/* Tier 2: Leading Measures as inline pills */}
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Measures:</span>
+                    {connectedMeasures.map((lm) => {
+                      const current = leadingValues[lm.id];
+                      const delta = lm.direction === "down"
+                        ? lm.baselineValue - current
+                        : current - lm.baselineValue;
+                      const improved = delta > 0.01;
+                      return (
+                        <TooltipProvider key={lm.id}>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <span className={cn(
+                                "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-medium cursor-default transition-colors",
+                                improved
+                                  ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
+                                  : "border-border/40 bg-card/30 text-foreground"
+                              )}>
+                                {lm.shortLabel}
+                                <span className="font-bold">{current.toFixed(1)}{lm.unit}</span>
+                                {improved && (lm.direction === "down" ? <ArrowDown className="w-2.5 h-2.5" /> : <ArrowUp className="w-2.5 h-2.5" />)}
                               </span>
-                              {improved && (
-                                <span className="flex items-center gap-0.5 text-[10px] font-medium text-emerald-400">
-                                  {lm.direction === "down" ? <ArrowDown className="w-2.5 h-2.5" /> : <ArrowUp className="w-2.5 h-2.5" />}
-                                  {delta.toFixed(1)}{lm.unit}
-                                </span>
-                              )}
-                            </div>
-                            <p className="text-[10px] text-muted-foreground">
-                              Baseline: {lm.baselineValue}{lm.unit}
-                            </p>
-                          </div>
-                        );
-                      })}
-                    </div>
+                            </TooltipTrigger>
+                            <TooltipContent side="bottom" className="text-[10px]">
+                              <p>Baseline: {lm.baselineValue}{lm.unit}</p>
+                              {improved && <p className="text-emerald-400">Δ {delta.toFixed(1)}{lm.unit} improvement</p>}
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      );
+                    })}
                   </div>
 
                   {/* Tier 3: Use Case Input Sliders */}
-                  <div>
-                    <h3 className={cn("text-xs font-semibold uppercase tracking-wider mb-3", colors.text)}>
-                      Platform Use Cases — Adjust Frequency to See Impact
-                    </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
                       {useCases.map((uc) => {
                         const isConnected = connectedUseCaseIds.has(uc.id);
@@ -342,7 +314,7 @@ const SlideLineOfSight = ({
                           <div
                             key={uc.id}
                             className={cn(
-                              "rounded-lg border p-2.5 transition-all duration-300",
+                              "rounded-lg border p-2 transition-all duration-300",
                               isConnected
                                 ? "border-border/50 bg-card/40"
                                 : "border-border/30 bg-card/30 opacity-50"
@@ -351,7 +323,7 @@ const SlideLineOfSight = ({
                             {/* Header */}
                             <button
                               onClick={() => setExpandedUseCase(isExpanded ? null : uc.id)}
-                              className="w-full flex items-start justify-between mb-2 cursor-pointer"
+                              className="w-full flex items-start justify-between mb-1.5 cursor-pointer hover:bg-muted/20 rounded p-0.5 -m-0.5 transition-colors"
                             >
                               <div className="flex items-center gap-2">
                                 <AlertTriangle className="w-3.5 h-3.5 text-muted-foreground shrink-0 mt-0.5" />
@@ -366,7 +338,7 @@ const SlideLineOfSight = ({
                             </button>
 
                             {/* Slider */}
-                            <div className="mb-2">
+                            <div className="mb-1.5">
                               <div className="flex items-center justify-between mb-1">
                                 <span className="text-[10px] text-muted-foreground">{uc.input.inputLabel}</span>
                                 <div className="flex items-center gap-1">
@@ -486,7 +458,6 @@ const SlideLineOfSight = ({
                         );
                       })}
                     </div>
-                  </div>
                 </TabsContent>
               );
             })}
