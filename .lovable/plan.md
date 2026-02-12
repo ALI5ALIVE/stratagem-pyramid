@@ -1,68 +1,71 @@
 
 
-# Sales Deck Narration Overhaul
+# Enrich the 3-Tier "Cost of Every Signal" Slide
 
-## Issues Found
+## Slide Rename
 
-### 1. Broken Navigation and Narration (from slide reorder)
-When Line of Sight was moved to position 6, three components still render hardcoded DOM IDs that no longer match the slides array. This breaks both scroll-to navigation and narration playback.
+- **Title**: "The Cost of Every Signal"
+- **Subtitle**: "From operational event to boardroom impact — every signal has a price tag."
 
-| Slides Array ID | Component | Hardcoded DOM ID | Narration Text |
-|----------------|-----------|-----------------|----------------|
-| sales-slide-6 | SalesSlide8LineOfSight | sales-slide-8 | Maturity journey (wrong!) |
-| sales-slide-7 | SalesSlide6Journey | sales-slide-6 | Outcomes text (wrong!) |
-| sales-slide-8 | SalesSlide7Outcomes | sales-slide-7 | Line of sight text (wrong!) |
+## What Changes (keeping the 3-tier layout)
 
-### 2. Narration reads verbatim instead of selling
+### Tier 1: Executive Outcomes (top) — add dollar context
 
-The current narration describes what's on screen ("Our platform follows a simple but powerful operating model..."). It needs to sell the pain an airline stakeholder feels, the value the platform delivers, and the ways of working that make it real.
+Currently shows stakeholder name + 2 metric labels. Enhance each card to also show a **tangible example sentence** that grounds the metric in reality.
+
+| Stakeholder | Current | Added Detail |
+|-------------|---------|-------------|
+| CFO | "Fuel Cost Savings", "IrOps Cost Avoidance" | Add a one-liner: "1% fuel variance = $5M-$20M/yr" |
+| CEO | "Brand & Reputation", "Regulatory Standing" | Add: "A single finding costs $50K-$2M" |
+| COO | "On-Time Performance", "Fleet Readiness" | Add: "Each AOG day costs $100K-$500K" |
+
+### Tier 2: Leading Measures (middle) — add direction context
+
+Currently shows label + baseline + arrow. Enhance each card with a short "how" line explaining the operational lever.
+
+| Measure | Added Detail |
+|---------|-------------|
+| Fuel Variance (3.2%) | "Flight data to targeted crew training" |
+| Fleet Availability (91%) | "Compliance gaps caught before grounding" |
+| OTP (78%) | "Procedural fixes before repeat delays" |
+| Safety Recurrence (12%) | "Signal to corrective action, closed loop" |
+
+### Tier 3: Use Cases (bottom) — add scenario context
+
+Currently shows label + cost badge. Enhance each card with a short real-world scenario sentence.
+
+| Use Case | Added Detail |
+|----------|-------------|
+| Go-Around Events ($5K-$25K) | "FOQA trend → 47 pilots retrained in 48hrs" |
+| AOG & Maintenance ($100K-$500K/day) | "AD compliance gap caught before grounding" |
+| Fuel Degradation (1% = $5M-$20M) | "Exceedance linked to specific crew & procedure" |
+| Regulatory Fines ($50K-$2M) | "Reg change cascaded to every affected person" |
+
+### Bottom Banner — unchanged
+
+$40M+ total with Interactive Calculator CTA link stays as-is.
 
 ---
 
-## Changes
+## Technical Details
 
-### A. Fix hardcoded DOM IDs (3 files)
+### File: `src/components/sales-slides/SalesSlide8LineOfSight.tsx`
 
-**`src/components/sales-slides/SalesSlide8LineOfSight.tsx`** (line 44)
-- Change `id="sales-slide-8"` to `id="sales-slide-6"`
+1. Update `title` prop to "The Cost of Every Signal" and `subtitle` to "From operational event to boardroom impact — every signal has a price tag."
 
-**`src/components/sales-slides/SalesSlide6Journey.tsx`** (line 89)
-- Change `id="sales-slide-6"` to `id="sales-slide-7"`
+2. Add a local mapping object for the enrichment data (stakeholder context lines, measure "how" descriptions, and use case scenario lines) rather than modifying the shared data file.
 
-**`src/components/sales-slides/SalesSlide7Outcomes.tsx`** (line 74)
-- Change `id="sales-slide-7"` to `id="sales-slide-8"`
+3. Tier 1 cards: after the existing metrics list, add a small italicised context line using the mapping.
 
-### B. Rewrite narration scripts (1 file)
+4. Tier 2 cards: below the baseline+arrow row, add a `text-[8px]` "how" line from the mapping.
 
-**`src/data/salesDeckNarration.ts`** -- complete rewrite of all 11 slide narration texts.
+5. Tier 3 cards: below the cost badge, add a `text-[8px]` scenario line from the mapping.
 
-The new narration follows these principles:
-- Never describe what's on screen -- the visual does that
-- Lead with the stakeholder's pain or aspiration
-- Use concrete airline scenarios (hard landings, fatigue, FOQA, crew scheduling)
-- Keep the conversational tone optimised for TTS "George" voice
-- Target ~850 words total for a 7-minute delivery at natural pace
-- Use "Comply three six five" and "Foqua" for correct TTS pronunciation
+6. Slight padding adjustments (`py-1.5` to `py-2` on Tier 2 cards) to accommodate the extra line without overflowing the slide.
 
-### New slide order with narration summaries
+### File: `src/data/salesDeckNarration.ts`
 
-| # | Slide | Narration Approach |
-|---|-------|-------------------|
-| 0 | Title | Open with the stakeholder's daily frustration -- the gap between knowing a risk exists and being able to act on it. Hook with the promise of closing that gap. |
-| 1 | Problem | Paint a vivid Monday morning: FOQA flags something, but by the time training hears about it, it's already happened again. Make the audience feel the frustration of disconnected teams. |
-| 2 | Why Now | Shift from frustration to urgency -- regulators are no longer accepting paperwork, they want connected evidence. Every week without a connected system widens the exposure. |
-| 3 | Before/After | Don't list bullet points. Tell the story of a single signal flowing through the old way (weeks, emails, spreadsheets) vs. the new way (hours, automated, proven). |
-| 4 | Solution (DTOP) | Explain DTOP as a way of working, not a product feature. Each step is what the airline's own teams do differently -- Detect isn't software, it's awareness; Prove isn't a report, it's confidence. |
-| 5 | Use Case | Walk through the hard landing scenario as if telling a real customer story. Make it tangible -- "forty-seven pilots, within forty-eight hours, seventy-eight percent reduction." |
-| 6 | Line of Sight | Connect the use cases to money. Every go-around, every delay, every regulatory finding has a cost. Show that this isn't theoretical -- it maps directly to what their CFO, CEO, and COO measure. |
-| 7 | Journey | Position the maturity curve as a mirror -- "where are you today?" Most are at Stage 1 or 2. The inflection point is Stage 3, and that's where the platform takes them. Compress the traditional 5-7 year timeline to 18-24 months. |
-| 8 | Outcomes | Translate platform capabilities into executive language -- schedule protection, revenue protection, cost reduction. Use the Signal-Action-Result pattern. |
-| 9 | Why Us | Three sharp differentiators: connected (not siloed), intelligent (not bolted on), provable (not after-the-fact). Close with "point solutions manage silos, we close the loop." |
-| 10 | Next Steps | Personal and forward-looking. Their operation has unique signals. Offer to build a custom ROI model. End with the DTOP framework and "your journey starts now." |
+Update the `sales-slide-6` narration text to reference "the cost of every signal" framing and walk through one scenario before summarising the $40M opportunity.
 
-### Word count target
-- ~75-85 words per slide average
-- Shorter for Title (slide 0) and Next Steps (slide 10)
-- Longer for Use Case (slide 5) and Line of Sight (slide 6) where the detail sells
-- Total: ~850 words for 7-minute delivery
+### No changes to `src/data/lineOfSightData.ts` or `src/pages/SalesDeck.tsx`.
 
