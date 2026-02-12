@@ -17,6 +17,7 @@ import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 interface SlideLineOfSightProps {
   useCaseValues: Record<string, number>;
@@ -396,77 +397,78 @@ const SlideLineOfSight = ({
                       })}
                     </div>
 
-                  {/* Expanded detail panel — rendered outside the grid */}
-                  {expandedUseCase && (() => {
-                    const uc = useCases.find((u) => u.id === expandedUseCase);
-                    if (!uc) return null;
-                    return (
-                      <div className="rounded-lg border border-primary/30 bg-card/60 p-3 space-y-2 animate-in fade-in-0 slide-in-from-top-2 duration-200">
-                        <div className="flex items-center justify-between">
-                          <h4 className="text-xs font-semibold text-foreground">{uc.label}</h4>
-                          <button onClick={() => setExpandedUseCase(null)} className="text-muted-foreground hover:text-foreground">
-                            <ChevronUp className="w-4 h-4" />
-                          </button>
-                        </div>
-                        <p className="text-[10px] text-muted-foreground">{uc.description}</p>
-                        <div className="grid grid-cols-2 gap-3">
-                          <div>
-                            <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">Cost Components</span>
-                            <ul className="mt-1 space-y-0.5">
-                              {uc.input.costComponents.map((c, i) => (
-                                <li key={i} className="text-[9px] text-muted-foreground flex items-center gap-1">
-                                  <span className="w-1 h-1 rounded-full bg-muted-foreground/50" />
-                                  {c}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                          <div>
-                            <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">Measures Impacted</span>
-                            <div className="flex flex-wrap gap-1 mt-1">
-                              {Object.keys(uc.impactOnMeasures).map((mId) => {
-                                const measure = leadingMeasures.find((m) => m.id === mId);
-                                return measure ? (
-                                  <span key={mId} className={cn("inline-flex items-center rounded-full border px-1.5 py-0.5 text-[9px] font-medium", colors.badge)}>
-                                    {measure.shortLabel}
-                                  </span>
-                                ) : null;
-                              })}
+                  {/* Use Case Detail Dialog */}
+                  <Dialog open={!!expandedUseCase} onOpenChange={(open) => { if (!open) setExpandedUseCase(null); }}>
+                    <DialogContent className="max-w-xl max-h-[85vh] overflow-y-auto">
+                      {(() => {
+                        const uc = useCases.find((u) => u.id === expandedUseCase);
+                        if (!uc) return null;
+                        return (
+                          <>
+                            <DialogHeader>
+                              <DialogTitle className="text-sm font-semibold">{uc.label}</DialogTitle>
+                            </DialogHeader>
+                            <p className="text-xs text-muted-foreground">{uc.description}</p>
+                            <div className="grid grid-cols-2 gap-3">
+                              <div>
+                                <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Cost Components</span>
+                                <ul className="mt-1 space-y-0.5">
+                                  {uc.input.costComponents.map((c, i) => (
+                                    <li key={i} className="text-[10px] text-muted-foreground flex items-center gap-1">
+                                      <span className="w-1 h-1 rounded-full bg-muted-foreground/50" />
+                                      {c}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                              <div>
+                                <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Measures Impacted</span>
+                                <div className="flex flex-wrap gap-1 mt-1">
+                                  {Object.keys(uc.impactOnMeasures).map((mId) => {
+                                    const measure = leadingMeasures.find((m) => m.id === mId);
+                                    return measure ? (
+                                      <span key={mId} className={cn("inline-flex items-center rounded-full border px-1.5 py-0.5 text-[10px] font-medium", colors.badge)}>
+                                        {measure.shortLabel}
+                                      </span>
+                                    ) : null;
+                                  })}
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                        <p className="text-[9px] italic text-muted-foreground pt-1 border-t border-border/20">
-                          {uc.methodology}
-                        </p>
-                        <div className="pt-1 border-t border-border/20">
-                          <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">Platform Mechanism — DTOP</span>
-                          <div className="flex items-center gap-1 mt-1 flex-wrap">
-                            {(() => {
-                              const steps = uc.platformMechanism.split("→").map(s => s.trim());
-                              const stepIcons = [Search, Zap, Settings, CheckCircle];
-                              const stepColors = [
-                                "text-accent",
-                                "text-primary",
-                                "text-sky-400",
-                                "text-emerald-400",
-                              ];
-                              return steps.map((step, i) => (
-                                <span key={i} className="flex items-center gap-1">
-                                  {React.createElement(stepIcons[i] || Search, { className: `w-2.5 h-2.5 ${stepColors[i] || "text-muted-foreground"}` })}
-                                  <span className={cn("text-[9px] font-medium", stepColors[i] || "text-muted-foreground")}>{step}</span>
-                                  {i < steps.length - 1 && <span className="text-[9px] text-muted-foreground/40 mx-0.5">→</span>}
-                                </span>
-                              ));
-                            })()}
-                          </div>
-                        </div>
-                        <div className="rounded-md bg-primary/5 border border-primary/20 p-2">
-                          <span className="text-[9px] font-semibold uppercase tracking-wider text-primary/70">Why Point Solutions Fall Short</span>
-                          <p className="text-[9px] text-muted-foreground mt-0.5 leading-relaxed">{uc.pointSolutionGap}</p>
-                        </div>
-                      </div>
-                    );
-                  })()}
+                            <p className="text-[10px] italic text-muted-foreground pt-2 border-t border-border/20">
+                              {uc.methodology}
+                            </p>
+                            <div className="pt-2 border-t border-border/20">
+                              <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Platform Mechanism — DTOP</span>
+                              <div className="flex items-center gap-1 mt-1 flex-wrap">
+                                {(() => {
+                                  const steps = uc.platformMechanism.split("→").map(s => s.trim());
+                                  const stepIcons = [Search, Zap, Settings, CheckCircle];
+                                  const stepColors = [
+                                    "text-accent",
+                                    "text-primary",
+                                    "text-sky-400",
+                                    "text-emerald-400",
+                                  ];
+                                  return steps.map((step, i) => (
+                                    <span key={i} className="flex items-center gap-1">
+                                      {React.createElement(stepIcons[i] || Search, { className: `w-2.5 h-2.5 ${stepColors[i] || "text-muted-foreground"}` })}
+                                      <span className={cn("text-[10px] font-medium", stepColors[i] || "text-muted-foreground")}>{step}</span>
+                                      {i < steps.length - 1 && <span className="text-[10px] text-muted-foreground/40 mx-0.5">→</span>}
+                                    </span>
+                                  ));
+                                })()}
+                              </div>
+                            </div>
+                            <div className="rounded-md bg-primary/5 border border-primary/20 p-2">
+                              <span className="text-[10px] font-semibold uppercase tracking-wider text-primary/70">Why Point Solutions Fall Short</span>
+                              <p className="text-[10px] text-muted-foreground mt-0.5 leading-relaxed">{uc.pointSolutionGap}</p>
+                            </div>
+                          </>
+                        );
+                      })()}
+                    </DialogContent>
+                  </Dialog>
                 </TabsContent>
               );
             })}
