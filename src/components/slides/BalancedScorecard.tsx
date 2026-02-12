@@ -81,99 +81,97 @@ const BalancedScorecard = ({ useCaseValues, leadingValues, totalCostAvoidance, a
   }, [perspectiveData]);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-6">
-      {/* Header */}
-      <div className="text-center mb-2">
-        <h2 className="text-2xl font-bold text-foreground tracking-tight">Balanced Scorecard</h2>
-        <p className="text-sm text-muted-foreground mt-1">Strategic objectives driven by operational use case improvements</p>
-      </div>
-
-      {/* Overall Improvement Strip */}
-      <div className="rounded-lg border border-border bg-card p-4 flex items-center justify-between">
-        <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Overall Strategic Improvement</span>
-        <div className="flex items-center gap-3">
-          <Progress value={Math.min(Math.max(overallImprovement, 0), 100)} className="w-32 h-2" />
-          <span className={cn(
-            "text-xl font-bold",
-            overallImprovement > 0 ? "text-emerald-400" : "text-muted-foreground"
-          )}>
-            {overallImprovement > 0 ? "+" : ""}{overallImprovement.toFixed(1)}%
-          </span>
+    <div className="h-[calc(100vh-40px)] flex flex-col overflow-hidden max-w-6xl mx-auto px-4 sm:px-6 py-3">
+      {/* Header + Overall Improvement + Cost Avoidance */}
+      <div className="flex items-center justify-between mb-2">
+        <div>
+          <h2 className="text-lg font-bold text-foreground tracking-tight">Balanced Scorecard</h2>
+          <p className="text-[10px] text-muted-foreground">Strategic objectives driven by operational use case improvements</p>
         </div>
-      </div>
-
-      {/* Perspective Cards */}
-      {perspectiveData.map(({ perspective, kpiResults, avgImprovement }) => (
-        <div
-          key={perspective.id}
-          className={cn(
-            "rounded-lg border-l-4 bg-card border border-border overflow-hidden",
-            perspective.color
-          )}
-        >
-          {/* Perspective Header */}
-          <div className="px-5 py-4 flex items-center justify-between border-b border-border/50">
-            <div className="flex items-center gap-3">
-              <div className="text-muted-foreground">{perspectiveIcons[perspective.icon]}</div>
-              <div>
-                <h3 className="text-base font-semibold text-foreground">{perspective.title}</h3>
-                <p className="text-xs text-muted-foreground mt-0.5">{perspective.objective}</p>
-              </div>
-            </div>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Improvement</span>
+            <Progress value={Math.min(Math.max(overallImprovement, 0), 100)} className="w-24 h-1.5" />
             <span className={cn(
-              "text-sm font-semibold",
-              avgImprovement > 0 ? "text-emerald-400" : "text-muted-foreground"
+              "text-sm font-bold",
+              overallImprovement > 0 ? "text-emerald-400" : "text-muted-foreground"
             )}>
-              {avgImprovement > 0 ? "+" : ""}{avgImprovement.toFixed(1)}%
+              {overallImprovement > 0 ? "+" : ""}{overallImprovement.toFixed(1)}%
             </span>
           </div>
-
-          {/* KPI Tiles */}
-          <div className="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {kpiResults.map(({ kpi, current, delta, improvementPct }) => (
-              <div
-                key={kpi.id}
-                className="rounded-md border border-border/50 bg-secondary/30 p-3 space-y-2"
-              >
-                <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{kpi.label}</div>
-                <div className="flex items-end justify-between">
-                  <span className="text-2xl font-bold text-foreground">
-                    {kpi.unit === "$M" ? `$${current.toFixed(1)}M` : `${current.toFixed(1)}${kpi.unit}`}
-                  </span>
-                  <div className={cn(
-                    "flex items-center gap-0.5 text-xs font-semibold",
-                    delta.positive ? "text-emerald-400" : improvementPct === 0 ? "text-muted-foreground" : "text-red-400"
-                  )}>
-                    {delta.positive ? <ArrowUp className="w-3 h-3" /> : improvementPct !== 0 ? <ArrowDown className="w-3 h-3" /> : null}
-                    {delta.value}
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Progress value={Math.min(Math.max(improvementPct, 0), 100)} className="h-1.5 flex-1" />
-                  <span className="text-[10px] text-muted-foreground">
-                    base: {kpi.unit === "$M" ? `$${kpi.baselineValue}M` : `${kpi.baselineValue}${kpi.unit}`}
-                  </span>
-                </div>
-              </div>
-            ))}
+          <div className="text-right">
+            <span className="text-[10px] text-muted-foreground uppercase tracking-wider block">Cost Avoidance</span>
+            <span className="text-lg font-bold text-emerald-400">
+              ${(totalCostAvoidance / 1_000_000).toFixed(1)}M
+            </span>
           </div>
         </div>
-      ))}
-
-      {/* Total Cost Avoidance */}
-      <div className="rounded-lg border border-border bg-card p-4 text-center">
-        <span className="text-xs text-muted-foreground uppercase tracking-wider">Total Annualised Cost Avoidance</span>
-        <div className="text-3xl font-bold text-emerald-400 mt-1">
-          ${(totalCostAvoidance / 1_000_000).toFixed(1)}M
-        </div>
       </div>
 
-      {/* Source Footnote */}
-      <div className="pt-2">
-        <p className="text-[10px] text-muted-foreground/60 text-center italic">
-          Cost ranges sourced from EUROCONTROL, IATA, SITA, A4A, and WTW industry reports (2024–2025). Figures are illustrative and scaled to your airline profile.
-        </p>
+      {/* 2x2 Perspective Grid */}
+      <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-2 min-h-0 overflow-y-auto lg:overflow-hidden">
+        {perspectiveData.map(({ perspective, kpiResults, avgImprovement }) => (
+          <div
+            key={perspective.id}
+            className={cn(
+              "rounded-lg border-l-4 bg-card border border-border overflow-hidden flex flex-col",
+              perspective.color
+            )}
+          >
+            {/* Perspective Header */}
+            <div className="px-3 py-2 flex items-center justify-between border-b border-border/50">
+              <div className="flex items-center gap-2">
+                <div className="text-muted-foreground">{perspectiveIcons[perspective.icon]}</div>
+                <div>
+                  <h3 className="text-sm font-semibold text-foreground">{perspective.title}</h3>
+                  <p className="text-[10px] text-muted-foreground">{perspective.objective}</p>
+                </div>
+              </div>
+              <span className={cn(
+                "text-xs font-semibold",
+                avgImprovement > 0 ? "text-emerald-400" : "text-muted-foreground"
+              )}>
+                {avgImprovement > 0 ? "+" : ""}{avgImprovement.toFixed(1)}%
+              </span>
+            </div>
+
+            {/* KPI Tiles - horizontal row */}
+            <div className="p-2 grid grid-cols-3 gap-2 flex-1">
+              {kpiResults.map(({ kpi, current, delta, improvementPct }) => (
+                <div
+                  key={kpi.id}
+                  className="rounded-md border border-border/50 bg-secondary/30 p-2 space-y-1"
+                >
+                  <div className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide leading-tight">{kpi.label}</div>
+                  <div className="flex items-end justify-between">
+                    <span className="text-lg font-bold text-foreground">
+                      {kpi.unit === "$M" ? `$${current.toFixed(1)}M` : `${current.toFixed(1)}${kpi.unit}`}
+                    </span>
+                    <div className={cn(
+                      "flex items-center gap-0.5 text-[10px] font-semibold",
+                      delta.positive ? "text-emerald-400" : improvementPct === 0 ? "text-muted-foreground" : "text-red-400"
+                    )}>
+                      {delta.positive ? <ArrowUp className="w-2.5 h-2.5" /> : improvementPct !== 0 ? <ArrowDown className="w-2.5 h-2.5" /> : null}
+                      {delta.value}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Progress value={Math.min(Math.max(improvementPct, 0), 100)} className="h-1 flex-1" />
+                    <span className="text-[9px] text-muted-foreground">
+                      {kpi.unit === "$M" ? `$${kpi.baselineValue}M` : `${kpi.baselineValue}${kpi.unit}`}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
+
+      {/* Footnote inline */}
+      <p className="text-[9px] text-muted-foreground/50 text-center italic mt-1">
+        Cost ranges sourced from EUROCONTROL, IATA, SITA, A4A, and WTW (2024–2025). Illustrative figures scaled to your airline profile.
+      </p>
     </div>
   );
 };
