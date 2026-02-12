@@ -207,7 +207,11 @@ const LineOfSightTree = ({ useCaseValues, leadingValues, totalCostAvoidance, air
                     key={`uc-lm-${ucId}-${lmId}`}
                     d={`M${from.x},${from.y} C${from.x},${mid} ${to.x},${mid} ${to.x},${to.y}`}
                     fill="none"
-                    stroke={getLmColor(lmId)}
+                    stroke={
+                      highlighted?.type === "eo"
+                        ? accentColors[executiveOutcomes.find(e => e.id === highlighted.id)?.accentColor ?? ""]?.line ?? getLmColor(lmId)
+                        : getLmColor(lmId)
+                    }
                     strokeWidth={1 + weight * 4}
                     opacity={active ? 0.6 : 0.06}
                     className="transition-opacity duration-300"
