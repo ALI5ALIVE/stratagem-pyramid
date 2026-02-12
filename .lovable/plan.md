@@ -1,63 +1,90 @@
 
 
-# Fit Calculator and Scorecard to Single Viewport
+# Fix Calculator Viewport Fit — Compress Tier 2 and Reveal Use Case Expand
 
 ## Problem
 
-Both the Calculator and Scorecard views scroll vertically because they render all content in a tall column layout. The goal is to make each fit within `100vh` minus the top nav bar (~40px).
+Two issues on the Calculator view:
+1. **Leading Measures (Tier 2)** use full card layouts with icon, value, delta, and baseline -- taking ~156px of vertical space for what is essentially read-only computed numbers
+2. **Use Case expand buttons** (chevron icons on Tier 3 cards) are clipped below the viewport fold
 
-## Approach
+## Solution
 
-### Calculator View (`SlideLineOfSight.tsx`)
+### 1. Convert Tier 2 from cards to inline pills
 
-The calculator currently stacks vertically: header, airline profile panel, tabs with 3 tiers of content. The key insight is that the user is already filtered to one stakeholder tab at a time, so we only need to fit one tab's content.
+Replace the `grid-cols-3` card layout with a **single horizontal row of compact pills**. Each pill shows just the label and current value inline (e.g., "Fuel Variance 2.8%") with a subtle improvement colour. This reduces Tier 2 from ~156px to ~40px -- saving over 100px.
 
-Changes:
+Before:
+```text
+Leading Operational Measures (header)
+[Card: icon + label]  [Card: icon + label]  [Card: icon + label]
+[     value + delta ]  [     value + delta ]  [     value + delta ]
+[     baseline      ]  [     baseline      ]  [     baseline      ]
+```
 
-1. **Remove the header** ("Line of Sight" h1 + subtitle) -- the page nav bar already identifies the view
-2. **Collapse the airline profile by default** (`profileOpen` initial state from `true` to `false`) -- it shows a compact summary when collapsed
-3. **Use viewport-height container** -- change the outer wrapper from `overflow-y-auto` to `h-[calc(100vh-40px)] overflow-hidden` and use `flex flex-col` to distribute space
-4. **Reduce spacing** -- cut `py-6` to `py-3`, `mb-6` to `mb-3`, `gap-3` to `gap-2` throughout
-5. **Make Tier 3 (Use Cases) a 4-column grid on desktop** instead of 2-column, and reduce each card's vertical padding -- the sliders and cost info stay but become more compact
-6. **Remove the source footnote bar** at the bottom (or move it into a tooltip) to reclaim vertical space
-7. **Shrink Tier 1 and Tier 2 card padding** from `p-4`/`p-3` to `p-2.5`/`p-2`
+After:
+```text
+Leading Measures:  [Fuel Variance 2.8%]  [Fleet Avail 92.1%]  [OTP 79.3%]  ...
+```
 
-### Scorecard View (`BalancedScorecard.tsx`)
+Each pill is a small rounded badge with the value. Baseline and delta details move into a tooltip on hover -- keeping the information accessible without the vertical cost.
 
-The scorecard stacks 4 perspective cards vertically with 2-3 KPI tiles each. This creates too much height.
+### 2. Merge Cost Banner into Tier 1 row
 
-Changes:
+Move the "Estimated Annual Cost Avoidance" from a separate full-width banner into the **Tier 1 grid** as a 4th card (alongside the 3 executive outcome cards). This saves ~80px of vertical space. The grid becomes `grid-cols-4` with the cost avoidance card using the existing emerald styling.
 
-1. **Use viewport-height container** -- wrap in `h-[calc(100vh-40px)] flex flex-col overflow-hidden`
-2. **Switch to a 2x2 grid for perspectives** -- `grid grid-cols-2 gap-3` instead of stacking vertically. Each perspective card becomes more compact
-3. **Reduce the header** from `text-2xl` to `text-lg` and cut `mb-2` and `py-8` spacing
-4. **Shrink the Overall Improvement strip** padding from `p-4` to `p-2`
-5. **Make KPI tiles horizontal within each perspective** -- use `grid-cols-3` on all screen sizes (each perspective has 2-3 KPIs so they fit in one row)
-6. **Reduce KPI tile value size** from `text-2xl` to `text-lg`
-7. **Merge the Cost Avoidance banner into the header strip** (side-by-side with Overall Improvement) instead of a separate full-width block
-8. **Remove the source footnote** or make it a single-line inside the header area
+### 3. Reduce Tier 3 card internal spacing
 
-### Page Container (`LineOfSightPage.tsx`)
+- Cut card padding from `p-2.5` to `p-2`
+- Reduce slider margin from `mb-2` to `mb-1.5`
+- Shrink the slider min/max labels row spacing
+- Make the expand chevron more visible by adding a subtle `hover:bg-muted/30` to the header button
 
-- Change the outer `min-h-screen` to `h-screen overflow-hidden` so the page itself never scrolls
+These small tweaks recover another ~30px across the 2 rows of use case cards.
+
+### 4. Remove Tier section headers
+
+The "Executive Outcomes", "Leading Operational Measures", and "Platform Use Cases" headers each take ~28px (text + margin). Remove the standalone headers and integrate labels into the inline elements:
+- Tier 1 label becomes part of the tab content (already identified by the stakeholder tab)
+- Tier 2 label becomes a small prefix before the pills ("Measures:")
+- Tier 3 label is removed (the cards are self-explanatory)
+
+This saves ~84px total.
+
+## Space Budget After Changes
+
+| Section | Before | After |
+|---------|--------|-------|
+| Airline profile (collapsed) | 48px | 48px |
+| Tab bar | 40px | 40px |
+| Tier 1 section header | 28px | 0px |
+| Tier 1 cards (3 outcomes) | 100px | ~85px (now grid-cols-4 with cost banner merged) |
+| Cost banner | 80px | 0px (merged into Tier 1) |
+| Tier 2 section header | 28px | 0px |
+| Tier 2 measure cards | 140px | ~36px (inline pills) |
+| Tier 3 section header | 28px | 0px |
+| Tier 3 use case cards (2 rows) | 300px | ~260px (tighter padding) |
+| Gaps and padding | ~80px | ~50px |
+| **Total** | **~872px** | **~519px** |
+
+This leaves ~480px of breathing room on a 1080p display, ensuring the expand chevrons are fully visible and there is space for one expanded use case detail panel without scrolling.
 
 ## Technical Details
 
-### Files to modify
+### File: `src/components/slides/SlideLineOfSight.tsx`
 
-| File | Key changes |
-|------|------------|
-| `src/pages/LineOfSightPage.tsx` | `min-h-screen` to `h-screen overflow-hidden` |
-| `src/components/slides/SlideLineOfSight.tsx` | Remove header, collapse profile default, viewport-height container, tighter spacing, 4-col use case grid |
-| `src/components/slides/BalancedScorecard.tsx` | 2x2 perspective grid, merged cost banner, tighter spacing, viewport-height container |
+**Tier 2 rewrite (lines 289-325):** Replace the grid of cards with a flex-wrap row of pill badges. Each pill:
+- Shows `shortLabel` and computed value with unit
+- Uses emerald text colour when improved vs baseline
+- Wraps in a `TooltipProvider` showing baseline and delta on hover
+- Prefixed with a small "Measures:" label
+
+**Cost banner merge (lines 272-287):** Remove the standalone banner div. Add a 4th card to the Tier 1 grid showing the cost avoidance total. Change grid from `grid-cols-3` to `grid-cols-4` (with the cost card spanning same width).
+
+**Remove section headers (lines 228-229, 291-292, 329-330):** Delete the `h3` elements for all three tiers.
+
+**Tier 3 tightening (lines 341-485):** Reduce `p-2.5` to `p-2`, `mb-2` to `mb-1.5`, and add `hover:bg-muted/20 rounded` to the expand button for better discoverability.
 
 ### No data file changes
 
-All changes are purely layout/CSS -- no modifications to `lineOfSightData.ts` or computation logic.
-
-### Responsive considerations
-
-- The 2x2 scorecard grid and 4-col use case grid apply only on `lg:` breakpoints and above
-- On smaller screens, the layout will remain scrollable (mobile users expect scrolling)
-- The `h-screen overflow-hidden` constraint applies only on `md:` and above via a media-query class approach
-
+All modifications are layout-only in `SlideLineOfSight.tsx`. No changes to `lineOfSightData.ts` or other files.
