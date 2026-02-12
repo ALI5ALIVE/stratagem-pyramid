@@ -1,71 +1,63 @@
 
 
-# Enrich the 3-Tier "Cost of Every Signal" Slide
+# Fit Calculator and Scorecard to Single Viewport
 
-## Slide Rename
+## Problem
 
-- **Title**: "The Cost of Every Signal"
-- **Subtitle**: "From operational event to boardroom impact — every signal has a price tag."
+Both the Calculator and Scorecard views scroll vertically because they render all content in a tall column layout. The goal is to make each fit within `100vh` minus the top nav bar (~40px).
 
-## What Changes (keeping the 3-tier layout)
+## Approach
 
-### Tier 1: Executive Outcomes (top) — add dollar context
+### Calculator View (`SlideLineOfSight.tsx`)
 
-Currently shows stakeholder name + 2 metric labels. Enhance each card to also show a **tangible example sentence** that grounds the metric in reality.
+The calculator currently stacks vertically: header, airline profile panel, tabs with 3 tiers of content. The key insight is that the user is already filtered to one stakeholder tab at a time, so we only need to fit one tab's content.
 
-| Stakeholder | Current | Added Detail |
-|-------------|---------|-------------|
-| CFO | "Fuel Cost Savings", "IrOps Cost Avoidance" | Add a one-liner: "1% fuel variance = $5M-$20M/yr" |
-| CEO | "Brand & Reputation", "Regulatory Standing" | Add: "A single finding costs $50K-$2M" |
-| COO | "On-Time Performance", "Fleet Readiness" | Add: "Each AOG day costs $100K-$500K" |
+Changes:
 
-### Tier 2: Leading Measures (middle) — add direction context
+1. **Remove the header** ("Line of Sight" h1 + subtitle) -- the page nav bar already identifies the view
+2. **Collapse the airline profile by default** (`profileOpen` initial state from `true` to `false`) -- it shows a compact summary when collapsed
+3. **Use viewport-height container** -- change the outer wrapper from `overflow-y-auto` to `h-[calc(100vh-40px)] overflow-hidden` and use `flex flex-col` to distribute space
+4. **Reduce spacing** -- cut `py-6` to `py-3`, `mb-6` to `mb-3`, `gap-3` to `gap-2` throughout
+5. **Make Tier 3 (Use Cases) a 4-column grid on desktop** instead of 2-column, and reduce each card's vertical padding -- the sliders and cost info stay but become more compact
+6. **Remove the source footnote bar** at the bottom (or move it into a tooltip) to reclaim vertical space
+7. **Shrink Tier 1 and Tier 2 card padding** from `p-4`/`p-3` to `p-2.5`/`p-2`
 
-Currently shows label + baseline + arrow. Enhance each card with a short "how" line explaining the operational lever.
+### Scorecard View (`BalancedScorecard.tsx`)
 
-| Measure | Added Detail |
-|---------|-------------|
-| Fuel Variance (3.2%) | "Flight data to targeted crew training" |
-| Fleet Availability (91%) | "Compliance gaps caught before grounding" |
-| OTP (78%) | "Procedural fixes before repeat delays" |
-| Safety Recurrence (12%) | "Signal to corrective action, closed loop" |
+The scorecard stacks 4 perspective cards vertically with 2-3 KPI tiles each. This creates too much height.
 
-### Tier 3: Use Cases (bottom) — add scenario context
+Changes:
 
-Currently shows label + cost badge. Enhance each card with a short real-world scenario sentence.
+1. **Use viewport-height container** -- wrap in `h-[calc(100vh-40px)] flex flex-col overflow-hidden`
+2. **Switch to a 2x2 grid for perspectives** -- `grid grid-cols-2 gap-3` instead of stacking vertically. Each perspective card becomes more compact
+3. **Reduce the header** from `text-2xl` to `text-lg` and cut `mb-2` and `py-8` spacing
+4. **Shrink the Overall Improvement strip** padding from `p-4` to `p-2`
+5. **Make KPI tiles horizontal within each perspective** -- use `grid-cols-3` on all screen sizes (each perspective has 2-3 KPIs so they fit in one row)
+6. **Reduce KPI tile value size** from `text-2xl` to `text-lg`
+7. **Merge the Cost Avoidance banner into the header strip** (side-by-side with Overall Improvement) instead of a separate full-width block
+8. **Remove the source footnote** or make it a single-line inside the header area
 
-| Use Case | Added Detail |
-|----------|-------------|
-| Go-Around Events ($5K-$25K) | "FOQA trend → 47 pilots retrained in 48hrs" |
-| AOG & Maintenance ($100K-$500K/day) | "AD compliance gap caught before grounding" |
-| Fuel Degradation (1% = $5M-$20M) | "Exceedance linked to specific crew & procedure" |
-| Regulatory Fines ($50K-$2M) | "Reg change cascaded to every affected person" |
+### Page Container (`LineOfSightPage.tsx`)
 
-### Bottom Banner — unchanged
-
-$40M+ total with Interactive Calculator CTA link stays as-is.
-
----
+- Change the outer `min-h-screen` to `h-screen overflow-hidden` so the page itself never scrolls
 
 ## Technical Details
 
-### File: `src/components/sales-slides/SalesSlide8LineOfSight.tsx`
+### Files to modify
 
-1. Update `title` prop to "The Cost of Every Signal" and `subtitle` to "From operational event to boardroom impact — every signal has a price tag."
+| File | Key changes |
+|------|------------|
+| `src/pages/LineOfSightPage.tsx` | `min-h-screen` to `h-screen overflow-hidden` |
+| `src/components/slides/SlideLineOfSight.tsx` | Remove header, collapse profile default, viewport-height container, tighter spacing, 4-col use case grid |
+| `src/components/slides/BalancedScorecard.tsx` | 2x2 perspective grid, merged cost banner, tighter spacing, viewport-height container |
 
-2. Add a local mapping object for the enrichment data (stakeholder context lines, measure "how" descriptions, and use case scenario lines) rather than modifying the shared data file.
+### No data file changes
 
-3. Tier 1 cards: after the existing metrics list, add a small italicised context line using the mapping.
+All changes are purely layout/CSS -- no modifications to `lineOfSightData.ts` or computation logic.
 
-4. Tier 2 cards: below the baseline+arrow row, add a `text-[8px]` "how" line from the mapping.
+### Responsive considerations
 
-5. Tier 3 cards: below the cost badge, add a `text-[8px]` scenario line from the mapping.
-
-6. Slight padding adjustments (`py-1.5` to `py-2` on Tier 2 cards) to accommodate the extra line without overflowing the slide.
-
-### File: `src/data/salesDeckNarration.ts`
-
-Update the `sales-slide-6` narration text to reference "the cost of every signal" framing and walk through one scenario before summarising the $40M opportunity.
-
-### No changes to `src/data/lineOfSightData.ts` or `src/pages/SalesDeck.tsx`.
+- The 2x2 scorecard grid and 4-col use case grid apply only on `lg:` breakpoints and above
+- On smaller screens, the layout will remain scrollable (mobile users expect scrolling)
+- The `h-screen overflow-hidden` constraint applies only on `md:` and above via a media-query class approach
 
