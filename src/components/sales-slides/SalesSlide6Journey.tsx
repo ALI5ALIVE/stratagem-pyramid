@@ -86,7 +86,7 @@ const SalesSlide6Journey = ({
 
   return (
     <SalesSlideContainer
-      id="sales-slide-6"
+      id="sales-slide-7"
       title="Your Operational Performance Roadmap"
       subtitle="From fragmented to predictive in 18-24 months"
       slideNumber={slideNumber}

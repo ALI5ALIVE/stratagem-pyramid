@@ -40,7 +40,7 @@ const SalesSlide8LineOfSight = ({
 }: SalesSlide8LineOfSightProps) => {
   return (
     <SalesSlideContainer
-      id="sales-slide-8"
+      id="sales-slide-6"
       title="Line of Sight"
       subtitle="From use case cost to executive outcome — every dollar traced."
       slideNumber={slideNumber}
