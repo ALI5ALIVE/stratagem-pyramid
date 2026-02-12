@@ -86,7 +86,7 @@ const SlideLineOfSight = ({
   totalCostAvoidance,
 }: SlideLineOfSightProps) => {
   const [expandedUseCase, setExpandedUseCase] = useState<string | null>(null);
-  const [profileOpen, setProfileOpen] = useState(true);
+  const [profileOpen, setProfileOpen] = useState(false);
 
   const handleUseCaseChange = (ucId: string, value: number[]) => {
     setUseCaseValues((prev) => ({ ...prev, [ucId]: value[0] }));
@@ -132,21 +132,12 @@ const SlideLineOfSight = ({
   ];
 
   return (
-    <div className="h-full w-full flex flex-col">
-      <div className="flex-1 overflow-y-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
-          {/* Header */}
-          <div className="mb-6">
-            <h1 className="text-3xl sm:text-4xl font-display font-bold text-foreground">
-              <span className="title-accent">Line of Sight</span>
-            </h1>
-            <p className="text-primary text-base sm:text-lg mt-2 max-w-2xl">
-              From platform use case to executive outcome
-            </p>
-          </div>
+    <div className="h-[calc(100vh-40px)] w-full flex flex-col overflow-hidden">
+      <div className="flex-1 overflow-y-auto lg:overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3">
 
           {/* Airline Profile Panel */}
-          <div className="mb-6 rounded-lg border border-primary/30 bg-gradient-to-br from-primary/5 to-primary/10 overflow-hidden">
+          <div className="mb-3 rounded-lg border border-primary/30 bg-gradient-to-br from-primary/5 to-primary/10 overflow-hidden">
             <button
               onClick={() => setProfileOpen(!profileOpen)}
               className="w-full flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-primary/5 transition-colors"
@@ -208,7 +199,7 @@ const SlideLineOfSight = ({
           </div>
 
           <Tabs defaultValue="cfo" className="w-full">
-            <TabsList className="bg-card/50 border border-border/30 mb-6">
+            <TabsList className="bg-card/50 border border-border/30 mb-3">
               {executiveOutcomes.map((eo) => {
                 const colors = tabColors[eo.accentColor];
                 return (
@@ -231,7 +222,7 @@ const SlideLineOfSight = ({
               const connectedMeasures = leadingMeasures.filter((lm) => connectedMeasureIds.has(lm.id));
 
               return (
-                <TabsContent key={eo.id} value={eo.id} className="space-y-6">
+                <TabsContent key={eo.id} value={eo.id} className="space-y-3">
                   {/* Tier 1: Executive Outcomes */}
                   <div>
                     <h3 className={cn("text-xs font-semibold uppercase tracking-wider mb-3", colors.text)}>
@@ -245,7 +236,7 @@ const SlideLineOfSight = ({
                         return (
                           <div
                             key={metric.id}
-                            className={cn("rounded-lg border bg-gradient-to-br p-4", eo.color)}
+                            className={cn("rounded-lg border bg-gradient-to-br p-2.5", eo.color)}
                           >
                             <p className="text-xs text-muted-foreground mb-1">{metric.label}</p>
                             <div className="flex items-baseline gap-2">
@@ -280,7 +271,7 @@ const SlideLineOfSight = ({
 
                   {/* Cost Impact Banner */}
                   {totalCostAvoidance > 0 && (
-                    <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-4 flex items-center justify-between">
+                    <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-2.5 flex items-center justify-between">
                       <div>
                         <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400 mb-1">
                           Your Estimated Annual Cost Avoidance*
@@ -308,7 +299,7 @@ const SlideLineOfSight = ({
                           : current - lm.baselineValue;
                         const improved = delta > 0.01;
                         return (
-                          <div key={lm.id} className="rounded-lg border border-border/40 bg-card/30 p-3">
+                          <div key={lm.id} className="rounded-lg border border-border/40 bg-card/30 p-2">
                             <div className="flex items-center gap-1.5 mb-1">
                               <Gauge className="w-3 h-3 text-muted-foreground" />
                               <span className="text-xs font-medium text-foreground">{lm.shortLabel}</span>
@@ -338,7 +329,7 @@ const SlideLineOfSight = ({
                     <h3 className={cn("text-xs font-semibold uppercase tracking-wider mb-3", colors.text)}>
                       Platform Use Cases — Adjust Frequency to See Impact
                     </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
                       {useCases.map((uc) => {
                         const isConnected = connectedUseCaseIds.has(uc.id);
                         const currentVal = useCaseValues[uc.id] ?? uc.input.baseline;
@@ -351,7 +342,7 @@ const SlideLineOfSight = ({
                           <div
                             key={uc.id}
                             className={cn(
-                              "rounded-lg border p-4 transition-all duration-300",
+                              "rounded-lg border p-2.5 transition-all duration-300",
                               isConnected
                                 ? "border-border/50 bg-card/40"
                                 : "border-border/30 bg-card/30 opacity-50"
@@ -501,12 +492,6 @@ const SlideLineOfSight = ({
             })}
           </Tabs>
 
-          {/* Source Footnote Bar */}
-          <div className="mt-6 pt-4 border-t border-border/20">
-            <p className="text-[10px] text-muted-foreground/60 text-center italic">
-              Cost ranges sourced from EUROCONTROL, IATA, SITA, A4A, and WTW industry reports (2024–2025). Figures are illustrative and scaled to your airline profile.
-            </p>
-          </div>
         </div>
       </div>
     </div>

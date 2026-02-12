@@ -42,7 +42,7 @@ const LineOfSightPage = () => {
   }, [useCaseValues, airlineProfile]);
 
   return (
-    <div className="min-h-screen w-full bg-background text-foreground">
+    <div className="h-screen w-full bg-background text-foreground overflow-hidden flex flex-col">
       {/* View toggle */}
       <div className="sticky top-0 z-20 bg-background/80 backdrop-blur-sm border-b border-border/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex items-center gap-2">
