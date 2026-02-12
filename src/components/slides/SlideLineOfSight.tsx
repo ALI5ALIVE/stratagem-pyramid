@@ -280,14 +280,14 @@ const SlideLineOfSight = ({
                           <Tooltip>
                             <TooltipTrigger asChild>
                               <span className={cn(
-                                "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-medium cursor-default transition-colors",
+                                "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium cursor-default transition-colors",
                                 improved
                                   ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
                                   : "border-border/40 bg-card/30 text-foreground"
                               )}>
                                 {lm.shortLabel}
-                                <span className="font-bold">{current.toFixed(1)}{lm.unit}</span>
-                                {improved && (lm.direction === "down" ? <ArrowDown className="w-2.5 h-2.5" /> : <ArrowUp className="w-2.5 h-2.5" />)}
+                                <span className="text-sm font-bold">{current.toFixed(1)}{lm.unit}</span>
+                                {improved && (lm.direction === "down" ? <ArrowDown className="w-3 h-3" /> : <ArrowUp className="w-3 h-3" />)}
                               </span>
                             </TooltipTrigger>
                             <TooltipContent side="bottom" className="text-[10px]">
@@ -301,7 +301,7 @@ const SlideLineOfSight = ({
                   </div>
 
                   {/* Tier 3: Use Case Input Sliders */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1.5">
                       {useCases.map((uc) => {
                         const isConnected = connectedUseCaseIds.has(uc.id);
                         const currentVal = useCaseValues[uc.id] ?? uc.input.baseline;
@@ -314,38 +314,39 @@ const SlideLineOfSight = ({
                           <div
                             key={uc.id}
                             className={cn(
-                              "rounded-lg border p-2 transition-all duration-300",
+                              "rounded-lg border p-1.5 transition-all duration-300",
                               isConnected
                                 ? "border-border/50 bg-card/40"
-                                : "border-border/30 bg-card/30 opacity-50"
+                                : "border-border/30 bg-card/30 opacity-50",
+                              isExpanded && "ring-1 ring-primary/40"
                             )}
                           >
                             {/* Header */}
                             <button
                               onClick={() => setExpandedUseCase(isExpanded ? null : uc.id)}
-                              className="w-full flex items-start justify-between mb-1.5 cursor-pointer hover:bg-muted/20 rounded p-0.5 -m-0.5 transition-colors"
+                              className="w-full flex items-start justify-between mb-1 cursor-pointer hover:bg-muted/20 rounded p-0.5 -m-0.5 transition-colors"
                             >
-                              <div className="flex items-center gap-2">
-                                <AlertTriangle className="w-3.5 h-3.5 text-muted-foreground shrink-0 mt-0.5" />
-                                <span className="text-sm font-semibold text-foreground text-left">{uc.label}</span>
-                              </div>
                               <div className="flex items-center gap-1.5">
+                                <AlertTriangle className="w-3 h-3 text-muted-foreground shrink-0 mt-0.5" />
+                                <span className="text-xs font-semibold text-foreground text-left leading-tight">{uc.label}</span>
+                              </div>
+                              <div className="flex items-center gap-1">
                                 <span className={cn("inline-flex items-center rounded-full border px-1.5 py-0.5 text-[9px] font-medium", severityColors[uc.input.severity])}>
                                   {uc.input.severity}
                                 </span>
-                                {isExpanded ? <ChevronUp className="w-3.5 h-3.5 text-muted-foreground" /> : <ChevronDown className="w-3.5 h-3.5 text-muted-foreground" />}
+                                {isExpanded ? <ChevronUp className="w-3 h-3 text-muted-foreground" /> : <ChevronDown className="w-3 h-3 text-muted-foreground" />}
                               </div>
                             </button>
 
                             {/* Slider */}
-                            <div className="mb-1.5">
-                              <div className="flex items-center justify-between mb-1">
-                                <span className="text-[10px] text-muted-foreground">{uc.input.inputLabel}</span>
+                            <div className="mb-1">
+                              <div className="flex items-center justify-between mb-0.5">
+                                <span className="text-[9px] text-muted-foreground">{uc.input.inputLabel}</span>
                                 <div className="flex items-center gap-1">
-                                  <span className={cn("text-sm font-semibold", improved ? "text-emerald-400" : "text-foreground")}>
+                                  <span className={cn("text-xs font-semibold", improved ? "text-emerald-400" : "text-foreground")}>
                                     {currentVal}{uc.input.unit}
                                   </span>
-                                  {improved && <ArrowDown className="w-3 h-3 text-emerald-400" />}
+                                  {improved && <ArrowDown className="w-2.5 h-2.5 text-emerald-400" />}
                                 </div>
                               </div>
                               <Slider
@@ -356,16 +357,16 @@ const SlideLineOfSight = ({
                                 onValueChange={(v) => handleUseCaseChange(uc.id, v)}
                                 className={cn("cursor-pointer", colors.slider)}
                               />
-                              <div className="flex justify-between mt-1">
-                                <span className="text-[9px] text-muted-foreground">Best: {uc.input.min}{uc.input.unit}</span>
-                                <span className="text-[9px] text-muted-foreground">Baseline: {uc.input.baseline}{uc.input.unit}</span>
+                              <div className="flex justify-between mt-0.5">
+                                <span className="text-[8px] text-muted-foreground">Best: {uc.input.min}{uc.input.unit}</span>
+                                <span className="text-[8px] text-muted-foreground">Baseline: {uc.input.baseline}{uc.input.unit}</span>
                               </div>
                             </div>
 
                             {/* Cost impact */}
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-1">
-                                <span className="text-[10px] text-muted-foreground">
+                                <span className="text-[9px] text-muted-foreground">
                                   {formatCurrency(scaledCost)} per {uc.input.unit === "%" ? "point" : uc.input.unit.replace(/s$/, "")}
                                 </span>
                                 {sourceCitations[uc.id] && (
@@ -373,7 +374,7 @@ const SlideLineOfSight = ({
                                     <Tooltip>
                                       <TooltipTrigger asChild>
                                         <span className="inline-flex cursor-help">
-                                          <Info className="w-3 h-3 text-muted-foreground/50 hover:text-muted-foreground" />
+                                          <Info className="w-2.5 h-2.5 text-muted-foreground/50 hover:text-muted-foreground" />
                                         </span>
                                       </TooltipTrigger>
                                       <TooltipContent side="top" className="max-w-[250px] text-[10px]">
@@ -385,79 +386,87 @@ const SlideLineOfSight = ({
                                 )}
                               </div>
                               {costImpact > 0 && (
-                                <span className="text-[10px] font-medium text-emerald-400">
+                                <span className="text-[9px] font-medium text-emerald-400">
                                   Saving {formatCurrency(costImpact)}/yr
                                 </span>
                               )}
                             </div>
-
-                            {/* Expandable detail */}
-                            {isExpanded && (
-                              <div className="mt-3 pt-3 border-t border-border/30 space-y-2">
-                                <p className="text-xs text-muted-foreground">{uc.description}</p>
-                                <div>
-                                  <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Cost Components</span>
-                                  <ul className="mt-1 space-y-0.5">
-                                    {uc.input.costComponents.map((c, i) => (
-                                      <li key={i} className="text-[10px] text-muted-foreground flex items-center gap-1">
-                                        <span className="w-1 h-1 rounded-full bg-muted-foreground/50" />
-                                        {c}
-                                      </li>
-                                    ))}
-                                  </ul>
-                                </div>
-                                <div>
-                                  <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Measures Impacted</span>
-                                  <div className="flex flex-wrap gap-1 mt-1">
-                                    {Object.keys(uc.impactOnMeasures).map((mId) => {
-                                      const measure = leadingMeasures.find((m) => m.id === mId);
-                                      return measure ? (
-                                        <span key={mId} className={cn("inline-flex items-center rounded-full border px-1.5 py-0.5 text-[9px] font-medium", colors.badge)}>
-                                          {measure.shortLabel}
-                                        </span>
-                                      ) : null;
-                                    })}
-                                  </div>
-                                </div>
-                                <p className="text-[10px] italic text-muted-foreground pt-1 border-t border-border/20">
-                                  {uc.methodology}
-                                </p>
-
-                                {/* DTOP Platform Mechanism */}
-                                <div className="pt-2 border-t border-border/20">
-                                  <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Platform Mechanism — DTOP</span>
-                                  <div className="flex items-center gap-1 mt-1.5 flex-wrap">
-                                    {(() => {
-                                      const steps = uc.platformMechanism.split("→").map(s => s.trim());
-                                      const stepIcons = [Search, Zap, Settings, CheckCircle];
-                                      const stepColors = [
-                                        "text-accent",
-                                        "text-primary",
-                                        "text-sky-400",
-                                        "text-emerald-400",
-                                      ];
-                                      return steps.map((step, i) => (
-                                        <span key={i} className="flex items-center gap-1">
-                                          {React.createElement(stepIcons[i] || Search, { className: `w-2.5 h-2.5 ${stepColors[i] || "text-muted-foreground"}` })}
-                                          <span className={cn("text-[9px] font-medium", stepColors[i] || "text-muted-foreground")}>{step}</span>
-                                          {i < steps.length - 1 && <span className="text-[9px] text-muted-foreground/40 mx-0.5">→</span>}
-                                        </span>
-                                      ));
-                                    })()}
-                                  </div>
-                                </div>
-
-                                {/* Point Solution Gap */}
-                                <div className="rounded-md bg-primary/5 border border-primary/20 p-2 mt-1">
-                                  <span className="text-[10px] font-semibold uppercase tracking-wider text-primary/70">Why Point Solutions Fall Short</span>
-                                  <p className="text-[10px] text-muted-foreground mt-0.5 leading-relaxed">{uc.pointSolutionGap}</p>
-                                </div>
-                              </div>
-                            )}
                           </div>
                         );
                       })}
                     </div>
+
+                  {/* Expanded detail panel — rendered outside the grid */}
+                  {expandedUseCase && (() => {
+                    const uc = useCases.find((u) => u.id === expandedUseCase);
+                    if (!uc) return null;
+                    return (
+                      <div className="rounded-lg border border-primary/30 bg-card/60 p-3 space-y-2 animate-in fade-in-0 slide-in-from-top-2 duration-200">
+                        <div className="flex items-center justify-between">
+                          <h4 className="text-xs font-semibold text-foreground">{uc.label}</h4>
+                          <button onClick={() => setExpandedUseCase(null)} className="text-muted-foreground hover:text-foreground">
+                            <ChevronUp className="w-4 h-4" />
+                          </button>
+                        </div>
+                        <p className="text-[10px] text-muted-foreground">{uc.description}</p>
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">Cost Components</span>
+                            <ul className="mt-1 space-y-0.5">
+                              {uc.input.costComponents.map((c, i) => (
+                                <li key={i} className="text-[9px] text-muted-foreground flex items-center gap-1">
+                                  <span className="w-1 h-1 rounded-full bg-muted-foreground/50" />
+                                  {c}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          <div>
+                            <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">Measures Impacted</span>
+                            <div className="flex flex-wrap gap-1 mt-1">
+                              {Object.keys(uc.impactOnMeasures).map((mId) => {
+                                const measure = leadingMeasures.find((m) => m.id === mId);
+                                return measure ? (
+                                  <span key={mId} className={cn("inline-flex items-center rounded-full border px-1.5 py-0.5 text-[9px] font-medium", colors.badge)}>
+                                    {measure.shortLabel}
+                                  </span>
+                                ) : null;
+                              })}
+                            </div>
+                          </div>
+                        </div>
+                        <p className="text-[9px] italic text-muted-foreground pt-1 border-t border-border/20">
+                          {uc.methodology}
+                        </p>
+                        <div className="pt-1 border-t border-border/20">
+                          <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">Platform Mechanism — DTOP</span>
+                          <div className="flex items-center gap-1 mt-1 flex-wrap">
+                            {(() => {
+                              const steps = uc.platformMechanism.split("→").map(s => s.trim());
+                              const stepIcons = [Search, Zap, Settings, CheckCircle];
+                              const stepColors = [
+                                "text-accent",
+                                "text-primary",
+                                "text-sky-400",
+                                "text-emerald-400",
+                              ];
+                              return steps.map((step, i) => (
+                                <span key={i} className="flex items-center gap-1">
+                                  {React.createElement(stepIcons[i] || Search, { className: `w-2.5 h-2.5 ${stepColors[i] || "text-muted-foreground"}` })}
+                                  <span className={cn("text-[9px] font-medium", stepColors[i] || "text-muted-foreground")}>{step}</span>
+                                  {i < steps.length - 1 && <span className="text-[9px] text-muted-foreground/40 mx-0.5">→</span>}
+                                </span>
+                              ));
+                            })()}
+                          </div>
+                        </div>
+                        <div className="rounded-md bg-primary/5 border border-primary/20 p-2">
+                          <span className="text-[9px] font-semibold uppercase tracking-wider text-primary/70">Why Point Solutions Fall Short</span>
+                          <p className="text-[9px] text-muted-foreground mt-0.5 leading-relaxed">{uc.pointSolutionGap}</p>
+                        </div>
+                      </div>
+                    );
+                  })()}
                 </TabsContent>
               );
             })}
