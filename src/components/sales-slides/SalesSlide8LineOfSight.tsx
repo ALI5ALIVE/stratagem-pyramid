@@ -1,4 +1,4 @@
-import { TrendingUp, Crown, Settings, ExternalLink, ChevronDown } from "lucide-react";
+import { TrendingUp, Crown, Settings, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import SalesSlideContainer from "./SalesSlideContainer";
 import type { SlideNarrationProps } from "@/types/slideProps";
@@ -16,11 +16,29 @@ const stakeholderColors: Record<string, { text: string; bg: string; border: stri
   COO: { text: "text-sky-400", bg: "bg-sky-400/10", border: "border-sky-400/30" },
 };
 
-// Show only the 4 most impactful use cases
+const stakeholderContext: Record<string, string> = {
+  CFO: "1% fuel variance = $5M–$20M/yr",
+  CEO: "A single finding costs $50K–$2M",
+  COO: "Each AOG day costs $100K–$500K",
+};
+
+const measureHow: Record<string, string> = {
+  lm1: "Flight data to targeted crew training",
+  lm2: "Compliance gaps caught before grounding",
+  lm3: "Procedural fixes before repeat delays",
+  lm4: "Signal to corrective action, closed loop",
+};
+
+const ucScenario: Record<string, string> = {
+  uc1: "FOQA trend → 47 pilots retrained in 48hrs",
+  uc2: "AD compliance gap caught before grounding",
+  uc4: "Exceedance linked to specific crew & procedure",
+  uc6: "Reg change cascaded to every affected person",
+};
+
 const selectedUCIds = ["uc1", "uc2", "uc4", "uc6"];
 const selectedUCs = useCases.filter((uc) => selectedUCIds.includes(uc.id));
 
-// Show only the 4 most relevant leading measures for these use cases
 const selectedLMIds = ["lm1", "lm2", "lm3", "lm4"];
 const selectedLMs = leadingMeasures.filter((lm) => selectedLMIds.includes(lm.id));
 
@@ -41,8 +59,8 @@ const SalesSlide8LineOfSight = ({
   return (
     <SalesSlideContainer
       id="sales-slide-6"
-      title="Line of Sight"
-      subtitle="From use case cost to executive outcome — every dollar traced."
+      title="The Cost of Every Signal"
+      subtitle="From operational event to boardroom impact — every signal has a price tag."
       slideNumber={slideNumber}
       isPlaying={isPlaying}
       isLoading={isLoading}
@@ -80,6 +98,11 @@ const SalesSlide8LineOfSight = ({
                       </span>
                     ))}
                   </div>
+                  {stakeholderContext[eo.stakeholder] && (
+                    <p className="text-[8px] italic text-foreground/50 mt-1 leading-tight">
+                      {stakeholderContext[eo.stakeholder]}
+                    </p>
+                  )}
                 </div>
               );
             })}
@@ -102,7 +125,7 @@ const SalesSlide8LineOfSight = ({
             {selectedLMs.map((lm) => (
               <div
                 key={lm.id}
-                className="bg-card/40 border border-border/40 rounded-lg px-2 py-1.5 text-center"
+                className="bg-card/40 border border-border/40 rounded-lg px-2 py-2 text-center"
               >
                 <span className="text-[10px] text-foreground font-medium block truncate">
                   {lm.shortLabel}
@@ -115,6 +138,11 @@ const SalesSlide8LineOfSight = ({
                     {lm.direction === "down" ? "↓" : "↑"}
                   </span>
                 </div>
+                {measureHow[lm.id] && (
+                  <p className="text-[8px] italic text-foreground/50 mt-1 leading-tight">
+                    {measureHow[lm.id]}
+                  </p>
+                )}
               </div>
             ))}
           </div>
@@ -145,6 +173,11 @@ const SalesSlide8LineOfSight = ({
                 <span className="text-[8px] text-primary font-semibold bg-primary/10 rounded-full px-2 py-0.5 whitespace-nowrap">
                   {uc.input.costPerEvent}
                 </span>
+                {ucScenario[uc.id] && (
+                  <p className="text-[8px] italic text-foreground/50 leading-tight">
+                    {ucScenario[uc.id]}
+                  </p>
+                )}
               </div>
             ))}
           </div>
