@@ -71,7 +71,7 @@ const SalesSlide7Outcomes = ({
 }: SalesSlide7OutcomesProps) => {
   return (
     <SalesSlideContainer
-      id="sales-slide-7"
+      id="sales-slide-8"
       title="What Predictable Performance Delivers"
       slideNumber={slideNumber}
       isPlaying={isPlaying}
