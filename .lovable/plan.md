@@ -1,39 +1,33 @@
 
+# Convert Use Case Expander to a Centered Dialog Popup
 
-# Change KPI Tree Line Colouring to Use Hovered Executive's Colour
+## Problem
+The expanded use case detail panel in the Calculator view gets cut off because it renders inline within the constrained `h-screen overflow-hidden` layout. There isn't enough vertical space for both the card grid and the expanded content.
 
-## What Changes
-
-When hovering an executive outcome (CFO/CEO/COO), **all** connected lines -- both the LM-to-EO lines and the UC-to-LM lines -- will use that executive's single colour (green for CFO, orange for CEO, blue for COO). This replaces the current "dominant stakeholder" approach where UC-to-LM lines could show mixed colours.
+## Solution
+Replace the inline expanded panel with a centered Dialog (modal popup) using the existing Radix Dialog component already in the project. When a user clicks a use case card's expand button, it opens a modal overlay in the center of the screen with all the detail content.
 
 ## Technical Details
 
-### File: `src/components/slides/LineOfSightTree.tsx`
+### File: `src/components/slides/SlideLineOfSight.tsx`
 
-**1. Update UC-to-LM line stroke colour (lines 206-215)**
+**1. Add Dialog imports**
+- Import `Dialog, DialogContent, DialogHeader, DialogTitle` from `@/components/ui/dialog`
 
-Currently the stroke uses `getLmColor(lmId)` which picks the dominant stakeholder colour. The change adds logic to check if an EO is highlighted -- if so, use that EO's accent colour for all connected lines instead.
+**2. Replace the inline expanded panel (lines 399-469) with a Dialog**
+- Remove the current inline `<div>` expansion block
+- Add a `<Dialog>` component that is controlled by `expandedUseCase` state:
+  - `open={!!expandedUseCase}`
+  - `onOpenChange` sets `expandedUseCase` to `null` when closed
+- Move all the existing detail content (description, cost components, measures impacted, DTOP mechanism, point solution gap) into `<DialogContent>`
+- Use `max-w-lg` or `max-w-xl` for comfortable reading width
+- The dialog's built-in close button (X) and overlay click-to-dismiss handle closing
 
-```
-// Current
-stroke={getLmColor(lmId)}
+**3. Keep the card click/chevron behavior**
+- The existing `setExpandedUseCase(uc.id)` toggle on card click stays the same -- it now opens the dialog instead of expanding inline
+- Clicking the same card again or pressing the dialog X closes it
 
-// New logic
-stroke={
-  highlighted?.type === "eo"
-    ? accentColors[executiveOutcomes.find(e => e.id === highlighted.id)?.accentColor ?? ""]?.line ?? getLmColor(lmId)
-    : getLmColor(lmId)
-}
-```
-
-This means:
-- **No hover**: lines use the dominant-stakeholder colour (unchanged default)
-- **Hovering CFO**: all visible UC-to-LM lines turn green
-- **Hovering CEO**: all visible UC-to-LM lines turn orange
-- **Hovering COO**: all visible UC-to-LM lines turn blue
-- **Hovering a UC or LM**: lines still use dominant-stakeholder colour (only EO hover triggers the override)
-
-**2. No other changes needed**
-
-The LM-to-EO lines already use the EO's own colour via `accentColors[color]?.line`, so they naturally show the correct colour. The highlight visibility logic (`isConnectionHighlighted`) already correctly filters which lines are visible, so only the stroke colour needs updating.
-
+This approach:
+- Eliminates all clipping issues since the dialog renders in a portal above everything
+- Requires minimal code changes (just wrapping existing content in Dialog components)
+- Uses the project's existing Dialog component -- no new dependencies
