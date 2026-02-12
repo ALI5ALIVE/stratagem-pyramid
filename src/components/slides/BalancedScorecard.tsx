@@ -109,17 +109,17 @@ const BalancedScorecard = ({ useCaseValues, leadingValues, totalCostAvoidance, a
       </div>
 
       {/* 2x2 Perspective Grid */}
-      <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-2 min-h-0 overflow-y-auto lg:overflow-hidden">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-1.5 grid-rows-[auto_auto]">
         {perspectiveData.map(({ perspective, kpiResults, avgImprovement }) => (
           <div
             key={perspective.id}
             className={cn(
-              "rounded-lg border-l-4 bg-card border border-border overflow-hidden flex flex-col",
+              "rounded-lg border-l-4 bg-card border border-border overflow-hidden",
               perspective.color
             )}
           >
             {/* Perspective Header */}
-            <div className="px-3 py-2 flex items-center justify-between border-b border-border/50">
+            <div className="px-3 py-1.5 flex items-center justify-between border-b border-border/50">
               <div className="flex items-center gap-2">
                 <div className="text-muted-foreground">{perspectiveIcons[perspective.icon]}</div>
                 <div>
@@ -135,16 +135,19 @@ const BalancedScorecard = ({ useCaseValues, leadingValues, totalCostAvoidance, a
               </span>
             </div>
 
-            {/* KPI Tiles - horizontal row */}
-            <div className="p-2 grid grid-cols-3 gap-2 flex-1">
+            {/* KPI Tiles - dynamic columns */}
+            <div className={cn(
+              "p-1.5 gap-1.5 grid",
+              kpiResults.length <= 2 ? "grid-cols-2" : "grid-cols-3"
+            )}>
               {kpiResults.map(({ kpi, current, delta, improvementPct }) => (
                 <div
                   key={kpi.id}
-                  className="rounded-md border border-border/50 bg-secondary/30 p-2 space-y-1"
+                  className="rounded-md border border-border/50 bg-secondary/30 p-1.5 space-y-0.5"
                 >
                   <div className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide leading-tight">{kpi.label}</div>
                   <div className="flex items-end justify-between">
-                    <span className="text-lg font-bold text-foreground">
+                    <span className="text-base font-bold text-foreground">
                       {kpi.unit === "$M" ? `$${current.toFixed(1)}M` : `${current.toFixed(1)}${kpi.unit}`}
                     </span>
                     <div className={cn(
