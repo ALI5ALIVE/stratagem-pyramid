@@ -155,7 +155,8 @@ const PerformanceShiftCurve = ({
             Cost Savings Distribution
           </h2>
            <p className="text-xs text-muted-foreground mt-1">
-            How platform adoption reduces and stabilises your annual cost exposure
+            How platform adoption reduces and stabilises your annual cost exposure.{" "}
+            <span className="italic">A taller, narrower curve means more predictable costs.</span>
            </p>
         </div>
 
@@ -165,11 +166,11 @@ const PerformanceShiftCurve = ({
           <div className="absolute top-3 right-4 flex items-center gap-4 text-xs z-10">
             <span className="flex items-center gap-1.5">
               <span className="w-3 h-3 rounded-sm bg-muted-foreground/30" />
-              <span className="text-muted-foreground">Current State</span>
+              <span className="text-muted-foreground">Current (variable)</span>
             </span>
             <span className="flex items-center gap-1.5">
               <span className="w-3 h-3 rounded-sm bg-emerald-500/70" />
-              <span className="text-muted-foreground">Improved State</span>
+              <span className="text-muted-foreground">Improved (predictable)</span>
             </span>
           </div>
 
@@ -247,6 +248,19 @@ const PerformanceShiftCurve = ({
                   style: { fill: "hsl(152 69% 53%)", fontSize: 10 },
                 }}
               />
+              {/* Annotation: cost reduction arrow between means */}
+              {totalCostAvoidance > 0 && (
+                <ReferenceLine
+                  x={Math.round((baselineMean + improvedMean) / 2)}
+                  stroke="none"
+                  label={{
+                    value: `← Cost Reduction →`,
+                    position: "insideBottom",
+                    dy: 15,
+                    style: { fill: "hsl(var(--muted-foreground))", fontSize: 9, fontWeight: 600 },
+                  }}
+                />
+              )}
               <Area
                 type="monotone"
                 dataKey="baseline"
@@ -254,7 +268,8 @@ const PerformanceShiftCurve = ({
                 strokeOpacity={0.4}
                 fill="url(#baselineGradient)"
                 fillOpacity={1}
-              isAnimationActive={false}
+                isAnimationActive={false}
+                name="Current (variable)"
               />
               <Area
                 type="monotone"
@@ -263,6 +278,28 @@ const PerformanceShiftCurve = ({
                 fill="url(#improvedGradient)"
                 fillOpacity={1}
                 isAnimationActive={false}
+                name="Improved (predictable)"
+              />
+              {/* Peak annotations */}
+              <ReferenceLine
+                x={Math.round(baselineMean + baselineStdDev * 0.3)}
+                stroke="none"
+                label={{
+                  value: "Unpredictable ↔",
+                  position: "insideTop",
+                  dy: 30,
+                  style: { fill: "hsl(var(--muted-foreground))", fontSize: 8, fontStyle: "italic" },
+                }}
+              />
+              <ReferenceLine
+                x={Math.round(improvedMean - improvedStdDev * 0.3)}
+                stroke="none"
+                label={{
+                  value: "↔ Predictable",
+                  position: "insideTop",
+                  dy: 20,
+                  style: { fill: "hsl(152 69% 53%)", fontSize: 8, fontStyle: "italic" },
+                }}
               />
             </AreaChart>
           </ResponsiveContainer>
