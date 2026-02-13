@@ -39,6 +39,16 @@
 
     --radius: 0.5rem;
 
+    /* Sidebar grey theme */
+    --sidebar-background: 220 15% 18%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 217 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 15% 24%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 220 15% 25%;
+    --sidebar-ring: 217 100% 50%;
+
     /* Comply365 Brand Extended Colors */
     --comply-blue: 217 100% 50%;
     --comply-sky: 195 100% 45%;

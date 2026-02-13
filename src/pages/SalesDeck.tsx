@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
+import { useSidebar } from "@/components/ui/sidebar";
 import { getSalesNarrationBySlideId } from "@/data/salesDeckNarration";
 
 // Sales slides
@@ -44,6 +45,7 @@ const SalesDeck = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const cacheRef = useRef<Map<string, string>>(new Map());
   const { register, updateActiveIndex, unregister } = useSlideNavigation();
+  const { open, setOpen } = useSidebar();
 
   // Fetch and play audio for a slide
   const fetchAndPlayAudio = async (slideId: string) => {
@@ -165,6 +167,12 @@ const SalesDeck = () => {
     const handleScroll = () => {
       const scrollTop = container.scrollTop;
       const slideHeight = container.clientHeight;
+
+      // Auto-collapse sidebar on scroll
+      if (open) {
+        setOpen(false);
+      }
+
       const newSlide = Math.round(scrollTop / slideHeight);
       if (newSlide !== currentSlide && newSlide >= 0 && newSlide < slides.length) {
         stop(); // Stop audio when changing slides
