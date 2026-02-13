@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { getSalesNarrationBySlideId } from "@/data/salesDeckNarration";
 
 // Sales slides
@@ -42,6 +43,7 @@ const SalesDeck = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const cacheRef = useRef<Map<string, string>>(new Map());
+  const { register, updateActiveIndex, unregister } = useSlideNavigation();
 
   // Fetch and play audio for a slide
   const fetchAndPlayAudio = async (slideId: string) => {
@@ -144,6 +146,17 @@ const SalesDeck = () => {
     }
   }, []);
 
+  // Register slides with sidebar context
+  useEffect(() => {
+    register(slides, currentSlide, navigateToSlide);
+    return () => unregister();
+  }, []);
+
+  // Keep sidebar in sync
+  useEffect(() => {
+    updateActiveIndex(currentSlide);
+  }, [currentSlide, updateActiveIndex]);
+
   // Track scroll position to update current slide
   useEffect(() => {
     const container = containerRef.current;
@@ -203,25 +216,7 @@ const SalesDeck = () => {
 
   return (
     <div className="relative min-h-screen bg-background">
-      {/* Dot navigation */}
-      <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-50 hidden sm:flex flex-col gap-2">
-        {slides.map((slide, i) => (
-          <button
-            key={slide.id}
-            onClick={() => navigateToSlide(i)}
-            className={`group relative w-3 h-3 rounded-full transition-all duration-300 ${
-              i === currentSlide
-                ? "bg-primary scale-125"
-                : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
-            }`}
-            aria-label={`Go to ${slide.label}`}
-          >
-            <span className="absolute right-5 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-muted-foreground whitespace-nowrap bg-background/80 px-2 py-1 rounded">
-              {slide.label}
-            </span>
-          </button>
-        ))}
-      </nav>
+      {/* Slide navigation moved to sidebar */}
 
       {/* Slides container */}
       <div

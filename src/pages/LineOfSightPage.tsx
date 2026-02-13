@@ -1,9 +1,10 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { Calculator, GitBranch, LayoutGrid } from "lucide-react";
 import SlideLineOfSight from "@/components/slides/SlideLineOfSight";
 import LineOfSightTree from "@/components/slides/LineOfSightTree";
 import BalancedScorecard from "@/components/slides/BalancedScorecard";
 import { Button } from "@/components/ui/button";
+import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import {
   useCases,
   leadingMeasures,
@@ -13,8 +14,31 @@ import {
   type AirlineProfile,
 } from "@/data/lineOfSightData";
 
+const views = [
+  { id: "calculator", label: "Calculator" },
+  { id: "tree", label: "KPI Tree" },
+  { id: "scorecard", label: "Scorecard" },
+];
+
 const LineOfSightPage = () => {
   const [view, setView] = useState<"calculator" | "tree" | "scorecard">("calculator");
+  const { register, updateActiveIndex, unregister } = useSlideNavigation();
+
+  const viewIndex = views.findIndex((v) => v.id === view);
+
+  const navigateToView = useCallback((index: number) => {
+    const viewId = views[index]?.id as "calculator" | "tree" | "scorecard";
+    if (viewId) setView(viewId);
+  }, []);
+
+  useEffect(() => {
+    register(views, viewIndex, navigateToView);
+    return () => unregister();
+  }, []);
+
+  useEffect(() => {
+    updateActiveIndex(viewIndex);
+  }, [viewIndex, updateActiveIndex]);
 
   const [useCaseValues, setUseCaseValues] = useState<Record<string, number>>(() => {
     const initial: Record<string, number> = {};

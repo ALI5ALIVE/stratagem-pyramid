@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSimpleNarration } from "@/hooks/useSimpleNarration";
 import Slide0Title from "@/components/slides/Slide0Title";
 import Slide1StrategicShift from "@/components/slides/Slide1StrategicShift";
@@ -45,6 +46,7 @@ const SlideDeck = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   
   const narration = useSimpleNarration();
+  const { register, updateActiveIndex, unregister } = useSlideNavigation();
 
   // Helper to get narration props for a slide
   const getNarrationProps = (slideId: number) => ({
@@ -60,6 +62,26 @@ const SlideDeck = () => {
     onPause: () => narration.pause(),
     onNextSlide: slideId < slides.length - 1 ? () => scrollToSlide(slideId + 1) : undefined,
   });
+
+  const scrollToSlide = useCallback((index: number) => {
+    if (!containerRef.current) return;
+    const slideHeight = containerRef.current.clientHeight;
+    containerRef.current.scrollTo({
+      top: index * slideHeight,
+      behavior: "smooth",
+    });
+  }, []);
+
+  // Register slides with sidebar context
+  useEffect(() => {
+    register(slides, activeSlide, scrollToSlide);
+    return () => unregister();
+  }, []);
+
+  // Keep sidebar in sync with active slide
+  useEffect(() => {
+    updateActiveIndex(activeSlide);
+  }, [activeSlide, updateActiveIndex]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -117,14 +139,7 @@ const SlideDeck = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activeSlide]);
 
-  const scrollToSlide = useCallback((index: number) => {
-    if (!containerRef.current) return;
-    const slideHeight = containerRef.current.clientHeight;
-    containerRef.current.scrollTo({
-      top: index * slideHeight,
-      behavior: "smooth",
-    });
-  }, []);
+  
 
   const navigateSlide = (direction: "up" | "down") => {
     if (direction === "up" && activeSlide > 0) {
@@ -153,31 +168,7 @@ const SlideDeck = () => {
         </div>
       </header>
 
-      {/* Slide navigation dots */}
-      <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col items-end gap-2">
-        {slides.map((slide, index) => (
-          <button
-            key={slide.id}
-            onClick={() => scrollToSlide(index)}
-            className="group relative flex items-center justify-end transition-all duration-200"
-          >
-            <span className={`
-              absolute right-5 whitespace-nowrap text-xs opacity-0 group-hover:opacity-100 transition-opacity
-              ${activeSlide === index ? 'text-primary' : 'text-muted-foreground'}
-            `}>
-              {slide.label}
-            </span>
-            <div
-              className={`
-                w-2 h-2 rounded-full transition-all duration-200
-                ${activeSlide === index
-                  ? "bg-primary scale-150"
-                  : "bg-muted-foreground/30 hover:bg-muted-foreground/50"}
-              `}
-            />
-          </button>
-        ))}
-      </nav>
+      {/* Slide navigation moved to sidebar */}
 
       {/* Navigation arrows */}
       <div className="fixed bottom-4 right-4 z-40 flex flex-col gap-2">
