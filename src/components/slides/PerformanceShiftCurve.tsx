@@ -256,7 +256,7 @@ const PerformanceShiftCurve = ({
                   label={{
                     value: `← Cost Reduction →`,
                     position: "insideBottom",
-                    dy: 15,
+                    dy: -15,
                     style: { fill: "hsl(var(--muted-foreground))", fontSize: 9, fontWeight: 600 },
                   }}
                 />
