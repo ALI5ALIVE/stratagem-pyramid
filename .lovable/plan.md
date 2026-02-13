@@ -1,26 +1,26 @@
 
 
-# Make the Bell Curve Height Difference Intuitive for Non-Technical Users
+# Fix: Cost Reduction Label Overlapping X-Axis
 
 ## Problem
-The improved curve being taller than the baseline is mathematically correct but confusing to laypeople who don't understand Gaussian distributions. Users may think "taller = more cost" rather than "taller = more predictable."
+The "Cost Reduction" arrow annotation (`← Cost Reduction →`) is positioned with `dy: 15` and `position: "insideBottom"`, which pushes it down onto the X-axis labels, making both unreadable.
 
 ## Solution
-Add clear visual annotations directly on the chart that translate the statistical concept into plain business language.
+Change the `dy` value from `15` to `-15` so the label sits above the bottom of the chart area instead of overlapping the axis.
 
-### Changes to `src/components/slides/PerformanceShiftCurve.tsx`
+## Technical Details
 
-1. **Add inline annotations near each curve peak** using Recharts `ReferenceLine` labels or custom positioned elements:
-   - Next to the baseline (grey) curve peak: **"Wide spread = unpredictable costs"**
-   - Next to the improved (green) curve peak: **"Narrow spread = predictable costs"**
+### File: `src/components/slides/PerformanceShiftCurve.tsx`
 
-2. **Add a horizontal double-arrow annotation** between the two dashed mean lines with the label **"Cost Reduction"** to make the horizontal shift (the actual savings) the primary visual message.
+In the "Cost Reduction" `ReferenceLine` label config (around line 256), change:
 
-3. **Update the legend text** from generic "Current State" / "Improved State" to more descriptive labels:
-   - "Current State (variable)" 
-   - "Improved State (predictable)"
+```typescript
+// Before
+dy: 15,
 
-4. **Add a one-line explanation** below the subtitle: *"A taller, narrower curve means your costs become more predictable and reliable."*
+// After
+dy: -15,
+```
 
-These are small text/label additions within the existing component -- no structural changes needed.
+One-line change.
 
