@@ -66,19 +66,19 @@ The scorecard is ideal for board presentations and quarterly business reviews. I
     viewId: "curve",
     title: "Cost Savings Profile",
     voiceId: GEORGE_VOICE_ID,
-    script: `This is the Cost Savings Profile. It shows you the single most powerful picture of what Comply three six five delivers -- the shift in your airline's expected annual cost avoidance.
+    script: `This is the Cost Savings Profile. It shows you the single most powerful picture of what Comply three six five delivers -- a reduction in your airline's annual cost exposure.
 
-The grey curve on the left represents your current state -- zero incremental savings. This is where you sit today, before platform adoption.
+The grey curve on the right represents your current annual cost exposure -- the total cost across all eight use cases based on your airline profile. This is a wide curve, reflecting the variability and unpredictability of your current operations.
 
-The green curve represents the expected cost avoidance -- based on whatever improvements you've modelled on the calculator sliders. As you improve individual use cases, this green curve shifts to the right, showing higher expected savings. It also narrows, meaning your projected outcome becomes more predictable and reliable.
+The green curve to the left represents your improved cost profile after platform adoption. It sits at a lower dollar value, meaning reduced costs. And it's narrower, meaning your cost outcomes become more predictable and reliable.
 
-That narrowing is critical. It's the difference between a wide range of uncertain savings and a tight, confident projection you can present to your board.
+That narrowing is critical. It's the difference between a wide range of uncertain costs and a tight, confident projection you can present to your board.
 
-The dashed vertical lines mark the current state at zero and the expected outcome. The gap between them is your total projected cost avoidance -- the measurable financial impact across your entire operation.
+The dashed vertical lines mark your current cost exposure and the improved cost after savings. The gap between them is your total projected cost avoidance -- the measurable financial impact across your entire operation.
 
-Below the chart, four summary metrics give you the headline numbers. Expected outcome in dollars, the average shift across leading operational measures, the number of use cases you've improved, and the likely range of outcomes from conservative to optimistic.
+Below the chart, four summary metrics give you the headline numbers. Expected savings in dollars, the average shift across leading operational measures, the number of use cases you've improved, and the likely range of improved cost outcomes.
 
-Every dollar on this chart traces back to the use case models grounded in industry benchmarks from EUROCONTROL, IATA, SITA, and A4A. This isn't an abstract score -- it's a defensible, traceable cost avoidance projection.
+Every dollar on this chart traces back to the use case models grounded in industry benchmarks from EUROCONTROL, IATA, SITA, and A4A. This isn't an abstract score -- it's a defensible, traceable cost reduction.
 
 Go back to the calculator, adjust some sliders, and watch the green curve respond in real time.`
   },
