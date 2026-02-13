@@ -1,37 +1,80 @@
 
-# Add a Navigation Sidebar for Page-Level Navigation
+# Merge Right-Side Slide Navigation into the Left Sidebar
 
 ## Overview
-Add a collapsible sidebar using the existing Shadcn Sidebar component that lets users navigate between the three main tools: Strategy Deck (/), Sales Deck (/sales-deck), and Line of Sight (/line-of-sight).
+Combine the page-level sidebar navigation with the per-page slide/section navigation into a single unified left sidebar. The right-side dot navigation in SlideDeck and SalesDeck will be removed, and its functionality will move into the sidebar.
 
-## What It Will Look Like
-- A slim sidebar on the left with icons and labels for each destination
-- Starts collapsed (icon-only, ~3rem wide) so it doesn't compete with slide content
-- Expands on hover or via a toggle button to show full labels
-- Highlights the currently active route
-- Uses the dark theme to match the slide deck aesthetic
+## How It Will Work
+- The sidebar will show page-level links (Strategy Deck, Sales Deck, Line of Sight) at the top
+- Below that, it will show the slides/sections for whichever page is currently active
+- Clicking a slide item scrolls to that slide within the deck
+- The active slide is highlighted with a dot or accent style
+- For Line of Sight, the sub-items will be Calculator, KPI Tree, and Scorecard
 
-## Changes
+## Architecture: Slide Navigation Context
+Since the sidebar lives in the layout but the slide data and scroll functions live inside each page, we need a way to connect them. A lightweight React context will handle this.
 
-### 1. New file: `src/components/AppSidebar.tsx`
-Create a sidebar component with three navigation items:
-- **Strategy Deck** (Presentation icon) -- links to `/`
-- **Sales Deck** (Megaphone icon) -- links to `/sales-deck`
-- **Line of Sight** (Calculator icon) -- links to `/line-of-sight`
+### New file: `src/contexts/SlideNavigationContext.tsx`
+- Creates a context that each page can register into with:
+  - `slides`: array of `{ id, label }` 
+  - `activeSlide`: current slide index
+  - `scrollToSlide`: callback function to navigate to a specific slide
+- The sidebar reads from this context to render sub-items
+- When a page unmounts, it automatically unregisters
 
-Uses the existing `NavLink` component for active-route highlighting and the Shadcn `Sidebar` primitives already installed in the project.
+### Updated file: `src/components/AppSidebar.tsx`
+- Keep the three page-level nav items at the top
+- Add a new section below that reads from the SlideNavigationContext
+- Render the registered slides as a vertical list of small buttons/dots with labels
+- Highlight the active slide
+- On click, call the `scrollToSlide` callback from context
+- When the sidebar is collapsed (icon-only mode), the slide items are hidden -- they only show when expanded
 
-### 2. New file: `src/components/AppLayout.tsx`
-A layout wrapper that combines the `SidebarProvider`, `AppSidebar`, and a `SidebarTrigger` button with a main content area. All routed pages will render inside this layout.
+### Updated file: `src/components/AppLayout.tsx`
+- Wrap the layout with the `SlideNavigationProvider`
 
-### 3. Update: `src/App.tsx`
-Wrap the `<Routes>` block inside the new `AppLayout` so the sidebar appears on every page. The three main routes (/, /sales-deck, /line-of-sight) plus the homepage mockup and solution pages will all share the sidebar.
+### Updated file: `src/pages/SlideDeck.tsx`
+- Call the context's register function on mount, passing in the `slides` array, `activeSlide`, and `scrollToSlide`
+- Remove the right-side dot `<nav>` element (lines 157-180)
+- Keep the bottom-right arrow navigation buttons (they're useful for quick up/down)
 
-### 4. Minor adjustment to page containers
-The SlideDeck, SalesDeck, and LineOfSightPage currently use `h-screen w-full`. These will need a small tweak to use `h-screen w-full` within the flex layout provided by the sidebar, ensuring the content fills the remaining space after the sidebar. This is handled naturally by the `flex-1` on the main content area in the layout.
+### Updated file: `src/pages/SalesDeck.tsx`
+- Same pattern: register slides into context on mount
+- Remove the right-side dot `<nav>` element (lines 207-224)
 
-## Technical Notes
-- The sidebar defaults to **collapsed** (`defaultOpen={false}`) so it stays as a narrow icon strip and doesn't obscure slide content
-- The `SidebarTrigger` button sits at the top of the sidebar for toggling
-- On mobile, the sidebar renders as a slide-out sheet (built into the Shadcn Sidebar component)
-- No new dependencies required -- everything uses existing installed components
+### Updated file: `src/pages/LineOfSightPage.tsx`
+- Register three "slides": Calculator, KPI Tree, Scorecard
+- The `scrollToSlide` callback switches the view state instead of scrolling
+- The current view maps to the active slide index
+
+## Technical Details
+
+### Context shape:
+```text
+SlideNavigationContext {
+  slides: { id: string; label: string }[]
+  activeIndex: number
+  onNavigate: (index: number) => void
+  register(slides, activeIndex, onNavigate): void
+  unregister(): void
+}
+```
+
+### Sidebar slide list rendering:
+- Each slide shown as a compact row with a small dot indicator and label text
+- Active slide gets `bg-sidebar-accent` highlight
+- Separated from page links with a thin divider
+- Only visible when sidebar is in expanded state
+
+### What gets removed:
+- Right-side dot nav in `SlideDeck.tsx` (lines 157-180)
+- Right-side dot nav in `SalesDeck.tsx` (lines 207-224)
+- The top progress bar in SlideDeck can remain as a subtle indicator
+
+### Files changed:
+1. **New**: `src/contexts/SlideNavigationContext.tsx` -- context + provider
+2. **Edit**: `src/components/AppLayout.tsx` -- wrap with provider
+3. **Edit**: `src/components/AppSidebar.tsx` -- add slide sub-navigation section
+4. **Edit**: `src/pages/SlideDeck.tsx` -- register slides, remove right nav
+5. **Edit**: `src/pages/SalesDeck.tsx` -- register slides, remove right nav
+6. **Edit**: `src/pages/LineOfSightPage.tsx` -- register views as slides
