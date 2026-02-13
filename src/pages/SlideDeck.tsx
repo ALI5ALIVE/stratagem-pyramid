@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
+import { useSidebar } from "@/components/ui/sidebar";
 import { useSimpleNarration } from "@/hooks/useSimpleNarration";
 import Slide0Title from "@/components/slides/Slide0Title";
 import Slide1StrategicShift from "@/components/slides/Slide1StrategicShift";
@@ -47,6 +48,7 @@ const SlideDeck = () => {
   
   const narration = useSimpleNarration();
   const { register, updateActiveIndex, unregister } = useSlideNavigation();
+  const { open, setOpen } = useSidebar();
 
   // Helper to get narration props for a slide
   const getNarrationProps = (slideId: number) => ({
@@ -91,6 +93,11 @@ const SlideDeck = () => {
       const scrollHeight = containerRef.current.scrollHeight - containerRef.current.clientHeight;
       const progress = scrollHeight > 0 ? scrollTop / scrollHeight : 0;
       setScrollProgress(progress * 100);
+
+      // Auto-collapse sidebar on scroll
+      if (open) {
+        setOpen(false);
+      }
 
       const slideHeight = containerRef.current.clientHeight;
       const currentSlide = Math.round(scrollTop / slideHeight);
@@ -150,7 +157,7 @@ const SlideDeck = () => {
   };
 
   return (
-    <div className="h-screen w-screen bg-background overflow-hidden relative">
+    <div className="h-screen w-full bg-background overflow-hidden relative">
       {/* Progress bar */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-muted z-50">
         <div
