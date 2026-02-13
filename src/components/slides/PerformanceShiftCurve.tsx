@@ -227,7 +227,8 @@ const PerformanceShiftCurve = ({
                 strokeOpacity={0.5}
                 label={{
                   value: `Baseline: ${Math.round(baselineMean)}`,
-                  position: "top",
+                  position: "insideTop",
+                  dy: -20,
                   style: { fill: "hsl(var(--muted-foreground))", fontSize: 10 },
                 }}
               />
@@ -238,7 +239,8 @@ const PerformanceShiftCurve = ({
                 strokeOpacity={0.8}
                 label={{
                   value: `Improved: ${Math.round(improvedMean)}`,
-                  position: "top",
+                  position: "insideTop",
+                  dy: -6,
                   style: { fill: "hsl(152 69% 53%)", fontSize: 10 },
                 }}
               />
