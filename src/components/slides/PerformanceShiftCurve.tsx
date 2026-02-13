@@ -44,35 +44,23 @@ const PerformanceShiftCurve = ({
   airlineProfile,
   narration,
 }: PerformanceShiftCurveProps) => {
-  const { baselineMean, improvedMean, baselineStdDev, improvedStdDev, useCasesImproved, avgLeadingShift } =
+  const { baselineMean, improvedMean, baselineStdDev, improvedStdDev, useCasesImproved, avgLeadingShift, chartMax } =
     useMemo(() => {
-      // Normalise each use case to 0-100 scale (inverted: lower input = better performance)
-      const baselineNorms: number[] = [];
-      const improvedNorms: number[] = [];
+      // Count improved use cases
       let improved = 0;
-
       useCases.forEach((uc) => {
-        const { baseline, min, max } = uc.input;
-        const current = useCaseValues[uc.id] ?? baseline;
-        const range = max - min || 1;
-
-        // All use cases are "lower is better" (fewer events/incidents = better)
-        // Invert so improvement = higher score
-        const baselineNorm = (1 - (baseline - min) / range) * 100;
-        const currentNorm = (1 - (current - min) / range) * 100;
-
-        baselineNorms.push(baselineNorm);
-        improvedNorms.push(currentNorm);
-
-        if (current < baseline) improved++;
+        const current = useCaseValues[uc.id] ?? uc.input.baseline;
+        if (current < uc.input.baseline) improved++;
       });
 
-      const bMean = baselineNorms.reduce((s, v) => s + v, 0) / baselineNorms.length;
-      const iMean = improvedNorms.reduce((s, v) => s + v, 0) / improvedNorms.length;
+      // Cost-based means
+      const bMean = 0;
+      const iMean = totalCostAvoidance;
 
-      const improvementRatio = bMean > 0 ? Math.min((iMean - bMean) / bMean, 1) : 0;
-      const bStdDev = 15;
-      const iStdDev = Math.max(15 - improvementRatio * 7, 8);
+      // Standard deviations as percentage of the range
+      const maxRange = Math.max(iMean * 1.8, 500_000);
+      const bStdDev = maxRange * 0.08;
+      const iStdDev = Math.max(iMean * 0.25, maxRange * 0.06);
 
       // Average leading measure shift
       const shifts = leadingMeasures.map((lm) => {
@@ -91,25 +79,31 @@ const PerformanceShiftCurve = ({
         improvedStdDev: iStdDev,
         useCasesImproved: improved,
         avgLeadingShift: avgShift,
+        chartMax: maxRange,
       };
-    }, [useCaseValues, leadingValues]);
+    }, [useCaseValues, leadingValues, totalCostAvoidance]);
 
   const chartData = useMemo(() => {
     const points: { x: number; baseline: number; improved: number }[] = [];
-    for (let x = 0; x <= 100; x += 1) {
+    const minX = -chartMax * 0.15;
+    const maxX = chartMax;
+    const step = (maxX - minX) / 200;
+    for (let x = minX; x <= maxX; x += step) {
       points.push({
-        x,
+        x: Math.round(x),
         baseline: gaussian(x, baselineMean, baselineStdDev),
         improved: gaussian(x, improvedMean, improvedStdDev),
       });
     }
     return points;
-  }, [baselineMean, improvedMean, baselineStdDev, improvedStdDev]);
+  }, [baselineMean, improvedMean, baselineStdDev, improvedStdDev, chartMax]);
 
   const overallImprovement =
-    baselineMean > 0
-      ? Math.round(((improvedMean - baselineMean) / baselineMean) * 100)
-      : 0;
+    baselineMean === 0 && improvedMean > 0
+      ? 100
+      : baselineMean > 0
+        ? Math.round(((improvedMean - baselineMean) / baselineMean) * 100)
+        : 0;
 
   const formatCost = (val: number) => {
     if (val >= 1_000_000) return `$${(val / 1_000_000).toFixed(1)}M`;
@@ -119,16 +113,16 @@ const PerformanceShiftCurve = ({
 
   const metrics = [
     {
-      icon: TrendingUp,
-      label: "Overall Improvement",
-      value: `+${overallImprovement}%`,
+      icon: DollarSign,
+      label: "Expected Outcome",
+      value: formatCost(totalCostAvoidance),
       color: "text-emerald-400",
     },
     {
-      icon: DollarSign,
-      label: "Cost Avoidance",
-      value: formatCost(totalCostAvoidance),
-      color: "text-emerald-400",
+      icon: TrendingUp,
+      label: "Avg Leading Shift",
+      value: `+${avgLeadingShift.toFixed(1)}%`,
+      color: "text-amber-400",
     },
     {
       icon: BarChart3,
@@ -138,9 +132,9 @@ const PerformanceShiftCurve = ({
     },
     {
       icon: Activity,
-      label: "Avg Leading Shift",
-      value: `+${avgLeadingShift.toFixed(1)}%`,
-      color: "text-amber-400",
+      label: "Outcome Range",
+      value: `${formatCost(Math.max(totalCostAvoidance * 0.75, 0))} – ${formatCost(totalCostAvoidance * 1.25)}`,
+      color: "text-emerald-400",
     },
   ];
 
@@ -149,11 +143,11 @@ const PerformanceShiftCurve = ({
       <div className="flex-1 flex flex-col max-w-6xl mx-auto w-full px-4 sm:px-6 py-4">
         {/* Header */}
         <div className="text-center mb-4">
-          <h2 className="text-lg font-bold text-foreground">
-            Operational Performance Distribution
+         <h2 className="text-lg font-bold text-foreground">
+            Cost Savings Distribution
           </h2>
           <p className="text-xs text-muted-foreground mt-1">
-            How platform adoption shifts the entire operation toward predictable, measurable performance
+            How platform adoption shifts expected annual cost avoidance — grounded in industry benchmarks
           </p>
         </div>
 
@@ -172,10 +166,10 @@ const PerformanceShiftCurve = ({
           </div>
 
           {/* Shift label */}
-          {overallImprovement > 0 && (
+          {totalCostAvoidance > 0 && (
             <div className="absolute top-3 left-4 z-10">
               <span className="text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-full border border-emerald-500/20">
-                Performance Shift: +{overallImprovement}%
+                Expected Savings: {formatCost(totalCostAvoidance)}
               </span>
             </div>
           )}
@@ -199,8 +193,9 @@ const PerformanceShiftCurve = ({
                 tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
                 tickLine={false}
                 axisLine={false}
+                tickFormatter={(val) => formatCost(val)}
                 label={{
-                  value: "Operational Performance Score",
+                  value: "Annual Cost Avoidance ($)",
                   position: "bottom",
                   offset: 0,
                   style: { fill: "hsl(var(--muted-foreground))", fontSize: 11 },
@@ -214,19 +209,19 @@ const PerformanceShiftCurve = ({
                   borderRadius: 8,
                   fontSize: 12,
                 }}
-                labelFormatter={(val) => `Performance Score: ${val}`}
+                labelFormatter={(val) => `Cost Avoidance: ${formatCost(val)}`}
                 formatter={(value: number, name: string) => [
-                  (value * 1000).toFixed(2),
-                  name === "baseline" ? "Current Distribution" : "Improved Distribution",
+                  (value * 1000).toFixed(4),
+                  name === "baseline" ? "Current State" : "Improved State",
                 ]}
               />
               <ReferenceLine
-                x={Math.round(baselineMean)}
+                x={0}
                 stroke="hsl(var(--muted-foreground))"
                 strokeDasharray="6 4"
                 strokeOpacity={0.5}
                 label={{
-                  value: `Baseline: ${Math.round(baselineMean)}`,
+                  value: "Current: $0",
                   position: "insideTop",
                   dy: -20,
                   style: { fill: "hsl(var(--muted-foreground))", fontSize: 10 },
@@ -238,7 +233,7 @@ const PerformanceShiftCurve = ({
                 strokeDasharray="6 4"
                 strokeOpacity={0.8}
                 label={{
-                  value: `Improved: ${Math.round(improvedMean)}`,
+                  value: `Expected: ${formatCost(improvedMean)}`,
                   position: "insideTop",
                   dy: -6,
                   style: { fill: "hsl(152 69% 53%)", fontSize: 10 },
