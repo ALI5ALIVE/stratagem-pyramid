@@ -1,80 +1,62 @@
 
-# Merge Right-Side Slide Navigation into the Left Sidebar
+# Fix Sidebar Colour, Slide Alignment, and Auto-Collapse on Scroll
 
-## Overview
-Combine the page-level sidebar navigation with the per-page slide/section navigation into a single unified left sidebar. The right-side dot navigation in SlideDeck and SalesDeck will be removed, and its functionality will move into the sidebar.
+## Problem
+Three issues with the current sidebar and slide layout:
+1. The sidebar has no explicit grey colour -- it inherits the dark theme background and blends in
+2. Slides use `w-screen` which ignores the sidebar width, causing content to extend behind/under the sidebar
+3. The sidebar stays open when scrolling through slides, wasting presentation space
 
-## How It Will Work
-- The sidebar will show page-level links (Strategy Deck, Sales Deck, Line of Sight) at the top
-- Below that, it will show the slides/sections for whichever page is currently active
-- Clicking a slide item scrolls to that slide within the deck
-- The active slide is highlighted with a dot or accent style
-- For Line of Sight, the sub-items will be Calculator, KPI Tree, and Scorecard
+## Changes
 
-## Architecture: Slide Navigation Context
-Since the sidebar lives in the layout but the slide data and scroll functions live inside each page, we need a way to connect them. A lightweight React context will handle this.
+### 1. Add grey sidebar CSS variables (`src/index.css`)
+Add sidebar-specific CSS custom properties in the `:root` block to give the sidebar a distinct medium-grey appearance:
+- `--sidebar-background`: a neutral grey (e.g. `220 15% 18%`)
+- `--sidebar-foreground`: light text (`0 0% 90%`)
+- `--sidebar-accent`: slightly lighter grey for hover/active states
+- `--sidebar-border`: subtle border tone
 
-### New file: `src/contexts/SlideNavigationContext.tsx`
-- Creates a context that each page can register into with:
-  - `slides`: array of `{ id, label }` 
-  - `activeSlide`: current slide index
-  - `scrollToSlide`: callback function to navigate to a specific slide
-- The sidebar reads from this context to render sub-items
-- When a page unmounts, it automatically unregisters
+### 2. Fix slide alignment (`src/pages/SlideDeck.tsx`)
+Change the outer container from `w-screen` to `w-full` so slides fill only the available space next to the sidebar rather than the full viewport width. The same fix applies to `SalesDeck.tsx` if it uses `w-screen`.
 
-### Updated file: `src/components/AppSidebar.tsx`
-- Keep the three page-level nav items at the top
-- Add a new section below that reads from the SlideNavigationContext
-- Render the registered slides as a vertical list of small buttons/dots with labels
-- Highlight the active slide
-- On click, call the `scrollToSlide` callback from context
-- When the sidebar is collapsed (icon-only mode), the slide items are hidden -- they only show when expanded
+### 3. Auto-collapse sidebar on scroll (`src/pages/SlideDeck.tsx`)
+In the existing scroll handler, detect when the user starts scrolling and call the sidebar's `setOpen(false)` to collapse it automatically. This keeps the presentation clean during navigation. The user can always re-expand via the trigger button.
 
-### Updated file: `src/components/AppLayout.tsx`
-- Wrap the layout with the `SlideNavigationProvider`
+Implementation approach:
+- Import `useSidebar` from the sidebar component in SlideDeck
+- In the scroll event handler, if `open` is true and scrollTop changes, call `setOpen(false)`
+- Use a small debounce or threshold to avoid collapsing on tiny scroll movements
 
-### Updated file: `src/pages/SlideDeck.tsx`
-- Call the context's register function on mount, passing in the `slides` array, `activeSlide`, and `scrollToSlide`
-- Remove the right-side dot `<nav>` element (lines 157-180)
-- Keep the bottom-right arrow navigation buttons (they're useful for quick up/down)
+### 4. Same scroll-collapse for SalesDeck (`src/pages/SalesDeck.tsx`)
+Apply the same auto-collapse logic so it works consistently across both decks.
 
-### Updated file: `src/pages/SalesDeck.tsx`
-- Same pattern: register slides into context on mount
-- Remove the right-side dot `<nav>` element (lines 207-224)
-
-### Updated file: `src/pages/LineOfSightPage.tsx`
-- Register three "slides": Calculator, KPI Tree, Scorecard
-- The `scrollToSlide` callback switches the view state instead of scrolling
-- The current view maps to the active slide index
+## Files Changed
+1. `src/index.css` -- add sidebar CSS variables for grey theme
+2. `src/pages/SlideDeck.tsx` -- fix `w-screen` to `w-full`, add auto-collapse on scroll
+3. `src/pages/SalesDeck.tsx` -- fix `w-screen` to `w-full`, add auto-collapse on scroll
 
 ## Technical Details
 
-### Context shape:
+### CSS variables to add:
 ```text
-SlideNavigationContext {
-  slides: { id: string; label: string }[]
-  activeIndex: number
-  onNavigate: (index: number) => void
-  register(slides, activeIndex, onNavigate): void
-  unregister(): void
+--sidebar-background: 220 15% 18%;
+--sidebar-foreground: 0 0% 90%;
+--sidebar-primary: 217 100% 50%;
+--sidebar-primary-foreground: 0 0% 100%;
+--sidebar-accent: 220 15% 24%;
+--sidebar-accent-foreground: 0 0% 95%;
+--sidebar-border: 220 15% 25%;
+--sidebar-ring: 217 100% 50%;
+```
+
+### Scroll-collapse logic (pseudocode):
+```text
+const { open, setOpen } = useSidebar();
+
+// Inside scroll handler:
+if (open) {
+  setOpen(false);
 }
 ```
 
-### Sidebar slide list rendering:
-- Each slide shown as a compact row with a small dot indicator and label text
-- Active slide gets `bg-sidebar-accent` highlight
-- Separated from page links with a thin divider
-- Only visible when sidebar is in expanded state
-
-### What gets removed:
-- Right-side dot nav in `SlideDeck.tsx` (lines 157-180)
-- Right-side dot nav in `SalesDeck.tsx` (lines 207-224)
-- The top progress bar in SlideDeck can remain as a subtle indicator
-
-### Files changed:
-1. **New**: `src/contexts/SlideNavigationContext.tsx` -- context + provider
-2. **Edit**: `src/components/AppLayout.tsx` -- wrap with provider
-3. **Edit**: `src/components/AppSidebar.tsx` -- add slide sub-navigation section
-4. **Edit**: `src/pages/SlideDeck.tsx` -- register slides, remove right nav
-5. **Edit**: `src/pages/SalesDeck.tsx` -- register slides, remove right nav
-6. **Edit**: `src/pages/LineOfSightPage.tsx` -- register views as slides
+This will instantly collapse the sidebar the moment the user scrolls, keeping slides front and centre.
