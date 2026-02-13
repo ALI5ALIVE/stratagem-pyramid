@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AppLayout } from "./components/AppLayout";
 import SlideDeck from "./pages/SlideDeck";
 import SalesDeck from "./pages/SalesDeck";
 import HomepageMockup from "./pages/HomepageMockup";
@@ -21,13 +22,15 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<SlideDeck />} />
-          <Route path="/sales-deck" element={<SalesDeck />} />
-          <Route path="/homepage-mockup" element={<HomepageMockup />} />
-          <Route path="/solutions/airlines" element={<AirlinesPage />} />
-          <Route path="/solutions/defense" element={<DefensePage />} />
-          <Route path="/solutions/rail" element={<RailPage />} />
-          <Route path="/line-of-sight" element={<LineOfSightPage />} />
+          <Route element={<AppLayout />}>
+            <Route path="/" element={<SlideDeck />} />
+            <Route path="/sales-deck" element={<SalesDeck />} />
+            <Route path="/homepage-mockup" element={<HomepageMockup />} />
+            <Route path="/solutions/airlines" element={<AirlinesPage />} />
+            <Route path="/solutions/defense" element={<DefensePage />} />
+            <Route path="/solutions/rail" element={<RailPage />} />
+            <Route path="/line-of-sight" element={<LineOfSightPage />} />
+          </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
