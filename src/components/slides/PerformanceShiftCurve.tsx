@@ -64,8 +64,8 @@ const PerformanceShiftCurve = ({
       const iMean = baselineExposure - totalCostAvoidance;
 
       // Baseline is wider (more uncertainty), improved is narrower (more predictable)
-      const bStdDev = Math.max(bMean * 0.12, 100_000);
-      const iStdDev = Math.max(iMean * 0.08, 50_000);
+      const bStdDev = Math.max(bMean * 0.05, 50_000);
+      const iStdDev = Math.max(iMean * 0.03, 25_000);
 
       // Average leading measure shift
       const shifts = leadingMeasures.map((lm) => {
@@ -77,9 +77,9 @@ const PerformanceShiftCurve = ({
       });
       const avgShift = shifts.reduce((s, v) => s + v, 0) / shifts.length;
 
-      // Chart range: from 0 to 1.3x baseline (all positive)
-      const cMax = bMean * 1.3;
-      const cMin = Math.max(0, iMean - iStdDev * 4);
+      // Zoom into the region around the curves
+      const cMin = Math.max(0, Math.min(iMean, bMean) - bStdDev * 4);
+      const cMax = Math.max(iMean, bMean) + bStdDev * 4;
 
       return {
         baselineMean: bMean,
