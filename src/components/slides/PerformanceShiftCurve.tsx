@@ -254,7 +254,7 @@ const PerformanceShiftCurve = ({
                 strokeOpacity={0.4}
                 fill="url(#baselineGradient)"
                 fillOpacity={1}
-                animationDuration={800}
+              isAnimationActive={false}
               />
               <Area
                 type="monotone"
@@ -262,7 +262,7 @@ const PerformanceShiftCurve = ({
                 stroke="hsl(152 69% 53%)"
                 fill="url(#improvedGradient)"
                 fillOpacity={1}
-                animationDuration={800}
+                isAnimationActive={false}
               />
             </AreaChart>
           </ResponsiveContainer>
