@@ -5,6 +5,7 @@ import LineOfSightTree from "@/components/slides/LineOfSightTree";
 import BalancedScorecard from "@/components/slides/BalancedScorecard";
 import { Button } from "@/components/ui/button";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
+import { useLineOfSightNarration } from "@/hooks/useLineOfSightNarration";
 import {
   useCases,
   leadingMeasures,
@@ -23,6 +24,7 @@ const views = [
 const LineOfSightPage = () => {
   const [view, setView] = useState<"calculator" | "tree" | "scorecard">("calculator");
   const { register, updateActiveIndex, unregister } = useSlideNavigation();
+  const narration = useLineOfSightNarration();
 
   const viewIndex = views.findIndex((v) => v.id === view);
 
@@ -108,6 +110,22 @@ const LineOfSightPage = () => {
           setAirlineProfile={setAirlineProfile}
           leadingValues={leadingValues}
           totalCostAvoidance={totalCostAvoidance}
+          narration={{
+            isPlaying: narration.currentView === "calculator" && narration.isPlaying,
+            isLoading: narration.currentView === "calculator" && narration.isLoading,
+            progress: narration.currentView === "calculator" ? narration.progress : 0,
+            hasCompleted: narration.currentView === "calculator" && narration.hasCompleted,
+            onPlay: () => {
+              if (narration.currentView === "calculator" && !narration.hasCompleted && narration.progress > 0) {
+                narration.resume();
+              } else {
+                narration.play("calculator");
+              }
+              narration.preloadNext("calculator");
+            },
+            onPause: () => narration.pause(),
+            onNextSlide: () => { narration.stop(); setView("tree"); },
+          }}
         />
       ) : view === "tree" ? (
         <LineOfSightTree
@@ -115,6 +133,22 @@ const LineOfSightPage = () => {
           leadingValues={leadingValues}
           totalCostAvoidance={totalCostAvoidance}
           airlineProfile={airlineProfile}
+          narration={{
+            isPlaying: narration.currentView === "tree" && narration.isPlaying,
+            isLoading: narration.currentView === "tree" && narration.isLoading,
+            progress: narration.currentView === "tree" ? narration.progress : 0,
+            hasCompleted: narration.currentView === "tree" && narration.hasCompleted,
+            onPlay: () => {
+              if (narration.currentView === "tree" && !narration.hasCompleted && narration.progress > 0) {
+                narration.resume();
+              } else {
+                narration.play("tree");
+              }
+              narration.preloadNext("tree");
+            },
+            onPause: () => narration.pause(),
+            onNextSlide: () => { narration.stop(); setView("scorecard"); },
+          }}
         />
       ) : (
         <BalancedScorecard
@@ -122,6 +156,20 @@ const LineOfSightPage = () => {
           leadingValues={leadingValues}
           totalCostAvoidance={totalCostAvoidance}
           airlineProfile={airlineProfile}
+          narration={{
+            isPlaying: narration.currentView === "scorecard" && narration.isPlaying,
+            isLoading: narration.currentView === "scorecard" && narration.isLoading,
+            progress: narration.currentView === "scorecard" ? narration.progress : 0,
+            hasCompleted: narration.currentView === "scorecard" && narration.hasCompleted,
+            onPlay: () => {
+              if (narration.currentView === "scorecard" && !narration.hasCompleted && narration.progress > 0) {
+                narration.resume();
+              } else {
+                narration.play("scorecard");
+              }
+            },
+            onPause: () => narration.pause(),
+          }}
         />
       )}
     </div>

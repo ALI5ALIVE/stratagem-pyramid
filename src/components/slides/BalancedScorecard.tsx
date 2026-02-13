@@ -10,12 +10,24 @@ import {
 } from "@/data/lineOfSightData";
 import { cn } from "@/lib/utils";
 import { Progress } from "@/components/ui/progress";
+import SlidePlayButton from "@/components/SlidePlayButton";
+
+interface NarrationProps {
+  isPlaying: boolean;
+  isLoading: boolean;
+  progress: number;
+  hasCompleted: boolean;
+  onPlay: () => void;
+  onPause: () => void;
+  onNextSlide?: () => void;
+}
 
 interface BalancedScorecardProps {
   useCaseValues: Record<string, number>;
   leadingValues: Record<string, number>;
   totalCostAvoidance: number;
   airlineProfile: AirlineProfile;
+  narration?: NarrationProps;
 }
 
 const perspectiveIcons: Record<string, React.ReactNode> = {
@@ -61,7 +73,7 @@ function computeImprovementPct(baseline: number, current: number, direction: "up
   return ((baseline - current) / baseline) * 100;
 }
 
-const BalancedScorecard = ({ useCaseValues, leadingValues, totalCostAvoidance, airlineProfile }: BalancedScorecardProps) => {
+const BalancedScorecard = ({ useCaseValues, leadingValues, totalCostAvoidance, airlineProfile, narration }: BalancedScorecardProps) => {
   const perspectiveData = useMemo(() => {
     return balancedScorecardPerspectives.map((p) => {
       const kpiResults = p.kpis.map((kpi) => {
@@ -81,7 +93,7 @@ const BalancedScorecard = ({ useCaseValues, leadingValues, totalCostAvoidance, a
   }, [perspectiveData]);
 
   return (
-    <div className="h-[calc(100vh-40px)] flex flex-col overflow-hidden max-w-6xl mx-auto px-4 sm:px-6 py-3">
+    <div className="h-[calc(100vh-40px)] flex flex-col overflow-hidden max-w-6xl mx-auto px-4 sm:px-6 py-3 relative">
       {/* Header + Overall Improvement + Cost Avoidance */}
       <div className="flex items-center justify-between mb-2">
         <div>
@@ -175,6 +187,18 @@ const BalancedScorecard = ({ useCaseValues, leadingValues, totalCostAvoidance, a
       <p className="text-[9px] text-muted-foreground/50 text-center italic mt-1">
         Cost ranges sourced from EUROCONTROL, IATA, SITA, A4A, and WTW (2024–2025). Illustrative figures scaled to your airline profile.
       </p>
+
+      {narration && (
+        <SlidePlayButton
+          isPlaying={narration.isPlaying}
+          isLoading={narration.isLoading}
+          progress={narration.progress}
+          hasCompleted={narration.hasCompleted}
+          onPlay={narration.onPlay}
+          onPause={narration.onPause}
+          onNextSlide={narration.onNextSlide}
+        />
+      )}
     </div>
   );
 };

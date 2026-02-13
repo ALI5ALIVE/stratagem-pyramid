@@ -1,4 +1,5 @@
 import { useState, useRef, useLayoutEffect, useCallback } from "react";
+import SlidePlayButton from "@/components/SlidePlayButton";
 import { Crown, TrendingUp, Settings, ArrowUp, ArrowDown } from "lucide-react";
 import {
   executiveOutcomes,
@@ -9,11 +10,22 @@ import {
 } from "@/data/lineOfSightData";
 import { cn } from "@/lib/utils";
 
+interface NarrationProps {
+  isPlaying: boolean;
+  isLoading: boolean;
+  progress: number;
+  hasCompleted: boolean;
+  onPlay: () => void;
+  onPause: () => void;
+  onNextSlide?: () => void;
+}
+
 interface LineOfSightTreeProps {
   useCaseValues: Record<string, number>;
   leadingValues: Record<string, number>;
   totalCostAvoidance: number;
   airlineProfile: AirlineProfile;
+  narration?: NarrationProps;
 }
 
 interface NodeRect {
@@ -67,7 +79,7 @@ function getCenter(rect: NodeRect, side: "top" | "bottom"): { x: number; y: numb
   };
 }
 
-const LineOfSightTree = ({ useCaseValues, leadingValues, totalCostAvoidance, airlineProfile }: LineOfSightTreeProps) => {
+const LineOfSightTree = ({ useCaseValues, leadingValues, totalCostAvoidance, airlineProfile, narration }: LineOfSightTreeProps) => {
   const [highlighted, setHighlighted] = useState<{ type: "uc" | "lm" | "eo"; id: string } | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const ucRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -162,7 +174,7 @@ const LineOfSightTree = ({ useCaseValues, leadingValues, totalCostAvoidance, air
   };
 
   return (
-    <div className="h-full w-full flex flex-col">
+    <div className="h-full w-full flex flex-col relative">
       <div className="flex-1 overflow-y-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
           {/* Header */}
@@ -369,6 +381,18 @@ const LineOfSightTree = ({ useCaseValues, leadingValues, totalCostAvoidance, air
           </div>
         </div>
       </div>
+
+      {narration && (
+        <SlidePlayButton
+          isPlaying={narration.isPlaying}
+          isLoading={narration.isLoading}
+          progress={narration.progress}
+          hasCompleted={narration.hasCompleted}
+          onPlay={narration.onPlay}
+          onPause={narration.onPause}
+          onNextSlide={narration.onNextSlide}
+        />
+      )}
     </div>
   );
 };

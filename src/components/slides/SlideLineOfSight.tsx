@@ -18,6 +18,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import SlidePlayButton from "@/components/SlidePlayButton";
+
+interface NarrationProps {
+  isPlaying: boolean;
+  isLoading: boolean;
+  progress: number;
+  hasCompleted: boolean;
+  onPlay: () => void;
+  onPause: () => void;
+  onNextSlide?: () => void;
+}
 
 interface SlideLineOfSightProps {
   useCaseValues: Record<string, number>;
@@ -26,6 +37,7 @@ interface SlideLineOfSightProps {
   setAirlineProfile: React.Dispatch<React.SetStateAction<AirlineProfile>>;
   leadingValues: Record<string, number>;
   totalCostAvoidance: number;
+  narration?: NarrationProps;
 }
 
 const stakeholderIcons: Record<string, React.ReactNode> = {
@@ -85,6 +97,7 @@ const SlideLineOfSight = ({
   setAirlineProfile,
   leadingValues,
   totalCostAvoidance,
+  narration,
 }: SlideLineOfSightProps) => {
   const [expandedUseCase, setExpandedUseCase] = useState<string | null>(null);
   const [profileOpen, setProfileOpen] = useState(false);
@@ -133,7 +146,7 @@ const SlideLineOfSight = ({
   ];
 
   return (
-    <div className="h-[calc(100vh-40px)] w-full flex flex-col overflow-hidden">
+    <div className="h-[calc(100vh-40px)] w-full flex flex-col overflow-hidden relative">
       <div className="flex-1 overflow-y-auto lg:overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3">
 
@@ -476,6 +489,18 @@ const SlideLineOfSight = ({
 
         </div>
       </div>
+
+      {narration && (
+        <SlidePlayButton
+          isPlaying={narration.isPlaying}
+          isLoading={narration.isLoading}
+          progress={narration.progress}
+          hasCompleted={narration.hasCompleted}
+          onPlay={narration.onPlay}
+          onPause={narration.onPause}
+          onNextSlide={narration.onNextSlide}
+        />
+      )}
     </div>
   );
 };
