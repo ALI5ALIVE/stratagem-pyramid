@@ -1,42 +1,26 @@
 
 
-# Make Bell Curve More Granular and Responsive
+# Make the Bell Curve Height Difference Intuitive for Non-Technical Users
 
 ## Problem
-The chart X-axis spans from $0 to ~1.3x the baseline mean (e.g. $0 to $20M). With standard deviations at 8-12% of the mean, the two curves occupy only a small portion of the chart. Small slider adjustments produce tiny, barely visible shifts.
+The improved curve being taller than the baseline is mathematically correct but confusing to laypeople who don't understand Gaussian distributions. Users may think "taller = more cost" rather than "taller = more predictable."
 
 ## Solution
-Two changes to make the curves more responsive and visually distinct:
+Add clear visual annotations directly on the chart that translate the statistical concept into plain business language.
 
-### 1. Tighten the Standard Deviations
-Reduce the spread of both curves so they are sharper peaks. This makes even small shifts between Current and Improved clearly visible.
+### Changes to `src/components/slides/PerformanceShiftCurve.tsx`
 
-- Baseline: change from `0.12` to `0.05` (was 12% of mean, now 5%)
-- Improved: change from `0.08` to `0.03` (was 8% of mean, now 3%)
-- Lower the minimum floor values accordingly
+1. **Add inline annotations near each curve peak** using Recharts `ReferenceLine` labels or custom positioned elements:
+   - Next to the baseline (grey) curve peak: **"Wide spread = unpredictable costs"**
+   - Next to the improved (green) curve peak: **"Narrow spread = predictable costs"**
 
-### 2. Zoom the Chart to the Action Zone
-Instead of spanning $0 to 1.3x baseline, zoom into just the region around the two curves:
+2. **Add a horizontal double-arrow annotation** between the two dashed mean lines with the label **"Cost Reduction"** to make the horizontal shift (the actual savings) the primary visual message.
 
-- `chartMin` = the lower of the two means minus 4 standard deviations
-- `chartMax` = the higher of the two means plus 4 standard deviations
+3. **Update the legend text** from generic "Current State" / "Improved State" to more descriptive labels:
+   - "Current State (variable)" 
+   - "Improved State (predictable)"
 
-This ensures the curves always fill the chart area and any shift from slider changes is immediately obvious.
+4. **Add a one-line explanation** below the subtitle: *"A taller, narrower curve means your costs become more predictable and reliable."*
 
-## Technical Details
+These are small text/label additions within the existing component -- no structural changes needed.
 
-### File: `src/components/slides/PerformanceShiftCurve.tsx`
-
-Lines 66-82 -- update standard deviations and chart range:
-
-```typescript
-// Tighter curves for more granular visibility
-const bStdDev = Math.max(bMean * 0.05, 50_000);
-const iStdDev = Math.max(iMean * 0.03, 25_000);
-
-// Zoom into the region around the curves
-const cMin = Math.max(0, Math.min(iMean, bMean) - bStdDev * 4);
-const cMax = Math.max(iMean, bMean) + bStdDev * 4;
-```
-
-This is a ~5-line change in one file.
