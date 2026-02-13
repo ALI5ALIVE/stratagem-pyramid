@@ -1,54 +1,37 @@
 
-# Redesign Balanced Scorecard to Eliminate Wasted Space
+# Add a Navigation Sidebar for Page-Level Navigation
 
-## Problem
-The current 2x2 grid of perspective cards uses `flex-1` on the KPI tile area, which stretches each card to fill half the viewport height. Since KPI tiles are compact, this leaves large empty areas below them -- especially in the "Learning & Growth" card which only has 2 KPIs instead of 3.
+## Overview
+Add a collapsible sidebar using the existing Shadcn Sidebar component that lets users navigate between the three main tools: Strategy Deck (/), Sales Deck (/sales-deck), and Line of Sight (/line-of-sight).
 
-## Solution
-Redesign the layout so cards size to their content rather than stretching to fill space, and use the available space more efficiently.
+## What It Will Look Like
+- A slim sidebar on the left with icons and labels for each destination
+- Starts collapsed (icon-only, ~3rem wide) so it doesn't compete with slide content
+- Expands on hover or via a toggle button to show full labels
+- Highlights the currently active route
+- Uses the dark theme to match the slide deck aesthetic
 
-## Key Changes
+## Changes
 
-### 1. Remove flex-stretch on KPI grid
-- Change perspective cards from `flex flex-col` with `flex-1` on the KPI area to auto-sizing based on content
-- KPI tiles will sit snugly within each card with no empty space below
+### 1. New file: `src/components/AppSidebar.tsx`
+Create a sidebar component with three navigation items:
+- **Strategy Deck** (Presentation icon) -- links to `/`
+- **Sales Deck** (Megaphone icon) -- links to `/sales-deck`
+- **Line of Sight** (Calculator icon) -- links to `/line-of-sight`
 
-### 2. Make KPI tiles denser
-- Reduce padding inside KPI tiles from `p-2` to `p-1.5`
-- Tighten the vertical spacing (`space-y-1` to `space-y-0.5`)
-- Make the metric value slightly smaller (`text-lg` to `text-base`) so tiles are more compact
+Uses the existing `NavLink` component for active-route highlighting and the Shadcn `Sidebar` primitives already installed in the project.
 
-### 3. Adapt the grid for uneven KPI counts
-- Learning & Growth has only 2 KPIs -- switch its inner grid to `grid-cols-2` instead of forcing `grid-cols-3` with an empty cell
-- Use dynamic column count: `grid-cols-{kpiResults.length}` capped at 3
+### 2. New file: `src/components/AppLayout.tsx`
+A layout wrapper that combines the `SidebarProvider`, `AppSidebar`, and a `SidebarTrigger` button with a main content area. All routed pages will render inside this layout.
 
-### 4. Fill reclaimed space with perspective-level context
-- Add a subtle "target" or baseline reference row at the bottom of each card showing the strategic objective more prominently, so the card feels purposeful rather than empty
-- Alternatively, let the 2x2 grid use `auto` row sizing so cards only take the height they need, and the grid naturally compresses
+### 3. Update: `src/App.tsx`
+Wrap the `<Routes>` block inside the new `AppLayout` so the sidebar appears on every page. The three main routes (/, /sales-deck, /line-of-sight) plus the homepage mockup and solution pages will all share the sidebar.
 
-### 5. Overall container adjustment
-- Change the grid from `flex-1` (which forces it to fill remaining viewport) to `auto` height with the outer container allowing the cards to sit naturally
-- Reduce the `gap-2` between cards to `gap-1.5` for tighter packing
+### 4. Minor adjustment to page containers
+The SlideDeck, SalesDeck, and LineOfSightPage currently use `h-screen w-full`. These will need a small tweak to use `h-screen w-full` within the flex layout provided by the sidebar, ensuring the content fills the remaining space after the sidebar. This is handled naturally by the `flex-1` on the main content area in the layout.
 
-## Technical Details
-
-### File: `src/components/slides/BalancedScorecard.tsx`
-
-**Grid container (line 112):**
-- Change from `flex-1 grid ... min-h-0` to remove `flex-1` and let grid rows auto-size
-- Use `grid-rows-[auto_auto]` so rows shrink to fit content
-
-**Perspective card (lines 114-167):**
-- Remove `flex flex-col` and `flex-1` on the KPI grid div
-- Cards will naturally size to their content
-
-**KPI tile grid (line 139):**
-- Change from fixed `grid-cols-3` to dynamic based on KPI count
-- Reduce padding and spacing inside tiles
-
-**KPI tiles (lines 141-164):**
-- Tighten padding from `p-2` to `p-1.5`
-- Reduce `space-y-1` to `space-y-0.5`
-- Shrink metric font from `text-lg` to `text-base`
-
-These changes will make each perspective card only as tall as its content requires, eliminating the large empty spaces while keeping all the data clearly readable.
+## Technical Notes
+- The sidebar defaults to **collapsed** (`defaultOpen={false}`) so it stays as a narrow icon strip and doesn't obscure slide content
+- The `SidebarTrigger` button sits at the top of the sidebar for toggling
+- On mobile, the sidebar renders as a slide-out sheet (built into the Shadcn Sidebar component)
+- No new dependencies required -- everything uses existing installed components
