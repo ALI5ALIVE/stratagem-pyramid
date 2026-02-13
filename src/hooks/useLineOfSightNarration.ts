@@ -149,7 +149,7 @@ export const useLineOfSightNarration = () => {
   }, []);
 
   const preloadNext = useCallback((currentViewId: string) => {
-    const order = ["calculator", "tree", "scorecard"];
+    const order = ["calculator", "tree", "scorecard", "curve"];
     const idx = order.indexOf(currentViewId);
     const nextId = order[idx + 1];
     if (nextId && !cacheRef.current.has(nextId)) {

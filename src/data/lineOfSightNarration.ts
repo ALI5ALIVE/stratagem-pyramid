@@ -1,5 +1,5 @@
 export interface LineOfSightNarrationEntry {
-  viewId: "calculator" | "tree" | "scorecard";
+  viewId: "calculator" | "tree" | "scorecard" | "curve";
   title: string;
   script: string;
   voiceId: string;
@@ -61,6 +61,24 @@ The overall improvement percentage in the top right aggregates progress across a
 All of these values are driven by the same use case sliders from the calculator view. Adjusting a slider there will immediately update the scorecard here. This makes it easy to model different scenarios and see how they play out across all four strategic perspectives simultaneously.
 
 The scorecard is ideal for board presentations and quarterly business reviews. It translates operational detail into the strategic language that executives use to evaluate platform investments.`
+  },
+  {
+    viewId: "curve",
+    title: "Performance Shift Walkthrough",
+    voiceId: GEORGE_VOICE_ID,
+    script: `This is the Performance Shift view. It shows you the single most powerful picture of what Comply three six five delivers -- the shift in your airline's entire operational performance distribution.
+
+The grey curve on the left represents where your operation sits today. It's wide and centred around a lower score, reflecting inconsistent, unpredictable performance across safety, content, and training domains.
+
+The green curve represents the improved state -- based on whatever adjustments you've made on the calculator sliders. As you improve individual use cases, this green curve does two things simultaneously. It shifts to the right, meaning your average operational performance improves. And it narrows, meaning your performance becomes more consistent and predictable.
+
+That narrowing is critical. It's the difference between an airline that occasionally hits its targets and one that reliably delivers. Predictable performance is what boards, regulators, and insurers all want to see.
+
+The dashed vertical lines mark the baseline mean and the improved mean. The gap between them is your Performance Shift -- the measurable improvement across your entire operation, not just one metric or one department.
+
+Below the chart, four summary metrics give you the headline numbers. Overall improvement percentage, total cost avoidance in dollars, the number of use cases you've improved, and the average shift across leading operational measures.
+
+This view connects directly to the Comply three six five value proposition: predictable, measurable, and provable operational performance. The curve proves it visually. Go back to the calculator, adjust some sliders, and watch the green curve respond in real time.`
   },
 ];
 

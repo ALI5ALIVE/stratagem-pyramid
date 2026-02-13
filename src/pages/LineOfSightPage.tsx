@@ -1,8 +1,9 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
-import { Calculator, GitBranch, LayoutGrid } from "lucide-react";
+import { Calculator, GitBranch, LayoutGrid, BarChart3 } from "lucide-react";
 import SlideLineOfSight from "@/components/slides/SlideLineOfSight";
 import LineOfSightTree from "@/components/slides/LineOfSightTree";
 import BalancedScorecard from "@/components/slides/BalancedScorecard";
+import PerformanceShiftCurve from "@/components/slides/PerformanceShiftCurve";
 import { Button } from "@/components/ui/button";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useLineOfSightNarration } from "@/hooks/useLineOfSightNarration";
@@ -19,17 +20,20 @@ const views = [
   { id: "calculator", label: "Calculator" },
   { id: "tree", label: "KPI Tree" },
   { id: "scorecard", label: "Scorecard" },
+  { id: "curve", label: "Performance Shift" },
 ];
 
+type ViewId = "calculator" | "tree" | "scorecard" | "curve";
+
 const LineOfSightPage = () => {
-  const [view, setView] = useState<"calculator" | "tree" | "scorecard">("calculator");
+  const [view, setView] = useState<ViewId>("calculator");
   const { register, updateActiveIndex, unregister } = useSlideNavigation();
   const narration = useLineOfSightNarration();
 
   const viewIndex = views.findIndex((v) => v.id === view);
 
   const navigateToView = useCallback((index: number) => {
-    const viewId = views[index]?.id as "calculator" | "tree" | "scorecard";
+    const viewId = views[index]?.id as ViewId;
     if (viewId) setView(viewId);
   }, []);
 
@@ -99,6 +103,15 @@ const LineOfSightPage = () => {
             <LayoutGrid className="w-3.5 h-3.5" />
             Scorecard
           </Button>
+          <Button
+            variant={view === "curve" ? "default" : "ghost"}
+            size="sm"
+            className="gap-1.5 text-xs"
+            onClick={() => setView("curve")}
+          >
+            <BarChart3 className="w-3.5 h-3.5" />
+            Performance Shift
+          </Button>
         </div>
       </div>
 
@@ -150,7 +163,7 @@ const LineOfSightPage = () => {
             onNextSlide: () => { narration.stop(); setView("scorecard"); },
           }}
         />
-      ) : (
+      ) : view === "scorecard" ? (
         <BalancedScorecard
           useCaseValues={useCaseValues}
           leadingValues={leadingValues}
@@ -166,6 +179,29 @@ const LineOfSightPage = () => {
                 narration.resume();
               } else {
                 narration.play("scorecard");
+              }
+              narration.preloadNext("scorecard");
+            },
+            onPause: () => narration.pause(),
+            onNextSlide: () => { narration.stop(); setView("curve"); },
+          }}
+        />
+      ) : (
+        <PerformanceShiftCurve
+          useCaseValues={useCaseValues}
+          leadingValues={leadingValues}
+          totalCostAvoidance={totalCostAvoidance}
+          airlineProfile={airlineProfile}
+          narration={{
+            isPlaying: narration.currentView === "curve" && narration.isPlaying,
+            isLoading: narration.currentView === "curve" && narration.isLoading,
+            progress: narration.currentView === "curve" ? narration.progress : 0,
+            hasCompleted: narration.currentView === "curve" && narration.hasCompleted,
+            onPlay: () => {
+              if (narration.currentView === "curve" && !narration.hasCompleted && narration.progress > 0) {
+                narration.resume();
+              } else {
+                narration.play("curve");
               }
             },
             onPause: () => narration.pause(),
