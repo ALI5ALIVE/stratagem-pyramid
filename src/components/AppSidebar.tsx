@@ -1,4 +1,4 @@
-import { Presentation, Megaphone, Target } from "lucide-react";
+import { Presentation, Megaphone, Target, TrendingUp } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
@@ -17,6 +17,7 @@ import {
 const items = [
   { title: "Strategy Deck", url: "/", icon: Presentation },
   { title: "Sales Deck", url: "/sales-deck", icon: Megaphone },
+  { title: "Value Deck", url: "/value-deck", icon: TrendingUp },
   { title: "Line of Sight", url: "/line-of-sight", icon: Target },
 ];
 
