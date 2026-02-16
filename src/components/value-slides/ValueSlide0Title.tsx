@@ -70,18 +70,18 @@ const ValueSlide0Title = ({
         {/* Headline */}
         <div className="space-y-4 sm:space-y-6">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight">
-            <span className="text-foreground">Operational Performance</span>
+            <span className="text-foreground">The Operational Performance</span>
             <br />
             <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-              Value & ROI
+              Platform
             </span>
           </h1>
 
           <p className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-            From strategic vision to measurable outcomes.
+            Connect safety, content, and training into an intelligent operating platform.
             <br className="hidden sm:block" />
             <span className="text-primary font-medium">
-              See the line of sight from platform capabilities to business value.
+              Turn signals into orchestrated change and measurable outcomes.
             </span>
           </p>
         </div>
