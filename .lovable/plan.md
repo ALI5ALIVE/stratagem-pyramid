@@ -1,26 +1,57 @@
 
+# New "Value Deck" — Combined Strategy + ROI Slides
 
-# Fix: Cost Reduction Label Overlapping X-Axis
+## Overview
+Create a new slide deck at `/value-deck` that cherry-picks slides from the Strategy Deck and embeds the interactive Line of Sight components as full-screen slides. The deck will have 9 slides total.
 
-## Problem
-The "Cost Reduction" arrow annotation (`← Cost Reduction →`) is positioned with `dy: 15` and `position: "insideBottom"`, which pushes it down onto the X-axis labels, making both unreadable.
+## Slide Sequence
 
-## Solution
-Change the `dy` value from `15` to `-15` so the label sits above the bottom of the chart area instead of overlapping the axis.
+| # | Label | Source | Component |
+|---|-------|--------|-----------|
+| 0 | Title | New | New title slide for this deck |
+| 1 | Strategic Shift | Strategy Deck | `Slide1StrategicShift` |
+| 2 | Before & After | Strategy Deck | `Slide2BeforeAfter` |
+| 3 | Operational Intelligence Layer | Strategy Deck | `Slide3OperatingModel` |
+| 4 | Use Cases in Action | Strategy Deck | `SlideUseCases` |
+| 5 | Operational Performance Ladder | Strategy Deck | `Slide4ValuePyramid` |
+| 6 | What This Means for Customers | Strategy Deck | `Slide7Customers` |
+| 7 | Line of Sight Calculator | Line of Sight | `SlideLineOfSight` |
+| 8 | Balanced Scorecard | Line of Sight | `BalancedScorecard` |
+| 9 | Performance Shift | Line of Sight | `PerformanceShiftCurve` |
 
 ## Technical Details
 
-### File: `src/components/slides/PerformanceShiftCurve.tsx`
+### New Files
 
-In the "Cost Reduction" `ReferenceLine` label config (around line 256), change:
+1. **`src/pages/ValueDeck.tsx`**
+   - Scroll-snap deck container (same pattern as `SlideDeck.tsx` and `SalesDeck.tsx`)
+   - Manages shared state for the interactive slides (slides 7-9): `useCaseValues`, `airlineProfile`, `leadingValues`, `totalCostAvoidance` -- same logic currently in `LineOfSightPage.tsx`
+   - Slides 0-6 are standard full-screen slide components rendered directly
+   - Slides 7-9 are wrapped in full-height snap containers so the Calculator, Scorecard, and Bell Curve each occupy one full viewport
+   - Registers slides with `SlideNavigationContext` for sidebar sub-navigation
+   - Includes narration support via `useSimpleNarration`
+   - Keyboard navigation (Arrow keys) and scroll-snap behavior
 
-```typescript
-// Before
-dy: 15,
+2. **`src/components/value-slides/ValueSlide0Title.tsx`**
+   - Title slide branded with the Comply365 logo
+   - Title: "Operational Performance Platform" (or similar, avoiding "OPP")
+   - Subtitle referencing the value/ROI focus
+   - Interactive agenda grid listing the 9 slides, clickable to navigate
 
-// After
-dy: -15,
-```
+### Modified Files
 
-One-line change.
+3. **`src/App.tsx`**
+   - Add route: `/value-deck` pointing to the new `ValueDeck` page
 
+4. **`src/components/AppSidebar.tsx`**
+   - Add a new sidebar nav item: "Value Deck" with a suitable icon (e.g., `DollarSign` or `Target`) linking to `/value-deck`
+
+### No Changes Needed
+- All existing slide components (`Slide1StrategicShift`, `Slide2BeforeAfter`, etc.) are reused as-is -- they already accept narration props
+- The Line of Sight components (`SlideLineOfSight`, `BalancedScorecard`, `PerformanceShiftCurve`) are reused as-is with their existing props interfaces
+- The shared state logic is copied from `LineOfSightPage.tsx` into the new deck page
+
+### Key Considerations
+- The Calculator slide (slide 7) is interactive with sliders; user adjustments will flow through to the Scorecard (slide 8) and Performance Shift curve (slide 9) since they share state
+- Each interactive slide occupies a full viewport height with `snap-start` for smooth deck-style navigation
+- The title slide will include an `onNavigateToSlide` handler for the clickable agenda items, matching the pattern in the Strategy Deck's title slide
