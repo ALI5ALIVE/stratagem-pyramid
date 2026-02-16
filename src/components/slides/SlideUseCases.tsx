@@ -185,7 +185,7 @@ const SlideUseCases = ({
         </div>
 
         {/* Use Cases Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0 overflow-visible">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 flex-1 min-h-0 overflow-visible">
           {useCases.map((useCase, index) => {
             const Icon = useCase.icon;
             const isExpanded = expandedCase === useCase.id;
