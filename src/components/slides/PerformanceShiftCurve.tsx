@@ -209,6 +209,8 @@ const PerformanceShiftCurve = ({
               </defs>
               <XAxis
                 dataKey="x"
+                type="number"
+                domain={[chartMin, chartMax]}
                 stroke="hsl(var(--muted-foreground))"
                 strokeOpacity={0.3}
                 tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
@@ -222,7 +224,7 @@ const PerformanceShiftCurve = ({
                   style: { fill: "hsl(var(--muted-foreground))", fontSize: 11 },
                 }}
               />
-              <YAxis hide />
+              <YAxis hide domain={[0, 1]} />
               <Tooltip
                 contentStyle={{
                   backgroundColor: "hsl(var(--card))",
