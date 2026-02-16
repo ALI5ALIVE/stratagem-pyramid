@@ -103,6 +103,18 @@ const PerformanceShiftCurve = ({
         improved: gaussian(x, improvedMean, improvedStdDev),
       });
     }
+
+    // Normalize to 0-1 range so Recharts can render visible curves
+    const maxVal = Math.max(
+      ...points.map((p) => Math.max(p.baseline, p.improved))
+    );
+    if (maxVal > 0) {
+      return points.map((p) => ({
+        x: p.x,
+        baseline: p.baseline / maxVal,
+        improved: p.improved / maxVal,
+      }));
+    }
     return points;
   }, [baselineMean, improvedMean, baselineStdDev, improvedStdDev, chartMin, chartMax]);
 
