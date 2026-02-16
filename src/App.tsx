@@ -12,6 +12,7 @@ import AirlinesPage from "./pages/solutions/AirlinesPage";
 import DefensePage from "./pages/solutions/DefensePage";
 import RailPage from "./pages/solutions/RailPage";
 import LineOfSightPage from "./pages/LineOfSightPage";
+import ValueDeck from "./pages/ValueDeck";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
           <Route element={<AppLayout />}>
             <Route path="/" element={<SlideDeck />} />
             <Route path="/sales-deck" element={<SalesDeck />} />
+            <Route path="/value-deck" element={<ValueDeck />} />
             <Route path="/homepage-mockup" element={<HomepageMockup />} />
             <Route path="/solutions/airlines" element={<AirlinesPage />} />
             <Route path="/solutions/defense" element={<DefensePage />} />
