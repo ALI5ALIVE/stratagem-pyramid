@@ -1,44 +1,37 @@
 
 
-# Fix: Bell Curves Not Rendering in Cost Savings Distribution
+# Fix: Chart Too Close to Top, Wasted Space at Bottom
 
-## Root Cause
+## Problem
+The chart is fixed at 350px height while the outer container (`flex-1`) has room to grow. This leaves unused space at the bottom of the slide.
 
-After normalizing the Gaussian values (previous fix), the data is correct (values 0 to 1), but the chart still produces **zero SVG path elements**. Two issues remain:
+## Solution
+Make the `ResponsiveContainer` fill its parent using `height="100%"`, while ensuring the parent div has a concrete height via flex layout (`flex-1 min-h-0`). The previous attempt with `height="100%"` failed because the parent lacked `min-h-0` (needed in flex children to allow proper height resolution). Adding `min-h-0` instead of `min-h-[350px]` fixes this.
 
-1. **XAxis type is "category" (default)** -- With 200 data points containing large numeric x values (e.g. 40,000,000 to 60,000,000), Recharts' category axis can fail to generate Area paths. The XAxis needs `type="number"` to treat x values as a continuous numeric scale.
-
-2. **YAxis has no domain** -- The YAxis is hidden but has no explicit `domain`. Recharts auto-detection with normalized 0-1 values and a hidden axis may produce an incorrect or zero-height domain.
-
-## Fix
-
-### File: `src/components/slides/PerformanceShiftCurve.tsx`
-
-**Change 1 -- XAxis (line 210):** Add `type="number"` and an explicit `domain` so Recharts interprets x as a continuous numeric axis:
-
-```tsx
-<XAxis
-  dataKey="x"
-  type="number"
-  domain={[chartMin, chartMax]}
-  stroke="hsl(var(--muted-foreground))"
-  // ... rest unchanged
-/>
-```
-
-**Change 2 -- YAxis (line 225):** Add an explicit `domain` so the Y-axis range is well-defined:
-
-```tsx
-<YAxis hide domain={[0, 1]} />
-```
-
-These two changes ensure Recharts has proper numeric axes with defined ranges, allowing it to generate the SVG path elements for the Area curves.
+Also reduce the header's bottom margin and chart's top margin so the curve doesn't crowd the top.
 
 ## Technical Details
 
-- `chartMin` and `chartMax` are already computed in the component's `useMemo` and represent the x-axis bounds (e.g., baseline mean +/- 4 standard deviations).
-- Y values are normalized to 0-1 in the `chartData` memo, so `domain={[0, 1]}` is the correct range.
-- No changes to the data computation, normalization, or visual styling.
+### File: `src/components/slides/PerformanceShiftCurve.tsx`
 
-Two-line change in one file.
+**Line 164** — add `justify-center` so the content block is vertically centered in the slide:
+```
+<div className="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full px-4 sm:px-6 py-4">
+```
 
+**Line 177** — change chart container from `flex-1 min-h-[350px]` to `min-h-[400px]` (fixed height, no flex-grow, taller chart):
+```
+<div className="min-h-[400px] h-[400px] bg-card/50 rounded-xl border border-border/30 p-4 relative">
+```
+
+**Line 199** — update `ResponsiveContainer` to match:
+```
+<ResponsiveContainer width="100%" height={400}>
+```
+
+**Line 200** — reduce top margin in `AreaChart` so curve doesn't crowd the top:
+```
+<AreaChart data={chartData} margin={{ top: 40, right: 20, bottom: 20, left: 20 }}>
+```
+
+These changes center the content vertically in the viewport and give the chart more room, eliminating the wasted space at the bottom while keeping the curve away from the top edge.
