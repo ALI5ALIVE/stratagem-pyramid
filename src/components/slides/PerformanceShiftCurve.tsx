@@ -118,6 +118,7 @@ const PerformanceShiftCurve = ({
     return points;
   }, [baselineMean, improvedMean, baselineStdDev, improvedStdDev, chartMin, chartMax]);
 
+
   const overallImprovement =
     baselineMean === 0 && improvedMean > 0
       ? 100
@@ -195,7 +196,7 @@ const PerformanceShiftCurve = ({
             </div>
           )}
 
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="100%" height={350}>
             <AreaChart data={chartData} margin={{ top: 30, right: 20, bottom: 20, left: 20 }}>
               <defs>
                 <linearGradient id="baselineGradient" x1="0" y1="0" x2="0" y2="1">
