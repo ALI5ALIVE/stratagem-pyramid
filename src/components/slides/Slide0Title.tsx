@@ -16,8 +16,10 @@ const agendaItems = [
   { num: 10, label: "Messaging House", summary: "Complete positioning framework" },
   { num: 11, label: "Campaign Ideas", summary: "Category leadership campaigns" },
   { num: 12, label: "Messaging in Context", summary: "How positioning applies across domains" },
-  { num: 13, label: "Homepage Experience", summary: "Category positioning in the product" },
-  { num: 14, label: "Next Steps", summary: "Your path forward" },
+  { num: 13, label: "Content Strategy", summary: "Flying High 12-month programme" },
+  { num: 14, label: "Persona Map", summary: "Stakeholder content by role" },
+  { num: 15, label: "Homepage Experience", summary: "Category positioning in the product" },
+  { num: 16, label: "Next Steps", summary: "Your path forward" },
 ];
 
 interface Slide0TitleProps extends SlideNarrationProps {
