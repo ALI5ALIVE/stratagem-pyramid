@@ -21,13 +21,14 @@ import SlideAIVision from "@/components/slides/SlideAIVision";
 import SlideMessagingContext from "@/components/slides/SlideMessagingContext";
 import SlidePlatformExperience from "@/components/slides/SlidePlatformExperience";
 import SlideConclusion from "@/components/slides/SlideConclusion";
+import SlideContentStrategy from "@/components/slides/SlideContentStrategy";
+import SlidePersonaContentMap from "@/components/slides/SlidePersonaContentMap";
 
 const slides = [
   { id: "slide-0", label: "Title" },
   { id: "slide-1", label: "Strategic Shift" },
   { id: "slide-2", label: "Before & After" },
   { id: "slide-3", label: "Operating Model" },
-  // { id: "slide-4", label: "Platform Capabilities" }, // HIDDEN - consolidated into Operating Model
   { id: "slide-5", label: "Use Cases" },
   { id: "slide-6", label: "Transformation" },
   { id: "slide-7", label: "Value Ladder" },
@@ -37,6 +38,8 @@ const slides = [
   { id: "slide-11", label: "Messaging House" },
   { id: "slide-12", label: "Campaign Ideas" },
   { id: "slide-13", label: "Messaging in Context" },
+  { id: "slide-content-strategy", label: "Content Strategy" },
+  { id: "slide-persona-content-map", label: "Persona Map" },
   { id: "slide-14", label: "Platform Experience" },
   { id: "slide-15", label: "Next Steps" },
 ];
@@ -214,8 +217,10 @@ const SlideDeck = () => {
         <SlideMessagingHouse {...getNarrationProps(10)} />
         <SlideCampaignIdeas {...getNarrationProps(11)} />
         <SlideMessagingContext {...getNarrationProps(12)} />
+        <SlideContentStrategy {...getNarrationProps(13)} />
+        <SlidePersonaContentMap {...getNarrationProps(14)} />
         <SlidePlatformExperience />
-        <SlideConclusion {...getNarrationProps(14)} />
+        <SlideConclusion {...getNarrationProps(16)} />
       </div>
     </div>
   );
