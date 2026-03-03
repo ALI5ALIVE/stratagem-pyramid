@@ -68,7 +68,7 @@ const SlideStrategyOverview = ({
           <div className="bg-primary/10 border border-primary/30 rounded-xl px-5 py-4 flex flex-col">
             <div className="flex items-center gap-2 mb-2">
               <Plane className="w-5 h-5 text-primary" />
-              <p className="text-[10px] text-primary uppercase tracking-widest font-semibold">The Central Idea</p>
+              <p className="text-xs text-primary uppercase tracking-widest font-semibold">The Central Idea</p>
             </div>
             <p className="text-sm text-foreground leading-relaxed font-medium flex-1">
               Aviation organisations do not improve performance through safety, training, compliance, content, 
@@ -82,7 +82,7 @@ const SlideStrategyOverview = ({
           <div className="bg-accent/10 border border-accent/30 rounded-xl px-5 py-4 flex flex-col">
             <div className="flex items-center gap-2 mb-2">
               <Megaphone className="w-5 h-5 text-accent-foreground" />
-              <p className="text-[10px] text-accent-foreground uppercase tracking-widest font-semibold">The Content Theme</p>
+              <p className="text-xs text-accent-foreground uppercase tracking-widest font-semibold">The Content Theme</p>
             </div>
             <h3 className="text-base font-display font-bold text-foreground mb-1">
               Flying High — Raise Performance Without Raising Risk
@@ -92,7 +92,7 @@ const SlideStrategyOverview = ({
               operational performance — educating buyers, introducing a clearer operating model, and supporting 
               buying groups to align internally and take action.
             </p>
-            <p className="text-[11px] text-foreground/60 mt-2 italic">
+            <p className="text-xs text-foreground/60 mt-2 italic">
               A content programme about performance, not a campaign about product features.
             </p>
           </div>

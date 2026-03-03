@@ -31,21 +31,6 @@ const quarterMeta = [
   { label: "Q4", theme: "Prove at Scale", months: "Jan–Mar", color: "text-purple-400", borderColor: "border-purple-400" },
 ];
 
-const q1Assets = [
-  "Flying High Report: Chapter 1",
-  "Build the Foundation for Performance",
-  "Why Fragmented Systems Quietly Reduce Performance",
-  "The Operational Performance Baseline",
-  "What Operational Performance Actually Means",
-  "Why Content, Safety, and Training Must Work Together",
-  "Governance Without Drag",
-  "The Hidden Cost of Disconnected Workflows",
-  "Readiness Starts Before Training Completion",
-  "Shared Language for Shared Performance",
-  "Fragmentation Risk Checklist",
-  "Q1 Sales Narrative",
-];
-
 const SlideContentInventory = ({
   isPlaying = false,
   isLoading = false,
@@ -77,13 +62,13 @@ const SlideContentInventory = ({
           {/* Header */}
           <div className="grid grid-cols-[1fr_repeat(4,90px)] border-b border-border/40">
             <div className="px-3 py-2">
-              <span className="text-[9px] text-muted-foreground uppercase tracking-wider font-semibold">Asset Type</span>
+              <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Asset Type</span>
             </div>
             {quarterMeta.map((qm) => (
               <div key={qm.label} className="px-2 py-2 text-center border-l border-border/30">
                 <span className={cn("text-xs font-bold", qm.color)}>{qm.label}</span>
-                <p className="text-[8px] text-muted-foreground leading-tight">{qm.months}</p>
-                <p className="text-[8px] text-muted-foreground/70 leading-tight mt-0.5">{qm.theme}</p>
+                <p className="text-xs text-muted-foreground leading-tight">{qm.months}</p>
+                <p className="text-xs text-muted-foreground/70 leading-tight mt-0.5">{qm.theme}</p>
               </div>
             ))}
           </div>
@@ -96,14 +81,14 @@ const SlideContentInventory = ({
               <div key={row.type} className="grid grid-cols-[1fr_repeat(4,90px)] border-b border-border/20 last:border-b-0 hover:bg-card/80 transition-colors">
                 <div className="px-3 py-2 flex items-center gap-2">
                   <RowIcon className={cn("w-3.5 h-3.5 shrink-0", row.color)} />
-                  <span className="text-[10px] font-semibold text-foreground">{row.type}</span>
+                  <span className="text-xs font-semibold text-foreground">{row.type}</span>
                 </div>
                 {counts.map((c, i) => (
                   <div key={i} className="px-2 py-2 flex items-center justify-center border-l border-border/20">
                     {c > 0 ? (
                       <span className="text-sm font-bold text-primary">{c}</span>
                     ) : (
-                      <span className="text-[10px] text-muted-foreground/40">—</span>
+                      <span className="text-xs text-muted-foreground/40">—</span>
                     )}
                   </div>
                 ))}
@@ -114,7 +99,7 @@ const SlideContentInventory = ({
           {/* Totals */}
           <div className="grid grid-cols-[1fr_repeat(4,90px)] border-t border-border/40 bg-primary/5">
             <div className="px-3 py-2">
-              <span className="text-[10px] font-bold text-foreground uppercase tracking-wider">Quarterly Total</span>
+              <span className="text-xs font-bold text-foreground uppercase tracking-wider">Quarterly Total</span>
             </div>
             {[0, 1, 2, 3].map((qi) => {
               const qKey = `q${qi + 1}` as keyof AssetRow;
@@ -129,7 +114,7 @@ const SlideContentInventory = ({
 
           {/* Derivatives note */}
           <div className="bg-primary/10 border-t border-primary/30 px-4 py-2.5">
-            <p className="text-[10px] text-foreground font-medium leading-snug">
+            <p className="text-xs text-foreground font-medium leading-snug">
               All primary assets supplied with supporting derivatives as appropriate (social posts, landing pages, emails, nurture sequences).
             </p>
           </div>
@@ -138,12 +123,12 @@ const SlideContentInventory = ({
         {/* Budget + delivery */}
         <div className="grid grid-cols-3 gap-3">
           <div className="bg-card/60 border border-border/40 rounded-lg px-4 py-3">
-            <p className="text-[9px] text-muted-foreground uppercase tracking-wider font-semibold mb-1">Monthly Budget</p>
+            <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-1">Monthly Budget</p>
             <p className="text-lg font-bold text-primary">£7,000</p>
-            <p className="text-[10px] text-muted-foreground mt-1">Focused, modular, disciplined</p>
+            <p className="text-xs text-muted-foreground mt-1">Focused, modular, disciplined</p>
           </div>
           <div className="bg-card/60 border border-border/40 rounded-lg px-4 py-3">
-            <p className="text-[9px] text-muted-foreground uppercase tracking-wider font-semibold mb-1">Monthly Mix</p>
+            <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-1">Monthly Mix</p>
             <div className="space-y-1 mt-1">
               {[
                 "1 core asset in development",
@@ -154,14 +139,14 @@ const SlideContentInventory = ({
               ].map((item) => (
                 <div key={item} className="flex items-center gap-1.5">
                   <div className="w-1 h-1 rounded-full bg-primary shrink-0" />
-                  <span className="text-[9px] text-foreground/70">{item}</span>
+                  <span className="text-xs text-foreground/70">{item}</span>
                 </div>
               ))}
             </div>
           </div>
           <div className="bg-card/60 border border-border/40 rounded-lg px-4 py-3">
-            <p className="text-[9px] text-muted-foreground uppercase tracking-wider font-semibold mb-1">Delivery Model</p>
-            <p className="text-[10px] text-foreground/70 leading-relaxed">
+            <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-1">Delivery Model</p>
+            <p className="text-xs text-foreground/70 leading-relaxed">
               Content created efficiently, then improved through review and iteration until 
               clear, commercially sharp, and reusable. Every asset must have a clear purpose, 
               audience, and role in the journey before production begins.

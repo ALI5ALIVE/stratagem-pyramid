@@ -194,8 +194,8 @@ const SlideContentStrategy = ({
                 )}
               >
                 <Icon className={cn("w-4 h-4", activeQuarter === i ? quarter.color : "text-muted-foreground")} />
-                <div className="text-[10px] font-bold text-foreground">{quarter.label}: {quarter.theme}</div>
-                <div className="text-[9px] text-muted-foreground">{quarter.subtitle}</div>
+                <div className="text-xs font-bold text-foreground">{quarter.label}: {quarter.theme}</div>
+                <div className="text-xs text-muted-foreground">{quarter.subtitle}</div>
               </button>
             );
           })}
@@ -208,8 +208,8 @@ const SlideContentStrategy = ({
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">
               <q.icon className={cn("w-4 h-4", q.color)} />
-              <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">{q.label} · {q.subtitle}</span>
-              <span className={cn("text-[9px] font-bold px-2 py-0.5 rounded-full", q.bgColor, q.color)}>{q.assetCount} assets</span>
+              <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">{q.label} · {q.subtitle}</span>
+              <span className={cn("text-xs font-bold px-2 py-0.5 rounded-full", q.bgColor, q.color)}>{q.assetCount} assets</span>
             </div>
           </div>
 
@@ -224,20 +224,20 @@ const SlideContentStrategy = ({
           {/* Three-column: Narrative + DTOP Role + Message Territory */}
           <div className="grid grid-cols-3 gap-2 mb-2">
             <div className="bg-background/60 rounded-lg px-3 py-2.5 border border-border/30">
-              <p className="text-[9px] text-muted-foreground uppercase tracking-wider font-semibold mb-1">Quarter Narrative</p>
-              <p className="text-[10px] text-foreground leading-relaxed">{q.narrative}</p>
+              <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-1">Quarter Narrative</p>
+              <p className="text-xs text-foreground leading-relaxed">{q.narrative}</p>
             </div>
             <div className="bg-background/60 rounded-lg px-3 py-2.5 border border-border/30">
-              <p className="text-[9px] text-primary uppercase tracking-wider font-semibold mb-1">Role of DTOP</p>
-              <p className="text-[10px] text-foreground/80 leading-relaxed">{q.dtopRole}</p>
+              <p className="text-xs text-primary uppercase tracking-wider font-semibold mb-1">Role of DTOP</p>
+              <p className="text-xs text-foreground/80 leading-relaxed">{q.dtopRole}</p>
             </div>
             <div className="bg-background/60 rounded-lg px-3 py-2.5 border border-border/30">
-              <p className="text-[9px] text-muted-foreground uppercase tracking-wider font-semibold mb-1">Message Territory</p>
+              <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-1">Message Territory</p>
               <div className="space-y-1">
                 {q.messageTerritory.map((msg) => (
                   <div key={msg} className="flex items-start gap-1.5">
                     <span className="w-1 h-1 rounded-full bg-primary/60 mt-1.5 shrink-0" />
-                    <p className="text-[10px] text-foreground/70 leading-snug">{msg}</p>
+                    <p className="text-xs text-foreground/70 leading-snug">{msg}</p>
                   </div>
                 ))}
               </div>
@@ -248,37 +248,37 @@ const SlideContentStrategy = ({
           <div className="grid grid-cols-2 gap-2 flex-1">
             {/* Content Journey stages addressed this quarter */}
             <div className="bg-background/40 rounded-lg p-3 flex flex-col">
-              <p className="text-[9px] text-muted-foreground uppercase tracking-wider font-semibold mb-2">Content Journey Stages</p>
+              <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-2">Content Journey Stages</p>
               <div className="space-y-2 flex-1">
                 {q.journeyStages.map((stage) => {
                   const StageIcon = stage.icon;
                   return (
                     <div key={stage.num} className="flex items-center gap-2 bg-background/60 rounded-lg px-3 py-2 border border-border/20">
-                      <div className={cn("w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold", `${stage.color}/20`, stage.color)}>
+                      <div className={cn("w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold", `${stage.color}/20`, stage.color)}>
                         {stage.num}
                       </div>
                       <StageIcon className={cn("w-3.5 h-3.5 shrink-0", stage.color)} />
-                      <p className="text-[10px] text-foreground font-medium">{stage.title}</p>
+                      <p className="text-xs text-foreground font-medium">{stage.title}</p>
                     </div>
                   );
                 })}
               </div>
               <div className="mt-2 bg-primary/5 border border-primary/20 rounded-lg px-3 py-2">
-                <p className="text-[9px] text-primary uppercase tracking-wider font-semibold mb-0.5">Core Message</p>
-                <p className="text-[10px] text-foreground/80 font-medium leading-snug">{q.quarterMessage}</p>
+                <p className="text-xs text-primary uppercase tracking-wider font-semibold mb-0.5">Core Message</p>
+                <p className="text-xs text-foreground/80 font-medium leading-snug">{q.quarterMessage}</p>
               </div>
             </div>
 
             {/* Hero assets */}
             <div className="bg-background/40 rounded-lg p-3">
-              <p className="text-[9px] text-muted-foreground uppercase tracking-wider font-semibold mb-2">Hero Assets</p>
+              <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-2">Hero Assets</p>
               <div className="space-y-1.5">
                 {q.heroAssets.map((asset) => (
                   <div key={asset.title} className="flex items-start gap-1.5">
                     <ChevronRight className={cn("w-3 h-3 mt-0.5 shrink-0", q.color)} />
                     <div>
-                      <span className="text-[10px] text-foreground/80 font-medium">{asset.title}</span>
-                      <span className="text-[9px] text-muted-foreground ml-1">· {asset.format}</span>
+                      <span className="text-xs text-foreground/80 font-medium">{asset.title}</span>
+                      <span className="text-xs text-muted-foreground ml-1">· {asset.format}</span>
                     </div>
                   </div>
                 ))}
