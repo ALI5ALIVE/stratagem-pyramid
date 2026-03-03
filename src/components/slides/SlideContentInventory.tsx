@@ -124,6 +124,7 @@ const quarterCalendar: QuarterCalendar[] = [
     months: ["Jan", "Feb", "Mar"],
     assets: [
       { type: "eGuide", title: "Build the Foundation", icon: FileText, color: "text-amber-400" },
+      { type: "Article", title: "Why operational performance now matters more than ever", icon: Lightbulb, color: "text-indigo-400" },
       { type: "Webinar", title: "Connected foundation for operational performance", icon: Mic, color: "text-emerald-400" },
       { type: "Decision", title: "Operational performance baseline assessment", icon: ClipboardCheck, color: "text-purple-400" },
       { type: "Worksheet", title: "Baseline assessment worksheet", icon: Wrench, color: "text-orange-400" },
@@ -139,6 +140,8 @@ const quarterCalendar: QuarterCalendar[] = [
     months: ["Apr", "May", "Jun"],
     assets: [
       { type: "eGuide", title: "Signal to Action", icon: FileText, color: "text-amber-400" },
+      { type: "Article", title: "How high-performing teams close the signal-to-action gap", icon: Lightbulb, color: "text-indigo-400" },
+      { type: "Article", title: "The hidden cost of operational lag", icon: Lightbulb, color: "text-indigo-400" },
       { type: "Webinar", title: "Closing the gap between signal and action", icon: Mic, color: "text-emerald-400" },
       { type: "Decision", title: "Signal-to-action gap diagnostic", icon: ClipboardCheck, color: "text-purple-400" },
       { type: "Worksheet", title: "Action design worksheet", icon: Wrench, color: "text-orange-400" },
@@ -154,6 +157,8 @@ const quarterCalendar: QuarterCalendar[] = [
     months: ["Jul", "Aug", "Sep"],
     assets: [
       { type: "eGuide", title: "Continuous Readiness", icon: FileText, color: "text-amber-400" },
+      { type: "Article", title: "Why readiness must be continuous, not periodic", icon: Lightbulb, color: "text-indigo-400" },
+      { type: "Article", title: "Connecting training, compliance and operational change", icon: Lightbulb, color: "text-indigo-400" },
       { type: "Webinar", title: "Building continuous readiness across functions", icon: Mic, color: "text-emerald-400" },
       { type: "Decision", title: "Readiness scorecard & workshop pack", icon: ClipboardCheck, color: "text-purple-400" },
       { type: "Worksheet", title: "Cross-functional workshop template", icon: Wrench, color: "text-orange-400" },
@@ -169,6 +174,7 @@ const quarterCalendar: QuarterCalendar[] = [
     months: ["Oct", "Nov", "Dec"],
     assets: [
       { type: "eGuide", title: "Prove at Scale", icon: FileText, color: "text-amber-400" },
+      { type: "Article", title: "How to prove operational progress without reporting burden", icon: Lightbulb, color: "text-indigo-400" },
       { type: "Webinar", title: "Proving operational progress without reporting burden", icon: Mic, color: "text-emerald-400" },
       { type: "Decision", title: "Operational performance business case pack", icon: ClipboardCheck, color: "text-purple-400" },
       { type: "Worksheet", title: "Expansion business case template", icon: Wrench, color: "text-orange-400" },
@@ -285,6 +291,13 @@ const SlideContentInventory = ({
                   </div>
                 );
               })}
+            </div>
+
+            {/* Derivatives note */}
+            <div className="mt-auto pt-2 border-t border-border/20">
+              <p className="text-[9px] text-muted-foreground italic leading-snug">
+                All assets supplied with supporting derivatives as appropriate (e.g. social posts, landing pages, emails, nurture sequences etc.)
+              </p>
             </div>
           </div>
 
