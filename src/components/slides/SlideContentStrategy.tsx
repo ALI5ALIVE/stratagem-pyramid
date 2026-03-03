@@ -167,12 +167,6 @@ const quarters: Quarter[] = [
         audience: "LinkedIn audience — executive and practitioner segments",
         summary: "A suite of social posts, carousels, and short-form content amplifying Q1 themes across LinkedIn, designed for both brand and employee advocacy channels.",
       },
-      {
-        title: "Q1 Sales Narrative Sheet",
-        format: "Sales Enablement",
-        audience: "Sales teams and account managers",
-        summary: "Equips sales teams with the Q1 outcome-led story: why fragmented foundations limit performance and how connected models change the conversation.",
-      },
     ],
   },
   {
@@ -295,12 +289,6 @@ const quarters: Quarter[] = [
         format: "Social Content",
         audience: "LinkedIn audience — executive and practitioner segments",
         summary: "A suite of social posts, carousels, and short-form content amplifying Q2 signal-to-action themes, designed for brand and employee advocacy channels.",
-      },
-      {
-        title: "Q2 Sales Narrative Sheet",
-        format: "Sales Enablement",
-        audience: "Sales teams and account managers",
-        summary: "Equips sales with the Q2 story: visibility alone does not improve performance — signals, triggers, and coordinated action do.",
       },
     ],
   },
@@ -425,12 +413,6 @@ const quarters: Quarter[] = [
         audience: "LinkedIn audience — executive and practitioner segments",
         summary: "A suite of social posts, carousels, and short-form content amplifying Q3 readiness themes, designed for brand and employee advocacy channels.",
       },
-      {
-        title: "Q3 Sales Narrative Sheet",
-        format: "Sales Enablement",
-        audience: "Sales teams and account managers",
-        summary: "Equips sales with the Q3 story: readiness is not a training event — it is a continuous condition that drives predictable performance.",
-      },
     ],
   },
   {
@@ -554,12 +536,6 @@ const quarters: Quarter[] = [
         audience: "LinkedIn audience — executive and practitioner segments",
         summary: "A suite of social posts, carousels, and short-form content amplifying Q4 proof-at-scale themes, designed for brand and employee advocacy channels.",
       },
-      {
-        title: "Q4 Sales Narrative Sheet",
-        format: "Sales Enablement",
-        audience: "Sales teams and account managers",
-        summary: "Equips sales with the Q4 story: performance only scales when progress can be proved — and that requires evidence, not just more reporting.",
-      },
     ],
   },
 ];
@@ -581,7 +557,7 @@ const SlideContentStrategy = ({
       id="slide-content-strategy"
       title="Quarterly Strategy"
       subtitle="Four chapters that build the case — from foundation to proof"
-      slideNumber={3}
+      slideNumber={4}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}
