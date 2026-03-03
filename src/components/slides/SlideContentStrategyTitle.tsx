@@ -16,8 +16,8 @@ const sections = [
   },
   {
     num: 2,
-    label: "Operating Model",
-    summary: "DTOP framework and what the programme should do",
+    label: "Flying High Narrative",
+    summary: "How DTOP brings the content messaging to life",
     icon: Route,
     color: "text-amber-400",
     bgColor: "bg-amber-400/10",
@@ -25,8 +25,8 @@ const sections = [
   },
   {
     num: 3,
-    label: "Buyer Journey",
-    summary: "Six stages from status quo to scaled proof",
+    label: "Content Journey",
+    summary: "From awareness to decision — six stages that shape the year",
     icon: AlertTriangle,
     color: "text-emerald-400",
     bgColor: "bg-emerald-400/10",
