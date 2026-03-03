@@ -23,6 +23,7 @@ import SlidePlatformExperience from "@/components/slides/SlidePlatformExperience
 import SlideConclusion from "@/components/slides/SlideConclusion";
 import SlideContentStrategy from "@/components/slides/SlideContentStrategy";
 import SlidePersonaContentMap from "@/components/slides/SlidePersonaContentMap";
+import SlideContentInventory from "@/components/slides/SlideContentInventory";
 
 const slides = [
   { id: "slide-0", label: "Title" },
@@ -40,6 +41,7 @@ const slides = [
   { id: "slide-13", label: "Messaging in Context" },
   { id: "slide-content-strategy", label: "Content Strategy" },
   { id: "slide-persona-content-map", label: "Persona Map" },
+  { id: "slide-content-inventory", label: "Content Inventory" },
   { id: "slide-14", label: "Platform Experience" },
   { id: "slide-15", label: "Next Steps" },
 ];
@@ -219,6 +221,7 @@ const SlideDeck = () => {
         <SlideMessagingContext {...getNarrationProps(12)} />
         <SlideContentStrategy {...getNarrationProps(13)} />
         <SlidePersonaContentMap {...getNarrationProps(14)} />
+        <SlideContentInventory {...getNarrationProps(15)} />
         <SlidePlatformExperience />
         <SlideConclusion {...getNarrationProps(16)} />
       </div>
