@@ -166,14 +166,6 @@ const SlideContentArchitecture = ({
               ))}
             </div>
 
-            {/* Budget note */}
-            <div className="mt-auto pt-3 border-t border-border/30">
-              <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-1">Budget</p>
-              <p className="text-xs text-foreground/70 leading-relaxed">
-                £7,000/month — sufficient for a focused, modular programme. 
-                Not for disconnected one-off assets.
-              </p>
-            </div>
           </div>
         </div>
       </div>

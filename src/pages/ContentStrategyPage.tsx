@@ -17,8 +17,8 @@ const slides = [
   { id: "slide-operating-model", label: "Messaging House" },
   { id: "slide-content-architecture", label: "Content Architecture" },
   { id: "slide-content-strategy", label: "Quarterly Strategy" },
-  { id: "slide-content-inventory", label: "Content Inventory" },
   { id: "slide-sales-enablement", label: "Sales Enablement" },
+  { id: "slide-content-inventory", label: "Content Inventory" },
 ];
 
 const ContentStrategyPage = () => {
@@ -136,8 +136,8 @@ const ContentStrategyPage = () => {
         <SlideOperatingModel {...getNarrationProps(2)} />
         <SlideContentArchitecture {...getNarrationProps(3)} />
         <SlideContentStrategy {...getNarrationProps(4)} />
-        <SlideContentInventory {...getNarrationProps(5)} />
-        <SlideSalesEnablement {...getNarrationProps(6)} />
+        <SlideSalesEnablement {...getNarrationProps(5)} />
+        <SlideContentInventory {...getNarrationProps(6)} />
       </div>
     </div>
   );
