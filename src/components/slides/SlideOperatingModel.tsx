@@ -1,4 +1,4 @@
-import { Eye, Zap, Link2, Target, Users, Radio, TrendingUp, Quote, ShieldCheck, GraduationCap, Monitor, Shield } from "lucide-react";
+import { Eye, Zap, Link2, Target, Users, Radio, TrendingUp, ShieldCheck, GraduationCap, Monitor, Shield } from "lucide-react";
 import SlideContainer from "./SlideContainer";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
@@ -73,7 +73,7 @@ const SlideOperatingModel = ({
       onPause={onPause}
       onNextSlide={onNextSlide}
     >
-      <div className="flex-1 flex flex-col gap-2 h-full overflow-hidden">
+      <div className="flex-1 flex flex-col gap-3 h-full overflow-hidden">
 
         {/* Roof — master line */}
         <div className="bg-primary/15 border-2 border-primary/40 rounded-xl px-5 py-2.5 text-center">
@@ -169,15 +169,6 @@ const SlideOperatingModel = ({
           </div>
         </div>
 
-        {/* Reasons to believe strip */}
-        <div className="bg-background/60 border border-border/30 rounded-lg px-3 py-1.5">
-          <div className="flex gap-2">
-            <Quote className="w-3 h-3 text-primary shrink-0 mt-0.5" />
-            <p className="text-xs text-foreground/70 leading-relaxed">
-              <span className="font-semibold text-foreground">Reasons to believe:</span> Built around the real friction points — fragmentation, lag, weak coordination, episodic readiness, and limited proof. Gives the market a practical operating model in DTOP, not just a high-level performance claim.
-            </p>
-          </div>
-        </div>
       </div>
     </SlideContainer>
   );
