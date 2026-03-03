@@ -14,6 +14,8 @@ interface JourneyStage {
 interface ContentAsset {
   title: string;
   format: string;
+  audience: string;
+  purpose: string;
   summary: string;
 }
 
@@ -66,61 +68,85 @@ const quarters: Quarter[] = [
       {
         title: "Flying High Report: Chapter 1",
         format: "Flagship Report",
+        audience: "Executive, Safety, Compliance, Training, IT leaders",
+        purpose: "Define the category problem and establish why operational performance requires a connected foundation",
         summary: "Defines the category problem, introduces the fragmentation challenge, and establishes why operational performance requires a connected foundation rather than isolated improvement streams.",
       },
       {
         title: "Build the Foundation for Performance",
         format: "Campaign Guide",
+        audience: "Marketing, Sales, wider buying group",
+        purpose: "Primary Q1 campaign asset — walks the market through the case for connected foundations",
         summary: "The primary campaign asset for Q1. Walks the market through the case for connected foundations, using real operational friction points as evidence.",
       },
       {
         title: "Why Fragmented Systems Quietly Reduce Performance",
         format: "Webinar",
+        audience: "Safety, Compliance, Training leaders and their teams",
+        purpose: "Educate the market on the hidden cost of fragmentation and what connected foundations look like",
         summary: "Interactive session exploring how siloed systems create drag, inconsistency, and reduced accountability — and what connected foundations look like in practice.",
       },
       {
         title: "The Operational Performance Baseline",
         format: "Decision Asset",
+        audience: "Executive sponsors, project leads evaluating readiness",
+        purpose: "Enable self-assessment of current operational maturity to build internal urgency",
         summary: "A structured self-assessment tool helping organisations benchmark their current operational maturity across safety, compliance, training, content, and IT alignment.",
       },
       {
         title: "What Operational Performance Actually Means",
         format: "Education Brief",
+        audience: "Buying group members new to the concept",
+        purpose: "Reframe performance beyond activity metrics and establish shared language",
         summary: "Reframes performance beyond activity metrics. Explains why performance is a cross-functional outcome, not a department-level measure.",
       },
       {
         title: "Why Content, Safety, and Training Must Work Together",
         format: "Education Brief",
+        audience: "Cross-functional stakeholders across safety, training, and content",
+        purpose: "Show how disconnected improvement streams weaken follow-through and reduce leadership visibility",
         summary: "Shows how disconnected improvement streams weaken follow-through and reduce visibility for leadership teams trying to coordinate change.",
       },
       {
         title: "Governance Without Drag",
         format: "Thought Leadership",
+        audience: "Compliance and IT leaders",
+        purpose: "Challenge the assumption that stronger governance means slower operations",
         summary: "Challenges the assumption that stronger governance means slower operations. Makes the case for lightweight, connected governance models.",
       },
       {
         title: "The Hidden Cost of Disconnected Workflows",
         format: "Thought Leadership",
+        audience: "Executive and IT leaders",
+        purpose: "Quantify the operational cost of fragmentation to build the case for change",
         summary: "Quantifies the operational cost of fragmentation — from duplicated effort to delayed response — and positions connected workflows as the alternative.",
       },
       {
         title: "Readiness Starts Before Training Completion",
         format: "Thought Leadership",
+        audience: "Training and Safety leaders",
+        purpose: "Reposition readiness as a governance outcome, not a training metric",
         summary: "Argues that readiness is not a training metric. It begins with visibility, governance, and shared accountability across functions.",
       },
       {
         title: "Shared Language for Shared Performance",
         format: "Thought Leadership",
+        audience: "Cross-functional leadership teams",
+        purpose: "Show how misaligned terminology creates friction and slows coordinated improvement",
         summary: "Explores how misaligned terminology across safety, compliance, and training teams creates friction and slows coordinated improvement.",
       },
       {
         title: "Fragmentation Risk Checklist",
         format: "Practical Tool",
+        audience: "Operations and IT teams evaluating current state",
+        purpose: "Downloadable diagnostic to identify where fragmentation creates the most operational drag",
         summary: "A downloadable diagnostic checklist helping organisations identify where fragmentation is creating the most operational drag.",
       },
       {
         title: "Q1 Sales Narrative Sheet",
         format: "Sales Enablement",
+        audience: "Sales teams and account managers",
+        purpose: "Equip frontline teams with the Q1 outcome-led story for prospect conversations",
         summary: "Equips sales teams with the Q1 outcome-led story: why fragmented foundations limit performance and how connected models change the conversation.",
       },
     ],
@@ -147,41 +173,57 @@ const quarters: Quarter[] = [
       {
         title: "Flying High Report: Chapter 2",
         format: "Flagship Report",
+        audience: "Executive, Safety, Compliance, Training, IT leaders",
+        purpose: "Introduce the DTOP operating model and show how signals differ from data",
         summary: "Introduces the DTOP operating model in full. Shows how signals differ from data and why coordinated response is the key to operational improvement.",
       },
       {
         title: "From Signal to Action",
         format: "Campaign Guide",
+        audience: "Marketing, Sales, wider buying group",
+        purpose: "Primary Q2 campaign asset — map the journey from signal to coordinated action",
         summary: "The Q2 campaign anchor. Maps the journey from identifying a signal to triggering the right response and coordinating action across teams.",
       },
       {
         title: "Closing the Gap Between Signal and Response",
         format: "Webinar",
+        audience: "Safety, Operations, and Compliance leaders",
+        purpose: "Educate the market on why organisations lose value between detection and action",
         summary: "Explores why most organisations lose value between detection and action, and how DTOP creates a practical bridge from awareness to coordinated follow-through.",
       },
       {
         title: "Signal-to-Action Gap Diagnostic",
         format: "Decision Asset",
+        audience: "Operations and Safety leaders evaluating response capability",
+        purpose: "Enable self-assessment of signal-to-action lag across the organisation",
         summary: "A structured assessment helping organisations measure the lag between identifying an issue and initiating a coordinated response.",
       },
       {
         title: "How Signals Differ from Data",
         format: "Thought Leadership",
+        audience: "Executive and IT leaders",
+        purpose: "Establish the distinction between data and signals to reframe the performance conversation",
         summary: "Data tells you what is happening. Signals tell you what matters. This piece explains the distinction and why it changes the performance conversation.",
       },
       {
         title: "The Cost of Delayed Response",
         format: "Thought Leadership",
+        audience: "Executive sponsors and Safety leaders",
+        purpose: "Quantify the compounding risk of operational lag between signal and action",
         summary: "Explores how operational lag between signal and action creates compounding risk, reduced accountability, and weaker follow-through.",
       },
       {
         title: "Ownership is the Missing Link",
         format: "Thought Leadership",
+        audience: "Operations and Compliance leaders",
+        purpose: "Show that signals only create value when accountability and ownership are clear",
         summary: "Argues that signals only create value when accountability is clear — when someone owns the response and the timeline is governed.",
       },
       {
         title: "Q2 Sales Narrative Sheet",
         format: "Sales Enablement",
+        audience: "Sales teams and account managers",
+        purpose: "Equip frontline teams with the Q2 outcome-led story for prospect conversations",
         summary: "Equips sales with the Q2 story: visibility alone does not improve performance — signals, triggers, and coordinated action do.",
       },
     ],
@@ -208,41 +250,57 @@ const quarters: Quarter[] = [
       {
         title: "Flying High Report: Chapter 3",
         format: "Flagship Report",
+        audience: "Executive, Safety, Training, Compliance leaders",
+        purpose: "Focus on continuous readiness as a performance capability, not a training event",
         summary: "Focuses on continuous readiness as a performance capability. Shows how training, compliance, and operational change must work together inside a connected model.",
       },
       {
         title: "Make Readiness Continuous",
         format: "Campaign Guide",
+        audience: "Marketing, Sales, wider buying group",
+        purpose: "Primary Q3 campaign asset — move the conversation from episodic to continuous readiness",
         summary: "The Q3 campaign anchor. Moves the conversation from episodic training events to continuous, role-based readiness as a measurable performance condition.",
       },
       {
         title: "Continuous Readiness in Practice",
         format: "Webinar",
+        audience: "Training and Compliance leaders and their teams",
+        purpose: "Show how organisations move from periodic readiness pushes to continuous capability",
         summary: "Practical session showing how organisations move from periodic readiness pushes to continuous capability — with examples of what changes operationally.",
       },
       {
         title: "Readiness Scorecard",
         format: "Decision Asset",
+        audience: "Training leaders and executive sponsors",
+        purpose: "Enable measurement of readiness beyond completion rates",
         summary: "A structured tool helping organisations measure readiness beyond completion rates — assessing role alignment, consistency, and confidence across teams.",
       },
       {
         title: "From Completion to Competence",
         format: "Thought Leadership",
+        audience: "Training and Safety leaders",
+        purpose: "Challenge the assumption that training completion equals readiness",
         summary: "Challenges the assumption that training completion equals readiness. Makes the case for competence-based measures tied to operational outcomes.",
       },
       {
         title: "Role-Based Readiness Explained",
         format: "Thought Leadership",
+        audience: "Training and Compliance leaders",
+        purpose: "Explain why readiness must be role-specific and how connected models make it practical",
         summary: "Explains why readiness must be role-specific, not generic — and how connected models make role-based alignment practical at scale.",
       },
       {
         title: "Why Predictability Depends on Readiness",
         format: "Thought Leadership",
+        audience: "Executive and Operations leaders",
+        purpose: "Connect continuous readiness to operational predictability and reduced lag",
         summary: "Connects continuous readiness to operational predictability — showing how organisations that maintain readiness reduce lag and improve consistency.",
       },
       {
         title: "Q3 Sales Narrative Sheet",
         format: "Sales Enablement",
+        audience: "Sales teams and account managers",
+        purpose: "Equip frontline teams with the Q3 outcome-led story for prospect conversations",
         summary: "Equips sales with the Q3 story: readiness is not a training event — it is a continuous condition that drives predictable performance.",
       },
     ],
@@ -269,41 +327,57 @@ const quarters: Quarter[] = [
       {
         title: "Flying High Report: Chapter 4",
         format: "Flagship Report",
+        audience: "Executive sponsors and buying group leaders",
+        purpose: "Conclude the Flying High narrative — turn DTOP into measurable evidence and expansion potential",
         summary: "The concluding chapter. Focuses on proving performance at scale — turning the DTOP operating model into measurable evidence, confidence, and expansion potential.",
       },
       {
         title: "Prove Performance at Scale",
         format: "Campaign Guide",
+        audience: "Marketing, Sales, wider buying group",
+        purpose: "Primary Q4 campaign asset — show how to move from activity reporting to evidence-based proof",
         summary: "The Q4 campaign anchor. Shows how organisations move from activity reporting to evidence-based proof that supports investment and wider rollout.",
       },
       {
         title: "How to Prove Progress Without More Reporting Burden",
         format: "Webinar",
+        audience: "Executive, Compliance, and IT leaders",
+        purpose: "Demonstrate how connected models generate proof without additional reporting overhead",
         summary: "Explores how connected operating models generate proof as a by-product of coordinated action — rather than requiring additional reporting overhead.",
       },
       {
         title: "Operational Performance Business Case Pack",
         format: "Decision Asset",
+        audience: "Executive sponsors, CFOs, and procurement leads",
+        purpose: "Provide structured materials for investment or expansion conversations",
         summary: "Structured materials for later-stage investment or expansion conversations. Includes evidence frameworks, ROI structures, and outcome mapping templates.",
       },
       {
         title: "Evidence Over Activity",
         format: "Thought Leadership",
+        audience: "Executive and Compliance leaders",
+        purpose: "Make the case that reporting volume is not proof — evidence comes from connected action",
         summary: "Makes the case that reporting volume is not proof of progress. Evidence comes from connected action, measurable readiness, and traceable outcomes.",
       },
       {
         title: "Scaling With Confidence",
         format: "Thought Leadership",
+        audience: "Executive and IT leaders",
+        purpose: "Show how standardisation and evidence create conditions for confident expansion",
         summary: "Explores how standardisation, visibility, and evidence create the conditions for confident expansion across teams, regions, and operating environments.",
       },
       {
         title: "The Performance Proof Gap",
         format: "Thought Leadership",
+        audience: "Operations and Safety leaders",
+        purpose: "Identify the gap between activity and evidence and show how DTOP closes it",
         summary: "Identifies the gap between activity and evidence in most organisations — and shows how DTOP closes it through connected workflows and traceable outcomes.",
       },
       {
         title: "Q4 Sales Narrative Sheet",
         format: "Sales Enablement",
+        audience: "Sales teams and account managers",
+        purpose: "Equip frontline teams with the Q4 outcome-led story for prospect conversations",
         summary: "Equips sales with the Q4 story: performance only scales when progress can be proved — and that requires evidence, not just more reporting.",
       },
     ],
@@ -417,25 +491,35 @@ const SlideContentStrategy = ({
           </div>
         </div>
 
-        {/* Content Ideas — Pinterest-style masonry */}
-        <div>
-          <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-3">
+        {/* Content Ideas — Pinterest-style masonry with distinct background */}
+        <div className="bg-primary/5 border border-primary/15 rounded-2xl p-6 -mx-2">
+          <p className="text-xs text-primary uppercase tracking-wider font-semibold mb-4">
             Content Ideas · {q.assets.length} assets
           </p>
-          <div className="columns-3 gap-3 space-y-3">
+          <div className="columns-3 gap-4 space-y-4">
             {q.assets.map((asset, i) => (
               <div
                 key={asset.title}
                 className={cn(
                   "break-inside-avoid rounded-xl border px-5 py-4",
                   i % 2 === 0
-                    ? "bg-card/60 border-border/50"
-                    : "bg-card/30 border-border/30"
+                    ? "bg-background border-border/50"
+                    : "bg-card/80 border-border/30"
                 )}
               >
                 <p className="text-xs text-primary font-semibold uppercase tracking-wider mb-1">{asset.format}</p>
                 <h4 className="text-sm font-bold text-foreground mb-2 leading-snug">{asset.title}</h4>
-                <p className="text-sm text-foreground/70 leading-relaxed">{asset.summary}</p>
+                <p className="text-sm text-foreground/70 leading-relaxed mb-3">{asset.summary}</p>
+                <div className="space-y-1.5 pt-3 border-t border-border/30">
+                  <div className="flex items-start gap-2">
+                    <span className="text-xs text-muted-foreground font-semibold shrink-0 w-16">Audience</span>
+                    <p className="text-xs text-foreground/80 leading-snug">{asset.audience}</p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-xs text-muted-foreground font-semibold shrink-0 w-16">Purpose</span>
+                    <p className="text-xs text-foreground/80 leading-snug">{asset.purpose}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
