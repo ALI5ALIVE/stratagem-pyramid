@@ -9,6 +9,7 @@ interface JourneyStage {
   title: string;
   icon: React.ElementType;
   color: string;
+  bg: string;
 }
 
 interface ContentAsset {
@@ -36,12 +37,12 @@ interface Quarter {
 }
 
 const journeyStages: JourneyStage[] = [
-  { num: 1, title: "The status quo is failing", icon: AlertOctagon, color: "text-red-400" },
-  { num: 2, title: "Performance needs redefining", icon: RefreshCw, color: "text-amber-400" },
-  { num: 3, title: "There is a better operating model", icon: Cog, color: "text-emerald-400" },
-  { num: 4, title: "Signals create line of sight", icon: Radio, color: "text-blue-400" },
-  { num: 5, title: "Readiness becomes continuous", icon: RotateCcw, color: "text-purple-400" },
-  { num: 6, title: "Progress can be proved", icon: BadgeCheck, color: "text-primary" },
+  { num: 1, title: "The status quo is failing", icon: AlertOctagon, color: "text-red-400", bg: "bg-red-400" },
+  { num: 2, title: "Performance needs redefining", icon: RefreshCw, color: "text-amber-400", bg: "bg-amber-400" },
+  { num: 3, title: "There is a better operating model", icon: Cog, color: "text-emerald-400", bg: "bg-emerald-400" },
+  { num: 4, title: "Signals create line of sight", icon: Radio, color: "text-blue-400", bg: "bg-blue-400" },
+  { num: 5, title: "Readiness becomes continuous", icon: RotateCcw, color: "text-purple-400", bg: "bg-purple-400" },
+  { num: 6, title: "Progress can be proved", icon: BadgeCheck, color: "text-primary", bg: "bg-primary" },
 ];
 
 const quarters: Quarter[] = [
@@ -445,17 +446,17 @@ const SlideContentStrategy = ({
                 className={cn(
                   "flex items-center gap-2 px-3 py-2.5 rounded-lg border transition-all",
                   isActive
-                    ? "bg-card/80 border-primary/30 shadow-sm"
+                    ? `${stage.bg} border-transparent shadow-sm`
                     : "bg-card/20 border-border/20 opacity-40"
                 )}
               >
                 <div className={cn(
                   "w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0",
-                  isActive ? `${stage.color}` : "text-muted-foreground"
+                  isActive ? "text-white" : "text-muted-foreground"
                 )}>
                   {stage.num}
                 </div>
-                <p className={cn("text-xs leading-tight", isActive ? "text-foreground font-medium" : "text-muted-foreground")}>{stage.title}</p>
+                <p className={cn("text-xs leading-tight", isActive ? "text-white font-medium" : "text-muted-foreground")}>{stage.title}</p>
               </div>
             );
           })}
