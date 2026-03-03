@@ -78,8 +78,8 @@ const SlideBuyerJourney = ({
   return (
     <SlideContainer
       id="slide-buyer-journey"
-      title="The Buyer Journey"
-      subtitle="Six stages from status quo to scaled proof — this flow shapes the whole year"
+      title="The Content Journey"
+      subtitle="From Awareness to Decision — six stages that shape the whole year"
       slideNumber={3}
       isPlaying={isPlaying}
       isLoading={isLoading}

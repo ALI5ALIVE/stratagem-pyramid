@@ -15,8 +15,8 @@ import SlideSalesEnablement from "@/components/slides/SlideSalesEnablement";
 const slides = [
   { id: "slide-cs-title", label: "Contents" },
   { id: "slide-strategy-overview", label: "Strategy Overview" },
-  { id: "slide-operating-model", label: "Operating Model" },
-  { id: "slide-buyer-journey", label: "Buyer Journey" },
+  { id: "slide-operating-model", label: "Flying High Narrative" },
+  { id: "slide-buyer-journey", label: "Content Journey" },
   { id: "slide-content-strategy", label: "Quarterly Strategy" },
   { id: "slide-content-architecture", label: "Content Architecture" },
   { id: "slide-content-inventory", label: "Content Inventory" },

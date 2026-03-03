@@ -1,20 +1,36 @@
-import { Eye, Zap, Link2, Target, ArrowRight, Plane } from "lucide-react";
+import { Eye, Zap, Link2, Target, ArrowRight } from "lucide-react";
 import SlideContainer from "./SlideContainer";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
-const dtopSteps = [
-  { label: "Detect", icon: Eye, description: "What matters" },
-  { label: "Trigger", icon: Zap, description: "The right response" },
-  { label: "Orchestrate", icon: Link2, description: "Action across teams" },
-  { label: "Improve", icon: Target, description: "Continuously without raising risk" },
-];
-
-const programmeGoals = [
-  "Challenge the current model",
-  "Teach what operational performance really means",
-  "Introduce DTOP as the new operating model",
-  "Explain how signals drive action",
-  "Help buying groups prove progress over time",
+const dtopMessaging = [
+  {
+    label: "Detect",
+    icon: Eye,
+    theme: "See what matters",
+    message: "Performance begins with visibility. When safety events, training gaps, compliance risks, and content usage are tracked in isolation, organisations cannot see the patterns that drive improvement.",
+    flyingHigh: "Flying High challenges the market to stop looking at functions separately and start seeing the connected signals that shape performance.",
+  },
+  {
+    label: "Trigger",
+    icon: Zap,
+    theme: "Act at the right moment",
+    message: "Knowing what matters is not enough. Organisations need to trigger the right response — automatically, consistently, and before small issues become systemic problems.",
+    flyingHigh: "The programme shows buyers that the gap between seeing a signal and acting on it is where performance is lost — and where it can be recovered.",
+  },
+  {
+    label: "Orchestrate",
+    icon: Link2,
+    theme: "Coordinate across teams",
+    message: "Action in one team is not improvement across the organisation. Real performance requires safety, training, compliance, content, and IT to move together — not in parallel silos.",
+    flyingHigh: "Flying High teaches the market that orchestration is the difference between activity and operational performance.",
+  },
+  {
+    label: "Improve",
+    icon: Target,
+    theme: "Prove progress without raising risk",
+    message: "Sustainable improvement is continuous, measurable, and does not create new risk. Leaders need line of sight from the work being done to the outcomes it delivers.",
+    flyingHigh: "The programme equips buying groups with the evidence and confidence to prove that their model is working — and to justify scaling it.",
+  },
 ];
 
 const SlideOperatingModel = ({
@@ -29,8 +45,8 @@ const SlideOperatingModel = ({
   return (
     <SlideContainer
       id="slide-operating-model"
-      title="The Operating Model"
-      subtitle="DTOP — the framework behind the programme and what Flying High should do"
+      title="The Flying High Narrative"
+      subtitle="How DTOP brings the content messaging to life — from awareness through to proof"
       slideNumber={2}
       isPlaying={isPlaying}
       isLoading={isLoading}
@@ -40,62 +56,60 @@ const SlideOperatingModel = ({
       onPause={onPause}
       onNextSlide={onNextSlide}
     >
-      <div className="flex-1 flex flex-col gap-4 h-full overflow-hidden">
+      <div className="flex-1 flex flex-col gap-3 h-full overflow-hidden">
 
-        {/* Framing statement */}
+        {/* Framing */}
         <div className="bg-primary/10 border border-primary/30 rounded-xl px-5 py-4">
           <p className="text-sm text-foreground leading-relaxed font-medium">
-            Operational performance improves when organisations can <strong>detect</strong> what matters, 
-            <strong> trigger</strong> the right response, <strong>orchestrate</strong> action across teams, 
-            and <strong>improve</strong> continuously — without raising risk.
+            The Flying High programme is structured around <strong>DTOP</strong> — the operating model that 
+            connects the market challenge to a clear path forward. Each stage of the model shapes the messaging, 
+            the content, and the buyer conversation.
           </p>
         </div>
 
-        {/* DTOP Model */}
-        <div className="bg-card/60 border border-border/50 rounded-xl p-5 flex-1 flex flex-col">
-          <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold mb-4">
-            DTOP — Detect · Trigger · Orchestrate · Improve
-          </p>
-          <div className="grid grid-cols-4 gap-3 flex-1">
-            {dtopSteps.map((step, i) => {
-              const Icon = step.icon;
-              return (
-                <div key={step.label} className="relative flex flex-col items-center text-center gap-3 bg-background/40 border border-border/30 rounded-xl p-5">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                    <Icon className="w-6 h-6 text-primary" />
+        {/* DTOP narrative cards */}
+        <div className="grid grid-cols-4 gap-3 flex-1">
+          {dtopMessaging.map((step, i) => {
+            const Icon = step.icon;
+            return (
+              <div key={step.label} className="relative bg-card/60 border border-border/50 rounded-xl p-4 flex flex-col">
+                {/* Header */}
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <Icon className="w-4 h-4 text-primary" />
                   </div>
-                  <p className="text-sm font-bold text-foreground">{step.label}</p>
-                  <p className="text-[11px] text-muted-foreground leading-snug">{step.description}</p>
-                  {i < 3 && (
-                    <ArrowRight className="absolute -right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary/40 z-10" />
-                  )}
+                  <div>
+                    <p className="text-xs font-bold text-foreground">{step.label}</p>
+                    <p className="text-[10px] text-muted-foreground">{step.theme}</p>
+                  </div>
                 </div>
-              );
-            })}
-          </div>
+
+                {/* Market reality */}
+                <p className="text-xs text-foreground/70 leading-relaxed mb-3 flex-1">
+                  {step.message}
+                </p>
+
+                {/* Flying High angle */}
+                <div className="bg-primary/5 border border-primary/20 rounded-lg px-3 py-2.5 mt-auto">
+                  <p className="text-[9px] text-primary uppercase tracking-wider font-semibold mb-1">Flying High Messaging</p>
+                  <p className="text-[11px] text-foreground/80 leading-snug font-medium">{step.flyingHigh}</p>
+                </div>
+
+                {i < 3 && (
+                  <ArrowRight className="absolute -right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary/40 z-10" />
+                )}
+              </div>
+            );
+          })}
         </div>
 
-        {/* What Flying High Should Do */}
-        <div className="bg-card/60 border border-border/50 rounded-xl p-5">
-          <div className="flex items-center gap-2 mb-3">
-            <Plane className="w-4 h-4 text-primary" />
-            <h3 className="text-sm font-bold text-foreground">What Flying High Should Do</h3>
-          </div>
-          <p className="text-[11px] text-muted-foreground leading-relaxed mb-3">
-            Position the brand around a stronger market idea: aviation organisations raise performance 
-            by creating line of sight across content, safety, training, compliance and IT — then turning 
-            that visibility into coordinated action, continuous readiness, and measurable improvement.
+        {/* Bottom strip — programme positioning */}
+        <div className="bg-accent/10 border border-accent/30 rounded-xl px-5 py-3">
+          <p className="text-xs text-foreground/80 leading-relaxed">
+            <span className="font-semibold text-foreground">The narrative arc:</span> Challenge the current model → 
+            Teach what performance really means → Show how signals drive action → Help buyers prove progress. 
+            This sequence shapes every asset, every quarter, and every conversation.
           </p>
-          <div className="flex gap-3">
-            {programmeGoals.map((item, i) => (
-              <div key={item} className="flex-1 flex items-start gap-2 bg-background/40 border border-border/30 rounded-lg px-3 py-2.5">
-                <span className="w-5 h-5 rounded-full bg-primary/10 text-primary text-[9px] font-bold flex items-center justify-center shrink-0 mt-0.5">
-                  {i + 1}
-                </span>
-                <span className="text-[10px] text-foreground/80 font-medium leading-snug">{item}</span>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </SlideContainer>
