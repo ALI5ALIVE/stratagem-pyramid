@@ -214,20 +214,19 @@ const SlideContentStrategy = ({
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 flex-1">
-              {/* Left details */}
-              <div className="space-y-3">
-                {/* Pillars */}
-                <div>
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold mb-1.5">Content Pillars</p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {q.pillars.map((p) => (
-                      <span key={p} className="text-[11px] bg-primary/10 text-primary px-2.5 py-1 rounded-full">{p}</span>
-                    ))}
-                  </div>
-                </div>
+            {/* Pillars — full width, side by side */}
+            <div className="mb-3">
+              <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold mb-1.5">Content Pillars</p>
+              <div className="flex gap-1.5">
+                {q.pillars.map((p) => (
+                  <span key={p} className="text-[11px] bg-primary/10 text-primary px-2.5 py-1 rounded-full">{p}</span>
+                ))}
+              </div>
+            </div>
 
-                {/* Hero asset */}
+            <div className="grid grid-cols-2 gap-4 flex-1">
+              {/* Left: Assets */}
+              <div className="space-y-3">
                 <div className="bg-background/50 rounded-lg p-3">
                   <div className="flex items-center gap-1.5 mb-1">
                     <FileText className="w-3.5 h-3.5 text-primary" />
@@ -236,7 +235,6 @@ const SlideContentStrategy = ({
                   <p className="text-[11px] text-foreground leading-relaxed">{q.heroAsset}</p>
                 </div>
 
-                {/* Webinar */}
                 <div className="bg-background/50 rounded-lg p-3">
                   <div className="flex items-center gap-1.5 mb-1">
                     <Mic className="w-3.5 h-3.5 text-accent" />
@@ -244,11 +242,7 @@ const SlideContentStrategy = ({
                   </div>
                   <p className="text-[11px] text-foreground leading-relaxed">{q.webinar}</p>
                 </div>
-              </div>
 
-              {/* Right details */}
-              <div className="space-y-3">
-                {/* Decision asset */}
                 <div className="bg-background/50 rounded-lg p-3">
                   <div className="flex items-center gap-1.5 mb-1">
                     <ClipboardCheck className="w-3.5 h-3.5 text-emerald-400" />
@@ -256,18 +250,18 @@ const SlideContentStrategy = ({
                   </div>
                   <p className="text-[11px] text-foreground leading-relaxed">{q.decisionAsset}</p>
                 </div>
+              </div>
 
-                {/* Outcomes */}
-                <div>
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold mb-1.5">By End of {q.label}</p>
-                  <div className="space-y-1.5">
-                    {q.outcomes.map((o, i) => (
-                      <div key={i} className="flex items-start gap-2">
-                        <ChevronRight className="w-3.5 h-3.5 text-primary mt-0.5 shrink-0" />
-                        <span className="text-[11px] text-foreground/80 leading-tight">{o}</span>
-                      </div>
-                    ))}
-                  </div>
+              {/* Right: Outcomes */}
+              <div>
+                <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold mb-1.5">By End of {q.label}</p>
+                <div className="space-y-1.5">
+                  {q.outcomes.map((o, i) => (
+                    <div key={i} className="flex items-start gap-2">
+                      <ChevronRight className="w-3.5 h-3.5 text-primary mt-0.5 shrink-0" />
+                      <span className="text-[11px] text-foreground/80 leading-tight">{o}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
