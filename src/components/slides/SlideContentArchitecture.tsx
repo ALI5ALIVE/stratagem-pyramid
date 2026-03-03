@@ -1,4 +1,4 @@
-import { BookOpen, Layers, FileText, Mic, ClipboardCheck, Lightbulb, Users, ShoppingCart, CheckCircle2 } from "lucide-react";
+import { BookOpen, Layers, FileText, Mic, ClipboardCheck, Lightbulb, Users, ShoppingCart, CheckCircle2, Mail, Share2, Wrench } from "lucide-react";
 import SlideContainer from "./SlideContainer";
 import type { SlideNarrationProps } from "@/types/slideProps";
 import { cn } from "@/lib/utils";
@@ -8,9 +8,11 @@ const quarterlyStructure = [
   { label: "1 campaign guide or hero asset", icon: FileText, color: "text-amber-400" },
   { label: "1 webinar", icon: Mic, color: "text-emerald-400" },
   { label: "1 decision asset", icon: ClipboardCheck, color: "text-purple-400" },
-  { label: "Persona-led supporting content", icon: Users, color: "text-blue-400" },
-  { label: "Sales enablement content", icon: ShoppingCart, color: "text-rose-400" },
+  { label: "2 education briefs", icon: Users, color: "text-blue-400" },
   { label: "6 thought leadership articles", icon: Lightbulb, color: "text-indigo-400" },
+  { label: "3 practical tools", icon: Wrench, color: "text-orange-400" },
+  { label: "1 nurture sequence", icon: Mail, color: "text-cyan-400" },
+  { label: "1 social content pack", icon: Share2, color: "text-pink-400" },
 ];
 
 const contentPrinciples = [
@@ -33,11 +35,12 @@ const finalProgramme = [
   { label: "Quarterly campaign guides", count: "4" },
   { label: "Webinars", count: "4" },
   { label: "Quarterly decision assets", count: "4" },
+  { label: "Education briefs", count: "8" },
   { label: "Thought leadership articles", count: "24" },
-  { label: "Persona-led briefs", count: "5+" },
-  { label: "Practical tools", count: "8+" },
-  { label: "Quarterly sales enablement", count: "4" },
-  { label: "Business case & proof content", count: "4+" },
+  { label: "Practical tools", count: "12" },
+  { label: "Nurture sequences", count: "4" },
+  { label: "Social content packs", count: "4" },
+  { label: "Sales enablement assets", count: "24" },
 ];
 
 const SlideContentArchitecture = ({
@@ -54,7 +57,7 @@ const SlideContentArchitecture = ({
       id="slide-content-architecture"
       title="Annual Content Architecture"
       subtitle="One anchor asset and four quarterly chapters — modular, disciplined, strategic"
-      slideNumber={5}
+      slideNumber={3}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}
@@ -85,9 +88,9 @@ const SlideContentArchitecture = ({
         <div className="flex-1 grid grid-cols-3 gap-4 overflow-hidden">
           {/* Quarterly structure */}
           <div className="bg-card/60 border border-border/50 rounded-xl p-4 flex flex-col">
-            <h3 className="text-sm font-bold text-foreground mb-3">Quarterly Structure</h3>
+            <h3 className="text-sm font-bold text-foreground mb-3">Quarterly Content Structure</h3>
             <p className="text-xs text-muted-foreground leading-relaxed mb-3">
-              Each quarter should include:
+              Each quarter produces 17 content assets:
             </p>
             <div className="space-y-2 flex-1">
               {quarterlyStructure.map((item) => {
@@ -99,6 +102,16 @@ const SlideContentArchitecture = ({
                   </div>
                 );
               })}
+            </div>
+            {/* Sales enablement note */}
+            <div className="mt-auto pt-3 border-t border-border/30">
+              <div className="flex items-center gap-2 mb-1">
+                <ShoppingCart className="w-3.5 h-3.5 text-rose-400" />
+                <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Sales Enablement</p>
+              </div>
+              <p className="text-xs text-foreground/70 leading-relaxed">
+                12 assets front-loaded in Q1, then 4 per quarter thereafter (24 total).
+              </p>
             </div>
           </div>
 
@@ -139,7 +152,7 @@ const SlideContentArchitecture = ({
 
           {/* Final programme summary */}
           <div className="bg-card/60 border border-border/50 rounded-xl p-4 flex flex-col">
-            <h3 className="text-sm font-bold text-foreground mb-3">Final Programme</h3>
+            <h3 className="text-sm font-bold text-foreground mb-3">Full Year Programme</h3>
             <p className="text-xs text-muted-foreground leading-relaxed mb-3">
               Strategic enough for leadership audiences, practical enough for operational stakeholders, 
               and structured enough for internal teams to produce with confidence.

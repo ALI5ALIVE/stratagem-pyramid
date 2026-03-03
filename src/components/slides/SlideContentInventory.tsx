@@ -1,4 +1,4 @@
-import { BookOpen, FileText, Lightbulb, Mic, ClipboardCheck, Users, Wrench, ShoppingCart } from "lucide-react";
+import { BookOpen, FileText, Lightbulb, Mic, ClipboardCheck, Users, Wrench, ShoppingCart, Mail, Share2 } from "lucide-react";
 import SlideContainer from "./SlideContainer";
 import type { SlideNarrationProps } from "@/types/slideProps";
 import { cn } from "@/lib/utils";
@@ -18,10 +18,12 @@ const assetRows: AssetRow[] = [
   { type: "Campaign Guide", icon: FileText, color: "text-amber-400", q1: 1, q2: 1, q3: 1, q4: 1 },
   { type: "Webinar", icon: Mic, color: "text-emerald-400", q1: 1, q2: 1, q3: 1, q4: 1 },
   { type: "Decision Asset", icon: ClipboardCheck, color: "text-purple-400", q1: 1, q2: 1, q3: 1, q4: 1 },
-  { type: "Persona & Education Briefs", icon: Users, color: "text-blue-400", q1: 4, q2: 2, q3: 3, q4: 3 },
-  { type: "Practical Tools", icon: Wrench, color: "text-orange-400", q1: 2, q2: 1, q3: 2, q4: 1 },
-  { type: "Thought Leadership Articles", icon: Lightbulb, color: "text-indigo-400", q1: 6, q2: 3, q3: 3, q4: 3 },
-  { type: "Sales Enablement Sheet", icon: ShoppingCart, color: "text-rose-400", q1: 1, q2: 1, q3: 1, q4: 1 },
+  { type: "Education Briefs", icon: Users, color: "text-blue-400", q1: 2, q2: 2, q3: 2, q4: 2 },
+  { type: "Thought Leadership Articles", icon: Lightbulb, color: "text-indigo-400", q1: 6, q2: 6, q3: 6, q4: 6 },
+  { type: "Practical Tools", icon: Wrench, color: "text-orange-400", q1: 3, q2: 3, q3: 3, q4: 3 },
+  { type: "Nurture Content", icon: Mail, color: "text-cyan-400", q1: 1, q2: 1, q3: 1, q4: 1 },
+  { type: "Social Content", icon: Share2, color: "text-pink-400", q1: 1, q2: 1, q3: 1, q4: 1 },
+  { type: "Sales Enablement", icon: ShoppingCart, color: "text-rose-400", q1: 12, q2: 4, q3: 4, q4: 4 },
 ];
 
 const quarterMeta = [
@@ -40,14 +42,18 @@ const SlideContentInventory = ({
   onPause,
   onNextSlide,
 }: SlideNarrationProps) => {
-  const totalAssets = assetRows.reduce((sum, r) => sum + r.q1 + r.q2 + r.q3 + r.q4, 0);
+  const qTotals = [0, 1, 2, 3].map((qi) => {
+    const qKey = `q${qi + 1}` as keyof AssetRow;
+    return assetRows.reduce((sum, r) => sum + (r[qKey] as number), 0);
+  });
+  const totalAssets = qTotals.reduce((a, b) => a + b, 0);
 
   return (
     <SlideContainer
       id="slide-content-inventory"
       title="Content Production Inventory"
-      subtitle={`${totalAssets} assets across the year — Q1: 18 · Q2: 12 · Q3: 12 · Q4: 12`}
-      slideNumber={6}
+      subtitle={`${totalAssets} assets across the year — Q1: ${qTotals[0]} · Q2: ${qTotals[1]} · Q3: ${qTotals[2]} · Q4: ${qTotals[3]}`}
+      slideNumber={5}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}
@@ -101,15 +107,11 @@ const SlideContentInventory = ({
             <div className="px-3 py-2">
               <span className="text-xs font-bold text-foreground uppercase tracking-wider">Quarterly Total</span>
             </div>
-            {[0, 1, 2, 3].map((qi) => {
-              const qKey = `q${qi + 1}` as keyof AssetRow;
-              const total = assetRows.reduce((sum, r) => sum + (r[qKey] as number), 0);
-              return (
-                <div key={qi} className="px-2 py-2 flex items-center justify-center border-l border-border/20">
-                  <span className="text-sm font-bold text-primary">{total}</span>
-                </div>
-              );
-            })}
+            {qTotals.map((total, qi) => (
+              <div key={qi} className="px-2 py-2 flex items-center justify-center border-l border-border/20">
+                <span className="text-sm font-bold text-primary">{total}</span>
+              </div>
+            ))}
           </div>
 
           {/* Derivatives note */}
