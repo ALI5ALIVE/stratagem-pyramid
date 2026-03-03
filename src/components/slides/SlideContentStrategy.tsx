@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Shield, Zap, Target, TrendingUp, ChevronRight, AlertOctagon, RefreshCw, Cog, Radio, RotateCcw, BadgeCheck } from "lucide-react";
+import { Shield, Zap, Target, TrendingUp, AlertOctagon, RefreshCw, Cog, Radio, RotateCcw, BadgeCheck } from "lucide-react";
 import SlideContainer from "./SlideContainer";
 import type { SlideNarrationProps } from "@/types/slideProps";
 import { cn } from "@/lib/utils";
@@ -14,6 +14,7 @@ interface JourneyStage {
 interface ContentAsset {
   title: string;
   format: string;
+  summary: string;
 }
 
 interface Quarter {
@@ -62,18 +63,66 @@ const quarters: Quarter[] = [
     ],
     journeyStageNums: [1, 2],
     assets: [
-      { title: "Flying High Report: Chapter 1", format: "Flagship" },
-      { title: "Build the Foundation for Performance", format: "Campaign Guide" },
-      { title: "Why Fragmented Systems Quietly Reduce Performance", format: "Webinar" },
-      { title: "The Operational Performance Baseline", format: "Decision Asset" },
-      { title: "What Operational Performance Actually Means", format: "Education Brief" },
-      { title: "Why Content, Safety, and Training Must Work Together", format: "Education Brief" },
-      { title: "Governance Without Drag", format: "Thought Leadership" },
-      { title: "The Hidden Cost of Disconnected Workflows", format: "Thought Leadership" },
-      { title: "Readiness Starts Before Training Completion", format: "Thought Leadership" },
-      { title: "Shared Language for Shared Performance", format: "Thought Leadership" },
-      { title: "Fragmentation Risk Checklist", format: "Practical Tool" },
-      { title: "Q1 Sales Narrative", format: "Sales Enablement" },
+      {
+        title: "Flying High Report: Chapter 1",
+        format: "Flagship Report",
+        summary: "Defines the category problem, introduces the fragmentation challenge, and establishes why operational performance requires a connected foundation rather than isolated improvement streams.",
+      },
+      {
+        title: "Build the Foundation for Performance",
+        format: "Campaign Guide",
+        summary: "The primary campaign asset for Q1. Walks the market through the case for connected foundations, using real operational friction points as evidence.",
+      },
+      {
+        title: "Why Fragmented Systems Quietly Reduce Performance",
+        format: "Webinar",
+        summary: "Interactive session exploring how siloed systems create drag, inconsistency, and reduced accountability — and what connected foundations look like in practice.",
+      },
+      {
+        title: "The Operational Performance Baseline",
+        format: "Decision Asset",
+        summary: "A structured self-assessment tool helping organisations benchmark their current operational maturity across safety, compliance, training, content, and IT alignment.",
+      },
+      {
+        title: "What Operational Performance Actually Means",
+        format: "Education Brief",
+        summary: "Reframes performance beyond activity metrics. Explains why performance is a cross-functional outcome, not a department-level measure.",
+      },
+      {
+        title: "Why Content, Safety, and Training Must Work Together",
+        format: "Education Brief",
+        summary: "Shows how disconnected improvement streams weaken follow-through and reduce visibility for leadership teams trying to coordinate change.",
+      },
+      {
+        title: "Governance Without Drag",
+        format: "Thought Leadership",
+        summary: "Challenges the assumption that stronger governance means slower operations. Makes the case for lightweight, connected governance models.",
+      },
+      {
+        title: "The Hidden Cost of Disconnected Workflows",
+        format: "Thought Leadership",
+        summary: "Quantifies the operational cost of fragmentation — from duplicated effort to delayed response — and positions connected workflows as the alternative.",
+      },
+      {
+        title: "Readiness Starts Before Training Completion",
+        format: "Thought Leadership",
+        summary: "Argues that readiness is not a training metric. It begins with visibility, governance, and shared accountability across functions.",
+      },
+      {
+        title: "Shared Language for Shared Performance",
+        format: "Thought Leadership",
+        summary: "Explores how misaligned terminology across safety, compliance, and training teams creates friction and slows coordinated improvement.",
+      },
+      {
+        title: "Fragmentation Risk Checklist",
+        format: "Practical Tool",
+        summary: "A downloadable diagnostic checklist helping organisations identify where fragmentation is creating the most operational drag.",
+      },
+      {
+        title: "Q1 Sales Narrative Sheet",
+        format: "Sales Enablement",
+        summary: "Equips sales teams with the Q1 outcome-led story: why fragmented foundations limit performance and how connected models change the conversation.",
+      },
     ],
   },
   {
@@ -95,13 +144,46 @@ const quarters: Quarter[] = [
     ],
     journeyStageNums: [3, 4],
     assets: [
-      { title: "Flying High Report: Chapter 2", format: "Flagship" },
-      { title: "From Signal to Action", format: "Campaign Guide" },
-      { title: "Closing the Gap Between Signal and Response", format: "Webinar" },
-      { title: "Signal-to-Action Gap Diagnostic", format: "Decision Asset" },
-      { title: "How Signals Differ from Data", format: "Thought Leadership" },
-      { title: "The Cost of Delayed Response", format: "Thought Leadership" },
-      { title: "Q2 Sales Narrative", format: "Sales Enablement" },
+      {
+        title: "Flying High Report: Chapter 2",
+        format: "Flagship Report",
+        summary: "Introduces the DTOP operating model in full. Shows how signals differ from data and why coordinated response is the key to operational improvement.",
+      },
+      {
+        title: "From Signal to Action",
+        format: "Campaign Guide",
+        summary: "The Q2 campaign anchor. Maps the journey from identifying a signal to triggering the right response and coordinating action across teams.",
+      },
+      {
+        title: "Closing the Gap Between Signal and Response",
+        format: "Webinar",
+        summary: "Explores why most organisations lose value between detection and action, and how DTOP creates a practical bridge from awareness to coordinated follow-through.",
+      },
+      {
+        title: "Signal-to-Action Gap Diagnostic",
+        format: "Decision Asset",
+        summary: "A structured assessment helping organisations measure the lag between identifying an issue and initiating a coordinated response.",
+      },
+      {
+        title: "How Signals Differ from Data",
+        format: "Thought Leadership",
+        summary: "Data tells you what is happening. Signals tell you what matters. This piece explains the distinction and why it changes the performance conversation.",
+      },
+      {
+        title: "The Cost of Delayed Response",
+        format: "Thought Leadership",
+        summary: "Explores how operational lag between signal and action creates compounding risk, reduced accountability, and weaker follow-through.",
+      },
+      {
+        title: "Ownership is the Missing Link",
+        format: "Thought Leadership",
+        summary: "Argues that signals only create value when accountability is clear — when someone owns the response and the timeline is governed.",
+      },
+      {
+        title: "Q2 Sales Narrative Sheet",
+        format: "Sales Enablement",
+        summary: "Equips sales with the Q2 story: visibility alone does not improve performance — signals, triggers, and coordinated action do.",
+      },
     ],
   },
   {
@@ -123,13 +205,46 @@ const quarters: Quarter[] = [
     ],
     journeyStageNums: [5],
     assets: [
-      { title: "Flying High Report: Chapter 3", format: "Flagship" },
-      { title: "Make Readiness Continuous", format: "Campaign Guide" },
-      { title: "Continuous Readiness in Practice", format: "Webinar" },
-      { title: "Readiness Scorecard", format: "Decision Asset" },
-      { title: "From Completion to Competence", format: "Thought Leadership" },
-      { title: "Role-Based Readiness Explained", format: "Thought Leadership" },
-      { title: "Q3 Sales Narrative", format: "Sales Enablement" },
+      {
+        title: "Flying High Report: Chapter 3",
+        format: "Flagship Report",
+        summary: "Focuses on continuous readiness as a performance capability. Shows how training, compliance, and operational change must work together inside a connected model.",
+      },
+      {
+        title: "Make Readiness Continuous",
+        format: "Campaign Guide",
+        summary: "The Q3 campaign anchor. Moves the conversation from episodic training events to continuous, role-based readiness as a measurable performance condition.",
+      },
+      {
+        title: "Continuous Readiness in Practice",
+        format: "Webinar",
+        summary: "Practical session showing how organisations move from periodic readiness pushes to continuous capability — with examples of what changes operationally.",
+      },
+      {
+        title: "Readiness Scorecard",
+        format: "Decision Asset",
+        summary: "A structured tool helping organisations measure readiness beyond completion rates — assessing role alignment, consistency, and confidence across teams.",
+      },
+      {
+        title: "From Completion to Competence",
+        format: "Thought Leadership",
+        summary: "Challenges the assumption that training completion equals readiness. Makes the case for competence-based measures tied to operational outcomes.",
+      },
+      {
+        title: "Role-Based Readiness Explained",
+        format: "Thought Leadership",
+        summary: "Explains why readiness must be role-specific, not generic — and how connected models make role-based alignment practical at scale.",
+      },
+      {
+        title: "Why Predictability Depends on Readiness",
+        format: "Thought Leadership",
+        summary: "Connects continuous readiness to operational predictability — showing how organisations that maintain readiness reduce lag and improve consistency.",
+      },
+      {
+        title: "Q3 Sales Narrative Sheet",
+        format: "Sales Enablement",
+        summary: "Equips sales with the Q3 story: readiness is not a training event — it is a continuous condition that drives predictable performance.",
+      },
     ],
   },
   {
@@ -151,27 +266,49 @@ const quarters: Quarter[] = [
     ],
     journeyStageNums: [6],
     assets: [
-      { title: "Flying High Report: Chapter 4", format: "Flagship" },
-      { title: "Prove Performance at Scale", format: "Campaign Guide" },
-      { title: "How to Prove Progress Without More Reporting Burden", format: "Webinar" },
-      { title: "Operational Performance Business Case Pack", format: "Decision Asset" },
-      { title: "Evidence Over Activity", format: "Thought Leadership" },
-      { title: "Scaling With Confidence", format: "Thought Leadership" },
-      { title: "Q4 Sales Narrative", format: "Sales Enablement" },
+      {
+        title: "Flying High Report: Chapter 4",
+        format: "Flagship Report",
+        summary: "The concluding chapter. Focuses on proving performance at scale — turning the DTOP operating model into measurable evidence, confidence, and expansion potential.",
+      },
+      {
+        title: "Prove Performance at Scale",
+        format: "Campaign Guide",
+        summary: "The Q4 campaign anchor. Shows how organisations move from activity reporting to evidence-based proof that supports investment and wider rollout.",
+      },
+      {
+        title: "How to Prove Progress Without More Reporting Burden",
+        format: "Webinar",
+        summary: "Explores how connected operating models generate proof as a by-product of coordinated action — rather than requiring additional reporting overhead.",
+      },
+      {
+        title: "Operational Performance Business Case Pack",
+        format: "Decision Asset",
+        summary: "Structured materials for later-stage investment or expansion conversations. Includes evidence frameworks, ROI structures, and outcome mapping templates.",
+      },
+      {
+        title: "Evidence Over Activity",
+        format: "Thought Leadership",
+        summary: "Makes the case that reporting volume is not proof of progress. Evidence comes from connected action, measurable readiness, and traceable outcomes.",
+      },
+      {
+        title: "Scaling With Confidence",
+        format: "Thought Leadership",
+        summary: "Explores how standardisation, visibility, and evidence create the conditions for confident expansion across teams, regions, and operating environments.",
+      },
+      {
+        title: "The Performance Proof Gap",
+        format: "Thought Leadership",
+        summary: "Identifies the gap between activity and evidence in most organisations — and shows how DTOP closes it through connected workflows and traceable outcomes.",
+      },
+      {
+        title: "Q4 Sales Narrative Sheet",
+        format: "Sales Enablement",
+        summary: "Equips sales with the Q4 story: performance only scales when progress can be proved — and that requires evidence, not just more reporting.",
+      },
     ],
   },
 ];
-
-const formatColors: Record<string, string> = {
-  "Flagship": "text-primary bg-primary/10",
-  "Campaign Guide": "text-amber-400 bg-amber-400/10",
-  "Webinar": "text-emerald-400 bg-emerald-400/10",
-  "Decision Asset": "text-purple-400 bg-purple-400/10",
-  "Education Brief": "text-blue-400 bg-blue-400/10",
-  "Thought Leadership": "text-indigo-400 bg-indigo-400/10",
-  "Practical Tool": "text-orange-400 bg-orange-400/10",
-  "Sales Enablement": "text-rose-400 bg-rose-400/10",
-};
 
 const SlideContentStrategy = ({
   isPlaying = false,
@@ -198,8 +335,9 @@ const SlideContentStrategy = ({
       onPlay={onPlay}
       onPause={onPause}
       onNextSlide={onNextSlide}
+      className="!h-auto !min-h-screen !overflow-visible"
     >
-      <div className="flex-1 flex flex-col gap-2 h-full overflow-hidden">
+      <div className="flex flex-col gap-4">
         {/* Quarter tabs */}
         <div className="flex gap-2">
           {quarters.map((quarter, i) => {
@@ -209,21 +347,22 @@ const SlideContentStrategy = ({
                 key={quarter.id}
                 onClick={() => setActiveQuarter(i)}
                 className={cn(
-                  "flex-1 flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-lg border-2 transition-all duration-200 cursor-pointer",
+                  "flex-1 flex flex-col items-center gap-1 px-3 py-2.5 rounded-lg border-2 transition-all duration-200 cursor-pointer",
                   activeQuarter === i
                     ? `${quarter.bgColor} ${quarter.borderAccent} scale-[1.02]`
                     : "bg-card/30 border-border/20 hover:border-border/50 hover:bg-card/50"
                 )}
               >
-                <Icon className={cn("w-4 h-4", activeQuarter === i ? quarter.color : "text-muted-foreground")} />
-                <div className="text-xs font-bold text-foreground">{quarter.label}: {quarter.theme}</div>
+                <Icon className={cn("w-5 h-5", activeQuarter === i ? quarter.color : "text-muted-foreground")} />
+                <div className="text-sm font-bold text-foreground">{quarter.label}: {quarter.theme}</div>
+                <div className="text-xs text-muted-foreground">{quarter.subtitle}</div>
               </button>
             );
           })}
         </div>
 
         {/* Content Journey Stages — 6 stages strip */}
-        <div className="flex gap-1.5">
+        <div className="grid grid-cols-6 gap-2">
           {journeyStages.map((stage) => {
             const StageIcon = stage.icon;
             const isActive = q.journeyStageNums.includes(stage.num);
@@ -231,75 +370,74 @@ const SlideContentStrategy = ({
               <div
                 key={stage.num}
                 className={cn(
-                  "flex-1 flex items-center gap-1.5 px-2 py-1.5 rounded-lg border transition-all",
+                  "flex items-center gap-2 px-3 py-2.5 rounded-lg border transition-all",
                   isActive
-                    ? `${stage.color.replace("text-", "bg-")}/15 border-current ${stage.color} font-semibold`
-                    : "bg-card/20 border-border/20 text-muted-foreground/40"
+                    ? "bg-card/80 border-primary/30 shadow-sm"
+                    : "bg-card/20 border-border/20 opacity-40"
                 )}
               >
                 <div className={cn(
-                  "w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold shrink-0",
-                  isActive ? `${stage.color.replace("text-", "bg-")}/20 ${stage.color}` : "bg-muted/30"
+                  "w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0",
+                  isActive ? `${stage.color}` : "text-muted-foreground"
                 )}>
                   {stage.num}
                 </div>
-                <p className="text-xs leading-tight truncate">{stage.title}</p>
+                <p className={cn("text-xs leading-tight", isActive ? "text-foreground font-medium" : "text-muted-foreground")}>{stage.title}</p>
               </div>
             );
           })}
         </div>
 
-        {/* Active quarter detail */}
-        <div className={cn("flex-1 rounded-xl border-2 p-3 flex flex-col gap-2 overflow-hidden", q.bgColor, q.borderAccent)}>
+        {/* Core message */}
+        <div className={cn("rounded-xl px-6 py-4 border-2", q.bgColor, q.borderAccent)}>
+          <p className="text-xs text-primary uppercase tracking-wider font-semibold mb-1">Core Message</p>
+          <p className="text-lg text-foreground font-bold">{q.quarterMessage}</p>
+        </div>
 
-          {/* Core message */}
-          <div className="bg-background/80 rounded-lg px-4 py-2 border-2 border-primary/20">
-            <p className="text-xs text-primary uppercase tracking-wider font-semibold mb-0.5">Core Message</p>
-            <p className="text-sm text-foreground font-semibold">{q.quarterMessage}</p>
+        {/* Three-column: Narrative + DTOP Role + Message Territory */}
+        <div className="grid grid-cols-3 gap-3">
+          <div className="bg-card/60 border border-border/50 rounded-xl px-5 py-4">
+            <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-2">Quarter Narrative</p>
+            <p className="text-sm text-foreground leading-relaxed">{q.narrative}</p>
           </div>
+          <div className="bg-card/60 border border-border/50 rounded-xl px-5 py-4">
+            <p className="text-xs text-primary uppercase tracking-wider font-semibold mb-2">Role of DTOP</p>
+            <p className="text-sm text-foreground/80 leading-relaxed">{q.dtopRole}</p>
+          </div>
+          <div className="bg-card/60 border border-border/50 rounded-xl px-5 py-4">
+            <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-2">Message Territory</p>
+            <div className="space-y-2">
+              {q.messageTerritory.map((msg) => (
+                <div key={msg} className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-2 shrink-0" />
+                  <p className="text-sm text-foreground/70 leading-snug">{msg}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
-          {/* Three-column: Narrative + DTOP Role + Message Territory */}
-          <div className="grid grid-cols-3 gap-2">
-            <div className="bg-background/60 rounded-lg px-3 py-2 border border-border/30">
-              <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-1">Quarter Narrative</p>
-              <p className="text-xs text-foreground leading-relaxed">{q.narrative}</p>
-            </div>
-            <div className="bg-background/60 rounded-lg px-3 py-2 border border-border/30">
-              <p className="text-xs text-primary uppercase tracking-wider font-semibold mb-1">Role of DTOP</p>
-              <p className="text-xs text-foreground/80 leading-relaxed">{q.dtopRole}</p>
-            </div>
-            <div className="bg-background/60 rounded-lg px-3 py-2 border border-border/30">
-              <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-1">Message Territory</p>
-              <div className="space-y-1">
-                {q.messageTerritory.map((msg) => (
-                  <div key={msg} className="flex items-start gap-1.5">
-                    <span className="w-1 h-1 rounded-full bg-primary/60 mt-1.5 shrink-0" />
-                    <p className="text-xs text-foreground/70 leading-snug">{msg}</p>
-                  </div>
-                ))}
+        {/* Content Ideas — Pinterest-style masonry */}
+        <div>
+          <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-3">
+            Content Ideas · {q.assets.length} assets
+          </p>
+          <div className="columns-3 gap-3 space-y-3">
+            {q.assets.map((asset, i) => (
+              <div
+                key={asset.title}
+                className={cn(
+                  "break-inside-avoid rounded-xl border px-5 py-4",
+                  i % 2 === 0
+                    ? "bg-card/60 border-border/50"
+                    : "bg-card/30 border-border/30"
+                )}
+              >
+                <p className="text-xs text-primary font-semibold uppercase tracking-wider mb-1">{asset.format}</p>
+                <h4 className="text-sm font-bold text-foreground mb-2 leading-snug">{asset.title}</h4>
+                <p className="text-sm text-foreground/70 leading-relaxed">{asset.summary}</p>
               </div>
-            </div>
-          </div>
-
-          {/* Content assets grid */}
-          <div className="flex-1 overflow-hidden flex flex-col">
-            <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-1.5">
-              Content Ideas · {q.assets.length} assets
-            </p>
-            <div className="grid grid-cols-4 gap-1.5 flex-1 overflow-y-auto">
-              {q.assets.map((asset) => {
-                const colorClass = formatColors[asset.format] || "text-muted-foreground bg-muted/10";
-                const [textColor, bgColor] = colorClass.split(" ");
-                return (
-                  <div key={asset.title} className="bg-background/60 border border-border/20 rounded-lg px-2.5 py-2 flex flex-col gap-1">
-                    <span className={cn("text-xs px-1.5 py-0.5 rounded self-start font-medium", bgColor, textColor)}>
-                      {asset.format}
-                    </span>
-                    <p className="text-xs text-foreground font-medium leading-snug">{asset.title}</p>
-                  </div>
-                );
-              })}
-            </div>
+            ))}
           </div>
         </div>
       </div>
