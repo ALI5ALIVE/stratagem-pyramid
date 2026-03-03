@@ -110,8 +110,9 @@ interface AssetRow {
 }
 
 const assetRows: AssetRow[] = [
+  { type: "Flagship Report", icon: BookOpen, color: "text-primary", q1: 1, q2: 0, q3: 0, q4: 0 },
   { type: "Campaign eGuide", icon: FileText, color: "text-amber-400", q1: 1, q2: 1, q3: 1, q4: 1 },
-  { type: "Thought Leadership Articles", icon: Lightbulb, color: "text-indigo-400", q1: 2, q2: 2, q3: 1, q4: 1 },
+  { type: "Thought Leadership Articles", icon: Lightbulb, color: "text-indigo-400", q1: 6, q2: 6, q3: 6, q4: 6 },
   { type: "Webinar", icon: Mic, color: "text-emerald-400", q1: 1, q2: 1, q3: 1, q4: 1 },
   { type: "Persona Briefings", icon: Users, color: "text-blue-400", q1: 5, q2: 0, q3: 0, q4: 0 },
   { type: "Decision Asset", icon: ClipboardCheck, color: "text-purple-400", q1: 1, q2: 1, q3: 1, q4: 1 },
@@ -235,21 +236,21 @@ const SlideContentInventory = ({
                 );
               })}
             </div>
-          </div>
 
-          {/* Always-on + derivatives */}
-          <div className="flex gap-2">
-            <div className="flex-1 bg-primary/5 border border-primary/20 rounded-lg px-3 py-1.5 flex items-start gap-2">
-              <BookOpen className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
-              <p className="text-[9px] text-foreground/80 leading-snug">
-                <span className="font-semibold text-primary">Always-on:</span> Flagship Report and Year-End Roadmap run across all quarters
-              </p>
-            </div>
-            <div className="flex-1 bg-muted/30 border border-border/30 rounded-lg px-3 py-1.5">
-              <p className="text-[9px] text-muted-foreground italic leading-snug">
+            {/* Derivatives note — prominent, inside the table */}
+            <div className="bg-primary/10 border-t border-primary/30 px-4 py-2.5">
+              <p className="text-[10px] text-foreground font-medium leading-snug">
                 All assets supplied with supporting derivatives as appropriate (e.g. social posts, landing pages, emails, nurture sequences etc.)
               </p>
             </div>
+          </div>
+
+          {/* Always-on note */}
+          <div className="bg-primary/5 border border-primary/20 rounded-lg px-3 py-1.5 flex items-start gap-2">
+            <BookOpen className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+            <p className="text-[9px] text-foreground/80 leading-snug">
+              <span className="font-semibold text-primary">Always-on:</span> Flagship Report and Year-End Roadmap run across all quarters
+            </p>
           </div>
         </div>
       </div>
