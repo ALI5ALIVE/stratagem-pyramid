@@ -3,14 +3,22 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useSimpleNarration } from "@/hooks/useSimpleNarration";
+import SlideContentStrategyTitle from "@/components/slides/SlideContentStrategyTitle";
+import SlideStrategyOverview from "@/components/slides/SlideStrategyOverview";
+import SlideBuyerJourney from "@/components/slides/SlideBuyerJourney";
 import SlideContentStrategy from "@/components/slides/SlideContentStrategy";
 import SlidePersonaContentMap from "@/components/slides/SlidePersonaContentMap";
 import SlideContentInventory from "@/components/slides/SlideContentInventory";
+import SlideSalesEnablement from "@/components/slides/SlideSalesEnablement";
 
 const slides = [
-  { id: "slide-content-strategy", label: "Content Strategy" },
+  { id: "slide-cs-title", label: "Contents" },
+  { id: "slide-strategy-overview", label: "Strategy Overview" },
+  { id: "slide-buyer-journey", label: "Buyer Journey" },
+  { id: "slide-content-strategy", label: "Quarterly Strategy" },
   { id: "slide-persona-content-map", label: "Persona Map" },
   { id: "slide-content-inventory", label: "Content Inventory" },
+  { id: "slide-sales-enablement", label: "Sales Enablement" },
 ];
 
 const ContentStrategyPage = () => {
@@ -123,9 +131,13 @@ const ContentStrategyPage = () => {
       </div>
 
       <div ref={containerRef} className="h-full w-full overflow-y-auto snap-y snap-mandatory scroll-smooth">
-        <SlideContentStrategy {...getNarrationProps(0)} />
-        <SlidePersonaContentMap {...getNarrationProps(1)} />
-        <SlideContentInventory {...getNarrationProps(2)} />
+        <SlideContentStrategyTitle {...getNarrationProps(0)} onNavigateToSlide={scrollToSlide} />
+        <SlideStrategyOverview {...getNarrationProps(1)} />
+        <SlideBuyerJourney {...getNarrationProps(2)} />
+        <SlideContentStrategy {...getNarrationProps(3)} />
+        <SlidePersonaContentMap {...getNarrationProps(4)} />
+        <SlideContentInventory {...getNarrationProps(5)} />
+        <SlideSalesEnablement {...getNarrationProps(6)} />
       </div>
     </div>
   );
