@@ -36,7 +36,7 @@ const SlideStrategyOverview = ({
       <div className="flex-1 flex flex-col gap-3 h-full overflow-hidden">
 
         {/* 1 — The Market Challenge — full width */}
-        <div className="bg-card/60 border border-border/50 rounded-xl p-5 flex-1 flex flex-col">
+        <div className="bg-card/60 border border-border/50 rounded-xl p-5 flex flex-col">
           <div className="flex items-center gap-2 mb-2">
             <div className="w-7 h-7 rounded-lg bg-destructive/10 flex items-center justify-center">
               <AlertTriangle className="w-4 h-4 text-destructive" />
