@@ -7,7 +7,7 @@ import SlideContentStrategyTitle from "@/components/slides/SlideContentStrategyT
 import SlideStrategyOverview from "@/components/slides/SlideStrategyOverview";
 import SlideBuyerJourney from "@/components/slides/SlideBuyerJourney";
 import SlideContentStrategy from "@/components/slides/SlideContentStrategy";
-import SlidePersonaContentMap from "@/components/slides/SlidePersonaContentMap";
+import SlideContentArchitecture from "@/components/slides/SlideContentArchitecture";
 import SlideContentInventory from "@/components/slides/SlideContentInventory";
 import SlideSalesEnablement from "@/components/slides/SlideSalesEnablement";
 
@@ -16,7 +16,7 @@ const slides = [
   { id: "slide-strategy-overview", label: "Strategy Overview" },
   { id: "slide-buyer-journey", label: "Buyer Journey" },
   { id: "slide-content-strategy", label: "Quarterly Strategy" },
-  { id: "slide-persona-content-map", label: "Persona Map" },
+  { id: "slide-content-architecture", label: "Content Architecture" },
   { id: "slide-content-inventory", label: "Content Inventory" },
   { id: "slide-sales-enablement", label: "Sales Enablement" },
 ];
@@ -135,7 +135,7 @@ const ContentStrategyPage = () => {
         <SlideStrategyOverview {...getNarrationProps(1)} />
         <SlideBuyerJourney {...getNarrationProps(2)} />
         <SlideContentStrategy {...getNarrationProps(3)} />
-        <SlidePersonaContentMap {...getNarrationProps(4)} />
+        <SlideContentArchitecture {...getNarrationProps(4)} />
         <SlideContentInventory {...getNarrationProps(5)} />
         <SlideSalesEnablement {...getNarrationProps(6)} />
       </div>
