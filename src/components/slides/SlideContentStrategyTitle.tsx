@@ -1,4 +1,4 @@
-import { ChevronDown, Plane, BarChart3, Users, FileText, ShoppingCart, Route, Layers } from "lucide-react";
+import { ChevronDown, Plane, AlertTriangle, Route, Layers, BookOpen, Lightbulb, ShoppingCart } from "lucide-react";
 import complyLogo from "@/assets/comply365-logo-white.png";
 import SlidePlayButton from "@/components/SlidePlayButton";
 import type { SlideNarrationProps } from "@/types/slideProps";
@@ -8,7 +8,7 @@ const sections = [
   {
     num: 1,
     label: "Strategy Overview",
-    summary: "The core idea and market challenge",
+    summary: "The central idea and why this programme exists",
     icon: Plane,
     color: "text-primary",
     bgColor: "bg-primary/10",
@@ -26,7 +26,7 @@ const sections = [
   {
     num: 3,
     label: "Quarterly Strategy",
-    summary: "Q1–Q4 themes, messaging and outcomes",
+    summary: "Q1–Q4 objectives, messaging and outcomes",
     icon: Layers,
     color: "text-emerald-400",
     bgColor: "bg-emerald-400/10",
@@ -34,9 +34,9 @@ const sections = [
   },
   {
     num: 4,
-    label: "Persona Map",
-    summary: "Content mapped to every buying role",
-    icon: Users,
+    label: "Content Architecture",
+    summary: "Anchor asset, quarterly structure and content principles",
+    icon: BookOpen,
     color: "text-purple-400",
     bgColor: "bg-purple-400/10",
     borderColor: "border-purple-400/30",
@@ -44,8 +44,8 @@ const sections = [
   {
     num: 5,
     label: "Content Inventory",
-    summary: "54 assets across 9 categories",
-    icon: FileText,
+    summary: "54 assets across the year with quarterly production schedule",
+    icon: Lightbulb,
     color: "text-blue-400",
     bgColor: "bg-blue-400/10",
     borderColor: "border-blue-400/30",
@@ -53,7 +53,7 @@ const sections = [
   {
     num: 6,
     label: "Sales Enablement",
-    summary: "Bottom-of-funnel support and enablement",
+    summary: "Bottom-of-funnel support for pipeline progression",
     icon: ShoppingCart,
     color: "text-rose-400",
     bgColor: "bg-rose-400/10",

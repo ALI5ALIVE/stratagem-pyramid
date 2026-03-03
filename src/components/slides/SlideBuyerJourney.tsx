@@ -47,7 +47,7 @@ const stages = [
   {
     num: 5,
     title: "Readiness becomes continuous",
-    description: "Performance improves when training, compliance and operational change are connected through an always-on model.",
+    description: "Performance improves when training, compliance, and operational change are connected through an always-on model.",
     icon: RotateCcw,
     color: "text-purple-400",
     bgColor: "bg-purple-400/10",
@@ -103,7 +103,6 @@ const SlideBuyerJourney = ({
                   stage.borderColor
                 )}
               >
-                {/* Stage number */}
                 <div className="flex items-center justify-between mb-3">
                   <div className={cn("w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold", stage.bgColor, stage.color)}>
                     {stage.num}
@@ -113,18 +112,15 @@ const SlideBuyerJourney = ({
                   </span>
                 </div>
 
-                {/* Icon + Title */}
                 <div className="flex items-center gap-2 mb-3">
                   <Icon className={cn("w-5 h-5 shrink-0", stage.color)} />
                   <h3 className="text-sm font-bold text-foreground leading-tight">{stage.title}</h3>
                 </div>
 
-                {/* Description */}
                 <p className="text-[11px] text-foreground/70 leading-relaxed flex-1">
                   {stage.description}
                 </p>
 
-                {/* Connector arrow (not on last) */}
                 {i < stages.length - 1 && i !== 2 && (
                   <div className="absolute -right-3 top-1/2 -translate-y-1/2 text-muted-foreground/30 text-lg z-10">→</div>
                 )}
@@ -133,7 +129,7 @@ const SlideBuyerJourney = ({
           })}
         </div>
 
-        {/* Bottom strip: how the journey maps to the year */}
+        {/* Bottom strip */}
         <div className="bg-card/60 border border-border/50 rounded-xl px-5 py-3 flex items-center gap-6">
           <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold shrink-0">Annual Flow</p>
           <div className="flex items-center gap-2 flex-1">

@@ -1,58 +1,53 @@
-import { ShoppingCart, FileText, Users, BarChart3, MessageSquare, Briefcase, ChevronRight } from "lucide-react";
+import { ShoppingCart, FileText, Users, BarChart3, MessageSquare, Briefcase, Radio, ChevronRight } from "lucide-react";
 import SlideContainer from "./SlideContainer";
 import type { SlideNarrationProps } from "@/types/slideProps";
 import { cn } from "@/lib/utils";
 
 const enablementAssets = [
   {
-    label: "Quarterly Sales Narratives",
+    label: "Quarterly Sales Narrative Sheets",
     description: "Consistent outcome-led story for each quarter's theme",
     icon: MessageSquare,
     color: "text-blue-400",
-    quarterly: true,
   },
   {
     label: "Persona One-Pagers",
-    description: "Tailored briefs for executive, safety, compliance, training and IT audiences",
+    description: "Tailored briefs for executive, safety, compliance, training, and IT audiences",
     icon: Users,
     color: "text-amber-400",
-    quarterly: false,
   },
   {
     label: "DTOP-to-KPI Mapping Sheet",
     description: "Links the operating model directly to measurable business outcomes",
     icon: BarChart3,
     color: "text-emerald-400",
-    quarterly: false,
   },
   {
     label: "Signals-to-Outcomes Explainer",
     description: "Shows how detection becomes coordinated action and proof",
-    icon: FileText,
+    icon: Radio,
     color: "text-purple-400",
-    quarterly: false,
   },
   {
     label: "Objection Handling Guide",
-    description: "Addresses concerns around fragmentation, readiness and proof",
+    description: "Addresses concerns around fragmentation, readiness, and proof",
     icon: MessageSquare,
     color: "text-rose-400",
-    quarterly: false,
   },
   {
-    label: "Business Case Support Pack",
-    description: "Structured materials for later-stage investment conversations",
+    label: "Business Case Support Materials",
+    description: "Structured materials for later-stage investment or expansion conversations",
     icon: Briefcase,
     color: "text-primary",
-    quarterly: false,
   },
 ];
 
 const conversationShifts = [
-  { from: "Feature-led product discussion", to: "Outcome-led commercial conversation" },
-  { from: "Why the status quo is limiting performance", to: "How DTOP changes the operating model" },
-  { from: "How signals improve action", to: "How readiness becomes measurable" },
-  { from: "How proof supports investment", to: "How to scale with confidence" },
+  { label: "Why the status quo is limiting performance" },
+  { label: "How DTOP changes the operating model" },
+  { label: "How signals improve action and accountability" },
+  { label: "How readiness becomes more measurable" },
+  { label: "How proof supports investment or expansion" },
 ];
 
 const SlideSalesEnablement = ({
@@ -96,7 +91,7 @@ const SlideSalesEnablement = ({
         <div className="flex-1 grid grid-cols-2 gap-4 overflow-hidden">
           {/* Enablement assets */}
           <div className="flex flex-col gap-2">
-            <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold px-1">Enablement Assets</p>
+            <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold px-1">Recommended Enablement Content</p>
             <div className="space-y-2 flex-1">
               {enablementAssets.map((asset) => {
                 const Icon = asset.icon;
@@ -106,12 +101,7 @@ const SlideSalesEnablement = ({
                       <Icon className={cn("w-4 h-4", asset.color)} />
                     </div>
                     <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-foreground">{asset.label}</span>
-                        {asset.quarterly && (
-                          <span className="text-[8px] text-primary bg-primary/10 px-1.5 py-0.5 rounded-full font-semibold">QUARTERLY</span>
-                        )}
-                      </div>
+                      <span className="text-xs font-bold text-foreground">{asset.label}</span>
                       <p className="text-[10px] text-muted-foreground leading-snug mt-0.5">{asset.description}</p>
                     </div>
                   </div>
@@ -120,24 +110,18 @@ const SlideSalesEnablement = ({
             </div>
           </div>
 
-          {/* Conversation shifts */}
+          {/* What it should make easier */}
           <div className="flex flex-col gap-2">
-            <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold px-1">Conversation Shifts</p>
+            <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold px-1">What It Should Make Easier to Explain</p>
             <div className="bg-card/60 border border-border/50 rounded-xl p-5 flex-1 flex flex-col">
               <p className="text-[11px] text-muted-foreground leading-relaxed mb-4">
                 The programme should make it easier for sales teams to explain:
               </p>
               <div className="space-y-3 flex-1">
                 {conversationShifts.map((shift, i) => (
-                  <div key={i} className="bg-background/50 rounded-lg px-4 py-3">
-                    <div className="flex items-center gap-2">
-                      <ChevronRight className="w-3 h-3 text-primary shrink-0" />
-                      <span className="text-[11px] text-foreground/80 leading-snug">{shift.from}</span>
-                    </div>
-                    <div className="flex items-center gap-2 mt-1">
-                      <ChevronRight className="w-3 h-3 text-rose-400 shrink-0" />
-                      <span className="text-[11px] text-foreground font-medium leading-snug">{shift.to}</span>
-                    </div>
+                  <div key={i} className="bg-background/50 rounded-lg px-4 py-3 flex items-center gap-2">
+                    <ChevronRight className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+                    <span className="text-[11px] text-foreground font-medium leading-snug">{shift.label}</span>
                   </div>
                 ))}
               </div>
