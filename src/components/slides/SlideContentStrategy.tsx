@@ -1,28 +1,8 @@
 import { useState } from "react";
-import { BookOpen, Target, Zap, Shield, TrendingUp, FileText, Mic, ClipboardCheck, ChevronRight, ArrowDown } from "lucide-react";
+import { Target, Zap, Shield, TrendingUp, ChevronRight, Quote } from "lucide-react";
 import SlideContainer from "./SlideContainer";
 import type { SlideNarrationProps } from "@/types/slideProps";
 import { cn } from "@/lib/utils";
-
-const narrativeArc = [
-  "What has changed",
-  "Where performance gets stuck",
-  "What high-performing teams do differently",
-  "What to do now",
-  "How to show progress",
-];
-
-const reportChapters = [
-  "Why operational performance now matters more than ever",
-  "The friction points that slow performance and increase risk",
-  "The connected foundation for operational performance",
-  "Turning signals into action across teams",
-  "Making readiness continuous across the organisation",
-  "Proving performance at scale",
-  "The role of AI in accelerating action inside governed workflows",
-  "Persona priorities across executive, safety, compliance, training and IT",
-  "A practical roadmap to improve performance without increasing risk",
-];
 
 interface Quarter {
   id: string;
@@ -32,14 +12,12 @@ interface Quarter {
   icon: React.ElementType;
   color: string;
   bgColor: string;
-  coreObjective: string;
+  borderAccent: string;
+  headline: string;
   coreMessage: string;
   pillars: string[];
-  heroAsset: string;
-  decisionAsset: string;
-  webinar: string;
+  audienceShift: string;
   outcomes: string[];
-  reportChapters: number[]; // indices into reportChapters that this quarter draws from
 }
 
 const quarters: Quarter[] = [
@@ -50,18 +28,16 @@ const quarters: Quarter[] = [
     subtitle: "Apr · May · Jun",
     icon: Shield,
     color: "text-blue-400",
-    bgColor: "bg-blue-400/10 border-blue-400/30",
-    coreObjective: "Establish the baseline idea that operational performance depends on connected teams, shared governance and clear accountability.",
-    coreMessage: "Performance breaks down when safety, compliance, training and IT improve separately.",
+    bgColor: "bg-blue-400/10",
+    borderAccent: "border-blue-400/40",
+    headline: "Performance breaks down when teams improve separately",
+    coreMessage: "Safety, compliance, training and IT each work hard — but when they improve in isolation, the organisation doesn't get better. Operational performance depends on a connected foundation.",
     pillars: ["Connected foundation", "Governance clarity", "Shared operational visibility"],
-    heroAsset: "Build the foundation: first steps to improve operational performance without adding risk",
-    decisionAsset: "Operational performance baseline assessment",
-    webinar: "How aviation teams build a connected foundation for operational performance",
-    reportChapters: [0, 1, 2],
+    audienceShift: "From 'we each have our own improvement plans' → 'we need a shared operating picture'",
     outcomes: [
-      "The problem is cross-functional",
+      "The problem is cross-functional, not departmental",
       "The opportunity is operational, not just technical",
-      "There is a practical starting point",
+      "There is a practical, low-risk starting point",
     ],
   },
   {
@@ -71,17 +47,15 @@ const quarters: Quarter[] = [
     subtitle: "Jul · Aug · Sep",
     icon: Zap,
     color: "text-amber-400",
-    bgColor: "bg-amber-400/10 border-amber-400/30",
-    coreObjective: "Move from awareness of fragmentation to a practical discussion about follow-through, coordination and controlled action.",
-    coreMessage: "Operational performance is shaped by how quickly teams turn signals into coordinated action.",
-    pillars: ["Continuous improvement", "Signal to action workflows", "Accountability and completion"],
-    heroAsset: "From signal to action: how high-performing aviation teams reduce operational lag",
-    decisionAsset: "Signal-to-action gap diagnostic",
-    webinar: "Closing the gap between signal and action in aviation operations",
-    reportChapters: [3, 4],
+    bgColor: "bg-amber-400/10",
+    borderAccent: "border-amber-400/40",
+    headline: "Performance is shaped by how fast teams turn signals into coordinated action",
+    coreMessage: "Most organisations detect problems well. The gap is in follow-through — turning audit findings, safety reports and training gaps into coordinated, accountable action across teams.",
+    pillars: ["Signal-to-action workflows", "Accountability loops", "Continuous improvement"],
+    audienceShift: "From 'we know what's wrong' → 'we close the loop and prove we acted'",
     outcomes: [
-      "A stronger shared understanding of operational lag",
-      "Language for cross-functional action design",
+      "A shared language for cross-functional action design",
+      "Stronger understanding of operational lag",
       "A reason to engage multiple stakeholders together",
     ],
   },
@@ -92,18 +66,16 @@ const quarters: Quarter[] = [
     subtitle: "Oct · Nov · Dec",
     icon: Target,
     color: "text-emerald-400",
-    bgColor: "bg-emerald-400/10 border-emerald-400/30",
-    coreObjective: "Shift the conversation from isolated projects and periodic pushes to ongoing readiness as a performance capability.",
-    coreMessage: "Readiness improves when training, compliance and operational change are connected rather than managed in separate cycles.",
+    bgColor: "bg-emerald-400/10",
+    borderAccent: "border-emerald-400/40",
+    headline: "Readiness improves when training, compliance and change are connected",
+    coreMessage: "Periodic training pushes and separate compliance cycles create gaps. Readiness becomes a real capability only when it's continuous, role-based and connected to operational change.",
     pillars: ["Readiness by role", "Training and change alignment", "Continuous capability"],
-    heroAsset: "Make readiness continuous: a practical approach to capability, control and consistency",
-    decisionAsset: "Readiness scorecard and workshop pack",
-    webinar: "How aviation teams build continuous readiness across training, compliance and operations",
-    reportChapters: [4, 5],
+    audienceShift: "From 'training is complete' → 'our people are ready for what's next'",
     outcomes: [
-      "Define readiness beyond training completion",
-      "Identify gaps by role and function",
-      "Internal workshops driving alignment",
+      "Readiness defined beyond training completion rates",
+      "Gaps identified by role and function",
+      "Internal alignment workshops driving action",
     ],
   },
   {
@@ -113,17 +85,15 @@ const quarters: Quarter[] = [
     subtitle: "Jan · Feb · Mar",
     icon: TrendingUp,
     color: "text-purple-400",
-    bgColor: "bg-purple-400/10 border-purple-400/30",
-    coreObjective: "Help buying groups turn progress into a credible internal case for investment, rollout or expansion.",
-    coreMessage: "Performance improvement only scales when teams can prove progress, control and readiness across the organisation.",
+    bgColor: "bg-purple-400/10",
+    borderAccent: "border-purple-400/40",
+    headline: "Performance only scales when you can prove progress across the organisation",
+    coreMessage: "Leaders need more than dashboards — they need proof that safety, compliance and training improvements translate into measurable, defensible operational outcomes at scale.",
     pillars: ["Proof at scale", "Executive visibility", "Standardisation and confidence"],
-    heroAsset: "Prove performance at scale: how aviation leaders build confidence across teams and regions",
-    decisionAsset: "Operational performance business case pack",
-    webinar: "How to prove operational progress without creating more reporting burden",
-    reportChapters: [5, 6, 7, 8],
+    audienceShift: "From 'we think it's working' → 'we can prove it to the board'",
     outcomes: [
-      "A clearer way to define proof and progress",
-      "Stronger internal alignment for investment",
+      "A credible internal case for investment",
+      "Stronger alignment across regions and functions",
       "A path from pilot thinking to scaled adoption",
     ],
   },
@@ -155,161 +125,90 @@ const SlideContentStrategy = ({
       onPause={onPause}
       onNextSlide={onNextSlide}
     >
-      <div className="flex-1 flex flex-col gap-3 h-full overflow-hidden">
-        {/* Top: Theme anchor — the Flying High narrative */}
-        <div className="grid grid-cols-12 gap-4">
-          {/* Left: Flagship report + narrative arc */}
-          <div className="col-span-5 bg-card/60 border border-border/50 rounded-lg p-4 flex flex-col">
-            <div className="flex items-center gap-2 mb-2">
-              <BookOpen className="w-4 h-4 text-primary" />
-              <h3 className="text-sm font-bold text-foreground">Flying High Report</h3>
-            </div>
-            <p className="text-muted-foreground text-[10px] leading-relaxed mb-2">
-              The anchor asset for the year — a practical guide to operational performance in aviation.
-              Written to support both broad demand creation and buying group engagement.
-            </p>
-            <div className="space-y-1 flex-1">
-              {reportChapters.map((ch, i) => (
-                <div key={i} className="flex items-start gap-1.5">
-                  <span className="text-primary/60 font-mono text-[9px] mt-0.5 shrink-0">{i + 1}.</span>
-                  <span className="text-foreground/80 text-[10px] leading-tight">{ch}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: Narrative arc + how quarters work */}
-          <div className="col-span-7 flex flex-col gap-3">
-            <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold mb-1.5">Annual Narrative Arc</p>
-              <p className="text-[11px] text-foreground/80 leading-relaxed mb-2">
-                Rather than one long story that only gets practical at the end, the year is structured as four repeatable content cycles. Each quarter progresses the same arc:
-              </p>
-              <div className="flex items-center gap-1.5">
-                {narrativeArc.map((step, i) => (
-                  <div key={i} className="flex items-center gap-1.5">
-                    <span className="text-[10px] bg-primary/15 text-primary px-2 py-0.5 rounded-full font-medium whitespace-nowrap">{step}</span>
-                    {i < narrativeArc.length - 1 && <ChevronRight className="w-3 h-3 text-muted-foreground shrink-0" />}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Visual dovetail — show how report feeds quarters */}
-            <div className="flex items-center gap-2">
-              <ArrowDown className="w-4 h-4 text-primary/50 shrink-0" />
-              <p className="text-[10px] text-muted-foreground italic">
-                Each quarterly campaign draws from the flagship report and applies a focused lens to one performance dimension
-              </p>
-            </div>
-
-            {/* Quarter selector tabs */}
-            <div className="flex gap-1.5">
-              {quarters.map((quarter, i) => {
-                const Icon = quarter.icon;
-                return (
-                  <button
-                    key={quarter.id}
-                    onClick={() => setActiveQuarter(i)}
-                    className={cn(
-                      "flex-1 flex items-center gap-2 px-3 py-2 rounded-lg border transition-all duration-200 cursor-pointer",
-                      activeQuarter === i
-                        ? `${quarter.bgColor} scale-[1.02]`
-                        : "bg-card/30 border-border/30 hover:border-border/60 hover:bg-card/50"
-                    )}
-                  >
-                    <Icon className={cn("w-4 h-4", quarter.color)} />
-                    <div className="text-left">
-                      <div className="text-[11px] font-bold text-foreground">{quarter.label}: {quarter.theme}</div>
-                      <div className="text-[9px] text-muted-foreground">{quarter.subtitle}</div>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+      <div className="flex-1 flex flex-col gap-4 h-full overflow-hidden">
+        {/* Hero: Core annual theme */}
+        <div className="bg-primary/10 border border-primary/30 rounded-xl px-6 py-4 text-center">
+          <p className="text-[10px] text-primary uppercase tracking-widest font-semibold mb-1.5">Annual Campaign Theme</p>
+          <h2 className="text-lg font-bold text-foreground leading-snug mb-2">
+            Flying High — Raise Performance Without Raising Risk
+          </h2>
+          <p className="text-[11px] text-foreground/70 leading-relaxed max-w-3xl mx-auto">
+            Aviation teams are under pressure to improve safety outcomes, operational efficiency and regulatory confidence — without slowing down. 
+            This 12-month programme builds the case that <span className="text-foreground font-semibold">predictable, measurable and provable operational performance</span> requires 
+            a connected platform across safety, compliance, training and operations.
+          </p>
         </div>
 
-        {/* Bottom: Active quarter detail */}
-        <div className="flex-1 bg-card/60 border border-border/50 rounded-lg p-4 flex flex-col overflow-hidden">
-          <div className="flex items-center gap-2 mb-2">
-            <q.icon className={cn("w-5 h-5", q.color)} />
-            <h3 className="text-sm font-bold text-foreground">
-              {q.label}: {q.theme}
-            </h3>
-            <span className="text-[10px] text-muted-foreground ml-1">({q.subtitle})</span>
+        {/* Quarter tabs */}
+        <div className="flex gap-2">
+          {quarters.map((quarter, i) => {
+            const Icon = quarter.icon;
+            return (
+              <button
+                key={quarter.id}
+                onClick={() => setActiveQuarter(i)}
+                className={cn(
+                  "flex-1 flex flex-col items-center gap-1 px-3 py-2.5 rounded-lg border-2 transition-all duration-200 cursor-pointer",
+                  activeQuarter === i
+                    ? `${quarter.bgColor} ${quarter.borderAccent} scale-[1.02]`
+                    : "bg-card/30 border-border/20 hover:border-border/50 hover:bg-card/50"
+                )}
+              >
+                <Icon className={cn("w-5 h-5", activeQuarter === i ? quarter.color : "text-muted-foreground")} />
+                <div className="text-[11px] font-bold text-foreground">{quarter.label}: {quarter.theme}</div>
+                <div className="text-[9px] text-muted-foreground">{quarter.subtitle}</div>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Active quarter — messaging-first layout */}
+        <div className={cn("flex-1 rounded-xl border-2 p-5 flex flex-col overflow-hidden", q.bgColor, q.borderAccent)}>
+          {/* Headline */}
+          <div className="mb-3">
+            <div className="flex items-center gap-2 mb-1.5">
+              <q.icon className={cn("w-5 h-5", q.color)} />
+              <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">{q.label} · {q.theme} · {q.subtitle}</span>
+            </div>
+            <h3 className="text-base font-bold text-foreground leading-snug">{q.headline}</h3>
           </div>
 
-          {/* Objective + core message */}
-          <div className="grid grid-cols-2 gap-3 mb-3">
-            <div className="bg-background/50 rounded-lg px-3 py-2">
-              <p className="text-[9px] text-muted-foreground uppercase tracking-wider font-semibold mb-1">Content Objective</p>
-              <p className="text-[10px] text-foreground/80 leading-relaxed">{q.coreObjective}</p>
-            </div>
-            <div className="bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
-              <p className="text-[9px] text-muted-foreground uppercase tracking-wider font-semibold mb-1">Core Message</p>
-              <p className="text-[10px] text-foreground leading-relaxed font-medium">{q.coreMessage}</p>
+          {/* Core message — prominent */}
+          <div className="bg-background/60 rounded-lg px-4 py-3 mb-3 border border-border/30">
+            <div className="flex gap-2">
+              <Quote className={cn("w-4 h-4 mt-0.5 shrink-0", q.color)} />
+              <p className="text-[11px] text-foreground leading-relaxed">{q.coreMessage}</p>
             </div>
           </div>
 
-          {/* Pillars + report link */}
-          <div className="flex items-center gap-3 mb-3">
-            <div className="flex gap-1.5">
-              {q.pillars.map((p) => (
-                <span key={p} className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full">{p}</span>
-              ))}
-            </div>
-            <span className="text-[9px] text-muted-foreground">
-              ← draws from report chapters {q.reportChapters.map(i => i + 1).join(", ")}
-            </span>
-          </div>
-
-          {/* Assets + Outcomes */}
+          {/* Bottom grid: Audience shift, pillars, outcomes */}
           <div className="grid grid-cols-3 gap-3 flex-1">
-            {/* Assets */}
-            <div className="space-y-2">
-              <div className="bg-background/50 rounded-lg p-2.5">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <FileText className="w-3 h-3 text-primary" />
-                  <p className="text-[9px] text-muted-foreground uppercase tracking-wider font-semibold">Hero Asset</p>
-                </div>
-                <p className="text-[10px] text-foreground leading-relaxed">{q.heroAsset}</p>
-              </div>
-              <div className="bg-background/50 rounded-lg p-2.5">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <Mic className="w-3 h-3 text-accent" />
-                  <p className="text-[9px] text-muted-foreground uppercase tracking-wider font-semibold">Webinar</p>
-                </div>
-                <p className="text-[10px] text-foreground leading-relaxed">{q.webinar}</p>
-              </div>
+            {/* Audience shift */}
+            <div className="bg-background/40 rounded-lg p-3 flex flex-col">
+              <p className="text-[9px] text-muted-foreground uppercase tracking-wider font-semibold mb-2">Audience Shift</p>
+              <p className="text-[10px] text-foreground/80 leading-relaxed italic flex-1">{q.audienceShift}</p>
             </div>
 
-            <div className="space-y-2">
-              <div className="bg-background/50 rounded-lg p-2.5">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <ClipboardCheck className="w-3 h-3 text-emerald-400" />
-                  <p className="text-[9px] text-muted-foreground uppercase tracking-wider font-semibold">Decision Asset</p>
-                </div>
-                <p className="text-[10px] text-foreground leading-relaxed">{q.decisionAsset}</p>
-              </div>
-              <div className="bg-background/30 rounded-lg p-2.5 border border-border/20">
-                <p className="text-[9px] text-muted-foreground uppercase tracking-wider font-semibold mb-1">Content Pillars</p>
+            {/* Pillars */}
+            <div className="bg-background/40 rounded-lg p-3">
+              <p className="text-[9px] text-muted-foreground uppercase tracking-wider font-semibold mb-2">Content Pillars</p>
+              <div className="space-y-1.5">
                 {q.pillars.map((p) => (
-                  <div key={p} className="flex items-center gap-1.5 mb-0.5">
-                    <ChevronRight className="w-2.5 h-2.5 text-primary shrink-0" />
-                    <span className="text-[10px] text-foreground/80">{p}</span>
+                  <div key={p} className="flex items-center gap-1.5">
+                    <ChevronRight className={cn("w-3 h-3 shrink-0", q.color)} />
+                    <span className="text-[10px] text-foreground/80 font-medium">{p}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Outcomes */}
-            <div>
-              <p className="text-[9px] text-muted-foreground uppercase tracking-wider font-semibold mb-1.5">By End of {q.label}</p>
+            <div className="bg-background/40 rounded-lg p-3">
+              <p className="text-[9px] text-muted-foreground uppercase tracking-wider font-semibold mb-2">By End of {q.label}</p>
               <div className="space-y-1.5">
                 {q.outcomes.map((o, i) => (
                   <div key={i} className="flex items-start gap-1.5">
-                    <ChevronRight className="w-3 h-3 text-primary mt-0.5 shrink-0" />
+                    <ChevronRight className={cn("w-3 h-3 mt-0.5 shrink-0", q.color)} />
                     <span className="text-[10px] text-foreground/80 leading-tight">{o}</span>
                   </div>
                 ))}
