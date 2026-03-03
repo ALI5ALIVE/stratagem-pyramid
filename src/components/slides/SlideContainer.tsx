@@ -105,7 +105,7 @@ const SlideContainer = ({
         </div>
 
         {/* Content area */}
-        <div className="w-full flex-1 overflow-hidden">{children}</div>
+        <div className={cn("w-full flex-1", className?.includes("!overflow-visible") ? "" : "overflow-hidden")}>{children}</div>
       </div>
     </section>
   );
