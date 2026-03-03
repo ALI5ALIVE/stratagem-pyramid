@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { FileText, Mic, ClipboardCheck, BookOpen, Users, Wrench, BarChart3, Map, Lightbulb } from "lucide-react";
 import SlideContainer from "./SlideContainer";
 import type { SlideNarrationProps } from "@/types/slideProps";
@@ -22,12 +23,12 @@ const categories: ContentCategory[] = [
     explainer: "The anchor asset for the year — a 9-chapter report driving awareness and engagement",
   },
   {
-    id: "campaign-guides",
-    label: "Campaign Guides",
-    icon: Map,
+    id: "campaign-eguides",
+    label: "Campaign eGuides",
+    icon: FileText,
     color: "text-amber-400",
     count: 4,
-    explainer: "Quarterly guides that frame each campaign theme for demand and sales teams",
+    explainer: "Quarterly whitepapers framing each campaign theme with research, insight and a clear point of view",
   },
   {
     id: "thought-leadership",
@@ -97,65 +98,82 @@ const categories: ContentCategory[] = [
 
 const totalAssets = categories.reduce((sum, c) => sum + c.count, 0);
 
-/* Quarter breakdown for the right panel */
-interface QuarterContent {
-  label: string;
-  theme: string;
+/* Asset types with icons for the calendar */
+interface CalendarAsset {
+  type: string;
+  title: string;
+  icon: React.ElementType;
   color: string;
-  assets: string[];
 }
 
-const quarters: QuarterContent[] = [
+interface QuarterCalendar {
+  label: string;
+  theme: string;
+  themeColor: string;
+  borderColor: string;
+  months: string[];
+  assets: CalendarAsset[];
+}
+
+const quarterCalendar: QuarterCalendar[] = [
   {
     label: "Q1",
     theme: "Build the Foundation",
-    color: "text-blue-400",
+    themeColor: "text-blue-400",
+    borderColor: "border-blue-400/40",
+    months: ["Jan", "Feb", "Mar"],
     assets: [
-      "Campaign guide: Build the Foundation",
-      "Webinar: Connected foundation for operational performance",
-      "Decision asset: Operational performance baseline assessment",
-      "Worksheet: Baseline assessment worksheet",
-      "Executive summary: Foundation executive note",
-      "Technical brief: IT and governance brief",
+      { type: "eGuide", title: "Build the Foundation", icon: FileText, color: "text-amber-400" },
+      { type: "Webinar", title: "Connected foundation for operational performance", icon: Mic, color: "text-emerald-400" },
+      { type: "Decision", title: "Operational performance baseline assessment", icon: ClipboardCheck, color: "text-purple-400" },
+      { type: "Worksheet", title: "Baseline assessment worksheet", icon: Wrench, color: "text-orange-400" },
+      { type: "Exec Brief", title: "Foundation executive note", icon: BarChart3, color: "text-rose-400" },
+      { type: "Tech Brief", title: "IT and governance brief", icon: FileText, color: "text-cyan-400" },
     ],
   },
   {
     label: "Q2",
     theme: "Signal to Action",
-    color: "text-amber-400",
+    themeColor: "text-amber-400",
+    borderColor: "border-amber-400/40",
+    months: ["Apr", "May", "Jun"],
     assets: [
-      "Campaign guide: Signal to Action",
-      "Webinar: Closing the gap between signal and action",
-      "Decision asset: Signal-to-action gap diagnostic",
-      "Worksheet: Action design worksheet",
-      "Executive summary: Signal-to-action executive brief",
-      "Technical brief: Compliance action flow briefing",
+      { type: "eGuide", title: "Signal to Action", icon: FileText, color: "text-amber-400" },
+      { type: "Webinar", title: "Closing the gap between signal and action", icon: Mic, color: "text-emerald-400" },
+      { type: "Decision", title: "Signal-to-action gap diagnostic", icon: ClipboardCheck, color: "text-purple-400" },
+      { type: "Worksheet", title: "Action design worksheet", icon: Wrench, color: "text-orange-400" },
+      { type: "Exec Brief", title: "Signal-to-action executive brief", icon: BarChart3, color: "text-rose-400" },
+      { type: "Tech Brief", title: "Compliance action flow briefing", icon: FileText, color: "text-cyan-400" },
     ],
   },
   {
     label: "Q3",
     theme: "Continuous Readiness",
-    color: "text-emerald-400",
+    themeColor: "text-emerald-400",
+    borderColor: "border-emerald-400/40",
+    months: ["Jul", "Aug", "Sep"],
     assets: [
-      "Campaign guide: Continuous Readiness",
-      "Webinar: Building continuous readiness across functions",
-      "Decision asset: Readiness scorecard & workshop pack",
-      "Worksheet: Cross-functional workshop template",
-      "Executive summary: Readiness as performance protection",
-      "Technical brief: Readiness maturity article",
+      { type: "eGuide", title: "Continuous Readiness", icon: FileText, color: "text-amber-400" },
+      { type: "Webinar", title: "Building continuous readiness across functions", icon: Mic, color: "text-emerald-400" },
+      { type: "Decision", title: "Readiness scorecard & workshop pack", icon: ClipboardCheck, color: "text-purple-400" },
+      { type: "Worksheet", title: "Cross-functional workshop template", icon: Wrench, color: "text-orange-400" },
+      { type: "Exec Brief", title: "Readiness as performance protection", icon: BarChart3, color: "text-rose-400" },
+      { type: "Tech Brief", title: "Readiness maturity article", icon: FileText, color: "text-cyan-400" },
     ],
   },
   {
     label: "Q4",
     theme: "Prove at Scale",
-    color: "text-purple-400",
+    themeColor: "text-purple-400",
+    borderColor: "border-purple-400/40",
+    months: ["Oct", "Nov", "Dec"],
     assets: [
-      "Campaign guide: Prove at Scale",
-      "Webinar: Proving operational progress without reporting burden",
-      "Decision asset: Operational performance business case pack",
-      "Worksheet: Expansion business case template",
-      "Executive summary: Executive decision brief",
-      "Technical brief: IT and compliance technical proof brief",
+      { type: "eGuide", title: "Prove at Scale", icon: FileText, color: "text-amber-400" },
+      { type: "Webinar", title: "Proving operational progress without reporting burden", icon: Mic, color: "text-emerald-400" },
+      { type: "Decision", title: "Operational performance business case pack", icon: ClipboardCheck, color: "text-purple-400" },
+      { type: "Worksheet", title: "Expansion business case template", icon: Wrench, color: "text-orange-400" },
+      { type: "Exec Brief", title: "Executive decision brief", icon: BarChart3, color: "text-rose-400" },
+      { type: "Tech Brief", title: "IT and compliance technical proof brief", icon: FileText, color: "text-cyan-400" },
     ],
   },
 ];
@@ -169,6 +187,9 @@ const SlideContentInventory = ({
   onPause,
   onNextSlide,
 }: SlideNarrationProps) => {
+  const [activeQuarter, setActiveQuarter] = useState(0);
+  const q = quarterCalendar[activeQuarter];
+
   return (
     <SlideContainer
       id="slide-content-inventory"
@@ -185,56 +206,89 @@ const SlideContentInventory = ({
     >
       <div className="flex-1 grid grid-cols-12 gap-4 h-full overflow-hidden">
         {/* Left: Category list with explainers */}
-        <div className="col-span-5 flex flex-col gap-1.5">
+        <div className="col-span-4 flex flex-col gap-1.5">
           {categories.map((cat) => {
             const Icon = cat.icon;
             return (
               <div
                 key={cat.id}
-                className="flex items-start gap-2.5 px-3 py-1.5 rounded-lg bg-card/30 border border-border/30"
+                className="flex items-start gap-2 px-2.5 py-1.5 rounded-lg bg-card/30 border border-border/30"
               >
-                <Icon className={cn("w-4 h-4 shrink-0 mt-0.5", cat.color)} />
+                <Icon className={cn("w-3.5 h-3.5 shrink-0 mt-0.5", cat.color)} />
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-foreground">{cat.label}</span>
-                    <span className="text-[10px] font-bold text-primary bg-primary/10 px-1.5 py-0.5 rounded-full">{cat.count}</span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[11px] font-bold text-foreground">{cat.label}</span>
+                    <span className="text-[9px] font-bold text-primary bg-primary/10 px-1.5 py-0.5 rounded-full">{cat.count}</span>
                   </div>
-                  <p className="text-[10px] text-muted-foreground leading-snug mt-0.5">{cat.explainer}</p>
+                  <p className="text-[9px] text-muted-foreground leading-snug mt-0.5">{cat.explainer}</p>
                 </div>
               </div>
             );
           })}
-
-          {/* Total bar */}
-          <div className="mt-auto pt-2 border-t border-border/30 flex items-center justify-between px-3">
-            <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">Total annual assets</span>
-            <span className="text-base font-bold text-primary">{totalAssets}</span>
+          <div className="mt-auto pt-2 border-t border-border/30 flex items-center justify-between px-2.5">
+            <span className="text-[9px] text-muted-foreground uppercase tracking-wider font-semibold">Total annual assets</span>
+            <span className="text-sm font-bold text-primary">{totalAssets}</span>
           </div>
         </div>
 
-        {/* Right: Quarterly breakdown */}
-        <div className="col-span-7 flex flex-col gap-2">
-          <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold px-1">Quarterly Production Schedule</p>
-          <div className="grid grid-cols-2 gap-2 flex-1 content-start">
-            {quarters.map((q) => (
-              <div key={q.label} className="bg-card/60 border border-border/50 rounded-lg p-3 flex flex-col">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className={cn("text-sm font-bold", q.color)}>{q.label}</span>
-                  <span className="text-[11px] text-foreground font-semibold">{q.theme}</span>
-                </div>
-                <div className="space-y-1 flex-1">
-                  {q.assets.map((asset, j) => (
-                    <div key={j} className="flex items-start gap-1.5">
-                      <span className="w-1 h-1 rounded-full bg-primary/60 shrink-0 mt-1.5" />
-                      <span className="text-[10px] text-foreground/80 leading-snug">{asset}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+        {/* Right: Interactive calendar view */}
+        <div className="col-span-8 flex flex-col gap-2">
+          {/* Quarter selector — calendar-style header */}
+          <div className="flex items-stretch gap-0 rounded-lg overflow-hidden border border-border/50">
+            {quarterCalendar.map((qc, i) => (
+              <button
+                key={qc.label}
+                onClick={() => setActiveQuarter(i)}
+                className={cn(
+                  "flex-1 flex flex-col items-center py-2 transition-all duration-200 cursor-pointer border-r last:border-r-0 border-border/30",
+                  activeQuarter === i
+                    ? "bg-card"
+                    : "bg-card/20 hover:bg-card/40"
+                )}
+              >
+                <span className={cn("text-sm font-bold", activeQuarter === i ? qc.themeColor : "text-muted-foreground")}>{qc.label}</span>
+                <span className="text-[9px] text-muted-foreground">{qc.months.join(" · ")}</span>
+              </button>
             ))}
           </div>
 
-          {/* Always-on assets note */}
+          {/* Active quarter — calendar grid */}
+          <div className={cn("flex-1 bg-card/60 border rounded-lg p-4 flex flex-col", q.borderColor)}>
+            {/* Header */}
+            <div className="flex items-center gap-3 mb-3">
+              <span className={cn("text-lg font-bold", q.themeColor)}>{q.label}</span>
+              <span className="text-sm font-semibold text-foreground">{q.theme}</span>
+              <div className="ml-auto flex gap-1">
+                {q.months.map((m) => (
+                  <span key={m} className="text-[10px] bg-muted/50 text-muted-foreground px-2 py-0.5 rounded font-mono">{m}</span>
+                ))}
+              </div>
+            </div>
+
+            {/* Asset rows — calendar-style */}
+            <div className="flex-1 grid grid-cols-3 gap-x-3 gap-y-2 content-start">
+              {q.assets.map((asset, j) => {
+                const AssetIcon = asset.icon;
+                /* Distribute across 3 "month" columns */
+                const col = j % 3;
+                return (
+                  <div
+                    key={j}
+                    className="bg-background/60 border border-border/30 rounded-lg p-2.5 flex items-start gap-2 hover:border-primary/30 transition-colors"
+                    style={{ gridColumn: col + 1 }}
+                  >
+                    <AssetIcon className={cn("w-3.5 h-3.5 shrink-0 mt-0.5", asset.color)} />
+                    <div className="min-w-0">
+                      <span className="text-[9px] font-semibold text-muted-foreground uppercase tracking-wider">{asset.type}</span>
+                      <p className="text-[10px] text-foreground/90 leading-snug">{asset.title}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Always-on bar */}
           <div className="bg-primary/5 border border-primary/20 rounded-lg px-3 py-2 flex items-start gap-2">
             <BookOpen className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
             <p className="text-[10px] text-foreground/80 leading-snug">
