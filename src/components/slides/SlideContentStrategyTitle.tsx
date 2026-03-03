@@ -154,7 +154,7 @@ const SlideContentStrategyTitle = ({
                     <div className="text-foreground text-sm font-bold leading-tight mb-1">
                       {section.label}
                     </div>
-                    <div className="text-muted-foreground text-[11px] leading-snug">
+                    <div className="text-muted-foreground text-xs leading-snug">
                       {section.summary}
                     </div>
                   </div>
