@@ -6,7 +6,6 @@ import { useSimpleNarration } from "@/hooks/useSimpleNarration";
 import SlideContentStrategyTitle from "@/components/slides/SlideContentStrategyTitle";
 import SlideStrategyOverview from "@/components/slides/SlideStrategyOverview";
 import SlideOperatingModel from "@/components/slides/SlideOperatingModel";
-import SlideBuyerJourney from "@/components/slides/SlideBuyerJourney";
 import SlideContentStrategy from "@/components/slides/SlideContentStrategy";
 import SlideContentArchitecture from "@/components/slides/SlideContentArchitecture";
 import SlideContentInventory from "@/components/slides/SlideContentInventory";
@@ -15,8 +14,7 @@ import SlideSalesEnablement from "@/components/slides/SlideSalesEnablement";
 const slides = [
   { id: "slide-cs-title", label: "Contents" },
   { id: "slide-strategy-overview", label: "Strategy Overview" },
-  { id: "slide-operating-model", label: "Flying High Narrative" },
-  { id: "slide-buyer-journey", label: "Content Journey" },
+  { id: "slide-operating-model", label: "Messaging House" },
   { id: "slide-content-strategy", label: "Quarterly Strategy" },
   { id: "slide-content-architecture", label: "Content Architecture" },
   { id: "slide-content-inventory", label: "Content Inventory" },
@@ -136,11 +134,10 @@ const ContentStrategyPage = () => {
         <SlideContentStrategyTitle {...getNarrationProps(0)} onNavigateToSlide={scrollToSlide} />
         <SlideStrategyOverview {...getNarrationProps(1)} />
         <SlideOperatingModel {...getNarrationProps(2)} />
-        <SlideBuyerJourney {...getNarrationProps(3)} />
-        <SlideContentStrategy {...getNarrationProps(4)} />
-        <SlideContentArchitecture {...getNarrationProps(5)} />
-        <SlideContentInventory {...getNarrationProps(6)} />
-        <SlideSalesEnablement {...getNarrationProps(7)} />
+        <SlideContentStrategy {...getNarrationProps(3)} />
+        <SlideContentArchitecture {...getNarrationProps(4)} />
+        <SlideContentInventory {...getNarrationProps(5)} />
+        <SlideSalesEnablement {...getNarrationProps(6)} />
       </div>
     </div>
   );
