@@ -1,4 +1,4 @@
-import { ChevronDown, Plane, AlertTriangle, Route, Layers, BookOpen, Lightbulb, ShoppingCart } from "lucide-react";
+import { ChevronDown, Plane, Route, Layers, BookOpen, Lightbulb, ShoppingCart } from "lucide-react";
 import complyLogo from "@/assets/comply365-logo-white.png";
 import SlidePlayButton from "@/components/SlidePlayButton";
 import type { SlideNarrationProps } from "@/types/slideProps";
@@ -16,8 +16,8 @@ const sections = [
   },
   {
     num: 2,
-    label: "Flying High Narrative",
-    summary: "How DTOP brings the content messaging to life",
+    label: "Messaging House",
+    summary: "Master line, pillars, DTOP, and audience interpretation",
     icon: Route,
     color: "text-amber-400",
     bgColor: "bg-amber-400/10",
@@ -25,24 +25,15 @@ const sections = [
   },
   {
     num: 3,
-    label: "Content Journey",
-    summary: "From awareness to decision — six stages that shape the year",
-    icon: AlertTriangle,
-    color: "text-emerald-400",
-    bgColor: "bg-emerald-400/10",
-    borderColor: "border-emerald-400/30",
-  },
-  {
-    num: 4,
     label: "Quarterly Strategy",
-    summary: "Q1–Q4 objectives, messaging and outcomes",
+    summary: "Q1–Q4 narratives, DTOP roles, and content journey stages",
     icon: Layers,
     color: "text-purple-400",
     bgColor: "bg-purple-400/10",
     borderColor: "border-purple-400/30",
   },
   {
-    num: 5,
+    num: 4,
     label: "Content Architecture",
     summary: "Anchor asset, quarterly structure and content principles",
     icon: BookOpen,
@@ -51,7 +42,7 @@ const sections = [
     borderColor: "border-blue-400/30",
   },
   {
-    num: 6,
+    num: 5,
     label: "Content Inventory",
     summary: "54 assets across the year with quarterly production schedule",
     icon: Lightbulb,
@@ -60,7 +51,7 @@ const sections = [
     borderColor: "border-rose-400/30",
   },
   {
-    num: 7,
+    num: 6,
     label: "Sales Enablement",
     summary: "Bottom-of-funnel support for pipeline progression",
     icon: ShoppingCart,
