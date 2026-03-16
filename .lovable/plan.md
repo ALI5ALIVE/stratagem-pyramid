@@ -1,30 +1,44 @@
 
 
-# Update Value Deck Title Slide Headline and Subtitle
+# Fix CoAnalyst Slides Overflowing Viewport
 
-## Changes
+## Problem
+Several slides have content that extends beyond the viewport height, getting cut off by the `h-screen overflow-hidden` constraint on `SlideContainer`. The slides using `!h-auto !min-h-screen !overflow-visible` break the snap-scroll system entirely.
 
-### File: `src/components/value-slides/ValueSlide0Title.tsx`
+**Affected slides:**
+- **Slide 4 (Product Positioning)** — 6 framework cards + large positioning statement overflow
+- **Slide 5 (Messaging Architecture)** — 5 pillar columns too tall
+- **Slide 11 (Taglines)** — uses overflow hack, breaks snap scrolling
+- **Slide 13 (Visual Narrative)** — uses overflow hack, breaks snap scrolling
 
-**Headline (lines 70-78)** -- Replace the current "Operational Performance / Value & ROI" with a stronger, purpose-driven title:
+## Approach
+Reduce content density and font sizes so everything fits within a single viewport (`h-screen`). Remove all `!h-auto !min-h-screen !overflow-visible` overrides — every slide must snap properly.
 
-```
-The Operational Performance
-Platform
-```
+### Slide 4 — Product Positioning
+- Reduce framework card padding from `p-4` to `p-3`
+- Reduce text sizes to `text-[11px]`
+- Shrink the positioning statement box padding and font sizes
 
-This keeps the category name front and center without the weaker "Value & ROI" label.
+### Slide 5 — Messaging Architecture
+- Reduce master message padding
+- Shrink pillar card padding and text sizes
+- Keep the 5-column grid but make content more compact
 
-**Subtitle (lines 80-86)** -- Replace the current copy with the standard category messaging:
+### Slide 11 — Taglines
+- **Remove** `!h-auto !min-h-screen !overflow-visible`
+- Reduce tagline/headline text to `text-xs`
+- Shrink elevator pitch cards with smaller padding and text
+- Use tighter spacing throughout
 
-```
-Connect safety, content, and training into an intelligent operating platform.
-Turn signals into orchestrated change and measurable outcomes.
-```
+### Slide 13 — Visual Narrative
+- **Remove** `!h-auto !min-h-screen !overflow-visible`
+- Switch from 2-column to 4-column grid
+- Drastically reduce card content — show only title, purpose, and headline (drop "What It Shows" and "Suggested Layout")
+- Use smaller text and tighter padding
 
-The second line will be styled with `text-primary font-medium` to match the existing visual hierarchy.
-
-## Technical Detail
-
-Two text-only changes in `src/components/value-slides/ValueSlide0Title.tsx`, no structural or layout modifications.
+## Files to edit
+- `src/components/coanalyst-slides/CASlide4ProductPositioning.tsx`
+- `src/components/coanalyst-slides/CASlide5MessagingArchitecture.tsx`
+- `src/components/coanalyst-slides/CASlide11Taglines.tsx`
+- `src/components/coanalyst-slides/CASlide13VisualNarrative.tsx`
 
