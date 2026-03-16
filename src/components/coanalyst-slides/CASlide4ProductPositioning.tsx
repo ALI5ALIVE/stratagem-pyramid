@@ -3,12 +3,12 @@ import { SlideNarrationProps } from "@/types/slideProps";
 import { Crosshair, Users, AlertCircle, Clock, Star, CheckCircle } from "lucide-react";
 
 const framework = [
-  { icon: Crosshair, label: "Category", value: "Aviation Data Intelligence" },
-  { icon: Users, label: "Audience", value: "Safety leaders, operations leaders, airline executives, transformation teams" },
-  { icon: AlertCircle, label: "Problem", value: "Aviation data is fragmented, underutilized, and analyzed reactively — leaving patterns, hazards, and weakening controls invisible until events occur" },
-  { icon: Clock, label: "Why Now", value: "Regulatory shift to performance-based oversight, growing data volumes, generic AI creating false confidence, industry moving from compliance to intelligence" },
-  { icon: Star, label: "Unique Value", value: "Purpose-built aviation intelligence with domain-trained models, hybrid AI architecture, and millions of historic reports delivering precision that generic AI cannot match" },
-  { icon: CheckCircle, label: "Proof Points", value: "60+ language support, thousands of aviation event categories, millions of historic reports in training data, cross-domain analysis across safety, ops, maintenance, training, and crew" },
+  { icon: Crosshair, label: "Category", value: "Aviation Data Intelligence — a standalone analytics product, not an add-on to safety reporting" },
+  { icon: Users, label: "Audience", value: "Safety leaders, operations leaders, airline executives, maintenance & engineering, transformation teams" },
+  { icon: AlertCircle, label: "Problem", value: "Aviation data is fragmented across domains, analyzed reactively, and current AI tools lack the granular precision needed — achieving only 30–40% accuracy at detailed categorization levels" },
+  { icon: Clock, label: "Why Now", value: "Airlines are exploring generic AI (Claude, ChatGPT) on their own data, creating false confidence. Regulatory shift to performance-based oversight demands intelligence, not just compliance" },
+  { icon: Star, label: "Unique Value", value: "Hybrid AI architecture (ML models + LLMs) trained on millions of historic reports, achieving 90% accuracy across 4,000+ aviation event categories in 5 classification levels — 3× more precise than any competing model" },
+  { icon: CheckCircle, label: "Proof Points", value: "90%+ analyst time savings, 60+ language support, cross-domain analysis (flight safety, flight ops, cabin ops, ground ops, maintenance & engineering), 7-figure ongoing R&D investment since 2023" },
 ];
 
 const CASlide4ProductPositioning = (props: SlideNarrationProps) => {
@@ -32,10 +32,10 @@ const CASlide4ProductPositioning = (props: SlideNarrationProps) => {
             <h3 className="text-xs font-bold text-primary uppercase tracking-wide mb-3">Differentiated Positioning Statement</h3>
             <p className="text-sm text-foreground leading-relaxed font-medium">
               For aviation organizations that need to move beyond reactive reporting,{" "}
-              <span className="text-primary">CoAnalyst</span> is the aviation data intelligence platform that transforms fragmented safety and operational data into actionable intelligence — enabling proactive control management, predictive risk identification, and measurable operational performance improvement.
+              <span className="text-primary">CoAnalyst</span> is the standalone data intelligence platform that transforms fragmented safety and operational data into actionable intelligence — enabling the shift from critical event management to critical control management.
             </p>
             <p className="text-xs text-muted-foreground mt-3 leading-relaxed">
-              Unlike generic AI tools or manual analysis workflows, CoAnalyst delivers aviation-specific precision built on millions of historic reports, a hybrid AI architecture, and deep domain expertise — making it the only intelligence layer purpose-built for aviation operations.
+              Unlike generic AI tools that hallucinate at granular aviation categorization, or competitor bolt-on AI features limited to basic summarization, CoAnalyst delivers aviation-specific precision built on a hybrid AI architecture, millions of historic reports, and continuous R&D — making it the only intelligence layer purpose-built for aviation operations.
             </p>
           </div>
         </div>
