@@ -14,6 +14,7 @@ import RailPage from "./pages/solutions/RailPage";
 import LineOfSightPage from "./pages/LineOfSightPage";
 import ValueDeck from "./pages/ValueDeck";
 import ContentStrategyPage from "./pages/ContentStrategyPage";
+import CoAnalystDeck from "./pages/CoAnalystDeck";
 
 const queryClient = new QueryClient();
 
