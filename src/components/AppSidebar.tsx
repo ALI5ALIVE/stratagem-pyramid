@@ -19,6 +19,7 @@ const items = [
   { title: "Sales Deck", url: "/sales-deck", icon: Megaphone },
   { title: "Value Deck", url: "/value-deck", icon: TrendingUp },
   { title: "Content Strategy", url: "/content-strategy", icon: FileText },
+  { title: "CoAnalyst Playbook", url: "/coanalyst", icon: Brain },
   { title: "Line of Sight", url: "/line-of-sight", icon: Target },
 ];
 
