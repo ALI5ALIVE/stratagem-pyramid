@@ -14,27 +14,27 @@ const framework = [
 const CASlide4ProductPositioning = (props: SlideNarrationProps) => {
   return (
     <SlideContainer id="ca-product-positioning" title="Product Positioning" subtitle="Sharp, differentiated positioning framework" slideNumber={4} {...props}>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-full">
-        <div className="space-y-3">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 h-full">
+        <div className="space-y-1.5">
           {framework.map((item, i) => (
-            <div key={i} className="bg-card/60 border border-border rounded-lg p-4 flex items-start gap-3">
-              <item.icon className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+            <div key={i} className="bg-card/60 border border-border rounded-lg p-2.5 flex items-start gap-2">
+              <item.icon className="w-3.5 h-3.5 text-primary mt-0.5 shrink-0" />
               <div>
-                <p className="text-xs font-bold text-primary uppercase tracking-wide mb-1">{item.label}</p>
-                <p className="text-sm text-muted-foreground leading-relaxed">{item.value}</p>
+                <p className="text-[10px] font-bold text-primary uppercase tracking-wide mb-0.5">{item.label}</p>
+                <p className="text-[11px] text-muted-foreground leading-snug">{item.value}</p>
               </div>
             </div>
           ))}
         </div>
 
         <div className="flex flex-col justify-center">
-          <div className="bg-primary/10 border border-primary/30 rounded-xl p-6">
-            <h3 className="text-sm font-bold text-primary uppercase tracking-wide mb-4">Differentiated Positioning Statement</h3>
-            <p className="text-lg text-foreground leading-relaxed font-medium">
+          <div className="bg-primary/10 border border-primary/30 rounded-xl p-4">
+            <h3 className="text-xs font-bold text-primary uppercase tracking-wide mb-3">Differentiated Positioning Statement</h3>
+            <p className="text-sm text-foreground leading-relaxed font-medium">
               For aviation organizations that need to move beyond reactive reporting,{" "}
               <span className="text-primary">CoAnalyst</span> is the aviation data intelligence platform that transforms fragmented safety and operational data into actionable intelligence — enabling proactive control management, predictive risk identification, and measurable operational performance improvement.
             </p>
-            <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
+            <p className="text-xs text-muted-foreground mt-3 leading-relaxed">
               Unlike generic AI tools or manual analysis workflows, CoAnalyst delivers aviation-specific precision built on millions of historic reports, a hybrid AI architecture, and deep domain expertise — making it the only intelligence layer purpose-built for aviation operations.
             </p>
           </div>
