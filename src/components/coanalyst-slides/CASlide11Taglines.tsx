@@ -37,15 +37,15 @@ const pitches = [
 
 const CASlide11Taglines = (props: SlideNarrationProps) => {
   return (
-    <SlideContainer id="ca-taglines" title="Taglines & Messaging Lines" subtitle="Ready-to-use positioning language" slideNumber={11} className="!h-auto !min-h-screen !overflow-visible" {...props}>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+    <SlideContainer id="ca-taglines" title="Taglines & Messaging Lines" subtitle="Ready-to-use positioning language" slideNumber={11} {...props}>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 h-full">
         {/* Taglines */}
-        <div className="bg-card/60 border border-border rounded-xl p-5">
-          <h3 className="text-sm font-bold text-primary uppercase tracking-wide mb-4">Tagline Options</h3>
-          <ol className="space-y-2">
+        <div className="bg-card/60 border border-border rounded-xl p-3">
+          <h3 className="text-[10px] font-bold text-primary uppercase tracking-wide mb-2">Tagline Options</h3>
+          <ol className="space-y-1">
             {taglines.map((t, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                <span className="text-xs text-primary font-bold mt-0.5 shrink-0">{i + 1}.</span>
+              <li key={i} className="flex items-start gap-1.5 text-[11px] text-muted-foreground leading-snug">
+                <span className="text-[10px] text-primary font-bold mt-0.5 shrink-0">{i + 1}.</span>
                 {t}
               </li>
             ))}
@@ -53,12 +53,12 @@ const CASlide11Taglines = (props: SlideNarrationProps) => {
         </div>
 
         {/* Headlines */}
-        <div className="bg-card/60 border border-border rounded-xl p-5">
-          <h3 className="text-sm font-bold text-primary uppercase tracking-wide mb-4">Homepage Headlines</h3>
-          <ol className="space-y-2">
+        <div className="bg-card/60 border border-border rounded-xl p-3">
+          <h3 className="text-[10px] font-bold text-primary uppercase tracking-wide mb-2">Homepage Headlines</h3>
+          <ol className="space-y-1">
             {headlines.map((h, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                <span className="text-xs text-primary font-bold mt-0.5 shrink-0">{i + 1}.</span>
+              <li key={i} className="flex items-start gap-1.5 text-[11px] text-muted-foreground leading-snug">
+                <span className="text-[10px] text-primary font-bold mt-0.5 shrink-0">{i + 1}.</span>
                 {h}
               </li>
             ))}
@@ -66,13 +66,13 @@ const CASlide11Taglines = (props: SlideNarrationProps) => {
         </div>
 
         {/* Elevator pitches */}
-        <div className="bg-card/60 border border-border rounded-xl p-5">
-          <h3 className="text-sm font-bold text-primary uppercase tracking-wide mb-4">Elevator Pitches</h3>
-          <div className="space-y-4">
+        <div className="bg-card/60 border border-border rounded-xl p-3">
+          <h3 className="text-[10px] font-bold text-primary uppercase tracking-wide mb-2">Elevator Pitches</h3>
+          <div className="space-y-2">
             {pitches.map((p, i) => (
-              <div key={i} className="bg-primary/5 border border-primary/20 rounded-lg p-3">
-                <p className="text-xs text-primary font-bold mb-1">Pitch {i + 1}</p>
-                <p className="text-xs text-muted-foreground leading-relaxed">{p}</p>
+              <div key={i} className="bg-primary/5 border border-primary/20 rounded-lg p-2">
+                <p className="text-[10px] text-primary font-bold mb-0.5">Pitch {i + 1}</p>
+                <p className="text-[10px] text-muted-foreground leading-snug">{p}</p>
               </div>
             ))}
           </div>

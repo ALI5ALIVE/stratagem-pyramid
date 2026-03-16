@@ -71,31 +71,17 @@ const visuals = [
 
 const CASlide13VisualNarrative = (props: SlideNarrationProps) => {
   return (
-    <SlideContainer id="ca-visual-narrative" title="Visual Narrative System" subtitle="Concept designs to support the positioning across all channels" slideNumber={13} className="!h-auto !min-h-screen !overflow-visible" {...props}>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <SlideContainer id="ca-visual-narrative" title="Visual Narrative System" subtitle="Concept designs to support the positioning across all channels" slideNumber={13} {...props}>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 h-full">
         {visuals.map((v, i) => (
-          <div key={i} className={`${v.bgColor} border border-border rounded-xl p-5`}>
-            <div className="flex items-center gap-2 mb-3">
-              <v.icon className={`w-5 h-5 ${v.color}`} />
-              <h4 className="text-sm font-bold text-foreground">{v.title}</h4>
+          <div key={i} className={`${v.bgColor} border border-border rounded-xl p-3 flex flex-col`}>
+            <div className="flex items-center gap-1.5 mb-2">
+              <v.icon className={`w-3.5 h-3.5 ${v.color}`} />
+              <h4 className="text-[11px] font-bold text-foreground leading-tight">{v.title}</h4>
             </div>
-            <div className="space-y-2">
-              <div>
-                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide">Purpose</p>
-                <p className="text-xs text-muted-foreground">{v.purpose}</p>
-              </div>
-              <div>
-                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide">What It Shows</p>
-                <p className="text-xs text-muted-foreground">{v.shows}</p>
-              </div>
-              <div>
-                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide">Suggested Layout</p>
-                <p className="text-xs text-muted-foreground">{v.layout}</p>
-              </div>
-              <div className="bg-card/60 border border-border rounded-lg px-3 py-2 mt-2">
-                <p className="text-[10px] font-bold text-primary uppercase tracking-wide">Headline</p>
-                <p className="text-sm font-semibold text-foreground">{v.headline}</p>
-              </div>
+            <p className="text-[10px] text-muted-foreground leading-snug mb-2">{v.purpose}</p>
+            <div className="bg-card/60 border border-border rounded-lg px-2 py-1.5 mt-auto">
+              <p className="text-[10px] font-semibold text-foreground leading-snug">{v.headline}</p>
             </div>
           </div>
         ))}
