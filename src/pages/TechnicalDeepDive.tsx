@@ -7,6 +7,9 @@ import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1Strateg
 import TechSlide2IndustryChallenge from "@/components/tech-slides/TechSlide2IndustryChallenge";
 import TechSlide3BeforeAfter from "@/components/tech-slides/TechSlide3BeforeAfter";
 import TechSlide4Platform from "@/components/tech-slides/TechSlide4Platform";
+import TechSlide4aSafetyManager from "@/components/tech-slides/TechSlide4aSafetyManager";
+import TechSlide4bContentManager from "@/components/tech-slides/TechSlide4bContentManager";
+import TechSlide4cTrainingManager from "@/components/tech-slides/TechSlide4cTrainingManager";
 import TechSlide5DTOP from "@/components/tech-slides/TechSlide5DTOP";
 import TechSlide6Capabilities from "@/components/tech-slides/TechSlide6Capabilities";
 import TechSlide7CoAnalyst from "@/components/tech-slides/TechSlide7CoAnalyst";
