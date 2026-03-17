@@ -9,8 +9,8 @@ export function AppLayout() {
       <SidebarProvider defaultOpen={false}>
         <div className="min-h-screen flex w-full">
           <AppSidebar />
-          <main className="flex-1 min-w-0 relative">
-            <SidebarTrigger className="fixed top-2 z-50 bg-background/80 backdrop-blur-sm transition-[left] duration-200 left-[calc(var(--sidebar-width,3rem)+0.5rem)]" />
+          <SidebarTrigger className="fixed top-2 left-2 z-[60] bg-background/80 backdrop-blur-sm" />
+          <main className="flex-1 min-w-0">
             <Outlet />
           </main>
         </div>
