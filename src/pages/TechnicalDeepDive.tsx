@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
+import { useTechPitchNarration } from "@/hooks/useTechPitchNarration";
 
 import TechSlide0Title from "@/components/tech-slides/TechSlide0Title";
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
@@ -55,14 +56,16 @@ const TechnicalDeepDive = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { register, updateActiveIndex } = useSlideNavigation();
   const { open, setOpen } = useSidebar();
+  const narration = useTechPitchNarration();
 
   const navigateToSlide = useCallback((index: number) => {
     const el = document.getElementById(slides[index]?.id);
     if (el) {
+      narration.stop();
       el.scrollIntoView({ behavior: "smooth" });
       setCurrentSlide(index);
     }
-  }, []);
+  }, [narration.stop]);
 
   useEffect(() => {
     register(
@@ -84,11 +87,15 @@ const TechnicalDeepDive = () => {
       const scrollTop = container.scrollTop;
       const slideHeight = container.clientHeight;
       const index = Math.round(scrollTop / slideHeight);
-      setCurrentSlide(Math.min(index, slides.length - 1));
+      const newSlide = Math.min(index, slides.length - 1);
+      if (newSlide !== currentSlide) {
+        narration.stop();
+        setCurrentSlide(newSlide);
+      }
     };
     container.addEventListener("scroll", handleScroll, { passive: true });
     return () => container.removeEventListener("scroll", handleScroll);
-  }, [open, setOpen]);
+  }, [open, setOpen, currentSlide, narration.stop]);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -104,15 +111,35 @@ const TechnicalDeepDive = () => {
     return () => window.removeEventListener("keydown", handleKey);
   }, [currentSlide, navigateToSlide]);
 
+  const handleNextSlide = useCallback(() => {
+    if (currentSlide < slides.length - 1) {
+      navigateToSlide(currentSlide + 1);
+    }
+  }, [currentSlide, navigateToSlide]);
+
   return (
     <div ref={containerRef} className="h-screen overflow-y-auto snap-y snap-mandatory scroll-smooth">
       {slides.map((slide, index) => {
         const SlideComponent = slide.component as React.ComponentType<any>;
+        const isCurrentSlide = index === currentSlide;
+        const slideId = slide.id;
+
+        const narrationProps = {
+          isPlaying: isCurrentSlide && narration.currentSlide === slideId ? narration.isPlaying : false,
+          isLoading: isCurrentSlide && narration.currentSlide === slideId ? narration.isLoading : false,
+          progress: isCurrentSlide && narration.currentSlide === slideId ? narration.progress : 0,
+          hasCompleted: isCurrentSlide && narration.currentSlide === slideId ? narration.hasCompleted : false,
+          onPlay: () => narration.play(slideId),
+          onPause: narration.pause,
+          onNextSlide: handleNextSlide,
+        };
+
         return (
           <div key={slide.id} className="snap-start">
             <SlideComponent
               slideNumber={index}
               onNavigateToSlide={index === 0 ? navigateToSlide : undefined}
+              {...narrationProps}
             />
           </div>
         );
