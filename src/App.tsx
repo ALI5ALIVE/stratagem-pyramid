@@ -36,6 +36,7 @@ const App = () => (
             <Route path="/coanalyst" element={<CoAnalystDeck />} />
             <Route path="/pitch-executive" element={<ExecutivePitch />} />
             <Route path="/pitch-operational" element={<OperationalPitch />} />
+            <Route path="/pitch-technical" element={<TechnicalDeepDive />} />
             <Route path="/homepage-mockup" element={<HomepageMockup />} />
             <Route path="/solutions/airlines" element={<AirlinesPage />} />
             <Route path="/solutions/defense" element={<DefensePage />} />
