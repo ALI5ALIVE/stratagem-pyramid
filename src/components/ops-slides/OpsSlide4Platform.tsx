@@ -106,6 +106,7 @@ const OpsSlide4Platform = ({ slideNumber, ...narrationProps }: OpsSlide4Platform
             );
           })}
         </div>
+      </div>
     </SalesSlideContainer>
   );
 };

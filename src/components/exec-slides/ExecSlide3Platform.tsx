@@ -86,6 +86,7 @@ const ExecSlide3Platform = ({ slideNumber, ...narrationProps }: ExecSlide3Platfo
             );
           })}
         </div>
+      </div>
     </SalesSlideContainer>
   );
 };
