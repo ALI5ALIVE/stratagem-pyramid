@@ -1,6 +1,6 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { Search, TestTube, Rocket, MessageSquare } from "lucide-react";
+import { Search, TestTube, Rocket, CalendarCheck } from "lucide-react";
 
 interface OpsSlide11Props extends SlideNarrationProps {
   slideNumber?: number;
@@ -66,14 +66,16 @@ const OpsSlide11GettingStarted = ({ slideNumber, ...narrationProps }: OpsSlide11
 
         {/* CTA */}
         <div className="p-6 rounded-xl border border-primary/30 bg-primary/5 text-center">
-          <MessageSquare className="h-7 w-7 text-primary mx-auto mb-3" />
+          <CalendarCheck className="h-7 w-7 text-primary mx-auto mb-3" />
           <h3 className="text-xl font-display font-bold text-foreground mb-2">
-            What does your first use case look like?
+            Start With a 90-Day Pilot
           </h3>
-          <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-            Let's start with a discovery workshop to identify the use case that will
-            deliver the most value for your operation — and prove it in 90 days.
+          <p className="text-sm text-muted-foreground max-w-lg mx-auto mb-4">
+            Pick one use case — hard landing retraining, regulatory change cascade, or crew fatigue detection — and prove measurable outcomes in 90 days.
           </p>
+          <button className="px-6 py-3 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors">
+            Book a Discovery Workshop
+          </button>
         </div>
       </div>
     </SalesSlideContainer>

@@ -1,12 +1,39 @@
 import { useState } from "react";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { Radar, Zap, GitBranch, BadgeCheck } from "lucide-react";
+import { Radar, Zap, GitBranch, BadgeCheck, Shield, FileText, GraduationCap } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface OpsSlide4Props extends SlideNarrationProps {
   slideNumber?: number;
 }
+
+const platformModules = [
+  {
+    icon: Shield,
+    name: "Safety Manager365",
+    desc: "SMS reporting, FOQA/FDM ingestion, audit & hazard management",
+    color: "text-red-400",
+    bg: "bg-red-500/10",
+    border: "border-red-500/20",
+  },
+  {
+    icon: FileText,
+    name: "Content Manager365",
+    desc: "Procedure authoring, revision cascades, regulatory change analysis",
+    color: "text-blue-400",
+    bg: "bg-blue-500/10",
+    border: "border-blue-500/20",
+  },
+  {
+    icon: GraduationCap,
+    name: "Training Manager365",
+    desc: "Competency tracking, targeted assignments, completion evidence",
+    color: "text-emerald-400",
+    bg: "bg-emerald-500/10",
+    border: "border-emerald-500/20",
+  },
+];
 
 const steps = [
   {
@@ -51,30 +78,33 @@ const steps = [
   },
 ];
 
-const dataSources = ["FOQA/FDM", "Safety Reports", "Maintenance", "Crew Logs", "Regulatory", "Audit"];
-
 const OpsSlide4DTOP = ({ slideNumber, ...narrationProps }: OpsSlide4Props) => {
   const [activeStep, setActiveStep] = useState<number | null>(null);
 
   return (
     <SalesSlideContainer
       id="ops-slide-4"
-      title="The Platform: DTOP in Action"
-      subtitle="Detect → Trigger → Orchestrate → Prove"
+      title="The Platform: Detect → Trigger → Orchestrate → Prove"
+      subtitle="Three connected applications powering a closed-loop operating model"
       slideNumber={slideNumber}
       {...narrationProps}
     >
-      <div className="flex-1 flex flex-col gap-4 min-h-0">
-        {/* Data sources strip */}
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-xs text-muted-foreground uppercase tracking-wider mr-2">Data Sources:</span>
-          {dataSources.map((src) => (
-            <span key={src} className="px-2.5 py-1 text-xs rounded-full border border-muted/30 bg-muted/10 text-muted-foreground">
-              {src}
-            </span>
+      <div className="flex-1 flex flex-col gap-3 min-h-0">
+        {/* Platform module cards */}
+        <div className="grid grid-cols-3 gap-3">
+          {platformModules.map((mod) => (
+            <div key={mod.name} className={cn("p-3 rounded-lg border flex items-start gap-3", mod.border, mod.bg)}>
+              <mod.icon className={cn("h-5 w-5 shrink-0 mt-0.5", mod.color)} />
+              <div className="min-w-0">
+                <h4 className={cn("text-sm font-bold", mod.color)}>{mod.name}</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">{mod.desc}</p>
+              </div>
+            </div>
           ))}
-          <span className="text-sm text-primary font-medium ml-1">65K+ signals/mo</span>
         </div>
+
+        {/* Arrow connector */}
+        <div className="flex justify-center text-muted-foreground/40 text-lg">↓</div>
 
         {/* DTOP pipeline */}
         <div className="grid grid-cols-4 gap-3 flex-1 min-h-0">
@@ -89,17 +119,16 @@ const OpsSlide4DTOP = ({ slideNumber, ...narrationProps }: OpsSlide4Props) => {
                 activeStep === index && "ring-1 ring-primary/50 scale-[1.02]"
               )}
             >
-              <div className="flex items-center gap-2 mb-3">
-                <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center text-base font-bold", step.bgColor, step.color)}>
+              <div className="flex items-center gap-2 mb-2">
+                <div className={cn("w-9 h-9 rounded-lg flex items-center justify-center text-sm font-bold", step.bgColor, step.color)}>
                   {step.letter}
                 </div>
-                <span className={cn("text-base font-bold", step.color)}>{step.label}</span>
+                <span className={cn("text-sm font-bold", step.color)}>{step.label}</span>
               </div>
-              <p className="text-sm text-muted-foreground leading-relaxed flex-1">{step.description}</p>
-              {/* Expanded detail */}
+              <p className="text-xs text-muted-foreground leading-relaxed flex-1">{step.description}</p>
               {activeStep === index && (
-                <div className="mt-3 pt-3 border-t border-muted/20">
-                  <p className="text-sm text-primary/80">{step.auditTrail}</p>
+                <div className="mt-2 pt-2 border-t border-muted/20">
+                  <p className="text-xs text-primary/80">{step.auditTrail}</p>
                 </div>
               )}
             </button>
