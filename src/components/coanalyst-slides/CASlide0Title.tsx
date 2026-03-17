@@ -1,31 +1,9 @@
-import { ChevronDown, Brain, Target, Compass, Crosshair, LayoutGrid, Cog, TrendingUp, Shield, Users, MessageSquare, Quote, Globe, Eye, Layers } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import complyLogo from "@/assets/comply365-logo-white.png";
 import SlidePlayButton from "@/components/SlidePlayButton";
 import { SlideNarrationProps } from "@/types/slideProps";
 
-const sections = [
-  { num: 1, label: "Executive Summary", icon: Brain, color: "text-blue-400", bgColor: "bg-blue-500/10", borderColor: "border-blue-500/30" },
-  { num: 2, label: "The Intelligence Gap", icon: Compass, color: "text-emerald-400", bgColor: "bg-emerald-500/10", borderColor: "border-emerald-500/30" },
-  { num: 3, label: "Strategic Narrative", icon: Target, color: "text-amber-400", bgColor: "bg-amber-500/10", borderColor: "border-amber-500/30" },
-  { num: 4, label: "Product Positioning", icon: Crosshair, color: "text-violet-400", bgColor: "bg-violet-500/10", borderColor: "border-violet-500/30" },
-  { num: 5, label: "Messaging Architecture", icon: LayoutGrid, color: "text-cyan-400", bgColor: "bg-cyan-500/10", borderColor: "border-cyan-500/30" },
-  { num: 6, label: "How It Works", icon: Cog, color: "text-orange-400", bgColor: "bg-orange-500/10", borderColor: "border-orange-500/30" },
-  { num: 7, label: "Business Outcomes", icon: TrendingUp, color: "text-green-400", bgColor: "bg-green-500/10", borderColor: "border-green-500/30" },
-  { num: 8, label: "vs Generic AI", icon: Shield, color: "text-red-400", bgColor: "bg-red-500/10", borderColor: "border-red-500/30" },
-  { num: 9, label: "Persona Messaging", icon: Users, color: "text-pink-400", bgColor: "bg-pink-500/10", borderColor: "border-pink-500/30" },
-  { num: 10, label: "Objection Handling", icon: MessageSquare, color: "text-yellow-400", bgColor: "bg-yellow-500/10", borderColor: "border-yellow-500/30" },
-  { num: 11, label: "Taglines & Lines", icon: Quote, color: "text-indigo-400", bgColor: "bg-indigo-500/10", borderColor: "border-indigo-500/30" },
-  { num: 12, label: "Website Messaging", icon: Globe, color: "text-teal-400", bgColor: "bg-teal-500/10", borderColor: "border-teal-500/30" },
-  { num: 13, label: "Visual Narrative", icon: Eye, color: "text-fuchsia-400", bgColor: "bg-fuchsia-500/10", borderColor: "border-fuchsia-500/30" },
-  { num: 14, label: "Deck Structure", icon: Layers, color: "text-sky-400", bgColor: "bg-sky-500/10", borderColor: "border-sky-500/30" },
-];
-
-interface CASlide0TitleProps extends SlideNarrationProps {
-  onNavigateToSlide?: (index: number) => void;
-}
-
 const CASlide0Title = ({
-  onNavigateToSlide,
   isPlaying = false,
   isLoading = false,
   progress = 0,
@@ -33,7 +11,7 @@ const CASlide0Title = ({
   onPlay,
   onPause,
   onNextSlide,
-}: CASlide0TitleProps) => {
+}: SlideNarrationProps) => {
   return (
     <section className="h-screen w-full flex flex-col snap-start relative overflow-hidden bg-background">
       {/* Background effects */}
@@ -71,22 +49,6 @@ const CASlide0Title = ({
             <br />
             <span className="text-primary font-medium">How CoAnalyst powers the Operational Performance Platform.</span>
           </p>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2">
-            {sections.map((section) => (
-              <button
-                key={section.num}
-                onClick={() => onNavigateToSlide?.(section.num)}
-                className={`${section.bgColor} ${section.borderColor} border rounded-lg p-2.5 text-left hover:scale-[1.02] transition-all group cursor-pointer`}
-              >
-                <div className="flex items-center gap-2 mb-1">
-                  <section.icon className={`w-3.5 h-3.5 ${section.color}`} />
-                  <span className="text-[10px] text-muted-foreground">{String(section.num).padStart(2, "0")}</span>
-                </div>
-                <p className="text-xs font-medium text-foreground leading-tight">{section.label}</p>
-              </button>
-            ))}
-          </div>
         </div>
       </div>
 
