@@ -3,7 +3,7 @@ import { SlideNarrationProps } from "@/types/slideProps";
 import { Crosshair, Users, AlertCircle, Clock, Star, CheckCircle } from "lucide-react";
 
 const framework = [
-  { icon: Crosshair, label: "Category", value: "Aviation Data Intelligence — a standalone analytics product, not an add-on to safety reporting" },
+  { icon: Crosshair, label: "Role", value: "Intelligence layer of the Operational Performance Platform — powering DTOP across Safety, Content, and Training" },
   { icon: Users, label: "Audience", value: "Safety leaders, operations leaders, airline executives, maintenance & engineering, transformation teams" },
   { icon: AlertCircle, label: "Problem", value: "Aviation data is fragmented across domains, analyzed reactively, and current AI tools lack the granular precision needed — achieving only 30–40% accuracy at detailed categorization levels" },
   { icon: Clock, label: "Why Now", value: "Airlines are exploring generic AI (Claude, ChatGPT) on their own data, creating false confidence. Regulatory shift to performance-based oversight demands intelligence, not just compliance" },
