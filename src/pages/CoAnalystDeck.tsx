@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
-import { useSimpleNarration } from "@/hooks/useSimpleNarration";
+import { useCoAnalystNarration } from "@/hooks/useCoAnalystNarration";
 import CASlide0Title from "@/components/coanalyst-slides/CASlide0Title";
 import CASlide1ExecutiveSummary from "@/components/coanalyst-slides/CASlide1ExecutiveSummary";
 import CASlide2CategoryNarrative from "@/components/coanalyst-slides/CASlide2CategoryNarrative";
