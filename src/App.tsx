@@ -15,6 +15,7 @@ import LineOfSightPage from "./pages/LineOfSightPage";
 import ValueDeck from "./pages/ValueDeck";
 import ContentStrategyPage from "./pages/ContentStrategyPage";
 import CoAnalystDeck from "./pages/CoAnalystDeck";
+import ExecutivePitch from "./pages/ExecutivePitch";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/value-deck" element={<ValueDeck />} />
             <Route path="/content-strategy" element={<ContentStrategyPage />} />
             <Route path="/coanalyst" element={<CoAnalystDeck />} />
+            <Route path="/pitch-executive" element={<ExecutivePitch />} />
             <Route path="/homepage-mockup" element={<HomepageMockup />} />
             <Route path="/solutions/airlines" element={<AirlinesPage />} />
             <Route path="/solutions/defense" element={<DefensePage />} />
