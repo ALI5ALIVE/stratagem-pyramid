@@ -9,7 +9,7 @@ const dataTypes = [
 
 const CASlide2CategoryNarrative = (props: SlideNarrationProps) => {
   return (
-    <SlideContainer id="ca-category-narrative" title="Category & Market Narrative" subtitle="Why the industry needs a new category of intelligence" slideNumber={2} {...props}>
+    <SlideContainer id="ca-category-narrative" title="The Intelligence Gap" subtitle="Why operational modules alone aren't enough" slideNumber={2} {...props}>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-full">
         {/* Problem */}
         <div className="bg-card/60 border border-border rounded-xl p-4 flex flex-col">
