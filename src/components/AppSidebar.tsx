@@ -21,6 +21,7 @@ const items = [
   { title: "Content Strategy", url: "/content-strategy", icon: FileText },
   { title: "CoAnalyst Playbook", url: "/coanalyst", icon: Brain },
   { title: "Executive Pitch", url: "/pitch-executive", icon: Rocket },
+  { title: "Operational Pitch", url: "/pitch-operational", icon: Briefcase },
   { title: "Line of Sight", url: "/line-of-sight", icon: Target },
 ];
 
