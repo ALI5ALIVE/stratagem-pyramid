@@ -5,7 +5,7 @@ const sections = [
   {
     label: "Hero",
     headline: "Activate Your Aviation Data. Intelligence for Safety, Operations, and Beyond.",
-    copy: "CoAnalyst is a standalone data intelligence platform that transforms fragmented safety and operational data into actionable intelligence — enabling aviation organizations to move from critical event management to critical control management.",
+    copy: "CoAnalyst is the intelligence engine within the Operational Performance Platform that transforms fragmented safety and operational data into actionable intelligence — enabling aviation organizations to move from critical event management to critical control management.",
     cta: "See CoAnalyst in Action →",
   },
   {
