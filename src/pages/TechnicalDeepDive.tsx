@@ -11,7 +11,7 @@ import TechSlide4aSafetyManager from "@/components/tech-slides/TechSlide4aSafety
 import TechSlide4bContentManager from "@/components/tech-slides/TechSlide4bContentManager";
 import TechSlide4cTrainingManager from "@/components/tech-slides/TechSlide4cTrainingManager";
 import TechSlide5DTOP from "@/components/tech-slides/TechSlide5DTOP";
-import TechSlide6Capabilities from "@/components/tech-slides/TechSlide6Capabilities";
+
 import TechSlide7CoAnalyst from "@/components/tech-slides/TechSlide7CoAnalyst";
 import TechSlide8IntelligenceTiers from "@/components/tech-slides/TechSlide8IntelligenceTiers";
 import TechSlide9VsGenericAI from "@/components/tech-slides/TechSlide9VsGenericAI";
