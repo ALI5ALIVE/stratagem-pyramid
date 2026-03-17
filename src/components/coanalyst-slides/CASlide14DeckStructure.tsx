@@ -42,8 +42,8 @@ const CASlide14DeckStructure = (props: SlideNarrationProps) => {
             <h3 className="text-xs font-bold text-primary uppercase tracking-wide mb-3">Final Recommended Positioning</h3>
             <div className="space-y-3">
               <div>
-                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide mb-0.5">Category</p>
-                <p className="text-lg font-display font-bold text-foreground">Aviation Data Intelligence</p>
+                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide mb-0.5">Role</p>
+                <p className="text-lg font-display font-bold text-foreground">Intelligence Layer — Operational Performance Platform</p>
               </div>
               <div>
                 <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide mb-0.5">One-Line Pitch</p>
@@ -51,7 +51,7 @@ const CASlide14DeckStructure = (props: SlideNarrationProps) => {
               </div>
               <div>
                 <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide mb-0.5">Positioning</p>
-                <p className="text-xs text-muted-foreground leading-relaxed">CoAnalyst is a standalone data intelligence platform that transforms aviation data into operational intelligence — enabling the shift from critical event management to critical control management across safety, operations, maintenance, training, and crew domains.</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">CoAnalyst is the intelligence layer of the Operational Performance Platform that transforms aviation data into operational intelligence — enabling the shift from critical event management to critical control management across safety, operations, maintenance, training, and crew domains.</p>
               </div>
             </div>
           </div>
