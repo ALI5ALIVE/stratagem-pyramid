@@ -147,7 +147,7 @@ const CoAnalystDeck = () => {
       </div>
 
       <div ref={containerRef} className="h-full w-full overflow-y-auto snap-y snap-mandatory scroll-smooth">
-        <CASlide0Title {...getNarrationProps(0)} onNavigateToSlide={scrollToSlide} />
+        <CASlide0Title {...getNarrationProps(0)} />
         <CASlide1ExecutiveSummary {...getNarrationProps(1)} />
         <CASlide2CategoryNarrative {...getNarrationProps(2)} />
         <CASlide3StrategicNarrative {...getNarrationProps(3)} />
