@@ -31,7 +31,7 @@ const narrativeSteps = [
 
 const CASlide3StrategicNarrative = (props: SlideNarrationProps) => {
   return (
-    <SlideContainer id="ca-strategic-narrative" title="The Strategic Narrative" subtitle="The category-creation story" slideNumber={3} {...props}>
+    <SlideContainer id="ca-strategic-narrative" title="The Strategic Narrative" subtitle="The intelligence story" slideNumber={3} {...props}>
       <div className="flex flex-col gap-2 h-full justify-center max-w-5xl mx-auto">
         {narrativeSteps.map((step, i) => (
           <div key={i} className="flex items-start gap-3">
