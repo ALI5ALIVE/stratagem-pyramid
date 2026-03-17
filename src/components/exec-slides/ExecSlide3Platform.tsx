@@ -47,13 +47,26 @@ const ExecSlide3Platform = ({ slideNumber, ...narrationProps }: ExecSlide3Platfo
         </div>
 
         {/* Right — Product Module Cards */}
-        <div className="flex flex-col gap-4 justify-center">
+        <div className="flex flex-col gap-3 justify-center">
+          {/* Intelligence Layer Card */}
+          <div className="rounded-xl border border-primary/30 bg-primary/10 p-4 flex gap-4 items-start">
+            <div className="mt-0.5 text-primary">
+              <Brain className="w-7 h-7" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold text-primary">CoAnalyst — Intelligence Layer</h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                The key to unlocking operational intelligence. CoAnalyst connects safety, content, and training data — transforming siloed reports into actionable insights through <span className="text-primary font-semibold">CoAuthor</span>, <span className="text-primary font-semibold">CoAnalyst</span>, and <span className="text-primary font-semibold">CoTrainer</span>.
+              </p>
+            </div>
+          </div>
+
           {modules.map((mod) => {
             const Icon = mod.icon;
             return (
               <div
                 key={mod.name}
-                className={`rounded-xl border p-5 flex gap-4 items-start ${mod.bgColor}`}
+                className={`rounded-xl border p-4 flex gap-4 items-start ${mod.bgColor}`}
               >
                 <div className={`mt-0.5 ${mod.color}`}>
                   <Icon className="w-7 h-7" />
@@ -73,19 +86,6 @@ const ExecSlide3Platform = ({ slideNumber, ...narrationProps }: ExecSlide3Platfo
             );
           })}
         </div>
-      </div>
-
-      {/* Bottom — CoAnalyst Intelligence Layer Bar */}
-      <div className="mt-4 rounded-xl border border-primary/30 bg-primary/5 px-6 py-3 flex items-center justify-center gap-6">
-        <Brain className="w-5 h-5 text-primary" />
-        <span className="text-sm font-medium text-foreground">
-          AI-Powered Intelligence Layer:
-          <span className="text-primary ml-2 font-semibold">CoAuthor</span>
-          <span className="text-muted-foreground mx-1">·</span>
-          <span className="text-primary font-semibold">CoAnalyst</span>
-          <span className="text-muted-foreground mx-1">·</span>
-          <span className="text-primary font-semibold">CoTrainer</span>
-        </span>
       </div>
     </SalesSlideContainer>
   );

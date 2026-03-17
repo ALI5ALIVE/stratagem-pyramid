@@ -65,13 +65,26 @@ const OpsSlide4Platform = ({ slideNumber, ...narrationProps }: OpsSlide4Platform
         </div>
 
         {/* Right — Product Module Cards */}
-        <div className="flex flex-col gap-3 justify-center overflow-y-auto">
+        <div className="flex flex-col gap-2 justify-center overflow-y-auto">
+          {/* Intelligence Layer Card */}
+          <div className="rounded-xl border border-primary/30 bg-primary/10 p-3 flex gap-3 items-start">
+            <div className="mt-0.5 text-primary">
+              <Brain className="w-6 h-6" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-base font-semibold text-primary">CoAnalyst — Intelligence Layer</h3>
+              <p className="text-xs text-muted-foreground mt-1">
+                The key that unlocks data intelligence across your operation. CoAnalyst activates the data held within Safety, Content, and Training Manager — surfacing patterns, predicting risks, and driving closed-loop corrective action through <span className="text-primary font-semibold">CoAuthor</span>, <span className="text-primary font-semibold">CoAnalyst</span>, and <span className="text-primary font-semibold">CoTrainer</span>.
+              </p>
+            </div>
+          </div>
+
           {modules.map((mod) => {
             const Icon = mod.icon;
             return (
               <div
                 key={mod.name}
-                className={`rounded-xl border p-4 ${mod.bgColor}`}
+                className={`rounded-xl border p-3 ${mod.bgColor}`}
               >
                 <div className="flex items-center gap-3 mb-2">
                   <Icon className={`w-6 h-6 ${mod.color}`} />
@@ -93,19 +106,6 @@ const OpsSlide4Platform = ({ slideNumber, ...narrationProps }: OpsSlide4Platform
             );
           })}
         </div>
-      </div>
-
-      {/* Bottom — CoAnalyst Intelligence Layer Bar */}
-      <div className="mt-3 rounded-xl border border-primary/30 bg-primary/5 px-6 py-3 flex items-center justify-center gap-6">
-        <Brain className="w-5 h-5 text-primary" />
-        <span className="text-sm font-medium text-foreground">
-          AI-Powered Intelligence Layer:
-          <span className="text-primary ml-2 font-semibold">CoAuthor</span>
-          <span className="text-muted-foreground mx-1">·</span>
-          <span className="text-primary font-semibold">CoAnalyst</span>
-          <span className="text-muted-foreground mx-1">·</span>
-          <span className="text-primary font-semibold">CoTrainer</span>
-        </span>
       </div>
     </SalesSlideContainer>
   );
