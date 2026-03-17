@@ -45,8 +45,17 @@ const stages = [
   },
 ];
 
+// SVG curve points for the maturity curve
+const curvePoints = [
+  { x: 60, y: 170 },
+  { x: 150, y: 155 },
+  { x: 250, y: 130 },
+  { x: 350, y: 85 },
+  { x: 450, y: 25 },
+];
+
 const OpsSlide8MaturityRoadmap = ({ slideNumber, ...narrationProps }: OpsSlide8Props) => {
-  const [activeStage, setActiveStage] = useState(1);
+  const [activeStage, setActiveStage] = useState(0);
   const selected = stages[activeStage];
 
   return (
@@ -57,67 +66,92 @@ const OpsSlide8MaturityRoadmap = ({ slideNumber, ...narrationProps }: OpsSlide8P
       slideNumber={slideNumber}
       {...narrationProps}
     >
-      <div className="flex-1 flex flex-col gap-6 overflow-hidden">
-        {/* Curve visualization - simplified */}
-        <div className="relative flex-1 flex items-end">
-          {/* Curve line */}
-          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 500 200" preserveAspectRatio="none">
-            <path
-              d="M 30 180 Q 100 170 160 155 Q 220 140 280 110 Q 340 75 400 30 Q 430 15 470 5"
-              fill="none"
-              stroke="hsl(var(--primary))"
-              strokeWidth="2"
-              strokeOpacity="0.3"
-            />
-          </svg>
-
-          {/* Stage dots */}
-          <div className="relative w-full flex justify-between items-end px-4 pb-4" style={{ height: "100%" }}>
-            {stages.map((stage, i) => {
-              const heightPercent = 15 + i * 20;
-              return (
-                <button
-                  key={stage.stage}
-                  onClick={() => setActiveStage(i)}
-                  className="flex flex-col items-center gap-1 relative"
-                  style={{ marginBottom: `${heightPercent}%` }}
-                >
-                  {/* "You are here" marker */}
-                  {i <= 1 && i === activeStage && (
-                    <span className="text-[9px] text-primary font-medium absolute -top-5 whitespace-nowrap">
-                      You are here
-                    </span>
+      <div className="flex-1 flex flex-col gap-4 min-h-0">
+        {/* Two-column: curve + detail */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-0">
+          {/* Left: SVG curve */}
+          <div className="flex flex-col">
+            <svg className="w-full flex-1" viewBox="0 0 500 200" preserveAspectRatio="xMidYMid meet">
+              {/* Grid lines */}
+              {[50, 100, 150].map((y) => (
+                <line key={y} x1="40" y1={y} x2="470" y2={y} stroke="hsl(var(--muted))" strokeWidth="0.5" strokeOpacity="0.2" />
+              ))}
+              {/* Curve */}
+              <path
+                d={`M ${curvePoints.map(p => `${p.x} ${p.y}`).join(' L ')}`}
+                fill="none"
+                stroke="hsl(var(--primary))"
+                strokeWidth="2.5"
+                strokeOpacity="0.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              {/* Stage dots */}
+              {curvePoints.map((pt, i) => (
+                <g key={i} onClick={() => setActiveStage(i)} className="cursor-pointer">
+                  {/* Glow ring for active */}
+                  {activeStage === i && (
+                    <circle cx={pt.x} cy={pt.y} r="14" fill="hsl(var(--primary))" fillOpacity="0.15" />
                   )}
-                  <div
+                  <circle
+                    cx={pt.x} cy={pt.y} r="8"
                     className={cn(
-                      "w-4 h-4 rounded-full transition-all cursor-pointer",
-                      stage.dotColor,
-                      activeStage === i ? "scale-150 ring-2 ring-primary/30" : "opacity-60"
+                      activeStage === i ? "fill-primary" : "fill-muted-foreground/40"
                     )}
+                    style={{ transition: "all 0.2s" }}
                   />
-                  <span className={cn(
-                    "text-[10px] font-medium whitespace-nowrap",
-                    activeStage === i ? stage.color : "text-muted-foreground/60"
-                  )}>
-                    {stage.label}
-                  </span>
-                </button>
-              );
-            })}
+                  {/* Label below */}
+                  <text
+                    x={pt.x} y={pt.y + 22}
+                    textAnchor="middle"
+                    className={cn(
+                      "text-[11px] font-medium",
+                      activeStage === i ? "fill-primary" : "fill-muted-foreground/50"
+                    )}
+                  >
+                    {stages[i].label}
+                  </text>
+                  {/* "You are here" marker */}
+                  {i <= 1 && activeStage === i && (
+                    <text x={pt.x} y={pt.y - 18} textAnchor="middle" className="fill-primary text-[9px] font-medium">
+                      You are here
+                    </text>
+                  )}
+                </g>
+              ))}
+            </svg>
           </div>
-        </div>
 
-        {/* Active stage detail */}
-        <div className={cn(
-          "p-4 rounded-xl border border-muted/20 bg-muted/5 transition-all"
-        )}>
-          <div className="flex items-center gap-2 mb-2">
-            <div className={cn("w-3 h-3 rounded-full", selected.dotColor)} />
-            <span className={cn("text-sm font-bold", selected.color)}>
-              Stage {selected.stage}: {selected.label}
-            </span>
+          {/* Right: Active stage detail */}
+          <div className={cn(
+            "p-6 rounded-xl border border-muted/20 bg-muted/5 flex flex-col justify-center"
+          )}>
+            <div className="flex items-center gap-3 mb-4">
+              <div className={cn("w-5 h-5 rounded-full", selected.dotColor)} />
+              <span className={cn("text-xl font-bold", selected.color)}>
+                Stage {selected.stage}: {selected.label}
+              </span>
+            </div>
+            <p className="text-base text-muted-foreground leading-relaxed">{selected.useCase}</p>
+
+            {/* Stage selector pills */}
+            <div className="flex gap-2 mt-6 pt-4 border-t border-muted/20">
+              {stages.map((s, i) => (
+                <button
+                  key={s.stage}
+                  onClick={() => setActiveStage(i)}
+                  className={cn(
+                    "px-3 py-1.5 rounded-full text-xs font-medium transition-all",
+                    activeStage === i
+                      ? `${s.dotColor} text-white`
+                      : "bg-muted/10 text-muted-foreground hover:bg-muted/20"
+                  )}
+                >
+                  {s.stage}
+                </button>
+              ))}
+            </div>
           </div>
-          <p className="text-sm text-muted-foreground">{selected.useCase}</p>
         </div>
       </div>
     </SalesSlideContainer>

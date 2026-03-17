@@ -36,15 +36,15 @@ const OpsSlide5Intelligence = ({ slideNumber, ...narrationProps }: OpsSlide5Prop
       slideNumber={slideNumber}
       {...narrationProps}
     >
-      <div className="flex-1 flex flex-col gap-4 overflow-hidden">
+      <div className="flex-1 flex flex-col gap-4 min-h-0">
         {/* Pipeline */}
         <div className="flex items-stretch gap-2">
           {pipeline.map((step, i) => (
             <div key={step.label} className="flex items-center gap-2 flex-1">
-              <div className={`flex flex-col items-center p-2 rounded-lg border border-muted/20 ${step.bg} flex-1`}>
-                <step.icon className={`h-5 w-5 ${step.color} mb-1`} />
-                <span className={`text-xs font-bold ${step.color}`}>{step.label}</span>
-                <span className="text-[10px] text-muted-foreground text-center mt-0.5 leading-tight">{step.desc}</span>
+              <div className={`flex flex-col items-center p-3 rounded-lg border border-muted/20 ${step.bg} flex-1`}>
+                <step.icon className={`h-6 w-6 ${step.color} mb-1.5`} />
+                <span className={`text-sm font-bold ${step.color}`}>{step.label}</span>
+                <span className="text-xs text-muted-foreground text-center mt-1 leading-tight">{step.desc}</span>
               </div>
               {i < pipeline.length - 1 && (
                 <span className="text-muted-foreground/30 text-lg shrink-0">→</span>
@@ -53,45 +53,45 @@ const OpsSlide5Intelligence = ({ slideNumber, ...narrationProps }: OpsSlide5Prop
           ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 flex-1">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 flex-1 min-h-0">
           {/* Precision Gap */}
-          <div className="p-3 rounded-xl border border-muted/20 bg-muted/5">
-            <h3 className="text-sm font-semibold text-foreground mb-3">The Precision Gap</h3>
-            <div className="space-y-3">
+          <div className="p-4 rounded-xl border border-muted/20 bg-muted/5 flex flex-col">
+            <h3 className="text-base font-semibold text-foreground mb-4">The Precision Gap</h3>
+            <div className="space-y-4 flex-1">
               {precisionData.map((row) => (
-                <div key={row.tier} className="space-y-1">
-                  <span className="text-xs text-muted-foreground">{row.tier}</span>
+                <div key={row.tier} className="space-y-1.5">
+                  <span className="text-sm text-muted-foreground">{row.tier}</span>
                   <div className="flex gap-2 items-center">
-                    <div className="flex-1 space-y-1">
-                      <div className="flex items-center gap-1">
-                        <div className="h-2 rounded-full bg-primary/80" style={{ width: `${row.coanalyst}%` }} />
-                        <span className="text-xs font-bold text-primary">{row.coanalyst}%</span>
+                    <div className="flex-1 space-y-1.5">
+                      <div className="flex items-center gap-1.5">
+                        <div className="h-3 rounded-full bg-primary/80" style={{ width: `${row.coanalyst}%` }} />
+                        <span className="text-sm font-bold text-primary">{row.coanalyst}%</span>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <div className="h-2 rounded-full bg-red-400/50" style={{ width: `${row.generic}%` }} />
-                        <span className="text-xs text-red-400">{row.generic}%</span>
+                      <div className="flex items-center gap-1.5">
+                        <div className="h-3 rounded-full bg-red-400/50" style={{ width: `${row.generic}%` }} />
+                        <span className="text-sm text-red-400">{row.generic}%</span>
                       </div>
                     </div>
                   </div>
                 </div>
               ))}
-              <div className="flex items-center gap-4 text-[10px] text-muted-foreground mt-2">
-                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-primary/80" /> CoAnalyst</span>
-                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-400/50" /> Generic AI</span>
+              <div className="flex items-center gap-4 text-xs text-muted-foreground mt-3">
+                <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-primary/80" /> CoAnalyst</span>
+                <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-red-400/50" /> Generic AI</span>
               </div>
             </div>
           </div>
 
           {/* Intelligence Tiers */}
-          <div className="flex flex-col gap-2">
-            <h3 className="text-sm font-semibold text-foreground">Four Levels of Intelligence</h3>
+          <div className="flex flex-col gap-3">
+            <h3 className="text-base font-semibold text-foreground">Four Levels of Intelligence</h3>
             {tiers.map((tier) => (
-              <div key={tier.label} className="p-2 rounded-lg border border-muted/20 bg-muted/5">
-                <div className="flex items-center gap-2 mb-0.5">
-                  <tier.icon className={`h-4 w-4 ${tier.color}`} />
-                  <span className={`text-xs font-bold ${tier.color}`}>{tier.label}</span>
+              <div key={tier.label} className="p-3 rounded-lg border border-muted/20 bg-muted/5 flex-1 flex flex-col justify-center">
+                <div className="flex items-center gap-2 mb-1">
+                  <tier.icon className={`h-5 w-5 ${tier.color}`} />
+                  <span className={`text-sm font-bold ${tier.color}`}>{tier.label}</span>
                 </div>
-                <p className="text-[11px] text-muted-foreground italic">{tier.example}</p>
+                <p className="text-sm text-muted-foreground italic">{tier.example}</p>
               </div>
             ))}
           </div>
