@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { Radar, Zap, GitBranch, BadgeCheck, ArrowRight } from "lucide-react";
+import { Radar, Zap, GitBranch, BadgeCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface OpsSlide4Props extends SlideNarrationProps {
@@ -64,54 +64,45 @@ const OpsSlide4DTOP = ({ slideNumber, ...narrationProps }: OpsSlide4Props) => {
       slideNumber={slideNumber}
       {...narrationProps}
     >
-      <div className="flex-1 flex flex-col gap-4 overflow-hidden">
+      <div className="flex-1 flex flex-col gap-4 min-h-0">
         {/* Data sources strip */}
         <div className="flex items-center gap-2 flex-wrap">
           <span className="text-xs text-muted-foreground uppercase tracking-wider mr-2">Data Sources:</span>
           {dataSources.map((src) => (
-            <span key={src} className="px-2 py-0.5 text-xs rounded-full border border-muted/30 bg-muted/10 text-muted-foreground">
+            <span key={src} className="px-2.5 py-1 text-xs rounded-full border border-muted/30 bg-muted/10 text-muted-foreground">
               {src}
             </span>
           ))}
-          <span className="text-xs text-primary font-medium ml-1">65K+ signals/mo</span>
+          <span className="text-sm text-primary font-medium ml-1">65K+ signals/mo</span>
         </div>
 
         {/* DTOP pipeline */}
-        <div className="grid grid-cols-4 gap-3 flex-1">
+        <div className="grid grid-cols-4 gap-3 flex-1 min-h-0">
           {steps.map((step, index) => (
-            <div key={step.letter} className="flex flex-col items-center gap-2">
-              {/* Card */}
-              <button
-                onClick={() => setActiveStep(activeStep === index ? null : index)}
-                className={cn(
-                  "w-full p-3 rounded-xl border transition-all text-left cursor-pointer",
-                  step.borderColor,
-                  step.bgColor,
-                  activeStep === index && "ring-1 ring-primary/50 scale-[1.02]"
-                )}
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold", step.bgColor, step.color)}>
-                    {step.letter}
-                  </div>
-                  <span className={cn("text-sm font-bold", step.color)}>{step.label}</span>
+            <button
+              key={step.letter}
+              onClick={() => setActiveStep(activeStep === index ? null : index)}
+              className={cn(
+                "p-4 rounded-xl border transition-all text-left cursor-pointer flex flex-col h-full",
+                step.borderColor,
+                step.bgColor,
+                activeStep === index && "ring-1 ring-primary/50 scale-[1.02]"
+              )}
+            >
+              <div className="flex items-center gap-2 mb-3">
+                <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center text-base font-bold", step.bgColor, step.color)}>
+                  {step.letter}
                 </div>
-                <p className="text-xs text-muted-foreground leading-relaxed">{step.description}</p>
-                {/* Expanded detail */}
-                {activeStep === index && (
-                  <div className="mt-2 pt-2 border-t border-muted/20">
-                    <p className="text-xs text-primary/80">{step.auditTrail}</p>
-                  </div>
-                )}
-              </button>
-
-              {/* Arrow connector (not on last) */}
-              {index < steps.length - 1 && (
-                <div className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10">
-                  <ArrowRight className="h-4 w-4 text-muted-foreground/30" />
+                <span className={cn("text-base font-bold", step.color)}>{step.label}</span>
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed flex-1">{step.description}</p>
+              {/* Expanded detail */}
+              {activeStep === index && (
+                <div className="mt-3 pt-3 border-t border-muted/20">
+                  <p className="text-sm text-primary/80">{step.auditTrail}</p>
                 </div>
               )}
-            </div>
+            </button>
           ))}
         </div>
 

@@ -48,21 +48,21 @@ const OpsSlide10WhyUs = ({ slideNumber, ...narrationProps }: OpsSlide10Props) =>
       slideNumber={slideNumber}
       {...narrationProps}
     >
-      <div className="flex-1 flex flex-col gap-5 overflow-hidden">
+      <div className="flex-1 flex flex-col gap-5 min-h-0">
         {/* Differentiator cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0">
           {differentiators.map((d) => (
-            <div key={d.title} className={`p-4 rounded-xl border ${d.border} ${d.bg}`}>
-              <d.icon className={`h-6 w-6 ${d.color} mb-3`} />
-              <h3 className={`text-base font-bold ${d.color} mb-2`}>{d.title}</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">{d.desc}</p>
+            <div key={d.title} className={`p-5 rounded-xl border ${d.border} ${d.bg} flex flex-col`}>
+              <d.icon className={`h-8 w-8 ${d.color} mb-4`} />
+              <h3 className={`text-lg font-bold ${d.color} mb-3`}>{d.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed flex-1">{d.desc}</p>
             </div>
           ))}
         </div>
 
         {/* Category promise */}
-        <div className="p-4 rounded-xl border border-primary/20 bg-primary/5 text-center">
-          <p className="text-lg font-display font-bold text-foreground mb-1">
+        <div className="p-5 rounded-xl border border-primary/20 bg-primary/5 text-center">
+          <p className="text-xl font-display font-bold text-foreground mb-2">
             Predictable. Measurable. Provable.
           </p>
           <p className="text-sm text-muted-foreground">
@@ -71,12 +71,12 @@ const OpsSlide10WhyUs = ({ slideNumber, ...narrationProps }: OpsSlide10Props) =>
         </div>
 
         {/* Trust bar */}
-        <div className="flex items-center justify-center gap-8">
+        <div className="flex items-center justify-center gap-10">
           {trustStats.map((stat) => (
             <div key={stat.label} className="flex items-center gap-2 text-muted-foreground">
-              <stat.icon className="h-4 w-4 text-primary/50" />
-              <span className="text-sm font-bold text-foreground">{stat.value}</span>
-              <span className="text-xs">{stat.label}</span>
+              <stat.icon className="h-5 w-5 text-primary/50" />
+              <span className="text-base font-bold text-foreground">{stat.value}</span>
+              <span className="text-sm">{stat.label}</span>
             </div>
           ))}
         </div>

@@ -1,6 +1,6 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { Zap, GitBranch, Brain, ArrowRight } from "lucide-react";
+import { Zap, GitBranch, Brain } from "lucide-react";
 
 interface OpsSlide7Props extends SlideNarrationProps {
   slideNumber?: number;
@@ -60,49 +60,42 @@ const OpsSlide7SteppingStones = ({ slideNumber, ...narrationProps }: OpsSlide7Pr
       slideNumber={slideNumber}
       {...narrationProps}
     >
-      <div className="flex-1 flex flex-col justify-center gap-6 overflow-hidden">
+      <div className="flex-1 flex flex-col justify-center gap-5 min-h-0">
         {/* Timeline */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          {phases.map((phase, i) => (
-            <div key={phase.year} className="flex items-start gap-3">
-              <div className={`p-4 rounded-xl border ${phase.border} ${phase.bg} flex-1`}>
-                {/* Header */}
-                <div className="flex items-center gap-2 mb-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0">
+          {phases.map((phase) => (
+            <div key={phase.year} className={`p-5 rounded-xl border ${phase.border} ${phase.bg} flex flex-col h-full`}>
+              {/* Header */}
+              <div className="flex items-center gap-3 mb-4">
+                <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${phase.bg} border ${phase.border}`}>
                   <phase.icon className={`h-5 w-5 ${phase.color}`} />
-                  <div>
-                    <span className={`text-xs font-bold uppercase tracking-wider ${phase.color}`}>{phase.year}</span>
-                    <h3 className="text-base font-bold text-foreground">{phase.title}</h3>
-                  </div>
                 </div>
-
-                {/* Capabilities */}
-                <ul className="space-y-1.5 mb-3">
-                  {phase.capabilities.map((cap) => (
-                    <li key={cap} className="flex items-start gap-2 text-xs text-muted-foreground">
-                      <span className={`w-1 h-1 rounded-full ${phase.color.replace("text-", "bg-")} mt-1.5 shrink-0`} />
-                      {cap}
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Outcome */}
-                <div className={`text-xs font-medium ${phase.color} pt-2 border-t border-muted/20`}>
-                  {phase.outcome}
+                <div>
+                  <span className={`text-xs font-bold uppercase tracking-wider ${phase.color}`}>{phase.year}</span>
+                  <h3 className="text-lg font-bold text-foreground">{phase.title}</h3>
                 </div>
               </div>
 
-              {/* Arrow between phases */}
-              {i < phases.length - 1 && (
-                <div className="hidden lg:flex items-center h-full">
-                  <ArrowRight className="h-5 w-5 text-muted-foreground/20" />
-                </div>
-              )}
+              {/* Capabilities */}
+              <ul className="space-y-2.5 mb-4 flex-1">
+                {phase.capabilities.map((cap) => (
+                  <li key={cap} className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <span className={`w-1.5 h-1.5 rounded-full ${phase.color.replace("text-", "bg-")} mt-1.5 shrink-0`} />
+                    {cap}
+                  </li>
+                ))}
+              </ul>
+
+              {/* Outcome */}
+              <div className={`text-sm font-medium ${phase.color} pt-3 border-t border-muted/20`}>
+                {phase.outcome}
+              </div>
             </div>
           ))}
         </div>
 
         {/* Bottom callout */}
-        <div className="p-3 rounded-lg border border-primary/20 bg-primary/5 text-center">
+        <div className="p-4 rounded-lg border border-primary/20 bg-primary/5 text-center">
           <p className="text-sm text-muted-foreground">
             Each phase builds on the last. <span className="font-medium text-primary">Start with what matters most</span> —
             the platform grows with you.
