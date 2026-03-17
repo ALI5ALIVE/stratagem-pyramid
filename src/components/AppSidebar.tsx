@@ -1,4 +1,4 @@
-import { Presentation, Megaphone, Target, TrendingUp, FileText, Brain } from "lucide-react";
+import { Presentation, Megaphone, Target, TrendingUp, FileText, Brain, Rocket } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
@@ -20,6 +20,7 @@ const items = [
   { title: "Value Deck", url: "/value-deck", icon: TrendingUp },
   { title: "Content Strategy", url: "/content-strategy", icon: FileText },
   { title: "CoAnalyst Playbook", url: "/coanalyst", icon: Brain },
+  { title: "Executive Pitch", url: "/pitch-executive", icon: Rocket },
   { title: "Line of Sight", url: "/line-of-sight", icon: Target },
 ];
 
