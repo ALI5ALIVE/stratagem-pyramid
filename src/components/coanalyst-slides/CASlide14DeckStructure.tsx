@@ -5,7 +5,7 @@ const deckFlow = [
   { slide: "Cover", purpose: "Set category and tone", message: "Aviation Data Intelligence — CoAnalyst" },
   { slide: "The Problem", purpose: "Frame the reactive model", message: "Aviation runs on reports, not intelligence" },
   { slide: "The Industry Shift", purpose: "Event → Control management", message: "From chasing events to managing controls" },
-  { slide: "The Category", purpose: "Define Aviation Data Intelligence", message: "A standalone product, like Palantir for aviation" },
+  { slide: "The Platform", purpose: "CoAnalyst within the platform", message: "The intelligence layer above Safety, Content, Training Manager 365" },
   { slide: "CoAnalyst", purpose: "Introduce the platform", message: "The intelligence layer above your operational systems" },
   { slide: "How It Works", purpose: "Explain the pipeline", message: "Ingest → Enrich → Detect → Intelligence → Activate" },
   { slide: "The Precision Gap", purpose: "Why not generic AI", message: "90% vs 30–40% at granular categorization" },
