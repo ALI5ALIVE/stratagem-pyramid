@@ -60,10 +60,10 @@ const CASlide14DeckStructure = (props: SlideNarrationProps) => {
             <h3 className="text-xs font-bold text-foreground uppercase tracking-wide mb-2">Key Strategic Decisions</h3>
             <div className="space-y-1.5">
               {[
-                "Position CoAnalyst as a standalone product — not an add-on to Safety Manager",
+                "Position CoAnalyst as the intelligence engine that makes the platform intelligent",
                 "Lead with intelligence and control management, not report processing",
-                "Future roadmap: extend to training, documentation, and OCM analytics",
-                "Price independently — it's a separate product with its own value",
+                "Future roadmap: extend intelligence across training, documentation, and OCM analytics",
+                "Demonstrate how intelligence amplifies the value of every module",
                 "Competitive narrative: precision gap (90% vs 30–40%) is the killer argument",
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-2 text-[10px] text-muted-foreground">
