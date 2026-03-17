@@ -1,6 +1,6 @@
 import { Shield, FileText, GraduationCap, Brain } from "lucide-react";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
-import platformEcosystem from "@/assets/comply365-platform-ecosystem.png";
+import PlatformEcosystemDiagram from "@/components/PlatformEcosystemDiagram";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 interface ExecSlide3PlatformProps extends SlideNarrationProps {
@@ -43,11 +43,7 @@ const ExecSlide3Platform = ({ slideNumber, ...narrationProps }: ExecSlide3Platfo
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-0">
         {/* Left — Platform Ecosystem Image */}
         <div className="flex items-center justify-center">
-          <img
-            src={platformEcosystem}
-            alt="Comply365 Platform Ecosystem"
-            className="w-full max-w-md object-contain drop-shadow-lg"
-          />
+          <PlatformEcosystemDiagram className="w-full" />
         </div>
 
         {/* Right — Product Module Cards */}
