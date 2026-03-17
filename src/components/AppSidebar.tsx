@@ -1,4 +1,4 @@
-import { Presentation, Megaphone, Target, TrendingUp, FileText, Brain, Rocket, Briefcase } from "lucide-react";
+import { Presentation, Megaphone, Target, TrendingUp, FileText, Brain, Rocket, Briefcase, BookOpen } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
