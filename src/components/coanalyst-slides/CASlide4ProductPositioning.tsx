@@ -32,10 +32,10 @@ const CASlide4ProductPositioning = (props: SlideNarrationProps) => {
             <h3 className="text-xs font-bold text-primary uppercase tracking-wide mb-3">Differentiated Positioning Statement</h3>
             <p className="text-sm text-foreground leading-relaxed font-medium">
               For aviation organizations that need to move beyond reactive reporting,{" "}
-              <span className="text-primary">CoAnalyst</span> is the standalone data intelligence platform that transforms fragmented safety and operational data into actionable intelligence — enabling the shift from critical event management to critical control management.
+              <span className="text-primary">CoAnalyst</span> is the intelligence layer within the Operational Performance Platform that transforms fragmented safety and operational data into actionable intelligence — enabling the shift from critical event management to critical control management.
             </p>
             <p className="text-xs text-muted-foreground mt-3 leading-relaxed">
-              Unlike generic AI tools that hallucinate at granular aviation categorization, or competitor bolt-on AI features limited to basic summarization, CoAnalyst delivers aviation-specific precision built on a hybrid AI architecture, millions of historic reports, and continuous R&D — making it the only intelligence layer purpose-built for aviation operations.
+              Unlike generic AI tools that hallucinate at granular aviation categorization, or competitor bolt-on AI features limited to basic summarization, CoAnalyst delivers aviation-specific precision built on a hybrid AI architecture, millions of historic reports, and continuous R&D — powering the DTOP model across every operational domain.
             </p>
           </div>
         </div>

@@ -33,7 +33,7 @@ const sections = [
 
 const CASlide12WebsiteMessaging = (props: SlideNarrationProps) => {
   return (
-    <SlideContainer id="ca-website-messaging" title="Website Messaging" subtitle="Ready-to-use copy for the CoAnalyst standalone microsite" slideNumber={12} {...props}>
+    <SlideContainer id="ca-website-messaging" title="Website Messaging" subtitle="Ready-to-use copy for the CoAnalyst product page" slideNumber={12} {...props}>
       <div className="flex flex-col gap-2 h-full justify-center max-w-5xl mx-auto w-full">
         {sections.map((section, i) => (
           <div key={i} className="bg-card/60 border border-border rounded-xl p-3 flex items-start gap-3">

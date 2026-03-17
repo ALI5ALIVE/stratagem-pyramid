@@ -5,7 +5,7 @@ import { SlideNarrationProps } from "@/types/slideProps";
 
 const sections = [
   { num: 1, label: "Executive Summary", icon: Brain, color: "text-blue-400", bgColor: "bg-blue-500/10", borderColor: "border-blue-500/30" },
-  { num: 2, label: "Category Narrative", icon: Compass, color: "text-emerald-400", bgColor: "bg-emerald-500/10", borderColor: "border-emerald-500/30" },
+  { num: 2, label: "The Intelligence Gap", icon: Compass, color: "text-emerald-400", bgColor: "bg-emerald-500/10", borderColor: "border-emerald-500/30" },
   { num: 3, label: "Strategic Narrative", icon: Target, color: "text-amber-400", bgColor: "bg-amber-500/10", borderColor: "border-amber-500/30" },
   { num: 4, label: "Product Positioning", icon: Crosshair, color: "text-violet-400", bgColor: "bg-violet-500/10", borderColor: "border-violet-500/30" },
   { num: 5, label: "Messaging Architecture", icon: LayoutGrid, color: "text-cyan-400", bgColor: "bg-cyan-500/10", borderColor: "border-cyan-500/30" },

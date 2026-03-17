@@ -11,17 +11,17 @@ const proofPoints = [
 
 const CASlide1ExecutiveSummary = (props: SlideNarrationProps) => {
   return (
-    <SlideContainer id="ca-exec-summary" title="Executive Summary" subtitle="Category definition, positioning, and strategic rationale" slideNumber={1} {...props}>
+    <SlideContainer id="ca-exec-summary" title="Executive Summary" subtitle="CoAnalyst within the Operational Performance Platform" slideNumber={1} {...props}>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-full">
         {/* Left — Positioning */}
         <div className="space-y-3">
           <div className="bg-card/60 border border-border rounded-xl p-4">
             <div className="flex items-center gap-2 mb-2">
               <Brain className="w-4 h-4 text-primary" />
-              <h3 className="text-xs font-bold text-foreground uppercase tracking-wide">Category</h3>
+              <h3 className="text-xs font-bold text-foreground uppercase tracking-wide">Role</h3>
             </div>
-            <p className="text-xl font-display font-bold text-primary">Aviation Data Intelligence</p>
-            <p className="text-[11px] text-muted-foreground mt-1">A standalone analytics product — not an add-on or feature extension. Positioned alongside platforms like Palantir Foundry and Databricks, purpose-built for aviation.</p>
+            <p className="text-xl font-display font-bold text-primary">The Intelligence Layer</p>
+            <p className="text-[11px] text-muted-foreground mt-1">Sits above Safety, Content, and Training Manager 365 — enriching and activating data across all three modules via the DTOP model.</p>
           </div>
 
           <div className="bg-card/60 border border-border rounded-xl p-4">
