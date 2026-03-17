@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
+import { useOpsPitchNarration } from "@/hooks/useOpsPitchNarration";
 
 import OpsSlide0Title from "@/components/ops-slides/OpsSlide0Title";
 import OpsSlide1DailyReality from "@/components/ops-slides/OpsSlide1DailyReality";
@@ -35,16 +36,18 @@ const OperationalPitch = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { register, updateActiveIndex, unregister } = useSlideNavigation();
   const { open, setOpen } = useSidebar();
+  const narration = useOpsPitchNarration();
 
   const navigateToSlide = useCallback((index: number) => {
     const container = containerRef.current;
     if (!container) return;
     const slideElement = document.getElementById(slides[index].id);
     if (slideElement) {
+      narration.stop();
       slideElement.scrollIntoView({ behavior: "smooth" });
       setCurrentSlide(index);
     }
-  }, []);
+  }, [narration.stop]);
 
   useEffect(() => {
     register(slides, currentSlide, navigateToSlide);
@@ -65,13 +68,14 @@ const OperationalPitch = () => {
       if (open) setOpen(false);
       const newSlide = Math.round(scrollTop / slideHeight);
       if (newSlide !== currentSlide && newSlide >= 0 && newSlide < slides.length) {
+        narration.stop();
         setCurrentSlide(newSlide);
       }
     };
 
     container.addEventListener("scroll", handleScroll);
     return () => container.removeEventListener("scroll", handleScroll);
-  }, [currentSlide, open, setOpen]);
+  }, [currentSlide, open, setOpen, narration.stop]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -87,6 +91,12 @@ const OperationalPitch = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [currentSlide, navigateToSlide]);
 
+  const handleNextSlide = useCallback(() => {
+    if (currentSlide < slides.length - 1) {
+      navigateToSlide(currentSlide + 1);
+    }
+  }, [currentSlide, navigateToSlide]);
+
   return (
     <div className="relative min-h-screen bg-background">
       <div
@@ -95,7 +105,20 @@ const OperationalPitch = () => {
       >
         {slides.map((slide, index) => {
           const SlideComponent = slide.component;
-          return <SlideComponent key={slide.id} slideNumber={index} />;
+          const isCurrentSlide = index === currentSlide;
+          const slideId = slide.id;
+
+          const narrationProps = {
+            isPlaying: isCurrentSlide && narration.currentSlide === slideId ? narration.isPlaying : false,
+            isLoading: isCurrentSlide && narration.currentSlide === slideId ? narration.isLoading : false,
+            progress: isCurrentSlide && narration.currentSlide === slideId ? narration.progress : 0,
+            hasCompleted: isCurrentSlide && narration.currentSlide === slideId ? narration.hasCompleted : false,
+            onPlay: () => narration.play(slideId),
+            onPause: narration.pause,
+            onNextSlide: handleNextSlide,
+          };
+
+          return <SlideComponent key={slide.id} slideNumber={index} {...narrationProps} />;
         })}
       </div>
     </div>
