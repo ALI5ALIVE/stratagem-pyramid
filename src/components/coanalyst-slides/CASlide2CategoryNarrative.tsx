@@ -9,7 +9,7 @@ const dataTypes = [
 
 const CASlide2CategoryNarrative = (props: SlideNarrationProps) => {
   return (
-    <SlideContainer id="ca-category-narrative" title="Category & Market Narrative" subtitle="Why the industry needs a new category of intelligence" slideNumber={2} {...props}>
+    <SlideContainer id="ca-category-narrative" title="The Intelligence Gap" subtitle="Why operational modules alone aren't enough" slideNumber={2} {...props}>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-full">
         {/* Problem */}
         <div className="bg-card/60 border border-border rounded-xl p-4 flex flex-col">
@@ -66,12 +66,12 @@ const CASlide2CategoryNarrative = (props: SlideNarrationProps) => {
             <h3 className="text-xs font-bold text-foreground uppercase tracking-wide">The Missing Layer</h3>
           </div>
           <p className="text-[11px] text-muted-foreground leading-relaxed mb-3">
-            Current systems execute workflows — they capture, route, and close reports. No system transforms that data into intelligence. What's needed is a standalone analytics product that sits above operational systems.
+            Current systems execute workflows — they capture, route, and close reports. No system transforms that data into intelligence. What's needed is an intelligence layer that sits above these operational modules.
           </p>
           <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3 mt-auto">
             <p className="text-[11px] font-semibold text-emerald-400 mb-1.5">CoAnalyst fills this gap:</p>
             <p className="text-[10px] text-muted-foreground leading-relaxed">
-              A standalone data intelligence platform — like Palantir Foundry for defense or Databricks for cybersecurity — purpose-built for aviation. It enriches, structures, analyzes, and activates data across safety, ops, maintenance, training, and crew.
+              The intelligence layer that sits above Safety, Content, and Training Manager 365 — enriching data and driving the Detect → Trigger → Orchestrate → Prove model across safety, ops, maintenance, training, and crew.
             </p>
           </div>
           <div className="mt-3 space-y-1">

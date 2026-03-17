@@ -3,7 +3,7 @@ import { SlideNarrationProps } from "@/types/slideProps";
 import { Crosshair, Users, AlertCircle, Clock, Star, CheckCircle } from "lucide-react";
 
 const framework = [
-  { icon: Crosshair, label: "Category", value: "Aviation Data Intelligence — a standalone analytics product, not an add-on to safety reporting" },
+  { icon: Crosshair, label: "Role", value: "Intelligence layer of the Operational Performance Platform — powering DTOP across Safety, Content, and Training" },
   { icon: Users, label: "Audience", value: "Safety leaders, operations leaders, airline executives, maintenance & engineering, transformation teams" },
   { icon: AlertCircle, label: "Problem", value: "Aviation data is fragmented across domains, analyzed reactively, and current AI tools lack the granular precision needed — achieving only 30–40% accuracy at detailed categorization levels" },
   { icon: Clock, label: "Why Now", value: "Airlines are exploring generic AI (Claude, ChatGPT) on their own data, creating false confidence. Regulatory shift to performance-based oversight demands intelligence, not just compliance" },
@@ -32,10 +32,10 @@ const CASlide4ProductPositioning = (props: SlideNarrationProps) => {
             <h3 className="text-xs font-bold text-primary uppercase tracking-wide mb-3">Differentiated Positioning Statement</h3>
             <p className="text-sm text-foreground leading-relaxed font-medium">
               For aviation organizations that need to move beyond reactive reporting,{" "}
-              <span className="text-primary">CoAnalyst</span> is the standalone data intelligence platform that transforms fragmented safety and operational data into actionable intelligence — enabling the shift from critical event management to critical control management.
+              <span className="text-primary">CoAnalyst</span> is the intelligence layer within the Operational Performance Platform that transforms fragmented safety and operational data into actionable intelligence — enabling the shift from critical event management to critical control management.
             </p>
             <p className="text-xs text-muted-foreground mt-3 leading-relaxed">
-              Unlike generic AI tools that hallucinate at granular aviation categorization, or competitor bolt-on AI features limited to basic summarization, CoAnalyst delivers aviation-specific precision built on a hybrid AI architecture, millions of historic reports, and continuous R&D — making it the only intelligence layer purpose-built for aviation operations.
+              Unlike generic AI tools that hallucinate at granular aviation categorization, or competitor bolt-on AI features limited to basic summarization, CoAnalyst delivers aviation-specific precision built on a hybrid AI architecture, millions of historic reports, and continuous R&D — powering the DTOP model across every operational domain.
             </p>
           </div>
         </div>

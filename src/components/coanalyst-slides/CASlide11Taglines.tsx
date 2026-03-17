@@ -3,11 +3,11 @@ import { SlideNarrationProps } from "@/types/slideProps";
 
 const taglines = [
   "From Reports to Intelligence. From Events to Control.",
-  "Aviation Intelligence, Purpose-Built.",
+  "The Intelligence Layer That Powers the Platform.",
   "See What Your Data Has Been Trying to Tell You.",
-  "The Intelligence Layer Aviation Has Been Missing.",
+  "Detect. Trigger. Orchestrate. Prove.",
   "Stop Processing Reports. Start Preventing Events.",
-  "Aviation Data. Operational Intelligence. Business Outcomes.",
+  "Safety, Content, Training — Connected by Intelligence.",
   "Intelligence That Flies Ahead of Risk.",
   "Know Before It Happens.",
   "From Fragmented Data to Unified Intelligence.",
@@ -16,23 +16,23 @@ const taglines = [
 
 const headlines = [
   "Turn Aviation Data into Operational Intelligence",
-  "The Intelligence Platform for Proactive Aviation Operations",
+  "The Intelligence Layer for Proactive Aviation Operations",
   "From Reactive Reporting to Predictive Control Management",
   "Aviation-Trained AI That Understands Your Operations",
   "See Patterns. Detect Hazards. Manage Controls. Protect Performance.",
   "Move Beyond Reports. Move Beyond Events. Move to Intelligence.",
-  "The Data Intelligence Layer Purpose-Built for Aviation",
+  "The Intelligence Engine Behind the Operational Performance Platform",
   "Smarter Safety. Stronger Operations. Better Outcomes.",
   "CoAnalyst: Where Aviation Data Becomes Actionable Intelligence",
   "Stop Managing Events. Start Managing Controls.",
 ];
 
 const pitches = [
-  "CoAnalyst is the aviation data intelligence platform that transforms fragmented safety and operational data into actionable intelligence — helping airlines move from reactive event management to proactive control management. Purpose-built with aviation-trained AI, it delivers precision that generic tools can't match.",
-  "Airlines generate thousands of reports across safety, ops, maintenance, and training. CoAnalyst is the intelligence layer that connects, enriches, and analyzes that data — revealing patterns, hazards, and weakening controls so organizations can act before events occur.",
-  "Most aviation organizations still manage safety reactively. CoAnalyst changes that by delivering four levels of intelligence — historical, real-time, proactive, and predictive — so airlines can shift from investigating events to managing the controls that prevent them.",
-  "Generic AI can summarize a report. CoAnalyst understands aviation operations. Built on millions of historic reports and thousands of domain-specific categories, it's the only intelligence platform purpose-built for aviation data.",
-  "CoAnalyst sits above your operational systems as an intelligence layer — enriching, structuring, and analyzing data across every domain. The result: fewer delays, fewer damages, fewer injuries, and stronger operational performance.",
+  "CoAnalyst is the intelligence layer of the Operational Performance Platform that transforms fragmented safety and operational data into actionable intelligence — helping airlines move from reactive event management to proactive control management. Purpose-built with aviation-trained AI, it delivers precision that generic tools can't match.",
+  "Airlines generate thousands of reports across safety, ops, maintenance, and training. CoAnalyst sits above Safety, Content, and Training Manager 365, connecting, enriching, and analyzing that data — revealing patterns, hazards, and weakening controls so organizations can act before events occur.",
+  "Most aviation organizations still manage safety reactively. CoAnalyst changes that by delivering four levels of intelligence — historical, real-time, proactive, and predictive — powering the DTOP model so airlines can shift from investigating events to managing the controls that prevent them.",
+  "Generic AI can summarize a report. CoAnalyst understands aviation operations. Built on millions of historic reports and thousands of domain-specific categories, it's the intelligence engine that makes the Operational Performance Platform intelligent.",
+  "CoAnalyst sits above Safety, Content, and Training Manager 365 as the intelligence layer — enriching, structuring, and analyzing data across every domain. The result: fewer delays, fewer damages, fewer injuries, and stronger operational performance.",
 ];
 
 const CASlide11Taglines = (props: SlideNarrationProps) => {

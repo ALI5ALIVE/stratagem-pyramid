@@ -5,7 +5,7 @@ const deckFlow = [
   { slide: "Cover", purpose: "Set category and tone", message: "Aviation Data Intelligence — CoAnalyst" },
   { slide: "The Problem", purpose: "Frame the reactive model", message: "Aviation runs on reports, not intelligence" },
   { slide: "The Industry Shift", purpose: "Event → Control management", message: "From chasing events to managing controls" },
-  { slide: "The Category", purpose: "Define Aviation Data Intelligence", message: "A standalone product, like Palantir for aviation" },
+  { slide: "The Platform", purpose: "CoAnalyst within the platform", message: "The intelligence layer above Safety, Content, Training Manager 365" },
   { slide: "CoAnalyst", purpose: "Introduce the platform", message: "The intelligence layer above your operational systems" },
   { slide: "How It Works", purpose: "Explain the pipeline", message: "Ingest → Enrich → Detect → Intelligence → Activate" },
   { slide: "The Precision Gap", purpose: "Why not generic AI", message: "90% vs 30–40% at granular categorization" },
@@ -42,8 +42,8 @@ const CASlide14DeckStructure = (props: SlideNarrationProps) => {
             <h3 className="text-xs font-bold text-primary uppercase tracking-wide mb-3">Final Recommended Positioning</h3>
             <div className="space-y-3">
               <div>
-                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide mb-0.5">Category</p>
-                <p className="text-lg font-display font-bold text-foreground">Aviation Data Intelligence</p>
+                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide mb-0.5">Role</p>
+                <p className="text-lg font-display font-bold text-foreground">Intelligence Layer — Operational Performance Platform</p>
               </div>
               <div>
                 <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide mb-0.5">One-Line Pitch</p>
@@ -51,7 +51,7 @@ const CASlide14DeckStructure = (props: SlideNarrationProps) => {
               </div>
               <div>
                 <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide mb-0.5">Positioning</p>
-                <p className="text-xs text-muted-foreground leading-relaxed">CoAnalyst is a standalone data intelligence platform that transforms aviation data into operational intelligence — enabling the shift from critical event management to critical control management across safety, operations, maintenance, training, and crew domains.</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">CoAnalyst is the intelligence layer of the Operational Performance Platform that transforms aviation data into operational intelligence — enabling the shift from critical event management to critical control management across safety, operations, maintenance, training, and crew domains.</p>
               </div>
             </div>
           </div>
@@ -60,10 +60,10 @@ const CASlide14DeckStructure = (props: SlideNarrationProps) => {
             <h3 className="text-xs font-bold text-foreground uppercase tracking-wide mb-2">Key Strategic Decisions</h3>
             <div className="space-y-1.5">
               {[
-                "Position CoAnalyst as a standalone product — not an add-on to Safety Manager",
+                "Position CoAnalyst as the intelligence engine that makes the platform intelligent",
                 "Lead with intelligence and control management, not report processing",
-                "Future roadmap: extend to training, documentation, and OCM analytics",
-                "Price independently — it's a separate product with its own value",
+                "Future roadmap: extend intelligence across training, documentation, and OCM analytics",
+                "Demonstrate how intelligence amplifies the value of every module",
                 "Competitive narrative: precision gap (90% vs 30–40%) is the killer argument",
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-2 text-[10px] text-muted-foreground">

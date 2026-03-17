@@ -22,7 +22,7 @@ import CASlide14DeckStructure from "@/components/coanalyst-slides/CASlide14DeckS
 const slides = [
   { id: "ca-title", label: "Contents" },
   { id: "ca-exec-summary", label: "Executive Summary" },
-  { id: "ca-category-narrative", label: "Category Narrative" },
+  { id: "ca-category-narrative", label: "The Intelligence Gap" },
   { id: "ca-strategic-narrative", label: "Strategic Narrative" },
   { id: "ca-product-positioning", label: "Product Positioning" },
   { id: "ca-messaging-architecture", label: "Messaging Architecture" },

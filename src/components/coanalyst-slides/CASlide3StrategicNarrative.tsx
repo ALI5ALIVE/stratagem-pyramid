@@ -19,7 +19,7 @@ const narrativeSteps = [
   },
   {
     phase: "CoAnalyst",
-    text: "CoAnalyst is a standalone aviation data intelligence platform that ingests data across safety, ops, maintenance, training, and crew. It enriches it with aviation-trained AI, detects patterns and hazards, and generates four levels of intelligence — historical, real-time, proactive, and predictive.",
+    text: "CoAnalyst is the intelligence layer of the Operational Performance Platform that ingests data across safety, ops, maintenance, training, and crew. It enriches it with aviation-trained AI, detects patterns and hazards, and generates four levels of intelligence — historical, real-time, proactive, and predictive.",
     example: "Ask: 'How did we perform in aircraft damages at this airport, on this gate, over the last four years?' — and get the answer in milliseconds. Or: 'What happened 10 minutes ago at Dubai airport?' — real-time intelligence from any report source.",
   },
   {
@@ -31,7 +31,7 @@ const narrativeSteps = [
 
 const CASlide3StrategicNarrative = (props: SlideNarrationProps) => {
   return (
-    <SlideContainer id="ca-strategic-narrative" title="The Strategic Narrative" subtitle="The category-creation story" slideNumber={3} {...props}>
+    <SlideContainer id="ca-strategic-narrative" title="The Strategic Narrative" subtitle="The intelligence story" slideNumber={3} {...props}>
       <div className="flex flex-col gap-2 h-full justify-center max-w-5xl mx-auto">
         {narrativeSteps.map((step, i) => (
           <div key={i} className="flex items-start gap-3">

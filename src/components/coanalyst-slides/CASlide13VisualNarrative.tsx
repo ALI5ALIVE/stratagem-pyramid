@@ -61,9 +61,9 @@ const visuals = [
   },
   {
     icon: Globe, color: "text-primary", bgColor: "bg-primary/10",
-    title: "Master Visual — Palantir Style",
+    title: "Master Visual — Platform Architecture",
     purpose: "One diagram that tells the entire story",
-    shows: "Operational systems (bottom) → CoAnalyst intelligence layer (center) → Insights & patterns (middle) → Better controls (upper) → Business outcomes (top). Cross-domain data flows in, intelligence flows out",
+    shows: "Core modules (bottom: Safety, Content, Training Manager 365) → CoAnalyst intelligence layer (center) → DTOP model (middle) → Better controls (upper) → Business outcomes (top). Cross-domain data flows in, intelligence flows out",
     headline: "The Complete Intelligence Architecture",
     layout: "Full-page layered architecture diagram with data flows",
   },

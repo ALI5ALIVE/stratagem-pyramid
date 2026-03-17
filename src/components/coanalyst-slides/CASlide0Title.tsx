@@ -5,7 +5,7 @@ import { SlideNarrationProps } from "@/types/slideProps";
 
 const sections = [
   { num: 1, label: "Executive Summary", icon: Brain, color: "text-blue-400", bgColor: "bg-blue-500/10", borderColor: "border-blue-500/30" },
-  { num: 2, label: "Category Narrative", icon: Compass, color: "text-emerald-400", bgColor: "bg-emerald-500/10", borderColor: "border-emerald-500/30" },
+  { num: 2, label: "The Intelligence Gap", icon: Compass, color: "text-emerald-400", bgColor: "bg-emerald-500/10", borderColor: "border-emerald-500/30" },
   { num: 3, label: "Strategic Narrative", icon: Target, color: "text-amber-400", bgColor: "bg-amber-500/10", borderColor: "border-amber-500/30" },
   { num: 4, label: "Product Positioning", icon: Crosshair, color: "text-violet-400", bgColor: "bg-violet-500/10", borderColor: "border-violet-500/30" },
   { num: 5, label: "Messaging Architecture", icon: LayoutGrid, color: "text-cyan-400", bgColor: "bg-cyan-500/10", borderColor: "border-cyan-500/30" },
@@ -60,16 +60,16 @@ const CASlide0Title = ({
 
       <div className="flex-1 flex flex-col justify-center px-6 sm:px-10 lg:px-16 relative z-10">
         <div className="max-w-7xl w-full mx-auto">
-          <p className="text-primary text-sm font-medium tracking-widest uppercase mb-4">CoAnalyst — Positioning & Messaging Playbook</p>
+          <p className="text-primary text-sm font-medium tracking-widest uppercase mb-4">CoAnalyst — The Intelligence Layer</p>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold leading-tight mb-4">
-            <span className="title-accent">Aviation Data</span>
+            <span className="title-accent">The Intelligence</span>
             <br />
-            <span className="text-foreground">Intelligence</span>
+            <span className="text-foreground">Layer</span>
           </h1>
           <p className="text-muted-foreground text-lg sm:text-xl max-w-2xl mb-10">
             From reports to intelligence. From events to control.
             <br />
-            <span className="text-primary font-medium">The strategic playbook for category-defining positioning.</span>
+            <span className="text-primary font-medium">How CoAnalyst powers the Operational Performance Platform.</span>
           </p>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2">
