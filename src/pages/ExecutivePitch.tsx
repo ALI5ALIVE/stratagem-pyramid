@@ -5,19 +5,21 @@ import { useSidebar } from "@/components/ui/sidebar";
 import ExecSlide0Title from "@/components/exec-slides/ExecSlide0Title";
 import ExecSlide1Problem from "@/components/exec-slides/ExecSlide1Problem";
 import ExecSlide2Shift from "@/components/exec-slides/ExecSlide2Shift";
-import ExecSlide3DTOP from "@/components/exec-slides/ExecSlide3DTOP";
-import ExecSlide4Intelligence from "@/components/exec-slides/ExecSlide4Intelligence";
-import ExecSlide5Value from "@/components/exec-slides/ExecSlide5Value";
-import ExecSlide6WhyUs from "@/components/exec-slides/ExecSlide6WhyUs";
+import ExecSlide3Platform from "@/components/exec-slides/ExecSlide3Platform";
+import ExecSlide4DTOP from "@/components/exec-slides/ExecSlide3DTOP";
+import ExecSlide5Intelligence from "@/components/exec-slides/ExecSlide4Intelligence";
+import ExecSlide6Value from "@/components/exec-slides/ExecSlide5Value";
+import ExecSlide7WhyUs from "@/components/exec-slides/ExecSlide6WhyUs";
 
 const slides = [
   { id: "exec-slide-0", label: "Title", component: ExecSlide0Title },
   { id: "exec-slide-1", label: "The $47M Problem", component: ExecSlide1Problem },
   { id: "exec-slide-2", label: "The Shift", component: ExecSlide2Shift },
-  { id: "exec-slide-3", label: "How It Works", component: ExecSlide3DTOP },
-  { id: "exec-slide-4", label: "Intelligence Layer", component: ExecSlide4Intelligence },
-  { id: "exec-slide-5", label: "Line of Sight", component: ExecSlide5Value },
-  { id: "exec-slide-6", label: "Why Comply365", component: ExecSlide6WhyUs },
+  { id: "exec-slide-3", label: "The Platform", component: ExecSlide3Platform },
+  { id: "exec-slide-4", label: "How It Works", component: ExecSlide4DTOP },
+  { id: "exec-slide-5", label: "Intelligence Layer", component: ExecSlide5Intelligence },
+  { id: "exec-slide-6", label: "Line of Sight", component: ExecSlide6Value },
+  { id: "exec-slide-7", label: "Why Comply365", component: ExecSlide7WhyUs },
 ];
 
 const ExecutivePitch = () => {

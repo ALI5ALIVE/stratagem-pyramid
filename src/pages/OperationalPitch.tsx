@@ -6,28 +6,30 @@ import OpsSlide0Title from "@/components/ops-slides/OpsSlide0Title";
 import OpsSlide1DailyReality from "@/components/ops-slides/OpsSlide1DailyReality";
 import OpsSlide2CostOfFragmentation from "@/components/ops-slides/OpsSlide2CostOfFragmentation";
 import OpsSlide3BeforeAfter from "@/components/ops-slides/OpsSlide3BeforeAfter";
-import OpsSlide4DTOP from "@/components/ops-slides/OpsSlide4DTOP";
-import OpsSlide5Intelligence from "@/components/ops-slides/OpsSlide5Intelligence";
-import OpsSlide6NearTermUseCases from "@/components/ops-slides/OpsSlide6NearTermUseCases";
-import OpsSlide7SteppingStones from "@/components/ops-slides/OpsSlide7SteppingStones";
-import OpsSlide8MaturityRoadmap from "@/components/ops-slides/OpsSlide8MaturityRoadmap";
-import OpsSlide9Outcomes from "@/components/ops-slides/OpsSlide9Outcomes";
-import OpsSlide10WhyUs from "@/components/ops-slides/OpsSlide10WhyUs";
-import OpsSlide11GettingStarted from "@/components/ops-slides/OpsSlide11GettingStarted";
+import OpsSlide4Platform from "@/components/ops-slides/OpsSlide4Platform";
+import OpsSlide5DTOP from "@/components/ops-slides/OpsSlide4DTOP";
+import OpsSlide6Intelligence from "@/components/ops-slides/OpsSlide5Intelligence";
+import OpsSlide7NearTermUseCases from "@/components/ops-slides/OpsSlide6NearTermUseCases";
+import OpsSlide8SteppingStones from "@/components/ops-slides/OpsSlide7SteppingStones";
+import OpsSlide9MaturityRoadmap from "@/components/ops-slides/OpsSlide8MaturityRoadmap";
+import OpsSlide10Outcomes from "@/components/ops-slides/OpsSlide9Outcomes";
+import OpsSlide11WhyUs from "@/components/ops-slides/OpsSlide10WhyUs";
+import OpsSlide12GettingStarted from "@/components/ops-slides/OpsSlide11GettingStarted";
 
 const slides = [
   { id: "ops-slide-0", label: "Title", component: OpsSlide0Title },
   { id: "ops-slide-1", label: "Your Daily Reality", component: OpsSlide1DailyReality },
   { id: "ops-slide-2", label: "Cost of Fragmentation", component: OpsSlide2CostOfFragmentation },
   { id: "ops-slide-3", label: "Before & After", component: OpsSlide3BeforeAfter },
-  { id: "ops-slide-4", label: "DTOP in Action", component: OpsSlide4DTOP },
-  { id: "ops-slide-5", label: "Intelligence Engine", component: OpsSlide5Intelligence },
-  { id: "ops-slide-6", label: "Near-Term Use Cases", component: OpsSlide6NearTermUseCases },
-  { id: "ops-slide-7", label: "Stepping Stones", component: OpsSlide7SteppingStones },
-  { id: "ops-slide-8", label: "Maturity Roadmap", component: OpsSlide8MaturityRoadmap },
-  { id: "ops-slide-9", label: "Outcomes", component: OpsSlide9Outcomes },
-  { id: "ops-slide-10", label: "Why Comply365", component: OpsSlide10WhyUs },
-  { id: "ops-slide-11", label: "Getting Started", component: OpsSlide11GettingStarted },
+  { id: "ops-slide-4", label: "The Platform", component: OpsSlide4Platform },
+  { id: "ops-slide-5", label: "DTOP in Action", component: OpsSlide5DTOP },
+  { id: "ops-slide-6", label: "Intelligence Engine", component: OpsSlide6Intelligence },
+  { id: "ops-slide-7", label: "Near-Term Use Cases", component: OpsSlide7NearTermUseCases },
+  { id: "ops-slide-8", label: "Stepping Stones", component: OpsSlide8SteppingStones },
+  { id: "ops-slide-9", label: "Maturity Roadmap", component: OpsSlide9MaturityRoadmap },
+  { id: "ops-slide-10", label: "Outcomes", component: OpsSlide10Outcomes },
+  { id: "ops-slide-11", label: "Why Comply365", component: OpsSlide11WhyUs },
+  { id: "ops-slide-12", label: "Getting Started", component: OpsSlide12GettingStarted },
 ];
 
 const OperationalPitch = () => {
