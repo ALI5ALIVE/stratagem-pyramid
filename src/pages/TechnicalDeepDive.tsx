@@ -7,6 +7,9 @@ import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1Strateg
 import TechSlide2IndustryChallenge from "@/components/tech-slides/TechSlide2IndustryChallenge";
 import TechSlide3BeforeAfter from "@/components/tech-slides/TechSlide3BeforeAfter";
 import TechSlide4Platform from "@/components/tech-slides/TechSlide4Platform";
+import TechSlide4aSafetyManager from "@/components/tech-slides/TechSlide4aSafetyManager";
+import TechSlide4bContentManager from "@/components/tech-slides/TechSlide4bContentManager";
+import TechSlide4cTrainingManager from "@/components/tech-slides/TechSlide4cTrainingManager";
 import TechSlide5DTOP from "@/components/tech-slides/TechSlide5DTOP";
 import TechSlide6Capabilities from "@/components/tech-slides/TechSlide6Capabilities";
 import TechSlide7CoAnalyst from "@/components/tech-slides/TechSlide7CoAnalyst";
@@ -28,6 +31,9 @@ const slides = [
   { id: "tech-slide-2", label: "Industry Challenge", component: TechSlide2IndustryChallenge },
   { id: "tech-slide-3", label: "Before & After", component: TechSlide3BeforeAfter },
   { id: "tech-slide-4", label: "The Platform", component: TechSlide4Platform },
+  { id: "tech-slide-4a", label: "Safety Manager 365", component: TechSlide4aSafetyManager },
+  { id: "tech-slide-4b", label: "Content Manager 365", component: TechSlide4bContentManager },
+  { id: "tech-slide-4c", label: "Training Manager 365", component: TechSlide4cTrainingManager },
   { id: "tech-slide-5", label: "DTOP Architecture", component: TechSlide5DTOP },
   { id: "tech-slide-6", label: "Capabilities", component: TechSlide6Capabilities },
   { id: "tech-slide-7", label: "CoAnalyst Intelligence", component: TechSlide7CoAnalyst },
