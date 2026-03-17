@@ -1,4 +1,4 @@
-import { Presentation, Megaphone, Target, TrendingUp, FileText, Brain, Rocket } from "lucide-react";
+import { Presentation, Megaphone, Target, TrendingUp, FileText, Brain, Rocket, Briefcase } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
@@ -21,6 +21,7 @@ const items = [
   { title: "Content Strategy", url: "/content-strategy", icon: FileText },
   { title: "CoAnalyst Playbook", url: "/coanalyst", icon: Brain },
   { title: "Executive Pitch", url: "/pitch-executive", icon: Rocket },
+  { title: "Operational Pitch", url: "/pitch-operational", icon: Briefcase },
   { title: "Line of Sight", url: "/line-of-sight", icon: Target },
 ];
 
