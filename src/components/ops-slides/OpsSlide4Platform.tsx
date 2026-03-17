@@ -1,6 +1,6 @@
 import { Shield, FileText, GraduationCap, Brain, ArrowRight } from "lucide-react";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
-import platformEcosystem from "@/assets/comply365-platform-ecosystem.png";
+import PlatformEcosystemDiagram from "@/components/PlatformEcosystemDiagram";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 interface OpsSlide4PlatformProps extends SlideNarrationProps {
