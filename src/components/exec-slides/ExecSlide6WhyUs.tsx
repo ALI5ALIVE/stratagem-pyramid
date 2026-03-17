@@ -78,10 +78,10 @@ const ExecSlide6WhyUs = ({
         <div className="rounded-xl border border-primary/20 bg-primary/5 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
             <p className="text-2xl sm:text-3xl font-display font-bold text-foreground">
-              Predictable. Measurable. <span className="text-primary">Provable.</span>
+              30-Minute Discovery Session
             </p>
             <p className="text-sm text-muted-foreground mt-1">
-              Let's explore what your first use case looks like.
+              We'll map your top 3 operational signals to measurable outcomes.
             </p>
           </div>
           <div className="flex items-center gap-6 shrink-0">
