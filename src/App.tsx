@@ -16,6 +16,7 @@ import ValueDeck from "./pages/ValueDeck";
 import ContentStrategyPage from "./pages/ContentStrategyPage";
 import CoAnalystDeck from "./pages/CoAnalystDeck";
 import ExecutivePitch from "./pages/ExecutivePitch";
+import OperationalPitch from "./pages/OperationalPitch";
 
 const queryClient = new QueryClient();
 
