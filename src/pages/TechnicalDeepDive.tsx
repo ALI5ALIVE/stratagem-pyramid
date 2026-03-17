@@ -11,10 +11,10 @@ import TechSlide4aSafetyManager from "@/components/tech-slides/TechSlide4aSafety
 import TechSlide4bContentManager from "@/components/tech-slides/TechSlide4bContentManager";
 import TechSlide4cTrainingManager from "@/components/tech-slides/TechSlide4cTrainingManager";
 import TechSlide5DTOP from "@/components/tech-slides/TechSlide5DTOP";
-import TechSlide6Capabilities from "@/components/tech-slides/TechSlide6Capabilities";
+
 import TechSlide7CoAnalyst from "@/components/tech-slides/TechSlide7CoAnalyst";
 import TechSlide8IntelligenceTiers from "@/components/tech-slides/TechSlide8IntelligenceTiers";
-import TechSlide9VsGenericAI from "@/components/tech-slides/TechSlide9VsGenericAI";
+
 import TechSlide10SafetyUseCases from "@/components/tech-slides/TechSlide10SafetyUseCases";
 import TechSlide11OpsUseCases from "@/components/tech-slides/TechSlide11OpsUseCases";
 import TechSlide12FinancialUseCases from "@/components/tech-slides/TechSlide12FinancialUseCases";
@@ -36,9 +36,9 @@ const slides = [
   { id: "tech-slide-4c", label: "Training Manager 365", component: TechSlide4cTrainingManager },
   { id: "tech-slide-7", label: "CoAnalyst Intelligence", component: TechSlide7CoAnalyst },
   { id: "tech-slide-8", label: "Intelligence Tiers", component: TechSlide8IntelligenceTiers },
-  { id: "tech-slide-9", label: "vs Generic AI", component: TechSlide9VsGenericAI },
+  
   { id: "tech-slide-5", label: "DTOP Architecture", component: TechSlide5DTOP },
-  { id: "tech-slide-6", label: "Capabilities", component: TechSlide6Capabilities },
+  
   { id: "tech-slide-10", label: "Safety Use Cases", component: TechSlide10SafetyUseCases },
   { id: "tech-slide-11", label: "Ops Use Cases", component: TechSlide11OpsUseCases },
   { id: "tech-slide-12", label: "Financial Use Cases", component: TechSlide12FinancialUseCases },
