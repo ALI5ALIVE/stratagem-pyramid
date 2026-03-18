@@ -21,7 +21,7 @@ const pitchItems = [
   { title: "Executive Pitch", url: "/pitch-executive", icon: Rocket },
   { title: "Operational Pitch", url: "/pitch-operational", icon: Briefcase },
   { title: "Technical Deep-Dive", url: "/pitch-technical", icon: BookOpen },
-  { title: "Sales Deck", url: "/sales-deck", icon: Megaphone },
+  
 ];
 
 const strategyItems = [

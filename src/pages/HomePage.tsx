@@ -41,14 +41,6 @@ const pitchDecks: DeckCard[] = [
     badge: "20 slides",
     accent: "from-comply-teal to-primary",
   },
-  {
-    title: "Sales Deck",
-    description: "Account team deal progression. Problem to next steps.",
-    href: "/sales-deck",
-    icon: Megaphone,
-    badge: "10 slides",
-    accent: "from-primary to-comply-plum",
-  },
 ];
 
 const strategyDecks: DeckCard[] = [
