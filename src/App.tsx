@@ -19,7 +19,7 @@ import CoAnalystDeck from "./pages/CoAnalystDeck";
 import ExecutivePitch from "./pages/ExecutivePitch";
 import OperationalPitch from "./pages/OperationalPitch";
 import TechnicalDeepDive from "./pages/TechnicalDeepDive";
-import GlobalDataDeck from "./pages/GlobalDataDeck";
+
 
 const queryClient = new QueryClient();
 
