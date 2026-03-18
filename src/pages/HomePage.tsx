@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { 
-  Rocket, Briefcase, BookOpen, Megaphone, 
+  Rocket, Briefcase, BookOpen, 
   Presentation, TrendingUp, Brain, FileText, 
   Target, Globe, Plane, Shield, Train,
   ArrowRight
