@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { 
-  Rocket, Briefcase, BookOpen, Megaphone, 
+  Rocket, Briefcase, BookOpen, 
   Presentation, TrendingUp, Brain, FileText, 
   Target, Globe, Plane, Shield, Train,
   ArrowRight
@@ -40,14 +40,6 @@ const pitchDecks: DeckCard[] = [
     icon: BookOpen,
     badge: "20 slides",
     accent: "from-comply-teal to-primary",
-  },
-  {
-    title: "Sales Deck",
-    description: "Account team deal progression. Problem to next steps.",
-    href: "/sales-deck",
-    icon: Megaphone,
-    badge: "10 slides",
-    accent: "from-primary to-comply-plum",
   },
 ];
 
