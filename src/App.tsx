@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppLayout } from "./components/AppLayout";
 import HomePage from "./pages/HomePage";
 import SlideDeck from "./pages/SlideDeck";
-import SalesDeck from "./pages/SalesDeck";
+
 import HomepageMockup from "./pages/HomepageMockup";
 import NotFound from "./pages/NotFound";
 import AirlinesPage from "./pages/solutions/AirlinesPage";
