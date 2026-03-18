@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppLayout } from "./components/AppLayout";
+import HomePage from "./pages/HomePage";
 import SlideDeck from "./pages/SlideDeck";
 import SalesDeck from "./pages/SalesDeck";
 import HomepageMockup from "./pages/HomepageMockup";
@@ -18,6 +19,7 @@ import CoAnalystDeck from "./pages/CoAnalystDeck";
 import ExecutivePitch from "./pages/ExecutivePitch";
 import OperationalPitch from "./pages/OperationalPitch";
 import TechnicalDeepDive from "./pages/TechnicalDeepDive";
+import GlobalDataDeck from "./pages/GlobalDataDeck";
 
 const queryClient = new QueryClient();
 
@@ -29,7 +31,8 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route element={<AppLayout />}>
-            <Route path="/" element={<SlideDeck />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/strategy" element={<SlideDeck />} />
             <Route path="/sales-deck" element={<SalesDeck />} />
             <Route path="/value-deck" element={<ValueDeck />} />
             <Route path="/content-strategy" element={<ContentStrategyPage />} />
@@ -37,6 +40,7 @@ const App = () => (
             <Route path="/pitch-executive" element={<ExecutivePitch />} />
             <Route path="/pitch-operational" element={<OperationalPitch />} />
             <Route path="/pitch-technical" element={<TechnicalDeepDive />} />
+            <Route path="/globaldata" element={<GlobalDataDeck />} />
             <Route path="/homepage-mockup" element={<HomepageMockup />} />
             <Route path="/solutions/airlines" element={<AirlinesPage />} />
             <Route path="/solutions/defense" element={<DefensePage />} />

@@ -1,4 +1,7 @@
-import { Presentation, Megaphone, Target, TrendingUp, FileText, Brain, Rocket, Briefcase, BookOpen } from "lucide-react";
+import { 
+  Presentation, Megaphone, Target, TrendingUp, FileText, Brain, 
+  Rocket, Briefcase, BookOpen, Home, Globe, Sparkles 
+} from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
@@ -14,17 +17,54 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 
-const items = [
-  { title: "Strategy Deck", url: "/", icon: Presentation },
-  { title: "Sales Deck", url: "/sales-deck", icon: Megaphone },
-  { title: "Value Deck", url: "/value-deck", icon: TrendingUp },
-  { title: "Content Strategy", url: "/content-strategy", icon: FileText },
-  { title: "CoAnalyst Playbook", url: "/coanalyst", icon: Brain },
+const pitchItems = [
   { title: "Executive Pitch", url: "/pitch-executive", icon: Rocket },
   { title: "Operational Pitch", url: "/pitch-operational", icon: Briefcase },
   { title: "Technical Deep-Dive", url: "/pitch-technical", icon: BookOpen },
-  { title: "Line of Sight", url: "/line-of-sight", icon: Target },
+  { title: "Sales Deck", url: "/sales-deck", icon: Megaphone },
 ];
+
+const strategyItems = [
+  { title: "Strategy Deck", url: "/strategy", icon: Presentation },
+  { title: "Value Deck", url: "/value-deck", icon: TrendingUp },
+  { title: "CoAnalyst Playbook", url: "/coanalyst", icon: Brain },
+  { title: "Content Strategy", url: "/content-strategy", icon: FileText },
+];
+
+const toolItems = [
+  { title: "Line of Sight", url: "/line-of-sight", icon: Target },
+  { title: "Homepage Mockup", url: "/homepage-mockup", icon: Globe },
+  { title: "GlobalData Deck", url: "/globaldata", icon: Sparkles },
+];
+
+function NavGroup({ label, items }: { label: string; items: typeof pitchItems }) {
+  return (
+    <SidebarGroup>
+      <SidebarGroupLabel className="text-[10px] uppercase tracking-wider text-sidebar-foreground/40">
+        {label}
+      </SidebarGroupLabel>
+      <SidebarGroupContent>
+        <SidebarMenu>
+          {items.map((item) => (
+            <SidebarMenuItem key={item.title}>
+              <SidebarMenuButton asChild tooltip={item.title}>
+                <NavLink
+                  to={item.url}
+                  end
+                  className="text-sidebar-foreground/70 hover:text-sidebar-foreground"
+                  activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                >
+                  <item.icon className="h-4 w-4" />
+                  <span>{item.title}</span>
+                </NavLink>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+      </SidebarGroupContent>
+    </SidebarGroup>
+  );
+}
 
 export function AppSidebar() {
   const { slides, activeIndex, onNavigate } = useSlideNavigation();
@@ -33,27 +73,32 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon" className="border-r-0">
       <SidebarContent className="bg-sidebar">
+        {/* Home */}
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild tooltip={item.title}>
-                    <NavLink
-                      to={item.url}
-                      end
-                      className="text-sidebar-foreground/70 hover:text-sidebar-foreground"
-                      activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
-                    >
-                      <item.icon className="h-4 w-4" />
-                      <span>{item.title}</span>
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild tooltip="Home">
+                  <NavLink
+                    to="/"
+                    end
+                    className="text-sidebar-foreground/70 hover:text-sidebar-foreground"
+                    activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                  >
+                    <Home className="h-4 w-4" />
+                    <span>Home</span>
+                  </NavLink>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
+        <SidebarSeparator />
+
+        <NavGroup label="Pitch Decks" items={pitchItems} />
+        <NavGroup label="Strategy" items={strategyItems} />
+        <NavGroup label="Tools" items={toolItems} />
 
         {/* Slide sub-navigation - only when expanded and slides registered */}
         {open && slides.length > 0 && (
