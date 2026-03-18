@@ -1,5 +1,5 @@
 import { 
-  Presentation, Megaphone, Target, TrendingUp, FileText, Brain, 
+  Presentation, Target, TrendingUp, FileText, Brain, 
   Rocket, Briefcase, BookOpen, Home, Globe 
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
