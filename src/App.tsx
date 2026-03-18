@@ -19,7 +19,7 @@ import CoAnalystDeck from "./pages/CoAnalystDeck";
 import ExecutivePitch from "./pages/ExecutivePitch";
 import OperationalPitch from "./pages/OperationalPitch";
 import TechnicalDeepDive from "./pages/TechnicalDeepDive";
-import GlobalDataDeck from "./pages/GlobalDataDeck";
+
 
 const queryClient = new QueryClient();
 
@@ -40,7 +40,7 @@ const App = () => (
             <Route path="/pitch-executive" element={<ExecutivePitch />} />
             <Route path="/pitch-operational" element={<OperationalPitch />} />
             <Route path="/pitch-technical" element={<TechnicalDeepDive />} />
-            <Route path="/globaldata" element={<GlobalDataDeck />} />
+            
             <Route path="/homepage-mockup" element={<HomepageMockup />} />
             <Route path="/solutions/airlines" element={<AirlinesPage />} />
             <Route path="/solutions/defense" element={<DefensePage />} />

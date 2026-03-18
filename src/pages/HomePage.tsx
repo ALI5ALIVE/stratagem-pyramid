@@ -3,7 +3,7 @@ import {
   Rocket, Briefcase, BookOpen, Megaphone, 
   Presentation, TrendingUp, Brain, FileText, 
   Target, Globe, Plane, Shield, Train,
-  ArrowRight, Sparkles
+  ArrowRight
 } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
 
@@ -98,14 +98,6 @@ const tools: DeckCard[] = [
     href: "/homepage-mockup",
     icon: Globe,
     accent: "from-accent to-comply-teal",
-  },
-  {
-    title: "GlobalData Deck",
-    description: "Partner-branded intelligence narrative for GlobalData.",
-    href: "/globaldata",
-    icon: Sparkles,
-    badge: "10 slides",
-    accent: "from-comply-teal to-primary",
   },
 ];
 

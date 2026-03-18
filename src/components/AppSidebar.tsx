@@ -1,6 +1,6 @@
 import { 
   Presentation, Megaphone, Target, TrendingUp, FileText, Brain, 
-  Rocket, Briefcase, BookOpen, Home, Globe, Sparkles 
+  Rocket, Briefcase, BookOpen, Home, Globe 
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
@@ -34,7 +34,6 @@ const strategyItems = [
 const toolItems = [
   { title: "Line of Sight", url: "/line-of-sight", icon: Target },
   { title: "Homepage Mockup", url: "/homepage-mockup", icon: Globe },
-  { title: "GlobalData Deck", url: "/globaldata", icon: Sparkles },
 ];
 
 function NavGroup({ label, items }: { label: string; items: typeof pitchItems }) {
