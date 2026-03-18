@@ -3,7 +3,7 @@ import {
   Rocket, Briefcase, BookOpen, Megaphone, 
   Presentation, TrendingUp, Brain, FileText, 
   Target, Globe, Plane, Shield, Train,
-  ArrowRight, Sparkles
+  ArrowRight
 } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
 
