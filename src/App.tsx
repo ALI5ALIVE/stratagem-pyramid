@@ -40,7 +40,7 @@ const App = () => (
             <Route path="/pitch-executive" element={<ExecutivePitch />} />
             <Route path="/pitch-operational" element={<OperationalPitch />} />
             <Route path="/pitch-technical" element={<TechnicalDeepDive />} />
-            <Route path="/globaldata" element={<GlobalDataDeck />} />
+            
             <Route path="/homepage-mockup" element={<HomepageMockup />} />
             <Route path="/solutions/airlines" element={<AirlinesPage />} />
             <Route path="/solutions/defense" element={<DefensePage />} />

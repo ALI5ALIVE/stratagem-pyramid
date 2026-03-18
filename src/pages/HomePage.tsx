@@ -99,14 +99,6 @@ const tools: DeckCard[] = [
     icon: Globe,
     accent: "from-accent to-comply-teal",
   },
-  {
-    title: "GlobalData Deck",
-    description: "Partner-branded intelligence narrative for GlobalData.",
-    href: "/globaldata",
-    icon: Sparkles,
-    badge: "10 slides",
-    accent: "from-comply-teal to-primary",
-  },
 ];
 
 const solutions: DeckCard[] = [
