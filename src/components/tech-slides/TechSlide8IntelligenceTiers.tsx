@@ -32,24 +32,10 @@ const accuracy = [
 
 const TechSlide8IntelligenceTiers = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer id="tech-slide-8" title="Intelligence Tiers & Differentiation" subtitle="Four levels of operational intelligence — and why generic AI falls short" slideNumber={slideNumber} {...narrationProps}>
-    <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 flex-1 min-h-0">
-      {/* Left: 2x2 compact tier grid */}
-      <div className="lg:col-span-3 grid grid-cols-2 gap-1.5">
-        {tiers.map((t) => (
-          <div key={t.tier} className={`rounded-lg border ${t.border} ${t.bg} p-2.5 flex flex-col`}>
-            <div className="flex items-center gap-2 mb-1.5">
-              <t.icon className={`h-4 w-4 ${t.color}`} />
-              <h3 className={`text-sm font-bold ${t.color}`}>{t.tier}</h3>
-            </div>
-            <p className="text-xs text-muted-foreground mb-2 flex-1">{t.desc}</p>
-            <p className="text-[10px] text-muted-foreground/60 pt-1.5 border-t border-muted/10">{t.capability}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Right: comparison table + accuracy */}
-      <div className="lg:col-span-2 flex flex-col gap-1.5">
-        <div className="rounded-lg border border-muted/20 bg-card/60 p-2 overflow-auto flex-1">
+    <div className="flex flex-col gap-3 flex-1 min-h-0">
+      {/* Top: comparison table + accuracy side by side */}
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 flex-1 min-h-0">
+        <div className="lg:col-span-3 rounded-lg border border-muted/20 bg-card/60 p-2 overflow-auto">
           <table className="w-full text-xs">
             <thead>
               <tr className="border-b border-border">
@@ -70,7 +56,7 @@ const TechSlide8IntelligenceTiers = ({ slideNumber, ...narrationProps }: Props) 
           </table>
         </div>
 
-        <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-2">
+        <div className="lg:col-span-2 rounded-lg border border-amber-500/30 bg-amber-500/10 p-2 flex flex-col justify-center">
           <h3 className="text-[10px] font-bold text-amber-400 uppercase tracking-wide mb-1.5">Accuracy by Depth</h3>
           {accuracy.map((a, i) => (
             <div key={i} className="flex items-center gap-2 text-[10px] mb-0.5">
@@ -81,6 +67,20 @@ const TechSlide8IntelligenceTiers = ({ slideNumber, ...narrationProps }: Props) 
           ))}
           <p className="text-[9px] text-muted-foreground mt-1.5 italic">LLMs hallucinate at granular levels — wrong technology for micro-categorization.</p>
         </div>
+      </div>
+
+      {/* Bottom: 4 tier cards in a row */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-1.5">
+        {tiers.map((t) => (
+          <div key={t.tier} className={`rounded-lg border ${t.border} ${t.bg} p-2.5 flex flex-col`}>
+            <div className="flex items-center gap-2 mb-1.5">
+              <t.icon className={`h-4 w-4 ${t.color}`} />
+              <h3 className={`text-sm font-bold ${t.color}`}>{t.tier}</h3>
+            </div>
+            <p className="text-xs text-muted-foreground mb-2 flex-1">{t.desc}</p>
+            <p className="text-[10px] text-muted-foreground/60 pt-1.5 border-t border-muted/10">{t.capability}</p>
+          </div>
+        ))}
       </div>
     </div>
   </SalesSlideContainer>
