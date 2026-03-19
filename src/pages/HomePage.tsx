@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { 
   Rocket, Briefcase, BookOpen, 
   Presentation, TrendingUp, Brain, FileText, 
-  Target, Globe, Plane, Shield, Train,
   ArrowRight
 } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
@@ -76,46 +75,6 @@ const strategyDecks: DeckCard[] = [
   },
 ];
 
-const tools: DeckCard[] = [
-  {
-    title: "Line of Sight",
-    description: "Interactive KPI calculator, scorecard, and performance shift curve.",
-    href: "/line-of-sight",
-    icon: Target,
-    accent: "from-primary to-accent",
-  },
-  {
-    title: "Homepage Mockup",
-    description: "Website concept preview with platform ecosystem visualization.",
-    href: "/homepage-mockup",
-    icon: Globe,
-    accent: "from-accent to-comply-teal",
-  },
-];
-
-const solutions: DeckCard[] = [
-  {
-    title: "Airlines",
-    description: "Aviation-specific operational performance use cases.",
-    href: "/solutions/airlines",
-    icon: Plane,
-    accent: "from-primary to-accent",
-  },
-  {
-    title: "Defense",
-    description: "Defense & government compliance and readiness.",
-    href: "/solutions/defense",
-    icon: Shield,
-    accent: "from-accent to-comply-teal",
-  },
-  {
-    title: "Rail",
-    description: "Rail safety and operational compliance.",
-    href: "/solutions/rail",
-    icon: Train,
-    accent: "from-comply-teal to-primary",
-  },
-];
 
 function SectionHeader({ title, subtitle }: { title: string; subtitle: string }) {
   return (
@@ -212,32 +171,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Tools & Solutions */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <section>
-            <SectionHeader 
-              title="Tools & Analysis" 
-              subtitle="Interactive calculators and previews" 
-            />
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {tools.map((card) => (
-                <DeckCardComponent key={card.href} card={card} />
-              ))}
-            </div>
-          </section>
-
-          <section>
-            <SectionHeader 
-              title="Industry Solutions" 
-              subtitle="Vertical-specific positioning" 
-            />
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {solutions.map((card) => (
-                <DeckCardComponent key={card.href} card={card} />
-              ))}
-            </div>
-          </section>
-        </div>
       </div>
     </div>
   );
