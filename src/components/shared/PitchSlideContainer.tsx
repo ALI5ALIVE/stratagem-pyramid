@@ -39,6 +39,7 @@ const PitchSlideContainer = ({
   onPlay,
   onPause,
   onNextSlide,
+  onPrevSlide,
 }: PitchSlideContainerProps) => {
   return (
     <section
