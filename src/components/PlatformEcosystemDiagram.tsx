@@ -46,9 +46,8 @@ const PlatformEcosystemDiagram = ({ className = "" }: PlatformEcosystemDiagramPr
 
   // AI assistants positions
   const aiAssistants = [
-    { id: "coauthor", name: "CoAuthor", angle: 225, symbol: "✦" },
-    { id: "coanalyst", name: "CoAnalyst", angle: 315, symbol: "✦" },
-    { id: "cotrainer", name: "CoTrainer", angle: 90, symbol: "✦" },
+    { id: "coauthor", name: "CoAuthor", angle: 45, symbol: "✦" },
+    { id: "cotrainer", name: "CoTrainer", angle: 135, symbol: "✦" },
   ];
 
   // Calculate position from angle and radius
