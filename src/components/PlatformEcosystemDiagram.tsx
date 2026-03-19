@@ -19,20 +19,20 @@ const PlatformEcosystemDiagram = ({ className = "" }: PlatformEcosystemDiagramPr
   // Product positions (triangle layout)
   const products = [
     {
-      id: "safety",
-      name: "Safety",
-      subtitle: "Manager365",
-      angle: 240, // top-left
-      color: "hsl(330, 80%, 55%)",
-      iconColor: "hsl(330, 80%, 55%)",
-    },
-    {
       id: "content",
       name: "Content",
       subtitle: "Manager365",
-      angle: 0, // right
+      angle: 240, // top-left
       color: "hsl(210, 80%, 55%)",
       iconColor: "hsl(210, 80%, 55%)",
+    },
+    {
+      id: "safety",
+      name: "Safety",
+      subtitle: "Manager365",
+      angle: 0, // right
+      color: "hsl(330, 80%, 55%)",
+      iconColor: "hsl(330, 80%, 55%)",
     },
     {
       id: "training",
