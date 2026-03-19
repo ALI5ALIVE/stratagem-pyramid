@@ -117,6 +117,12 @@ const TechnicalDeepDive = () => {
     }
   }, [currentSlide, navigateToSlide]);
 
+  const handlePrevSlide = useCallback(() => {
+    if (currentSlide > 0) {
+      navigateToSlide(currentSlide - 1);
+    }
+  }, [currentSlide, navigateToSlide]);
+
   return (
     <div ref={containerRef} className="h-screen overflow-y-auto snap-y snap-mandatory scroll-smooth">
       {slides.map((slide, index) => {
