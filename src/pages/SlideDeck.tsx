@@ -44,8 +44,6 @@ const SlideDeck = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-  const autoPlayTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  
   const narration = useSimpleNarration();
   const { register, updateActiveIndex, unregister } = useSlideNavigation();
   const { open, setOpen } = useSidebar();
