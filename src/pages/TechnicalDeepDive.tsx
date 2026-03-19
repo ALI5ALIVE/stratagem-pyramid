@@ -54,7 +54,6 @@ const slides = [
 const TechnicalDeepDive = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-  const autoPlayTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { register, updateActiveIndex } = useSlideNavigation();
   const { open, setOpen } = useSidebar();
   const narration = useTechPitchNarration();
@@ -81,20 +80,6 @@ const TechnicalDeepDive = () => {
     );
   }, [register, currentSlide, navigateToSlide]);
 
-  // Auto-play narration with debounce for fast scrolling
-  useEffect(() => {
-    if (autoPlayTimerRef.current) clearTimeout(autoPlayTimerRef.current);
-    narration.stop();
-    autoPlayTimerRef.current = setTimeout(() => {
-      narration.play(slides[currentSlide].id);
-    }, 600);
-    return () => {
-      if (autoPlayTimerRef.current) clearTimeout(autoPlayTimerRef.current);
-    };
-  }, [currentSlide]);
-
-  useEffect(() => {
-  }, [currentSlide, updateActiveIndex]);
 
   useEffect(() => {
     const container = containerRef.current;
