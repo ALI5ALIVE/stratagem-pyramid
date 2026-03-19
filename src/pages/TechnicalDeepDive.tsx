@@ -68,6 +68,11 @@ const TechnicalDeepDive = () => {
     }
   }, [narration.stop]);
 
+  // Stop narration when leaving this deck
+  useEffect(() => {
+    return () => narration.stop();
+  }, []);
+
   useEffect(() => {
     register(
       slides.map((s) => ({ id: s.id, label: s.label })),

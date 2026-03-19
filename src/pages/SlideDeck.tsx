@@ -66,6 +66,11 @@ const SlideDeck = () => {
     onPrevSlide: slideId > 0 ? () => scrollToSlide(slideId - 1) : undefined,
   });
 
+  // Stop narration when leaving this deck
+  useEffect(() => {
+    return () => narration.stop();
+  }, []);
+
   const scrollToSlide = useCallback((index: number) => {
     if (!containerRef.current) return;
     const slideHeight = containerRef.current.clientHeight;

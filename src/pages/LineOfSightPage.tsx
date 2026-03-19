@@ -37,6 +37,11 @@ const LineOfSightPage = () => {
     if (viewId) setView(viewId);
   }, []);
 
+  // Stop narration when leaving this deck
+  useEffect(() => {
+    return () => narration.stop();
+  }, []);
+
   useEffect(() => {
     register(views, viewIndex, navigateToView);
     return () => unregister();

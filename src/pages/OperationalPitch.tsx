@@ -50,6 +50,11 @@ const OperationalPitch = () => {
     }
   }, [narration.stop]);
 
+  // Stop narration when leaving this deck
+  useEffect(() => {
+    return () => narration.stop();
+  }, []);
+
   useEffect(() => {
     register(slides, currentSlide, navigateToSlide);
     return () => unregister();
