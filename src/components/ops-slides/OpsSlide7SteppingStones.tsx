@@ -9,7 +9,7 @@ interface OpsSlide7Props extends SlideNarrationProps {
 const phases = [
   {
     icon: Zap,
-    year: "Year 1",
+    year: "Phase 1",
     title: "Quick Wins",
     color: "text-sky-400",
     border: "border-sky-400/30",
