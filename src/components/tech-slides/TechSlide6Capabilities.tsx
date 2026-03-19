@@ -24,7 +24,7 @@ const pillars = [
 
 const TechSlide6Capabilities = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer id="tech-slide-6" title="Platform Capabilities" subtitle="Three pillars that define the Operational Performance Platform" slideNumber={slideNumber} {...narrationProps}>
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
       {pillars.map((p) => (
         <div key={p.title} className={`rounded-xl border ${p.border} ${p.bg} p-5 flex flex-col`}>
           <div className="flex items-center gap-3 mb-3">

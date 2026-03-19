@@ -45,9 +45,9 @@ const OpsSlide11GettingStarted = ({ slideNumber, ...narrationProps }: OpsSlide11
       slideNumber={slideNumber}
       {...narrationProps}
     >
-      <div className="flex-1 flex flex-col justify-center gap-6 min-h-0">
+      <div className="flex flex-col justify-center gap-6">
         {/* Engagement model */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {engagementSteps.map((step) => (
             <div key={step.step} className={`p-6 rounded-xl border ${step.border} ${step.bg} flex flex-col h-full`}>
               <div className="flex items-center gap-3 mb-4">

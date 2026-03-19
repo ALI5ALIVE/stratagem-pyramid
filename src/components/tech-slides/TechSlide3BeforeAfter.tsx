@@ -27,7 +27,7 @@ const metrics = [
 const TechSlide3BeforeAfter = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer id="tech-slide-3" title="Before & After" subtitle="From fragmented event management to connected operational performance" slideNumber={slideNumber} {...narrationProps}>
     <div className="flex-1 flex flex-col gap-4">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 flex-1">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div className="p-4 rounded-xl border border-red-500/20 bg-red-500/5">
           <div className="flex items-center gap-2 mb-3"><XCircle className="h-5 w-5 text-red-400" /><h3 className="text-lg font-bold text-red-400">Today: Fragmented</h3></div>
           <ul className="space-y-2">{beforeItems.map((i) => (<li key={i} className="flex items-start gap-2 text-sm text-muted-foreground"><span className="w-1.5 h-1.5 rounded-full bg-red-400/60 mt-1.5 shrink-0" />{i}</li>))}</ul>
