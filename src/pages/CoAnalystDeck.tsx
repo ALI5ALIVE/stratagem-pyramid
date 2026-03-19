@@ -40,7 +40,12 @@ const slides = [
   { id: "ca-deck-structure", label: "Deck Structure" },
 ];
 
+const GATE_PASSWORD = "comply2025";
+
 const CoAnalystDeck = () => {
+  const [unlocked, setUnlocked] = useState(() => sessionStorage.getItem("ca-unlocked") === "true");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
