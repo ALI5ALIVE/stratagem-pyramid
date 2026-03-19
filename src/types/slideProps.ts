@@ -7,4 +7,5 @@ export interface SlideNarrationProps {
   onPlay?: () => void;
   onPause?: () => void;
   onNextSlide?: () => void;
+  onPrevSlide?: () => void;
 }
