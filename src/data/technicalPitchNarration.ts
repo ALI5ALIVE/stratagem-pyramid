@@ -69,7 +69,7 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "CoAnalyst Intelligence",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "CoAnalyst is a hybrid AI architecture — not one model doing everything. Specialised language models trained on aviation data. Retrieval-augmented generation for real-time context. Structured reasoning for compliance logic. Pattern detection for trend identification. Trained on millions of historical aviation reports since twenty twenty-three, continuously fine-tuned on real operational data. The result: a system that distinguishes a bird strike report from a bird strike trend, a procedure change from a procedure gap, a training completion from a competency validation. That domain specificity delivers ninety percent accuracy where generic AI plateaus at thirty-five.",
+      "You've now seen CoAnalyst activate each module — safety, content, training. Let me show you the architecture that makes that possible. CoAnalyst is a hybrid AI architecture — not one model doing everything. Specialised language models trained on aviation data. Retrieval-augmented generation for real-time context. Structured reasoning for compliance logic. Pattern detection for trend identification. Trained on millions of historical aviation reports since twenty twenty-three, continuously fine-tuned on real operational data. The result: a system that distinguishes a bird strike report from a bird strike trend, a procedure change from a procedure gap, a training completion from a competency validation. That domain specificity delivers ninety percent accuracy where generic AI plateaus at thirty-five.",
   },
   {
     slideId: "tech-slide-8",
