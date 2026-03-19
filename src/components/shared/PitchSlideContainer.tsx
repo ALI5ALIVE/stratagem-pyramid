@@ -20,6 +20,7 @@ interface PitchSlideContainerProps {
   onPlay?: () => void;
   onPause?: () => void;
   onNextSlide?: () => void;
+  onPrevSlide?: () => void;
 }
 
 const PitchSlideContainer = ({
