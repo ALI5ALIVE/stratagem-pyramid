@@ -45,7 +45,7 @@ const SlideContainer = ({
     <section
       id={id}
       className={cn(
-        "h-screen w-full flex flex-col px-6 sm:px-10 lg:px-16 py-10 sm:py-14 snap-start relative overflow-hidden",
+        "h-screen w-full flex flex-col px-6 sm:px-10 lg:px-16 pt-10 sm:pt-14 pb-16 sm:pb-20 snap-start relative overflow-hidden",
         variant === "light" ? "slide-light bg-white text-foreground" : "bg-background",
         className
       )}
@@ -76,7 +76,7 @@ const SlideContainer = ({
 
       {/* Slide number - bottom right */}
       {slideNumber && (
-        <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-10">
+        <div className="absolute bottom-16 right-6 sm:bottom-20 sm:right-10">
           <span className={cn(
             "text-sm font-medium",
             variant === "light" ? "text-muted-foreground" : "text-muted-foreground"
