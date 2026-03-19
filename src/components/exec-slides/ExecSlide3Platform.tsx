@@ -17,14 +17,14 @@ const modules = [
   },
   {
     icon: FileText,
-    name: "Content Manager365",
+    name: "Content Manager365 + CoAuthor",
     color: "text-blue-400",
     bgColor: "bg-blue-500/10 border-blue-500/20",
     bullets: ["Procedure authoring & revision", "Regulatory change management", "Crew & ops distribution"],
   },
   {
     icon: GraduationCap,
-    name: "Training Manager365",
+    name: "Training Manager365 + CoTrainer",
     color: "text-emerald-400",
     bgColor: "bg-emerald-500/10 border-emerald-500/20",
     bullets: ["Competency-based training", "Targeted course assignments", "Completion evidence & records"],
@@ -56,7 +56,7 @@ const ExecSlide3Platform = ({ slideNumber, ...narrationProps }: ExecSlide3Platfo
             <div className="flex-1">
               <h3 className="text-lg font-semibold text-primary">CoAnalyst — Intelligence Layer</h3>
               <p className="text-sm text-muted-foreground mt-1">
-                The key to unlocking operational intelligence. CoAnalyst connects safety, content, and training data — transforming siloed reports into actionable insights through <span className="text-primary font-semibold">CoAuthor</span>, <span className="text-primary font-semibold">CoAnalyst</span>, and <span className="text-primary font-semibold">CoTrainer</span>.
+                The key to unlocking operational intelligence. CoAnalyst connects safety, content, and training data — transforming siloed reports into actionable insights.
               </p>
             </div>
           </div>

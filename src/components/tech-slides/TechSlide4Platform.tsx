@@ -7,8 +7,8 @@ interface Props extends SlideNarrationProps { slideNumber?: number; }
 
 const modules = [
   { icon: Shield, name: "Safety Manager 365", color: "text-red-400", bgColor: "bg-red-500/10 border-red-500/20", bullets: ["SMS event reporting & investigations", "FOQA/FDM data ingestion & analysis", "Audit & compliance tracking"] },
-  { icon: FileText, name: "Content Manager 365", color: "text-blue-400", bgColor: "bg-blue-500/10 border-blue-500/20", bullets: ["Procedure authoring & revision control", "Regulatory change management", "Crew & ops distribution"] },
-  { icon: GraduationCap, name: "Training Manager 365", color: "text-emerald-400", bgColor: "bg-emerald-500/10 border-emerald-500/20", bullets: ["Competency-based training", "Targeted course assignments", "Completion evidence & records"] },
+  { icon: FileText, name: "Content Manager 365 + CoAuthor", color: "text-blue-400", bgColor: "bg-blue-500/10 border-blue-500/20", bullets: ["Procedure authoring & revision control", "Regulatory change management", "Crew & ops distribution"] },
+  { icon: GraduationCap, name: "Training Manager 365 + CoTrainer", color: "text-emerald-400", bgColor: "bg-emerald-500/10 border-emerald-500/20", bullets: ["Competency-based training", "Targeted course assignments", "Completion evidence & records"] },
 ];
 
 const TechSlide4Platform = ({ slideNumber, ...narrationProps }: Props) => (
@@ -20,7 +20,7 @@ const TechSlide4Platform = ({ slideNumber, ...narrationProps }: Props) => (
           <Brain className="w-7 h-7 text-primary mt-0.5" />
           <div className="flex-1">
             <h3 className="text-lg font-semibold text-primary">CoAnalyst — Intelligence Layer</h3>
-            <p className="text-sm text-muted-foreground mt-1">The key to unlocking operational intelligence. CoAnalyst connects safety, content, and training data — transforming siloed reports into actionable insights through <span className="text-primary font-semibold">CoAuthor</span>, <span className="text-primary font-semibold">CoAnalyst</span>, and <span className="text-primary font-semibold">CoTrainer</span>.</p>
+            <p className="text-sm text-muted-foreground mt-1">The key to unlocking operational intelligence. CoAnalyst connects safety, content, and training data — transforming siloed reports into actionable insights.</p>
           </div>
         </div>
         {modules.map((m) => (
