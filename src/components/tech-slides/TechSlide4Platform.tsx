@@ -8,7 +8,7 @@ interface Props extends SlideNarrationProps { slideNumber?: number; }
 const modules = [
   { icon: Shield, name: "Safety Manager 365", color: "text-red-400", bgColor: "bg-red-500/10 border-red-500/20", bullets: ["SMS event reporting & investigations", "FOQA/FDM data ingestion & analysis", "Audit & compliance tracking"] },
   { icon: FileText, name: "Content Manager 365 + CoAuthor", color: "text-blue-400", bgColor: "bg-blue-500/10 border-blue-500/20", bullets: ["Procedure authoring & revision control", "Regulatory change management", "Crew & ops distribution"] },
-  { icon: GraduationCap, name: "Training Manager 365", color: "text-emerald-400", bgColor: "bg-emerald-500/10 border-emerald-500/20", bullets: ["Competency-based training", "Targeted course assignments", "Completion evidence & records"] },
+  { icon: GraduationCap, name: "Training Manager 365 + CoTrainer", color: "text-emerald-400", bgColor: "bg-emerald-500/10 border-emerald-500/20", bullets: ["Competency-based training", "Targeted course assignments", "Completion evidence & records"] },
 ];
 
 const TechSlide4Platform = ({ slideNumber, ...narrationProps }: Props) => (

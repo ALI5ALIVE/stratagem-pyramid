@@ -24,7 +24,7 @@ const modules = [
   },
   {
     icon: GraduationCap,
-    name: "Training Manager365",
+    name: "Training Manager365 + CoTrainer",
     color: "text-emerald-400",
     bgColor: "bg-emerald-500/10 border-emerald-500/20",
     bullets: ["Competency-based training", "Targeted course assignments", "Completion evidence & records"],
