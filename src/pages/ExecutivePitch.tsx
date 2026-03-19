@@ -48,8 +48,19 @@ const ExecutivePitch = () => {
     return () => unregister();
   }, []);
 
+  // Auto-play narration with debounce for fast scrolling
   useEffect(() => {
-    updateActiveIndex(currentSlide);
+    if (autoPlayTimerRef.current) clearTimeout(autoPlayTimerRef.current);
+    narration.stop();
+    autoPlayTimerRef.current = setTimeout(() => {
+      narration.play(slides[currentSlide].id);
+    }, 600);
+    return () => {
+      if (autoPlayTimerRef.current) clearTimeout(autoPlayTimerRef.current);
+    };
+  }, [currentSlide]);
+
+  useEffect(() => {
   }, [currentSlide, updateActiveIndex]);
 
   // Scroll tracking
