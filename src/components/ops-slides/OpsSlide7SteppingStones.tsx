@@ -23,7 +23,7 @@ const phases = [
   },
   {
     icon: GitBranch,
-    year: "Year 2",
+    year: "Phase 2",
     title: "Connected Operations",
     color: "text-purple-400",
     border: "border-purple-400/30",
