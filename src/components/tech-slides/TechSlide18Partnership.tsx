@@ -12,7 +12,7 @@ const steps = [
 
 const TechSlide18Partnership = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer id="tech-slide-18" title="Partnership Model" subtitle="Your path to connected operational performance" slideNumber={slideNumber} {...narrationProps}>
-    <div className="flex-1 flex flex-col justify-center gap-6">
+    <div className="flex flex-col justify-center gap-6">
       <div className="grid grid-cols-3 gap-4">
         {steps.map((s) => (
           <div key={s.step} className={`p-6 rounded-xl border ${s.border} ${s.bg} flex flex-col h-full`}>

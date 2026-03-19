@@ -69,7 +69,7 @@ const ExecSlide6WhyUs = ({
                 <d.icon className={`w-6 h-6 ${d.iconColor}`} />
               </div>
               <h3 className="text-lg font-bold text-foreground">{d.title}</h3>
-              <p className="text-sm text-muted-foreground flex-1">{d.desc}</p>
+              <p className="text-sm text-muted-foreground">{d.desc}</p>
             </div>
           ))}
         </div>
