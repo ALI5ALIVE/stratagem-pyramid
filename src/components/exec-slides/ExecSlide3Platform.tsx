@@ -56,7 +56,7 @@ const ExecSlide3Platform = ({ slideNumber, ...narrationProps }: ExecSlide3Platfo
             <div className="flex-1">
               <h3 className="text-lg font-semibold text-primary">CoAnalyst — Intelligence Layer</h3>
               <p className="text-sm text-muted-foreground mt-1">
-                The key to unlocking operational intelligence. CoAnalyst connects safety, content, and training data — transforming siloed reports into actionable insights through <span className="text-primary font-semibold">CoAuthor</span>, <span className="text-primary font-semibold">CoAnalyst</span>, and <span className="text-primary font-semibold">CoTrainer</span>.
+                The key to unlocking operational intelligence. CoAnalyst connects safety, content, and training data — transforming siloed reports into actionable insights.
               </p>
             </div>
           </div>
