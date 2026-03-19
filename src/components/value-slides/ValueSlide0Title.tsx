@@ -28,6 +28,7 @@ const ValueSlide0Title = ({
   onPlay,
   onPause,
   onNextSlide,
+  onPrevSlide,
 }: ValueSlide0TitleProps) => {
   return (
     <section
@@ -43,6 +44,7 @@ const ValueSlide0Title = ({
           onPlay={onPlay}
           onPause={onPause ?? (() => {})}
           onNextSlide={onNextSlide}
+          onPrevSlide={onPrevSlide}
         />
       )}
 
