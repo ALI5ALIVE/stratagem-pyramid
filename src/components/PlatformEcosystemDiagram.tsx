@@ -385,25 +385,15 @@ const PlatformEcosystemDiagram = ({ className = "" }: PlatformEcosystemDiagramPr
       {/* Hub logo text */}
       <text
         x={cx}
-        y={cy - 6}
+        y={cy}
         fill="white"
-        fontSize="11"
+        fontSize="12"
         fontWeight="700"
         textAnchor="middle"
+        dominantBaseline="middle"
         fontFamily="Space Grotesk, sans-serif"
       >
-        COMPLY
-      </text>
-      <text
-        x={cx}
-        y={cy + 10}
-        fill="hsl(200, 100%, 70%)"
-        fontSize="14"
-        fontWeight="700"
-        textAnchor="middle"
-        fontFamily="Space Grotesk, sans-serif"
-      >
-        365
+        CoAnalyst
       </text>
     </svg>
   );
