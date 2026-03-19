@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { Radar, Zap, GitBranch, BadgeCheck, Shield, FileText, GraduationCap } from "lucide-react";
+import { Radar, Zap, GitBranch, BadgeCheck, Shield, FileText, GraduationCap, Brain } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface OpsSlide4Props extends SlideNarrationProps {
