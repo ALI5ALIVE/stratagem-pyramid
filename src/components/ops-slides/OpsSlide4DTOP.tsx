@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { Radar, Zap, GitBranch, BadgeCheck, Shield, FileText, GraduationCap } from "lucide-react";
+import { Radar, Zap, GitBranch, BadgeCheck, Shield, FileText, GraduationCap, Brain } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface OpsSlide4Props extends SlideNarrationProps {
@@ -101,6 +101,15 @@ const OpsSlide4DTOP = ({ slideNumber, ...narrationProps }: OpsSlide4Props) => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* CoAnalyst Intelligence Layer */}
+        <div className="p-3 rounded-lg border border-primary/30 bg-primary/10 flex items-start gap-3">
+          <Brain className="h-5 w-5 shrink-0 mt-0.5 text-primary" />
+          <div className="min-w-0">
+            <h4 className="text-sm font-bold text-primary">CoAnalyst✦ — Intelligence Layer</h4>
+            <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">Aviation-specific AI that surfaces patterns, predicts risks, and drives closed-loop corrective action across all three modules.</p>
+          </div>
         </div>
 
         {/* Arrow connector */}
