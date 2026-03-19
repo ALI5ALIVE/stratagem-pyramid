@@ -33,6 +33,7 @@ const Slide0Title = ({
   onPlay,
   onPause,
   onNextSlide,
+  onPrevSlide,
 }: Slide0TitleProps) => {
   return (
     <section
