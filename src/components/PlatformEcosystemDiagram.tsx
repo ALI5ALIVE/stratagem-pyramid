@@ -46,7 +46,7 @@ const PlatformEcosystemDiagram = ({ className = "" }: PlatformEcosystemDiagramPr
 
   // AI assistants positions
   const aiAssistants = [
-    { id: "coauthor", name: "CoAuthor", angle: 210, symbol: "✦" },
+    { id: "coauthor", name: "CoAuthor", angle: 300, symbol: "✦" },
     { id: "cotrainer", name: "CoTrainer", angle: 135, symbol: "✦" },
   ];
 
