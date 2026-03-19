@@ -17,10 +17,10 @@ export const executivePitchNarrations: ExecNarrationSlide[] = [
   },
   {
     slideId: "exec-slide-1",
-    title: "The $110M Problem",
+    title: "The Human-Factor Cost",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "One hundred and ten million dollars. That's what operational fragmentation costs a mid-size carrier every year. Not one catastrophic event — thousands of small disconnections. A go-around that wasn't prevented because training never saw the safety signal. An aircraft grounded because a compliance gap wasn't flagged. These aren't hypotheticals. They're line items hiding across your P&L. The carriers closing these gaps are fundamentally changing their cost structure.",
+      "Every airline has costs hiding in the gap between what people know and what they do. Go-arounds that weren't prevented because training never saw the safety signal. An aircraft grounded because a compliance gap wasn't flagged. Crew technique variance adding fuel burn that no dashboard catches. These are human-factor costs — the portion of operational spend your people and processes can directly influence. We've modelled eight categories of operational disconnection. The total is significant. But the methodology is the point — we help you identify your biggest human-factor cost driver and show you what even a small improvement is worth.",
   },
   {
     slideId: "exec-slide-2",
@@ -55,14 +55,14 @@ export const executivePitchNarrations: ExecNarrationSlide[] = [
     title: "Line of Sight",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Every signal connects to an outcome you own. Go-around trends detected and addressed within forty-eight hours — that's schedule protection. Procedure gaps closed before the audit — that's regulatory confidence. Crew retrained before the next rotation — that's operational readiness. For a mid-size carrier, the total annual exposure exceeds one hundred and ten million dollars — and the cost avoidance opportunity exceeds thirty million. We can model this with your numbers. So what makes us the right partner to deliver this?",
+      "Every signal connects to an outcome you own. Go-around trends detected and addressed within forty-eight hours — that's schedule protection. Procedure gaps closed before the audit — that's regulatory confidence. Crew retrained before the next rotation — that's operational readiness. The total human-factor cost exposure is significant — and the cost avoidance opportunity runs into the tens of millions. We can model this with your specific numbers. So what makes us the right partner to deliver this?",
   },
   {
     slideId: "exec-slide-7",
     title: "Why Comply365",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Three things set Comply three six five apart — and they're the reason fifty-plus airlines trust us with their operations today. First, a connected foundation. We're not stitching point solutions together. Safety, content, and training share one data model, one version of truth. Seven of the top ten North American carriers and over one million frontline users rely on this every day. Second, embedded intelligence. CoAnalyst wasn't built as a generic AI with an aviation skin. It's been trained from the ground up on ten years of aviation operational data — delivering over ninety percent accuracy where general-purpose tools plateau at thirty-five. That precision is the difference between actionable intelligence and noise. Third, proof by default. Every action is logged automatically. Every change is traced. Every decision is auditable. You don't prepare for regulators — you're always ready. Let's schedule a thirty-minute discovery session to map your operational signals to measurable outcomes — and build a custom cost avoidance model with your numbers.",
+      "Three things set Comply three six five apart — and they're the reason leading carriers across North America trust us with their operations today. First, a connected foundation. We're not stitching point solutions together. Safety, content, and training share one data model, one version of truth. The largest carriers in North America rely on this every day. Second, embedded intelligence. CoAnalyst wasn't built as a generic AI with an aviation skin. It's been trained from the ground up on ten years of aviation operational data — delivering over ninety percent accuracy where general-purpose tools plateau at thirty-five. That precision is the difference between actionable intelligence and noise. Third, proof by default. Every action is logged automatically. Every change is traced. Every decision is auditable. You don't prepare for regulators — you're always ready. Let's schedule a thirty-minute discovery session to map your operational signals to measurable outcomes — and build a custom cost avoidance model with your numbers.",
   },
 ];
 

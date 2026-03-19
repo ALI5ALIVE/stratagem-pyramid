@@ -9,7 +9,7 @@ interface OpsSlide7Props extends SlideNarrationProps {
 const phases = [
   {
     icon: Zap,
-    year: "Year 1",
+    year: "Phase 1",
     title: "Quick Wins",
     color: "text-sky-400",
     border: "border-sky-400/30",
@@ -23,7 +23,7 @@ const phases = [
   },
   {
     icon: GitBranch,
-    year: "Year 2",
+    year: "Phase 2",
     title: "Connected Operations",
     color: "text-purple-400",
     border: "border-purple-400/30",
@@ -37,7 +37,7 @@ const phases = [
   },
   {
     icon: Brain,
-    year: "Year 3",
+    year: "Phase 3",
     title: "Intelligent Operations",
     color: "text-emerald-400",
     border: "border-emerald-400/30",
