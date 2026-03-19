@@ -2,6 +2,7 @@ import { TrendingUp, Crown, Settings, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import type { SlideNarrationProps } from "@/types/slideProps";
+import { useCases } from "@/data/lineOfSightData";
 
 interface ExecSlide5ValueProps extends SlideNarrationProps {
   slideNumber?: number;
