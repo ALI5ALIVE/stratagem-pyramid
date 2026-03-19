@@ -86,12 +86,17 @@ const CASlide8VsGenericAI = (props: SlideNarrationProps) => {
             </div>
           </div>
 
-          <div className="bg-primary/10 border border-primary/30 rounded-xl p-3 flex-1 flex flex-col justify-center">
-            <p className="text-[11px] font-semibold text-foreground italic leading-relaxed">
+          <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-3 flex items-start gap-2">
+            <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+            <div>
+              <h3 className="text-[10px] font-bold text-emerald-400 uppercase tracking-wide mb-1">Data Security Guarantee</h3>
+              <p className="text-[9px] text-muted-foreground leading-relaxed">Your data stays yours. Never used to train external models (OpenAI, Microsoft, or any third party). Secure, isolated AI pipeline — customer data visible only to you.</p>
+            </div>
+          </div>
+
+          <div className="bg-primary/10 border border-primary/30 rounded-xl p-2.5 flex-1 flex flex-col justify-center">
+            <p className="text-[10px] font-semibold text-foreground italic leading-relaxed">
               "Generic AI reads reports. CoAnalyst understands aviation operations."
-            </p>
-            <p className="text-[10px] text-muted-foreground mt-2 italic">
-              "Generic AI answers questions. CoAnalyst identifies risks airlines don't yet know to ask about."
             </p>
           </div>
         </div>
