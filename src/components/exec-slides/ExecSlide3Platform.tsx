@@ -17,7 +17,7 @@ const modules = [
   },
   {
     icon: FileText,
-    name: "Content Manager365",
+    name: "Content Manager365 + CoAuthor",
     color: "text-blue-400",
     bgColor: "bg-blue-500/10 border-blue-500/20",
     bullets: ["Procedure authoring & revision", "Regulatory change management", "Crew & ops distribution"],
