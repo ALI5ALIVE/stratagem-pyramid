@@ -39,6 +39,7 @@ const SlideContainer = ({
   onPlay,
   onPause,
   onNextSlide,
+  onPrevSlide,
 }: SlideContainerProps) => {
   return (
     <section
