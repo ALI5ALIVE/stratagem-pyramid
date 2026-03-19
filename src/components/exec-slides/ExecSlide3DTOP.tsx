@@ -50,7 +50,7 @@ const ExecSlide3DTOP = ({
   return (
     <SalesSlideContainer
       id="exec-slide-3"
-      title="How It Works"
+      title="The New Operating Model"
       subtitle="One use case. Four connected steps. Closed-loop performance improvement."
       slideNumber={slideNumber}
       isPlaying={isPlaying}
