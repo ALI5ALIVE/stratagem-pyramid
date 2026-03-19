@@ -54,6 +54,7 @@ const slides = [
 const TechnicalDeepDive = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const autoPlayTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { register, updateActiveIndex } = useSlideNavigation();
   const { open, setOpen } = useSidebar();
   const narration = useTechPitchNarration();

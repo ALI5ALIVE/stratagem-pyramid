@@ -41,6 +41,7 @@ const CoAnalystDeck = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const autoPlayTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const narration = useCoAnalystNarration();
   const { register, updateActiveIndex, unregister } = useSlideNavigation();
