@@ -37,7 +37,7 @@ const phases = [
   },
   {
     icon: Brain,
-    year: "Year 3",
+    year: "Phase 3",
     title: "Intelligent Operations",
     color: "text-emerald-400",
     border: "border-emerald-400/30",

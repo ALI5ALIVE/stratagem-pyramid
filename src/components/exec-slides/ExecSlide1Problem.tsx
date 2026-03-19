@@ -40,7 +40,7 @@ const ExecSlide1Problem = ({
     <SalesSlideContainer
       id="exec-slide-1"
       title={`The ${totalFormatted} Problem`}
-      subtitle="The annual cost of fragmented operations — calculated from real use cases, industry benchmarks, and defensible data."
+      subtitle="The annual cost of operational disconnection — the human-factor costs your people and processes can influence."
       slideNumber={slideNumber}
       isPlaying={isPlaying}
       isLoading={isLoading}
