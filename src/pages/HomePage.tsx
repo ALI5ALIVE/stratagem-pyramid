@@ -75,46 +75,6 @@ const strategyDecks: DeckCard[] = [
   },
 ];
 
-const tools: DeckCard[] = [
-  {
-    title: "Line of Sight",
-    description: "Interactive KPI calculator, scorecard, and performance shift curve.",
-    href: "/line-of-sight",
-    icon: Target,
-    accent: "from-primary to-accent",
-  },
-  {
-    title: "Homepage Mockup",
-    description: "Website concept preview with platform ecosystem visualization.",
-    href: "/homepage-mockup",
-    icon: Globe,
-    accent: "from-accent to-comply-teal",
-  },
-];
-
-const solutions: DeckCard[] = [
-  {
-    title: "Airlines",
-    description: "Aviation-specific operational performance use cases.",
-    href: "/solutions/airlines",
-    icon: Plane,
-    accent: "from-primary to-accent",
-  },
-  {
-    title: "Defense",
-    description: "Defense & government compliance and readiness.",
-    href: "/solutions/defense",
-    icon: Shield,
-    accent: "from-accent to-comply-teal",
-  },
-  {
-    title: "Rail",
-    description: "Rail safety and operational compliance.",
-    href: "/solutions/rail",
-    icon: Train,
-    accent: "from-comply-teal to-primary",
-  },
-];
 
 function SectionHeader({ title, subtitle }: { title: string; subtitle: string }) {
   return (
