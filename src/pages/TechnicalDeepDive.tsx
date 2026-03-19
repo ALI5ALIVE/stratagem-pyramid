@@ -38,7 +38,7 @@ const slides = [
   { id: "tech-slide-7", label: "CoAnalyst Intelligence", component: TechSlide7CoAnalyst },
   { id: "tech-slide-8", label: "Intelligence Tiers", component: TechSlide8IntelligenceTiers },
   
-  { id: "tech-slide-5", label: "DTOP Architecture", component: TechSlide5DTOP },
+  { id: "tech-slide-5", label: "DTOP Operating Model", component: TechSlide5DTOP },
   
   { id: "tech-slide-10", label: "Safety Use Cases", component: TechSlide10SafetyUseCases },
   { id: "tech-slide-11", label: "Ops Use Cases", component: TechSlide11OpsUseCases },
