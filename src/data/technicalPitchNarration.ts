@@ -139,7 +139,7 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "Why Comply365",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Three differentiators. Connected foundation — one data model, three applications, one intelligence layer. Fifty-plus airlines, seven of the top ten North American carriers, over one million frontline users. Domain-trained intelligence — CoAnalyst built from the ground up on aviation data, continuously trained since twenty twenty-three. Not a generic AI with an aviation wrapper. Proof by design — every action logged automatically. The evidence trail is a byproduct, not a report. Point solutions manage silos. Generic AI creates noise. We close the loop.",
+      "Those outcomes raise the question — why Comply three six five? Three differentiators. Connected foundation — one data model, three applications, one intelligence layer. Fifty-plus airlines, seven of the top ten North American carriers, over one million frontline users. Domain-trained intelligence — CoAnalyst built from the ground up on aviation data, continuously trained since twenty twenty-three. Not a generic AI with an aviation wrapper. Proof by design — every action logged automatically. The evidence trail is a byproduct, not a report. Point solutions manage silos. Generic AI creates noise. We close the loop.",
   },
   {
     slideId: "tech-slide-18",
