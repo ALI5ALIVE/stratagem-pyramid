@@ -1,5 +1,8 @@
 import { useEffect, useState, useRef, useCallback } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Lock } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useCoAnalystNarration } from "@/hooks/useCoAnalystNarration";
