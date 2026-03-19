@@ -60,6 +60,7 @@ const SlideContainer = ({
           onPlay={onPlay}
           onPause={onPause ?? (() => {})}
           onNextSlide={onNextSlide}
+          onPrevSlide={onPrevSlide}
           variant={variant}
         />
       )}

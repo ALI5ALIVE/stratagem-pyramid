@@ -60,6 +60,7 @@ const PitchSlideContainer = ({
           onPlay={onPlay}
           onPause={onPause ?? (() => {})}
           onNextSlide={onNextSlide}
+          onPrevSlide={onPrevSlide}
           variant={variant}
         />
       )}
