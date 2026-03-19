@@ -76,7 +76,7 @@ const SlideContainer = ({
 
       {/* Slide number - bottom right */}
       {slideNumber && (
-        <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-10">
+        <div className="absolute bottom-16 right-6 sm:bottom-20 sm:right-10">
           <span className={cn(
             "text-sm font-medium",
             variant === "light" ? "text-muted-foreground" : "text-muted-foreground"
