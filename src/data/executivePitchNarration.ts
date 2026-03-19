@@ -55,7 +55,7 @@ export const executivePitchNarrations: ExecNarrationSlide[] = [
     title: "Line of Sight",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Every signal connects to an outcome you own. Go-around trends detected and addressed within forty-eight hours — that's schedule protection. Procedure gaps closed before the audit — that's regulatory confidence. Crew retrained before the next rotation — that's operational readiness. For a mid-size carrier, the total annual exposure exceeds one hundred and ten million dollars — and the cost avoidance opportunity exceeds thirty million. We can model this with your numbers. So what makes us the right partner to deliver this?",
+      "Every signal connects to an outcome you own. Go-around trends detected and addressed within forty-eight hours — that's schedule protection. Procedure gaps closed before the audit — that's regulatory confidence. Crew retrained before the next rotation — that's operational readiness. The total human-factor cost exposure is significant — and the cost avoidance opportunity runs into the tens of millions. We can model this with your specific numbers. So what makes us the right partner to deliver this?",
   },
   {
     slideId: "exec-slide-7",
