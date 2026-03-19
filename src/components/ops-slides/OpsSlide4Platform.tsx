@@ -74,7 +74,7 @@ const OpsSlide4Platform = ({ slideNumber, ...narrationProps }: OpsSlide4Platform
             <div className="flex-1">
               <h3 className="text-base font-semibold text-primary">CoAnalyst — Intelligence Layer</h3>
               <p className="text-xs text-muted-foreground mt-1">
-                The key that unlocks data intelligence across your operation. CoAnalyst activates the data held within Safety, Content, and Training Manager — surfacing patterns, predicting risks, and driving closed-loop corrective action through <span className="text-primary font-semibold">CoAuthor</span>, <span className="text-primary font-semibold">CoAnalyst</span>, and <span className="text-primary font-semibold">CoTrainer</span>.
+                The key that unlocks data intelligence across your operation. CoAnalyst activates the data held within Safety, Content, and Training Manager — surfacing patterns, predicting risks, and driving closed-loop corrective action.
               </p>
             </div>
           </div>
