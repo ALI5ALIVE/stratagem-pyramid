@@ -21,8 +21,8 @@ const phases = [
 
 const TechSlide15Roadmap2026 = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer id="tech-slide-15" title="2026 Use Case Roadmap" subtitle="Phased delivery — each phase builds on proven value" slideNumber={slideNumber} {...narrationProps}>
-    <div className="flex-1 flex flex-col gap-4">
-      <div className="grid grid-cols-3 gap-4 flex-1 min-h-0">
+    <div className="flex flex-col gap-4">
+      <div className="grid grid-cols-3 gap-4">
         {phases.map((p) => (
           <div key={p.phase} className={`rounded-xl border ${p.border} ${p.bg} p-5 flex flex-col`}>
             <div className="flex items-center gap-3 mb-3">

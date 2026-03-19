@@ -18,7 +18,7 @@ const trust = [
 
 const TechSlide17WhyUs = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer id="tech-slide-17" title="Why Comply365" subtitle="The only connected operational performance platform with embedded aviation intelligence" slideNumber={slideNumber} {...narrationProps}>
-    <div className="flex-1 flex flex-col gap-5 justify-center">
+    <div className="flex flex-col gap-5 justify-center">
       <div className="grid grid-cols-3 gap-4">
         {diffs.map((d) => (
           <div key={d.title} className={`rounded-xl border ${d.border} ${d.bg} p-5`}>

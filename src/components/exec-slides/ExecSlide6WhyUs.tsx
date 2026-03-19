@@ -60,16 +60,16 @@ const ExecSlide6WhyUs = ({
       onPause={onPause}
       onNextSlide={onNextSlide}
     >
-      <div className="flex-1 flex flex-col gap-6">
+      <div className="flex flex-col gap-6">
         {/* Differentiator cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 flex-1">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {differentiators.map((d) => (
             <div key={d.title} className={`rounded-xl border p-6 flex flex-col gap-4 ${d.color}`}>
               <div className="w-12 h-12 rounded-xl bg-background/30 flex items-center justify-center">
                 <d.icon className={`w-6 h-6 ${d.iconColor}`} />
               </div>
               <h3 className="text-lg font-bold text-foreground">{d.title}</h3>
-              <p className="text-sm text-muted-foreground flex-1">{d.desc}</p>
+              <p className="text-sm text-muted-foreground">{d.desc}</p>
             </div>
           ))}
         </div>

@@ -30,7 +30,7 @@ const categoryDrivers = [
 const TechSlide1StrategicShift = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer id="tech-slide-1" title="The Strategic Shift" subtitle="From point tools to an Operational Performance Platform — and why the category exists now" slideNumber={slideNumber} {...narrationProps}>
     <div className="flex-1 flex flex-col gap-4">
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-4 flex-1">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-4">
         {/* Before */}
         <div className="p-4 rounded-xl border border-red-500/20 bg-red-500/5">
           <div className="flex items-center gap-2 mb-3">

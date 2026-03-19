@@ -104,7 +104,7 @@ const PitchSlideContainer = ({
         )}
 
         {/* Content area */}
-        <div className="w-full flex-1 overflow-hidden flex flex-col">{children}</div>
+        <div className="w-full flex-1 overflow-hidden flex flex-col justify-center">{children}</div>
       </div>
     </section>
   );
