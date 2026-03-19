@@ -97,6 +97,12 @@ const OperationalPitch = () => {
     }
   }, [currentSlide, navigateToSlide]);
 
+  const handlePrevSlide = useCallback(() => {
+    if (currentSlide > 0) {
+      navigateToSlide(currentSlide - 1);
+    }
+  }, [currentSlide, navigateToSlide]);
+
   return (
     <div className="relative min-h-screen bg-background">
       <div
