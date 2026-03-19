@@ -20,6 +20,7 @@ interface SlideContainerProps {
   onPlay?: () => void;
   onPause?: () => void;
   onNextSlide?: () => void;
+  onPrevSlide?: () => void;
 }
 
 const SlideContainer = ({
