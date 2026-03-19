@@ -211,32 +211,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Tools & Solutions */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <section>
-            <SectionHeader 
-              title="Tools & Analysis" 
-              subtitle="Interactive calculators and previews" 
-            />
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {tools.map((card) => (
-                <DeckCardComponent key={card.href} card={card} />
-              ))}
-            </div>
-          </section>
-
-          <section>
-            <SectionHeader 
-              title="Industry Solutions" 
-              subtitle="Vertical-specific positioning" 
-            />
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {solutions.map((card) => (
-                <DeckCardComponent key={card.href} card={card} />
-              ))}
-            </div>
-          </section>
-        </div>
       </div>
     </div>
   );
