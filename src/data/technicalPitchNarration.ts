@@ -104,7 +104,7 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "Financial Use Cases",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Two cases that hit the P and L directly. Fuel variance: one percent across a mid-size fleet equals five to twenty million annually. CoAnalyst identifies specific routes, aircraft, and crew contributing to excess burn — correlating FOQA with flight planning, weather, and training records. Targeted interventions deliver measurable savings within ninety days. Insurance premiums: carriers demonstrating connected safety intelligence — live evidence trails, not binders — are seeing material reductions. One carrier achieved fifteen percent reduction in hull and liability premiums. These aren't operational metrics. They're financial outcomes your CFO measures.",
+      "Two cases that hit the P and L directly. Fuel variance: one percent across a mid-size fleet equals five to twenty million annually. CoAnalyst identifies specific routes, aircraft, and crew contributing to excess burn — correlating FOQA with flight planning, weather, and training records. Targeted interventions deliver measurable savings within ninety days. Insurance premiums: carriers demonstrating connected safety intelligence — live evidence trails, not binders — are seeing material reductions. One carrier achieved fifteen percent reduction in hull and liability premiums. These aren't operational metrics. They're financial outcomes your CFO measures. And those financial outcomes are just the beginning — here's what's coming next.",
   },
   {
     slideId: "tech-slide-13",
