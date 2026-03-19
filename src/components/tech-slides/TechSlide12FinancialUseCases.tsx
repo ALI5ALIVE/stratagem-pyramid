@@ -1,65 +1,119 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
 import { useCases } from "@/data/lineOfSightData";
-import { DollarSign, Shield, TrendingDown } from "lucide-react";
+import { DollarSign, TrendingDown, Zap, FileText, CheckCircle2, ChevronRight } from "lucide-react";
 
 interface Props extends SlideNarrationProps { slideNumber?: number; }
 
 const formatCurrency = (v: number) => v >= 1_000_000 ? `$${(v / 1_000_000).toFixed(1)}M` : v >= 1_000 ? `$${(v / 1_000).toFixed(0)}K` : `$${v}`;
 
+const parseDTOP = (mechanism: string) => {
+  const parts = mechanism.split(" → ");
+  return {
+    detect: parts[0]?.replace(/^Detect\s*\(/, "").replace(/\)$/, "") || "",
+    trigger: parts[1]?.replace(/^Trigger\s*\(/, "").replace(/\)$/, "") || "",
+    orchestrate: parts[2]?.replace(/^Orchestrate\s*\(/, "").replace(/\)$/, "") || "",
+    prove: parts[3]?.replace(/^Prove\s*\(/, "").replace(/\)$/, "") || "",
+  };
+};
+
 const TechSlide12FinancialUseCases = ({ slideNumber, ...narrationProps }: Props) => {
   const insurance = useCases.find((uc) => uc.id === "uc7")!;
   const insAnnual = insurance.input.baseline * insurance.input.costMidpoint * insurance.input.annualisationFactor;
-  const dtopParts = insurance.platformMechanism.split(" → ");
+  const dtop = parseDTOP(insurance.platformMechanism);
 
   const totalExposure = useCases.reduce((s, uc) => s + uc.input.baseline * uc.input.costMidpoint * uc.input.annualisationFactor, 0);
   const revenueProtection = totalExposure * 0.3;
 
   return (
     <SalesSlideContainer id="tech-slide-12" title="Use Cases: Financial" subtitle="Insurance premiums and revenue protection — the CFO's view" slideNumber={slideNumber} {...narrationProps}>
-      <div className="flex-1 flex flex-col gap-4">
-        {/* Insurance deep-dive */}
-        <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-5 flex-1">
-          <div className="flex items-center gap-3 mb-3">
-            <Shield className="h-6 w-6 text-amber-400" />
-            <h3 className="text-lg font-bold text-amber-400">{insurance.label}</h3>
-            <span className="text-sm px-3 py-1 rounded-full bg-destructive/10 text-destructive font-bold">{formatCurrency(insAnnual)}/yr exposure</span>
+      <div className="flex flex-col gap-4">
+        {/* DTOP Legend */}
+        <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/30">
+            <Zap className="w-3.5 h-3.5 text-primary" />
+            <span className="text-xs font-medium text-primary">Detect</span>
           </div>
-          <p className="text-sm text-muted-foreground mb-4">{insurance.description}</p>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <span className="text-[10px] uppercase tracking-wider text-muted-foreground/60">DTOP Chain</span>
-              <div className="space-y-1 mt-2">
-                {dtopParts.map((p, i) => (
-                  <div key={i} className="flex items-center gap-2">
-                    <span className="text-[10px] px-2 py-1 rounded-lg bg-primary/10 border border-primary/20 text-foreground/80">{p.trim()}</span>
-                  </div>
-                ))}
+          <ChevronRight className="w-4 h-4 text-muted-foreground" />
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-accent/10 border border-accent/30">
+            <TrendingDown className="w-3.5 h-3.5 text-accent" />
+            <span className="text-xs font-medium text-accent">Trigger</span>
+          </div>
+          <ChevronRight className="w-4 h-4 text-muted-foreground" />
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30">
+            <FileText className="w-3.5 h-3.5 text-cyan-500" />
+            <span className="text-xs font-medium text-cyan-500">Orchestrate</span>
+          </div>
+          <ChevronRight className="w-4 h-4 text-muted-foreground" />
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+            <span className="text-xs font-medium text-emerald-500">Prove</span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Insurance DTOP card */}
+          <div className="bg-card/50 backdrop-blur-sm border border-amber-500/30 rounded-xl p-4">
+            <div className="flex items-center gap-2 mb-1">
+              <h3 className="text-sm font-semibold text-foreground">{insurance.label}</h3>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-destructive/10 text-destructive font-semibold shrink-0">{formatCurrency(insAnnual)}/yr</span>
+            </div>
+            <p className="text-[10px] text-muted-foreground mb-3">{insurance.description}</p>
+
+            {/* DTOP Timeline */}
+            <div className="space-y-2">
+              <div className="relative pl-4 border-l-2 border-primary/50">
+                <div className="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-primary" />
+                <div className="text-[10px] font-semibold uppercase tracking-wider text-primary mb-0.5">Signal Detected</div>
+                <div className="text-xs font-medium text-foreground">{dtop.detect}</div>
+              </div>
+
+              <div className="relative pl-4 border-l-2 border-accent/50">
+                <div className="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-accent" />
+                <div className="text-[10px] font-semibold uppercase tracking-wider text-accent mb-0.5">Action Triggered</div>
+                <div className="text-xs font-medium text-foreground">{dtop.trigger}</div>
+              </div>
+
+              <div className="relative pl-4 border-l-2 border-cyan-500/50">
+                <div className="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-cyan-500" />
+                <div className="text-[10px] font-semibold uppercase tracking-wider text-cyan-500 mb-0.5">Change Orchestrated</div>
+                <div className="text-xs font-medium text-foreground">{dtop.orchestrate}</div>
+                <div className="flex gap-1 mt-1 flex-wrap">
+                  {insurance.input.costComponents.map((c) => (
+                    <span key={c} className="text-[9px] px-1.5 py-0.5 rounded-full border border-muted/20 bg-muted/10 text-muted-foreground">{c}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="relative pl-4 border-l-2 border-emerald-500/50">
+                <div className="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-emerald-500" />
+                <div className="text-[10px] font-semibold uppercase tracking-wider text-emerald-500 mb-0.5">Outcome Proven</div>
+                <div className="text-xs font-medium text-foreground">{dtop.prove}</div>
+                <p className="text-[10px] text-muted-foreground mt-1 italic">{insurance.pointSolutionGap}</p>
               </div>
             </div>
-            <div>
-              <span className="text-[10px] uppercase tracking-wider text-muted-foreground/60">Cost Components</span>
-              <ul className="mt-2 space-y-1">
-                {insurance.input.costComponents.map((c) => (<li key={c} className="text-xs text-muted-foreground">• {c}</li>))}
-              </ul>
-              <span className="text-[10px] uppercase tracking-wider text-muted-foreground/60 mt-3 block">Point Solution Gap</span>
-              <p className="text-[10px] text-muted-foreground mt-1 italic">{insurance.pointSolutionGap}</p>
+          </div>
+
+          {/* Revenue protection summary */}
+          <div className="flex flex-col gap-4">
+            <div className="p-4 rounded-xl border border-emerald-500/20 bg-emerald-500/5 text-center">
+              <DollarSign className="h-6 w-6 text-emerald-400 mx-auto mb-2" />
+              <span className="text-2xl font-bold text-emerald-400">{formatCurrency(revenueProtection)}</span>
+              <p className="text-xs text-muted-foreground mt-1">Annual Cost Avoidance</p>
+            </div>
+            <div className="p-4 rounded-xl border border-primary/20 bg-primary/5">
+              <TrendingDown className="h-5 w-5 text-primary mb-2" />
+              <h4 className="text-sm font-bold text-foreground mb-1">Revenue Protection Through Connected Operations</h4>
+              <p className="text-xs text-muted-foreground">When safety events are resolved faster, procedures stay current, and crews are trained on actual gaps — the financial impact cascades: fewer claims, lower premiums, reduced regulatory penalties, and protected schedule reliability.</p>
             </div>
           </div>
         </div>
 
-        {/* Revenue protection summary */}
-        <div className="grid grid-cols-3 gap-4">
-          <div className="p-4 rounded-xl border border-emerald-500/20 bg-emerald-500/5 text-center col-span-1">
-            <DollarSign className="h-6 w-6 text-emerald-400 mx-auto mb-2" />
-            <span className="text-2xl font-bold text-emerald-400">{formatCurrency(revenueProtection)}</span>
-            <p className="text-xs text-muted-foreground mt-1">Annual Cost Avoidance</p>
-          </div>
-          <div className="p-4 rounded-xl border border-primary/20 bg-primary/5 col-span-2">
-            <TrendingDown className="h-5 w-5 text-primary mb-2" />
-            <h4 className="text-sm font-bold text-foreground mb-1">Revenue Protection Through Connected Operations</h4>
-            <p className="text-xs text-muted-foreground">When safety events are resolved faster, procedures stay current, and crews are trained on actual gaps — the financial impact cascades: fewer claims, lower premiums, reduced regulatory penalties, and protected schedule reliability.</p>
-          </div>
+        {/* Bottom callout */}
+        <div className="bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20 rounded-lg p-2 shrink-0">
+          <p className="text-xs text-center text-foreground">
+            <span className="font-semibold text-primary">The CFO sees cost avoidance.</span> The platform delivers it through the same DTOP chain that powers every operational improvement.
+          </p>
         </div>
       </div>
     </SalesSlideContainer>
