@@ -132,7 +132,7 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "Outcomes",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Measurable outcomes across everything we've discussed. Safety: seventy-eight percent reduction in repeat events. Speed: six weeks compressed to forty-eight hours. Compliance: directive to crew acknowledgment in five days. Financial: cost avoidance exceeding forty million annually for a mid-size carrier. Precision: ninety percent domain accuracy versus thirty-five for generic AI. These aren't projections. They're measured outcomes from carriers running on the platform today. The evidence model we just described — that's how we prove it.",
+      "Measurable outcomes across everything we've discussed. Safety: seventy-eight percent reduction in repeat events. Speed: six weeks compressed to forty-eight hours. Compliance: directive to crew acknowledgment in five days. Financial: total annual exposure exceeding one hundred and ten million, with cost avoidance exceeding thirty million for a mid-size carrier. Precision: ninety percent domain accuracy versus thirty-five for generic AI. These aren't projections. They're measured outcomes from carriers running on the platform today. The evidence model we just described — that's how we prove it.",
   },
   {
     slideId: "tech-slide-17",

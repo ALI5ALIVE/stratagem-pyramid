@@ -27,7 +27,7 @@ export const operationalPitchNarrations: OpsNarrationSlide[] = [
     title: "Cost of Fragmentation",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Let me put a number on that wiring problem. Every disconnected handoff has a cost. When a safety signal takes six weeks to reach a training response, the same crew flies the same approach and the trend continues. Each go-around costs eight to twenty-five thousand dollars in fuel alone. An aircraft-on-ground day costs up to half a million dollars. A single regulatory finding can cost between fifty thousand and two million. Add it up across a mid-size fleet, and the annual cost of fragmentation — not failure, just fragmentation — exceeds forty million dollars. These aren't hypothetical numbers. They're the compounding cost of systems that were never designed to talk to each other.",
+      "Let me put a number on that wiring problem. Every disconnected handoff has a cost. When a safety signal takes six weeks to reach a training response, the same crew flies the same approach and the trend continues. Each go-around costs eight to twenty-five thousand dollars in fuel alone. An aircraft-on-ground day costs up to half a million dollars. A single regulatory finding can cost between fifty thousand and two million. Add it up across a mid-size fleet, and the annual cost of fragmentation — not failure, just fragmentation — exceeds one hundred and ten million dollars. These aren't hypothetical numbers. They're the compounding cost of systems that were never designed to talk to each other.",
   },
   {
     slideId: "ops-slide-3",

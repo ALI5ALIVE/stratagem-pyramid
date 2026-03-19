@@ -86,7 +86,9 @@ const ExecSlide5Value = ({
         <div className="bg-primary/5 border border-primary/20 rounded-xl px-6 py-4 flex items-center justify-between flex-wrap gap-4">
           <div>
             <p className="text-sm text-muted-foreground">Total Annual Cost Avoidance Opportunity</p>
-            <p className="text-3xl font-bold text-primary">$40M+</p>
+            <p className="text-3xl font-bold text-primary">
+              ${`$${(useCases.reduce((sum, uc) => sum + (uc.input.baseline * uc.input.costMidpoint * uc.input.annualisationFactor), 0) * 0.3 / 1_000_000).toFixed(0)}M+`}
+            </p>
             <p className="text-xs text-muted-foreground">Based on mid-size carrier profile · customisable to your operation</p>
           </div>
           <Link
