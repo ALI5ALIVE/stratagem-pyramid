@@ -62,6 +62,7 @@ const SlideDeck = () => {
     },
     onPause: () => narration.pause(),
     onNextSlide: slideId < slides.length - 1 ? () => scrollToSlide(slideId + 1) : undefined,
+    onPrevSlide: slideId > 0 ? () => scrollToSlide(slideId - 1) : undefined,
   });
 
   const scrollToSlide = useCallback((index: number) => {

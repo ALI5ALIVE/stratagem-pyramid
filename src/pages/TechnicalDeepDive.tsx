@@ -138,6 +138,7 @@ const TechnicalDeepDive = () => {
           onPlay: () => narration.play(slideId),
           onPause: narration.pause,
           onNextSlide: handleNextSlide,
+          onPrevSlide: handlePrevSlide,
         };
 
         return (
