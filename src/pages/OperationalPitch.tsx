@@ -34,6 +34,7 @@ const slides = [
 const OperationalPitch = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const autoPlayTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { register, updateActiveIndex, unregister } = useSlideNavigation();
   const { open, setOpen } = useSidebar();
   const narration = useOpsPitchNarration();
@@ -54,8 +55,19 @@ const OperationalPitch = () => {
     return () => unregister();
   }, []);
 
+  // Auto-play narration with debounce for fast scrolling
   useEffect(() => {
-    updateActiveIndex(currentSlide);
+    if (autoPlayTimerRef.current) clearTimeout(autoPlayTimerRef.current);
+    narration.stop();
+    autoPlayTimerRef.current = setTimeout(() => {
+      narration.play(slides[currentSlide].id);
+    }, 600);
+    return () => {
+      if (autoPlayTimerRef.current) clearTimeout(autoPlayTimerRef.current);
+    };
+  }, [currentSlide]);
+
+  useEffect(() => {
   }, [currentSlide, updateActiveIndex]);
 
   useEffect(() => {

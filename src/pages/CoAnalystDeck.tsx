@@ -41,6 +41,7 @@ const CoAnalystDeck = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const autoPlayTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const narration = useCoAnalystNarration();
   const { register, updateActiveIndex, unregister } = useSlideNavigation();
@@ -74,8 +75,20 @@ const CoAnalystDeck = () => {
     return () => unregister();
   }, []);
 
+  // Auto-play narration with debounce for fast scrolling
   useEffect(() => {
-    updateActiveIndex(activeSlide);
+    if (autoPlayTimerRef.current) clearTimeout(autoPlayTimerRef.current);
+    narration.stop();
+    autoPlayTimerRef.current = setTimeout(() => {
+      narration.play(activeSlide);
+      narration.preloadNext(activeSlide);
+    }, 600);
+    return () => {
+      if (autoPlayTimerRef.current) clearTimeout(autoPlayTimerRef.current);
+    };
+  }, [activeSlide]);
+
+  useEffect(() => {
   }, [activeSlide, updateActiveIndex]);
 
   useEffect(() => {
