@@ -54,6 +54,11 @@ const ContentStrategyPage = () => {
     });
   }, []);
 
+  // Stop narration when leaving this deck
+  useEffect(() => {
+    return () => narration.stop();
+  }, []);
+
   useEffect(() => {
     register(slides, activeSlide, scrollToSlide);
     return () => unregister();

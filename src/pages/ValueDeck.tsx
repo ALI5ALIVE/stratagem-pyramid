@@ -47,6 +47,11 @@ const ValueDeck = () => {
   const { register, updateActiveIndex, unregister } = useSlideNavigation();
   const { open, setOpen } = useSidebar();
 
+  // Stop narration when leaving this deck
+  useEffect(() => {
+    return () => narration.stop();
+  }, []);
+
   // --- Shared state for interactive slides (7-9) ---
   const [useCaseValues, setUseCaseValues] = useState<Record<string, number>>(() => {
     const initial: Record<string, number> = {};
