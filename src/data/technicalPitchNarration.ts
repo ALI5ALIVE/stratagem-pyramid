@@ -69,7 +69,7 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "CoAnalyst Intelligence",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "CoAnalyst is a hybrid AI architecture — not one model doing everything. Specialised language models trained on aviation data. Retrieval-augmented generation for real-time context. Structured reasoning for compliance logic. Pattern detection for trend identification. Trained on millions of historical aviation reports since twenty twenty-three, continuously fine-tuned on real operational data. The result: a system that distinguishes a bird strike report from a bird strike trend, a procedure change from a procedure gap, a training completion from a competency validation. That domain specificity delivers ninety percent accuracy where generic AI plateaus at thirty-five.",
+      "You've now seen CoAnalyst activate each module — safety, content, training. Let me show you the architecture that makes that possible. CoAnalyst is a hybrid AI architecture — not one model doing everything. Specialised language models trained on aviation data. Retrieval-augmented generation for real-time context. Structured reasoning for compliance logic. Pattern detection for trend identification. Trained on millions of historical aviation reports since twenty twenty-three, continuously fine-tuned on real operational data. The result: a system that distinguishes a bird strike report from a bird strike trend, a procedure change from a procedure gap, a training completion from a competency validation. That domain specificity delivers ninety percent accuracy where generic AI plateaus at thirty-five.",
   },
   {
     slideId: "tech-slide-8",
@@ -104,14 +104,14 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "Financial Use Cases",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Two cases that hit the P and L directly. Fuel variance: one percent across a mid-size fleet equals five to twenty million annually. CoAnalyst identifies specific routes, aircraft, and crew contributing to excess burn — correlating FOQA with flight planning, weather, and training records. Targeted interventions deliver measurable savings within ninety days. Insurance premiums: carriers demonstrating connected safety intelligence — live evidence trails, not binders — are seeing material reductions. One carrier achieved fifteen percent reduction in hull and liability premiums. These aren't operational metrics. They're financial outcomes your CFO measures.",
+      "Two cases that hit the P and L directly. Fuel variance: one percent across a mid-size fleet equals five to twenty million annually. CoAnalyst identifies specific routes, aircraft, and crew contributing to excess burn — correlating FOQA with flight planning, weather, and training records. Targeted interventions deliver measurable savings within ninety days. Insurance premiums: carriers demonstrating connected safety intelligence — live evidence trails, not binders — are seeing material reductions. One carrier achieved fifteen percent reduction in hull and liability premiums. These aren't operational metrics. They're financial outcomes your CFO measures. And those financial outcomes are just the beginning — here's what's coming next.",
   },
   {
     slideId: "tech-slide-13",
     title: "Line of Sight",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Every use case connects to executive outcomes through the Line of Sight model. Three tiers. Tier three: operational events — go-arounds, delays, injuries, findings. The signals your teams manage daily. Tier two: leading measures — investigation closure rates, training response times, compliance gaps. The levers you control. Tier one: lagging outcomes — schedule reliability, CASM, regulatory standing, insurance costs. The numbers your board measures. When your CFO asks why premiums changed, you trace it through compliance closure rates to specific regulatory responses. Every signal measured. Every outcome traceable.",
+      "Every capability we've shown — current and future — connects to outcomes your board measures. That's the Line of Sight model. Three tiers. Tier three: operational events — go-arounds, delays, injuries, findings. The signals your teams manage daily. Tier two: leading measures — investigation closure rates, training response times, compliance gaps. The levers you control. Tier one: lagging outcomes — schedule reliability, CASM, regulatory standing, insurance costs. The numbers your board measures. When your CFO asks why premiums changed, you trace it through compliance closure rates to specific regulatory responses. Every signal measured. Every outcome traceable.",
   },
   {
     slideId: "tech-slide-14",
@@ -125,7 +125,7 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "2026 Roadmap",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Three capabilities in active development. Predictive maintenance correlation — connecting safety intelligence with maintenance planning to predict component failures before disruption. Cross-carrier benchmarking — anonymised intelligence sharing across fifty-plus airline customers, enabling performance benchmarking against industry peers. Regulatory submission automation — generating audit-ready evidence packages automatically on regulator request. Each extends the intelligence layer while maintaining the connected architecture. The platform gets smarter with every carrier, every signal, every closed loop.",
+      "Beyond the use cases we've covered, three capabilities are in active development. Predictive maintenance correlation — connecting safety intelligence with maintenance planning to predict component failures before disruption. Cross-carrier benchmarking — anonymised intelligence sharing across fifty-plus airline customers, enabling performance benchmarking against industry peers. Regulatory submission automation — generating audit-ready evidence packages automatically on regulator request. Each extends the intelligence layer while maintaining the connected architecture. The platform gets smarter with every carrier, every signal, every closed loop.",
   },
   {
     slideId: "tech-slide-16",
@@ -139,7 +139,7 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "Why Comply365",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Three differentiators. Connected foundation — one data model, three applications, one intelligence layer. Fifty-plus airlines, seven of the top ten North American carriers, over one million frontline users. Domain-trained intelligence — CoAnalyst built from the ground up on aviation data, continuously trained since twenty twenty-three. Not a generic AI with an aviation wrapper. Proof by design — every action logged automatically. The evidence trail is a byproduct, not a report. Point solutions manage silos. Generic AI creates noise. We close the loop.",
+      "Those outcomes raise the question — why Comply three six five? Three differentiators. Connected foundation — one data model, three applications, one intelligence layer. Fifty-plus airlines, seven of the top ten North American carriers, over one million frontline users. Domain-trained intelligence — CoAnalyst built from the ground up on aviation data, continuously trained since twenty twenty-three. Not a generic AI with an aviation wrapper. Proof by design — every action logged automatically. The evidence trail is a byproduct, not a report. Point solutions manage silos. Generic AI creates noise. We close the loop.",
   },
   {
     slideId: "tech-slide-18",

@@ -76,7 +76,7 @@ export const operationalPitchNarrations: OpsNarrationSlide[] = [
     title: "Outcomes",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Let me translate this into outcomes your leadership team measures. Schedule protection: when hard landing trends are caught early, you protect departures and reduce delay minutes. Revenue protection: when fatigue risks are flagged proactively, you avoid the cancellations that cost two hundred thousand dollars each. Cost reduction: when content updates are automated, you eliminate the rework cycles that consume your technical publications team. And customer trust: when compliance gaps close immediately, you maintain the operational reliability that passengers and partners depend on. Every signal, acted on. Every outcome, measured. Every decision, auditable.",
+      "Let me translate this into outcomes your leadership team measures. Schedule protection: when hard landing trends are caught early, you protect departures and reduce delay minutes. Revenue protection: when fatigue risks are flagged proactively, you avoid the cancellations that cost two hundred thousand dollars each. Cost reduction: when content updates are automated, you eliminate the rework cycles that consume your technical publications team. And customer trust: when compliance gaps close immediately, you maintain the operational reliability that passengers and partners depend on. Every signal, acted on. Every outcome, measured. Every decision, auditable. So why are we the right partner to deliver this?",
   },
   {
     slideId: "ops-slide-10",

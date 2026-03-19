@@ -55,14 +55,14 @@ export const executivePitchNarrations: ExecNarrationSlide[] = [
     title: "Line of Sight",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Every signal connects to an outcome you own. Go-around trends detected and addressed within forty-eight hours — that's schedule protection. Procedure gaps closed before the audit — that's regulatory confidence. Crew retrained before the next rotation — that's operational readiness. For a mid-size carrier, the total annual exposure exceeds one hundred and ten million dollars — and the cost avoidance opportunity exceeds thirty million. We can model this with your numbers.",
+      "Every signal connects to an outcome you own. Go-around trends detected and addressed within forty-eight hours — that's schedule protection. Procedure gaps closed before the audit — that's regulatory confidence. Crew retrained before the next rotation — that's operational readiness. For a mid-size carrier, the total annual exposure exceeds one hundred and ten million dollars — and the cost avoidance opportunity exceeds thirty million. We can model this with your numbers. So what makes us the right partner to deliver this?",
   },
   {
     slideId: "exec-slide-7",
     title: "Why Comply365",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Connected foundation — one version of truth. Embedded intelligence — built in aviation, not bolted on. Proof by default — always audit-ready. Let's schedule thirty minutes to map your operational signals to measurable outcomes.",
+      "Three things set Comply three six five apart — and they're the reason fifty-plus airlines trust us with their operations today. First, a connected foundation. We're not stitching point solutions together. Safety, content, and training share one data model, one version of truth. Seven of the top ten North American carriers and over one million frontline users rely on this every day. Second, embedded intelligence. CoAnalyst wasn't built as a generic AI with an aviation skin. It's been trained from the ground up on ten years of aviation operational data — delivering over ninety percent accuracy where general-purpose tools plateau at thirty-five. That precision is the difference between actionable intelligence and noise. Third, proof by default. Every action is logged automatically. Every change is traced. Every decision is auditable. You don't prepare for regulators — you're always ready. Let's schedule a thirty-minute discovery session to map your operational signals to measurable outcomes — and build a custom cost avoidance model with your numbers.",
   },
 ];
 
