@@ -17,10 +17,10 @@ export const executivePitchNarrations: ExecNarrationSlide[] = [
   },
   {
     slideId: "exec-slide-1",
-    title: "The $110M Problem",
+    title: "The Human-Factor Cost",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "One hundred and ten million dollars. That's what operational fragmentation costs a mid-size carrier every year. Not one catastrophic event — thousands of small disconnections. A go-around that wasn't prevented because training never saw the safety signal. An aircraft grounded because a compliance gap wasn't flagged. These aren't hypotheticals. They're line items hiding across your P&L. The carriers closing these gaps are fundamentally changing their cost structure.",
+      "Every airline has costs hiding in the gap between what people know and what they do. Go-arounds that weren't prevented because training never saw the safety signal. An aircraft grounded because a compliance gap wasn't flagged. Crew technique variance adding fuel burn that no dashboard catches. These are human-factor costs — the portion of operational spend your people and processes can directly influence. We've modelled eight categories of operational disconnection. The total is significant. But the methodology is the point — we help you identify your biggest human-factor cost driver and show you what even a small improvement is worth.",
   },
   {
     slideId: "exec-slide-2",
