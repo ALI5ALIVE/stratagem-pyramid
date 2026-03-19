@@ -19,20 +19,20 @@ const PlatformEcosystemDiagram = ({ className = "" }: PlatformEcosystemDiagramPr
   // Product positions (triangle layout)
   const products = [
     {
-      id: "safety",
-      name: "Safety",
-      subtitle: "Manager365",
-      angle: 240, // top-left
-      color: "hsl(330, 80%, 55%)",
-      iconColor: "hsl(330, 80%, 55%)",
-    },
-    {
       id: "content",
       name: "Content",
       subtitle: "Manager365",
-      angle: 0, // right
+      angle: 240, // top-left
       color: "hsl(210, 80%, 55%)",
       iconColor: "hsl(210, 80%, 55%)",
+    },
+    {
+      id: "safety",
+      name: "Safety",
+      subtitle: "Manager365",
+      angle: 0, // right
+      color: "hsl(330, 80%, 55%)",
+      iconColor: "hsl(330, 80%, 55%)",
     },
     {
       id: "training",
@@ -46,9 +46,8 @@ const PlatformEcosystemDiagram = ({ className = "" }: PlatformEcosystemDiagramPr
 
   // AI assistants positions
   const aiAssistants = [
-    { id: "coauthor", name: "CoAuthor", angle: 225, symbol: "✦" },
-    { id: "coanalyst", name: "CoAnalyst", angle: 315, symbol: "✦" },
-    { id: "cotrainer", name: "CoTrainer", angle: 90, symbol: "✦" },
+    { id: "coauthor", name: "CoAuthor", angle: 45, symbol: "✦" },
+    { id: "cotrainer", name: "CoTrainer", angle: 135, symbol: "✦" },
   ];
 
   // Calculate position from angle and radius
