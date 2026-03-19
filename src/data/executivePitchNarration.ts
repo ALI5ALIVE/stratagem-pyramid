@@ -17,10 +17,10 @@ export const executivePitchNarrations: ExecNarrationSlide[] = [
   },
   {
     slideId: "exec-slide-1",
-    title: "The $47M Problem",
+    title: "The $110M Problem",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Forty-seven million dollars. That's what operational fragmentation costs a mid-size carrier every year. Not one catastrophic event — thousands of small disconnections. A go-around that wasn't prevented because training never saw the safety signal. An aircraft grounded because a compliance gap wasn't flagged. These aren't hypotheticals. They're line items hiding across your P&L. The carriers closing these gaps are fundamentally changing their cost structure.",
+      "One hundred and ten million dollars. That's what operational fragmentation costs a mid-size carrier every year. Not one catastrophic event — thousands of small disconnections. A go-around that wasn't prevented because training never saw the safety signal. An aircraft grounded because a compliance gap wasn't flagged. These aren't hypotheticals. They're line items hiding across your P&L. The carriers closing these gaps are fundamentally changing their cost structure.",
   },
   {
     slideId: "exec-slide-2",
@@ -55,7 +55,7 @@ export const executivePitchNarrations: ExecNarrationSlide[] = [
     title: "Line of Sight",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Every signal connects to an outcome you own. Go-around trends detected and addressed within forty-eight hours — that's schedule protection. Procedure gaps closed before the audit — that's regulatory confidence. Crew retrained before the next rotation — that's operational readiness. For a mid-size carrier, the total cost avoidance exceeds forty million dollars annually. We can model this with your numbers.",
+      "Every signal connects to an outcome you own. Go-around trends detected and addressed within forty-eight hours — that's schedule protection. Procedure gaps closed before the audit — that's regulatory confidence. Crew retrained before the next rotation — that's operational readiness. For a mid-size carrier, the total annual exposure exceeds one hundred and ten million dollars — and the cost avoidance opportunity exceeds thirty million. We can model this with your numbers.",
   },
   {
     slideId: "exec-slide-7",
