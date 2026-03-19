@@ -11,6 +11,7 @@ const CASlide0Title = ({
   onPlay,
   onPause,
   onNextSlide,
+  onPrevSlide,
 }: SlideNarrationProps) => {
   return (
     <section className="h-screen w-full flex flex-col snap-start relative overflow-hidden bg-background">
@@ -29,6 +30,7 @@ const CASlide0Title = ({
           onPlay={onPlay}
           onPause={onPause ?? (() => {})}
           onNextSlide={onNextSlide}
+          onPrevSlide={onPrevSlide}
         />
       )}
 

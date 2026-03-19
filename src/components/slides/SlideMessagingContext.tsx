@@ -80,6 +80,7 @@ const SlideMessagingContext = ({
   onPlay,
   onPause,
   onNextSlide,
+  onPrevSlide,
 }: SlideNarrationProps) => {
   return (
     <SlideContainer 
@@ -99,6 +100,7 @@ const SlideMessagingContext = ({
           onPlay={onPlay}
           onPause={onPause ?? (() => {})}
           onNextSlide={onNextSlide}
+          onPrevSlide={onPrevSlide}
         />
       )}
 

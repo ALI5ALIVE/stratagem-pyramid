@@ -92,6 +92,12 @@ const ExecutivePitch = () => {
     }
   }, [currentSlide, navigateToSlide]);
 
+  const handlePrevSlide = useCallback(() => {
+    if (currentSlide > 0) {
+      navigateToSlide(currentSlide - 1);
+    }
+  }, [currentSlide, navigateToSlide]);
+
   return (
     <div className="relative min-h-screen bg-background">
       <div
@@ -111,6 +117,7 @@ const ExecutivePitch = () => {
             onPlay: () => narration.play(slideId),
             onPause: narration.pause,
             onNextSlide: handleNextSlide,
+            onPrevSlide: handlePrevSlide,
           };
 
           return (

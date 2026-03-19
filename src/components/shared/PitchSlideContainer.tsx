@@ -20,6 +20,7 @@ interface PitchSlideContainerProps {
   onPlay?: () => void;
   onPause?: () => void;
   onNextSlide?: () => void;
+  onPrevSlide?: () => void;
 }
 
 const PitchSlideContainer = ({
@@ -38,6 +39,7 @@ const PitchSlideContainer = ({
   onPlay,
   onPause,
   onNextSlide,
+  onPrevSlide,
 }: PitchSlideContainerProps) => {
   return (
     <section
@@ -58,6 +60,7 @@ const PitchSlideContainer = ({
           onPlay={onPlay}
           onPause={onPause ?? (() => {})}
           onNextSlide={onNextSlide}
+          onPrevSlide={onPrevSlide}
           variant={variant}
         />
       )}

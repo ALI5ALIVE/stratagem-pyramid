@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useCallback } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useSimpleNarration } from "@/hooks/useSimpleNarration";
@@ -62,6 +62,7 @@ const SlideDeck = () => {
     },
     onPause: () => narration.pause(),
     onNextSlide: slideId < slides.length - 1 ? () => scrollToSlide(slideId + 1) : undefined,
+    onPrevSlide: slideId > 0 ? () => scrollToSlide(slideId - 1) : undefined,
   });
 
   const scrollToSlide = useCallback((index: number) => {
@@ -147,14 +148,6 @@ const SlideDeck = () => {
 
   
 
-  const navigateSlide = (direction: "up" | "down") => {
-    if (direction === "up" && activeSlide > 0) {
-      scrollToSlide(activeSlide - 1);
-    } else if (direction === "down" && activeSlide < slides.length - 1) {
-      scrollToSlide(activeSlide + 1);
-    }
-  };
-
   return (
     <div className="h-screen w-full bg-background overflow-hidden relative">
       {/* Progress bar */}
@@ -173,26 +166,6 @@ const SlideDeck = () => {
           </span>
         </div>
       </header>
-
-      {/* Slide navigation moved to sidebar */}
-
-      {/* Navigation arrows */}
-      <div className="fixed bottom-4 right-4 z-40 flex flex-col gap-2">
-        <button
-          onClick={() => navigateSlide("up")}
-          disabled={activeSlide === 0}
-          className="w-10 h-10 rounded-full bg-card/80 border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-        >
-          <ChevronUp className="w-5 h-5" />
-        </button>
-        <button
-          onClick={() => navigateSlide("down")}
-          disabled={activeSlide === slides.length - 1}
-          className="w-10 h-10 rounded-full bg-card/80 border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-        >
-          <ChevronDown className="w-5 h-5" />
-        </button>
-      </div>
 
       {/* Slides container */}
       <div

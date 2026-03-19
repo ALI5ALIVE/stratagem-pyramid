@@ -1,4 +1,5 @@
-import { Play, Pause, Loader2, RotateCcw, ChevronRight } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { Play, Pause, Loader2, RotateCcw, SkipBack, SkipForward } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SlidePlayButtonProps {
@@ -9,6 +10,7 @@ interface SlidePlayButtonProps {
   onPlay: () => void;
   onPause: () => void;
   onNextSlide?: () => void;
+  onPrevSlide?: () => void;
   variant?: "dark" | "light";
 }
 
@@ -20,9 +22,35 @@ const SlidePlayButton = ({
   onPlay,
   onPause,
   onNextSlide,
+  onPrevSlide,
   variant = "dark",
 }: SlidePlayButtonProps) => {
-  const handleClick = () => {
+  const autoAdvanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Auto-advance to next slide 1.5s after narration completes
+  useEffect(() => {
+    if (hasCompleted && onNextSlide) {
+      autoAdvanceTimer.current = setTimeout(() => {
+        onNextSlide();
+      }, 1500);
+    }
+    return () => {
+      if (autoAdvanceTimer.current) {
+        clearTimeout(autoAdvanceTimer.current);
+      }
+    };
+  }, [hasCompleted, onNextSlide]);
+
+  // Cancel auto-advance if user interacts
+  const cancelAutoAdvance = () => {
+    if (autoAdvanceTimer.current) {
+      clearTimeout(autoAdvanceTimer.current);
+      autoAdvanceTimer.current = null;
+    }
+  };
+
+  const handlePlayPause = () => {
+    cancelAutoAdvance();
     if (isPlaying) {
       onPause();
     } else {
@@ -30,82 +58,101 @@ const SlidePlayButton = ({
     }
   };
 
+  const handlePrev = () => {
+    cancelAutoAdvance();
+    onPrevSlide?.();
+  };
+
+  const handleNext = () => {
+    cancelAutoAdvance();
+    onNextSlide?.();
+  };
+
   return (
-    <div className="absolute bottom-24 right-6 sm:bottom-28 sm:right-10 z-30 flex flex-col items-center gap-3">
-      {/* Main play/pause button */}
-      <button
-        onClick={handleClick}
-        className={cn(
-          "w-20 h-20 rounded-full",
-          "flex items-center justify-center",
-          "shadow-lg hover:shadow-xl hover:scale-105",
-          "transition-all duration-200",
-          variant === "light"
-            ? "bg-primary/90 hover:bg-primary border-2 border-primary-foreground/20"
-            : "bg-primary/90 hover:bg-primary border-2 border-primary-foreground/20",
-          isPlaying && "bg-primary/70"
-        )}
-        title={hasCompleted ? "Replay narration" : isPlaying ? "Pause narration" : "Play narration"}
-      >
-        {isLoading ? (
-          <Loader2 className="w-8 h-8 text-primary-foreground animate-spin" />
-        ) : isPlaying ? (
-          <Pause className="w-8 h-8 text-primary-foreground" />
-        ) : hasCompleted ? (
-          <RotateCcw className="w-8 h-8 text-primary-foreground" />
-        ) : (
-          <Play className="w-8 h-8 text-primary-foreground ml-1" />
-        )}
-
-        {/* Circular progress indicator */}
-        <svg 
-          className="absolute inset-0 -rotate-90 pointer-events-none"
-          width="80"
-          height="80"
-          viewBox="0 0 80 80"
-        >
-          <circle
-            cx="40"
-            cy="40"
-            r="38"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="3"
-            className="text-primary-foreground/20"
-          />
-          {(isPlaying || progress > 0) && (
-            <circle
-              cx="40"
-              cy="40"
-              r="38"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="3"
-              strokeDasharray={`${2 * Math.PI * 38}`}
-              strokeDashoffset={`${2 * Math.PI * 38 * (1 - progress / 100)}`}
-              className="text-primary-foreground transition-all duration-150"
-              strokeLinecap="round"
-            />
-          )}
-        </svg>
-      </button>
-
-      {/* Next slide button - shown after completion */}
-      {hasCompleted && onNextSlide && (
-        <button
-          onClick={onNextSlide}
-          className={cn(
-            "flex items-center gap-2 px-4 py-2 rounded-full",
-            "bg-card/80 backdrop-blur-sm border border-border",
-            "text-sm font-medium text-foreground",
-            "hover:bg-card hover:border-primary/50",
-            "transition-all duration-200"
-          )}
-        >
-          Next slide
-          <ChevronRight className="w-4 h-4" />
-        </button>
+    <div
+      className={cn(
+        "absolute bottom-0 left-0 right-0 z-30",
+        "flex flex-col"
       )}
+    >
+      {/* Progress bar */}
+      <div className={cn(
+        "w-full h-1",
+        variant === "light" ? "bg-muted" : "bg-muted/30"
+      )}>
+        <div
+          className="h-full bg-primary transition-all duration-150"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+
+      {/* Control bar */}
+      <div
+        className={cn(
+          "flex items-center justify-center gap-2 sm:gap-4 px-4 sm:px-6 py-2.5 sm:py-3",
+          "backdrop-blur-md",
+          variant === "light"
+            ? "bg-background/80 border-t border-border/30"
+            : "bg-background/60 border-t border-border/20"
+        )}
+      >
+        {/* Previous */}
+        <button
+          onClick={handlePrev}
+          disabled={!onPrevSlide}
+          className={cn(
+            "w-9 h-9 rounded-full flex items-center justify-center",
+            "transition-all duration-200",
+            "disabled:opacity-20 disabled:cursor-not-allowed",
+            variant === "light"
+              ? "text-muted-foreground hover:text-foreground hover:bg-muted"
+              : "text-muted-foreground hover:text-foreground hover:bg-muted/20"
+          )}
+          title="Previous slide"
+        >
+          <SkipBack className="w-4 h-4" />
+        </button>
+
+        {/* Play / Pause / Replay */}
+        <button
+          onClick={handlePlayPause}
+          className={cn(
+            "w-12 h-12 rounded-full flex items-center justify-center",
+            "shadow-md hover:shadow-lg hover:scale-105",
+            "transition-all duration-200",
+            "bg-primary/90 hover:bg-primary",
+            isPlaying && "bg-primary/70"
+          )}
+          title={hasCompleted ? "Replay narration" : isPlaying ? "Pause narration" : "Play narration"}
+        >
+          {isLoading ? (
+            <Loader2 className="w-5 h-5 text-primary-foreground animate-spin" />
+          ) : isPlaying ? (
+            <Pause className="w-5 h-5 text-primary-foreground" />
+          ) : hasCompleted ? (
+            <RotateCcw className="w-5 h-5 text-primary-foreground" />
+          ) : (
+            <Play className="w-5 h-5 text-primary-foreground ml-0.5" />
+          )}
+        </button>
+
+        {/* Next */}
+        <button
+          onClick={handleNext}
+          disabled={!onNextSlide}
+          className={cn(
+            "w-9 h-9 rounded-full flex items-center justify-center",
+            "transition-all duration-200",
+            "disabled:opacity-20 disabled:cursor-not-allowed",
+            variant === "light"
+              ? "text-muted-foreground hover:text-foreground hover:bg-muted"
+              : "text-muted-foreground hover:text-foreground hover:bg-muted/20"
+          )}
+          title="Next slide"
+        >
+          <SkipForward className="w-4 h-4" />
+        </button>
+      </div>
     </div>
   );
 };

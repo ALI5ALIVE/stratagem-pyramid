@@ -74,6 +74,7 @@ const SlideContentStrategyTitle = ({
   onPlay,
   onPause,
   onNextSlide,
+  onPrevSlide,
 }: SlideContentStrategyTitleProps) => {
   return (
     <section
@@ -89,6 +90,7 @@ const SlideContentStrategyTitle = ({
           onPlay={onPlay}
           onPause={onPause ?? (() => {})}
           onNextSlide={onNextSlide}
+          onPrevSlide={onPrevSlide}
         />
       )}
 

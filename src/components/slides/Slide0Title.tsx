@@ -33,6 +33,7 @@ const Slide0Title = ({
   onPlay,
   onPause,
   onNextSlide,
+  onPrevSlide,
 }: Slide0TitleProps) => {
   return (
     <section
@@ -49,6 +50,7 @@ const Slide0Title = ({
           onPlay={onPlay}
           onPause={onPause ?? (() => {})}
           onNextSlide={onNextSlide}
+          onPrevSlide={onPrevSlide}
         />
       )}
       {/* Decorative gradient orbs */}
