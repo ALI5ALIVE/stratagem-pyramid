@@ -1,6 +1,6 @@
 import SlideContainer from "@/components/slides/SlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { Check, X } from "lucide-react";
+import { Check, X, ShieldCheck } from "lucide-react";
 
 const comparisonRows = [
   { capability: "Event categorization across 4,000+ categories (5 levels)", coanalyst: true, generic: false },
