@@ -17,10 +17,10 @@ export const executivePitchNarrations: ExecNarrationSlide[] = [
   },
   {
     slideId: "exec-slide-1",
-    title: "The $47M Problem",
+    title: "The $110M Problem",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Forty-seven million dollars. That's what operational fragmentation costs a mid-size carrier every year. Not one catastrophic event — thousands of small disconnections. A go-around that wasn't prevented because training never saw the safety signal. An aircraft grounded because a compliance gap wasn't flagged. These aren't hypotheticals. They're line items hiding across your P&L. The carriers closing these gaps are fundamentally changing their cost structure.",
+      "One hundred and ten million dollars. That's what operational fragmentation costs a mid-size carrier every year. Not one catastrophic event — thousands of small disconnections. A go-around that wasn't prevented because training never saw the safety signal. An aircraft grounded because a compliance gap wasn't flagged. These aren't hypotheticals. They're line items hiding across your P&L. The carriers closing these gaps are fundamentally changing their cost structure.",
   },
   {
     slideId: "exec-slide-2",
