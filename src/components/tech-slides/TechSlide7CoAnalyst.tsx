@@ -53,7 +53,7 @@ const TechSlide7CoAnalyst = ({ slideNumber, ...narrationProps }: Props) => (
         {/* Precision Gap */}
         <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-5 flex flex-col">
           <h3 className="text-base font-bold text-amber-400 mb-3">The Precision Gap</h3>
-          <p className="text-xs text-muted-foreground mb-4">Generic AI accuracy collapses at the granularity levels aviation operations require.</p>
+          <p className="text-xs text-muted-foreground mb-4">Generative AI accuracy collapses at the granularity levels aviation operations require.</p>
           {[
             { level: "Level 1 (top ~50)", co: 95, gen: 90 },
             { level: "Level 2–3 (hundreds)", co: 92, gen: 60 },
