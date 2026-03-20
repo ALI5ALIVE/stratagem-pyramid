@@ -25,7 +25,7 @@ const OpsSlide5Intelligence = ({ slideNumber, ...narrationProps }: OpsSlide5Prop
     <SalesSlideContainer
       id="ops-slide-5"
       title="The Intelligence Layer — CoAnalyst"
-      subtitle="Aviation-specific AI that generic tools can't replicate."
+      subtitle="Aviation-specific AI that generative AI can't replicate."
       slideNumber={slideNumber}
       {...narrationProps}
     >
