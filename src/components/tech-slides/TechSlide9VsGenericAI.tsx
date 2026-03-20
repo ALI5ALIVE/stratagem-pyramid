@@ -59,7 +59,7 @@ const TechSlide9VsGenericAI = ({ slideNumber, ...narrationProps }: Props) => (
               <span className="text-muted-foreground w-12 text-center">{a.gen}</span>
             </div>
           ))}
-          <p className="text-[10px] text-muted-foreground mt-2 italic">LLMs hallucinate at granular levels — wrong technology for micro-categorization.</p>
+          <p className="text-[10px] text-muted-foreground mt-2 italic">Generative AI hallucinates at granular levels — wrong technology for micro-categorization.</p>
         </div>
         <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-2.5">
           <h3 className="text-[11px] font-bold text-red-400 uppercase tracking-wide mb-2">Build vs Buy</h3>
