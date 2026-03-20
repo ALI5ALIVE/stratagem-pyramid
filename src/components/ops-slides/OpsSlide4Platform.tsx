@@ -19,7 +19,7 @@ const modules = [
       "Audit management & regulatory compliance",
       "Hazard register & risk assessment",
     ],
-    dataFlow: "Safety events → DTOP pipeline → Corrective actions",
+    dataFlow: "Safety events → DTOP pipeline → Recommended actions",
   },
   {
     icon: FileText,

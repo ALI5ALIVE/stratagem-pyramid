@@ -88,7 +88,7 @@ const OpsSlide1DailyReality = ({ slideNumber, ...narrationProps }: OpsSlide1Prop
 
           <div className="px-3 py-1.5 border-t border-muted/20 bg-muted/5">
             <p className="text-[10px] text-muted-foreground italic text-center">
-              Same event. 3 systems. No connection. No action taken.
+              5 requests. 3 departments. Every one waiting on someone else.
             </p>
           </div>
         </div>

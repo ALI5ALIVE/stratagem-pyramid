@@ -17,7 +17,7 @@ const dataFlow = [
   { step: "Safety Events", desc: "Reports, operational data, audit findings flow in" },
   { step: "Pattern Detection", desc: "CoAnalyst identifies recurring themes across 4,000+ categories" },
   { step: "Risk Prediction", desc: "Proactive alerts surface emerging hazards before incidents" },
-  { step: "Corrective Action", desc: "Automated triggers to training, procedures, and management review" },
+  { step: "Recommended Action", desc: "Automated triggers to training, procedures, and management review" },
 ];
 
 const TechSlide4aSafetyManager = ({ slideNumber, ...narrationProps }: Props) => (

@@ -67,7 +67,7 @@ const TechSlide7CoAnalyst = ({ slideNumber, ...narrationProps }: Props) => (
                 <span className="text-[10px] text-primary font-bold w-8">{r.co}%</span>
               </div>
               <div className="flex items-center gap-2 mt-1">
-                <span className="text-[9px] w-16 text-muted-foreground shrink-0">Generic AI</span>
+                <span className="text-[9px] w-16 text-muted-foreground shrink-0">Generative AI</span>
                 <div className="flex-1 h-4 rounded-full bg-muted/20 overflow-hidden"><div className="h-full rounded-full bg-muted-foreground/30" style={{ width: `${r.gen}%` }} /></div>
                 <span className="text-[10px] text-muted-foreground w-8">{r.gen}%</span>
               </div>

@@ -63,7 +63,7 @@ const stages: StageData[] = [
     accentColor: "hsl(280 65% 55%)",
     whatItLooksLike: [
       "Signals trigger coordinated workflows",
-      "Corrective actions drive controlled change",
+      "Recommended actions drive controlled change",
       "Training targeted and triggered by change",
     ],
     result: ["Reduced recurrence and drift", "Faster time-to-change", "Measurable KPI improvement"],

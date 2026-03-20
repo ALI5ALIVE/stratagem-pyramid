@@ -35,8 +35,8 @@ const differentiators = [
 
 const trustStats = [
   { icon: Shield, value: "50+", label: "Airlines" },
-  { icon: Signal, value: "7/10", label: "NA Carriers" },
-  { icon: Users, value: "1M+", label: "Users" },
+  { icon: Signal, value: "20+", label: "Years" },
+  { icon: Users, value: "300K+", label: "Users" },
 ];
 
 const OpsSlide10WhyUs = ({ slideNumber, ...narrationProps }: OpsSlide10Props) => {

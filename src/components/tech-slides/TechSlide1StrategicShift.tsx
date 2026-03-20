@@ -22,7 +22,7 @@ const afterItems = [
 
 const categoryDrivers = [
   { label: "Regulatory Pressure", desc: "EASA/FAA demanding proactive safety management evidence" },
-  { label: "Data Explosion", desc: "12K+ monthly signals across FOQA, reports, audits — mostly orphaned" },
+  { label: "Data Explosion", desc: "12K+ monthly signals across safety reports, audits, training records — mostly orphaned" },
   { label: "AI Maturity", desc: "Domain-specific AI now accurate enough for aviation categorisation" },
   { label: "Cost Pressure", desc: "Airlines can no longer afford fragmented, reactive operations" },
 ];

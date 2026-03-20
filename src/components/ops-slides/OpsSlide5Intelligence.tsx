@@ -94,8 +94,8 @@ const OpsSlide5Intelligence = ({ slideNumber, ...narrationProps }: OpsSlide5Prop
                     </div>
                   </div>
                   <div className="flex gap-2 text-[9px] text-muted-foreground">
-                    <span className="flex-1">CoAnalyst</span>
-                    <span className="flex-1">Generic AI</span>
+                   <span className="flex-1">CoAnalyst</span>
+                    <span className="flex-1">Generative AI</span>
                   </div>
                 </div>
               ))}

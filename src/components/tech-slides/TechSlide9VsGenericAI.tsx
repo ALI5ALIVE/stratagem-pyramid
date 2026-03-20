@@ -66,7 +66,7 @@ const TechSlide9VsGenericAI = ({ slideNumber, ...narrationProps }: Props) => (
           {buildVsBuy.map((b, i) => (<div key={i} className="text-[11px] text-muted-foreground mb-1">• {b}</div>))}
         </div>
         <div className="rounded-lg border border-primary/30 bg-primary/10 p-2.5 flex flex-col justify-center">
-          <p className="text-xs font-semibold text-foreground italic">"Generic AI reads reports. CoAnalyst understands aviation operations."</p>
+          <p className="text-xs font-semibold text-foreground italic">"Generative AI reads reports. CoAnalyst understands aviation operations."</p>
         </div>
       </div>
     </div>

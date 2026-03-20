@@ -12,9 +12,9 @@ const outcomes = [
   {
     icon: TrendingUp,
     stakeholder: "CFO",
-    headline: "Fuel Cost Avoidance",
-    metric: "$5M–$20M/yr",
-    scenario: "A 1% fuel variance costs $5M–$20M annually. Connected FOQA-to-training pipelines target the specific crews and procedures driving excess burn.",
+    headline: "Compliance Cost Avoidance",
+    metric: "$2M–$10M/yr",
+    scenario: "Regulatory findings, incident remediation, and audit failures cost $2M–$10M annually. Continuous compliance evidence and proactive risk management close gaps before they become costly.",
     colors: { text: "text-emerald-400", bg: "bg-emerald-400/10", border: "border-emerald-400/30" },
   },
   {

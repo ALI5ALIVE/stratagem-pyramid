@@ -65,7 +65,7 @@ const ExecSlide3DTOP = ({
         {/* Use case label */}
         <div className="mb-8 text-center">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-semibold">
-            Use Case: Hard Landing → Retraining → Reduced Recurrence
+            Use Case: Dangerous Goods → Procedure Update → Reduced Incidents
           </span>
         </div>
 

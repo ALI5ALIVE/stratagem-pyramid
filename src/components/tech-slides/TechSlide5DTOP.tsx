@@ -13,7 +13,7 @@ const steps = [
   { icon: BadgeCheck, letter: "P", label: "Prove", description: "Generate continuous, auditable evidence that the recommended action cycle is complete.", auditTrail: "Evidence: 85/85 crew completed. DG incident recurrence: -72% over 90 days. Audit package generated.", color: "text-emerald-400", bg: "bg-emerald-400/10", border: "border-emerald-400/30" },
 ];
 
-const dataSources = ["FOQA/FDM", "Safety Reports", "Maintenance", "Crew Logs", "Regulatory", "Audit"];
+const dataSources = ["Safety Reports", "Operational Data", "Maintenance", "Crew Logs", "Regulatory", "Audit"];
 
 const TechSlide5DTOP = ({ slideNumber, ...narrationProps }: Props) => {
   const [active, setActive] = useState<number | null>(null);

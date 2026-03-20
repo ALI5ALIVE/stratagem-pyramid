@@ -86,8 +86,8 @@ const ExecSlide4Intelligence = ({
                   </div>
                 </div>
                 <div className="flex gap-2 text-[10px] text-muted-foreground">
-                  <span className="flex-1">CoAnalyst</span>
-                  <span className="flex-1">Generic AI</span>
+                   <span className="flex-1">CoAnalyst</span>
+                   <span className="flex-1">Generative AI</span>
                 </div>
               </div>
             ))}

@@ -65,7 +65,7 @@ const TechSlide8IntelligenceTiers = ({ slideNumber, ...narrationProps }: Props) 
               <span className="text-muted-foreground w-10 text-center">{a.gen}</span>
             </div>
           ))}
-          <p className="text-[9px] text-muted-foreground mt-1.5 italic">LLMs hallucinate at granular levels — wrong technology for micro-categorization.</p>
+          <p className="text-[9px] text-muted-foreground mt-1.5 italic">Generative AI hallucinates at granular levels — wrong technology for micro-categorization.</p>
         </div>
       </div>
 

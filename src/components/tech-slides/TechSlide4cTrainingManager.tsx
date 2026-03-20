@@ -17,7 +17,7 @@ const dataFlow = [
   { step: "Safety Findings", desc: "Events from Safety Manager 365 identify competency-related root causes" },
   { step: "Targeted Retraining", desc: "CoAnalyst maps findings to specific training modules and affected crews" },
   { step: "Verified Competency", desc: "Assessment confirms knowledge transfer and behaviour change" },
-  { step: "Closed-Loop Evidence", desc: "Completion feeds back to safety record — proving corrective action worked" },
+  { step: "Closed-Loop Evidence", desc: "Completion feeds back to safety record — proving recommended action worked" },
 ];
 
 const TechSlide4cTrainingManager = ({ slideNumber, ...narrationProps }: Props) => (
