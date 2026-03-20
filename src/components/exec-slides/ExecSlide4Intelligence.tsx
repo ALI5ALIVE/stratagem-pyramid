@@ -54,7 +54,7 @@ const ExecSlide4Intelligence = ({
         </div>
 
         <p className="text-center text-muted-foreground text-sm max-w-lg">
-          Accuracy at <span className="text-foreground font-semibold">4,000+ aviation categories</span> across 5 classification levels — where generic AI hallucinates.
+          Accuracy at <span className="text-foreground font-semibold">4,000+ aviation categories</span> across 5 classification levels — where generative AI hallucinates.
         </p>
 
         {/* Precision breakdown */}
