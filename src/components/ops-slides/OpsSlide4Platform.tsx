@@ -15,7 +15,7 @@ const modules = [
     bgColor: "bg-red-500/10 border-red-500/20",
     capabilities: [
       "SMS event reporting & investigation workflows",
-      "FOQA/FDM data ingestion & exceedance tracking",
+      "Flight data analysis & exceedance tracking",
       "Audit management & regulatory compliance",
       "Hazard register & risk assessment",
     ],
