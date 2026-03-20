@@ -27,7 +27,7 @@ const ExecSlide4Intelligence = ({
     <SalesSlideContainer
       id="exec-slide-5"
       title="The Intelligence Layer"
-      subtitle="Aviation-specific AI that generic tools can't replicate."
+      subtitle="Aviation-specific AI that generative AI can't replicate."
       slideNumber={slideNumber}
       isPlaying={isPlaying}
       isLoading={isLoading}
