@@ -31,7 +31,7 @@ const accuracy = [
 ];
 
 const TechSlide8IntelligenceTiers = ({ slideNumber, ...narrationProps }: Props) => (
-  <SalesSlideContainer id="tech-slide-8" title="Intelligence Tiers & Differentiation" subtitle="Four levels of operational intelligence — and why generic AI falls short" slideNumber={slideNumber} {...narrationProps}>
+  <SalesSlideContainer id="tech-slide-8" title="Intelligence Tiers & Differentiation" subtitle="Four levels of operational intelligence — and why generative AI falls short" slideNumber={slideNumber} {...narrationProps}>
     <div className="flex flex-col gap-3 flex-1 min-h-0">
       {/* Top: comparison table + accuracy side by side */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 flex-1 min-h-0">
