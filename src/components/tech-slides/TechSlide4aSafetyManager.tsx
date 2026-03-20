@@ -7,7 +7,7 @@ interface Props extends SlideNarrationProps { slideNumber?: number; }
 const capabilities = [
   { icon: AlertTriangle, label: "SMS Event Reporting", desc: "Capture safety events across all operations with structured taxonomy" },
   { icon: Search, label: "Investigation Workflows", desc: "Guided root-cause analysis with evidence attachment and tracking" },
-  { icon: BarChart3, label: "FOQA/FDM Ingestion", desc: "Automated flight data monitoring with exceedance detection" },
+  { icon: BarChart3, label: "Flight Data Analysis", desc: "Automated flight data monitoring with exceedance detection" },
   { icon: ClipboardCheck, label: "Audit Management", desc: "Internal and regulatory audit scheduling, findings, and corrective actions" },
   { icon: BookOpen, label: "Hazard Register", desc: "Centralised hazard identification, assessment, and mitigation tracking" },
   { icon: Shield, label: "Risk Assessment", desc: "Quantitative risk matrices with trend analysis and threshold alerts" },
