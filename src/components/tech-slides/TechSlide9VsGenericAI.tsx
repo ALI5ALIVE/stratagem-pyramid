@@ -37,7 +37,7 @@ const TechSlide9VsGenericAI = ({ slideNumber, ...narrationProps }: Props) => (
     <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 flex-1 min-h-0">
       <div className="lg:col-span-3 rounded-lg border border-muted/20 bg-card/60 p-2.5 overflow-auto">
         <table className="w-full text-xs">
-          <thead><tr className="border-b border-border"><th className="text-left py-1.5 text-[11px] text-muted-foreground font-medium">Capability</th><th className="text-center py-1.5 text-[11px] text-primary font-bold w-20">CoAnalyst</th><th className="text-center py-1.5 text-[11px] text-muted-foreground w-20">Generic AI</th></tr></thead>
+          <thead><tr className="border-b border-border"><th className="text-left py-1.5 text-[11px] text-muted-foreground font-medium">Capability</th><th className="text-center py-1.5 text-[11px] text-primary font-bold w-20">CoAnalyst</th><th className="text-center py-1.5 text-[11px] text-muted-foreground w-20">Generative AI</th></tr></thead>
           <tbody>
             {rows.map((r, i) => (
               <tr key={i} className="border-b border-border/50">
