@@ -48,8 +48,8 @@ const ExecSlide4Intelligence = ({
             <p className="text-lg font-semibold text-muted-foreground">vs</p>
           </div>
           <div className="text-center">
-            <p className="text-6xl font-bold text-destructive/60">35%</p>
-            <p className="text-sm text-muted-foreground mt-1">Generic AI</p>
+             <p className="text-6xl font-bold text-destructive/60">35%</p>
+            <p className="text-sm text-muted-foreground mt-1">Generative AI</p>
           </div>
         </div>
 
