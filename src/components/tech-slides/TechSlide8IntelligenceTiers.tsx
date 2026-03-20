@@ -41,7 +41,7 @@ const TechSlide8IntelligenceTiers = ({ slideNumber, ...narrationProps }: Props) 
               <tr className="border-b border-border">
                 <th className="text-left py-1 text-[10px] text-muted-foreground font-medium">Capability</th>
                 <th className="text-center py-1 text-[10px] text-primary font-bold w-16">CoAnalyst</th>
-                <th className="text-center py-1 text-[10px] text-muted-foreground w-16">Generic</th>
+                <th className="text-center py-1 text-[10px] text-muted-foreground w-16">Generative</th>
               </tr>
             </thead>
             <tbody>
