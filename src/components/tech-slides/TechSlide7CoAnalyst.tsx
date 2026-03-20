@@ -13,7 +13,7 @@ const pipeline = [
 ];
 
 const TechSlide7CoAnalyst = ({ slideNumber, ...narrationProps }: Props) => (
-  <SalesSlideContainer id="tech-slide-7" title="CoAnalyst: Aviation Intelligence" subtitle="Purpose-built AI that understands aviation operations at a level generic tools cannot reach" slideNumber={slideNumber} {...narrationProps}>
+  <SalesSlideContainer id="tech-slide-7" title="CoAnalyst: Aviation Intelligence" subtitle="Purpose-built AI that understands aviation operations at a level generative AI cannot reach" slideNumber={slideNumber} {...narrationProps}>
     <div className="flex-1 flex flex-col gap-5">
       {/* Pipeline */}
       <div className="flex items-start gap-2">
