@@ -48,7 +48,7 @@ const OpsSlide1DailyReality = ({ slideNumber, ...narrationProps }: OpsSlide1Prop
               <span className="text-xs font-medium text-foreground">Inbox</span>
               <span className="text-[10px] font-bold bg-destructive text-destructive-foreground rounded-full px-1.5 py-0.5 leading-none">5</span>
             </div>
-            <span className="text-[10px] text-muted-foreground font-mono">3 systems · 0 linked</span>
+            <span className="text-[10px] text-muted-foreground font-mono">3 modules · cross-dept</span>
           </div>
 
           {/* Rows */}
