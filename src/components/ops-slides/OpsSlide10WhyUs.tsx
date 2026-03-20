@@ -18,7 +18,7 @@ const differentiators = [
   {
     icon: Brain,
     title: "Embedded Intelligence",
-    desc: "CoAnalyst delivers 90% accuracy across 4,000+ aviation categories — precision that generic AI simply cannot match at operational granularity.",
+    desc: "CoAnalyst delivers 90% accuracy across 4,000+ aviation categories — precision that generative AI simply cannot match at operational granularity.",
     color: "text-purple-400",
     bg: "bg-purple-400/10",
     border: "border-purple-400/30",
@@ -35,8 +35,8 @@ const differentiators = [
 
 const trustStats = [
   { icon: Shield, value: "50+", label: "Airlines" },
-  { icon: Signal, value: "7/10", label: "NA Carriers" },
-  { icon: Users, value: "1M+", label: "Users" },
+  { icon: Signal, value: "20+", label: "Years" },
+  { icon: Users, value: "300K+", label: "Users" },
 ];
 
 const OpsSlide10WhyUs = ({ slideNumber, ...narrationProps }: OpsSlide10Props) => {

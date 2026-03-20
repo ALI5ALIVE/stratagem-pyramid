@@ -12,7 +12,7 @@ const platformModules = [
   {
     icon: Shield,
     name: "Safety Manager365",
-    desc: "SMS reporting, FOQA/FDM ingestion, audit & hazard management",
+    desc: "SMS reporting, flight data analysis, audit & hazard management",
     color: "text-red-400",
     bg: "bg-red-500/10",
     border: "border-red-500/20",
@@ -40,7 +40,7 @@ const steps = [
     icon: Radar,
     letter: "D",
     label: "Detect",
-    description: "Ingest signals from safety reports, flight data, maintenance logs, crew feedback, and regulatory changes.",
+    description: "Ingest signals from safety reports, operational data, maintenance logs, crew feedback, and regulatory changes.",
     auditTrail: "65K+ signals/year ingested and categorised automatically",
     color: "text-sky-400",
     bgColor: "bg-sky-400/10",
@@ -108,7 +108,7 @@ const OpsSlide4DTOP = ({ slideNumber, ...narrationProps }: OpsSlide4Props) => {
           <Brain className="h-5 w-5 shrink-0 mt-0.5 text-primary" />
           <div className="min-w-0">
             <h4 className="text-sm font-bold text-primary">CoAnalyst✦ — Intelligence Layer</h4>
-            <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">Aviation-specific AI that surfaces patterns, predicts risks, and drives closed-loop corrective action across all three modules.</p>
+            <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">Aviation-specific AI that surfaces patterns, predicts risks, and drives closed-loop recommended action across all three modules.</p>
           </div>
         </div>
 

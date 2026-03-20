@@ -31,7 +31,7 @@ const accuracy = [
 ];
 
 const TechSlide8IntelligenceTiers = ({ slideNumber, ...narrationProps }: Props) => (
-  <SalesSlideContainer id="tech-slide-8" title="Intelligence Tiers & Differentiation" subtitle="Four levels of operational intelligence — and why generic AI falls short" slideNumber={slideNumber} {...narrationProps}>
+  <SalesSlideContainer id="tech-slide-8" title="Intelligence Tiers & Differentiation" subtitle="Four levels of operational intelligence — and why generative AI falls short" slideNumber={slideNumber} {...narrationProps}>
     <div className="flex flex-col gap-3 flex-1 min-h-0">
       {/* Top: comparison table + accuracy side by side */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 flex-1 min-h-0">
@@ -41,7 +41,7 @@ const TechSlide8IntelligenceTiers = ({ slideNumber, ...narrationProps }: Props) 
               <tr className="border-b border-border">
                 <th className="text-left py-1 text-[10px] text-muted-foreground font-medium">Capability</th>
                 <th className="text-center py-1 text-[10px] text-primary font-bold w-16">CoAnalyst</th>
-                <th className="text-center py-1 text-[10px] text-muted-foreground w-16">Generic</th>
+                <th className="text-center py-1 text-[10px] text-muted-foreground w-16">Generative</th>
               </tr>
             </thead>
             <tbody>
@@ -65,7 +65,7 @@ const TechSlide8IntelligenceTiers = ({ slideNumber, ...narrationProps }: Props) 
               <span className="text-muted-foreground w-10 text-center">{a.gen}</span>
             </div>
           ))}
-          <p className="text-[9px] text-muted-foreground mt-1.5 italic">LLMs hallucinate at granular levels — wrong technology for micro-categorization.</p>
+          <p className="text-[9px] text-muted-foreground mt-1.5 italic">Generative AI hallucinates at granular levels — wrong technology for micro-categorization.</p>
         </div>
       </div>
 

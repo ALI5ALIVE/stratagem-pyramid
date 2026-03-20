@@ -86,7 +86,7 @@ const ExecSlide1Problem = ({
               <span className="text-lg font-normal text-muted-foreground ml-2">per year</span>
             </p>
             <p className="text-sm text-muted-foreground mt-1">
-              Total annual cost of operational fragmentation — and every dollar is avoidable with a connected platform.
+              A sample of the highest-cost, most addressable operational issues — not an exhaustive list. Customisable to your operation.
             </p>
           </div>
         </div>

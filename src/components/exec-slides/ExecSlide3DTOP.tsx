@@ -11,29 +11,29 @@ const steps = [
     icon: Search,
     label: "Detect",
     color: "text-sky-400 bg-sky-500/10 border-sky-500/20",
-    description: "FOQA data flags hard landing trend on 737 fleet",
-    example: "3× exceedances in 14 days",
+    description: "Pattern of dangerous goods procedural non-compliance identified — correlated with seasonal cold weather conditions",
+    example: "6 DG incidents in 30 days, 4 linked to de-icing ops",
   },
   {
     icon: Zap,
     label: "Trigger",
     color: "text-amber-400 bg-amber-500/10 border-amber-500/20",
-    description: "Platform triggers procedure review and training assignment",
-    example: "Auto-linked to approach SOP",
+    description: "Procedural review initiated for DG handling procedures during winter operations",
+    example: "Auto-linked to DG-COLD-OPS SOP",
   },
   {
     icon: GitBranch,
     label: "Orchestrate",
     color: "text-purple-400 bg-purple-500/10 border-purple-500/20",
-    description: "Targeted sim training for affected crews with updated procedures",
-    example: "12 crews assigned in 24hrs",
+    description: "Updated procedures published, targeted training assigned to ground handling and cabin crew",
+    example: "85 crew retrained in 10 days",
   },
   {
     icon: BadgeCheck,
     label: "Prove",
     color: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
-    description: "Reduced recurrence with complete audit trail",
-    example: "67% reduction in 60 days",
+    description: "Measurable decline in DG incidents with complete audit trail",
+    example: "72% reduction within 90 days",
   },
 ];
 
@@ -65,7 +65,7 @@ const ExecSlide3DTOP = ({
         {/* Use case label */}
         <div className="mb-8 text-center">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-semibold">
-            Use Case: Hard Landing → Retraining → Reduced Recurrence
+            Use Case: Dangerous Goods → Procedure Update → Reduced Incidents
           </span>
         </div>
 

@@ -4,7 +4,7 @@ import { Shield, Plane, Users } from "lucide-react";
 
 const trustStats = [
   { icon: Plane, value: "50+", label: "Airlines Worldwide" },
-  { icon: Shield, value: "7/10", label: "Top North American Carriers" },
+  { icon: Shield, value: "20+", label: "Years in Aviation" },
   { icon: Users, value: "300K+", label: "Operational Users" },
 ];
 

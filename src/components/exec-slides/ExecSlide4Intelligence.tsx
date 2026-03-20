@@ -27,7 +27,7 @@ const ExecSlide4Intelligence = ({
     <SalesSlideContainer
       id="exec-slide-5"
       title="The Intelligence Layer"
-      subtitle="Aviation-specific AI that generic tools can't replicate."
+      subtitle="Aviation-specific AI that generative AI can't replicate."
       slideNumber={slideNumber}
       isPlaying={isPlaying}
       isLoading={isLoading}
@@ -48,13 +48,13 @@ const ExecSlide4Intelligence = ({
             <p className="text-lg font-semibold text-muted-foreground">vs</p>
           </div>
           <div className="text-center">
-            <p className="text-6xl font-bold text-destructive/60">35%</p>
-            <p className="text-sm text-muted-foreground mt-1">Generic AI</p>
+             <p className="text-6xl font-bold text-destructive/60">35%</p>
+            <p className="text-sm text-muted-foreground mt-1">Generative AI</p>
           </div>
         </div>
 
         <p className="text-center text-muted-foreground text-sm max-w-lg">
-          Accuracy at <span className="text-foreground font-semibold">4,000+ aviation categories</span> across 5 classification levels — where generic AI hallucinates.
+          Accuracy at <span className="text-foreground font-semibold">4,000+ aviation categories</span> across 5 classification levels — where generative AI hallucinates.
         </p>
 
         {/* Precision breakdown */}
@@ -86,8 +86,8 @@ const ExecSlide4Intelligence = ({
                   </div>
                 </div>
                 <div className="flex gap-2 text-[10px] text-muted-foreground">
-                  <span className="flex-1">CoAnalyst</span>
-                  <span className="flex-1">Generic AI</span>
+                   <span className="flex-1">CoAnalyst</span>
+                   <span className="flex-1">Generative AI</span>
                 </div>
               </div>
             ))}

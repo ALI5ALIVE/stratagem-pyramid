@@ -10,14 +10,14 @@ interface OpsSlide6Props extends SlideNarrationProps {
 
 const useCaseCards = [
   {
-    id: "hard-landing",
+    id: "dangerous-goods",
     icon: Plane,
-    title: "Hard Landing → Retraining",
+    title: "Dangerous Goods → Procedure Update",
     iconColor: "hsl(199 89% 48%)",
-    detect: "FOQA detects hard landing exceedance",
-    trigger: "Auto-flags crew for procedure review",
-    orchestrate: "Targeted sim session assigned to crew",
-    prove: "47% reduction in recurrence within 90 days",
+    detect: "Pattern of DG handling issues identified — correlated with seasonal conditions",
+    trigger: "Procedural review initiated for DG handling SOPs",
+    orchestrate: "Updated procedures published, ground crew retrained",
+    prove: "Measurable decline in DG incidents within 90 days",
   },
   {
     id: "smoke-fumes",

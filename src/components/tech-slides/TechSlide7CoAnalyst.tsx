@@ -5,7 +5,7 @@ import { Database, Sparkles, Search, Brain, Zap } from "lucide-react";
 interface Props extends SlideNarrationProps { slideNumber?: number; }
 
 const pipeline = [
-  { icon: Database, label: "Ingest", desc: "Collect data from FOQA, reports, audits, maintenance", color: "text-sky-400", bg: "bg-sky-400/10" },
+  { icon: Database, label: "Ingest", desc: "Collect data from safety reports, audits, maintenance, operational data", color: "text-sky-400", bg: "bg-sky-400/10" },
   { icon: Sparkles, label: "Enrich", desc: "Classify across 4,000+ categories at 5 levels", color: "text-amber-400", bg: "bg-amber-400/10" },
   { icon: Search, label: "Detect", desc: "Surface patterns, anomalies, and emerging trends", color: "text-purple-400", bg: "bg-purple-400/10" },
   { icon: Brain, label: "Intelligence", desc: "Hybrid AI: domain ML models + LLM augmentation", color: "text-primary", bg: "bg-primary/10" },
@@ -13,7 +13,7 @@ const pipeline = [
 ];
 
 const TechSlide7CoAnalyst = ({ slideNumber, ...narrationProps }: Props) => (
-  <SalesSlideContainer id="tech-slide-7" title="CoAnalyst: Aviation Intelligence" subtitle="Purpose-built AI that understands aviation operations at a level generic tools cannot reach" slideNumber={slideNumber} {...narrationProps}>
+  <SalesSlideContainer id="tech-slide-7" title="CoAnalyst: Aviation Intelligence" subtitle="Purpose-built AI that understands aviation operations at a level generative AI cannot reach" slideNumber={slideNumber} {...narrationProps}>
     <div className="flex-1 flex flex-col gap-5">
       {/* Pipeline */}
       <div className="flex items-start gap-2">
@@ -53,7 +53,7 @@ const TechSlide7CoAnalyst = ({ slideNumber, ...narrationProps }: Props) => (
         {/* Precision Gap */}
         <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-5 flex flex-col">
           <h3 className="text-base font-bold text-amber-400 mb-3">The Precision Gap</h3>
-          <p className="text-xs text-muted-foreground mb-4">Generic AI accuracy collapses at the granularity levels aviation operations require.</p>
+          <p className="text-xs text-muted-foreground mb-4">Generative AI accuracy collapses at the granularity levels aviation operations require.</p>
           {[
             { level: "Level 1 (top ~50)", co: 95, gen: 90 },
             { level: "Level 2–3 (hundreds)", co: 92, gen: 60 },
@@ -67,7 +67,7 @@ const TechSlide7CoAnalyst = ({ slideNumber, ...narrationProps }: Props) => (
                 <span className="text-[10px] text-primary font-bold w-8">{r.co}%</span>
               </div>
               <div className="flex items-center gap-2 mt-1">
-                <span className="text-[9px] w-16 text-muted-foreground shrink-0">Generic AI</span>
+                <span className="text-[9px] w-16 text-muted-foreground shrink-0">Generative AI</span>
                 <div className="flex-1 h-4 rounded-full bg-muted/20 overflow-hidden"><div className="h-full rounded-full bg-muted-foreground/30" style={{ width: `${r.gen}%` }} /></div>
                 <span className="text-[10px] text-muted-foreground w-8">{r.gen}%</span>
               </div>

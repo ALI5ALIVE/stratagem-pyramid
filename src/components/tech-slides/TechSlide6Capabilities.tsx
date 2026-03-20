@@ -13,7 +13,7 @@ const pillars = [
   {
     icon: RefreshCw, title: "Continuous Improvement", color: "text-purple-400", bg: "bg-purple-400/10", border: "border-purple-400/30",
     desc: "Closed-loop learning that turns every signal into a measurable improvement cycle.",
-    details: ["DTOP pipeline automates detect-to-prove", "Pattern recognition across historical data", "Automated corrective action workflows", "Recurrence tracking and trend analysis"],
+    details: ["DTOP pipeline automates detect-to-prove", "Pattern recognition across historical data", "Automated recommended action workflows", "Recurrence tracking and trend analysis"],
   },
   {
     icon: BadgeCheck, title: "Proof at Scale", color: "text-emerald-400", bg: "bg-emerald-400/10", border: "border-emerald-400/30",

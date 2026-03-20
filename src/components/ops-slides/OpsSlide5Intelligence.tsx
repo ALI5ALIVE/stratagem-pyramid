@@ -25,7 +25,7 @@ const OpsSlide5Intelligence = ({ slideNumber, ...narrationProps }: OpsSlide5Prop
     <SalesSlideContainer
       id="ops-slide-5"
       title="The Intelligence Layer — CoAnalyst"
-      subtitle="Aviation-specific AI that generic tools can't replicate."
+      subtitle="Aviation-specific AI that generative AI can't replicate."
       slideNumber={slideNumber}
       {...narrationProps}
     >
@@ -41,7 +41,7 @@ const OpsSlide5Intelligence = ({ slideNumber, ...narrationProps }: OpsSlide5Prop
           </div>
           <div className="text-center">
             <p className="text-5xl font-bold text-destructive/60">35%</p>
-            <p className="text-xs text-muted-foreground mt-1">Generic AI</p>
+            <p className="text-xs text-muted-foreground mt-1">Generative AI</p>
           </div>
         </div>
 
@@ -94,8 +94,8 @@ const OpsSlide5Intelligence = ({ slideNumber, ...narrationProps }: OpsSlide5Prop
                     </div>
                   </div>
                   <div className="flex gap-2 text-[9px] text-muted-foreground">
-                    <span className="flex-1">CoAnalyst</span>
-                    <span className="flex-1">Generic AI</span>
+                   <span className="flex-1">CoAnalyst</span>
+                    <span className="flex-1">Generative AI</span>
                   </div>
                 </div>
               ))}

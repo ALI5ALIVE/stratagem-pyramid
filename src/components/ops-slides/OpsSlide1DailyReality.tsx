@@ -9,19 +9,19 @@ interface OpsSlide1Props extends SlideNarrationProps {
 }
 
 const inboxItems = [
-  { time: "06:15", source: "SMS", sender: "FOQA System", subject: "Hard landing report filed — runway 27L", preview: "Exceedance detected on approach. Report auto-generated…", urgency: "Critical", urgencyColor: "bg-red-500/15 text-red-400 border-red-500/30", unread: true, starred: true },
-  { time: "08:30", source: "Ops Portal", sender: "Crew Scheduling", subject: "Crew scheduling notice — no link to SMS report", preview: "Captain reassigned to flight 402. No reference to prior…", urgency: "Warning", urgencyColor: "bg-amber-500/15 text-amber-400 border-amber-500/30", unread: true, starred: false },
-  { time: "10:00", source: "Email", sender: "Training Dept", subject: "Training team unaware — crew flies next sector", preview: "Requesting status on recurrent training completion for…", urgency: "Critical", urgencyColor: "bg-red-500/15 text-red-400 border-red-500/30", unread: true, starred: false },
-  { time: "14:00", source: "Spreadsheet", sender: "Compliance Officer", subject: "Compliance requests evidence — 3 emails, 2 attachments", preview: "Please forward supporting documentation for finding…", urgency: "Warning", urgencyColor: "bg-amber-500/15 text-amber-400 border-amber-500/30", unread: false, starred: false },
-  { time: "17:30", source: "SMS", sender: "Safety Board", subject: "Investigation opened — third duplicate entry for same event", preview: "Duplicate record flagged. Requesting clarification on…", urgency: "Escalation", urgencyColor: "bg-orange-500/15 text-orange-400 border-orange-500/30", unread: false, starred: true },
+  { time: "08:15", source: "Content Mgr365", sender: "Content Manager365", subject: "Procedure revision update requires your approval", preview: "SOP-ENG-42 v3.1 revision ready for sign-off. 2 departments pending…", urgency: "Action Required", urgencyColor: "bg-amber-500/15 text-amber-400 border-amber-500/30", unread: true, starred: true },
+  { time: "09:30", source: "Safety Mgr365", sender: "Safety Manager365", subject: "Overdue audit finding — corrective action past due", preview: "Finding #2847 — corrective action overdue by 12 days. Escalation…", urgency: "Critical", urgencyColor: "bg-red-500/15 text-red-400 border-red-500/30", unread: true, starred: true },
+  { time: "10:45", source: "Training Mgr365", sender: "Training Manager365", subject: "Type rating renewal — bid for simulator slots required", preview: "3 crew members due for recurrent. Sim availability closing in 5 days…", urgency: "Warning", urgencyColor: "bg-amber-500/15 text-amber-400 border-amber-500/30", unread: true, starred: false },
+  { time: "13:00", source: "Safety Mgr365", sender: "Safety Manager365", subject: "Your input required for risk control effectiveness review", preview: "Risk control RC-114 requires quarterly effectiveness assessment…", urgency: "Action Required", urgencyColor: "bg-amber-500/15 text-amber-400 border-amber-500/30", unread: false, starred: false },
+  { time: "15:30", source: "Content Mgr365", sender: "Content Manager365", subject: "Regulation revision — new update requires applicability review", preview: "EASA AD 2026-0034 published. Applicability assessment needed for 4 SOPs…", urgency: "Critical", urgencyColor: "bg-red-500/15 text-red-400 border-red-500/30", unread: false, starred: true },
 ];
 
 const painPoints = [
-  { icon: FileX, label: "Siloed Systems", stat: "5 tools, 0 links" },
-  { icon: Search, label: "Invisible Signals", stat: "40% ignored" },
-  { icon: Clock, label: "Slow Investigations", stat: "3-week avg" },
-  { icon: Users, label: "Manual Coordination", stat: "60% chasing" },
-  { icon: AlertTriangle, label: "Recurring Events", stat: "Quarter after quarter" },
+  { icon: FileX, label: "Cross-Dept Requests", stat: "5 depts, 1 queue" },
+  { icon: Search, label: "Buried Approvals", stat: "40% overdue" },
+  { icon: Clock, label: "Slow Coordination", stat: "3-week avg" },
+  { icon: Users, label: "Multi-Dept Input", stat: "60% chasing" },
+  { icon: AlertTriangle, label: "Missed Deadlines", stat: "Quarter after quarter" },
 ];
 
 const OpsSlide1DailyReality = ({ slideNumber, ...narrationProps }: OpsSlide1Props) => {
@@ -29,7 +29,7 @@ const OpsSlide1DailyReality = ({ slideNumber, ...narrationProps }: OpsSlide1Prop
     <SalesSlideContainer
       id="ops-slide-1"
       title="Your Daily Reality"
-      subtitle="A day in the life of disconnected operations"
+      subtitle="Cross-departmental demands competing for your attention"
       slideNumber={slideNumber}
       {...narrationProps}
     >
@@ -48,7 +48,7 @@ const OpsSlide1DailyReality = ({ slideNumber, ...narrationProps }: OpsSlide1Prop
               <span className="text-xs font-medium text-foreground">Inbox</span>
               <span className="text-[10px] font-bold bg-destructive text-destructive-foreground rounded-full px-1.5 py-0.5 leading-none">5</span>
             </div>
-            <span className="text-[10px] text-muted-foreground font-mono">3 systems · 0 linked</span>
+            <span className="text-[10px] text-muted-foreground font-mono">3 modules · cross-dept</span>
           </div>
 
           {/* Rows */}
@@ -88,7 +88,7 @@ const OpsSlide1DailyReality = ({ slideNumber, ...narrationProps }: OpsSlide1Prop
 
           <div className="px-3 py-1.5 border-t border-muted/20 bg-muted/5">
             <p className="text-[10px] text-muted-foreground italic text-center">
-              Same event. 3 systems. No connection. No action taken.
+              5 requests. 3 departments. Every one waiting on someone else.
             </p>
           </div>
         </div>
