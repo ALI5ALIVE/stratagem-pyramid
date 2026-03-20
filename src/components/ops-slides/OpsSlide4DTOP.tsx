@@ -40,7 +40,7 @@ const steps = [
     icon: Radar,
     letter: "D",
     label: "Detect",
-    description: "Ingest signals from safety reports, flight data, maintenance logs, crew feedback, and regulatory changes.",
+    description: "Ingest signals from safety reports, operational data, maintenance logs, crew feedback, and regulatory changes.",
     auditTrail: "65K+ signals/year ingested and categorised automatically",
     color: "text-sky-400",
     bgColor: "bg-sky-400/10",
