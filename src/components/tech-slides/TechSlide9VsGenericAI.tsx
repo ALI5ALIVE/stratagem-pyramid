@@ -33,7 +33,7 @@ const buildVsBuy = [
 ];
 
 const TechSlide9VsGenericAI = ({ slideNumber, ...narrationProps }: Props) => (
-  <SalesSlideContainer id="tech-slide-9" title="CoAnalyst vs Generic AI" subtitle="Purpose-built aviation intelligence vs off-the-shelf AI tools" slideNumber={slideNumber} {...narrationProps}>
+  <SalesSlideContainer id="tech-slide-9" title="CoAnalyst vs Generative AI" subtitle="Purpose-built aviation intelligence vs off-the-shelf AI tools" slideNumber={slideNumber} {...narrationProps}>
     <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 flex-1 min-h-0">
       <div className="lg:col-span-3 rounded-lg border border-muted/20 bg-card/60 p-2.5 overflow-auto">
         <table className="w-full text-xs">
