@@ -29,7 +29,7 @@ const OpsSlide1DailyReality = ({ slideNumber, ...narrationProps }: OpsSlide1Prop
     <SalesSlideContainer
       id="ops-slide-1"
       title="Your Daily Reality"
-      subtitle="A day in the life of disconnected operations"
+      subtitle="Cross-departmental demands competing for your attention"
       slideNumber={slideNumber}
       {...narrationProps}
     >
