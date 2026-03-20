@@ -18,7 +18,7 @@ const differentiators = [
   {
     icon: Brain,
     title: "Embedded Intelligence",
-    desc: "CoAnalyst delivers 90% accuracy across 4,000+ aviation categories — precision that generic AI simply cannot match at operational granularity.",
+    desc: "CoAnalyst delivers 90% accuracy across 4,000+ aviation categories — precision that generative AI simply cannot match at operational granularity.",
     color: "text-purple-400",
     bg: "bg-purple-400/10",
     border: "border-purple-400/30",
