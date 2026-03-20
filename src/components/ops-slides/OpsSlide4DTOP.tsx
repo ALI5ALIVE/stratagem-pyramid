@@ -12,7 +12,7 @@ const platformModules = [
   {
     icon: Shield,
     name: "Safety Manager365",
-    desc: "SMS reporting, FOQA/FDM ingestion, audit & hazard management",
+    desc: "SMS reporting, flight data analysis, audit & hazard management",
     color: "text-red-400",
     bg: "bg-red-500/10",
     border: "border-red-500/20",
