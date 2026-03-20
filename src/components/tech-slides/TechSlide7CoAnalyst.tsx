@@ -5,7 +5,7 @@ import { Database, Sparkles, Search, Brain, Zap } from "lucide-react";
 interface Props extends SlideNarrationProps { slideNumber?: number; }
 
 const pipeline = [
-  { icon: Database, label: "Ingest", desc: "Collect data from FOQA, reports, audits, maintenance", color: "text-sky-400", bg: "bg-sky-400/10" },
+  { icon: Database, label: "Ingest", desc: "Collect data from safety reports, audits, maintenance, operational data", color: "text-sky-400", bg: "bg-sky-400/10" },
   { icon: Sparkles, label: "Enrich", desc: "Classify across 4,000+ categories at 5 levels", color: "text-amber-400", bg: "bg-amber-400/10" },
   { icon: Search, label: "Detect", desc: "Surface patterns, anomalies, and emerging trends", color: "text-purple-400", bg: "bg-purple-400/10" },
   { icon: Brain, label: "Intelligence", desc: "Hybrid AI: domain ML models + LLM augmentation", color: "text-primary", bg: "bg-primary/10" },
