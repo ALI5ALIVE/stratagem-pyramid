@@ -7,7 +7,7 @@ interface Props extends SlideNarrationProps { slideNumber?: number; }
 const phases = [
   {
     icon: Target, phase: "H1 2026", label: "Quick Wins", color: "text-sky-400", bg: "bg-sky-400/10", border: "border-sky-400/30",
-    items: ["Hard landing retraining pipeline", "Regulatory change cascade automation", "Safety report auto-categorisation (CoAnalyst)", "Audit evidence package generation"],
+    items: ["DG incident reduction pipeline", "Regulatory change cascade automation", "Safety report auto-categorisation (CoAnalyst)", "Audit evidence package generation"],
   },
   {
     icon: Rocket, phase: "H2 2026", label: "Connected Operations", color: "text-purple-400", bg: "bg-purple-400/10", border: "border-purple-400/30",

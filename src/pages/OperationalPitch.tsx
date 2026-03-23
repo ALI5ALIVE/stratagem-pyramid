@@ -23,7 +23,7 @@ const slides = [
   { id: "ops-slide-3", label: "Before & After", component: OpsSlide3BeforeAfter },
   { id: "ops-slide-4", label: "DTOP + Platform", component: OpsSlide4DTOP },
   { id: "ops-slide-5", label: "Intelligence Layer — CoAnalyst", component: OpsSlide5Intelligence },
-  { id: "ops-slide-6", label: "Near-Term Use Cases", component: OpsSlide6NearTermUseCases },
+  
   { id: "ops-slide-7", label: "Stepping Stones", component: OpsSlide7SteppingStones },
   { id: "ops-slide-8", label: "Maturity Roadmap", component: OpsSlide8MaturityRoadmap },
   { id: "ops-slide-9", label: "Outcomes", component: OpsSlide9Outcomes },

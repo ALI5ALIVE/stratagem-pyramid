@@ -1,11 +1,11 @@
 import { SlideNarrationProps } from "@/types/slideProps";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
-import { Shield, Plane, Users } from "lucide-react";
+import { Plane, Globe, Users } from "lucide-react";
 
 const trustStats = [
-  { icon: Plane, value: "50+", label: "Airlines Worldwide" },
-  { icon: Shield, value: "20+", label: "Years in Aviation" },
-  { icon: Users, value: "300K+", label: "Operational Users" },
+  { icon: Plane, value: "550+", label: "Airlines Worldwide" },
+  { icon: Globe, value: "6", label: "Continents" },
+  { icon: Users, value: "Global", label: "Aviation & AI Experts" },
 ];
 
 interface ExecSlide0TitleProps extends SlideNarrationProps {

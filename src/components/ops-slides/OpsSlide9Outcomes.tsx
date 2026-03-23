@@ -114,11 +114,15 @@ const OpsSlide9Outcomes = ({ slideNumber, ...narrationProps }: OpsSlide9Props) =
             </div>
           </div>
 
-          {/* Total cost avoidance */}
+          {/* Total cost avoidance + calculator CTA */}
           <div className="p-4 rounded-lg border border-primary/20 bg-primary/5 flex flex-col items-center justify-center text-center">
             <span className="text-sm text-muted-foreground">Annual Cost Avoidance Opportunity</span>
             <span className="text-4xl font-bold text-primary mt-2">{formatted}</span>
             <span className="text-xs text-muted-foreground mt-1">across 8 costed use cases</span>
+            <Link to="/line-of-sight" className="mt-3 inline-flex items-center gap-2 text-xs text-primary hover:text-primary/80 font-medium transition-colors">
+              <Calculator className="w-3.5 h-3.5" />
+              Explore the Interactive Calculator →
+            </Link>
           </div>
         </div>
       </div>

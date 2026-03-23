@@ -53,7 +53,7 @@ const OpsSlide4Platform = ({ slideNumber, ...narrationProps }: OpsSlide4Platform
   return (
     <SalesSlideContainer
       id="ops-slide-4"
-      title="The Application Platform"
+      title="The Operational Performance Platform"
       subtitle="Three connected applications powering the DTOP operating model"
       slideNumber={slideNumber}
       {...narrationProps}

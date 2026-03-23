@@ -59,7 +59,7 @@ const TechSlide4cTrainingManager = ({ slideNumber, ...narrationProps }: Props) =
             ))}
           </div>
         </div>
-        <p className="text-xs text-muted-foreground mt-3 italic">Every training event closes a loop — connecting safety findings to proven competency</p>
+        <p className="text-xs text-muted-foreground mt-3 italic">CoTrainer transforms every training session into a data-enriched learning event</p>
       </div>
     </div>
   </SalesSlideContainer>

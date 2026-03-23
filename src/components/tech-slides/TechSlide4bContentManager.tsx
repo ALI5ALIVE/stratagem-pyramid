@@ -59,7 +59,7 @@ const TechSlide4bContentManager = ({ slideNumber, ...narrationProps }: Props) =>
             ))}
           </div>
         </div>
-        <p className="text-xs text-muted-foreground mt-3 italic">Every procedure change becomes an intelligence event — not just a revision number</p>
+        <p className="text-xs text-muted-foreground mt-3 italic">CoAuthor turns every regulatory change into a ready-to-review revision — not just a notification</p>
       </div>
     </div>
   </SalesSlideContainer>
