@@ -1,4 +1,4 @@
-import { FileText, BookOpen, GitBranch, Scale, Send, FolderOpen, ArrowRight } from "lucide-react";
+import { FileText, BookOpen, GitBranch, Scale, Send, FolderOpen, ArrowRight, Sparkles } from "lucide-react";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
@@ -14,10 +14,10 @@ const capabilities = [
 ];
 
 const dataFlow = [
-  { step: "Procedure Changes", desc: "New or revised documents enter the platform" },
-  { step: "Cascade Triggers", desc: "CoAnalyst identifies all downstream impacts across manuals and SOPs" },
-  { step: "Impact Analysis", desc: "Surfaces which crews, routes, and operations are affected" },
-  { step: "Training Updates", desc: "Automatically triggers targeted retraining in Training Manager 365" },
+  { step: "Regulatory Analysis", desc: "Analyzes regulatory changes and identifies impacted manual sections" },
+  { step: "Smart Revisions", desc: "Proposes revised language, ready to merge and route for approval" },
+  { step: "Impact Cascades", desc: "Identifies all downstream impacts across manuals and SOPs" },
+  { step: "Audit-Ready Output", desc: "Policies and procedures become clearer, safer, and always audit-ready" },
 ];
 
 const TechSlide4bContentManager = ({ slideNumber, ...narrationProps }: Props) => (
