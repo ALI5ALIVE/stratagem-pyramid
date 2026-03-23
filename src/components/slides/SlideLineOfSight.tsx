@@ -90,6 +90,8 @@ function formatCompact(value: number, unit: string): string {
   return `${value}`;
 }
 
+const SIMPLE_USE_CASE_IDS = ["uc3", "uc7"];
+
 const SlideLineOfSight = ({
   useCaseValues,
   setUseCaseValues,
@@ -101,6 +103,11 @@ const SlideLineOfSight = ({
 }: SlideLineOfSightProps) => {
   const [expandedUseCase, setExpandedUseCase] = useState<string | null>(null);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [calculatorMode, setCalculatorMode] = useState<"simple" | "advanced">("simple");
+
+  const visibleUseCases = calculatorMode === "simple"
+    ? useCases.filter((uc) => SIMPLE_USE_CASE_IDS.includes(uc.id))
+    : useCases;
 
   const handleUseCaseChange = (ucId: string, value: number[]) => {
     setUseCaseValues((prev) => ({ ...prev, [ucId]: value[0] }));
@@ -314,9 +321,36 @@ const SlideLineOfSight = ({
                     })}
                   </div>
 
+                  {/* Calculator Mode Toggle */}
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="inline-flex rounded-lg border border-border/30 bg-card/50 p-0.5">
+                      <Button
+                        variant={calculatorMode === "simple" ? "default" : "ghost"}
+                        size="sm"
+                        className="h-6 text-[10px] px-2.5"
+                        onClick={() => setCalculatorMode("simple")}
+                      >
+                        Quick View (2)
+                      </Button>
+                      <Button
+                        variant={calculatorMode === "advanced" ? "default" : "ghost"}
+                        size="sm"
+                        className="h-6 text-[10px] px-2.5"
+                        onClick={() => setCalculatorMode("advanced")}
+                      >
+                        Full Model ({useCases.length})
+                      </Button>
+                    </div>
+                    {calculatorMode === "simple" && (
+                      <span className="text-[9px] text-muted-foreground">
+                        Showing {SIMPLE_USE_CASE_IDS.length} of {useCases.length} use cases — switch to Full Model for complete analysis
+                      </span>
+                    )}
+                  </div>
+
                   {/* Tier 3: Use Case Input Sliders */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1.5">
-                      {useCases.map((uc) => {
+                    <div className={cn("grid gap-1.5", calculatorMode === "simple" ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4")}>
+                      {visibleUseCases.map((uc) => {
                         const isConnected = connectedUseCaseIds.has(uc.id);
                         const currentVal = useCaseValues[uc.id] ?? uc.input.baseline;
                         const improved = currentVal < uc.input.baseline;
