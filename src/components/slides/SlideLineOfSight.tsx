@@ -90,6 +90,8 @@ function formatCompact(value: number, unit: string): string {
   return `${value}`;
 }
 
+const SIMPLE_USE_CASE_IDS = ["uc3", "uc7"];
+
 const SlideLineOfSight = ({
   useCaseValues,
   setUseCaseValues,
@@ -101,6 +103,11 @@ const SlideLineOfSight = ({
 }: SlideLineOfSightProps) => {
   const [expandedUseCase, setExpandedUseCase] = useState<string | null>(null);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [calculatorMode, setCalculatorMode] = useState<"simple" | "advanced">("simple");
+
+  const visibleUseCases = calculatorMode === "simple"
+    ? useCases.filter((uc) => SIMPLE_USE_CASE_IDS.includes(uc.id))
+    : useCases;
 
   const handleUseCaseChange = (ucId: string, value: number[]) => {
     setUseCaseValues((prev) => ({ ...prev, [ucId]: value[0] }));
