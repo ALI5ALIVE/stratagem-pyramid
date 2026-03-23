@@ -1,4 +1,4 @@
-import { FileText, BookOpen, GitBranch, Scale, Send, FolderOpen, ArrowRight } from "lucide-react";
+import { FileText, BookOpen, GitBranch, Scale, Send, FolderOpen, ArrowRight, Sparkles } from "lucide-react";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
@@ -14,10 +14,10 @@ const capabilities = [
 ];
 
 const dataFlow = [
-  { step: "Procedure Changes", desc: "New or revised documents enter the platform" },
-  { step: "Cascade Triggers", desc: "CoAnalyst identifies all downstream impacts across manuals and SOPs" },
-  { step: "Impact Analysis", desc: "Surfaces which crews, routes, and operations are affected" },
-  { step: "Training Updates", desc: "Automatically triggers targeted retraining in Training Manager 365" },
+  { step: "Regulatory Analysis", desc: "Analyzes regulatory changes and identifies impacted manual sections" },
+  { step: "Smart Revisions", desc: "Proposes revised language, ready to merge and route for approval" },
+  { step: "Impact Cascades", desc: "Identifies all downstream impacts across manuals and SOPs" },
+  { step: "Audit-Ready Output", desc: "Policies and procedures become clearer, safer, and always audit-ready" },
 ];
 
 const TechSlide4bContentManager = ({ slideNumber, ...narrationProps }: Props) => (
@@ -41,8 +41,8 @@ const TechSlide4bContentManager = ({ slideNumber, ...narrationProps }: Props) =>
       <div className="flex flex-col justify-center">
         <div className="rounded-xl border border-blue-500/30 bg-blue-500/10 p-5">
           <div className="flex items-center gap-3 mb-4">
-            <FileText className="w-7 h-7 text-blue-400" />
-            <h3 className="text-lg font-semibold text-blue-400">How CoAnalyst Activates Content Data</h3>
+            <Sparkles className="w-7 h-7 text-blue-400" />
+            <h3 className="text-lg font-semibold text-blue-400">CoAuthor — AI-Powered Content Intelligence</h3>
           </div>
           <div className="space-y-3">
             {dataFlow.map((d, i) => (
@@ -59,7 +59,7 @@ const TechSlide4bContentManager = ({ slideNumber, ...narrationProps }: Props) =>
             ))}
           </div>
         </div>
-        <p className="text-xs text-muted-foreground mt-3 italic">Every procedure change becomes an intelligence event — not just a revision number</p>
+        <p className="text-xs text-muted-foreground mt-3 italic">CoAuthor turns every regulatory change into a ready-to-review revision — not just a notification</p>
       </div>
     </div>
   </SalesSlideContainer>

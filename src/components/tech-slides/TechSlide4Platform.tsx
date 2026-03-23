@@ -12,7 +12,7 @@ const modules = [
 ];
 
 const TechSlide4Platform = ({ slideNumber, ...narrationProps }: Props) => (
-  <SalesSlideContainer id="tech-slide-4" title="The Application Platform" subtitle="Three connected applications, one intelligence layer, one operational performance platform" slideNumber={slideNumber} {...narrationProps}>
+  <SalesSlideContainer id="tech-slide-4" title="The Operational Performance Platform" subtitle="Three connected applications, one intelligence layer, one operational performance platform" slideNumber={slideNumber} {...narrationProps}>
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-0">
       <div className="flex items-center justify-center"><PlatformEcosystemDiagram className="w-full" /></div>
       <div className="flex flex-col gap-3 justify-center">

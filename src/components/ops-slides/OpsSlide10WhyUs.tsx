@@ -1,6 +1,6 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { Layers, Brain, BadgeCheck, Shield, Signal, Users } from "lucide-react";
+import { Layers, Brain, BadgeCheck, Plane, Globe, Users } from "lucide-react";
 
 interface OpsSlide10Props extends SlideNarrationProps {
   slideNumber?: number;
@@ -34,9 +34,9 @@ const differentiators = [
 ];
 
 const trustStats = [
-  { icon: Shield, value: "50+", label: "Airlines" },
-  { icon: Signal, value: "20+", label: "Years" },
-  { icon: Users, value: "300K+", label: "Users" },
+  { icon: Plane, value: "550+", label: "Airlines" },
+  { icon: Globe, value: "6", label: "Continents" },
+  { icon: Users, value: "Global", label: "Experts" },
 ];
 
 const OpsSlide10WhyUs = ({ slideNumber, ...narrationProps }: OpsSlide10Props) => {

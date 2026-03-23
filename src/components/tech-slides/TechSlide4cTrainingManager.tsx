@@ -1,4 +1,4 @@
-import { GraduationCap, Target, UserCheck, Award, RefreshCw, BarChart3, ArrowRight } from "lucide-react";
+import { GraduationCap, Target, UserCheck, Award, RefreshCw, BarChart3, ArrowRight, Sparkles } from "lucide-react";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
@@ -14,10 +14,10 @@ const capabilities = [
 ];
 
 const dataFlow = [
-  { step: "Safety Findings", desc: "Events from Safety Manager 365 identify competency-related root causes" },
-  { step: "Targeted Retraining", desc: "CoAnalyst maps findings to specific training modules and affected crews" },
-  { step: "Verified Competency", desc: "Assessment confirms knowledge transfer and behaviour change" },
-  { step: "Closed-Loop Evidence", desc: "Completion feeds back to safety record — proving recommended action worked" },
+  { step: "Debrief Transcription", desc: "Transcribes every debrief, generates summaries, coaching cues, and improvement areas" },
+  { step: "Automated Grading", desc: "Accelerates grading and generates rich, actionable trainee feedback" },
+  { step: "Feedback Enhancement", desc: "Analyzes instructor feedback to improve clarity, tone, and constructiveness" },
+  { step: "Personalised Training", desc: "Prior performance data personalises each session for improved crew readiness" },
 ];
 
 const TechSlide4cTrainingManager = ({ slideNumber, ...narrationProps }: Props) => (
@@ -41,8 +41,8 @@ const TechSlide4cTrainingManager = ({ slideNumber, ...narrationProps }: Props) =
       <div className="flex flex-col justify-center">
         <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-5">
           <div className="flex items-center gap-3 mb-4">
-            <GraduationCap className="w-7 h-7 text-emerald-400" />
-            <h3 className="text-lg font-semibold text-emerald-400">How CoAnalyst Activates Training Data</h3>
+            <Sparkles className="w-7 h-7 text-emerald-400" />
+            <h3 className="text-lg font-semibold text-emerald-400">CoTrainer — Intelligence Before Instruction</h3>
           </div>
           <div className="space-y-3">
             {dataFlow.map((d, i) => (
@@ -59,7 +59,7 @@ const TechSlide4cTrainingManager = ({ slideNumber, ...narrationProps }: Props) =
             ))}
           </div>
         </div>
-        <p className="text-xs text-muted-foreground mt-3 italic">Every training event closes a loop — connecting safety findings to proven competency</p>
+        <p className="text-xs text-muted-foreground mt-3 italic">CoTrainer transforms every training session into a data-enriched learning event</p>
       </div>
     </div>
   </SalesSlideContainer>
