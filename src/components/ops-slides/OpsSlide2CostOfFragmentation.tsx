@@ -87,6 +87,14 @@ const OpsSlide2CostOfFragmentation = ({ slideNumber, ...narrationProps }: OpsSli
             and audit findings — multiplying the cost of every missed signal.
           </p>
         </div>
+
+        {/* Methodology footnote */}
+        <div className="flex items-start gap-2 pt-2 border-t border-muted/10">
+          <Info className="w-3 h-3 text-muted-foreground shrink-0 mt-0.5" />
+          <p className="text-[10px] text-muted-foreground/70 leading-relaxed">
+            {methodologyNote}
+          </p>
+        </div>
       </div>
     </SalesSlideContainer>
   );
