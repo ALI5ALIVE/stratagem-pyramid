@@ -104,7 +104,7 @@ const ExecSlide4Intelligence = ({
         </div>
 
         <p className="text-center text-xs text-muted-foreground italic">
-          CoAnalyst enables new ways of working — connecting modules into the DTOP operating model that turns signals into outcomes.
+          Connecting Safety, Content, and Training is what makes the intelligence layer possible — powering the DTOP operating model that turns signals into outcomes.
         </p>
       </div>
     </SalesSlideContainer>
