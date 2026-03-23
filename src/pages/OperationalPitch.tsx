@@ -9,7 +9,7 @@ import OpsSlide2CostOfFragmentation from "@/components/ops-slides/OpsSlide2CostO
 import OpsSlide3BeforeAfter from "@/components/ops-slides/OpsSlide3BeforeAfter";
 import OpsSlide4DTOP from "@/components/ops-slides/OpsSlide4DTOP";
 import OpsSlide5Intelligence from "@/components/ops-slides/OpsSlide5Intelligence";
-import OpsSlide6NearTermUseCases from "@/components/ops-slides/OpsSlide6NearTermUseCases";
+
 import OpsSlide7SteppingStones from "@/components/ops-slides/OpsSlide7SteppingStones";
 import OpsSlide8MaturityRoadmap from "@/components/ops-slides/OpsSlide8MaturityRoadmap";
 import OpsSlide9Outcomes from "@/components/ops-slides/OpsSlide9Outcomes";
