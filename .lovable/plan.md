@@ -1,123 +1,99 @@
 
 
-# Executive, Operational & Technical Pitch Feedback — Action Plan
+# Microsites Feedback — Action Plan
 
-This covers all feedback points across the three decks, organized by theme.
-
----
-
-## Theme 1: Trust Bar Stats (Exec 00 + 07)
-**Feedback**: "7/10 US carriers" may alienate non-customers. Numbers need revalidation.
-
-**Changes**:
-- **`ExecSlide0Title.tsx`** (lines 5-9): Replace trust stats with more inclusive framing — e.g., "500+ Customers", "20+ Years Aviation", "300K+ Frontline Users" (or mark as TBC). Remove "7/10 NA Carriers."
-- **`ExecSlide6WhyUs.tsx`** (lines 33-37): Same trust stats in footer — mirror the title slide changes.
+Based on KG's feedback document, here are the identified changes organized by theme.
 
 ---
 
-## Theme 2: Exec 01 — "Not Exhaustive" Caveat
-**Feedback**: Flag that the cost waterfall is a sample of highest-cost, most addressable issues — not an exhaustive list.
+## Feedback Summary
 
-**Changes**:
-- **`ExecSlide1Problem.tsx`** (line 89): Update the bottom callout text to add: "A sample of the highest-cost, most addressable operational issues — not an exhaustive list. Customisable to your operation."
+### 1. Trust Bar Stats — All Title Slides
+**Current**: "50+ Airlines Worldwide", "20+ Years in Aviation", "300K+ Operational Users"
+**Requested**: "550+ Airlines Worldwide", "6 Continents", "Global Team of Aviation & AI Experts"
 
----
+### 2. Platform Title — Exec + Ops + Tech
+**Current**: "The Application Platform" (Ops + Tech slides)
+**Requested**: "The Operational Performance Platform"
 
-## Theme 3: Replace Hard Landing Example with Dangerous Goods (Exec 03, Ops 06, Tech 05)
-**Feedback**: Hard landing uses FOQA (not integrated today), implies targeting individuals (union pushback). Replace with "Dangerous Goods Incidents" — detection of procedural pattern (e.g., cold weather), trigger is procedure review, orchestrate updates and training, prove decline in incidents.
+### 3. Remove "Near-Term Use Cases" Slide (Ops Deck)
+**Feedback**: "We cannot back it up." The 2026 Roadmap slide is a better/safer option. Remove `OpsSlide6NearTermUseCases` from the Operational Pitch deck. Keep the 2026 Roadmap.
 
-**Changes**:
-- **`ExecSlide3DTOP.tsx`** (lines 9-38): Replace all 4 DTOP steps with Dangerous Goods example:
-  - Detect: "Pattern of dangerous goods procedural non-compliance identified — correlated with seasonal/cold weather conditions"
-  - Trigger: "Procedural review initiated for DG handling procedures"
-  - Orchestrate: "Updated procedures published, targeted training assigned to ground handling and cabin crew"
-  - Prove: "Measurable decline in DG incidents within 90 days"
-  - Update the use case label pill (line 68) from "Hard Landing → Retraining" to "Dangerous Goods → Procedure Update → Reduced Incidents"
+### 4. Tech Deck — Content Manager & Training Manager Slides: Replace CoAnalyst with CoAuthor/CoTrainer
+**Feedback**: On the longer (Technical) version, the ContentManager365 and TrainingManager365 deep-dive slides should focus on **CoAuthor** and **CoTrainer** respectively, not CoAnalyst.
 
-- **`OpsSlide6NearTermUseCases.tsx`** (lines 11-21): Replace "Hard Landing → Retraining" card with "Dangerous Goods → Procedure Update":
-  - detect: "Pattern of DG handling issues identified — correlated with seasonal conditions"
-  - trigger: "Procedural review initiated for DG handling SOPs"
-  - orchestrate: "Updated procedures published, ground crew retrained"
-  - prove: "Measurable decline in DG incidents within 90 days"
+- **ContentManager365 (`TechSlide4bContentManager.tsx`)**: Replace "How CoAnalyst Activates Content Data" with **"How CoAuthor Transforms Content Management"** — focusing on AI-powered authoring, regulatory change analysis, smart insights, and proposed revisions.
+- **TrainingManager365 (`TechSlide4cTrainingManager.tsx`)**: Replace "How CoAnalyst Activates Training Data" with **"How CoTrainer Elevates Instruction"** — focusing on automated grading, debrief transcription, personalized coaching cues, and feedback enhancement.
 
-- **`TechSlide5DTOP.tsx`** (lines 10-13): Replace hard landing audit trail examples with Dangerous Goods equivalents throughout all 4 steps.
+### 5. Include Interactive Calculator in All Deck Versions
+**Feedback**: The Line of Sight calculator should be included/linked in each version of the microsite. Reduce the number of use case examples to 2 or 3. Keep: Flight Delays & OTP, Insurance Premium Escalation, Go-Around Events.
 
----
+### 6. Weave in "Operational Performance — In Context" Slide
+**Feedback**: The "Messaging in Context" slide (slide 13/15 from Master Strategy) that defines Operational Performance across Safety, Content, and Training domains works well. Consider weaving it into the pitch decks.
 
-## Theme 4: Remove/Replace FOQA References Where We Can't Demonstrate It
-**Feedback**: We don't integrate with FOQA today. Remove FOQA from detect sections and data source lists where it implies current capability.
-
-**Changes**:
-- **`OpsSlide4DTOP.tsx`** (line 15): Safety Manager desc — change "SMS reporting, FOQA/FDM ingestion, audit & hazard management" → "SMS reporting, flight data analysis, audit & hazard management"
-- **`OpsSlide4DTOP.tsx`** (line 43): Detect step description — remove "flight data" from signal list or soften to "safety reports, operational data, maintenance logs, crew feedback, and regulatory changes"
-- **`TechSlide5DTOP.tsx`** (line 10): Detect description — change "FOQA, safety reports" → "safety reports, operational data"
-- **`TechSlide5DTOP.tsx`** (line 16): Remove "FOQA/FDM" from dataSources array, replace with "Operational Data"
-- **`TechSlide1StrategicShift.tsx`** (line 25): Change "12K+ monthly signals across FOQA, reports, audits" → "12K+ monthly signals across safety reports, audits, training records"
-- **`TechSlide4aSafetyManager.tsx`**: Change "FOQA/FDM Ingestion" capability label to "Flight Data Analysis" (keeps the capability without implying current FOQA integration)
+### 7. Roadmap H1 2026 — Remove "Hard Landing" Reference
+**Current** (`TechSlide15Roadmap2026.tsx` line 10): "Hard landing retraining pipeline"
+**Should be**: Updated to match the Dangerous Goods use case or a generic "DTOP pipeline for priority use case"
 
 ---
 
-## Theme 5: "Generic AI" → "Generative AI" (Exec 05, Ops 05)
-**Feedback**: The comparison should be against "Generative AI" not "Generic AI."
+## Proposed Code Changes
 
-**Changes**: Global find-and-replace across all slides that say "Generic AI" → "Generative AI":
-- **`ExecSlide4Intelligence.tsx`** (lines 51, 57, 89-90)
-- **`OpsSlide5Intelligence.tsx`** (lines 44, 49, 97)
-- **`OpsSlide10WhyUs.tsx`** (line 21)
-- **`TechSlide7CoAnalyst.tsx`**, **`TechSlide8IntelligenceTiers.tsx`**, **`TechSlide9VsGenericAI.tsx`**
-- **`CASlide8VsGenericAI.tsx`**, **`CASlide10ObjectionHandling.tsx`**, multiple other CoAnalyst slides
-- Subtitle text on intelligence slides: "that generic tools can't replicate" → "that generative AI can't replicate"
+### Files to Modify
+
+| # | Change | File(s) |
+|---|--------|---------|
+| 1 | Trust bar: 550+ Airlines, 6 Continents, Global Aviation & AI Team | `ExecSlide0Title.tsx`, `ExecSlide6WhyUs.tsx`, `TechSlide0Title.tsx`, `OpsSlide10WhyUs.tsx` |
+| 2 | "The Application Platform" → "The Operational Performance Platform" | `OpsSlide4Platform.tsx`, `TechSlide4Platform.tsx` |
+| 3 | Remove Near-Term Use Cases slide from Ops deck | `OperationalPitch.tsx` (remove from slides array + import) |
+| 4a | Content Manager slide: CoAnalyst → CoAuthor | `TechSlide4bContentManager.tsx` |
+| 4b | Training Manager slide: CoAnalyst → CoTrainer | `TechSlide4cTrainingManager.tsx` |
+| 5 | Add calculator link/CTA to Exec and Ops decks (already in ExecSlide5Value; add to OpsSlide9Outcomes or similar) | `OpsSlide9Outcomes.tsx` |
+| 6 | Roadmap: "Hard landing retraining pipeline" → "DG incident reduction pipeline" | `TechSlide15Roadmap2026.tsx` |
+
+### Detail
+
+**Change 1 — Trust Bar** (4 files)
+Replace trust stats across all title/footer slides:
+- `{ value: "550+", label: "Airlines Worldwide" }`
+- `{ value: "6", label: "Continents" }` (use Globe icon)
+- `{ value: "Global", label: "Aviation & AI Experts" }` (use Users icon)
+
+**Change 2 — Platform Title** (2 files)
+- `OpsSlide4Platform.tsx` line 56: `title="The Operational Performance Platform"`
+- `TechSlide4Platform.tsx` line 15: `title="The Operational Performance Platform"`
+
+**Change 3 — Remove Near-Term Use Cases** (1 file)
+- `OperationalPitch.tsx`: Remove the `OpsSlide6NearTermUseCases` entry from the slides array and its import. This drops the slide from the Ops deck navigation and rendering.
+
+**Change 4a — ContentManager365 → CoAuthor focus** (`TechSlide4bContentManager.tsx`)
+- Replace the right-column "How CoAnalyst Activates Content Data" section with **"CoAuthor — AI-Powered Content Intelligence"**
+- Update the 4-step data flow to CoAuthor capabilities:
+  1. "Regulatory Analysis" / "Analyzes regulatory changes and identifies impacted manual sections"
+  2. "Smart Revisions" / "Proposes revised language, ready to merge and route for approval"
+  3. "Impact Cascades" / "Identifies all downstream impacts across manuals and SOPs"
+  4. "Audit-Ready Output" / "Policies and procedures become clearer, safer, and always audit-ready"
+
+**Change 4b — TrainingManager365 → CoTrainer focus** (`TechSlide4cTrainingManager.tsx`)
+- Replace the right-column "How CoAnalyst Activates Training Data" section with **"CoTrainer — Intelligence Before Instruction"**
+- Update the 4-step data flow to CoTrainer capabilities:
+  1. "Debrief Transcription" / "Transcribes every debrief, generates summaries, coaching cues, and improvement areas"
+  2. "Automated Grading" / "Accelerates grading and generates rich, actionable trainee feedback"
+  3. "Feedback Enhancement" / "Analyzes instructor feedback to improve clarity, tone, and constructiveness"
+  4. "Personalised Training" / "Prior performance data personalises each session for improved crew readiness"
+
+**Change 5 — Calculator CTA** (`OpsSlide9Outcomes.tsx`)
+- Add a link/CTA to the Interactive Calculator (`/line-of-sight`) at the bottom of the Outcomes slide, mirroring the pattern already used in `ExecSlide5Value.tsx`.
+
+**Change 6 — Roadmap hard landing reference** (`TechSlide15Roadmap2026.tsx`)
+- Line 10: Change "Hard landing retraining pipeline" → "DG incident reduction pipeline"
 
 ---
 
-## Theme 6: Exec 06 — Fuel Cost Avoidance in Line of Sight Slide
-**Feedback**: The CFO outcome card still references fuel cost avoidance and FOQA-to-training pipelines.
+## What This Does NOT Change
+- The "Messaging in Context" slide already exists in the Master Strategy deck. Weaving it into pitch decks is noted but deferred as it requires adding a new slide component to the Exec/Ops/Tech registries — recommend as a follow-up.
+- The calculator use case reduction (to 3 examples) applies to the Line of Sight data model and is a separate scope item.
+- The Exec deck title "The Operational Performance Platform" is already correct (line 46 of ExecSlide0Title.tsx).
 
-**Changes**:
-- **`ExecSlide5Value.tsx`** (lines 14-17): Replace CFO "Fuel Cost Avoidance" outcome with a more defensible framing — e.g., "Compliance Cost Avoidance" or "Operational Cost Reduction" with scenario referencing regulatory findings, incident costs, and training efficiency rather than fuel.
-
----
-
-## Theme 7: Ops 01 — Reframe Inbox with Internal Platform Signals
-**Feedback**: The inbox should show cross-departmental requests coming from within the platform, not external signals. Examples: "Procedure revision requires approval", "Overdue audit finding notification", "Training renewal — bid for simulator slots", etc.
-
-**Changes**:
-- **`OpsSlide1DailyReality.tsx`** (lines 11-17): Replace the 5 `inboxItems` with internal platform-originated requests:
-  1. "Procedure Revision" / "SOP-ENG-42 revision update requires your approval" / Content Manager365
-  2. "Overdue Audit Finding" / "Finding #2847 — corrective action overdue by 12 days" / Safety Manager365
-  3. "Training Renewal" / "Type rating renewal due — bid for simulator slots required" / Training Manager365
-  4. "Risk Control Review" / "Your input required for risk control effectiveness review" / Safety Manager365
-  5. "Regulation Revision" / "EASA AD 2026-0034 — new update requires review for applicability" / Content Manager365
-
-  Update source badges from "SMS/Email/Spreadsheet" to module names. Update the pain points strip to reflect cross-departmental coordination friction rather than external system chaos.
-
----
-
-## Theme 8: Tech 05 — "Corrective Action" → "Recommended Action"
-**Feedback**: Implies autonomous action without human in the loop. Should be "Recommended Action."
-
-**Changes**:
-- **`TechSlide5DTOP.tsx`** (line 13): Change "corrective action cycle" → "recommended action cycle"
-- **`TechSlide4aSafetyManager.tsx`** (line 20): Change "Corrective Action" → "Recommended Action" in the CoAnalyst pipeline step
-- **`TechSlide4cTrainingManager.tsx`** (line 20): Change "proving corrective action worked" → "proving recommended action worked"
-- **`TechSlide6Capabilities.tsx`** (line 16): Change "Automated corrective action workflows" → "Automated recommended action workflows"
-- **`TechSlide14MaturityRoadmap.tsx`** (line 66): Change "Corrective actions drive controlled change" → "Recommended actions drive controlled change"
-- **`OpsSlide4DTOP.tsx`**: Update CoAnalyst description (line 111) — change "corrective action" → "recommended action"
-
----
-
-## Summary
-
-| # | Theme | Files Affected |
-|---|-------|----------------|
-| 1 | Trust bar revalidation | 2 files |
-| 2 | "Not exhaustive" caveat | 1 file |
-| 3 | Hard Landing → Dangerous Goods | 3 files |
-| 4 | Remove FOQA references | 4 files |
-| 5 | Generic → Generative AI | ~12 files |
-| 6 | Fuel cost avoidance reframe | 1 file |
-| 7 | Inbox reframe (internal signals) | 1 file |
-| 8 | Corrective → Recommended Action | 6 files |
-
-**~20 files modified. No routing or structural changes.**
+**~10 files modified. No routing changes except removing one slide from the Ops deck.**
 
