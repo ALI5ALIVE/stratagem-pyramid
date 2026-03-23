@@ -41,8 +41,8 @@ const TechSlide4cTrainingManager = ({ slideNumber, ...narrationProps }: Props) =
       <div className="flex flex-col justify-center">
         <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-5">
           <div className="flex items-center gap-3 mb-4">
-            <GraduationCap className="w-7 h-7 text-emerald-400" />
-            <h3 className="text-lg font-semibold text-emerald-400">How CoAnalyst Activates Training Data</h3>
+            <Sparkles className="w-7 h-7 text-emerald-400" />
+            <h3 className="text-lg font-semibold text-emerald-400">CoTrainer — Intelligence Before Instruction</h3>
           </div>
           <div className="space-y-3">
             {dataFlow.map((d, i) => (
