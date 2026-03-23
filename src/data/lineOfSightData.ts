@@ -273,13 +273,13 @@ export const useCases: UseCase[] = [
     description:
       "Operational failures where baggage and passengers are separated or mishandled.",
     input: {
-      inputLabel: "Mishandled bags per 1,000 pax",
-      unit: "bags",
-      baseline: 6.5,
+      inputLabel: "Mishandled bags (thousands per month)",
+      unit: "K bags",
+      baseline: 10.8,
       min: 0,
-      max: 15,
+      max: 30,
       step: 0.5,
-      costPerEvent: "$100–$350 per bag",
+      costPerEvent: "$100–$350 per bag (≈6.5/1,000 pax for 20M pax/yr carrier)",
       costMidpoint: 225,
       annualisationFactor: 12,
       costComponents: [
