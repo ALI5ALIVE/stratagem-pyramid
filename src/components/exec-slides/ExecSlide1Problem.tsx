@@ -1,7 +1,7 @@
 import { SlideNarrationProps } from "@/types/slideProps";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
-import { useCases } from "@/data/lineOfSightData";
-import { AlertTriangle } from "lucide-react";
+import { useCases, methodologyNote } from "@/data/lineOfSightData";
+import { AlertTriangle, Info } from "lucide-react";
 
 interface ExecSlide1ProblemProps extends SlideNarrationProps {
   slideNumber?: number;
