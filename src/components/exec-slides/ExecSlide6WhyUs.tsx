@@ -1,6 +1,6 @@
 import { SlideNarrationProps } from "@/types/slideProps";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
-import { Link2, Brain, BadgeCheck, Shield, Plane, Users } from "lucide-react";
+import { Link2, Brain, BadgeCheck, Plane, Globe, Users } from "lucide-react";
 
 interface ExecSlide6WhyUsProps extends SlideNarrationProps {
   slideNumber?: number;
