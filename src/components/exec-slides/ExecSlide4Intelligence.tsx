@@ -43,7 +43,7 @@ const ExecSlide4Intelligence = ({
           <p className="text-sm text-foreground leading-relaxed">
             <span className="font-semibold text-primary">Why connection matters:</span>{" "}
             When Safety, Content, and Training share one data model, a safety signal detected Tuesday triggers the right procedural update <span className="italic">and</span> targeted crew retraining — automatically. 
-            <span className="font-semibold"> CoAnalyst is the USP that makes this possible</span> — transforming three siloed applications into a single operating model where every signal drives a measurable response.
+            This connection is what powers the intelligence layer. CoAnalyst can only drive performance because it sees across all three domains simultaneously — transforming siloed applications into a single operating model where every signal drives a measurable response.
           </p>
         </div>
 
