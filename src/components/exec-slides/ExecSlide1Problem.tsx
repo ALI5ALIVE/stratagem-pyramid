@@ -1,7 +1,7 @@
 import { SlideNarrationProps } from "@/types/slideProps";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
-import { useCases } from "@/data/lineOfSightData";
-import { AlertTriangle } from "lucide-react";
+import { useCases, methodologyNote } from "@/data/lineOfSightData";
+import { AlertTriangle, Info } from "lucide-react";
 
 interface ExecSlide1ProblemProps extends SlideNarrationProps {
   slideNumber?: number;
@@ -89,6 +89,14 @@ const ExecSlide1Problem = ({
               A sample of the highest-cost, most addressable operational issues — not an exhaustive list. Customisable to your operation.
             </p>
           </div>
+        </div>
+
+        {/* Methodology footnote */}
+        <div className="flex items-start gap-2 pt-2 border-t border-muted/10">
+          <Info className="w-3 h-3 text-muted-foreground shrink-0 mt-0.5" />
+          <p className="text-[10px] text-muted-foreground/70 leading-relaxed">
+            {methodologyNote}
+          </p>
         </div>
       </div>
     </SalesSlideContainer>

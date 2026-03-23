@@ -273,13 +273,13 @@ export const useCases: UseCase[] = [
     description:
       "Operational failures where baggage and passengers are separated or mishandled.",
     input: {
-      inputLabel: "Mishandled bags per 1,000 pax",
-      unit: "bags",
-      baseline: 6.5,
+      inputLabel: "Mishandled bags (thousands per month)",
+      unit: "K bags",
+      baseline: 10.8,
       min: 0,
-      max: 15,
+      max: 30,
       step: 0.5,
-      costPerEvent: "$100–$350 per bag",
+      costPerEvent: "$100–$350 per bag (≈6.5/1,000 pax for 20M pax/yr carrier)",
       costMidpoint: 225,
       annualisationFactor: 12,
       costComponents: [
@@ -302,17 +302,25 @@ export const useCases: UseCase[] = [
 // ─── Source Citations ─────────────────────────────────────────────────
 
 export const sourceCitations: Record<string, string> = {
-  uc1: "EUROCONTROL delay cost reference values v4.1; airline fuel burn data",
-  uc2: "OxMaint Aviation Management Guide 2026; industry estimates $10K–$150K/hr including lost revenue",
-  uc3: "EUROCONTROL Standard Inputs; A4A US Carrier Delay Costs 2024 ($100.76/min average)",
-  uc4: "IATA Global Outlook for Air Transport 2024; scaled to carrier fuel spend",
-  uc5: "Industry compensation and legal cost benchmarks",
-  uc6: "DOT/FAA Civil Penalty Guidelines 2024; EASA enforcement data",
-  uc7: "WTW Airline Insurance Market Renewal Outlook Q4 2025",
-  uc8: "SITA Baggage IT Insights 2024 (6.3/1000 global average)",
+  uc1: "Flight Safety Foundation Go-Around Safety Forum 2024; IATA Fuel Efficiency Gap Analysis; EUROCONTROL delay cost reference values v4.1",
+  uc2: "Oliver Wyman MRO Survey 2024; IATA Airline Maintenance Cost Report FY2023; industry AOG cost range $100K–$500K/day including lost revenue and recovery",
+  uc3: "EUROCONTROL Standard Inputs for Cost-Benefit Analysis; A4A (Airlines for America) US Carrier Delay Costs 2024 — $100.76/min average",
+  uc4: "IATA Global Outlook for Air Transport 2024; human-factor variance range 2–5% per Boeing Fuel Conservation Strategies; scaled to carrier annual fuel spend",
+  uc5: "FAA Cabin Safety Injury Database; Bureau of Labor Statistics aviation sector workplace injury costs 2023; airline liability and workers' compensation benchmarks",
+  uc6: "DOT/FAA Civil Penalty Guidelines 2024; EASA enforcement actions public register",
+  uc7: "Willis Towers Watson (WTW) Airline Insurance Market Renewal Outlook Q4 2025; premium range scaled to fleet size and claims history",
+  uc8: "SITA Baggage IT Insights 2024 (6.3/1,000 pax global average); IATA Resolution 753 baggage tracking benchmarks",
   lm2: "IATA Maintenance Cost Report FY2023; fleet availability distinct from dispatch reliability",
   lm3: "Cirium On-Time Performance Review 2024",
 };
+
+// ─── Methodology Note ────────────────────────────────────────────────
+
+export const methodologyNote =
+  "Cost estimates are illustrative and based on published industry benchmarks. Actual exposure varies by fleet composition, route network, and operational maturity. All figures are annualised and represent the addressable cost envelope — not total P&L impact. Sources include EUROCONTROL, IATA, A4A, SITA, WTW, Flight Safety Foundation, FAA, and Oliver Wyman.";
+
+export const defaultProfileCitation =
+  "Default profile approximates a mid-size carrier operating 50 narrowbody-equivalent aircraft (~150 daily departures, ~20M annual passengers). Benchmarks: A4A industry averages 2024, ICAO Air Transport Statistics 2024.";
 
 // ─── Leading Measures (Computed from Use Cases) ───────────────────────
 

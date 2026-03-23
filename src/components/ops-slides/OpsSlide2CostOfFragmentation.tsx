@@ -1,7 +1,7 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { useCases } from "@/data/lineOfSightData";
-import { AlertTriangle, Clock, Signal, TrendingDown } from "lucide-react";
+import { useCases, methodologyNote } from "@/data/lineOfSightData";
+import { AlertTriangle, Clock, Signal, TrendingDown, Info } from "lucide-react";
 
 interface OpsSlide2Props extends SlideNarrationProps {
   slideNumber?: number;
@@ -85,6 +85,14 @@ const OpsSlide2CostOfFragmentation = ({ slideNumber, ...narrationProps }: OpsSli
             <span className="font-medium text-red-400">Risk compounds.</span>{" "}
             A single unlinked event cascades into delayed investigations, repeated incidents,
             and audit findings — multiplying the cost of every missed signal.
+          </p>
+        </div>
+
+        {/* Methodology footnote */}
+        <div className="flex items-start gap-2 pt-2 border-t border-muted/10">
+          <Info className="w-3 h-3 text-muted-foreground shrink-0 mt-0.5" />
+          <p className="text-[10px] text-muted-foreground/70 leading-relaxed">
+            {methodologyNote}
           </p>
         </div>
       </div>
