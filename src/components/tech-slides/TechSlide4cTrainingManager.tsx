@@ -1,4 +1,4 @@
-import { GraduationCap, Target, UserCheck, Award, RefreshCw, BarChart3, ArrowRight } from "lucide-react";
+import { GraduationCap, Target, UserCheck, Award, RefreshCw, BarChart3, ArrowRight, Sparkles } from "lucide-react";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
@@ -14,10 +14,10 @@ const capabilities = [
 ];
 
 const dataFlow = [
-  { step: "Safety Findings", desc: "Events from Safety Manager 365 identify competency-related root causes" },
-  { step: "Targeted Retraining", desc: "CoAnalyst maps findings to specific training modules and affected crews" },
-  { step: "Verified Competency", desc: "Assessment confirms knowledge transfer and behaviour change" },
-  { step: "Closed-Loop Evidence", desc: "Completion feeds back to safety record — proving recommended action worked" },
+  { step: "Debrief Transcription", desc: "Transcribes every debrief, generates summaries, coaching cues, and improvement areas" },
+  { step: "Automated Grading", desc: "Accelerates grading and generates rich, actionable trainee feedback" },
+  { step: "Feedback Enhancement", desc: "Analyzes instructor feedback to improve clarity, tone, and constructiveness" },
+  { step: "Personalised Training", desc: "Prior performance data personalises each session for improved crew readiness" },
 ];
 
 const TechSlide4cTrainingManager = ({ slideNumber, ...narrationProps }: Props) => (
