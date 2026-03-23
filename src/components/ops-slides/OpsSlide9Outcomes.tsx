@@ -1,7 +1,8 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
 import { useCases } from "@/data/lineOfSightData";
-import { Shield, DollarSign, Clock, Heart, ArrowRight } from "lucide-react";
+import { Shield, DollarSign, Clock, Heart, ArrowRight, Calculator } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface OpsSlide9Props extends SlideNarrationProps {
   slideNumber?: number;
