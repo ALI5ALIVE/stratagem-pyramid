@@ -41,8 +41,8 @@ const TechSlide4bContentManager = ({ slideNumber, ...narrationProps }: Props) =>
       <div className="flex flex-col justify-center">
         <div className="rounded-xl border border-blue-500/30 bg-blue-500/10 p-5">
           <div className="flex items-center gap-3 mb-4">
-            <FileText className="w-7 h-7 text-blue-400" />
-            <h3 className="text-lg font-semibold text-blue-400">How CoAnalyst Activates Content Data</h3>
+            <Sparkles className="w-7 h-7 text-blue-400" />
+            <h3 className="text-lg font-semibold text-blue-400">CoAuthor — AI-Powered Content Intelligence</h3>
           </div>
           <div className="space-y-3">
             {dataFlow.map((d, i) => (
