@@ -6,9 +6,9 @@ import type { SlideNarrationProps } from "@/types/slideProps";
 interface Props extends SlideNarrationProps { slideNumber?: number; }
 
 const modules = [
-  { icon: Shield, name: "Safety Manager 365", color: "text-red-400", bgColor: "bg-red-500/10 border-red-500/20", bullets: ["SMS event reporting & investigations", "Flight data analysis & monitoring", "Audit & compliance tracking"] },
-  { icon: FileText, name: "Content Manager 365 + CoAuthor", color: "text-blue-400", bgColor: "bg-blue-500/10 border-blue-500/20", bullets: ["Procedure authoring & revision control", "Regulatory change management", "Crew & ops distribution"] },
-  { icon: GraduationCap, name: "Training Manager 365 + CoTrainer", color: "text-emerald-400", bgColor: "bg-emerald-500/10 border-emerald-500/20", bullets: ["Competency-based training", "Targeted course assignments", "Completion evidence & records"] },
+  { icon: Shield, name: "SafetyManager365", color: "text-red-400", bgColor: "bg-red-500/10 border-red-500/20", desc: "Advanced Safety, Quality, and Risk Management solution for utmost audit readiness and highest standards of compliance." },
+  { icon: FileText, name: "ContentManager365 + CoAuthor", color: "text-blue-400", bgColor: "bg-blue-500/10 border-blue-500/20", desc: "Next Gen Operational Content Management solution for authoring, publishing, distributing, and viewing enterprise-wide operational content." },
+  { icon: GraduationCap, name: "TrainingManager365 + CoTrainer", color: "text-emerald-400", bgColor: "bg-emerald-500/10 border-emerald-500/20", desc: "Higher-quality training with less effort, optimized schedules, readiness through automated qualification tracking, and continuous improvement." },
 ];
 
 const TechSlide4Platform = ({ slideNumber, ...narrationProps }: Props) => (
@@ -19,8 +19,8 @@ const TechSlide4Platform = ({ slideNumber, ...narrationProps }: Props) => (
         <div className="rounded-xl border border-primary/30 bg-primary/10 p-4 flex gap-4 items-start">
           <Brain className="w-7 h-7 text-primary mt-0.5" />
           <div className="flex-1">
-            <h3 className="text-lg font-semibold text-primary">CoAnalyst — Intelligence Layer</h3>
-            <p className="text-sm text-muted-foreground mt-1">The key to unlocking operational intelligence. CoAnalyst connects safety, content, and training data — transforming siloed reports into actionable insights.</p>
+            <h3 className="text-lg font-semibold text-primary">The Intelligence Layer — CoAnalyst — CoAuthor — CoTrainer</h3>
+            <p className="text-sm text-muted-foreground mt-1">Embedding intelligence across the platform to move from reactive compliance to predictive insights, from managing documents and processes to anticipating issues before they escalate. Empowering better decision-making, strengthened operational resilience, and enhanced safety at scale.</p>
           </div>
         </div>
         {modules.map((m) => (
@@ -28,7 +28,7 @@ const TechSlide4Platform = ({ slideNumber, ...narrationProps }: Props) => (
             <m.icon className={`w-7 h-7 mt-0.5 ${m.color}`} />
             <div className="flex-1">
               <h3 className={`text-lg font-semibold ${m.color}`}>{m.name}</h3>
-              <ul className="mt-1.5 space-y-1">{m.bullets.map((b) => (<li key={b} className="text-sm text-muted-foreground flex items-start gap-2"><span className="text-primary mt-1">•</span>{b}</li>))}</ul>
+              <p className="text-sm text-muted-foreground mt-1.5">{m.desc}</p>
             </div>
           </div>
         ))}

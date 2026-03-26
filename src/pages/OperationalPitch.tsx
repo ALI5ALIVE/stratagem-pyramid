@@ -7,6 +7,7 @@ import OpsSlide0Title from "@/components/ops-slides/OpsSlide0Title";
 import OpsSlide1DailyReality from "@/components/ops-slides/OpsSlide1DailyReality";
 import OpsSlide2CostOfFragmentation from "@/components/ops-slides/OpsSlide2CostOfFragmentation";
 import OpsSlide3BeforeAfter from "@/components/ops-slides/OpsSlide3BeforeAfter";
+import OpsSlide4Platform from "@/components/ops-slides/OpsSlide4Platform";
 import OpsSlide4DTOP from "@/components/ops-slides/OpsSlide4DTOP";
 import OpsSlide5Intelligence from "@/components/ops-slides/OpsSlide5Intelligence";
 

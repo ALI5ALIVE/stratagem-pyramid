@@ -16,9 +16,9 @@ const comparisonRows = [
 ];
 
 const accuracyData = [
-  { level: "Level 1 (top ~50 categories)", coanalyst: "~95%", generic: "~90%" },
-  { level: "Level 2–3 (hundreds)", coanalyst: "~92%", generic: "~60%" },
-  { level: "Level 4–5 (thousands)", coanalyst: "~90%", generic: "30–40%" },
+  { level: "Level 1 — Occurrence Type (~50 categories)", coanalyst: "~95%", generic: "~90%" },
+  { level: "Level 2–3 — Event Category → Specific Event (hundreds)", coanalyst: "~92%", generic: "~60%" },
+  { level: "Level 4–5 — Detailed Cause → Root Cause (thousands)", coanalyst: "~90%", generic: "30–40%" },
 ];
 
 const buildVsBuy = [
@@ -36,18 +36,18 @@ const CASlide8VsGenericAI = (props: SlideNarrationProps) => {
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 h-full">
         {/* Comparison table */}
         <div className="lg:col-span-3 bg-card/60 border border-border rounded-xl p-3 overflow-auto flex flex-col">
-          <table className="w-full text-[11px]">
+          <table className="w-full text-xs">
             <thead>
               <tr className="border-b border-border">
-                <th className="text-left py-1.5 text-[10px] text-muted-foreground font-medium">Capability</th>
-                <th className="text-center py-1.5 text-[10px] text-primary font-bold w-20">CoAnalyst</th>
-                <th className="text-center py-1.5 text-[10px] text-muted-foreground font-medium w-20">Generic AI</th>
+                <th className="text-left py-1.5 text-xs text-muted-foreground font-medium">Capability</th>
+                <th className="text-center py-1.5 text-xs text-primary font-bold w-20">CoAnalyst</th>
+                <th className="text-center py-1.5 text-xs text-muted-foreground font-medium w-20">Generic AI</th>
               </tr>
             </thead>
             <tbody>
               {comparisonRows.map((row, i) => (
                 <tr key={i} className="border-b border-border/50">
-                  <td className="py-1 text-[10px] text-muted-foreground">{row.capability}</td>
+                  <td className="py-1 text-xs text-muted-foreground">{row.capability}</td>
                   <td className="text-center py-1">{row.coanalyst ? <Check className="w-3.5 h-3.5 text-emerald-400 mx-auto" /> : <X className="w-3.5 h-3.5 text-red-400 mx-auto" />}</td>
                   <td className="text-center py-1">{row.generic ? <Check className="w-3.5 h-3.5 text-emerald-400 mx-auto" /> : <X className="w-3.5 h-3.5 text-red-400 mx-auto" />}</td>
                 </tr>
@@ -60,26 +60,28 @@ const CASlide8VsGenericAI = (props: SlideNarrationProps) => {
         <div className="lg:col-span-2 flex flex-col gap-2">
           {/* Accuracy breakdown */}
           <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-3">
-            <h3 className="text-[10px] font-bold text-amber-400 uppercase tracking-wide mb-2">Categorization Accuracy by Depth</h3>
+            <h3 className="text-xs font-bold text-amber-400 uppercase tracking-wide mb-2">Accuracy by Taxonomy Depth</h3>
             <div className="space-y-1.5">
               {accuracyData.map((row, i) => (
-                <div key={i} className="flex items-center gap-2 text-[10px]">
+                <div key={i} className="flex items-center gap-2 text-xs">
                   <span className="text-muted-foreground flex-1">{row.level}</span>
                   <span className="text-primary font-bold w-12 text-center">{row.coanalyst}</span>
                   <span className="text-muted-foreground w-12 text-center">{row.generic}</span>
                 </div>
               ))}
             </div>
-            <p className="text-[9px] text-muted-foreground mt-2 italic">LLMs hallucinate at granular levels — they're not the right technology for micro-categorization.</p>
+            <p className="text-[10px] text-muted-foreground mt-2 italic">LLMs hallucinate at granular levels — they're not the right technology for micro-categorization.</p>
           </div>
 
-          {/* Build vs buy */}
+          {/* Real-world risk + build vs buy */}
           <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-3">
-            <h3 className="text-[10px] font-bold text-red-400 uppercase tracking-wide mb-2">Build vs Buy</h3>
+            <h3 className="text-xs font-bold text-red-400 uppercase tracking-wide mb-1">The Real-World Risk</h3>
+            <p className="text-xs text-muted-foreground mb-2">Generic AI classifies a repeated bird strike as a one-off wildlife event — missing the cluster pattern that signals a runway hazard trend requiring immediate operational response.</p>
+            <h3 className="text-xs font-bold text-red-400 uppercase tracking-wide mb-1.5">Build vs Buy</h3>
             <div className="space-y-1">
               {buildVsBuy.map((item, i) => (
-                <div key={i} className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
-                  <span className="text-[9px]">{item.icon}</span>
+                <div key={i} className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                  <span className="text-[10px]">{item.icon}</span>
                   {item.item}
                 </div>
               ))}
@@ -89,13 +91,13 @@ const CASlide8VsGenericAI = (props: SlideNarrationProps) => {
           <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-3 flex items-start gap-2">
             <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
             <div>
-              <h3 className="text-[10px] font-bold text-emerald-400 uppercase tracking-wide mb-1">Data Security Guarantee</h3>
-              <p className="text-[9px] text-muted-foreground leading-relaxed">Your data stays yours. Never used to train external models (OpenAI, Microsoft, or any third party). Secure, isolated AI pipeline — customer data visible only to you.</p>
+              <h3 className="text-xs font-bold text-emerald-400 uppercase tracking-wide mb-1">Data Security Guarantee</h3>
+              <p className="text-[10px] text-muted-foreground leading-relaxed">Your data stays yours. Never used to train external models (OpenAI, Microsoft, or any third party). Secure, isolated AI pipeline — customer data visible only to you.</p>
             </div>
           </div>
 
           <div className="bg-primary/10 border border-primary/30 rounded-xl p-2.5 flex-1 flex flex-col justify-center">
-            <p className="text-[10px] font-semibold text-foreground italic leading-relaxed">
+            <p className="text-xs font-semibold text-foreground italic leading-relaxed">
               "Generic AI reads reports. CoAnalyst understands aviation operations."
             </p>
           </div>

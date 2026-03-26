@@ -18,9 +18,9 @@ const rows = [
 ];
 
 const accuracy = [
-  { level: "Level 1 (~50 categories)", co: "~95%", gen: "~90%" },
-  { level: "Level 2–3 (hundreds)", co: "~92%", gen: "~60%" },
-  { level: "Level 4–5 (thousands)", co: "~90%", gen: "30–40%" },
+  { level: "Level 1 — Occurrence Type (~50 categories)", co: "~95%", gen: "~90%" },
+  { level: "Level 2–3 — Event Category → Specific Event (hundreds)", co: "~92%", gen: "~60%" },
+  { level: "Level 4–5 — Detailed Cause → Root Cause (thousands)", co: "~90%", gen: "30–40%" },
 ];
 
 const buildVsBuy = [
@@ -37,11 +37,11 @@ const TechSlide9VsGenericAI = ({ slideNumber, ...narrationProps }: Props) => (
     <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 flex-1 min-h-0">
       <div className="lg:col-span-3 rounded-lg border border-muted/20 bg-card/60 p-2.5 overflow-auto">
         <table className="w-full text-xs">
-          <thead><tr className="border-b border-border"><th className="text-left py-1.5 text-[11px] text-muted-foreground font-medium">Capability</th><th className="text-center py-1.5 text-[11px] text-primary font-bold w-20">CoAnalyst</th><th className="text-center py-1.5 text-[11px] text-muted-foreground w-20">Generative AI</th></tr></thead>
+          <thead><tr className="border-b border-border"><th className="text-left py-1.5 text-xs text-muted-foreground font-medium">Capability</th><th className="text-center py-1.5 text-xs text-primary font-bold w-20">CoAnalyst</th><th className="text-center py-1.5 text-xs text-muted-foreground w-20">Generative AI</th></tr></thead>
           <tbody>
             {rows.map((r, i) => (
               <tr key={i} className="border-b border-border/50">
-                <td className="py-1 text-[11px] text-muted-foreground">{r.cap}</td>
+                <td className="py-1 text-xs text-muted-foreground">{r.cap}</td>
                 <td className="text-center py-1">{r.co ? <Check className="w-3.5 h-3.5 text-emerald-400 mx-auto" /> : <X className="w-3.5 h-3.5 text-red-400 mx-auto" />}</td>
                 <td className="text-center py-1">{r.gen ? <Check className="w-3.5 h-3.5 text-emerald-400 mx-auto" /> : <X className="w-3.5 h-3.5 text-red-400 mx-auto" />}</td>
               </tr>
@@ -51,19 +51,21 @@ const TechSlide9VsGenericAI = ({ slideNumber, ...narrationProps }: Props) => (
       </div>
       <div className="lg:col-span-2 flex flex-col gap-1.5">
         <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-2.5">
-          <h3 className="text-[11px] font-bold text-amber-400 uppercase tracking-wide mb-2">Accuracy by Depth</h3>
+          <h3 className="text-xs font-bold text-amber-400 uppercase tracking-wide mb-2">Accuracy by Taxonomy Depth</h3>
           {accuracy.map((a, i) => (
-            <div key={i} className="flex items-center gap-2 text-[11px] mb-1">
+            <div key={i} className="flex items-center gap-2 text-xs mb-1.5">
               <span className="text-muted-foreground flex-1">{a.level}</span>
               <span className="text-primary font-bold w-12 text-center">{a.co}</span>
               <span className="text-muted-foreground w-12 text-center">{a.gen}</span>
             </div>
           ))}
-          <p className="text-[10px] text-muted-foreground mt-2 italic">Generative AI hallucinates at granular levels — wrong technology for micro-categorization.</p>
+          <p className="text-[11px] text-muted-foreground mt-2 italic">Generative AI hallucinates at granular levels — wrong technology for micro-categorization.</p>
         </div>
         <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-2.5">
-          <h3 className="text-[11px] font-bold text-red-400 uppercase tracking-wide mb-2">Build vs Buy</h3>
-          {buildVsBuy.map((b, i) => (<div key={i} className="text-[11px] text-muted-foreground mb-1">• {b}</div>))}
+          <h3 className="text-xs font-bold text-red-400 uppercase tracking-wide mb-2">The Real-World Risk</h3>
+          <p className="text-xs text-muted-foreground mb-2">Generic AI classifies a repeated bird strike as a one-off wildlife event — missing the cluster pattern that signals a runway hazard trend requiring immediate operational response.</p>
+          <h3 className="text-xs font-bold text-red-400 uppercase tracking-wide mb-1.5 mt-2">Build vs Buy</h3>
+          {buildVsBuy.map((b, i) => (<div key={i} className="text-xs text-muted-foreground mb-1">• {b}</div>))}
         </div>
         <div className="rounded-lg border border-primary/30 bg-primary/10 p-2.5 flex flex-col justify-center">
           <p className="text-xs font-semibold text-foreground italic">"Generative AI reads reports. CoAnalyst understands aviation operations."</p>
