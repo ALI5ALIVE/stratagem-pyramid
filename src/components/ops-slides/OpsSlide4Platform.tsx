@@ -10,7 +10,7 @@ interface OpsSlide4PlatformProps extends SlideNarrationProps {
 const modules = [
   {
     icon: Shield,
-    name: "Safety Manager365",
+    name: "SafetyManager365",
     color: "text-red-400",
     bgColor: "bg-red-500/10 border-red-500/20",
     capabilities: [
@@ -23,7 +23,7 @@ const modules = [
   },
   {
     icon: FileText,
-    name: "Content Manager365 + CoAuthor",
+    name: "ContentManager365 + CoAuthor",
     color: "text-blue-400",
     bgColor: "bg-blue-500/10 border-blue-500/20",
     capabilities: [
@@ -36,7 +36,7 @@ const modules = [
   },
   {
     icon: GraduationCap,
-    name: "Training Manager365 + CoTrainer",
+    name: "TrainingManager365 + CoTrainer",
     color: "text-emerald-400",
     bgColor: "bg-emerald-500/10 border-emerald-500/20",
     capabilities: [
@@ -53,7 +53,7 @@ const OpsSlide4Platform = ({ slideNumber, ...narrationProps }: OpsSlide4Platform
   return (
     <SalesSlideContainer
       id="ops-slide-4"
-      title="The Operational Performance Platform"
+      title="The Comply365 Operational Performance Platform"
       subtitle="Three connected applications powering the DTOP operating model"
       slideNumber={slideNumber}
       {...narrationProps}
@@ -72,9 +72,9 @@ const OpsSlide4Platform = ({ slideNumber, ...narrationProps }: OpsSlide4Platform
               <Brain className="w-6 h-6" />
             </div>
             <div className="flex-1">
-              <h3 className="text-base font-semibold text-primary">CoAnalyst — Intelligence Layer</h3>
+              <h3 className="text-base font-semibold text-primary">The Intelligence Layer — CoAnalyst — CoAuthor — CoTrainer</h3>
               <p className="text-xs text-muted-foreground mt-1">
-                The key that unlocks data intelligence across your operation. CoAnalyst activates the data held within Safety, Content, and Training Manager — surfacing patterns, predicting risks, and driving closed-loop corrective action.
+                Embedding intelligence across the platform to move from reactive compliance to predictive insights, from managing documents and processes to anticipating issues before they escalate. Empowering better decision-making, strengthened operational resilience, and enhanced safety at scale.
               </p>
             </div>
           </div>

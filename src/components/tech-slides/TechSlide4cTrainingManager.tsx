@@ -21,7 +21,7 @@ const dataFlow = [
 ];
 
 const TechSlide4cTrainingManager = ({ slideNumber, ...narrationProps }: Props) => (
-  <SalesSlideContainer id="tech-slide-4c" title="Training Manager 365" subtitle="From compliance checklists to competency-driven workforce readiness" slideNumber={slideNumber} {...narrationProps}>
+  <SalesSlideContainer id="tech-slide-4c" title="TrainingManager365 + CoTrainer" subtitle="Higher-quality training with less effort — from compliance checklists to competency-driven workforce readiness" slideNumber={slideNumber} {...narrationProps}>
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-0">
       <div className="flex flex-col gap-3 justify-center">
         <h3 className="text-sm font-semibold uppercase tracking-wider text-emerald-400 mb-1">Core Capabilities</h3>
@@ -37,7 +37,6 @@ const TechSlide4cTrainingManager = ({ slideNumber, ...narrationProps }: Props) =
           ))}
         </div>
       </div>
-
       <div className="flex flex-col justify-center">
         <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-5">
           <div className="flex items-center gap-3 mb-4">

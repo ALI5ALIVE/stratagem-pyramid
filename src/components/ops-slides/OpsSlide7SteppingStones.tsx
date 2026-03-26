@@ -10,42 +10,45 @@ const phases = [
   {
     icon: Zap,
     year: "Phase 1",
-    title: "Quick Wins",
+    title: "Platform Foundations to Unlock Future Value",
     color: "text-sky-400",
     border: "border-sky-400/30",
     bg: "bg-sky-400/10",
     capabilities: [
-      "Hard landing → retraining pipeline",
-      "Regulatory change → cascade updates",
-      "Safety report auto-categorisation",
+      "Unified UX across all solutions",
+      "API-first architecture for integrations",
+      "Safety reporting within ContentManager365",
+      "AI investment across CoAnalyst, CoAuthor & CoTrainer",
+      "Platform PoCs with early adopter airlines",
     ],
-    outcome: "Immediate ROI from connected use cases",
+    outcome: "Laying the connected foundation",
   },
   {
     icon: GitBranch,
     year: "Phase 2",
-    title: "Connected Operations",
+    title: "Connected Intelligence & Workflow Orchestration",
     color: "text-purple-400",
     border: "border-purple-400/30",
     bg: "bg-purple-400/10",
     capabilities: [
-      "Cross-department workflow orchestration",
-      "Integrated compliance evidence",
-      "Trend analysis across all signal types",
+      "End-to-end workflows across Safety, Content & Training",
+      "Cross-domain visibility and operational dashboards",
+      "Automated triggers and response orchestration",
+      "CoAnalyst as the intelligence layer across all modules",
     ],
     outcome: "Operational silos eliminated",
   },
   {
     icon: Brain,
     year: "Phase 3",
-    title: "Intelligent Operations",
+    title: "Fully Connected & Intelligent Operations",
     color: "text-emerald-400",
     border: "border-emerald-400/30",
     bg: "bg-emerald-400/10",
     capabilities: [
-      "Predictive risk modelling",
-      "Proactive hazard prevention",
-      "Autonomous compliance management",
+      "Predictive risk modelling across the operation",
+      "Automated continuous improvement loops",
+      "Closed-loop system: detect → respond → prove → improve",
     ],
     outcome: "From reactive to predictive operations",
   },
@@ -55,8 +58,8 @@ const OpsSlide7SteppingStones = ({ slideNumber, ...narrationProps }: OpsSlide7Pr
   return (
     <SalesSlideContainer
       id="ops-slide-7"
-      title="The Journey"
-      subtitle="From quick wins to platform value"
+      title="The Customer Journey"
+      subtitle="A Phased Platform Value Realization Roadmap"
       slideNumber={slideNumber}
       {...narrationProps}
     >
@@ -72,7 +75,7 @@ const OpsSlide7SteppingStones = ({ slideNumber, ...narrationProps }: OpsSlide7Pr
                 </div>
                 <div>
                   <span className={`text-xs font-bold uppercase tracking-wider ${phase.color}`}>{phase.year}</span>
-                  <h3 className="text-lg font-bold text-foreground">{phase.title}</h3>
+                  <h3 className="text-base font-bold text-foreground">{phase.title}</h3>
                 </div>
               </div>
 

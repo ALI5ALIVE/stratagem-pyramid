@@ -7,6 +7,7 @@ import OpsSlide0Title from "@/components/ops-slides/OpsSlide0Title";
 import OpsSlide1DailyReality from "@/components/ops-slides/OpsSlide1DailyReality";
 import OpsSlide2CostOfFragmentation from "@/components/ops-slides/OpsSlide2CostOfFragmentation";
 import OpsSlide3BeforeAfter from "@/components/ops-slides/OpsSlide3BeforeAfter";
+import OpsSlide4Platform from "@/components/ops-slides/OpsSlide4Platform";
 import OpsSlide4DTOP from "@/components/ops-slides/OpsSlide4DTOP";
 import OpsSlide5Intelligence from "@/components/ops-slides/OpsSlide5Intelligence";
 
@@ -21,6 +22,7 @@ const slides = [
   { id: "ops-slide-1", label: "Your Daily Reality", component: OpsSlide1DailyReality },
   { id: "ops-slide-2", label: "Cost of Fragmentation", component: OpsSlide2CostOfFragmentation },
   { id: "ops-slide-3", label: "Before & After", component: OpsSlide3BeforeAfter },
+  { id: "ops-slide-3b", label: "The Platform", component: OpsSlide4Platform },
   { id: "ops-slide-4", label: "DTOP + Platform", component: OpsSlide4DTOP },
   { id: "ops-slide-5", label: "Intelligence Layer — CoAnalyst", component: OpsSlide5Intelligence },
   

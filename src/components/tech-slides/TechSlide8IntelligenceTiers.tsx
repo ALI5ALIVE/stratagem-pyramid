@@ -25,9 +25,9 @@ const rows = [
 ];
 
 const accuracy = [
-  { level: "Level 1 (~50 categories)", co: "~95%", gen: "~90%" },
-  { level: "Level 2–3 (hundreds)", co: "~92%", gen: "~60%" },
-  { level: "Level 4–5 (thousands)", co: "~90%", gen: "30–40%" },
+  { level: "Level 1 — Occurrence Type (~50 categories)", co: "~95%", gen: "~90%" },
+  { level: "Level 2–3 — Event Category → Specific Event (hundreds)", co: "~92%", gen: "~60%" },
+  { level: "Level 4–5 — Detailed Cause → Root Cause (thousands)", co: "~90%", gen: "30–40%" },
 ];
 
 const TechSlide8IntelligenceTiers = ({ slideNumber, ...narrationProps }: Props) => (
@@ -39,15 +39,15 @@ const TechSlide8IntelligenceTiers = ({ slideNumber, ...narrationProps }: Props) 
           <table className="w-full text-xs">
             <thead>
               <tr className="border-b border-border">
-                <th className="text-left py-1 text-[10px] text-muted-foreground font-medium">Capability</th>
-                <th className="text-center py-1 text-[10px] text-primary font-bold w-16">CoAnalyst</th>
-                <th className="text-center py-1 text-[10px] text-muted-foreground w-16">Generative</th>
+                <th className="text-left py-1 text-xs text-muted-foreground font-medium">Capability</th>
+                <th className="text-center py-1 text-xs text-primary font-bold w-16">CoAnalyst</th>
+                <th className="text-center py-1 text-xs text-muted-foreground w-16">Generative</th>
               </tr>
             </thead>
             <tbody>
               {rows.map((r, i) => (
                 <tr key={i} className="border-b border-border/50">
-                  <td className="py-0.5 text-[10px] text-muted-foreground">{r.cap}</td>
+                  <td className="py-0.5 text-xs text-muted-foreground">{r.cap}</td>
                   <td className="text-center py-0.5">{r.co ? <Check className="w-3 h-3 text-emerald-400 mx-auto" /> : <X className="w-3 h-3 text-red-400 mx-auto" />}</td>
                   <td className="text-center py-0.5">{r.gen ? <Check className="w-3 h-3 text-emerald-400 mx-auto" /> : <X className="w-3 h-3 text-red-400 mx-auto" />}</td>
                 </tr>
@@ -56,16 +56,22 @@ const TechSlide8IntelligenceTiers = ({ slideNumber, ...narrationProps }: Props) 
           </table>
         </div>
 
-        <div className="lg:col-span-2 rounded-lg border border-amber-500/30 bg-amber-500/10 p-2 flex flex-col justify-center">
-          <h3 className="text-[10px] font-bold text-amber-400 uppercase tracking-wide mb-1.5">Accuracy by Depth</h3>
-          {accuracy.map((a, i) => (
-            <div key={i} className="flex items-center gap-2 text-[10px] mb-0.5">
-              <span className="text-muted-foreground flex-1">{a.level}</span>
-              <span className="text-primary font-bold w-10 text-center">{a.co}</span>
-              <span className="text-muted-foreground w-10 text-center">{a.gen}</span>
-            </div>
-          ))}
-          <p className="text-[9px] text-muted-foreground mt-1.5 italic">Generative AI hallucinates at granular levels — wrong technology for micro-categorization.</p>
+        <div className="lg:col-span-2 flex flex-col gap-1.5">
+          <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-2 flex flex-col justify-center">
+            <h3 className="text-xs font-bold text-amber-400 uppercase tracking-wide mb-1.5">Accuracy by Taxonomy Depth</h3>
+            {accuracy.map((a, i) => (
+              <div key={i} className="flex items-center gap-2 text-xs mb-1">
+                <span className="text-muted-foreground flex-1">{a.level}</span>
+                <span className="text-primary font-bold w-10 text-center">{a.co}</span>
+                <span className="text-muted-foreground w-10 text-center">{a.gen}</span>
+              </div>
+            ))}
+            <p className="text-[10px] text-muted-foreground mt-1.5 italic">Generative AI hallucinates at granular levels — wrong technology for micro-categorization.</p>
+          </div>
+          <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-2">
+            <h3 className="text-xs font-bold text-red-400 uppercase tracking-wide mb-1">The Real-World Risk</h3>
+            <p className="text-xs text-muted-foreground">Generic AI classifies a repeated bird strike as a one-off wildlife event — missing the cluster pattern that signals a runway hazard trend.</p>
+          </div>
         </div>
       </div>
 
@@ -78,7 +84,7 @@ const TechSlide8IntelligenceTiers = ({ slideNumber, ...narrationProps }: Props) 
               <h3 className={`text-sm font-bold ${t.color}`}>{t.tier}</h3>
             </div>
             <p className="text-xs text-muted-foreground mb-2 flex-1">{t.desc}</p>
-            <p className="text-[10px] text-muted-foreground/60 pt-1.5 border-t border-muted/10">{t.capability}</p>
+            <p className="text-[11px] text-muted-foreground/60 pt-1.5 border-t border-muted/10">{t.capability}</p>
           </div>
         ))}
       </div>

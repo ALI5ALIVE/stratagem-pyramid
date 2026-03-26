@@ -26,7 +26,7 @@ const ExecSlide4Intelligence = ({
   return (
     <SalesSlideContainer
       id="exec-slide-5"
-      title="The Intelligence Layer"
+      title="The Intelligence Layer — CoAnalyst — CoAuthor — CoTrainer"
       subtitle="Connecting Safety, Content & Training unlocks intelligence that generative AI can't replicate."
       slideNumber={slideNumber}
       isPlaying={isPlaying}

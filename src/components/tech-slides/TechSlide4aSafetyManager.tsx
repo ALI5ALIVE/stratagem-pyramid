@@ -21,9 +21,8 @@ const dataFlow = [
 ];
 
 const TechSlide4aSafetyManager = ({ slideNumber, ...narrationProps }: Props) => (
-  <SalesSlideContainer id="tech-slide-4a" title="Safety Manager 365" subtitle="From reactive reporting to predictive safety intelligence" slideNumber={slideNumber} {...narrationProps}>
+  <SalesSlideContainer id="tech-slide-4a" title="SafetyManager365" subtitle="Advanced Safety, Quality, and Risk Management — from reactive reporting to predictive safety intelligence" slideNumber={slideNumber} {...narrationProps}>
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-0">
-      {/* Capabilities */}
       <div className="flex flex-col gap-3 justify-center">
         <h3 className="text-sm font-semibold uppercase tracking-wider text-red-400 mb-1">Core Capabilities</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -38,8 +37,6 @@ const TechSlide4aSafetyManager = ({ slideNumber, ...narrationProps }: Props) => 
           ))}
         </div>
       </div>
-
-      {/* CoAnalyst Activation */}
       <div className="flex flex-col justify-center">
         <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-5">
           <div className="flex items-center gap-3 mb-4">
