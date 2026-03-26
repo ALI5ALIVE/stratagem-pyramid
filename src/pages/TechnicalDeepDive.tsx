@@ -40,7 +40,8 @@ const slides = [
   { id: "tech-slide-8", label: "Intelligence Tiers", component: TechSlide8IntelligenceTiers },
   
   { id: "tech-slide-5", label: "DTOP Operating Model", component: TechSlide5DTOP },
-  
+  { id: "tech-slide-6", label: "Platform Integrations", component: TechSlide6PlatformIntegrations },
+
   { id: "tech-slide-10", label: "Safety Use Cases", component: TechSlide10SafetyUseCases },
   { id: "tech-slide-11", label: "Ops Use Cases", component: TechSlide11OpsUseCases },
   { id: "tech-slide-12", label: "Financial Use Cases", component: TechSlide12FinancialUseCases },
