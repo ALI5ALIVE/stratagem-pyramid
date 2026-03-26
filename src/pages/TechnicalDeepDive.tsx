@@ -26,6 +26,7 @@ import TechSlide15Roadmap2026 from "@/components/tech-slides/TechSlide15Roadmap2
 import TechSlide16Outcomes from "@/components/tech-slides/TechSlide16Outcomes";
 import TechSlide17WhyUs from "@/components/tech-slides/TechSlide17WhyUs";
 import TechSlide18Partnership from "@/components/tech-slides/TechSlide18Partnership";
+import CustomerOutcomesSlide from "@/components/shared/CustomerOutcomesSlide";
 
 const slides = [
   { id: "tech-slide-0", label: "Title", component: TechSlide0Title },
@@ -49,6 +50,7 @@ const slides = [
   { id: "tech-slide-13", label: "Line of Sight", component: TechSlide13LineOfSight },
   { id: "tech-slide-14", label: "Maturity Roadmap", component: TechSlide14MaturityRoadmap },
   { id: "tech-slide-16", label: "Outcomes", component: TechSlide16Outcomes },
+  { id: "tech-slide-16b", label: "Customer Outcomes", component: CustomerOutcomesSlide },
   { id: "tech-slide-17", label: "Why Comply365", component: TechSlide17WhyUs },
   { id: "tech-slide-18", label: "Partnership", component: TechSlide18Partnership },
 ];
