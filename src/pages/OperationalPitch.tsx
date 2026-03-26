@@ -22,6 +22,7 @@ const slides = [
   { id: "ops-slide-1", label: "Your Daily Reality", component: OpsSlide1DailyReality },
   { id: "ops-slide-2", label: "Cost of Fragmentation", component: OpsSlide2CostOfFragmentation },
   { id: "ops-slide-3", label: "Before & After", component: OpsSlide3BeforeAfter },
+  { id: "ops-slide-3b", label: "The Platform", component: OpsSlide4Platform },
   { id: "ops-slide-4", label: "DTOP + Platform", component: OpsSlide4DTOP },
   { id: "ops-slide-5", label: "Intelligence Layer — CoAnalyst", component: OpsSlide5Intelligence },
   
