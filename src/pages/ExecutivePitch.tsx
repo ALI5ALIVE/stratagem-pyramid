@@ -11,6 +11,7 @@ import ExecSlide4DTOP from "@/components/exec-slides/ExecSlide3DTOP";
 import ExecSlide5Intelligence from "@/components/exec-slides/ExecSlide4Intelligence";
 import ExecSlide6Value from "@/components/exec-slides/ExecSlide5Value";
 import ExecSlide7WhyUs from "@/components/exec-slides/ExecSlide6WhyUs";
+import CustomerOutcomesSlide from "@/components/shared/CustomerOutcomesSlide";
 
 const slides = [
   { id: "exec-slide-0", label: "Title", component: ExecSlide0Title },
@@ -20,6 +21,7 @@ const slides = [
   { id: "exec-slide-4", label: "The New Operating Model", component: ExecSlide4DTOP },
   { id: "exec-slide-5", label: "Intelligence Layer", component: ExecSlide5Intelligence },
   { id: "exec-slide-6", label: "Line of Sight", component: ExecSlide6Value },
+  { id: "exec-slide-6b", label: "Customer Outcomes", component: CustomerOutcomesSlide },
   { id: "exec-slide-7", label: "Why Comply365", component: ExecSlide7WhyUs },
 ];
 
