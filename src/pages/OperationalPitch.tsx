@@ -13,7 +13,7 @@ import OpsSlide5Intelligence from "@/components/ops-slides/OpsSlide5Intelligence
 
 import OpsSlide7SteppingStones from "@/components/ops-slides/OpsSlide7SteppingStones";
 import OpsSlide8MaturityRoadmap from "@/components/ops-slides/OpsSlide8MaturityRoadmap";
-import OpsSlide9Outcomes from "@/components/ops-slides/OpsSlide9Outcomes";
+
 import OpsSlide10WhyUs from "@/components/ops-slides/OpsSlide10WhyUs";
 import OpsSlide11GettingStarted from "@/components/ops-slides/OpsSlide11GettingStarted";
 import CustomerOutcomesSlide from "@/components/shared/CustomerOutcomesSlide";
@@ -29,7 +29,7 @@ const slides = [
   
   { id: "ops-slide-7", label: "Stepping Stones", component: OpsSlide7SteppingStones },
   { id: "ops-slide-8", label: "Maturity Roadmap", component: OpsSlide8MaturityRoadmap },
-  { id: "ops-slide-9", label: "Outcomes", component: OpsSlide9Outcomes },
+  
   { id: "ops-slide-9b", label: "Customer Outcomes", component: CustomerOutcomesSlide },
   { id: "ops-slide-10", label: "Why Comply365", component: OpsSlide10WhyUs },
   { id: "ops-slide-11", label: "Getting Started", component: OpsSlide11GettingStarted },
