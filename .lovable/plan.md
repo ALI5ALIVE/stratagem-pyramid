@@ -1,32 +1,18 @@
 
 
-# Add "What This Means for Customers" Slide to All Pitch Decks
+# Remove "Operational Outcomes" Slides from Ops and Tech Decks
 
-## Approach
-
-Create a new shared component that repackages the existing `Slide7Customers` content using `PitchSlideContainer` (the wrapper used by all pitch decks), then insert it into the Executive, Operational, and Technical decks.
+The Executive deck doesn't have a separate Outcomes slide — only the Ops and Tech decks do. Both already have the "Customer Outcomes" slide which covers the same ground.
 
 ## Changes
 
-### 1. New file: `src/components/shared/CustomerOutcomesSlide.tsx`
-- Copy the content (value outcomes grid, cost-center-to-revenue progression, benchmarking callout) from `Slide7Customers.tsx`
-- Use `PitchSlideContainer` instead of `SlideContainer`
-- Accept `id` and `slideNumber` as props so each deck can assign its own slide ID
+### 1. `src/pages/OperationalPitch.tsx`
+- Remove the import of `OpsSlide9Outcomes` (line 16)
+- Remove `{ id: "ops-slide-9", label: "Outcomes", component: OpsSlide9Outcomes }` from the slides array (line 32)
 
-### 2. `src/pages/ExecutivePitch.tsx`
-- Import `CustomerOutcomesSlide`
-- Insert as a new slide entry before "Why Comply365" (after "Line of Sight"):
-  `{ id: "exec-slide-6b", label: "Customer Outcomes", component: CustomerOutcomesSlide }`
+### 2. `src/pages/TechnicalDeepDive.tsx`
+- Remove the import of `TechSlide16Outcomes` (line 26)
+- Remove `{ id: "tech-slide-16", label: "Outcomes", component: TechSlide16Outcomes }` from the slides array (line 52)
 
-### 3. `src/pages/OperationalPitch.tsx`
-- Import `CustomerOutcomesSlide`
-- Insert before "Why Comply365" (after "Outcomes"):
-  `{ id: "ops-slide-9b", label: "Customer Outcomes", component: CustomerOutcomesSlide }`
-
-### 4. `src/pages/TechnicalDeepDive.tsx`
-- Import `CustomerOutcomesSlide`
-- Insert before "Why Comply365" (after "Outcomes"):
-  `{ id: "tech-slide-16b", label: "Customer Outcomes", component: CustomerOutcomesSlide }`
-
-**4 files: 1 new, 3 modified. No routing changes.**
+**2 files modified. No new files. The component files themselves (`OpsSlide9Outcomes.tsx`, `TechSlide16Outcomes.tsx`) are left in place as dead code — can be deleted in a cleanup pass if desired.**
 
