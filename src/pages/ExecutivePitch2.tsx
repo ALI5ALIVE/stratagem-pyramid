@@ -4,7 +4,7 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { useExecPitchNarration } from "@/hooks/useExecPitchNarration";
 
 import ExecSlide0Title from "@/components/exec-slides/ExecSlide0Title";
-import Slide1StrategicShift from "@/components/slides/Slide1StrategicShift";
+import Exec2Slide1Before from "@/components/exec2-slides/Exec2Slide1Before";
 import Exec2Slide2After from "@/components/exec2-slides/Exec2Slide2After";
 import Slide3OperatingModel from "@/components/slides/Slide3OperatingModel";
 import ExecSlide3Platform from "@/components/exec-slides/ExecSlide3Platform";
@@ -17,7 +17,7 @@ import CustomerOutcomesSlide from "@/components/shared/CustomerOutcomesSlide";
 
 const slides = [
   { id: "exec2-slide-0", label: "Title", component: ExecSlide0Title },
-  { id: "exec2-slide-1", label: "The Strategic Shift", component: Slide1StrategicShift },
+  { id: "exec2-slide-1", label: "Before", component: Exec2Slide1Before },
   { id: "exec2-slide-2", label: "The After", component: Exec2Slide2After },
   { id: "exec2-slide-3", label: "DTOP Operating Model", component: Slide3OperatingModel },
   { id: "exec2-slide-4", label: "The Platform", component: ExecSlide3Platform },
