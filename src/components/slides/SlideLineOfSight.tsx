@@ -102,7 +102,7 @@ const SlideLineOfSight = ({
   narration,
 }: SlideLineOfSightProps) => {
   const [expandedUseCase, setExpandedUseCase] = useState<string | null>(null);
-  const [profileOpen, setProfileOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(true);
   const [calculatorMode, setCalculatorMode] = useState<"simple" | "advanced">("simple");
 
   const visibleUseCases = calculatorMode === "simple"
