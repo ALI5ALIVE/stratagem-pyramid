@@ -1,30 +1,28 @@
 
 
-# Split Strategic Shift into Before & After Slides
+# Make DTOP Steps Stand Out on "The Operational Intelligence Layer" Slide
 
-## What's Changing
-
-Replace the current `Slide1StrategicShift` (slide 1) with the "Before" half of the Strategy deck's `Slide2BeforeAfter`, and enhance the existing `Exec2Slide2After` (slide 2) with the "After" visual from the same source. This gives two focused slides matching the PDF direction.
+## Problem
+The Detect / Trigger / Orchestrate / Prove step cards in `Slide3OperatingModel` are too small and muted — they don't visually stand out on the slide, especially at the current viewport size.
 
 ## Changes
 
-### 1. New: `src/components/exec2-slides/Exec2Slide1Before.tsx`
-- Title: "The Strategic Shift" / subtitle: "Before — The operational reality we're transforming"
-- Content extracted from the left half of `Slide2BeforeAfter`:
-  - "The operational gap point tools can't close" header with 3 bullet points (from PDF: scattered signals, no automated trigger, manual coordination)
-  - SVG fragmentation visual (3 disconnected silos: Safety 12K scattered, Content 8K orphaned, Training 45K manual)
-  - 4 bullet points (disconnected, manual investigations, training not tied, evidence assembled late)
-  - "DATA LOCKED — 65K+ data points managed manually" callout
-- Uses `SalesSlideContainer` wrapper for pitch deck consistency
+### `src/components/slides/Slide3OperatingModel.tsx`
 
-### 2. Modified: `src/components/exec2-slides/Exec2Slide2After.tsx`
-- Add the "After" connected circles SVG visual (from right half of `Slide2BeforeAfter`) above the existing DTOP pipeline
-- Shows 3 connected circles (Safety, Content, Training) with flow paths and "65K+ Connected" badge
-- Keep existing category definition, DTOP steps, and illustrative outcomes below
+**Step cards (lines ~183-230)** — increase visual weight:
+- Increase padding from `p-2` to `p-3`
+- Increase icon container from `w-6 h-6` to `w-8 h-8`, icon from `w-3 h-3` to `w-4 h-4`
+- Increase label from `text-xs` to `text-sm`
+- Increase metric value from `text-sm` to `text-lg`
+- Make step cards always show their color styling (not just when active) — set default state to use each step's own `bgColor` and `borderColor` instead of the current grey `bg-card/30 border-border`
+- Increase step number badge from `w-5 h-5 text-[10px]` to `w-6 h-6 text-xs`
+- Add a subtle shadow to each card: `shadow-md`
 
-### 3. Modified: `src/pages/ExecutivePitch2.tsx`
-- Replace `Slide1StrategicShift` import with `Exec2Slide1Before`
-- Update slides array entry at index 1: `{ id: "exec2-slide-1", label: "Before", component: Exec2Slide1Before }`
+**Description text** — bump from `text-[10px]` to `text-xs` and always show as `text-foreground` (not muted when inactive)
 
-**1 new file, 2 modified files.**
+**Metric** — always show at full opacity instead of `opacity-50` when inactive
+
+This makes the DTOP pipeline the dominant visual element on the slide without changing content or layout structure.
+
+**1 file modified.**
 
