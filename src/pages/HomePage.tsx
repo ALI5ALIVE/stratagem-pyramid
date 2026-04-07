@@ -25,6 +25,14 @@ const pitchDecks: DeckCard[] = [
     accent: "from-primary to-accent",
   },
   {
+    title: "Executive Pitch 2",
+    description: "Strategic Before & After narrative. From fragmentation to intelligent operations.",
+    href: "/pitch-executive-2",
+    icon: Rocket,
+    badge: "11 slides",
+    accent: "from-accent to-comply-plum",
+  },
+  {
     title: "Operational Pitch",
     description: "VP Ops & Safety workflow depth. Daily pain to 90-day pilot.",
     href: "/pitch-operational",
