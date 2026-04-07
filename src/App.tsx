@@ -17,6 +17,7 @@ import ValueDeck from "./pages/ValueDeck";
 import ContentStrategyPage from "./pages/ContentStrategyPage";
 import CoAnalystDeck from "./pages/CoAnalystDeck";
 import ExecutivePitch from "./pages/ExecutivePitch";
+import ExecutivePitch2 from "./pages/ExecutivePitch2";
 import OperationalPitch from "./pages/OperationalPitch";
 import TechnicalDeepDive from "./pages/TechnicalDeepDive";
 
@@ -38,6 +39,7 @@ const App = () => (
             <Route path="/content-strategy" element={<ContentStrategyPage />} />
             <Route path="/coanalyst" element={<CoAnalystDeck />} />
             <Route path="/pitch-executive" element={<ExecutivePitch />} />
+            <Route path="/pitch-executive-2" element={<ExecutivePitch2 />} />
             <Route path="/pitch-operational" element={<OperationalPitch />} />
             <Route path="/pitch-technical" element={<TechnicalDeepDive />} />
             
