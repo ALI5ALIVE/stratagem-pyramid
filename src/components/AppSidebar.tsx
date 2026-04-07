@@ -19,9 +19,9 @@ import {
 
 const pitchItems = [
   { title: "Executive Pitch", url: "/pitch-executive", icon: Rocket },
+  { title: "Executive Pitch 2", url: "/pitch-executive-2", icon: Rocket },
   { title: "Operational Pitch", url: "/pitch-operational", icon: Briefcase },
   { title: "Technical Deep-Dive", url: "/pitch-technical", icon: BookOpen },
-  
 ];
 
 const strategyItems = [
