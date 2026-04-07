@@ -44,32 +44,6 @@ interface UseCase {
 
 const useCases: UseCase[] = [
   {
-    id: "pilot-training",
-    title: "Personalized Pilot Training",
-    icon: Plane,
-    iconColor: "hsl(199 89% 48%)",
-    signal: {
-      label: "Hard Landing Trend",
-      description: "FOQA data shows elevated hard landing rates for specific pilots at particular airports",
-      source: "Flight Operations Quality Assurance",
-    },
-    action: {
-      label: "AI Pattern Detection",
-      description: "Platform identifies pilot-airport correlation, cross-references with training records and weather patterns",
-      trigger: "Automated retraining trigger generated",
-    },
-    orchestrate: {
-      label: "Training Deployment",
-      description: "Personalized competency module created, assigned to affected pilots with completion deadline",
-      deliverable: "47 pilots enrolled in targeted program",
-    },
-    outcome: {
-      label: "Targeted Retraining",
-      description: "Affected pilots receive personalized competency improvement — not generic refresher courses",
-      metric: "78% reduction in repeat events",
-    },
-  },
-  {
     id: "smoke-fumes",
     title: "Smoke & Fumes Detection",
     icon: Wind,
@@ -121,6 +95,32 @@ const useCases: UseCase[] = [
       metric: "100% incident prevention",
     },
   },
+  {
+    id: "pilot-training",
+    title: "Personalized Pilot Training",
+    icon: Plane,
+    iconColor: "hsl(199 89% 48%)",
+    signal: {
+      label: "Hard Landing Trend",
+      description: "FOQA data shows elevated hard landing rates for specific pilots at particular airports",
+      source: "Flight Operations Quality Assurance",
+    },
+    action: {
+      label: "AI Pattern Detection",
+      description: "Platform identifies pilot-airport correlation, cross-references with training records and weather patterns",
+      trigger: "Automated retraining trigger generated",
+    },
+    orchestrate: {
+      label: "Training Deployment",
+      description: "Personalized competency module created, assigned to affected pilots with completion deadline",
+      deliverable: "47 pilots enrolled in targeted program",
+    },
+    outcome: {
+      label: "Targeted Retraining",
+      description: "Affected pilots receive personalized competency improvement — not generic refresher courses",
+      metric: "78% reduction in repeat events",
+    },
+  },
 ];
 
 const SlideUseCases = ({
@@ -149,7 +149,7 @@ const SlideUseCases = ({
   return (
     <SlideContainer
       id="slide-use-cases"
-      title="Use Cases in Action"
+      title="The Platform Use Cases in Action"
       subtitle="Real-world examples of the DTOP operating model delivering outcomes"
       slideNumber={5}
       isPlaying={isPlaying}
