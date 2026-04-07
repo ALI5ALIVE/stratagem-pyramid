@@ -1,12 +1,15 @@
 
 
-# Add Executive Pitch 2 Card to Home Page
+# Revise "Use Cases in Action" Slide
 
-## Change
+## Changes in `src/components/slides/SlideUseCases.tsx`
 
-**`src/pages/HomePage.tsx`**
-- Add a new entry to the `pitchDecks` array for Executive Pitch 2, positioned after the existing Executive Pitch card
-- Title: "Executive Pitch 2", description referencing the strategic Before/After narrative, href: `/pitch-executive-2`, badge: "11 slides", using the `Rocket` icon with a distinct accent gradient
+1. **Reorder `useCases` array** — move "Personalized Pilot Training" (index 0) to the end, making the order:
+   - Smoke & Fumes Detection
+   - Hydraulic Switch Error
+   - Personalized Pilot Training
+
+2. **Update title** — change from `"Use Cases in Action"` to `"The Platform Use Cases in Action"` in the `SlideContainer` `title` prop.
 
 **1 file modified.**
 
