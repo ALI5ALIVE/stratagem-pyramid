@@ -34,7 +34,7 @@ const ExecutivePitch2 = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { register, updateActiveIndex, unregister } = useSlideNavigation();
   const { open, setOpen } = useSidebar();
-  const narration = useExecPitchNarration();
+  const narration = useExecPitch2Narration();
 
   const navigateToSlide = useCallback((index: number) => {
     const container = containerRef.current;
