@@ -183,33 +183,33 @@ const Slide3OperatingModel = ({
                 <button 
                   onClick={() => setActiveStep(index === activeStep ? null : index)}
                   className={`
-                    relative w-full p-2 rounded-lg border transition-all duration-300 text-left
-                    ${isStepActive ? `${step.bgColor} ${step.borderColor}` : 'bg-card/30 border-border hover:border-muted-foreground/50'}
+                    relative w-full p-3 rounded-lg border transition-all duration-300 text-left shadow-md
+                    ${step.bgColor} ${step.borderColor}
                     ${isCurrentStep ? 'ring-2 ring-offset-2 ring-offset-background ring-primary' : ''}
                     ${isNarrationControlled && isCurrentStep ? 'animate-fade-in' : ''}
                   `}
                 >
                   {/* Icon */}
                   <div className={`
-                    w-6 h-6 mx-auto mb-1 rounded-md flex items-center justify-center transition-all duration-300
-                    ${isStepActive ? `${step.bgColor} ${step.borderColor} border` : 'bg-muted/30 border-border border'}
+                    w-8 h-8 mx-auto mb-1 rounded-md flex items-center justify-center transition-all duration-300
+                    ${step.bgColor} ${step.borderColor} border
                   `}>
-                    <Icon className={`w-3 h-3 transition-colors duration-300 ${isStepActive ? step.color : 'text-muted-foreground/50'}`} />
+                    <Icon className={`w-4 h-4 transition-colors duration-300 ${step.color}`} />
                   </div>
 
                   {/* Label */}
-                  <h3 className={`text-xs font-bold text-center mb-0.5 transition-colors duration-300 ${isStepActive ? step.color : 'text-muted-foreground/50'}`}>
+                  <h3 className={`text-sm font-bold text-center mb-0.5 transition-colors duration-300 ${step.color}`}>
                     {step.label}
                   </h3>
 
                   {/* Metric */}
-                  <div className={`text-center mb-0.5 ${isStepActive ? 'opacity-100' : 'opacity-50'}`}>
-                    <span className={`text-sm font-bold ${step.color}`}>{step.metric}</span>
-                    <span className="text-[9px] text-muted-foreground ml-1">{step.metricLabel}</span>
+                  <div className="text-center mb-0.5">
+                    <span className={`text-lg font-bold ${step.color}`}>{step.metric}</span>
+                    <span className="text-[10px] text-muted-foreground ml-1">{step.metricLabel}</span>
                   </div>
 
                   {/* Description */}
-                  <p className={`text-[10px] text-center transition-colors duration-300 ${isStepActive ? 'text-foreground' : 'text-muted-foreground/50'}`}>
+                  <p className="text-xs text-center transition-colors duration-300 text-foreground">
                     {step.description}
                   </p>
 
@@ -222,8 +222,8 @@ const Slide3OperatingModel = ({
 
                   {/* Step number */}
                   <div className={`
-                    absolute -top-1.5 -left-1.5 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold
-                    ${isStepActive ? `${step.bgColor} ${step.color} border ${step.borderColor}` : 'bg-muted text-muted-foreground border border-border'}
+                    absolute -top-1.5 -left-1.5 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold
+                    ${step.bgColor} ${step.color} border ${step.borderColor}
                   `}>
                     {index + 1}
                   </div>
