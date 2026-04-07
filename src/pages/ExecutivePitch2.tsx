@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
-import { useExecPitchNarration } from "@/hooks/useExecPitchNarration";
+import { useExecPitch2Narration } from "@/hooks/useExecPitch2Narration";
 
 import ExecSlide0Title from "@/components/exec-slides/ExecSlide0Title";
 import Exec2Slide1Before from "@/components/exec2-slides/Exec2Slide1Before";
@@ -34,7 +34,7 @@ const ExecutivePitch2 = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { register, updateActiveIndex, unregister } = useSlideNavigation();
   const { open, setOpen } = useSidebar();
-  const narration = useExecPitchNarration();
+  const narration = useExecPitch2Narration();
 
   const navigateToSlide = useCallback((index: number) => {
     const container = containerRef.current;
