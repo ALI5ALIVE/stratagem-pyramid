@@ -224,7 +224,7 @@ const SlideAIVision = ({
 
           {/* CTA — Link to CoAnalyst deck */}
           <Link
-            to="/coanalyst"
+            to="/coanalyst-preview"
             className="block group"
           >
             <div className="bg-gradient-to-r from-primary to-accent rounded-lg p-5 text-center transition-all duration-300 group-hover:shadow-lg group-hover:shadow-primary/25 group-hover:scale-[1.02]">

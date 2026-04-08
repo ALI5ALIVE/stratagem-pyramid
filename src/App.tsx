@@ -20,6 +20,7 @@ import ExecutivePitch from "./pages/ExecutivePitch";
 import ExecutivePitch2 from "./pages/ExecutivePitch2";
 import OperationalPitch from "./pages/OperationalPitch";
 import TechnicalDeepDive from "./pages/TechnicalDeepDive";
+import CoAnalystPreview from "./pages/CoAnalystPreview";
 
 
 const queryClient = new QueryClient();
@@ -42,6 +43,7 @@ const App = () => (
             <Route path="/pitch-executive-2" element={<ExecutivePitch2 />} />
             <Route path="/pitch-operational" element={<OperationalPitch />} />
             <Route path="/pitch-technical" element={<TechnicalDeepDive />} />
+            <Route path="/coanalyst-preview" element={<CoAnalystPreview />} />
             
             <Route path="/homepage-mockup" element={<HomepageMockup />} />
             <Route path="/solutions/airlines" element={<AirlinesPage />} />
