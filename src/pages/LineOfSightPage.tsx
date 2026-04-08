@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
-import { Calculator, GitBranch, LayoutGrid, BarChart3 } from "lucide-react";
+import { Calculator, GitBranch, LayoutGrid, BarChart3, ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 import SlideLineOfSight from "@/components/slides/SlideLineOfSight";
 import LineOfSightTree from "@/components/slides/LineOfSightTree";
 import BalancedScorecard from "@/components/slides/BalancedScorecard";
@@ -80,7 +81,15 @@ const LineOfSightPage = () => {
     <div className="h-screen w-full bg-background text-foreground overflow-hidden flex flex-col">
       {/* View toggle */}
       <div className="sticky top-0 z-20 bg-background/80 backdrop-blur-sm border-b border-border/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex items-center gap-2">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex items-center gap-4">
+          <Link
+            to="/pitch-executive-2"
+            className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            Back to Executive Pitch
+          </Link>
+          <div className="h-4 w-px bg-border/50" />
           <Button
             variant={view === "calculator" ? "default" : "ghost"}
             size="sm"
