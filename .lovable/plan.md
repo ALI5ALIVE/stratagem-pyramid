@@ -1,30 +1,25 @@
 
 
-# Add Back Buttons and Scoped CoAnalyst Sub-Page
+# Add "~2.5M Users" Trust Stat to Executive Pitch Title Slide
 
-## Problem
-1. The CoAnalyst CTA links to the full 15-slide password-protected CoAnalyst deck — user wants it to show only the two relevant slides (Intelligence Tiers + Vs Generic AI) with a back button to Exec Pitch 2.
-2. The Calculator CTA links to the full Line of Sight page with no way to get back to Exec Pitch 2.
+## Summary
+Add a new trust stat "~2.5M Users" between "550+ Airlines" and "6 Continents" on the shared title slide used by both Executive Pitch decks.
 
-## Changes
+## Change
 
-### 1. New page: `src/pages/CoAnalystPreview.tsx`
-A lightweight page at route `/coanalyst-preview` that renders only two slides:
-- `CASlide6HowItWorks` (Intelligence Tiers)
-- `CASlide8VsGenericAI` (Vs Generic AI)
+### `src/components/exec-slides/ExecSlide0Title.tsx`
 
-With a sticky back button at top-left: "← Back to Executive Pitch" linking to `/pitch-executive-2`.
-No password gate. No sidebar navigation. Just the two slides stacked vertically with snap scrolling.
+Update the `trustStats` array (lines 5-9) to insert a new entry:
 
-### 2. `src/App.tsx` — Add route
-- Add `<Route path="/coanalyst-preview" element={<CoAnalystPreview />} />` and the import.
+```
+const trustStats = [
+  { icon: Plane, value: "550+", label: "Airlines Worldwide" },
+  { icon: Users, value: "~2.5M", label: "Users" },
+  { icon: Globe, value: "6", label: "Continents" },
+];
+```
 
-### 3. `src/components/slides/SlideAIVision.tsx` — Update CTA link
-- Change `to="/coanalyst"` → `to="/coanalyst-preview"` on the CTA link.
+The existing `Users` icon import is already present. The third stat ("Global / Aviation & AI Experts") is replaced since we now have a concrete user count which is more compelling for C-suite audiences.
 
-### 4. `src/pages/LineOfSightPage.tsx` — Add back button
-- Add a sticky/fixed back button at the top of the page: "← Back to Executive Pitch" linking to `/pitch-executive-2`.
-- Use `useLocation` or `useSearchParams` to conditionally show the back button only when arriving from a referrer (or always show it since it's useful navigation).
-
-**1 new file, 3 files modified.**
+**1 file modified.**
 
