@@ -4,8 +4,8 @@ import { Plane, Globe, Users } from "lucide-react";
 
 const trustStats = [
   { icon: Plane, value: "550+", label: "Airlines Worldwide" },
+  { icon: Users, value: "~2.5M", label: "Users" },
   { icon: Globe, value: "6", label: "Continents" },
-  { icon: Users, value: "Global", label: "Aviation & AI Experts" },
 ];
 
 interface ExecSlide0TitleProps extends SlideNarrationProps {
