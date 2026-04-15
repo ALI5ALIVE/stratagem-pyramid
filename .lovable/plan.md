@@ -1,47 +1,44 @@
 
 
-# Regulation Management — Messaging & Positioning Playbook Page
+# Convert Regulation Management Playbook to Slide Deck Format
 
 ## Summary
 
-Create a new `/regulation-management` page in the app — a comprehensive, interactive playbook for the Regulation Management solution, structured for the commercial team to reference during sales conversations. Built using the same design patterns as the Persona Deep-Dive hub (cards, accordions, badges, scroll area).
+Rebuild the Regulation Management playbook to match the CoAnalyst playbook format: full-screen snap-scroll slides, password gate, progress bar, slide counter, keyboard navigation, and sidebar slide list integration.
 
-## Content Architecture
+## Approach
 
-Drawn from the PPM document and the transcript with Paul/Kathrina/Alistair/Pete, the page will have these scrollable sections:
+Convert each of the 11 current sections into individual slide components using `SlideContainer`, then wrap them in the same deck shell pattern as `CoAnalystDeck.tsx`.
 
-1. **Solution Overview** — Elevator pitch, three-phase roadmap (POC → Production → Cross-Platform Entity), and the "system of record → system of work" narrative arc
-2. **The Problem Today** — Current state pain points extracted from transcript: legacy infrastructure, 1,400+ regulations managed manually, fragmented tooling (spreadsheets, Access databases, tribal knowledge), no cross-system linkage, reactive-only compliance, BA example of ~1,100 people doing this daily
-3. **Solution Positioning** — Role, audience, problem, unique value, positioning statement. Framing as a managed service + platform capability (not just a "use case" — a self-contained solution, as clarified in the call)
-4. **Value Pillars** (card grid) — Real-Time Compliance Visibility, Connected Cross-System Intelligence, Proactive Change Readiness, AI-Driven Insights & Automation, Future-Proof Scalable Foundation
-5. **How It Works** — Three-layer model: (1) Managed Service — regulation data assurance, (2) Platform Integration — structured data at point of need across CM365/TM365/SM365, (3) Intelligence Layer — CoAnalyst complex queries, scenario planning
-6. **Use Cases & Scenarios** (expandable accordion) — Connected Compliance, Real-Time Readiness, Regulatory Change Management, AI-Driven Insights, Scenario Planning & Future Readiness, Executive-Level Assurance
-7. **Persona Relevance** — Who buys this and why: Procedure Owners / Dept Heads, Auditors, Training Managers, COO/Form 4 Holders, Head of Compliance — with tailored messages per persona
-8. **Commercial Model** — Subscription per regulation, standalone value per solution (SM365/CM365/TM365), cross-sell multiplier, API/data-only option
-9. **Objection Handling** — Key objections from transcript: "Too much effort to migrate", "We're only a small operation", "We just need the data, not the platform", etc. with strategic responses
-10. **Phased Roadmap** — Visual timeline: Phase 1 (Q2 2026 POC), Phase 2 (2027 Production), Phase 3 (2027+ Cross-Platform Entity) with outcomes per phase
-11. **Key Talking Points & Discovery Questions** — Ready-to-use conversation starters and probing questions for sales meetings
+## Slides (11 total)
+
+0. **Title Slide** — "Regulation Management" hero with tagline and scroll prompt
+1. **Solution Overview** — Elevator pitch, narrative arc, key insight
+2. **The Problem Today** — 6 pain point cards in grid
+3. **Solution Positioning** — Role/audience/problem/unique value framework
+4. **Value Pillars** — 5 pillar cards with icons and metrics
+5. **How It Works** — 3-layer delivery model
+6. **Use Cases & Scenarios** — Use case cards (no accordion — content fits slide)
+7. **Persona Relevance** — 5 persona cards with tailored messages
+8. **Commercial Model** — Pricing/packaging cards
+9. **Objection Handling** — Objection/response grid
+10. **Roadmap & Talking Points** — Phased timeline + discovery questions
 
 ## Changes
 
-### 1. New data file: `src/data/regulationManagementPlaybook.ts`
-All structured content for the page — elevator pitch, pain points, value pillars, use cases, persona relevance, objections, roadmap phases, discovery questions. Single source of truth.
+### 1. New slide components: `src/components/regmgmt-slides/`
+Create 11 slide components (RMSlide0Title through RMSlide10Roadmap), each using `SlideContainer` with the existing data from `regulationManagementPlaybook.ts`. Same dense card-based layouts as the CoAnalyst slides.
 
-### 2. New page: `src/pages/RegulationManagementPlaybook.tsx`
-- Scrollable single-page layout with section anchors
-- Uses existing UI primitives: `Card`, `Badge`, `Accordion`, `ScrollArea`
-- Section navigation chips at top for quick jump
-- Dark theme matching existing app aesthetic
-- Back-to-home link
+### 2. Rewrite `src/pages/RegulationManagementPlaybook.tsx`
+Replace the scrollable page with the CoAnalyst deck pattern:
+- Password gate (same password `comply2025`, session key `rm-unlocked`)
+- Full-screen snap-scroll container
+- Progress bar, slide counter, keyboard navigation
+- Sidebar slide list via `useSlideNavigation`
+- No narration (can be added later)
 
-### 3. `src/App.tsx` — Add route
-- `/regulation-management` route
+### 3. No changes to data file
+`src/data/regulationManagementPlaybook.ts` stays as-is — slide components import from it.
 
-### 4. `src/components/AppSidebar.tsx` — Add nav item
-- Add to `toolItems` or create a new "Solutions" nav group
-
-### 5. `src/pages/HomePage.tsx` — Add card
-- Link card in the Tools section
-
-**2 new files, 3 files modified.**
+**11 new files, 1 file modified.**
 
