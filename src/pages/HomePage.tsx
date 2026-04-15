@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { 
   Rocket, Briefcase, BookOpen, 
   Presentation, TrendingUp, Brain, FileText, 
-  ArrowRight, Users
+  ArrowRight, Users, ScrollText
 } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
 
@@ -193,6 +193,14 @@ export default function HomePage() {
               icon: Users,
               badge: "5 personas",
               accent: "from-violet-500 to-cyan-500",
+            }} />
+            <DeckCardComponent card={{
+              title: "Regulation Management",
+              description: "Messaging & positioning playbook for the Regulation Management solution. Pain points, value pillars, objections, and commercial model.",
+              href: "/regulation-management",
+              icon: ScrollText,
+              badge: "Playbook",
+              accent: "from-primary to-comply-teal",
             }} />
           </div>
         </section>

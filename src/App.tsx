@@ -52,6 +52,7 @@ const App = () => (
             <Route path="/solutions/rail" element={<RailPage />} />
             <Route path="/line-of-sight" element={<LineOfSightPage />} />
             <Route path="/personas" element={<PersonaDeepDive />} />
+            <Route path="/regulation-management" element={<RegulationManagementPlaybook />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

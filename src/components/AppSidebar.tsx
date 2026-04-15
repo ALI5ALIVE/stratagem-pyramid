@@ -1,6 +1,6 @@
 import { 
   Presentation, Target, TrendingUp, FileText, Brain, 
-  Rocket, Briefcase, BookOpen, Home, Globe, Users 
+  Rocket, Briefcase, BookOpen, Home, Globe, Users, ScrollText 
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
@@ -34,6 +34,7 @@ const strategyItems = [
 const toolItems = [
   { title: "Line of Sight", url: "/line-of-sight", icon: Target },
   { title: "Persona Profiles", url: "/personas", icon: Users },
+  { title: "Regulation Mgmt", url: "/regulation-management", icon: ScrollText },
   { title: "Homepage Mockup", url: "/homepage-mockup", icon: Globe },
 ];
 
