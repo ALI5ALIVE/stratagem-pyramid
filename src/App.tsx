@@ -21,6 +21,7 @@ import ExecutivePitch2 from "./pages/ExecutivePitch2";
 import OperationalPitch from "./pages/OperationalPitch";
 import TechnicalDeepDive from "./pages/TechnicalDeepDive";
 import CoAnalystPreview from "./pages/CoAnalystPreview";
+import PersonaDeepDive from "./pages/PersonaDeepDive";
 
 
 const queryClient = new QueryClient();
@@ -50,6 +51,7 @@ const App = () => (
             <Route path="/solutions/defense" element={<DefensePage />} />
             <Route path="/solutions/rail" element={<RailPage />} />
             <Route path="/line-of-sight" element={<LineOfSightPage />} />
+            <Route path="/personas" element={<PersonaDeepDive />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

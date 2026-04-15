@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { 
   Rocket, Briefcase, BookOpen, 
   Presentation, TrendingUp, Brain, FileText, 
-  ArrowRight
+  ArrowRight, Users
 } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
 
@@ -176,6 +176,24 @@ export default function HomePage() {
             {strategyDecks.map((card) => (
               <DeckCardComponent key={card.href} card={card} />
             ))}
+          </div>
+        </section>
+
+        {/* Tools */}
+        <section>
+          <SectionHeader 
+            title="Tools & Reference" 
+            subtitle="Sales enablement resources and interactive tools" 
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <DeckCardComponent card={{
+              title: "Persona Deep-Dive",
+              description: "Comprehensive buyer personas with messaging, objections, and discovery questions for every stakeholder.",
+              href: "/personas",
+              icon: Users,
+              badge: "5 personas",
+              accent: "from-violet-500 to-cyan-500",
+            }} />
           </div>
         </section>
 
