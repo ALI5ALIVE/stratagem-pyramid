@@ -1,91 +1,47 @@
 
 
-# Persona Deep-Dive Hub
+# Regulation Management — Messaging & Positioning Playbook Page
 
 ## Summary
 
-Create a new dedicated `/personas` page with comprehensive, world-class persona profiles designed as a reference tool for sales enablement and content alignment. Each persona will be a rich, scrollable profile card with structured sections that any content creator, sales rep, or marketer can use to align messaging.
+Create a new `/regulation-management` page in the app — a comprehensive, interactive playbook for the Regulation Management solution, structured for the commercial team to reference during sales conversations. Built using the same design patterns as the Persona Deep-Dive hub (cards, accordions, badges, scroll area).
 
-## Personas (5 profiles)
+## Content Architecture
 
-Based on existing data across the codebase (MessagingHouse, CoAnalyst Persona Messaging, Sales Enablement):
+Drawn from the PPM document and the transcript with Paul/Kathrina/Alistair/Pete, the page will have these scrollable sections:
 
-1. **CEO / COO** (Executive)
-2. **VP Safety / Safety Director**
-3. **VP Operations / Operations Director**
-4. **Training & L&D Director**
-5. **CIO / IT Director**
-
-Each persona will include these sections:
-
-```text
-┌─────────────────────────────────────────────────┐
-│  [Icon] PERSONA TITLE          Role / Seniority │
-│  ─────────────────────────────────────────────── │
-│  PROFILE SNAPSHOT                                │
-│  Title variants, reports to, org size, budget    │
-│  ─────────────────────────────────────────────── │
-│  STRATEGIC PRIORITIES                            │
-│  What keeps them up at night (3-5 bullets)       │
-│  ─────────────────────────────────────────────── │
-│  DAILY PAIN POINTS                               │
-│  Operational frustrations they face today        │
-│  ─────────────────────────────────────────────── │
-│  BUYING TRIGGERS                                 │
-│  Events/signals that create urgency to act       │
-│  ─────────────────────────────────────────────── │
-│  DECISION CRITERIA                               │
-│  How they evaluate solutions                     │
-│  ─────────────────────────────────────────────── │
-│  VALUE PROPOSITION                               │
-│  Our tailored pitch to this persona              │
-│  ─────────────────────────────────────────────── │
-│  KEY MESSAGES (3-5)                              │
-│  Exact phrases/talking points for conversations  │
-│  ─────────────────────────────────────────────── │
-│  OBJECTION HANDLING                              │
-│  Common objections + structured responses        │
-│  ─────────────────────────────────────────────── │
-│  CONTENT ALIGNMENT                               │
-│  Preferred formats, channels, content themes     │
-│  ─────────────────────────────────────────────── │
-│  METRICS THAT MATTER                             │
-│  KPIs this persona is measured on                │
-│  ─────────────────────────────────────────────── │
-│  DISCOVERY QUESTIONS                             │
-│  Open-ended questions to use in meetings         │
-└─────────────────────────────────────────────────┘
-```
+1. **Solution Overview** — Elevator pitch, three-phase roadmap (POC → Production → Cross-Platform Entity), and the "system of record → system of work" narrative arc
+2. **The Problem Today** — Current state pain points extracted from transcript: legacy infrastructure, 1,400+ regulations managed manually, fragmented tooling (spreadsheets, Access databases, tribal knowledge), no cross-system linkage, reactive-only compliance, BA example of ~1,100 people doing this daily
+3. **Solution Positioning** — Role, audience, problem, unique value, positioning statement. Framing as a managed service + platform capability (not just a "use case" — a self-contained solution, as clarified in the call)
+4. **Value Pillars** (card grid) — Real-Time Compliance Visibility, Connected Cross-System Intelligence, Proactive Change Readiness, AI-Driven Insights & Automation, Future-Proof Scalable Foundation
+5. **How It Works** — Three-layer model: (1) Managed Service — regulation data assurance, (2) Platform Integration — structured data at point of need across CM365/TM365/SM365, (3) Intelligence Layer — CoAnalyst complex queries, scenario planning
+6. **Use Cases & Scenarios** (expandable accordion) — Connected Compliance, Real-Time Readiness, Regulatory Change Management, AI-Driven Insights, Scenario Planning & Future Readiness, Executive-Level Assurance
+7. **Persona Relevance** — Who buys this and why: Procedure Owners / Dept Heads, Auditors, Training Managers, COO/Form 4 Holders, Head of Compliance — with tailored messages per persona
+8. **Commercial Model** — Subscription per regulation, standalone value per solution (SM365/CM365/TM365), cross-sell multiplier, API/data-only option
+9. **Objection Handling** — Key objections from transcript: "Too much effort to migrate", "We're only a small operation", "We just need the data, not the platform", etc. with strategic responses
+10. **Phased Roadmap** — Visual timeline: Phase 1 (Q2 2026 POC), Phase 2 (2027 Production), Phase 3 (2027+ Cross-Platform Entity) with outcomes per phase
+11. **Key Talking Points & Discovery Questions** — Ready-to-use conversation starters and probing questions for sales meetings
 
 ## Changes
 
-### 1. New data file: `src/data/personaProfiles.ts`
-- Comprehensive structured data for all 5 personas
-- Each persona object contains: `id`, `title`, `titleVariants`, `icon`, `color`, `reportsTo`, `orgContext`, `strategicPriorities`, `dailyPains`, `buyingTriggers`, `decisionCriteria`, `valueProposition`, `keyMessages`, `objections` (with responses), `contentAlignment` (formats, channels, themes), `metricsThatMatter`, `discoveryQuestions`
-- Aviation-specific, deeply researched content drawn from existing slide data and expanded significantly
+### 1. New data file: `src/data/regulationManagementPlaybook.ts`
+All structured content for the page — elevator pitch, pain points, value pillars, use cases, persona relevance, objections, roadmap phases, discovery questions. Single source of truth.
 
-### 2. New page: `src/pages/PersonaDeepDive.tsx`
-- Left sidebar: vertical tab list of 5 personas with icons and color accents
-- Right content area: scrollable deep-dive profile with all sections rendered using cards, badges, and accordion patterns
-- Responsive: on mobile, tabs become horizontal scrollable chips at the top
-- Print-friendly styling for PDF export
-- Clean dark theme matching existing app aesthetic
+### 2. New page: `src/pages/RegulationManagementPlaybook.tsx`
+- Scrollable single-page layout with section anchors
+- Uses existing UI primitives: `Card`, `Badge`, `Accordion`, `ScrollArea`
+- Section navigation chips at top for quick jump
+- Dark theme matching existing app aesthetic
+- Back-to-home link
 
 ### 3. `src/App.tsx` — Add route
-- Add `<Route path="/personas" element={<PersonaDeepDive />} />`
+- `/regulation-management` route
 
 ### 4. `src/components/AppSidebar.tsx` — Add nav item
-- Add `{ title: "Persona Profiles", url: "/personas", icon: Users }` to the `toolItems` array
+- Add to `toolItems` or create a new "Solutions" nav group
 
 ### 5. `src/pages/HomePage.tsx` — Add card
-- Add a new card in the "Strategy & Positioning" or "Tools" section linking to `/personas`
+- Link card in the Tools section
 
-**3 new files, 3 files modified.**
-
-## Technical Details
-
-- No backend/database needed — all content is static data
-- Uses existing UI primitives: `Card`, `Badge`, `Accordion`, `ScrollArea`, `Tabs`
-- Persona color system matches existing accent patterns (emerald, blue, orange, violet, cyan)
-- Data file is the single source of truth — any future persona updates happen in one place
+**2 new files, 3 files modified.**
 
