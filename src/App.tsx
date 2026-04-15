@@ -22,6 +22,7 @@ import OperationalPitch from "./pages/OperationalPitch";
 import TechnicalDeepDive from "./pages/TechnicalDeepDive";
 import CoAnalystPreview from "./pages/CoAnalystPreview";
 import PersonaDeepDive from "./pages/PersonaDeepDive";
+import RegulationManagementPlaybook from "./pages/RegulationManagementPlaybook";
 
 
 const queryClient = new QueryClient();
