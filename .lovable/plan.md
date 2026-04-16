@@ -1,12 +1,23 @@
 
 
-# Fix DTOP Download Button Causing Logout
+# Remove Password Gates from All Playbooks
 
-## Problem
-The `<a href="..." download>` tag navigates the browser away from the app, which disrupts the Lovable preview iframe session and logs you out.
+## Summary
+Remove the client-side password login screens from all three playbook pages so they load directly without authentication.
 
-## Fix
-Replace the `<a>` tag with a programmatic download using `fetch()` + `URL.createObjectURL()` in `src/components/dtop-slides/DTOPSlide0Title.tsx`. This downloads the file in the background without navigating away from the page.
+## Changes (3 files)
 
-**1 file modified.**
+### 1. `src/pages/DTOPPlaybook.tsx`
+- Remove `GATE_PASSWORD`, `unlocked`, `password`, `error` state variables
+- Remove `handlePasswordSubmit` function
+- Remove the `if (!unlocked)` login card block
+- Remove `Lock` icon import, `Card`/`CardHeader`/`CardTitle`/`CardContent`/`Input`/`Button` imports (if unused elsewhere)
+
+### 2. `src/pages/CoAnalystDeck.tsx`
+- Same removals as above
+
+### 3. `src/pages/RegulationManagementPlaybook.tsx`
+- Same removals as above
+
+**3 files modified. No new files.**
 
