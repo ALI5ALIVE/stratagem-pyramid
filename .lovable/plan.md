@@ -1,44 +1,42 @@
 
 
-# Convert Regulation Management Playbook to Slide Deck Format
+# DTOP Operating Model — Sales Enablement Playbook
 
 ## Summary
 
-Rebuild the Regulation Management playbook to match the CoAnalyst playbook format: full-screen snap-scroll slides, password gate, progress bar, slide counter, keyboard navigation, and sidebar slide list integration.
+Create a new `/dtop-playbook` slide deck (same format as CoAnalyst and Regulation Management playbooks) that serves as the definitive internal sales enablement asset for explaining the DTOP operating model. Password-gated, snap-scroll, 12 slides.
 
-## Approach
+## Slide Structure (12 slides)
 
-Convert each of the 11 current sections into individual slide components using `SlideContainer`, then wrap them in the same deck shell pattern as `CoAnalystDeck.tsx`.
-
-## Slides (11 total)
-
-0. **Title Slide** — "Regulation Management" hero with tagline and scroll prompt
-1. **Solution Overview** — Elevator pitch, narrative arc, key insight
-2. **The Problem Today** — 6 pain point cards in grid
-3. **Solution Positioning** — Role/audience/problem/unique value framework
-4. **Value Pillars** — 5 pillar cards with icons and metrics
-5. **How It Works** — 3-layer delivery model
-6. **Use Cases & Scenarios** — Use case cards (no accordion — content fits slide)
-7. **Persona Relevance** — 5 persona cards with tailored messages
-8. **Commercial Model** — Pricing/packaging cards
-9. **Objection Handling** — Objection/response grid
-10. **Roadmap & Talking Points** — Phased timeline + discovery questions
+0. **Title** — "The DTOP Operating Model: Detect → Trigger → Orchestrate → Prove" with tagline "The only closed-loop operating model in aviation"
+1. **Why DTOP Exists** — The industry problem: siloed safety, content, and training systems create an accountability gap. Point solutions detect but can't prove. The cost of fragmentation ($4.1B industry exposure).
+2. **What DTOP Is** — Definition and positioning statement. A continuous improvement operating model that turns operational signals into orchestrated action and auditable proof. Visual: the 4-step pipeline with descriptions.
+3. **How Each Step Works** — Deep-dive into D, T, O, P with expanded descriptions, data sources, actions taken, and outputs per step. Interactive click-to-expand cards.
+4. **DTOP in Action: Use Case 1** — Dangerous Goods incident scenario. Signal detected → procedure review triggered → crew retrained → 72% incident reduction proved. Vertical DTOP timeline.
+5. **DTOP in Action: Use Case 2** — Regulatory change management scenario. New EASA directive detected → impact analysis triggered → procedures and training updated → compliance evidence generated.
+6. **DTOP in Action: Use Case 3** — Training effectiveness scenario. Recurring crew errors detected → competency gap triggered → targeted simulation assigned → performance improvement proved.
+7. **The Value DTOP Unlocks** — Four value categories: Risk Reduction, Operational Efficiency, Continuous Compliance, Performance Improvement. Each with defensible metrics.
+8. **How to Talk About DTOP** — Persona-specific messaging: what to say to a CEO vs VP Safety vs Head of Training vs IT Director. Discovery questions per persona.
+9. **Why Only Comply365 Can Deliver This** — Competitive moat: requires all three modules (Safety, Content, Training) connected by an intelligence layer. Point solutions can detect but can't orchestrate or prove. Positioning matrix.
+10. **Objection Handling** — "We already have an SMS", "Our LMS handles training", "We use SharePoint for docs", "We're not ready for AI" — with strategic responses.
+11. **Key Talking Points & Closing** — The 3 anchor statements, elevator pitch, and recommended next steps (discovery call → workshop → 90-day pilot).
 
 ## Changes
 
-### 1. New slide components: `src/components/regmgmt-slides/`
-Create 11 slide components (RMSlide0Title through RMSlide10Roadmap), each using `SlideContainer` with the existing data from `regulationManagementPlaybook.ts`. Same dense card-based layouts as the CoAnalyst slides.
+### 1. New data file: `src/data/dtopPlaybook.ts`
+All structured content — step definitions, use cases, value metrics, persona messaging, objections, competitive positioning. Single source of truth.
 
-### 2. Rewrite `src/pages/RegulationManagementPlaybook.tsx`
-Replace the scrollable page with the CoAnalyst deck pattern:
-- Password gate (same password `comply2025`, session key `rm-unlocked`)
-- Full-screen snap-scroll container
-- Progress bar, slide counter, keyboard navigation
-- Sidebar slide list via `useSlideNavigation`
-- No narration (can be added later)
+### 2. New slide components: `src/components/dtop-slides/`
+12 slide components (DTOPSlide0Title through DTOPSlide11Closing), each using `SlideContainer`. Dense card-based layouts matching the CoAnalyst playbook style.
 
-### 3. No changes to data file
-`src/data/regulationManagementPlaybook.ts` stays as-is — slide components import from it.
+### 3. New page: `src/pages/DTOPPlaybook.tsx`
+Deck shell with password gate (`comply2025`), snap-scroll, progress bar, keyboard nav, sidebar slide list integration.
 
-**11 new files, 1 file modified.**
+### 4. `src/App.tsx` — Add route `/dtop-playbook`
+
+### 5. `src/components/AppSidebar.tsx` — Add "DTOP Playbook" to toolItems
+
+### 6. `src/pages/HomePage.tsx` — Add card to Tools section
+
+**14 new files, 3 files modified.**
 
