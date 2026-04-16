@@ -1,6 +1,7 @@
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Download } from "lucide-react";
 import complyLogo from "@/assets/comply365-logo-white.png";
 import { SlideNarrationProps } from "@/types/slideProps";
+import { Button } from "@/components/ui/button";
 import { heroTagline, heroSubtitle } from "@/data/dtopPlaybook";
 
 const DTOPSlide0Title = (_props: SlideNarrationProps) => {
