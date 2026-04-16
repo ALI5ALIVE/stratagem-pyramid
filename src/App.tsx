@@ -23,6 +23,7 @@ import TechnicalDeepDive from "./pages/TechnicalDeepDive";
 import CoAnalystPreview from "./pages/CoAnalystPreview";
 import PersonaDeepDive from "./pages/PersonaDeepDive";
 import RegulationManagementPlaybook from "./pages/RegulationManagementPlaybook";
+import DTOPPlaybook from "./pages/DTOPPlaybook";
 
 
 const queryClient = new QueryClient();
@@ -54,6 +55,7 @@ const App = () => (
             <Route path="/line-of-sight" element={<LineOfSightPage />} />
             <Route path="/personas" element={<PersonaDeepDive />} />
             <Route path="/regulation-management" element={<RegulationManagementPlaybook />} />
+            <Route path="/dtop-playbook" element={<DTOPPlaybook />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

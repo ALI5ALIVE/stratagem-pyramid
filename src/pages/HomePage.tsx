@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { 
   Rocket, Briefcase, BookOpen, 
   Presentation, TrendingUp, Brain, FileText, 
-  ArrowRight, Users, ScrollText
+  ArrowRight, Users, ScrollText, Workflow
 } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
 
@@ -201,6 +201,14 @@ export default function HomePage() {
               icon: ScrollText,
               badge: "Playbook",
               accent: "from-primary to-comply-teal",
+            }} />
+            <DeckCardComponent card={{
+              title: "DTOP Operating Model",
+              description: "Sales enablement playbook for the DTOP operating model. Why, what, how, competitive positioning, and objection handling.",
+              href: "/dtop-playbook",
+              icon: Workflow,
+              badge: "12 slides",
+              accent: "from-blue-500 to-violet-500",
             }} />
           </div>
         </section>
