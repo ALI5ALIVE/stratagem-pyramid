@@ -1,6 +1,7 @@
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Download } from "lucide-react";
 import complyLogo from "@/assets/comply365-logo-white.png";
 import { SlideNarrationProps } from "@/types/slideProps";
+import { Button } from "@/components/ui/button";
 import { heroTagline, heroSubtitle } from "@/data/dtopPlaybook";
 
 const DTOPSlide0Title = (_props: SlideNarrationProps) => {
@@ -38,6 +39,14 @@ const DTOPSlide0Title = (_props: SlideNarrationProps) => {
                 {i < 3 && <span className="text-muted-foreground">→</span>}
               </span>
             ))}
+          </div>
+          <div className="mt-6">
+            <a href="/Comply365-DTOP-Operating-Model-1-Pager.pdf" download>
+              <Button variant="outline" size="sm" className="gap-2">
+                <Download className="w-4 h-4" />
+                Download 1-Pager PDF
+              </Button>
+            </a>
           </div>
         </div>
       </div>
