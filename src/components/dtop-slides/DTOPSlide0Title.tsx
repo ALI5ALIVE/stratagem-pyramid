@@ -57,12 +57,10 @@ const DTOPSlide0Title = (_props: SlideNarrationProps) => {
             ))}
           </div>
           <div className="mt-6">
-            <a href="/Comply365-DTOP-Operating-Model-1-Pager.pdf" download>
-              <Button variant="outline" size="sm" className="gap-2">
-                <Download className="w-4 h-4" />
-                Download 1-Pager PDF
-              </Button>
-            </a>
+            <Button variant="outline" size="sm" className="gap-2" onClick={handleDownload}>
+              <Download className="w-4 h-4" />
+              Download 1-Pager PDF
+            </Button>
           </div>
         </div>
       </div>
