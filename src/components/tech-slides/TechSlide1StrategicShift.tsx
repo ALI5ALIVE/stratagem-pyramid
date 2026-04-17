@@ -29,18 +29,18 @@ const categoryDrivers = [
 
 const TechSlide1StrategicShift = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer id="tech-slide-1" title="The Strategic Shift" subtitle="From point tools to an Operational Performance Platform — and why the category exists now" slideNumber={slideNumber} {...narrationProps}>
-    <div className="flex-1 flex flex-col gap-4">
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-4">
-        {/* Before */}
-        <div className="p-4 rounded-xl border border-red-500/20 bg-red-500/5">
+    <div className="flex-1 flex flex-col gap-4 min-h-0">
+      {/* Before / After */}
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-4 items-stretch flex-1 min-h-0">
+        <div className="p-4 rounded-xl border border-red-500/20 bg-red-500/5 h-full flex flex-col">
           <div className="flex items-center gap-2 mb-3">
             <XCircle className="h-5 w-5 text-red-400" />
-            <h3 className="text-lg font-bold text-red-400">Today: Point Tools</h3>
+            <h3 className="text-base font-bold text-red-400">Today: Point Tools</h3>
           </div>
-          <ul className="space-y-2">
+          <ul className="space-y-2 flex-1 flex flex-col justify-center">
             {beforeItems.map((item) => (
-              <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
-                <span className="w-1.5 h-1.5 rounded-full bg-red-400/60 mt-1.5 shrink-0" />
+              <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground leading-relaxed">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-400/60 mt-2 shrink-0" />
                 {item}
               </li>
             ))}
@@ -49,16 +49,15 @@ const TechSlide1StrategicShift = ({ slideNumber, ...narrationProps }: Props) => 
 
         <div className="hidden lg:flex items-center"><ArrowRight className="h-8 w-8 text-primary/40" /></div>
 
-        {/* After */}
-        <div className="p-4 rounded-xl border border-emerald-500/20 bg-emerald-500/5">
+        <div className="p-4 rounded-xl border border-emerald-500/20 bg-emerald-500/5 h-full flex flex-col">
           <div className="flex items-center gap-2 mb-3">
             <CheckCircle2 className="h-5 w-5 text-emerald-400" />
-            <h3 className="text-lg font-bold text-emerald-400">Tomorrow: Connected Platform</h3>
+            <h3 className="text-base font-bold text-emerald-400">Tomorrow: Connected Platform</h3>
           </div>
-          <ul className="space-y-2">
+          <ul className="space-y-2 flex-1 flex flex-col justify-center">
             {afterItems.map((item) => (
-              <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/60 mt-1.5 shrink-0" />
+              <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground leading-relaxed">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/60 mt-2 shrink-0" />
                 {item}
               </li>
             ))}
@@ -66,12 +65,12 @@ const TechSlide1StrategicShift = ({ slideNumber, ...narrationProps }: Props) => 
         </div>
       </div>
 
-      {/* Category drivers */}
-      <div className="grid grid-cols-4 gap-3">
+      {/* Category drivers — 2x2 */}
+      <div className="grid grid-cols-2 gap-3 auto-rows-fr shrink-0">
         {categoryDrivers.map((d) => (
-          <div key={d.label} className="p-3 rounded-lg border border-primary/20 bg-primary/5">
-            <span className="text-xs font-bold text-primary">{d.label}</span>
-            <p className="text-[11px] text-muted-foreground mt-1">{d.desc}</p>
+          <div key={d.label} className="p-3 rounded-xl border border-primary/20 bg-primary/5 h-full flex flex-col">
+            <span className="text-xs font-bold text-primary uppercase tracking-wider">{d.label}</span>
+            <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{d.desc}</p>
           </div>
         ))}
       </div>

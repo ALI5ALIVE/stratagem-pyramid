@@ -20,21 +20,20 @@ const TechSlide4Platform = ({ slideNumber, ...narrationProps }: Props) => (
     slideNumber={slideNumber}
     {...narrationProps}
   >
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0 items-stretch">
       <div className="lg:col-span-2 flex items-center justify-center min-h-0">
         <div className="w-full">
           <PlatformArchitectureDiagram compact />
         </div>
       </div>
-      <div className="flex flex-col gap-2 justify-center">
-        <h3 className="text-xs font-bold text-foreground uppercase tracking-wider mb-1">How to read the stack</h3>
+      <div className="grid grid-rows-5 gap-2 h-full">
         {guide.map((g) => (
-          <div key={g.tag} className="rounded-lg border border-muted/20 bg-card/40 p-2.5">
+          <div key={g.tag} className="rounded-xl border border-muted/20 bg-card/40 p-3 flex flex-col justify-center h-full">
             <div className="flex items-baseline gap-2">
               <span className={`text-[10px] font-bold uppercase tracking-wider ${g.color}`}>{g.tag}</span>
-              <span className="text-xs font-semibold text-foreground">{g.title}</span>
+              <span className="text-sm font-bold text-foreground">{g.title}</span>
             </div>
-            <p className="text-[10px] text-muted-foreground mt-0.5">{g.desc}</p>
+            <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{g.desc}</p>
           </div>
         ))}
       </div>
