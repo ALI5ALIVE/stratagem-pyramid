@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { 
   Rocket, Briefcase, BookOpen, 
   Presentation, TrendingUp, Brain, FileText, 
-  ArrowRight, Users, ScrollText, Workflow
+  ArrowRight, Users, ScrollText, Workflow, Layers, Sparkles, Zap, Smartphone
 } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
 
