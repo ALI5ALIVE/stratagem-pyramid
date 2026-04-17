@@ -36,61 +36,63 @@ const TechSlideTiersVsAI = ({ slideNumber, ...narrationProps }: Props) => (
     slideNumber={slideNumber}
     {...narrationProps}
   >
-    <div className="flex flex-col gap-3 flex-1 min-h-0">
+    <div className="flex flex-col gap-4 flex-1 min-h-0">
       {/* Tiers row */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 auto-rows-fr shrink-0">
         {tiers.map((t) => (
-          <div key={t.tier} className={`rounded-lg border ${t.border} ${t.bg} p-2.5 flex flex-col`}>
+          <div key={t.tier} className={`rounded-xl border ${t.border} ${t.bg} p-3 flex flex-col h-full`}>
             <div className="flex items-center gap-2 mb-1">
-              <t.icon className={`h-4 w-4 ${t.color}`} />
+              <t.icon className={`h-5 w-5 ${t.color}`} />
               <h3 className={`text-sm font-bold ${t.color}`}>{t.tier}</h3>
             </div>
-            <p className="text-[11px] text-muted-foreground">{t.desc}</p>
+            <p className="text-xs text-muted-foreground leading-relaxed">{t.desc}</p>
           </div>
         ))}
       </div>
 
       {/* Bottom: capability table + accuracy/risk */}
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 flex-1 min-h-0">
-        <div className="lg:col-span-3 rounded-lg border border-muted/20 bg-card/60 p-3 overflow-auto">
-          <h3 className="text-xs font-bold text-foreground uppercase tracking-wide mb-2">Capability — CoAnalyst vs Generative AI</h3>
-          <table className="w-full text-xs">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 flex-1 min-h-0 items-stretch">
+        <div className="lg:col-span-3 rounded-xl border border-muted/20 bg-card/60 p-4 flex flex-col h-full">
+          <h3 className="text-xs font-bold text-foreground uppercase tracking-wider mb-3 shrink-0">Capability — CoAnalyst vs Generative AI</h3>
+          <table className="w-full text-xs flex-1">
             <thead>
               <tr className="border-b border-border">
-                <th className="text-left py-1 text-[11px] text-muted-foreground font-medium">Capability</th>
-                <th className="text-center py-1 text-[11px] text-primary font-bold w-20">CoAnalyst</th>
-                <th className="text-center py-1 text-[11px] text-muted-foreground w-20">Generative</th>
+                <th className="text-left py-1.5 text-xs text-muted-foreground font-medium">Capability</th>
+                <th className="text-center py-1.5 text-xs text-primary font-bold w-20">CoAnalyst</th>
+                <th className="text-center py-1.5 text-xs text-muted-foreground w-20">Generative</th>
               </tr>
             </thead>
             <tbody>
               {rows.map((r, i) => (
                 <tr key={i} className="border-b border-border/50">
-                  <td className="py-1 text-[11px] text-muted-foreground">{r.cap}</td>
-                  <td className="text-center py-1">{r.co ? <Check className="w-3.5 h-3.5 text-emerald-400 mx-auto" /> : <X className="w-3.5 h-3.5 text-red-400 mx-auto" />}</td>
-                  <td className="text-center py-1">{r.gen ? <Check className="w-3.5 h-3.5 text-emerald-400 mx-auto" /> : <X className="w-3.5 h-3.5 text-red-400 mx-auto" />}</td>
+                  <td className="py-1.5 text-xs text-muted-foreground">{r.cap}</td>
+                  <td className="text-center py-1.5">{r.co ? <Check className="w-4 h-4 text-emerald-400 mx-auto" /> : <X className="w-4 h-4 text-red-400 mx-auto" />}</td>
+                  <td className="text-center py-1.5">{r.gen ? <Check className="w-4 h-4 text-emerald-400 mx-auto" /> : <X className="w-4 h-4 text-red-400 mx-auto" />}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
 
-        <div className="lg:col-span-2 flex flex-col gap-2">
-          <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-2.5">
-            <h3 className="text-[11px] font-bold text-amber-400 uppercase tracking-wide mb-1.5">Accuracy by Taxonomy Depth</h3>
+        <div className="lg:col-span-2 flex flex-col gap-3 h-full">
+          <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-3">
+            <h3 className="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">Accuracy by Taxonomy Depth</h3>
             {accuracy.map((a, i) => (
-              <div key={i} className="flex items-center gap-2 text-[11px] mb-1">
-                <span className="text-muted-foreground flex-1">{a.level}</span>
-                <span className="text-primary font-bold w-10 text-center">{a.co}</span>
-                <span className="text-muted-foreground w-10 text-center">{a.gen}</span>
+              <div key={i} className="flex items-center gap-2 text-xs mb-1.5 last:mb-0">
+                <span className="text-muted-foreground flex-1 leading-snug">{a.level}</span>
+                <span className="text-primary font-bold w-12 text-center">{a.co}</span>
+                <span className="text-muted-foreground w-12 text-center">{a.gen}</span>
               </div>
             ))}
           </div>
-          <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-2.5 flex-1">
-            <h3 className="text-[11px] font-bold text-red-400 uppercase tracking-wide mb-1">The Real-World Risk</h3>
-            <p className="text-[11px] text-muted-foreground">Generic AI classifies a repeated bird strike as a one-off — missing the cluster pattern signalling a runway hazard trend that requires immediate operational response.</p>
+          <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-3 flex-1 flex items-center">
+            <div>
+              <h3 className="text-xs font-bold text-red-400 uppercase tracking-wider mb-1.5">The Real-World Risk</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">Generic AI classifies a repeated bird strike as a one-off — missing the cluster pattern signalling a runway hazard trend that requires immediate operational response.</p>
+            </div>
           </div>
-          <div className="rounded-lg border border-primary/30 bg-primary/10 p-2 text-center">
-            <p className="text-[11px] font-semibold text-foreground italic">"Generative AI reads reports. CoAnalyst understands aviation operations."</p>
+          <div className="rounded-xl border border-primary/30 bg-primary/10 p-3 text-center">
+            <p className="text-xs font-semibold text-foreground italic">"Generative AI reads reports. CoAnalyst understands aviation operations."</p>
           </div>
         </div>
       </div>

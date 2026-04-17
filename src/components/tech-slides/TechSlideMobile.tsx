@@ -25,46 +25,48 @@ const TechSlideMobile = ({ slideNumber, ...narrationProps }: Props) => (
     slideNumber={slideNumber}
     {...narrationProps}
   >
-    <div className="flex-1 grid grid-cols-1 lg:grid-cols-5 gap-4 min-h-0">
-      {/* Left: phone mock */}
-      <div className="lg:col-span-2 flex items-center justify-center">
-        <div className="rounded-[2rem] border-4 border-muted/30 bg-card/60 p-4 w-56 aspect-[9/16] flex flex-col">
-          <div className="text-center mb-3">
-            <div className="text-[10px] text-muted-foreground">Comply365 Mobile</div>
-            <div className="text-xs font-bold text-foreground">One trusted shell</div>
-          </div>
-          <div className="flex-1 flex flex-col gap-2">
-            {miniApps.map((m) => (
-              <div key={m.name} className={`rounded-lg border ${m.border} ${m.bg} p-2 flex items-center gap-2`}>
-                <m.icon className={`h-4 w-4 ${m.color}`} />
-                <div className="flex-1 min-w-0">
-                  <div className={`text-[11px] font-bold ${m.color}`}>{m.name}</div>
-                  <div className="text-[9px] text-muted-foreground truncate">{m.status}</div>
+    <div className="flex-1 flex flex-col gap-4 min-h-0">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 flex-1 min-h-0 items-stretch">
+        {/* Phone mock — fixed width */}
+        <div className="lg:col-span-2 flex items-center justify-center">
+          <div className="rounded-[2rem] border-4 border-muted/30 bg-card/60 p-4 w-56 aspect-[9/16] flex flex-col">
+            <div className="text-center mb-3 shrink-0">
+              <div className="text-[10px] text-muted-foreground">Comply365 Mobile</div>
+              <div className="text-xs font-bold text-foreground">One trusted shell</div>
+            </div>
+            <div className="flex-1 flex flex-col gap-2 justify-center">
+              {miniApps.map((m) => (
+                <div key={m.name} className={`rounded-lg border ${m.border} ${m.bg} p-2 flex items-center gap-2`}>
+                  <m.icon className={`h-4 w-4 ${m.color}`} />
+                  <div className="flex-1 min-w-0">
+                    <div className={`text-xs font-bold ${m.color}`}>{m.name}</div>
+                    <div className="text-[9px] text-muted-foreground truncate">{m.status}</div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <div className="mt-2 text-center text-[9px] text-muted-foreground shrink-0">SSO · Unified shell · iOS</div>
           </div>
-          <div className="mt-2 text-center text-[9px] text-muted-foreground">SSO · Unified shell · iOS</div>
+        </div>
+
+        {/* Pillars 2x2 equal height */}
+        <div className="lg:col-span-3 grid grid-cols-2 gap-3 auto-rows-fr h-full">
+          {pillars.map((p) => (
+            <div key={p.title} className={`rounded-xl border ${p.border} ${p.bg} p-4 flex flex-col h-full`}>
+              <p.icon className={`h-5 w-5 ${p.color} mb-2`} />
+              <h3 className={`text-sm font-bold ${p.color} mb-1.5`}>{p.title}</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">{p.desc}</p>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Right: 4 pillars */}
-      <div className="lg:col-span-3 grid grid-cols-2 gap-3">
-        {pillars.map((p) => (
-          <div key={p.title} className={`rounded-xl border ${p.border} ${p.bg} p-3 flex flex-col`}>
-            <p.icon className={`h-5 w-5 ${p.color} mb-2`} />
-            <h3 className={`text-sm font-bold ${p.color} mb-1`}>{p.title}</h3>
-            <p className="text-[11px] text-muted-foreground leading-snug">{p.desc}</p>
-          </div>
-        ))}
+      <div className="rounded-xl border border-primary/20 bg-primary/5 p-3 text-center shrink-0 mt-auto">
+        <p className="text-sm text-foreground">
+          <span className="font-semibold text-primary">Three apps a shift → one app every shift.</span>
+          <span className="text-muted-foreground"> Built on the Comply365 iOS app already in daily frontline use.</span>
+        </p>
       </div>
-    </div>
-
-    <div className="mt-3 rounded-lg border border-primary/20 bg-primary/5 p-2.5 text-center shrink-0">
-      <p className="text-xs text-foreground">
-        <span className="font-semibold text-primary">Three apps a shift → one app every shift.</span>
-        <span className="text-muted-foreground"> Built on the Comply365 iOS app already in daily frontline use.</span>
-      </p>
     </div>
   </SalesSlideContainer>
 );
