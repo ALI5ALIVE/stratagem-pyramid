@@ -37,24 +37,24 @@ const phases = [
 
 const TechSlide15Roadmap2026 = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer id="tech-slide-15" title="2026 Use Case Roadmap" subtitle="Phased delivery — each phase builds on proven value" slideNumber={slideNumber} {...narrationProps}>
-    <div className="flex flex-col gap-4">
-      <div className="grid grid-cols-3 gap-4">
+    <div className="flex-1 flex flex-col gap-4 min-h-0">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 flex-1 min-h-0 auto-rows-fr items-stretch">
         {phases.map((p) => (
-          <div key={p.phase} className={`rounded-xl border ${p.border} ${p.bg} p-5 flex flex-col`}>
-            <div className="flex items-center gap-3 mb-3">
+          <div key={p.phase} className={`rounded-xl border ${p.border} ${p.bg} p-4 flex flex-col h-full`}>
+            <div className="flex items-center gap-3 mb-3 shrink-0">
               <p.icon className={`h-6 w-6 ${p.color}`} />
               <div>
-                <span className="text-xs text-muted-foreground">{p.phase}</span>
+                <span className="text-xs text-muted-foreground uppercase tracking-wider">{p.phase}</span>
                 <h3 className={`text-base font-bold ${p.color}`}>{p.label}</h3>
               </div>
             </div>
-            <ul className="space-y-2 flex-1">
+            <ul className="space-y-2 flex-1 flex flex-col justify-center">
               {p.items.map((item) => (
-                <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground leading-relaxed">
                   {item.startsWith("✅") ? (
                     <span className="mt-0.5 shrink-0">{item.slice(0, 2)}</span>
                   ) : (
-                    <span className={`w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 ${p.color.replace("text-", "bg-")}/60`} />
+                    <span className={`w-1.5 h-1.5 rounded-full mt-2 shrink-0 ${p.color.replace("text-", "bg-")}/60`} />
                   )}
                   {item.startsWith("✅") ? item.slice(3) : item}
                 </li>
@@ -63,7 +63,7 @@ const TechSlide15Roadmap2026 = ({ slideNumber, ...narrationProps }: Props) => (
           </div>
         ))}
       </div>
-      <div className="p-3 rounded-lg border border-amber-500/20 bg-amber-500/5 text-center">
+      <div className="p-3 rounded-xl border border-amber-500/20 bg-amber-500/5 text-center shrink-0">
         <p className="text-xs text-muted-foreground"><span className="text-amber-400 font-semibold">Note:</span> Roadmap content is illustrative — specific deliverables to be defined during the discovery workshop based on your operational priorities.</p>
       </div>
     </div>
