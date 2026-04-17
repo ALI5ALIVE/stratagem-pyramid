@@ -187,6 +187,14 @@ export default function HomePage() {
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <DeckCardComponent card={{
+              title: "Platform Playbook",
+              description: "Master positioning for the Operational Performance Platform — core apps, data foundation, intelligence layer, mobile, and DTOP.",
+              href: "/platform-playbook",
+              icon: Layers,
+              badge: "13 slides",
+              accent: "from-primary to-comply-teal",
+            }} />
+            <DeckCardComponent card={{
               title: "Persona Deep-Dive",
               description: "Comprehensive buyer personas with messaging, objections, and discovery questions for every stakeholder.",
               href: "/personas",
@@ -209,6 +217,30 @@ export default function HomePage() {
               icon: Workflow,
               badge: "12 slides",
               accent: "from-blue-500 to-violet-500",
+            }} />
+            <DeckCardComponent card={{
+              title: "Insights & Recommendations",
+              description: "Positioning playbook for AI-driven insights and recommended actions across operational data.",
+              href: "/insights-playbook",
+              icon: Sparkles,
+              badge: "11 slides",
+              accent: "from-comply-teal to-primary",
+            }} />
+            <DeckCardComponent card={{
+              title: "Automation",
+              description: "Platform-wide automation playbook — Prismatic-powered orchestration across the operational stack.",
+              href: "/automation-playbook",
+              icon: Zap,
+              badge: "11 slides",
+              accent: "from-accent to-comply-plum",
+            }} />
+            <DeckCardComponent card={{
+              title: "Unified Mobile App",
+              description: "One trusted mobile entry point for the frontline — Content, Training and Safety in one shell.",
+              href: "/mobile-playbook",
+              icon: Smartphone,
+              badge: "11 slides",
+              accent: "from-accent to-comply-teal",
             }} />
           </div>
         </section>
