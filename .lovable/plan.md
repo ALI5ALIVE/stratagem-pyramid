@@ -1,20 +1,42 @@
 
-Add the existing Platform Playbook (`/platform-playbook`) to the Home page so users can launch it from the Command Centre, and promote it in the sidebar.
+Tidy up the Home page (`src/pages/HomePage.tsx`) only. No route or sidebar changes.
 
-## Changes (2 files)
+## Changes to `src/pages/HomePage.tsx`
 
-### 1. `src/pages/HomePage.tsx`
-- Add a new `DeckCardComponent` for **Platform Playbook** in the "Tools & Reference" section (first card, since it's the master/overarching playbook).
-  - Title: "Platform Playbook"
-  - Description: "Master positioning for the Operational Performance Platform — core apps, data foundation, intelligence layer, mobile, and DTOP."
-  - Href: `/platform-playbook`
-  - Icon: `Layers`
-  - Badge: "13 slides"
-  - Accent: `from-primary to-comply-teal`
-- Import `Layers` from lucide-react.
-- Optionally also add the missing **Insights**, **Automation**, and **Unified Mobile** cards to Tools & Reference (currently in sidebar but not on Home) for consistency.
+### Pitch Decks section (4 → 3 cards)
+Remove **Executive Pitch** (`/pitch-executive`). Keep:
+- Executive Pitch 2
+- Operational Pitch
+- Technical Deep-Dive
 
-### 2. `src/components/AppSidebar.tsx`
-- Move "Platform Playbook" to the **top** of `toolItems` (currently last) so it leads the Tools group as the master playbook.
+### Strategy & Positioning section (4 → 3 cards)
+Remove **Value Deck** and **CoAnalyst Playbook** (CoAnalyst moves to Tools as a capability playbook). Keep:
+- Strategy Deck
+- Content Strategy
 
-No other files affected. No route changes (route already exists).
+Wait — re-reading the request: "have strategy deck and content strategy in the strategy section and then all of the [rest] in tools section". So Strategy section keeps only **Strategy Deck** + **Content Strategy** (2 cards). Everything else (CoAnalyst, Value Deck removed entirely, etc.) moves to Tools.
+
+Final Strategy section (2 cards):
+- Strategy Deck
+- Content Strategy
+
+### Tools & Reference section
+Remove: Value Deck (deleted entirely per user).
+Add **CoAnalyst Playbook** card (moved from Strategy) with `Brain` icon, badge "15 slides".
+Keep existing Tools cards in this order (Platform first as master):
+1. Platform Playbook
+2. CoAnalyst Playbook (newly moved here)
+3. Persona Deep-Dive
+4. Regulation Management
+5. DTOP Operating Model
+6. Insights & Recommendations
+7. Automation
+8. Unified Mobile App
+
+### Grid
+Pitch Decks grid: change `lg:grid-cols-4` → `lg:grid-cols-3` so 3 cards fill the row cleanly.
+Strategy grid: change `lg:grid-cols-4` → `lg:grid-cols-2` (or keep 4 and let cards sit left — prefer `sm:grid-cols-2 lg:grid-cols-2` for balanced layout).
+Tools grid: stays `lg:grid-cols-4`.
+
+### Imports
+Remove unused icons after cleanup: `Presentation`, `TrendingUp` no longer needed if Strategy Deck keeps `Presentation` — keep `Presentation`. Remove `TrendingUp` (was Value Deck only).
