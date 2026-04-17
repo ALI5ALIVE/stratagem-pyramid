@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { 
   Rocket, Briefcase, BookOpen, 
-  Presentation, TrendingUp, Brain, FileText, 
+  Presentation, Brain, FileText, 
   ArrowRight, Users, ScrollText, Workflow, Layers, Sparkles, Zap, Smartphone
 } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
@@ -18,14 +18,6 @@ interface DeckCard {
 const pitchDecks: DeckCard[] = [
   {
     title: "Executive Pitch",
-    description: "C-suite strategic ROI narrative. Provocation to commitment in 5 minutes.",
-    href: "/pitch-executive",
-    icon: Rocket,
-    badge: "8 slides",
-    accent: "from-primary to-accent",
-  },
-  {
-    title: "Executive Pitch 2",
     description: "Strategic Before & After narrative. From fragmentation to intelligent operations.",
     href: "/pitch-executive-2",
     icon: Rocket,
@@ -58,21 +50,6 @@ const strategyDecks: DeckCard[] = [
     icon: Presentation,
     badge: "15 slides",
     accent: "from-primary to-accent",
-  },
-  {
-    title: "Value Deck",
-    description: "Value framework with interactive ROI calculator and KPI trees.",
-    href: "/value-deck",
-    icon: TrendingUp,
-    accent: "from-accent to-comply-teal",
-  },
-  {
-    title: "CoAnalyst Playbook",
-    description: "AI product positioning, messaging architecture, and go-to-market.",
-    href: "/coanalyst",
-    icon: Brain,
-    badge: "15 slides",
-    accent: "from-comply-plum to-primary",
   },
   {
     title: "Content Strategy",
@@ -159,7 +136,7 @@ export default function HomePage() {
             title="Customer Pitch Decks" 
             subtitle="Audience-tailored presentations for external delivery" 
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {pitchDecks.map((card) => (
               <DeckCardComponent key={card.href} card={card} />
             ))}
@@ -172,7 +149,7 @@ export default function HomePage() {
             title="Strategy & Positioning" 
             subtitle="Internal playbooks and frameworks" 
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
             {strategyDecks.map((card) => (
               <DeckCardComponent key={card.href} card={card} />
             ))}
@@ -193,6 +170,14 @@ export default function HomePage() {
               icon: Layers,
               badge: "13 slides",
               accent: "from-primary to-comply-teal",
+            }} />
+            <DeckCardComponent card={{
+              title: "CoAnalyst Playbook",
+              description: "AI product positioning, messaging architecture, and go-to-market.",
+              href: "/coanalyst",
+              icon: Brain,
+              badge: "15 slides",
+              accent: "from-comply-plum to-primary",
             }} />
             <DeckCardComponent card={{
               title: "Persona Deep-Dive",
