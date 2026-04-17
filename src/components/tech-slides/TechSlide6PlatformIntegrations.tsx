@@ -120,7 +120,7 @@ const TechSlide6PlatformIntegrations = ({ slideNumber, ...narrationProps }: Prop
         </div>
 
         {/* Two-column case studies */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1 min-h-0 auto-rows-fr items-stretch">
           {caseStudies.map((cs) => {
             const isExpanded = expandedCase === cs.id;
             const Icon = cs.icon;
@@ -129,7 +129,7 @@ const TechSlide6PlatformIntegrations = ({ slideNumber, ...narrationProps }: Prop
               <div
                 key={cs.id}
                 className={cn(
-                  "bg-card/50 backdrop-blur-sm border rounded-xl p-4 cursor-pointer transition-all duration-300 flex flex-col",
+                  "bg-card/50 backdrop-blur-sm border rounded-xl p-4 cursor-pointer transition-all duration-300 flex flex-col h-full",
                   isExpanded ? "border-primary/30 shadow-lg shadow-primary/10" : "border-border/50 hover:border-primary/30"
                 )}
                 onClick={() => setExpandedCase(isExpanded ? null : cs.id)}

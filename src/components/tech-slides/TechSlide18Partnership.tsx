@@ -12,31 +12,33 @@ const steps = [
 
 const TechSlide18Partnership = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer id="tech-slide-18" title="Partnership Model" subtitle="Your path to connected operational performance" slideNumber={slideNumber} {...narrationProps}>
-    <div className="flex flex-col justify-center gap-6">
-      <div className="grid grid-cols-3 gap-4">
+    <div className="flex-1 flex flex-col justify-center gap-4 min-h-0">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-fr items-stretch">
         {steps.map((s) => (
-          <div key={s.step} className={`p-6 rounded-xl border ${s.border} ${s.bg} flex flex-col h-full`}>
-            <div className="flex items-center gap-3 mb-4">
-              <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${s.bg} border ${s.border}`}>
-                <s.icon className={`h-6 w-6 ${s.color}`} />
+          <div key={s.step} className={`p-5 rounded-xl border ${s.border} ${s.bg} flex flex-col h-full justify-between`}>
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${s.bg} border ${s.border} shrink-0`}>
+                  <s.icon className={`h-6 w-6 ${s.color}`} />
+                </div>
+                <div>
+                  <span className="text-xs text-muted-foreground uppercase tracking-wider">Step {s.step}</span>
+                  <h3 className={`text-xl font-bold ${s.color}`}>{s.title}</h3>
+                </div>
               </div>
-              <div>
-                <span className="text-xs text-muted-foreground">Step {s.step}</span>
-                <h3 className={`text-xl font-bold ${s.color}`}>{s.title}</h3>
-              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
             </div>
-            <p className="text-sm text-muted-foreground leading-relaxed flex-1">{s.desc}</p>
             <div className="mt-4 pt-3 border-t border-muted/20">
               <span className="text-[10px] text-muted-foreground/60 uppercase tracking-wider">Timeline</span>
-              <p className={`text-sm font-semibold ${s.color}`}>{s.timeline}</p>
+              <p className={`text-sm font-bold ${s.color}`}>{s.timeline}</p>
             </div>
           </div>
         ))}
       </div>
-      <div className="p-6 rounded-xl border border-primary/30 bg-primary/5 text-center">
-        <MessageSquare className="h-7 w-7 text-primary mx-auto mb-3" />
+      <div className="p-5 rounded-xl border border-primary/30 bg-primary/5 text-center">
+        <MessageSquare className="h-7 w-7 text-primary mx-auto mb-2" />
         <h3 className="text-xl font-display font-bold text-foreground mb-2">What does your first use case look like?</h3>
-        <p className="text-sm text-muted-foreground max-w-lg mx-auto">Let's start with a discovery workshop to identify the use case that delivers the most value — and prove it in 90 days.</p>
+        <p className="text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">Let's start with a discovery workshop to identify the use case that delivers the most value — and prove it in 90 days.</p>
       </div>
     </div>
   </SalesSlideContainer>

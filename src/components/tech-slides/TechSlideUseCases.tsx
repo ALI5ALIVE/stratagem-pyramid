@@ -38,9 +38,9 @@ const TechSlideUseCases = ({ slideNumber, ...narrationProps }: Props) => {
       slideNumber={slideNumber}
       {...narrationProps}
     >
-      <div className="flex flex-col gap-3 flex-1 min-h-0">
+      <div className="flex flex-col gap-4 flex-1 min-h-0">
         {/* Tab selector */}
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex items-center justify-center gap-2 shrink-0">
           {tabs.map((t) => {
             const Icon = t.icon;
             const isActive = activeTab === t.id;
@@ -63,7 +63,7 @@ const TechSlideUseCases = ({ slideNumber, ...narrationProps }: Props) => {
         </div>
 
         {/* DTOP legend */}
-        <div className="flex items-center justify-center gap-3 text-[10px]">
+        <div className="flex items-center justify-center gap-3 text-[11px] shrink-0">
           <span className="flex items-center gap-1"><Zap className="h-3 w-3 text-amber-400" /><span className="text-amber-400 font-medium">Detect</span></span>
           <span className="text-muted-foreground/40">→</span>
           <span className="flex items-center gap-1"><TrendingDown className="h-3 w-3 text-blue-400" /><span className="text-blue-400 font-medium">Trigger</span></span>
@@ -74,38 +74,38 @@ const TechSlideUseCases = ({ slideNumber, ...narrationProps }: Props) => {
         </div>
 
         {/* Use case cards */}
-        <div className={cn("grid gap-3 flex-1 min-h-0", cases.length === 1 ? "grid-cols-1 max-w-2xl mx-auto w-full" : "grid-cols-1 md:grid-cols-2")}>
+        <div className={cn("grid gap-4 flex-1 min-h-0 auto-rows-fr items-stretch", cases.length === 1 ? "grid-cols-1 max-w-2xl mx-auto w-full" : "grid-cols-1 md:grid-cols-2")}>
           {cases.map((uc) => {
             const annual = uc.input.baseline * uc.input.costMidpoint * uc.input.annualisationFactor;
             const dtop = parseDTOP(uc.platformMechanism);
             return (
-              <div key={uc.id} className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-3 flex flex-col">
-                <div className="flex items-center gap-2 mb-1">
-                  <h3 className="text-sm font-semibold text-foreground flex-1">{uc.label}</h3>
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-destructive/10 text-destructive font-semibold shrink-0">{formatCurrency(annual)}/yr</span>
+              <div key={uc.id} className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-4 flex flex-col h-full">
+                <div className="flex items-center gap-2 mb-2 shrink-0">
+                  <h3 className="text-sm font-bold text-foreground flex-1">{uc.label}</h3>
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-destructive/10 text-destructive font-bold shrink-0">{formatCurrency(annual)}/yr</span>
                 </div>
-                <p className="text-[10px] text-muted-foreground mb-2">{uc.description}</p>
+                <p className="text-xs text-muted-foreground mb-3 leading-relaxed shrink-0">{uc.description}</p>
 
-                <div className="space-y-1.5 flex-1">
+                <div className="space-y-2 flex-1 flex flex-col justify-center">
                   <div className="relative pl-3 border-l-2 border-amber-400/50">
                     <div className="absolute -left-[5px] top-0.5 w-2 h-2 rounded-full bg-amber-400" />
-                    <div className="text-[9px] font-semibold uppercase tracking-wider text-amber-400">Detect</div>
-                    <div className="text-[11px] text-foreground leading-snug">{dtop.detect}</div>
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-amber-400">Detect</div>
+                    <div className="text-xs text-foreground leading-snug">{dtop.detect}</div>
                   </div>
                   <div className="relative pl-3 border-l-2 border-blue-400/50">
                     <div className="absolute -left-[5px] top-0.5 w-2 h-2 rounded-full bg-blue-400" />
-                    <div className="text-[9px] font-semibold uppercase tracking-wider text-blue-400">Trigger</div>
-                    <div className="text-[11px] text-foreground leading-snug">{dtop.trigger}</div>
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-blue-400">Trigger</div>
+                    <div className="text-xs text-foreground leading-snug">{dtop.trigger}</div>
                   </div>
                   <div className="relative pl-3 border-l-2 border-violet-400/50">
                     <div className="absolute -left-[5px] top-0.5 w-2 h-2 rounded-full bg-violet-400" />
-                    <div className="text-[9px] font-semibold uppercase tracking-wider text-violet-400">Orchestrate</div>
-                    <div className="text-[11px] text-foreground leading-snug">{dtop.orchestrate}</div>
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-violet-400">Orchestrate</div>
+                    <div className="text-xs text-foreground leading-snug">{dtop.orchestrate}</div>
                   </div>
                   <div className="relative pl-3 border-l-2 border-emerald-400/50">
                     <div className="absolute -left-[5px] top-0.5 w-2 h-2 rounded-full bg-emerald-400" />
-                    <div className="text-[9px] font-semibold uppercase tracking-wider text-emerald-400">Prove</div>
-                    <div className="text-[11px] text-foreground leading-snug">{dtop.prove}</div>
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">Prove</div>
+                    <div className="text-xs text-foreground leading-snug">{dtop.prove}</div>
                   </div>
                 </div>
               </div>

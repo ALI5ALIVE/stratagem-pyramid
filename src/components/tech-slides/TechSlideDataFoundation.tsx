@@ -10,7 +10,6 @@ const sources = [
   { icon: ShieldCheck, name: "SafetyManager365", color: "text-rose-400", bg: "bg-rose-500/10", border: "border-rose-500/30", feeds: "Occurrences · Audits · Investigations" },
 ];
 
-// Three capability pillars that build OUT the foundation
 const capabilityPillars = [
   {
     icon: Layers,
@@ -56,7 +55,6 @@ const capabilityPillars = [
   },
 ];
 
-// Cross-cutting governance & access guarantees
 const guarantees = [
   { icon: Lock, label: "Customer-Owned & Tenant-Isolated", color: "text-cyan-400" },
   { icon: Radio, label: "Real-Time Event Propagation", color: "text-emerald-400" },
@@ -71,17 +69,17 @@ const TechSlideDataFoundation = ({ slideNumber, ...narrationProps }: Props) => (
     slideNumber={slideNumber}
     {...narrationProps}
   >
-    <div className="flex-1 flex flex-col gap-3 min-h-0">
+    <div className="flex-1 flex flex-col gap-4 min-h-0">
       {/* Top: data flow into foundation */}
-      <div className="grid grid-cols-1 lg:grid-cols-7 gap-3 items-stretch">
-        <div className="lg:col-span-3 grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-1 lg:grid-cols-7 gap-3 items-stretch shrink-0">
+        <div className="lg:col-span-3 grid grid-cols-3 gap-2 auto-rows-fr">
           {sources.map((s) => (
-            <div key={s.name} className={`rounded-lg border ${s.border} ${s.bg} p-2 flex flex-col`}>
+            <div key={s.name} className={`rounded-xl border ${s.border} ${s.bg} p-2.5 flex flex-col h-full`}>
               <div className="flex items-center gap-1.5 mb-1">
-                <s.icon className={`h-3.5 w-3.5 ${s.color} shrink-0`} />
-                <span className={`text-[10px] font-bold ${s.color} truncate`}>{s.name}</span>
+                <s.icon className={`h-4 w-4 ${s.color} shrink-0`} />
+                <span className={`text-[11px] font-bold ${s.color} truncate`}>{s.name}</span>
               </div>
-              <div className="text-[9px] text-muted-foreground leading-tight">{s.feeds}</div>
+              <div className="text-[10px] text-muted-foreground leading-tight">{s.feeds}</div>
             </div>
           ))}
         </div>
@@ -94,54 +92,56 @@ const TechSlideDataFoundation = ({ slideNumber, ...narrationProps }: Props) => (
           <Database className="h-7 w-7 text-cyan-400 shrink-0" />
           <div className="flex-1 min-w-0">
             <h3 className="text-sm font-bold text-cyan-400">Operational Data Foundation</h3>
-            <p className="text-[10px] text-muted-foreground leading-snug">Cross-product schema · Governed access · Customer-owned</p>
+            <p className="text-[11px] text-muted-foreground leading-snug">Cross-product schema · Governed access · Customer-owned</p>
           </div>
           <Sparkles className="h-4 w-4 text-primary/60 shrink-0" />
         </div>
       </div>
 
       {/* Three capability pillars */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 flex-1 min-h-0">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 flex-1 min-h-0 auto-rows-fr items-stretch">
         {capabilityPillars.map((p) => (
-          <div key={p.title} className={`rounded-xl border ${p.border} ${p.bg} p-3.5 flex flex-col`}>
-            <div className="flex items-start gap-2 mb-2">
-              <p.icon className={`h-5 w-5 ${p.color} shrink-0 mt-0.5`} />
-              <div className="flex-1 min-w-0">
-                <h3 className={`text-sm font-bold ${p.color}`}>{p.title}</h3>
-                <p className="text-[10px] text-muted-foreground italic">{p.tagline}</p>
+          <div key={p.title} className={`rounded-xl border ${p.border} ${p.bg} p-4 flex flex-col h-full justify-between`}>
+            <div>
+              <div className="flex items-start gap-2 mb-3">
+                <p.icon className={`h-5 w-5 ${p.color} shrink-0 mt-0.5`} />
+                <div className="flex-1 min-w-0">
+                  <h3 className={`text-sm font-bold ${p.color}`}>{p.title}</h3>
+                  <p className="text-[11px] text-muted-foreground italic">{p.tagline}</p>
+                </div>
               </div>
+              <ul className="space-y-2">
+                {p.points.map((pt) => (
+                  <li key={pt} className="text-xs text-foreground/80 leading-relaxed flex gap-2">
+                    <span className={`${p.color} shrink-0`}>▸</span>
+                    <span>{pt}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <ul className="space-y-1.5 flex-1 mb-2">
-              {p.points.map((pt) => (
-                <li key={pt} className="text-[11px] text-foreground/80 leading-snug flex gap-1.5">
-                  <span className={`${p.color} shrink-0`}>▸</span>
-                  <span>{pt}</span>
-                </li>
-              ))}
-            </ul>
-            <div className={`rounded-md border ${p.border} bg-background/40 px-2 py-1 text-center`}>
-              <span className={`text-[10px] font-bold ${p.color} uppercase tracking-wider`}>{p.metric}</span>
+            <div className={`mt-3 rounded-md border ${p.border} bg-background/40 px-2 py-1.5 text-center`}>
+              <span className={`text-[11px] font-bold ${p.color} uppercase tracking-wider`}>{p.metric}</span>
             </div>
           </div>
         ))}
       </div>
 
       {/* Governance guarantees strip */}
-      <div className="rounded-lg border border-muted/20 bg-card/40 p-2 flex flex-col sm:flex-row items-center justify-around gap-2 shrink-0">
+      <div className="rounded-xl border border-muted/20 bg-card/40 p-3 flex flex-col sm:flex-row items-center justify-around gap-2 shrink-0 mt-auto">
         {guarantees.map((g) => (
           <div key={g.label} className="flex items-center gap-2">
-            <g.icon className={`h-3.5 w-3.5 ${g.color}`} />
-            <span className="text-[11px] text-foreground font-medium">{g.label}</span>
+            <g.icon className={`h-4 w-4 ${g.color}`} />
+            <span className="text-xs text-foreground font-medium">{g.label}</span>
           </div>
         ))}
       </div>
-    </div>
 
-    <div className="mt-2 rounded-lg border border-primary/20 bg-primary/5 p-2 text-center shrink-0">
-      <p className="text-[11px] text-foreground">
-        <span className="font-semibold text-primary">Taxonomy gives shared language. The graph gives shared context. Custom LLMs give shared understanding.</span>
-        <span className="text-muted-foreground"> Together they're the architectural keystone — every layer above depends on this one.</span>
-      </p>
+      <div className="rounded-xl border border-primary/20 bg-primary/5 p-2.5 text-center shrink-0">
+        <p className="text-xs text-foreground">
+          <span className="font-semibold text-primary">Taxonomy gives shared language. The graph gives shared context. Custom LLMs give shared understanding.</span>
+          <span className="text-muted-foreground"> Together they're the architectural keystone — every layer above depends on this one.</span>
+        </p>
+      </div>
     </div>
   </SalesSlideContainer>
 );

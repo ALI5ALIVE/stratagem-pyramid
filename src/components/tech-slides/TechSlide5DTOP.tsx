@@ -19,34 +19,32 @@ const TechSlide5DTOP = ({ slideNumber, ...narrationProps }: Props) => {
   const [active, setActive] = useState<number | null>(null);
   return (
     <SalesSlideContainer id="tech-slide-5" title="Operating Model: DTOP" subtitle="Detect → Trigger → Orchestrate → Prove — the closed-loop operating model" slideNumber={slideNumber} {...narrationProps}>
-      <div className="flex-1 flex flex-col gap-3">
+      <div className="flex-1 flex flex-col gap-4 min-h-0">
         {/* Data sources */}
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-[10px] text-muted-foreground uppercase tracking-wider mr-2">Data Sources</span>
-          {dataSources.map((d) => (<span key={d} className="text-[10px] px-2 py-0.5 rounded-full border border-muted/30 bg-muted/10 text-muted-foreground">{d}</span>))}
+        <div className="flex items-center gap-2 flex-wrap shrink-0">
+          <span className="text-xs text-muted-foreground uppercase tracking-wider mr-2 font-semibold">Data Sources</span>
+          {dataSources.map((d) => (<span key={d} className="text-xs px-3 py-1 rounded-full border border-muted/30 bg-muted/10 text-muted-foreground">{d}</span>))}
         </div>
 
-        {/* Pipeline */}
-        <div className="grid grid-cols-4 gap-2 flex-1 min-h-0">
+        {/* Pipeline — equal height; reserve room for audit trail */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 flex-1 min-h-0 auto-rows-fr items-stretch">
           {steps.map((s, i) => (
-            <button key={s.letter} onClick={() => setActive(active === i ? null : i)} className={cn("rounded-lg border p-3 flex flex-col text-left transition-all h-full", s.border, s.bg, active === i && "ring-2 ring-primary")}>
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className={cn("text-xl font-display font-bold", s.color)}>{s.letter}</span>
+            <button key={s.letter} onClick={() => setActive(active === i ? null : i)} className={cn("rounded-xl border p-4 flex flex-col text-left transition-all h-full", s.border, s.bg, active === i && "ring-2 ring-primary")}>
+              <div className="flex items-center gap-2 mb-2">
+                <span className={cn("text-2xl font-display font-bold", s.color)}>{s.letter}</span>
                 <s.icon className={cn("h-5 w-5", s.color)} />
               </div>
-              <h3 className={cn("text-sm font-bold mb-1", s.color)}>{s.label}</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed flex-1">{s.description}</p>
-              {active === i && (
-                <div className="mt-3 pt-3 border-t border-muted/20">
-                  <span className="text-[9px] uppercase tracking-wider text-muted-foreground/60">Audit Trail Example</span>
-                  <p className="text-[10px] text-foreground/80 mt-1 italic leading-relaxed">{s.auditTrail}</p>
-                </div>
-              )}
+              <h3 className={cn("text-base font-bold mb-1.5", s.color)}>{s.label}</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">{s.description}</p>
+              <div className="mt-auto pt-3 border-t border-muted/20">
+                <span className="text-[10px] uppercase tracking-wider text-muted-foreground/60 font-semibold">Audit Trail Example</span>
+                <p className={cn("text-xs mt-1 italic leading-relaxed transition-opacity", active === i ? "text-foreground/80 opacity-100" : "text-muted-foreground/40 opacity-60")}>{s.auditTrail}</p>
+              </div>
             </button>
           ))}
         </div>
 
-        <div className="p-2 rounded-lg border border-primary/20 bg-primary/5 text-center">
+        <div className="p-3 rounded-xl border border-primary/20 bg-primary/5 text-center shrink-0">
           <p className="text-sm text-muted-foreground"><span className="text-primary font-semibold">Every step is auditable.</span> Every action is traceable. Every outcome is provable.</p>
         </div>
       </div>

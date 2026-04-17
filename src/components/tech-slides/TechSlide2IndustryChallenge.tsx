@@ -26,22 +26,22 @@ const TechSlide2IndustryChallenge = ({ slideNumber, ...narrationProps }: Props) 
 
   return (
     <SalesSlideContainer id="tech-slide-2" title="The Industry Challenge" subtitle="The daily reality of fragmented operations — and the cost of inaction" slideNumber={slideNumber} {...narrationProps}>
-      <div className="flex-1 flex flex-col gap-4">
+      <div className="flex-1 flex flex-col gap-4 min-h-0">
         {/* Pain points strip */}
-        <div className="grid grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 auto-rows-fr shrink-0">
           {painPoints.map((p) => (
-            <div key={p.label} className="flex items-center gap-3 p-3 rounded-lg border border-muted/20 bg-muted/5">
+            <div key={p.label} className="flex items-center gap-3 p-3 rounded-xl border border-muted/20 bg-muted/5 h-full">
               <p.icon className="h-5 w-5 text-destructive shrink-0" />
-              <div>
-                <span className="text-sm font-bold text-foreground">{p.label}</span>
-                <p className="text-[10px] text-muted-foreground">{p.sub}</p>
+              <div className="min-w-0">
+                <span className="text-sm font-bold text-foreground block">{p.label}</span>
+                <p className="text-xs text-muted-foreground leading-snug">{p.sub}</p>
               </div>
             </div>
           ))}
         </div>
 
         {/* Cost waterfall */}
-        <div className="flex-1 grid grid-cols-1 gap-1.5">
+        <div className="flex-1 flex flex-col justify-center gap-2 min-h-0">
           {sorted.map((uc) => {
             const widthPct = Math.max((uc.annualCost / maxCost) * 100, 8);
             return (
@@ -59,7 +59,7 @@ const TechSlide2IndustryChallenge = ({ slideNumber, ...narrationProps }: Props) 
         </div>
 
         {/* Total */}
-        <div className="border border-destructive/30 rounded-xl bg-destructive/5 p-4 flex items-center gap-4">
+        <div className="border border-destructive/30 rounded-xl bg-destructive/5 p-4 flex items-center gap-4 shrink-0">
           <div className="w-10 h-10 rounded-full bg-destructive/20 flex items-center justify-center shrink-0">
             <AlertTriangle className="w-5 h-5 text-destructive" />
           </div>
@@ -72,7 +72,7 @@ const TechSlide2IndustryChallenge = ({ slideNumber, ...narrationProps }: Props) 
         </div>
 
         {/* Methodology footnote */}
-        <div className="flex items-start gap-2 pt-2 border-t border-muted/10">
+        <div className="flex items-start gap-2 pt-2 border-t border-muted/10 shrink-0">
           <Info className="w-3 h-3 text-muted-foreground shrink-0 mt-0.5" />
           <p className="text-[10px] text-muted-foreground/70 leading-relaxed">
             {methodologyNote}

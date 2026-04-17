@@ -21,15 +21,15 @@ const TechSlideAutomation = ({ slideNumber, ...narrationProps }: Props) => (
   >
     <div className="flex-1 flex flex-col gap-4 min-h-0">
       {/* Pipeline */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-2 auto-rows-fr shrink-0">
         {pipeline.map((s, i, arr) => (
-          <div key={s.label} className="flex items-center gap-2">
-            <div className={`flex-1 rounded-xl border ${s.border} ${s.bg} p-3 flex flex-col`}>
-              <div className="flex items-center gap-2 mb-1.5">
+          <div key={s.label} className="flex items-center gap-2 h-full">
+            <div className={`flex-1 h-full rounded-xl border ${s.border} ${s.bg} p-4 flex flex-col`}>
+              <div className="flex items-center gap-2 mb-2">
                 <s.icon className={`h-5 w-5 ${s.color}`} />
                 <span className={`text-sm font-bold ${s.color}`}>{s.label}</span>
               </div>
-              <p className="text-[11px] text-muted-foreground leading-snug">{s.desc}</p>
+              <p className="text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
             </div>
             {i < arr.length - 1 && <ArrowRight className="h-4 w-4 text-muted-foreground/40 shrink-0 hidden md:block" />}
           </div>
@@ -37,40 +37,40 @@ const TechSlideAutomation = ({ slideNumber, ...narrationProps }: Props) => (
       </div>
 
       {/* Worked example */}
-      <div className="rounded-xl border border-primary/20 bg-card/40 p-4 flex-1 min-h-0">
-        <div className="flex items-baseline justify-between mb-2">
+      <div className="rounded-xl border border-primary/20 bg-card/40 p-4 flex-1 flex flex-col min-h-0">
+        <div className="flex items-baseline justify-between mb-3 shrink-0">
           <h3 className="text-sm font-bold text-foreground">Cross-Product Workflow — Publish → Train → Assure</h3>
           <span className="text-[10px] text-muted-foreground">Zero manual handoffs · Zero custom code</span>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-          <div className="rounded-lg border border-blue-500/30 bg-blue-500/5 p-2.5">
-            <span className="text-[10px] font-bold text-blue-400 uppercase tracking-wider">1. Event</span>
-            <p className="text-[11px] text-foreground mt-1">ContentManager365 fires a <em>procedure published</em> event with role, criticality and effective date.</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 auto-rows-fr items-stretch">
+          <div className="rounded-xl border border-blue-500/30 bg-blue-500/5 p-3 h-full flex flex-col">
+            <span className="text-xs font-bold text-blue-400 uppercase tracking-wider">1. Event</span>
+            <p className="text-xs text-foreground mt-1.5 leading-relaxed">ContentManager365 fires a <em>procedure published</em> event with role, criticality and effective date.</p>
           </div>
-          <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-2.5">
-            <span className="text-[10px] font-bold text-amber-400 uppercase tracking-wider">2. Orchestrate</span>
-            <p className="text-[11px] text-foreground mt-1">Workflow joins affected roles to TrainingManager365, opens a SafetyManager365 compliance checkpoint, notifies in Teams.</p>
+          <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-3 h-full flex flex-col">
+            <span className="text-xs font-bold text-amber-400 uppercase tracking-wider">2. Orchestrate</span>
+            <p className="text-xs text-foreground mt-1.5 leading-relaxed">Workflow joins affected roles to TrainingManager365, opens a SafetyManager365 compliance checkpoint, notifies in Teams.</p>
           </div>
-          <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-2.5">
-            <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">3. Outcome</span>
-            <p className="text-[11px] text-foreground mt-1">Training auto-assigned, acknowledgement tracked, exceptions surfaced — auditable trail end-to-end.</p>
+          <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-3 h-full flex flex-col">
+            <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">3. Outcome</span>
+            <p className="text-xs text-foreground mt-1.5 leading-relaxed">Training auto-assigned, acknowledgement tracked, exceptions surfaced — auditable trail end-to-end.</p>
           </div>
         </div>
 
         {/* Two callouts */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-3">
-          <div className="rounded-lg border border-violet-500/30 bg-violet-500/10 p-2.5 flex items-start gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3 auto-rows-fr items-stretch">
+          <div className="rounded-xl border border-violet-500/30 bg-violet-500/10 p-3 flex items-start gap-2 h-full">
             <UserCheck className="h-4 w-4 text-violet-400 mt-0.5 shrink-0" />
             <div>
-              <span className="text-[11px] font-bold text-violet-400">Human-in-the-loop by design</span>
-              <p className="text-[10px] text-muted-foreground mt-0.5">Approval gates, optional review steps and override controls — automation augments operators, never bypasses them.</p>
+              <span className="text-xs font-bold text-violet-400">Human-in-the-loop by design</span>
+              <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">Approval gates, optional review steps and override controls — automation augments operators, never bypasses them.</p>
             </div>
           </div>
-          <div className="rounded-lg border border-primary/30 bg-primary/10 p-2.5 flex items-start gap-2">
+          <div className="rounded-xl border border-primary/30 bg-primary/10 p-3 flex items-start gap-2 h-full">
             <Plug className="h-4 w-4 text-primary mt-0.5 shrink-0" />
             <div>
-              <span className="text-[11px] font-bold text-primary">Native connectors, not bespoke code</span>
-              <p className="text-[10px] text-muted-foreground mt-0.5">Outlook, Teams, Slack, identity providers, customer data systems — integrations land in days, not months.</p>
+              <span className="text-xs font-bold text-primary">Native connectors, not bespoke code</span>
+              <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">Outlook, Teams, Slack, identity providers, customer data systems — integrations land in days, not months.</p>
             </div>
           </div>
         </div>
