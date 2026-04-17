@@ -16,7 +16,17 @@ const PlatformArchitectureDiagram = ({ compact = false }: { compact?: boolean })
 
   return (
     <div className="w-full h-full flex flex-col gap-1.5">
-      {/* Layer 1 — Unified Mobile (delivery surface, top) */}
+      {/* Layer 5 — DTOP Way of Working (now at top) */}
+      <div className="rounded-lg border-2 border-emerald-500/50 bg-emerald-500/5 p-2.5 flex items-center gap-3">
+        <Repeat className="h-5 w-5 text-emerald-400 shrink-0" />
+        <div className="flex-1 min-w-0">
+          <div className={`${titleSize} font-semibold text-emerald-300`}>DTOP — The Way of Working</div>
+          <div className={`${labelSize} text-muted-foreground`}>Detect → Trigger → Orchestrate → Prove · wraps the whole stack</div>
+        </div>
+        <span className={`${labelSize} text-emerald-300/80 font-medium`}>Way of working</span>
+      </div>
+
+      {/* Layer 1 — Unified Mobile (delivery surface) */}
       <div className="rounded-lg border border-violet-500/40 bg-violet-500/5 p-2.5 flex items-center gap-3">
         <Smartphone className="h-5 w-5 text-violet-400 shrink-0" />
         <div className="flex-1 min-w-0">
