@@ -1,6 +1,6 @@
 import { 
   Presentation, Target, TrendingUp, FileText, Brain, 
-  Rocket, Briefcase, BookOpen, Home, Globe, Users, ScrollText, Workflow
+  Rocket, Briefcase, BookOpen, Home, Globe, Users, ScrollText, Workflow, Sparkles
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
@@ -36,6 +36,7 @@ const toolItems = [
   { title: "Persona Profiles", url: "/personas", icon: Users },
   { title: "Regulation Mgmt", url: "/regulation-management", icon: ScrollText },
   { title: "DTOP Playbook", url: "/dtop-playbook", icon: Workflow },
+  { title: "Insights & Recs", url: "/insights-playbook", icon: Sparkles },
   { title: "Homepage Mockup", url: "/homepage-mockup", icon: Globe },
 ];
 
