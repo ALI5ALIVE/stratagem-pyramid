@@ -121,27 +121,6 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
       "Three domains, same architecture. Safety: hard landing trends, crew injuries, regulatory exposure — each follows the same Detect, Trigger, Orchestrate, Prove loop with costed outcomes. Operations: AOG events, ground delays, fuel performance — connecting operational data with training and content to drive measurable cost avoidance. Financial: insurance premiums and revenue protection — the carriers building connected evidence trails are seeing material reductions in hull and liability premiums. Different signal, different domain — exactly the same DTOP pattern. Use the tabs to walk a customer through the cases most relevant to their pain point.",
   },
   {
-    slideId: "tech-slide-10",
-    title: "Safety Use Cases",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "Three safety use cases. Hard landing trend response: FOQA detects a cluster at a specific airport. CoAnalyst identifies contributing factors, cross-references crew rosters. Affected crew receive targeted simulator training within forty-eight hours. Result: seventy-eight percent reduction in repeat events within ninety days. Smoke and fumes investigation: cabin air quality report clusters trigger pattern detection across aircraft type, route, and maintenance history — automatically flagging maintenance with correlated analysis. Turbulence injury prevention: cross-referencing encounter data with cabin crew injuries to identify high-risk routes and altitudes. Each case follows the same DTOP loop. Different signal, same architecture.",
-  },
-  {
-    slideId: "tech-slide-11",
-    title: "Ops Use Cases",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "Three operational use cases. Regulatory change cascade: new airworthiness directive arrives, CoAnalyst maps it against procedures and crew qualifications, orchestrates the update from revision through acknowledgment and retraining. Six weeks compressed to five days. Fatigue risk management: integrating roster data, duty period calculations, and voluntary fatigue reports into a real-time risk picture. CoAnalyst flags crew members where cumulative fatigue exceeds threshold — before the next assignment, not after the next incident. Ground handling incident reduction: correlating ramp reports with equipment, time of day, seasonal patterns, and handler training records for targeted interventions.",
-  },
-  {
-    slideId: "tech-slide-12",
-    title: "Financial Use Cases",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "Two cases that hit the P and L directly. Fuel variance: one percent across a mid-size fleet equals five to twenty million annually. CoAnalyst identifies specific routes, aircraft, and crew contributing to excess burn — correlating FOQA with flight planning, weather, and training records. Targeted interventions deliver measurable savings within ninety days. Insurance premiums: carriers demonstrating connected safety intelligence — live evidence trails, not binders — are seeing material reductions. One carrier achieved fifteen percent reduction in hull and liability premiums. These aren't operational metrics. They're financial outcomes your CFO measures. And those financial outcomes are just the beginning — here's what's coming next.",
-  },
-  {
     slideId: "tech-slide-13",
     title: "Line of Sight",
     voiceId: DEFAULT_VOICE_ID,
@@ -160,21 +139,14 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "2026 Roadmap",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Beyond the use cases we've covered, three capabilities are in active development. Predictive maintenance correlation — connecting safety intelligence with maintenance planning to predict component failures before disruption. Cross-carrier benchmarking — anonymised intelligence sharing across fifty-plus airline customers, enabling performance benchmarking against industry peers. Regulatory submission automation — generating audit-ready evidence packages automatically on regulator request. Each extends the intelligence layer while maintaining the connected architecture. The platform gets smarter with every carrier, every signal, every closed loop.",
+      "Beyond the use cases we've covered, three capabilities are in active development. Predictive maintenance correlation — connecting safety intelligence with maintenance planning to predict component failures before disruption. Cross-carrier benchmarking — anonymised intelligence sharing across customers, enabling performance benchmarking against industry peers. Regulatory submission automation — generating audit-ready evidence packages automatically on regulator request. Each extends the intelligence layer while maintaining the connected architecture. The platform gets smarter with every carrier, every signal, every closed loop.",
   },
   {
-    slideId: "tech-slide-16",
-    title: "Outcomes",
+    slideId: "tech-slide-why-comply",
+    title: "Outcomes & Why Comply365",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Measurable outcomes across everything we've discussed. Safety: seventy-eight percent reduction in repeat events. Speed: six weeks compressed to forty-eight hours. Compliance: directive to crew acknowledgment in five days. Financial: total annual exposure exceeding one hundred and ten million, with cost avoidance exceeding thirty million for a mid-size carrier. Precision: ninety percent domain accuracy versus thirty-five for generic AI. These aren't projections. They're measured outcomes from carriers running on the platform today. The evidence model we just described — that's how we prove it.",
-  },
-  {
-    slideId: "tech-slide-17",
-    title: "Why Comply365",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "Those outcomes raise the question — why Comply three six five? Three differentiators. Connected foundation — one data model, three applications, one intelligence layer. Fifty-plus airlines, seven of the top ten North American carriers, over one million frontline users. Domain-trained intelligence — CoAnalyst built from the ground up on aviation data, continuously trained since twenty twenty-three. Not a generic AI with an aviation wrapper. Proof by design — every action logged automatically. The evidence trail is a byproduct, not a report. Point solutions manage silos. Generic AI creates noise. We close the loop.",
+      "Measured outcomes from carriers running on the platform today. Seventy-eight percent reduction in repeat events. Signal-to-coordinated-response compressed from six weeks to forty-eight hours. Directive to crew acknowledgement in five days. Ninety percent domain accuracy where generic AI sits at thirty-five. Three things make those outcomes possible. Connected foundation — one data model, three core apps, one intelligence layer. Domain-trained intelligence — CoAnalyst built on aviation data since twenty twenty-three, not a generic AI with an aviation wrapper. Proof by design — every action logged automatically, the audit trail is a byproduct, not a report. Point solutions manage silos. Generic AI creates noise. We close the loop.",
   },
   {
     slideId: "tech-slide-18",
