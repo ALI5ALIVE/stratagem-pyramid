@@ -3,55 +3,63 @@ import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useTechPitchNarration } from "@/hooks/useTechPitchNarration";
 
+// Act 1 — Frame the problem
 import TechSlide0Title from "@/components/tech-slides/TechSlide0Title";
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
 import TechSlide2IndustryChallenge from "@/components/tech-slides/TechSlide2IndustryChallenge";
-import TechSlide3BeforeAfter from "@/components/tech-slides/TechSlide3BeforeAfter";
+
+// Act 2 — Architecture
 import TechSlide4Platform from "@/components/tech-slides/TechSlide4Platform";
 import TechSlide4aSafetyManager from "@/components/tech-slides/TechSlide4aSafetyManager";
 import TechSlide4bContentManager from "@/components/tech-slides/TechSlide4bContentManager";
 import TechSlide4cTrainingManager from "@/components/tech-slides/TechSlide4cTrainingManager";
-import TechSlide5DTOP from "@/components/tech-slides/TechSlide5DTOP";
+import TechSlideDataFoundation from "@/components/tech-slides/TechSlideDataFoundation";
 import TechSlide6PlatformIntegrations from "@/components/tech-slides/TechSlide6PlatformIntegrations";
 
+// Act 3 — Intelligence layer
 import TechSlide7CoAnalyst from "@/components/tech-slides/TechSlide7CoAnalyst";
-import TechSlide8IntelligenceTiers from "@/components/tech-slides/TechSlide8IntelligenceTiers";
+import TechSlideInsights from "@/components/tech-slides/TechSlideInsights";
+import TechSlideAutomation from "@/components/tech-slides/TechSlideAutomation";
+import TechSlideTiersVsAI from "@/components/tech-slides/TechSlideTiersVsAI";
 
-import TechSlide10SafetyUseCases from "@/components/tech-slides/TechSlide10SafetyUseCases";
-import TechSlide11OpsUseCases from "@/components/tech-slides/TechSlide11OpsUseCases";
-import TechSlide12FinancialUseCases from "@/components/tech-slides/TechSlide12FinancialUseCases";
+// Act 4 — Delivery & operating model
+import TechSlideMobile from "@/components/tech-slides/TechSlideMobile";
+import TechSlide5DTOP from "@/components/tech-slides/TechSlide5DTOP";
+import TechSlideUseCases from "@/components/tech-slides/TechSlideUseCases";
+
+// Act 5 — Value & close
 import TechSlide13LineOfSight from "@/components/tech-slides/TechSlide13LineOfSight";
 import TechSlide14MaturityRoadmap from "@/components/tech-slides/TechSlide14MaturityRoadmap";
 import TechSlide15Roadmap2026 from "@/components/tech-slides/TechSlide15Roadmap2026";
-
-import TechSlide17WhyUs from "@/components/tech-slides/TechSlide17WhyUs";
+import TechSlideWhyComply from "@/components/tech-slides/TechSlideWhyComply";
 import TechSlide18Partnership from "@/components/tech-slides/TechSlide18Partnership";
-import CustomerOutcomesSlide from "@/components/shared/CustomerOutcomesSlide";
 
 const slides = [
+  // Act 1
   { id: "tech-slide-0", label: "Title", component: TechSlide0Title },
   { id: "tech-slide-1", label: "Strategic Shift", component: TechSlide1StrategicShift },
   { id: "tech-slide-2", label: "Industry Challenge", component: TechSlide2IndustryChallenge },
-  { id: "tech-slide-3", label: "Before & After", component: TechSlide3BeforeAfter },
-  { id: "tech-slide-4", label: "The Platform", component: TechSlide4Platform },
-  { id: "tech-slide-4a", label: "Safety Manager 365", component: TechSlide4aSafetyManager },
-  { id: "tech-slide-4b", label: "Content Manager 365", component: TechSlide4bContentManager },
-  { id: "tech-slide-4c", label: "Training Manager 365", component: TechSlide4cTrainingManager },
-  { id: "tech-slide-7", label: "CoAnalyst Intelligence", component: TechSlide7CoAnalyst },
-  { id: "tech-slide-8", label: "Intelligence Tiers", component: TechSlide8IntelligenceTiers },
-  
-  { id: "tech-slide-5", label: "DTOP Operating Model", component: TechSlide5DTOP },
+  // Act 2 — Architecture
+  { id: "tech-slide-4", label: "Platform Overview", component: TechSlide4Platform },
+  { id: "tech-slide-4a", label: "SafetyManager365", component: TechSlide4aSafetyManager },
+  { id: "tech-slide-4b", label: "ContentManager365", component: TechSlide4bContentManager },
+  { id: "tech-slide-4c", label: "TrainingManager365", component: TechSlide4cTrainingManager },
+  { id: "tech-slide-data-foundation", label: "Data Foundation", component: TechSlideDataFoundation },
   { id: "tech-slide-6", label: "Platform Integrations", component: TechSlide6PlatformIntegrations },
-
-  { id: "tech-slide-10", label: "Safety Use Cases", component: TechSlide10SafetyUseCases },
-  { id: "tech-slide-11", label: "Ops Use Cases", component: TechSlide11OpsUseCases },
-  { id: "tech-slide-12", label: "Financial Use Cases", component: TechSlide12FinancialUseCases },
-  { id: "tech-slide-15", label: "2026 Roadmap", component: TechSlide15Roadmap2026 },
+  // Act 3 — Intelligence
+  { id: "tech-slide-coanalyst", label: "CoAnalyst", component: TechSlide7CoAnalyst },
+  { id: "tech-slide-insights", label: "Insights & Recommendations", component: TechSlideInsights },
+  { id: "tech-slide-automation", label: "Automation", component: TechSlideAutomation },
+  { id: "tech-slide-tiers-vs-ai", label: "Tiers vs Generic AI", component: TechSlideTiersVsAI },
+  // Act 4 — Delivery & operating model
+  { id: "tech-slide-mobile", label: "Unified Mobile", component: TechSlideMobile },
+  { id: "tech-slide-5", label: "DTOP Operating Model", component: TechSlide5DTOP },
+  { id: "tech-slide-use-cases", label: "Use Cases", component: TechSlideUseCases },
+  // Act 5 — Value & close
   { id: "tech-slide-13", label: "Line of Sight", component: TechSlide13LineOfSight },
   { id: "tech-slide-14", label: "Maturity Roadmap", component: TechSlide14MaturityRoadmap },
-  
-  { id: "tech-slide-16b", label: "Customer Outcomes", component: CustomerOutcomesSlide },
-  { id: "tech-slide-17", label: "Why Comply365", component: TechSlide17WhyUs },
+  { id: "tech-slide-15", label: "2026 Roadmap", component: TechSlide15Roadmap2026 },
+  { id: "tech-slide-why-comply", label: "Why Comply365", component: TechSlideWhyComply },
   { id: "tech-slide-18", label: "Partnership", component: TechSlide18Partnership },
 ];
 
