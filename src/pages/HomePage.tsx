@@ -136,8 +136,7 @@ export default function HomePage() {
             title="Customer Pitch Decks" 
             subtitle="Audience-tailored presentations for external delivery" 
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {pitchDecks.map((card) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <DeckCardComponent key={card.href} card={card} />
             ))}
           </div>
@@ -149,8 +148,7 @@ export default function HomePage() {
             title="Strategy & Positioning" 
             subtitle="Internal playbooks and frameworks" 
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {strategyDecks.map((card) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
               <DeckCardComponent key={card.href} card={card} />
             ))}
           </div>
@@ -169,10 +167,15 @@ export default function HomePage() {
               href: "/platform-playbook",
               icon: Layers,
               badge: "13 slides",
-              accent: "from-primary to-comply-teal",
             }} />
             <DeckCardComponent card={{
-              title: "Persona Deep-Dive",
+              title: "CoAnalyst Playbook",
+              description: "AI product positioning, messaging architecture, and go-to-market.",
+              href: "/coanalyst",
+              icon: Brain,
+              badge: "15 slides",
+              accent: "from-comply-plum to-primary",
+            }} />
               description: "Comprehensive buyer personas with messaging, objections, and discovery questions for every stakeholder.",
               href: "/personas",
               icon: Users,
