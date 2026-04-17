@@ -65,25 +65,60 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
       "Training Manager handles the competency lifecycle — qualification, recurrent training, checking events, and revalidation across every crew member. CoAnalyst's activation here is powerful. Instead of generic recurrent cycles, it analyses individual operational data — FOQA trends, route exposure, safety report history — and recommends targeted interventions specific to each crew member's risk profile. When a hard landing cluster is detected at a specific airport, CoAnalyst identifies the forty-seven pilots who've flown that approach and assigns approach-specific simulator scenarios within forty-eight hours. Not generic training. Targeted, evidence-based crew development.",
   },
   {
-    slideId: "tech-slide-7",
-    title: "CoAnalyst Intelligence",
+    slideId: "tech-slide-data-foundation",
+    title: "Operational Data Foundation",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "You've now seen CoAnalyst activate each module — safety, content, training. Let me show you the architecture that makes that possible. CoAnalyst is a hybrid AI architecture — not one model doing everything. Specialised language models trained on aviation data. Retrieval-augmented generation for real-time context. Structured reasoning for compliance logic. Pattern detection for trend identification. Trained on millions of historical aviation reports since twenty twenty-three, continuously fine-tuned on real operational data. The result: a system that distinguishes a bird strike report from a bird strike trend, a procedure change from a procedure gap, a training completion from a competency validation. That domain specificity delivers ninety percent accuracy where generic AI plateaus at thirty-five.",
+      "This is the architectural keystone — and the slide most platforms can't draw. ContentManager365, TrainingManager365 and SafetyManager365 each emit structured events into a single operational data foundation. One unified taxonomy, four thousand categories across five levels, applied consistently across all three. Customer-owned and tenant-isolated — your data stays yours. Real-time event propagation means every publish, completion or occurrence is immediately available to the intelligence and orchestration layers. Open APIs and webhooks mean you build on top of it. Without this foundation, intelligence has nothing to reason over. Every other layer in the platform depends on this one.",
   },
   {
-    slideId: "tech-slide-8",
-    title: "Intelligence Tiers",
+    slideId: "tech-slide-coanalyst",
+    title: "CoAnalyst",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Four intelligence tiers, each building on the last. Historical — querying past data. How many hard landings at this airport over twelve months? Reactive — real-time monitoring. A fatigue report cluster just crossed threshold at this base. Proactive — pattern detection. Seasonal weather data suggests elevated risk on this route for the next sixty days. Predictive — forward-looking models. Seventy-three percent probability of a regulatory finding in this area within ninety days. Each tier compounds as the system ingests more of your operational data. Most carriers start at tier one and reach tier three within twelve months.",
+      "CoAnalyst is the conversational intelligence layer. Master message: from reports to intelligence, from events to control. It's a hybrid AI architecture — domain-trained ML models for the heavy lifting, an LLM augmentation layer for natural-language interaction, and continuous learning that keeps both improving. Domain models are trained on millions of aviation reports since twenty twenty-three, delivering ninety percent accuracy at four thousand categories — where generic AI collapses to thirty-five. The LLM layer handles plain-English questions, summarisation and sixty-plus languages, but it's guardrailed by the domain models so you don't get aviation-critical hallucination. And it's tenant-isolated — your data never crosses customer boundaries.",
+  },
+  {
+    slideId: "tech-slide-insights",
+    title: "Insights & Recommendations",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "CoAnalyst answers questions. Insights and Recommendations goes a step further — it surfaces the questions you should be asking. Three capabilities. Pattern detection: cross-domain correlation that links training gaps to safety events to procedural ambiguity. Recommended actions: every insight comes paired with a concrete next step and a traceable reasoning trail. Trend and foresight: continuous, exploratory analysis that turns reactive reporting into proactive risk identification. Worked example: a COO asks, are dangerous goods incidents linked to training gaps? Sixty seconds later: three hub stations correlate with overdue DG recurrent training. Targeted retraining for one hundred and eighty ground crew, expedite SOP republish, audit pack generated. Question to evidence-backed action plan in under a minute.",
+  },
+  {
+    slideId: "tech-slide-automation",
+    title: "Automation",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "If insights surface what to do, automation actually does it — reliably, repeatably, with an audit trail. One automation layer across the platform, not one per product. Triggers fire from native events, webhooks, schedules, or third-party tools like Outlook and Teams. The orchestration layer routes them through reusable, no-code workflows. Guardrails by design — versioned, observable, testable, with human-in-the-loop approval gates wherever you need them. Every execution is logged. Worked example: a procedure publishes in ContentManager365. The workflow auto-assigns training in TrainingManager365 to the affected roles, opens a SafetyManager365 compliance checkpoint, notifies the team in Teams. Zero manual handoffs. Zero custom code. Publish to train to assure runs as one connected flow.",
+  },
+  {
+    slideId: "tech-slide-tiers-vs-ai",
+    title: "Intelligence Tiers vs Generic AI",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Four intelligence tiers, each compounding on the last. Historical — query past data in plain English. Reactive — real-time alerts on threshold breach. Proactive — pattern detection before incidents. Predictive — probabilistic risk modelling. Most carriers start at tier one and reach tier three within twelve months. And here's why generic AI cannot get you there. At level one — fifty occurrence types — generic AI is roughly comparable. At level two and three, hundreds of categories, generic AI drops to sixty percent. At level four and five — the cause and root cause, thousands of categories — generic AI collapses to thirty to forty percent. CoAnalyst holds ninety. The real-world risk: generic AI calls a repeated bird strike a one-off — missing the cluster pattern that signals a runway hazard trend.",
+  },
+  {
+    slideId: "tech-slide-mobile",
+    title: "Unified Mobile",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Three apps a shift becomes one app every shift. The Comply365 mobile app — already in daily frontline use through ContentManager365 — becomes the single shell for the platform. Procedures live there today. Training arrives in phase one, second quarter twenty twenty-six. Safety reporting in phase two, fourth quarter twenty twenty-six. Single sign-on across every mini-app. Unified notifications. One MDM footprint, one certification cycle, one approval through customer mobile estates — instead of three. The infrequent tools — training and safety — stop being unfamiliar detours and become tabs inside the app crews already trust.",
   },
   {
     slideId: "tech-slide-5",
-    title: "DTOP Architecture",
+    title: "DTOP Operating Model",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Now connecting intelligence to workflow. Detect, Trigger, Orchestrate, Prove. Detect — the signal engine ingests FOQA, ASAP, audit, and ops data. Sixty-five thousand signals monthly. Trigger — when criteria are met, the right workflow fires automatically. No emails, no manual handoffs. Orchestrate — safety investigation, content update, and training assignment move in parallel, not sequence. Prove — every action logged automatically, audit-ready by default. This is the mechanism that closes the loop. Intelligence without workflow is just dashboards. DTOP turns intelligence into operational outcomes your teams can measure.",
+      "DTOP is the operating model that wraps everything we've built. Detect — operational signals are ingested in real time across content, training, safety and external sources. Trigger — when criteria are met, the right workflow fires automatically, no emails, no manual handoffs. Orchestrate — safety investigation, procedure update and training assignment move in parallel, not in sequence. Prove — every action logged automatically, audit-ready by default. This is the mechanism that closes the loop. Intelligence without workflow is just dashboards. DTOP turns intelligence into operational outcomes your teams can measure — and prove.",
+  },
+  {
+    slideId: "tech-slide-use-cases",
+    title: "Use Cases",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Three domains, same architecture. Safety: hard landing trends, crew injuries, regulatory exposure — each follows the same Detect, Trigger, Orchestrate, Prove loop with costed outcomes. Operations: AOG events, ground delays, fuel performance — connecting operational data with training and content to drive measurable cost avoidance. Financial: insurance premiums and revenue protection — the carriers building connected evidence trails are seeing material reductions in hull and liability premiums. Different signal, different domain — exactly the same DTOP pattern. Use the tabs to walk a customer through the cases most relevant to their pain point.",
   },
   {
     slideId: "tech-slide-10",
