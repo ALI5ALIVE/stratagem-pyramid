@@ -30,13 +30,6 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
       "Here's the problem you're managing. Five to fifteen disconnected systems across safety, training, and content. Safety data in one database, training records in another, procedures in a third. Each system was built to solve one problem — none were designed to connect. The result: a safety signal detected in system A takes six weeks to produce a training response in system B — if it happens at all. When an auditor asks for the evidence thread, your team spends days reconstructing it across spreadsheets and email. That's not a process problem. It's an architecture problem.",
   },
   {
-    slideId: "tech-slide-3",
-    title: "Before & After",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "Let me make the contrast tangible. Today: a FOQA exceedance is detected. Safety logs it, emails training. Training opens a spreadsheet. Content receives a request weeks later. Evidence scattered across four systems. In the connected model: the same exceedance is detected. The platform identifies affected crew, assigns targeted training, verifies procedure versions, and logs every step — within forty-eight hours. Same data sources. Same teams. The difference isn't the people or the systems. It's the wiring between them. That's what we fix.",
-  },
-  {
     slideId: "tech-slide-4",
     title: "The Platform",
     voiceId: DEFAULT_VOICE_ID,
