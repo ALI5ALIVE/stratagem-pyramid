@@ -1,5 +1,5 @@
-import { 
-  Presentation, Target, TrendingUp, FileText, Brain, 
+import {
+  Presentation, Target, FileText, Brain,
   Rocket, Briefcase, BookOpen, Home, Globe, Users, ScrollText, Workflow, Sparkles, Zap, Smartphone, Layers
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
@@ -17,33 +17,41 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 
-const pitchItems = [
-  { title: "Executive Pitch", url: "/pitch-executive", icon: Rocket },
-  { title: "Executive Pitch 2", url: "/pitch-executive-2", icon: Rocket },
+type NavItem = {
+  title: string;
+  url: string;
+  icon: React.ElementType;
+  badge?: string;
+};
+
+const pitchItems: NavItem[] = [
+  { title: "Executive Pitch", url: "/pitch-executive-2", icon: Rocket },
   { title: "Operational Pitch", url: "/pitch-operational", icon: Briefcase },
   { title: "Technical Deep-Dive", url: "/pitch-technical", icon: BookOpen },
 ];
 
-const strategyItems = [
-  { title: "Strategy Deck", url: "/strategy", icon: Presentation },
-  { title: "Value Deck", url: "/value-deck", icon: TrendingUp },
-  { title: "CoAnalyst Playbook", url: "/coanalyst", icon: Brain },
-  { title: "Content Strategy", url: "/content-strategy", icon: FileText },
-];
-
-const toolItems = [
-  { title: "Platform Playbook", url: "/platform-playbook", icon: Layers },
-  { title: "Line of Sight", url: "/line-of-sight", icon: Target },
-  { title: "Persona Profiles", url: "/personas", icon: Users },
-  { title: "Regulation Mgmt", url: "/regulation-management", icon: ScrollText },
-  { title: "DTOP Playbook", url: "/dtop-playbook", icon: Workflow },
+const platformItems: NavItem[] = [
+  { title: "Platform Playbook", url: "/platform-playbook", icon: Layers, badge: "Master" },
+  { title: "CoAnalyst", url: "/coanalyst", icon: Brain },
   { title: "Insights & Recs", url: "/insights-playbook", icon: Sparkles },
   { title: "Automation", url: "/automation-playbook", icon: Zap },
   { title: "Unified Mobile", url: "/mobile-playbook", icon: Smartphone },
+  { title: "DTOP Operating Model", url: "/dtop-playbook", icon: Workflow },
+];
+
+const strategyItems: NavItem[] = [
+  { title: "Strategy Deck", url: "/strategy", icon: Presentation },
+  { title: "Content Strategy", url: "/content-strategy", icon: FileText },
+];
+
+const referenceItems: NavItem[] = [
+  { title: "Personas", url: "/personas", icon: Users },
+  { title: "Regulation Mgmt", url: "/regulation-management", icon: ScrollText },
+  { title: "Line of Sight", url: "/line-of-sight", icon: Target },
   { title: "Homepage Mockup", url: "/homepage-mockup", icon: Globe },
 ];
 
-function NavGroup({ label, items }: { label: string; items: typeof pitchItems }) {
+function NavGroup({ label, items }: { label: string; items: NavItem[] }) {
   return (
     <SidebarGroup>
       <SidebarGroupLabel className="text-[10px] uppercase tracking-wider text-sidebar-foreground/40">
@@ -61,7 +69,12 @@ function NavGroup({ label, items }: { label: string; items: typeof pitchItems })
                   activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
                 >
                   <item.icon className="h-4 w-4" />
-                  <span>{item.title}</span>
+                  <span className="flex-1 truncate">{item.title}</span>
+                  {item.badge && (
+                    <span className="ml-auto rounded-sm bg-primary/15 text-primary px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wide">
+                      {item.badge}
+                    </span>
+                  )}
                 </NavLink>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -101,10 +114,13 @@ export function AppSidebar() {
         </SidebarGroup>
 
         <SidebarSeparator />
-
         <NavGroup label="Pitch Decks" items={pitchItems} />
+        <SidebarSeparator />
+        <NavGroup label="Platform & Capabilities" items={platformItems} />
+        <SidebarSeparator />
         <NavGroup label="Strategy" items={strategyItems} />
-        <NavGroup label="Tools" items={toolItems} />
+        <SidebarSeparator />
+        <NavGroup label="Reference" items={referenceItems} />
 
         {/* Slide sub-navigation - only when expanded and slides registered */}
         {open && slides.length > 0 && (
