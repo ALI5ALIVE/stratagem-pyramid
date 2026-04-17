@@ -27,6 +27,7 @@ import DTOPPlaybook from "./pages/DTOPPlaybook";
 import InsightsPlaybook from "./pages/InsightsPlaybook";
 import AutomationPlaybook from "./pages/AutomationPlaybook";
 import MobilePlaybook from "./pages/MobilePlaybook";
+import PlatformPlaybook from "./pages/PlatformPlaybook";
 
 
 const queryClient = new QueryClient();
@@ -62,6 +63,7 @@ const App = () => (
             <Route path="/insights-playbook" element={<InsightsPlaybook />} />
             <Route path="/automation-playbook" element={<AutomationPlaybook />} />
             <Route path="/mobile-playbook" element={<MobilePlaybook />} />
+            <Route path="/platform-playbook" element={<PlatformPlaybook />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
