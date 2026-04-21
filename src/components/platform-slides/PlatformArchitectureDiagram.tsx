@@ -41,7 +41,7 @@ const PlatformArchitectureDiagram = ({ compact = false }: { compact?: boolean })
         <div className="flex items-center gap-2 mb-2">
           <Brain className="h-5 w-5 text-amber-400 shrink-0" />
           <div className={`${titleSize} font-semibold text-amber-300 flex-1`}>Intelligence & Orchestration Layer</div>
-          <span className={`${labelSize} text-amber-300/80 font-medium`}>Action</span>
+          <span className={`${labelSize} text-amber-300/80 font-medium`}>System of action</span>
         </div>
         <div className="grid grid-cols-3 gap-2">
           <div className="rounded-md border border-amber-500/30 bg-background/40 p-1.5">
