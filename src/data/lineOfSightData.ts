@@ -43,6 +43,8 @@ export interface LaggingMetric {
   unit: string;
   direction: "up" | "down";
   weights: Record<string, number>; // leading measure id -> weight
+  sourceUseCases?: string[]; // use case ids that primarily drive this metric (for citations)
+  isTotal?: boolean; // headline total — sums across all use cases
 }
 
 export interface ExecutiveOutcome {
@@ -761,4 +763,41 @@ export function computeUseCaseCostImpact(
     ? computeScaledCostMidpoint(uc, profile)
     : uc.input.costMidpoint;
   return reduction * midpoint * uc.input.annualisationFactor;
+}
+
+/**
+ * Compute annualised dollar contribution for a single use case at the slider value.
+ * Returns both the saved dollars vs baseline and the baseline (full) dollar exposure.
+ */
+export function computeUseCaseDollarContribution(
+  uc: UseCase,
+  currentValue: number,
+  profile?: AirlineProfile
+): { savedDollars: number; baselineDollars: number } {
+  const midpoint = profile
+    ? computeScaledCostMidpoint(uc, profile)
+    : uc.input.costMidpoint;
+  const baselineDollars = uc.input.baseline * midpoint * uc.input.annualisationFactor;
+  const savedDollars = Math.max(0, (uc.input.baseline - currentValue) * midpoint * uc.input.annualisationFactor);
+  return { savedDollars, baselineDollars };
+}
+
+/**
+ * Compute the total annualised dollar contribution to a leading measure
+ * by summing the use case savings weighted by each use case's impact on that measure.
+ */
+export function computeLeadingMeasureDollars(
+  measure: LeadingMeasure,
+  useCaseValues: Record<string, number>,
+  profile?: AirlineProfile
+): number {
+  let total = 0;
+  for (const uc of useCases) {
+    const weight = uc.impactOnMeasures[measure.id];
+    if (!weight) continue;
+    const current = useCaseValues[uc.id] ?? uc.input.baseline;
+    const { savedDollars } = computeUseCaseDollarContribution(uc, current, profile);
+    total += weight * savedDollars;
+  }
+  return total;
 }
