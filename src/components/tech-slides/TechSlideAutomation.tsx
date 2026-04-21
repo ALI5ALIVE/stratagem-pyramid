@@ -15,7 +15,7 @@ const pipeline = [
 const TechSlideAutomation = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer
     id="tech-slide-automation"
-    title="Automation & Orchestration"
+    title="Intelligence & Orchestration Layer — Automation & Orchestration"
     subtitle="One automation layer across the platform — closing the loop on cross-product workflows"
     slideNumber={slideNumber}
     {...narrationProps}

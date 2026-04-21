@@ -22,7 +22,7 @@ const archCards = [
 const TechSlide7CoAnalyst = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer
     id="tech-slide-coanalyst"
-    title="CoAnalyst — From Reports to Intelligence"
+    title="Intelligence & Orchestration Layer — From Reports to Intelligence"
     subtitle="Conversational intelligence purpose-built for aviation operations"
     slideNumber={slideNumber}
     {...narrationProps}
