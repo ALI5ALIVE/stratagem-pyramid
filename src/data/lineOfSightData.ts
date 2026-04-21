@@ -381,6 +381,72 @@ export const leadingMeasures: LeadingMeasure[] = [
 
 export const executiveOutcomes: ExecutiveOutcome[] = [
   {
+    id: "cfo",
+    stakeholder: "CFO",
+    icon: "TrendingUp",
+    color: "from-emerald-500/20 to-emerald-600/10 border-emerald-500/30",
+    accentColor: "emerald",
+    metrics: [
+      {
+        id: "fuel-cost-savings",
+        label: "Fuel Cost Savings",
+        baselineValue: 0,
+        unit: "$M",
+        direction: "up",
+        weights: { lm1: 0.6 },
+      },
+      {
+        id: "irops-cost-avoidance",
+        label: "IrOps Cost Avoidance",
+        baselineValue: 0,
+        unit: "$M",
+        direction: "up",
+        weights: { lm2: 0.3, lm3: 0.4 },
+      },
+      {
+        id: "insurance-premium",
+        label: "Insurance Premium",
+        baselineValue: 0,
+        unit: "$M",
+        direction: "up",
+        weights: { lm4: 0.3, lm5: 0.3 },
+      },
+    ],
+  },
+  {
+    id: "ceo",
+    stakeholder: "CEO",
+    icon: "Crown",
+    color: "from-amber-500/20 to-amber-600/10 border-amber-500/30",
+    accentColor: "amber",
+    metrics: [
+      {
+        id: "regulatory-standing",
+        label: "Regulatory Standing",
+        baselineValue: 85,
+        unit: "%",
+        direction: "up",
+        weights: { lm5: 0.4, lm4: 0.2 },
+      },
+      {
+        id: "brand-trust",
+        label: "Brand & Customer Trust",
+        baselineValue: 72,
+        unit: "pts",
+        direction: "up",
+        weights: { lm6: 0.5, lm3: 0.2 },
+      },
+      {
+        id: "strategic-resilience",
+        label: "Strategic Resilience",
+        baselineValue: 65,
+        unit: "pts",
+        direction: "up",
+        weights: { lm2: 0.3, lm4: 0.3, lm5: 0.2 },
+      },
+    ],
+  },
+  {
     id: "coo",
     stakeholder: "COO",
     icon: "Settings",
