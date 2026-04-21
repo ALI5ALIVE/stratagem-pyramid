@@ -1,5 +1,6 @@
 import { FileText, BookOpen, GitBranch, Scale, Send, FolderOpen, ArrowRight, Sparkles } from "lucide-react";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
+import ArchitectureLayerBadge from "@/components/tech-slides/ArchitectureLayerBadge";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 interface Props extends SlideNarrationProps { slideNumber?: number; }
@@ -22,6 +23,7 @@ const dataFlow = [
 
 const TechSlide4bContentManager = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer id="tech-slide-4b" title="ContentManager365 + CoAuthor" subtitle="Next Gen Operational Content Management — from manual revisions to intelligent document orchestration" slideNumber={slideNumber} {...narrationProps}>
+    <ArchitectureLayerBadge active="core" sublayer="content" className="mb-2" />
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 flex-1 min-h-0 items-stretch">
       <div className="flex flex-col gap-3 h-full">
         <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 shrink-0">Core Capabilities</h3>
