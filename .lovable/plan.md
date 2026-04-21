@@ -1,64 +1,51 @@
 
 
-## Move Line of Sight Calculator into Technical Deep-Dive (COO-only)
+## Restore Line of Sight standalone deck; keep new calculator only in Tech deck
 
-Same approach as previously approved, with one change: keep **COO** as the only stakeholder view (drop CFO and CEO).
+You want the standalone `/line-of-sight` deck reverted to its previous state (CFO + CEO + COO tabs, % gain badges, no citation chips, no methodology popover) while the Technical Deep-Dive keeps the new COO-only, dollar-value, citation-backed calculator.
 
-## Fix 1 — Embed calculator as a Tech deck slide
+## Approach
 
-New `src/components/tech-slides/TechSlideCalculator.tsx`:
-- Wraps `SlideLineOfSight` (calculator view only) inside `SalesSlideContainer` with deck title bar, narration controls, slide number, and ArchitectureLayerBadge.
-- Owns `useCaseValues` and `airlineProfile` state (same pattern as `LineOfSightPage`).
-- Title: `Line of Sight — ROI Calculator`. Subtitle: `Adjust the inputs to model your own cost avoidance, grounded in published industry benchmarks.`
+The cleanest split is to stop sharing `SlideLineOfSight` between the two surfaces. The Tech deck wrapper (`TechSlideCalculator`) will get its own dedicated calculator component with the new behaviour, and the original `SlideLineOfSight` (used by `/line-of-sight`) is reverted to its prior multi-stakeholder, percentage-based form.
 
-In `src/pages/TechnicalDeepDive.tsx`: replace the existing static `TechSlide13LineOfSight` with `TechSlideCalculator` in Act 5, between `TechSlide6PlatformIntegrations` and `TechSlide14MaturityRoadmap`.
+### Fix 1 — Revert shared data + components to pre-change state
 
-The standalone `/line-of-sight` route stays available.
+- `src/data/lineOfSightData.ts` — restore the original `executiveOutcomes` array (CFO, CEO, COO with their original metric mix of `$M` and `%/pts`). Keep the new helpers (`computeUseCaseDollarContribution`, `computeLeadingMeasureDollars`) since they're additive and only consumed by the new Tech calculator — they don't affect the old deck.
+- `src/components/slides/SlideLineOfSight.tsx` — revert to the pre-change version: 3-tab `Tabs` wrapper (CFO/CEO/COO), `↓ X%` / `↑ X pts` leading-measure badges, no `[i] Source` chips, no Methodology & Sources popover, original tab colour switching.
+- `src/components/slides/LineOfSightTree.tsx` — restore CFO and CEO grid cards alongside COO.
+- `src/components/slides/BalancedScorecard.tsx` and `PerformanceShiftCurve.tsx` — restore any CFO/CEO references that were stripped.
 
-## Fix 2 — Strip stakeholders down to COO only
+Net effect: `/line-of-sight` looks and behaves exactly as it did before the last change.
 
-In `src/data/lineOfSightData.ts`:
-- Remove `cfo` and `ceo` entries from `executiveOutcomes`. Keep `coo`.
-- Audit COO metrics so each one outputs a `$M` / `$K` value. Any % or pts metrics on COO get converted to dollar metrics by multiplying their leading-measure delta against the relevant cost driver from `airlineProfile` (e.g. AOG-day reduction × AOG day cost; OTP improvement × delay-minute cost). Add a headline `coo-total-cost-avoidance` metric summing the COO's dollar metrics so the top number is explicit.
+### Fix 2 — Move the new calculator behaviour into a dedicated Tech component
 
-In `src/components/slides/SlideLineOfSight.tsx`:
-- Remove the `Tabs` wrapper entirely (only one stakeholder remains).
-- Pin colour palette to the COO sky/blue tone already defined in `tabColors`.
-- Remove `defaultValue` Tabs scaffolding.
+- New file `src/components/slides/TechCalculatorView.tsx` — a copy of the *new* (post-change) `SlideLineOfSight`: COO-only, no Tabs wrapper, `−$XXXk/yr` dollar badges on use-case cards, `[i] Source` tooltip chips, `Methodology & Sources` popover header button, sky/blue COO palette pinned. Same props shape as `SlideLineOfSight` so the wrapper change is one import swap.
+- `src/components/tech-slides/TechSlideCalculator.tsx` — change the import from `SlideLineOfSight` to the new `TechCalculatorView`. No other changes; state, helpers, and `SalesSlideContainer` wrapping stay as-is.
+- `src/pages/TechnicalDeepDive.tsx` — already references `TechSlideCalculator`. No change needed.
 
-In `LineOfSightTree.tsx`, `BalancedScorecard.tsx`, `PerformanceShiftCurve.tsx`: data source is shared, so cards auto-update. `code--search_files` will catch any hardcoded `cfo` / `ceo` strings; remove those references (likely 2 grid cards each).
+### Fix 3 — Verify no regressions
 
-## Fix 3 — Show $ values instead of % gains, with citations
-
-1. **New helpers** in `lineOfSightData.ts`:
-   - `computeUseCaseDollarContribution(uc, currentValue, profile): { savedDollars, baselineDollars }` — cost avoided per use case at slider value vs baseline.
-   - `computeLeadingMeasureDollars(measure, useCaseValues, profile)` — sums weighted use-case dollar contributions feeding that measure.
-
-2. **In `SlideLineOfSight.tsx`** per use-case card:
-   - Replace the "↓ X%" badge with `−$XXXk/yr` (or `$X.XM/yr` ≥ $1M).
-   - Keep slider, baseline marker, severity tag.
-   - Add `[i] Source` chip → `Tooltip` showing matching `sourceCitations[uc.id]`.
-
-3. **Leading-measures column**: render dollar translation (e.g. `Fuel variance contribution: $1.2M/yr saved`) via `computeLeadingMeasureDollars`.
-
-4. **COO outcomes column**: each metric already in `$`. Add citation chip per metric linking back to its underlying use-case sources.
-
-5. **Methodology footer**: extend `methodologyNote` block to render `defaultProfileCitation` plus a numbered source list. Add a `<Popover>` "Methodology & Sources" button in the calculator header showing the full bibliography.
+- `code--search_files` for any remaining cross-imports between Tech deck files and the reverted `SlideLineOfSight` to confirm clean separation.
+- Confirm `/line-of-sight` route still renders the original 4-view switcher (Calculator / KPI Tree / Scorecard / Performance Shift) with all three stakeholders intact.
+- Confirm the Tech deck calculator slide still renders the COO-only dollar view with citations.
 
 ## Out of scope
 
-- KPI Tree, Scorecard, and Performance Shift views remain as-is on `/line-of-sight` aside from removing CFO/CEO panels.
-- No new external research — citations come from the existing `sourceCitations` map.
+- No narration script changes.
+- No new data, sources, or copy.
+- The static `TechSlide13LineOfSight` summary slide stays removed from the Tech deck (the new interactive calculator replaces it, as previously approved).
 
 ## Files touched
 
 **New**
-- `src/components/tech-slides/TechSlideCalculator.tsx`
+- `src/components/slides/TechCalculatorView.tsx` — owns the new COO-only $-value calculator UI.
 
-**Edited**
-- `src/data/lineOfSightData.ts` — drop CFO/CEO outcomes, convert any COO % metrics to $, add headline COO total, add `computeUseCaseDollarContribution` + `computeLeadingMeasureDollars`.
-- `src/components/slides/SlideLineOfSight.tsx` — remove Tabs, swap % badges for $ values, add citation chips/popover.
-- `src/components/slides/LineOfSightTree.tsx`, `BalancedScorecard.tsx`, `PerformanceShiftCurve.tsx` — remove CFO/CEO references.
-- `src/pages/TechnicalDeepDive.tsx` — replace `TechSlide13LineOfSight` with `TechSlideCalculator`.
-- `src/components/tech-slides/TechSlideUseCases.tsx` — fix TS2345 build error (relax `tab.ids` type so `.includes(uc.id)` compiles).
+**Edited (reverted to prior state)**
+- `src/data/lineOfSightData.ts` — restore CFO/CEO `executiveOutcomes` entries; keep additive helpers.
+- `src/components/slides/SlideLineOfSight.tsx` — restore Tabs, % badges, drop chips/popover.
+- `src/components/slides/LineOfSightTree.tsx` — restore CFO/CEO cards.
+- `src/components/slides/BalancedScorecard.tsx`, `PerformanceShiftCurve.tsx` — restore CFO/CEO references if removed.
+
+**Edited (one-line swap)**
+- `src/components/tech-slides/TechSlideCalculator.tsx` — import `TechCalculatorView` instead of `SlideLineOfSight`.
 
