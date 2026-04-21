@@ -43,6 +43,8 @@ export interface LaggingMetric {
   unit: string;
   direction: "up" | "down";
   weights: Record<string, number>; // leading measure id -> weight
+  sourceUseCases?: string[]; // use case ids that primarily drive this metric (for citations)
+  isTotal?: boolean; // headline total — sums across all use cases
 }
 
 export interface ExecutiveOutcome {
@@ -379,72 +381,6 @@ export const leadingMeasures: LeadingMeasure[] = [
 
 export const executiveOutcomes: ExecutiveOutcome[] = [
   {
-    id: "cfo",
-    stakeholder: "CFO",
-    icon: "TrendingUp",
-    color: "from-emerald-500/20 to-emerald-600/10 border-emerald-500/30",
-    accentColor: "emerald",
-    metrics: [
-      {
-        id: "fuel-cost-savings",
-        label: "Fuel Cost Savings",
-        baselineValue: 0,
-        unit: "$M",
-        direction: "up",
-        weights: { lm1: 0.6 },
-      },
-      {
-        id: "irops-cost-avoidance",
-        label: "IrOps Cost Avoidance",
-        baselineValue: 0,
-        unit: "$M",
-        direction: "up",
-        weights: { lm2: 0.3, lm3: 0.4 },
-      },
-      {
-        id: "insurance-reduction",
-        label: "Insurance Premium Reduction",
-        baselineValue: 0,
-        unit: "$M",
-        direction: "up",
-        weights: { lm4: 0.3, lm5: 0.3 },
-      },
-    ],
-  },
-  {
-    id: "ceo",
-    stakeholder: "CEO",
-    icon: "Crown",
-    color: "from-amber-500/20 to-amber-600/10 border-amber-500/30",
-    accentColor: "amber",
-    metrics: [
-      {
-        id: "brand-reputation",
-        label: "Brand & Reputation",
-        baselineValue: 72,
-        unit: "pts",
-        direction: "up",
-        weights: { lm4: 0.3, lm6: 0.4 },
-      },
-      {
-        id: "regulatory-standing",
-        label: "Regulatory Standing",
-        baselineValue: 85,
-        unit: "%",
-        direction: "up",
-        weights: { lm5: 0.4, lm4: 0.2 },
-      },
-      {
-        id: "revenue-protection",
-        label: "Revenue Protection",
-        baselineValue: 0,
-        unit: "$M",
-        direction: "up",
-        weights: { lm3: 0.35, lm6: 0.2 },
-      },
-    ],
-  },
-  {
     id: "coo",
     stakeholder: "COO",
     icon: "Settings",
@@ -452,28 +388,41 @@ export const executiveOutcomes: ExecutiveOutcome[] = [
     accentColor: "sky",
     metrics: [
       {
-        id: "on-time-performance",
-        label: "On-Time Performance",
-        baselineValue: 78,
-        unit: "%",
+        id: "delay-cost-avoidance",
+        label: "Delay Cost Avoidance",
+        baselineValue: 0,
+        unit: "$M",
         direction: "up",
         weights: { lm3: 0.5, lm2: 0.2 },
+        sourceUseCases: ["uc3"],
       },
       {
-        id: "fleet-readiness",
-        label: "Fleet Readiness",
-        baselineValue: 91,
-        unit: "%",
+        id: "fleet-readiness-savings",
+        label: "Fleet Readiness Savings",
+        baselineValue: 0,
+        unit: "$M",
         direction: "up",
         weights: { lm2: 0.5 },
+        sourceUseCases: ["uc2"],
       },
       {
-        id: "labour-effectiveness",
-        label: "Labour Effectiveness",
-        baselineValue: 68,
-        unit: "%",
+        id: "irops-recovery-savings",
+        label: "IrOps & Recovery Savings",
+        baselineValue: 0,
+        unit: "$M",
         direction: "up",
         weights: { lm3: 0.2, lm4: 0.3 },
+        sourceUseCases: ["uc1", "uc5"],
+      },
+      {
+        id: "coo-total-cost-avoidance",
+        label: "Total Annual Cost Avoidance",
+        baselineValue: 0,
+        unit: "$M",
+        direction: "up",
+        weights: { lm1: 0.1, lm2: 0.4, lm3: 0.3, lm4: 0.1, lm6: 0.1 },
+        sourceUseCases: ["uc1", "uc2", "uc3", "uc5", "uc8"],
+        isTotal: true,
       },
     ],
   },
@@ -814,4 +763,41 @@ export function computeUseCaseCostImpact(
     ? computeScaledCostMidpoint(uc, profile)
     : uc.input.costMidpoint;
   return reduction * midpoint * uc.input.annualisationFactor;
+}
+
+/**
+ * Compute annualised dollar contribution for a single use case at the slider value.
+ * Returns both the saved dollars vs baseline and the baseline (full) dollar exposure.
+ */
+export function computeUseCaseDollarContribution(
+  uc: UseCase,
+  currentValue: number,
+  profile?: AirlineProfile
+): { savedDollars: number; baselineDollars: number } {
+  const midpoint = profile
+    ? computeScaledCostMidpoint(uc, profile)
+    : uc.input.costMidpoint;
+  const baselineDollars = uc.input.baseline * midpoint * uc.input.annualisationFactor;
+  const savedDollars = Math.max(0, (uc.input.baseline - currentValue) * midpoint * uc.input.annualisationFactor);
+  return { savedDollars, baselineDollars };
+}
+
+/**
+ * Compute the total annualised dollar contribution to a leading measure
+ * by summing the use case savings weighted by each use case's impact on that measure.
+ */
+export function computeLeadingMeasureDollars(
+  measure: LeadingMeasure,
+  useCaseValues: Record<string, number>,
+  profile?: AirlineProfile
+): number {
+  let total = 0;
+  for (const uc of useCases) {
+    const weight = uc.impactOnMeasures[measure.id];
+    if (!weight) continue;
+    const current = useCaseValues[uc.id] ?? uc.input.baseline;
+    const { savedDollars } = computeUseCaseDollarContribution(uc, current, profile);
+    total += weight * savedDollars;
+  }
+  return total;
 }

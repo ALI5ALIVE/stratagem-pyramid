@@ -9,11 +9,11 @@ interface Props extends SlideNarrationProps { slideNumber?: number; }
 
 const formatCurrency = (v: number) => v >= 1_000_000 ? `$${(v / 1_000_000).toFixed(1)}M` : v >= 1_000 ? `$${(v / 1_000).toFixed(0)}K` : `$${v}`;
 
-const tabs = [
+const tabs: { id: string; label: string; icon: typeof ShieldAlert; color: string; ids: string[] }[] = [
   { id: "safety", label: "Safety", icon: ShieldAlert, color: "text-rose-400", ids: ["uc1", "uc5"] },
   { id: "ops", label: "Operations", icon: Plane, color: "text-blue-400", ids: ["uc2", "uc3"] },
   { id: "financial", label: "Financial", icon: DollarSign, color: "text-amber-400", ids: ["uc7"] },
-] as const;
+];
 
 const parseDTOP = (mechanism: string) => {
   const parts = mechanism.split(" → ");
