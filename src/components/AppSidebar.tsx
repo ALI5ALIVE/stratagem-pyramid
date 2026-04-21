@@ -37,6 +37,7 @@ const platformItems: NavItem[] = [
   { title: "Automation", url: "/automation-playbook", icon: Zap },
   { title: "Unified Mobile", url: "/mobile-playbook", icon: Smartphone },
   { title: "DTOP Operating Model", url: "/dtop-playbook", icon: Workflow },
+  { title: "Regulation Mgmt", url: "/regulation-management", icon: ScrollText },
 ];
 
 const strategyItems: NavItem[] = [
@@ -46,7 +47,6 @@ const strategyItems: NavItem[] = [
 
 const referenceItems: NavItem[] = [
   { title: "Personas", url: "/personas", icon: Users },
-  { title: "Regulation Mgmt", url: "/regulation-management", icon: ScrollText },
   { title: "Line of Sight", url: "/line-of-sight", icon: Target },
   { title: "Homepage Mockup", url: "/homepage-mockup", icon: Globe },
 ];
