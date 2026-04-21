@@ -14,7 +14,6 @@ import TechSlide4aSafetyManager from "@/components/tech-slides/TechSlide4aSafety
 import TechSlide4bContentManager from "@/components/tech-slides/TechSlide4bContentManager";
 import TechSlide4cTrainingManager from "@/components/tech-slides/TechSlide4cTrainingManager";
 import TechSlideDataFoundation from "@/components/tech-slides/TechSlideDataFoundation";
-import TechSlide6PlatformIntegrations from "@/components/tech-slides/TechSlide6PlatformIntegrations";
 
 // Act 3 — Intelligence layer
 import TechSlide7CoAnalyst from "@/components/tech-slides/TechSlide7CoAnalyst";
@@ -26,6 +25,7 @@ import TechSlideTiersVsAI from "@/components/tech-slides/TechSlideTiersVsAI";
 import TechSlideMobile from "@/components/tech-slides/TechSlideMobile";
 import TechSlide5DTOP from "@/components/tech-slides/TechSlide5DTOP";
 import TechSlideUseCases from "@/components/tech-slides/TechSlideUseCases";
+import TechSlide6PlatformIntegrations from "@/components/tech-slides/TechSlide6PlatformIntegrations";
 
 // Act 5 — Value & close
 import TechSlide13LineOfSight from "@/components/tech-slides/TechSlide13LineOfSight";
@@ -45,7 +45,6 @@ const slides = [
   { id: "tech-slide-4b", label: "ContentManager365", component: TechSlide4bContentManager },
   { id: "tech-slide-4c", label: "TrainingManager365", component: TechSlide4cTrainingManager },
   { id: "tech-slide-data-foundation", label: "Data Foundation", component: TechSlideDataFoundation },
-  { id: "tech-slide-6", label: "Platform Integrations", component: TechSlide6PlatformIntegrations },
   // Act 3 — Intelligence
   { id: "tech-slide-coanalyst", label: "CoAnalyst", component: TechSlide7CoAnalyst },
   { id: "tech-slide-insights", label: "Insights & Recommendations", component: TechSlideInsights },
@@ -55,6 +54,7 @@ const slides = [
   { id: "tech-slide-mobile", label: "Unified Mobile", component: TechSlideMobile },
   { id: "tech-slide-5", label: "DTOP Operating Model", component: TechSlide5DTOP },
   { id: "tech-slide-use-cases", label: "Use Cases", component: TechSlideUseCases },
+  { id: "tech-slide-6", label: "Platform Integrations", component: TechSlide6PlatformIntegrations },
   // Act 5 — Value & close
   { id: "tech-slide-13", label: "Line of Sight", component: TechSlide13LineOfSight },
   { id: "tech-slide-14", label: "Maturity Roadmap", component: TechSlide14MaturityRoadmap },
