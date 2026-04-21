@@ -20,8 +20,10 @@ const PlatformArchitectureDiagram = ({ compact = false }: { compact?: boolean })
       <div className="rounded-lg border-2 border-emerald-500/50 bg-emerald-500/5 p-2.5 flex items-center gap-3">
         <Repeat className="h-5 w-5 text-emerald-400 shrink-0" />
         <div className="flex-1 min-w-0">
+          <div className={`${titleSize} font-semibold text-emerald-300`}>DTOP — The System of Work</div>
           <div className={`${labelSize} text-muted-foreground`}>Detect → Trigger → Orchestrate → Prove · wraps the whole stack</div>
         </div>
+        <span className={`${labelSize} text-emerald-300/80 font-medium`}>System of work</span>
       </div>
 
       {/* Layer 1 — Unified Mobile (delivery surface) */}
