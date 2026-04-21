@@ -28,7 +28,7 @@ import TechSlideUseCases from "@/components/tech-slides/TechSlideUseCases";
 import TechSlide6PlatformIntegrations from "@/components/tech-slides/TechSlide6PlatformIntegrations";
 
 // Act 5 — Value & close
-import TechSlide13LineOfSight from "@/components/tech-slides/TechSlide13LineOfSight";
+import TechSlideCalculator from "@/components/tech-slides/TechSlideCalculator";
 import TechSlide14MaturityRoadmap from "@/components/tech-slides/TechSlide14MaturityRoadmap";
 import TechSlide15Roadmap2026 from "@/components/tech-slides/TechSlide15Roadmap2026";
 import TechSlideWhyComply from "@/components/tech-slides/TechSlideWhyComply";
@@ -56,7 +56,7 @@ const slides = [
   { id: "tech-slide-use-cases", label: "Use Cases", component: TechSlideUseCases },
   { id: "tech-slide-6", label: "Platform Integrations", component: TechSlide6PlatformIntegrations },
   // Act 5 — Value & close
-  { id: "tech-slide-13", label: "Line of Sight", component: TechSlide13LineOfSight },
+  { id: "tech-slide-calculator", label: "Line of Sight Calculator", component: TechSlideCalculator },
   { id: "tech-slide-14", label: "Maturity Roadmap", component: TechSlide14MaturityRoadmap },
   { id: "tech-slide-15", label: "2026 Roadmap", component: TechSlide15Roadmap2026 },
   { id: "tech-slide-why-comply", label: "Why Comply365", component: TechSlideWhyComply },
