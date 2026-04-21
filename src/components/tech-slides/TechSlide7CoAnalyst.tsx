@@ -1,4 +1,5 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
+import ArchitectureLayerBadge from "@/components/tech-slides/ArchitectureLayerBadge";
 import { SlideNarrationProps } from "@/types/slideProps";
 import { Brain, Database, Sparkles, Search, Zap, Languages, Quote } from "lucide-react";
 
@@ -27,6 +28,7 @@ const TechSlide7CoAnalyst = ({ slideNumber, ...narrationProps }: Props) => (
     {...narrationProps}
   >
     <div className="flex-1 flex flex-col gap-4 min-h-0">
+      <ArchitectureLayerBadge active="intelligence" sublayer="coanalyst" />
       {/* Master message */}
       <div className="rounded-xl border border-primary/30 bg-primary/10 p-4 flex items-center gap-3 shrink-0">
         <Quote className="h-5 w-5 text-primary shrink-0" />
