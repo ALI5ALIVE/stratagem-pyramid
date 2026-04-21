@@ -34,7 +34,7 @@ interface NarrationProps {
   onNextSlide?: () => void;
 }
 
-interface SlideLineOfSightProps {
+interface TechCalculatorViewProps {
   useCaseValues: Record<string, number>;
   setUseCaseValues: React.Dispatch<React.SetStateAction<Record<string, number>>>;
   airlineProfile: AirlineProfile;
@@ -66,7 +66,7 @@ function formatCurrency(value: number): string {
 
 const SIMPLE_USE_CASE_IDS = ["uc3", "uc7"];
 
-const SlideLineOfSight = ({
+const TechCalculatorView = ({
   useCaseValues,
   setUseCaseValues,
   airlineProfile,
@@ -74,7 +74,7 @@ const SlideLineOfSight = ({
   leadingValues,
   totalCostAvoidance,
   narration,
-}: SlideLineOfSightProps) => {
+}: TechCalculatorViewProps) => {
   const [expandedUseCase, setExpandedUseCase] = useState<string | null>(null);
   const [profileOpen, setProfileOpen] = useState(true);
   const [calculatorMode, setCalculatorMode] = useState<"simple" | "advanced">("simple");
@@ -542,4 +542,4 @@ const SlideLineOfSight = ({
   );
 };
 
-export default SlideLineOfSight;
+export default TechCalculatorView;
