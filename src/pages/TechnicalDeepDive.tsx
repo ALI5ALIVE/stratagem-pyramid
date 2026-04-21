@@ -49,10 +49,10 @@ const slides = [
   { id: "tech-slide-coanalyst", label: "CoAnalyst", component: TechSlide7CoAnalyst },
   { id: "tech-slide-insights", label: "Insights & Recommendations", component: TechSlideInsights },
   { id: "tech-slide-automation", label: "Automation", component: TechSlideAutomation },
-  { id: "tech-slide-tiers-vs-ai", label: "Tiers vs Generic AI", component: TechSlideTiersVsAI },
-  // Act 4 — Delivery & operating model
   { id: "tech-slide-mobile", label: "Unified Mobile", component: TechSlideMobile },
+  // Act 4 — Delivery & operating model
   { id: "tech-slide-5", label: "DTOP Operating Model", component: TechSlide5DTOP },
+  { id: "tech-slide-tiers-vs-ai", label: "Tiers vs Generic AI", component: TechSlideTiersVsAI },
   { id: "tech-slide-use-cases", label: "Use Cases", component: TechSlideUseCases },
   { id: "tech-slide-6", label: "Platform Integrations", component: TechSlide6PlatformIntegrations },
   // Act 5 — Value & close
