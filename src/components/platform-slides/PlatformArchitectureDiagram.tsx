@@ -20,10 +20,10 @@ const PlatformArchitectureDiagram = ({ compact = false }: { compact?: boolean })
       <div className="rounded-lg border-2 border-emerald-500/50 bg-emerald-500/5 p-2.5 flex items-center gap-3">
         <Repeat className="h-5 w-5 text-emerald-400 shrink-0" />
         <div className="flex-1 min-w-0">
-          <div className={`${titleSize} font-semibold text-emerald-300`}>DTOP — The Way of Working</div>
+          <div className={`${titleSize} font-semibold text-emerald-300`}>DTOP — The System of Work</div>
           <div className={`${labelSize} text-muted-foreground`}>Detect → Trigger → Orchestrate → Prove · wraps the whole stack</div>
         </div>
-        <span className={`${labelSize} text-emerald-300/80 font-medium`}>Way of working</span>
+        <span className={`${labelSize} text-emerald-300/80 font-medium`}>System of work</span>
       </div>
 
       {/* Layer 1 — Unified Mobile (delivery surface) */}
@@ -41,7 +41,7 @@ const PlatformArchitectureDiagram = ({ compact = false }: { compact?: boolean })
         <div className="flex items-center gap-2 mb-2">
           <Brain className="h-5 w-5 text-amber-400 shrink-0" />
           <div className={`${titleSize} font-semibold text-amber-300 flex-1`}>Intelligence & Orchestration Layer</div>
-          <span className={`${labelSize} text-amber-300/80 font-medium`}>Action</span>
+          <span className={`${labelSize} text-amber-300/80 font-medium`}>System of action</span>
         </div>
         <div className="grid grid-cols-3 gap-2">
           <div className="rounded-md border border-amber-500/30 bg-background/40 p-1.5">
