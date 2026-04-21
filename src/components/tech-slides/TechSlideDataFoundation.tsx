@@ -1,4 +1,5 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
+import ArchitectureLayerBadge from "@/components/tech-slides/ArchitectureLayerBadge";
 import { SlideNarrationProps } from "@/types/slideProps";
 import { Database, Layers, Network, Brain, Lock, Radio, Plug, FileText, GraduationCap, ShieldCheck, ArrowRight, Sparkles } from "lucide-react";
 
@@ -70,6 +71,7 @@ const TechSlideDataFoundation = ({ slideNumber, ...narrationProps }: Props) => (
     {...narrationProps}
   >
     <div className="flex-1 flex flex-col gap-4 min-h-0">
+      <ArchitectureLayerBadge active="data" />
       {/* Top: data flow into foundation */}
       <div className="grid grid-cols-1 lg:grid-cols-7 gap-3 items-stretch shrink-0">
         <div className="lg:col-span-3 grid grid-cols-3 gap-2 auto-rows-fr">
