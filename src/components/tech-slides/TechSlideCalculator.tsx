@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import SlideLineOfSight from "@/components/slides/SlideLineOfSight";
+import TechCalculatorView from "@/components/slides/TechCalculatorView";
 import {
   useCases,
   leadingMeasures,
@@ -50,7 +50,7 @@ const TechSlideCalculator = ({ slideNumber, ...narrationProps }: Props) => {
       {...narrationProps}
     >
       <div className="flex-1 min-h-0 -mx-6 -mb-6">
-        <SlideLineOfSight
+        <TechCalculatorView
           useCaseValues={useCaseValues}
           setUseCaseValues={setUseCaseValues}
           airlineProfile={airlineProfile}
