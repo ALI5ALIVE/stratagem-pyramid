@@ -369,6 +369,12 @@ const LineOfSightTree = ({ useCaseValues, leadingValues, totalCostAvoidance, air
           {/* Legend */}
           <div className="mt-8 flex items-center justify-center gap-6 text-[10px] text-muted-foreground">
             <span className="flex items-center gap-1.5">
+              <span className="w-6 h-0.5 bg-emerald-400 rounded" /> CFO
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="w-6 h-0.5 bg-amber-400 rounded" /> CEO
+            </span>
+            <span className="flex items-center gap-1.5">
               <span className="w-6 h-0.5 bg-sky-400 rounded" /> COO
             </span>
             <span className="italic">Hover any node to trace connections</span>

@@ -1,22 +1,27 @@
 import React, { useState } from "react";
-import { Crown, TrendingUp, Settings, ArrowDown, ArrowUp, ChevronDown, ChevronUp, AlertTriangle, Plane, Building2, Search, Zap, CheckCircle } from "lucide-react";
+import { Settings, ArrowDown, ArrowUp, ChevronDown, ChevronUp, AlertTriangle, Plane, Building2, Info, Search, Zap, CheckCircle, BookOpen } from "lucide-react";
 import {
   executiveOutcomes,
   leadingMeasures,
   useCases,
   computeMetricValue,
   computeUseCaseCostImpact,
+  computeUseCaseDollarContribution,
+  computeLeadingMeasureDollars,
   computeScaledCostMidpoint,
   airlinePresets,
+  sourceCitations,
+  methodologyNote,
+  defaultProfileCitation,
   type AirlineProfile,
-  type ExecutiveOutcome,
 } from "@/data/lineOfSightData";
 import { cn } from "@/lib/utils";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import SlidePlayButton from "@/components/SlidePlayButton";
 
 interface NarrationProps {
@@ -29,7 +34,7 @@ interface NarrationProps {
   onNextSlide?: () => void;
 }
 
-interface SlideLineOfSightProps {
+interface TechCalculatorViewProps {
   useCaseValues: Record<string, number>;
   setUseCaseValues: React.Dispatch<React.SetStateAction<Record<string, number>>>;
   airlineProfile: AirlineProfile;
@@ -39,31 +44,11 @@ interface SlideLineOfSightProps {
   narration?: NarrationProps;
 }
 
-const tabColors: Record<string, { text: string; border: string; slider: string; badge: string; icon: React.ReactNode; tabActive: string }> = {
-  cfo: {
-    text: "text-emerald-400",
-    border: "border-emerald-500/30",
-    slider: "[&_[role=slider]]:bg-emerald-400 [&_[class*=Range]]:bg-emerald-500",
-    badge: "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
-    icon: <TrendingUp className="w-3.5 h-3.5" />,
-    tabActive: "data-[state=active]:bg-emerald-500/15 data-[state=active]:text-emerald-300",
-  },
-  ceo: {
-    text: "text-amber-400",
-    border: "border-amber-500/30",
-    slider: "[&_[role=slider]]:bg-amber-400 [&_[class*=Range]]:bg-amber-500",
-    badge: "bg-amber-500/15 text-amber-300 border-amber-500/30",
-    icon: <Crown className="w-3.5 h-3.5" />,
-    tabActive: "data-[state=active]:bg-amber-500/15 data-[state=active]:text-amber-300",
-  },
-  coo: {
-    text: "text-sky-400",
-    border: "border-sky-500/30",
-    slider: "[&_[role=slider]]:bg-sky-400 [&_[class*=Range]]:bg-sky-500",
-    badge: "bg-sky-500/15 text-sky-300 border-sky-500/30",
-    icon: <Settings className="w-3.5 h-3.5" />,
-    tabActive: "data-[state=active]:bg-sky-500/15 data-[state=active]:text-sky-300",
-  },
+const cooColors = {
+  text: "text-sky-400",
+  border: "border-sky-500/30",
+  slider: "[&_[role=slider]]:bg-sky-400 [&_[class*=Range]]:bg-sky-500",
+  badge: "bg-sky-500/15 text-sky-300 border-sky-500/30",
 };
 
 const severityColors: Record<string, string> = {
@@ -81,7 +66,7 @@ function formatCurrency(value: number): string {
 
 const SIMPLE_USE_CASE_IDS = ["uc3", "uc7"];
 
-const SlideLineOfSight = ({
+const TechCalculatorView = ({
   useCaseValues,
   setUseCaseValues,
   airlineProfile,
@@ -89,8 +74,7 @@ const SlideLineOfSight = ({
   leadingValues,
   totalCostAvoidance,
   narration,
-}: SlideLineOfSightProps) => {
-  const [activeTab, setActiveTab] = useState<string>("cfo");
+}: TechCalculatorViewProps) => {
   const [expandedUseCase, setExpandedUseCase] = useState<string | null>(null);
   const [profileOpen, setProfileOpen] = useState(true);
   const [calculatorMode, setCalculatorMode] = useState<"simple" | "advanced">("simple");
@@ -110,11 +94,8 @@ const SlideLineOfSight = ({
     }
   };
 
-  const activeOutcome: ExecutiveOutcome =
-    executiveOutcomes.find((eo) => eo.id === activeTab) ?? executiveOutcomes[0];
-  const colors = tabColors[activeOutcome.id] ?? tabColors.cfo;
-
-  const connectedMeasureIds = new Set(activeOutcome.metrics.flatMap((m) => Object.keys(m.weights)));
+  const cooOutcome = executiveOutcomes.find((eo) => eo.id === "coo")!;
+  const connectedMeasureIds = new Set(cooOutcome.metrics.flatMap((m) => Object.keys(m.weights)));
   const connectedUseCaseIds = new Set(
     useCases
       .filter((uc) => Object.keys(uc.impactOnMeasures).some((mId) => connectedMeasureIds.has(mId)))
@@ -129,6 +110,24 @@ const SlideLineOfSight = ({
     { field: "annualPassengersM", label: "Passengers", unit: "M/yr", step: 1 },
     { field: "revenuePerFlight", label: "Rev/Flight", unit: "$", step: 1000 },
   ];
+
+  // Compute headline COO total in $ from total cost avoidance
+  const renderOutcomeMetricValue = (metric: typeof cooOutcome.metrics[number]): string => {
+    if (metric.isTotal) {
+      return formatCurrency(totalCostAvoidance);
+    }
+    if (metric.unit === "$M" && metric.sourceUseCases) {
+      const dollars = metric.sourceUseCases.reduce((sum, ucId) => {
+        const uc = useCases.find((u) => u.id === ucId);
+        if (!uc) return sum;
+        const current = useCaseValues[uc.id] ?? uc.input.baseline;
+        return sum + computeUseCaseDollarContribution(uc, current, airlineProfile).savedDollars;
+      }, 0);
+      return formatCurrency(dollars);
+    }
+    const computed = computeMetricValue(metric, leadingValues, leadingMeasures);
+    return metric.unit === "$M" ? `$${computed.toFixed(1)}M` : `${computed.toFixed(1)}${metric.unit}`;
+  };
 
   return (
     <div className="h-[calc(100vh-40px)] w-full flex flex-col overflow-hidden relative">
@@ -150,7 +149,49 @@ const SlideLineOfSight = ({
                   </span>
                 )}
               </div>
-              {profileOpen ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
+              <div className="flex items-center gap-2">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <span
+                      role="button"
+                      tabIndex={0}
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-flex items-center gap-1 rounded-md border border-border/50 bg-card/40 px-2 py-1 text-[10px] font-medium text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors cursor-pointer"
+                    >
+                      <BookOpen className="w-3 h-3" />
+                      Methodology & Sources
+                    </span>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    side="bottom"
+                    align="end"
+                    className="w-[420px] max-h-[60vh] overflow-y-auto"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div className="space-y-3">
+                      <div>
+                        <p className="text-xs font-semibold text-foreground mb-1">Methodology</p>
+                        <p className="text-[11px] text-muted-foreground leading-relaxed">{methodologyNote}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-semibold text-foreground mb-1">Default Profile</p>
+                        <p className="text-[11px] text-muted-foreground leading-relaxed">{defaultProfileCitation}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-semibold text-foreground mb-1">Sources by Use Case</p>
+                        <ol className="space-y-1.5 text-[11px] text-muted-foreground">
+                          {useCases.map((uc) => (
+                            <li key={uc.id} className="leading-snug">
+                              <span className="font-medium text-foreground">{uc.label}:</span> {sourceCitations[uc.id] ?? "—"}
+                            </li>
+                          ))}
+                        </ol>
+                      </div>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+                {profileOpen ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
+              </div>
             </button>
 
             {profileOpen && (
@@ -197,75 +238,86 @@ const SlideLineOfSight = ({
             )}
           </div>
 
-          {/* Stakeholder Tabs */}
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-3">
-            <TabsList className="grid grid-cols-3 w-full max-w-xl bg-card/40 border border-border/30">
-              {executiveOutcomes.map((eo) => {
-                const c = tabColors[eo.id] ?? tabColors.cfo;
-                return (
-                  <TabsTrigger
-                    key={eo.id}
-                    value={eo.id}
-                    className={cn("flex items-center gap-1.5 text-xs font-semibold", c.tabActive)}
-                  >
-                    {c.icon}
-                    {eo.stakeholder}
-                  </TabsTrigger>
-                );
-              })}
-            </TabsList>
-          </Tabs>
+          {/* COO header */}
+          <div className="flex items-center gap-2 mb-3">
+            <span className={cn("inline-flex items-center gap-1.5 rounded-md border px-2 py-1 text-xs font-semibold", cooColors.border, cooColors.text, "bg-sky-500/10")}>
+              <Settings className="w-3.5 h-3.5" />
+              COO View — Cost Avoidance in Dollars
+            </span>
+            <span className="text-[10px] text-muted-foreground italic">All metrics expressed as annualised $ savings vs baseline</span>
+          </div>
 
-          {/* Tier 1: Executive Outcome Metrics */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3">
-            {activeOutcome.metrics.map((metric) => {
-              const computed = computeMetricValue(metric, leadingValues, leadingMeasures);
-              const delta = computed - metric.baselineValue;
-              const improved = metric.direction === "up" ? delta > 0.05 : delta < -0.05;
-              const valStr = metric.unit === "$M" ? `$${computed.toFixed(1)}M` : `${computed.toFixed(1)}${metric.unit}`;
+          {/* Tier 1: COO Outcomes (all $) */}
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-2 mb-2">
+            {cooOutcome.metrics.map((metric) => {
+              const valStr = renderOutcomeMetricValue(metric);
+              const citationIds = metric.sourceUseCases ?? [];
               return (
-                <div key={metric.id} className={cn("rounded-lg border bg-gradient-to-br p-2.5", activeOutcome.color)}>
-                  <p className="text-[10px] text-muted-foreground mb-0.5">{metric.label}</p>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-xl font-bold text-foreground">{valStr}</span>
-                    {Math.abs(delta) > 0.05 && (
-                      <span className={cn("flex items-center gap-0.5 text-[10px] font-medium", improved ? "text-emerald-400" : "text-red-400")}>
-                        {improved ? <ArrowUp className="w-2.5 h-2.5" /> : <ArrowDown className="w-2.5 h-2.5" />}
-                        {Math.abs(delta).toFixed(1)}{metric.unit === "$M" ? "M" : metric.unit}
-                      </span>
+                <div
+                  key={metric.id}
+                  className={cn("rounded-lg border bg-gradient-to-br p-2", metric.isTotal ? "from-emerald-500/15 to-emerald-600/5 border-emerald-500/40" : cooOutcome.color)}
+                >
+                  <div className="flex items-center justify-between mb-0.5">
+                    <p className="text-[10px] text-muted-foreground">{metric.label}</p>
+                    {citationIds.length > 0 && (
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <span className="inline-flex cursor-help">
+                              <Info className="w-2.5 h-2.5 text-muted-foreground/60 hover:text-muted-foreground" />
+                            </span>
+                          </TooltipTrigger>
+                          <TooltipContent side="top" className="max-w-[280px] text-[10px]">
+                            <p className="font-medium mb-1">Sources</p>
+                            <ul className="space-y-1">
+                              {citationIds.map((id) => (
+                                <li key={id}>
+                                  <span className="font-medium">{useCases.find((u) => u.id === id)?.label}:</span> {sourceCitations[id] ?? "—"}
+                                </li>
+                              ))}
+                            </ul>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     )}
                   </div>
-                  <p className="text-[9px] text-muted-foreground mt-0.5">Baseline: {metric.unit === "$M" ? `$${metric.baselineValue}M` : `${metric.baselineValue}${metric.unit}`}</p>
+                  <span className={cn("text-xl font-bold", metric.isTotal ? "text-emerald-300" : "text-foreground")}>
+                    {valStr}
+                  </span>
+                  <p className="text-[9px] text-muted-foreground mt-0.5">/yr</p>
                 </div>
               );
             })}
           </div>
 
-          {/* Tier 2: Leading Measures with % gain badges */}
-          <div className="flex items-center gap-2 flex-wrap mb-3">
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Leading Measures:</span>
+          {/* Tier 2: Leading Measures as $ pills */}
+          <div className="flex items-center gap-2 flex-wrap mb-2">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Measure contributions:</span>
             {connectedMeasures.map((lm) => {
-              const current = leadingValues[lm.id] ?? lm.baselineValue;
-              const diff = lm.direction === "down" ? lm.baselineValue - current : current - lm.baselineValue;
-              const pct = lm.baselineValue !== 0 ? (diff / lm.baselineValue) * 100 : 0;
-              const improved = pct > 0.05;
-              const arrow = lm.direction === "down" ? "↓" : "↑";
-              const unitLabel = lm.unit === "%" ? "%" : ` ${lm.unit}`;
+              const dollars = computeLeadingMeasureDollars(lm, useCaseValues, airlineProfile);
+              const improved = dollars > 0;
               return (
-                <span
-                  key={lm.id}
-                  className={cn(
-                    "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium transition-colors",
-                    improved
-                      ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
-                      : "border-border/40 bg-card/30 text-foreground"
-                  )}
-                >
-                  {lm.shortLabel}
-                  <span className="text-sm font-bold">
-                    {improved ? `${arrow} ${Math.abs(pct).toFixed(1)}${unitLabel}` : "—"}
-                  </span>
-                </span>
+                <TooltipProvider key={lm.id}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className={cn(
+                        "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium cursor-default transition-colors",
+                        improved
+                          ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
+                          : "border-border/40 bg-card/30 text-foreground"
+                      )}>
+                        {lm.shortLabel}
+                        <span className="text-sm font-bold">{improved ? `+${formatCurrency(dollars)}` : "—"}</span>
+                        {improved && <ArrowUp className="w-3 h-3" />}
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom" className="max-w-[240px] text-[10px]">
+                      <p className="font-medium">{lm.label}</p>
+                      <p className="text-muted-foreground">Dollar contribution from connected use cases at current slider values.</p>
+                      {sourceCitations[lm.id] && <p className="mt-1 italic">{sourceCitations[lm.id]}</p>}
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               );
             })}
           </div>
@@ -328,11 +380,12 @@ const SlideLineOfSight = ({
                       <span className="text-xs font-semibold text-foreground text-left leading-tight">{uc.label}</span>
                     </div>
                     <div className="flex items-center gap-1">
+                      {/* $ saved badge replaces % badge */}
                       <span className={cn(
                         "inline-flex items-center rounded-full border px-1.5 py-0.5 text-[9px] font-bold",
-                        severityColors[uc.input.severity]
+                        costImpact > 0 ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/40" : severityColors[uc.input.severity]
                       )}>
-                        {uc.input.severity}
+                        {costImpact > 0 ? `−${formatCurrency(costImpact)}/yr` : uc.input.severity}
                       </span>
                       {isExpanded ? <ChevronUp className="w-3 h-3 text-muted-foreground" /> : <ChevronDown className="w-3 h-3 text-muted-foreground" />}
                     </div>
@@ -355,7 +408,7 @@ const SlideLineOfSight = ({
                       max={uc.input.max}
                       step={uc.input.step}
                       onValueChange={(v) => handleUseCaseChange(uc.id, v)}
-                      className={cn("cursor-pointer", colors.slider)}
+                      className={cn("cursor-pointer", cooColors.slider)}
                     />
                     <div className="flex justify-between mt-0.5">
                       <span className="text-[8px] text-muted-foreground">Best: {uc.input.min}{uc.input.unit}</span>
@@ -363,29 +416,34 @@ const SlideLineOfSight = ({
                     </div>
                   </div>
 
-                  {/* Cost basis */}
+                  {/* Cost basis + source */}
                   <div className="flex items-center justify-between">
-                    <span className="text-[9px] text-muted-foreground">
-                      {formatCurrency(scaledCost)} per {uc.input.unit === "%" ? "point" : uc.input.unit.replace(/s$/, "")}
-                    </span>
-                    {improved && costImpact > 0 && (
-                      <span className="text-[9px] font-semibold text-emerald-400">
-                        −{formatCurrency(costImpact)}/yr
+                    <div className="flex items-center gap-1">
+                      <span className="text-[9px] text-muted-foreground">
+                        {formatCurrency(scaledCost)} per {uc.input.unit === "%" ? "point" : uc.input.unit.replace(/s$/, "")}
                       </span>
-                    )}
+                      {sourceCitations[uc.id] && (
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <span className="inline-flex items-center gap-0.5 cursor-help text-[9px] text-muted-foreground/70 hover:text-muted-foreground">
+                                <Info className="w-2.5 h-2.5" />
+                                Source
+                              </span>
+                            </TooltipTrigger>
+                            <TooltipContent side="top" className="max-w-[260px] text-[10px]">
+                              <p className="font-medium mb-0.5">Source</p>
+                              <p>{sourceCitations[uc.id]}</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      )}
+                    </div>
                   </div>
                 </div>
               );
             })}
           </div>
-
-          {/* Total cost avoidance footer */}
-          {totalCostAvoidance > 0 && (
-            <div className="mt-3 rounded-lg border border-emerald-500/30 bg-emerald-500/5 px-4 py-2 flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Total Annual Cost Avoidance</span>
-              <span className="text-xl font-bold text-emerald-300">{formatCurrency(totalCostAvoidance)}</span>
-            </div>
-          )}
 
           {/* Use Case Detail Dialog */}
           <Dialog open={!!expandedUseCase} onOpenChange={(open) => { if (!open) setExpandedUseCase(null); }}>
@@ -417,7 +475,7 @@ const SlideLineOfSight = ({
                           {Object.keys(uc.impactOnMeasures).map((mId) => {
                             const measure = leadingMeasures.find((m) => m.id === mId);
                             return measure ? (
-                              <span key={mId} className={cn("inline-flex items-center rounded-full border px-1.5 py-0.5 text-[10px] font-medium", colors.badge)}>
+                              <span key={mId} className={cn("inline-flex items-center rounded-full border px-1.5 py-0.5 text-[10px] font-medium", cooColors.badge)}>
                                 {measure.shortLabel}
                               </span>
                             ) : null;
@@ -428,6 +486,12 @@ const SlideLineOfSight = ({
                     <p className="text-[10px] italic text-muted-foreground pt-2 border-t border-border/20">
                       {uc.methodology}
                     </p>
+                    {sourceCitations[uc.id] && (
+                      <div className="rounded-md bg-muted/20 border border-border/30 p-2">
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Source</span>
+                        <p className="text-[10px] text-muted-foreground mt-0.5 leading-relaxed">{sourceCitations[uc.id]}</p>
+                      </div>
+                    )}
                     <div className="pt-2 border-t border-border/20">
                       <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Platform Mechanism — DTOP</span>
                       <div className="flex items-center gap-1 mt-1 flex-wrap">
@@ -478,4 +542,4 @@ const SlideLineOfSight = ({
   );
 };
 
-export default SlideLineOfSight;
+export default TechCalculatorView;
