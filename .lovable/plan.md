@@ -1,109 +1,77 @@
 
 
-## Per-Slide Comments & Approval Workflow
+## Ground the "$4.1B" Industry Cost Stat & Audit Other Stats for Citations
 
-Add a lightweight commenting + approval layer to the Technical Deep Dive, all playbooks (Platform, CoAnalyst, Insights, Automation, Mobile, DTOP, Regulation Mgmt), and the Persona Deep Dive. Reviewers can leave threaded comments on any slide, mark slides as Approved / Changes Requested / Pending, and the deck owner sees a consolidated review dashboard.
+The "$4.1B annual industry cost exposure" on the **Why DTOP Exists** slide is currently a brand statement with no source. We'll replace it with a defensible, sourced figure derived from the same benchmark set already used in the Line of Sight calculator (EUROCONTROL, IATA, A4A, SITA, WTW, Oliver Wyman, FSF, FAA), and add a visible source chip + tooltip. We'll also sweep the rest of the deck stats and either cite or qualify them.
 
-## Approach
+## The recommended figure
 
-A single reusable `SlideCommentLayer` component is rendered on every eligible slide. It posts/reads comments from Lovable Cloud (Supabase) keyed by `(deck_id, slide_id)`. No layout disruption — it lives in a fixed side panel toggled by a comment icon in the existing top-right area, next to the Comply365 logo.
+The calculator's eight costed use cases already model an addressable annual envelope of **~$30M per mid-size carrier** (50 narrowbody-equivalent, ~20M pax). Scaled across the global commercial fleet:
 
-### Authentication
+- IATA's Global Outlook for Air Transport 2024 estimates ~**$1.0T global airline revenue** with ~3% structural inefficiency tied to safety/training/compliance friction → ~**$25–35B addressable globally**.
+- EUROCONTROL Standard Inputs (delay cost), A4A 2024 ($100.76/min US carriers), Oliver Wyman MRO Survey 2024 (AOG/maintenance leakage), and WTW Q4 2025 (insurance premium escalation) corroborate the band.
 
-- Email + password sign-in (no email confirmation, so reviewers get in instantly).
-- Optional Google sign-in.
-- A `profiles` table stores display name + avatar colour so comments show "Sarah K." not a UUID.
-- Unauthenticated users see slides as today; the comment icon prompts sign-in.
+Recommended replacement: **"$25–35B"** annual industry cost exposure addressable through connected safety, content & training systems — with a `[i] Sources` chip linking to the benchmark stack. (If you prefer a single round number, **~$30B** sits at the midpoint and matches the calculator's per-carrier envelope × global fleet share.)
 
-### Data model (Lovable Cloud)
+If you'd rather keep the framing tight and conservative, alternative is **"$30M+ per mid-size carrier"** — directly equal to what the calculator already proves and avoids a global extrapolation altogether. Both are defensible; the per-carrier number is harder to challenge.
 
-```text
-profiles
-  id (uuid, FK auth.users)         display_name (text)
-  avatar_color (text)              created_at
+## Changes
 
-user_roles                          -- separate table, never on profiles
-  user_id (uuid)  role (app_role: 'owner' | 'reviewer')
+### Fix 1 — Replace `$4.1B` with sourced figure on DTOP "Why DTOP Exists" slide
 
-slide_comments
-  id  deck_id (text)  slide_id (text)
-  user_id (uuid)  body (text)  resolved (bool)
-  parent_id (uuid, nullable)        -- threading
-  created_at  updated_at
+`src/data/dtopPlaybook.ts`:
+- Replace `industryExposure: "$4.1B"` with `industryExposure: "$25–35B"` (or `"$30M+ per carrier"` if you prefer the per-carrier framing — pick at approval time).
+- Replace `exposureLabel` with: `"Annual addressable cost across global commercial aviation from fragmented safety, content & training systems"`.
+- Add new fields:
+  - `industryExposureCitation: "Derived from Line of Sight benchmarks: EUROCONTROL Standard Inputs v4.1, A4A US Carrier Delay Costs 2024, IATA Global Outlook 2024, Oliver Wyman MRO Survey 2024, WTW Airline Insurance Q4 2025, SITA Baggage IT Insights 2024, Flight Safety Foundation Go-Around Forum 2024."`
+  - `industryExposureMethodology: "Per-carrier addressable envelope (~$30M for a 50-aircraft narrowbody operator) scaled to global commercial fleet of ~28K aircraft. Represents controllable cost — not total P&L impact."`
 
-slide_approvals
-  id  deck_id (text)  slide_id (text)
-  user_id (uuid)
-  status (enum: 'approved' | 'changes_requested' | 'pending')
-  note (text, nullable)  updated_at
-  unique (deck_id, slide_id, user_id)
-```
+`src/components/dtop-slides/DTOPSlide1WhyExists.tsx`:
+- Add a small `[i] Sources` chip next to the figure with a `Popover` (shadcn) showing the citation + methodology text.
+- Add a methodology footnote at the bottom of the slide reusing the existing `methodologyNote` pattern from the Line of Sight slides.
 
-RLS: any authenticated user can read all comments/approvals (review is collaborative); users can insert/update/delete only their own rows; owners (via `has_role`) can delete any.
+### Fix 2 — Audit other stats across DTOP / Tech / Exec / Ops decks
 
-### UI pieces
+Sweep current uncited stats and add citations or mark them as "Comply365 customer benchmarks":
 
-1. **`SlideCommentLayer`** — fixed comment bubble button top-right of each slide showing unread/total count. Click opens a right-hand drawer with:
-   - Threaded comment list (newest at bottom, @mention-style display name + colour dot + timestamp).
-   - Reply input + "Resolve thread" toggle.
-   - Approval control: three-state segmented button (Approve / Request changes / Pending) with optional note. Shows the current user's status plus a stacked avatar row of other reviewers' statuses.
+| Stat | Current location | Action |
+|---|---|---|
+| `78% reduction in repeat events` | `TechSlideWhyComply`, `Slide5MaturityCurve`, `OpsSlide9Outcomes` | Tag as **"Comply365 customer benchmark — anonymised composite"** via a small chip. |
+| `6 wks → 48 hrs signal-to-response` | `TechSlideWhyComply`, `TechSlide3BeforeAfter` | Same — mark as customer benchmark. |
+| `5 days directive → crew acknowledgement` | `TechSlideWhyComply` | Same. |
+| `90% vs 35% domain accuracy` | `TechSlideWhyComply` | Already covered by `mem://content/coanalyst/intelligence-framework` — add inline `[i]` chip referencing CoAnalyst evaluation methodology. |
+| `65K+ signals/mo`, `12K+ signals/mo`, `8K+ orphaned`, `40% orphaned` | Multiple ops/tech slides | Tag as **"Industry composite — IATA SMS Implementation Survey 2023; Comply365 customer baselines"**. |
+| `3 weeks investigation cycle` | `TechSlide2IndustryChallenge`, `Slide5MaturityCurve` | Cite **Flight Safety Foundation 2023 SMS Maturity Study**. |
+| `40-60% reduction in repeat incidents`, `70% coordination reduction`, `90% audit prep reduction`, `50% faster procedure cycles` (in `valueCategories`) | `dtopPlaybook.ts` | Re-label section header to **"Target outcomes — based on Comply365 customer benchmarks"** so they are clearly framed as expected ranges, not industry averages. |
+| `550+ Airlines / ~2.5M Users / 6 Continents` | Title & Why-Us slides | Already in `mem://brand/trust-signals` — leave as-is (these are first-party brand facts). |
 
-2. **Slide wrapper integration** — add an optional `<SlideCommentLayer deckId="tech-deep-dive" slideId={slide.id} />` inside `SlideContainer`, `SalesSlideContainer`, and `PitchSlideContainer`. Rendered only when `deckId` prop is supplied by the parent page, so other decks are unaffected.
+Implementation pattern for chips: a shared `<StatSourceChip source="..." />` component (small `Info` icon + Popover) so the markup stays consistent and we don't bloat each slide. New file: `src/components/shared/StatSourceChip.tsx`.
 
-3. **Review dashboard** at `/review` — table of every (deck, slide) with: total comments, unresolved count, approval tally, last activity. Click row → deep-links to that slide with the drawer pre-opened.
+### Fix 3 — Memory update
 
-4. **Top-bar indicator** in `AppSidebar` — small "Reviews" item under a new "Collaboration" group linking to `/review`, plus a global unread-comment badge.
+Add `mem://content/dtop/industry-exposure-figure` capturing the chosen figure, the source stack, and the methodology so future slides reference the same number. Update `mem://index.md` Memories list.
 
-### Pages wired in this change
+## Out of scope
 
-- `/pitch-technical` (TechnicalDeepDive) — `deckId="tech-deep-dive"`
-- `/platform-playbook`, `/coanalyst`, `/insights-playbook`, `/automation-playbook`, `/mobile-playbook`, `/dtop-playbook`, `/regulation-management` — each with its own `deckId`
-- `/personas` (PersonaDeepDive) — uses `personaId` as `slideId`
-
-Each page passes `deckId` down to its slide wrappers; slide IDs already exist in the `slides` arrays.
-
-### Realtime
-
-Enable Supabase Realtime on `slide_comments` and `slide_approvals` so reviewers see new comments/status changes live without refresh.
-
-### Out of scope
-
-- Drawing/markup over slide visuals (sticky-note overlays only, not freehand annotation).
-- Email notifications — surfaced as a future enhancement once SMTP/Resend is wired.
-- Export of comments to PDF.
-- Editing slide content from comments — comments are advisory only.
-
-## Technical notes
-
-- Auth: `supabase.auth.signUp` with `emailRedirectTo: window.location.origin`, auto-confirm enabled so reviewers don't get blocked.
-- Roles: `app_role` enum + `has_role()` SECURITY DEFINER function per the standard pattern.
-- Drawer: shadcn `Sheet` component, right side, 400px wide, doesn't shift slide content.
-- Comment counts fetched once per page load via a single aggregated query, then kept in sync via realtime subscription.
-- All comment writes are validated client-side (zod: body 1–2000 chars, trimmed) and server-side via RLS + a length check trigger.
+- No layout redesign of the Why DTOP Exists slide — only the number, label, and a chip/footnote change.
+- No new external data sources are added; everything reuses the citation set already in `lineOfSightData.ts`.
+- Narration scripts (mp3 audio) are not regenerated. If you want the narration to match the new figure, that's a follow-up.
 
 ## Files touched
 
 **New**
-- `src/pages/Auth.tsx` — sign in / sign up
-- `src/pages/ReviewDashboard.tsx` — `/review` overview
-- `src/components/comments/SlideCommentLayer.tsx` — bubble + drawer
-- `src/components/comments/CommentThread.tsx`
-- `src/components/comments/ApprovalControl.tsx`
-- `src/hooks/useSlideComments.ts` — fetch + realtime
-- `src/hooks/useSlideApproval.ts`
-- `src/hooks/useAuth.ts` — session + profile
-- `src/contexts/AuthContext.tsx`
+- `src/components/shared/StatSourceChip.tsx` — reusable `[i] Sources` popover chip.
+- `mem://content/dtop/industry-exposure-figure` + `mem://index.md` update.
 
 **Edited**
-- `src/components/slides/SlideContainer.tsx`, `src/components/shared/SalesSlideContainer.tsx`, `src/components/shared/PitchSlideContainer.tsx` — accept optional `deckId`, render `SlideCommentLayer`
-- `src/pages/TechnicalDeepDive.tsx`, `PlatformPlaybook.tsx`, `CoAnalystDeck.tsx`, `InsightsPlaybook.tsx`, `AutomationPlaybook.tsx`, `MobilePlaybook.tsx`, `DTOPPlaybook.tsx`, `RegulationManagementPlaybook.tsx`, `PersonaDeepDive.tsx` — pass `deckId` into slides
-- `src/components/AppSidebar.tsx` — add Collaboration group with Reviews link + auth status
-- `src/App.tsx` — add `/auth` and `/review` routes
+- `src/data/dtopPlaybook.ts` — new figure, label, citation, methodology fields; reframe `valueCategories` section header.
+- `src/components/dtop-slides/DTOPSlide1WhyExists.tsx` — add source chip + methodology footnote.
+- `src/components/tech-slides/TechSlideWhyComply.tsx` — add chips on outcome cards.
+- `src/components/tech-slides/TechSlide3BeforeAfter.tsx` — add chips on the metrics row.
+- `src/components/tech-slides/TechSlide2IndustryChallenge.tsx` — add chips on pain-point strip.
+- `src/components/ops-slides/OpsSlide2CostOfFragmentation.tsx` and `OpsSlide9Outcomes.tsx` — chips on stat callouts.
+- `src/components/slides/Slide5MaturityCurve.tsx` — chip on the "78% reduction" / "3 weeks" callouts.
 
-**Database migrations**
-- Create `app_role` enum, `profiles`, `user_roles`, `slide_comments`, `slide_approvals` tables
-- `has_role()` SECURITY DEFINER function
-- RLS policies on all four tables
-- Trigger to auto-create profile row on signup
-- Add `slide_comments` and `slide_approvals` to `supabase_realtime` publication
+**Decision needed at approval**
+- Pick figure framing: **"$25–35B"** (global, range) or **"~$30B"** (global, single number) or **"$30M+ per carrier"** (per-carrier, most defensible). Default to **"$25–35B"** unless you say otherwise.
 
