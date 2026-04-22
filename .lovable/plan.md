@@ -1,92 +1,74 @@
 
-
-## Fix: "Download Deck PDF" on Technical Deep Dive produces nothing / blank PDF
+Fix the Technical Deep Dive PDF export by removing the comment/auth dependency from the off-screen export render.
 
 ### Root cause
 
-`DeckPDFExportButton` renders each slide into a host positioned at `left: -20000px`. Three problems:
+The export pipeline now renders slides with `DeckProvider`, which makes `PitchSlideContainer`/`SlideContainer` think they are inside a live reviewable deck. That mounts `SlideCommentLayer`, and `SlideCommentLayer` immediately calls `useAuth()`.
 
-1. **Off-viewport host** — html2canvas resolves bounding rects outside the layout viewport and returns blank or clipped canvases (same bug we fixed for `PersonaDownloadButton` / `DTOPDownloadButton`).
-2. **Missing context providers** — slides are rendered inside `<BrowserRouter>` only, but several Tech slides consume `DeckProvider` (via `useDeckId`) and `SidebarProvider` (via `useSidebar` in the title slide's container). When a hook throws, the whole render fails silently inside the offscreen root and the toast just spins.
-3. **Tailwind `h-screen` collapses** — slides use `h-screen` (`100vh`). When the offscreen host is invisible/zero-area in some browsers the slide renders at 0 height, producing an empty canvas. We need to force the inner wrapper to a fixed `1920×1080` regardless of viewport.
+In the export root there is no `AuthProvider`, so every exported slide that includes comments crashes with:
 
-### Fix
+```text
+useAuth must be used within AuthProvider
+```
 
-Rewrite `src/components/DeckPDFExportButton.tsx`:
+Because the crash happens inside the hidden export render, the PDF generation never completes.
 
-1. **On-viewport but invisible host** (mirrors the persona/DTOP fix):
-   ```ts
-   host.style.position = "fixed";
-   host.style.left = "0";
-   host.style.top = "0";
-   host.style.width = "1920px";
-   host.style.height = "1080px";
-   host.style.opacity = "0";
-   host.style.pointerEvents = "none";
-   host.style.zIndex = "-1";
-   host.style.overflow = "hidden";
-   ```
+### Implementation
 
-2. **Wrap each slide with the same providers the live deck uses**, so hooks resolve:
-   ```tsx
-   <BrowserRouter>
-     <SidebarProvider>
-       <DeckProvider deckId="tech-deep-dive">
-         <SlideNavigationProvider>
-           <div style={{ width: 1920, height: 1080, position: "relative" }}>
-             <SlideComponent slideNumber={i} />
-           </div>
-         </SlideNavigationProvider>
-       </DeckProvider>
-     </SidebarProvider>
-   </BrowserRouter>
-   ```
-   The wrapper div has explicit pixel dimensions so `h-screen` children fill it correctly (they still resolve to viewport, but the host now matches viewport too).
+#### 1. Update `src/components/DeckPDFExportButton.tsx`
+Change the off-screen render tree so exported slides do **not** mount the comment system.
 
-3. **Replace `setTimeout(250)` with double-rAF + `document.fonts.ready`** to guarantee React commit + style/font application before capture:
-   ```ts
-   await new Promise<void>((r) =>
-     requestAnimationFrame(() => requestAnimationFrame(() => r()))
-   );
-   await (document as any).fonts?.ready;
-   await waitForImages(slideHost);
-   await new Promise((r) => setTimeout(r, 120)); // settle gradients/SVG
-   ```
+Build the export root as:
 
-4. **Capture the slideHost itself (not `firstElementChild`)** with explicit window dims, and add `onclone` to neutralise any `oklch()` colors the dark theme produces (html2canvas v1 can't parse oklch and silently bails on those nodes):
-   ```ts
-   html2canvas(slideHost, {
-     scale: 2,
-     useCORS: true,
-     backgroundColor: "#0a0f1c",
-     width: 1920,
-     height: 1080,
-     windowWidth: 1920,
-     windowHeight: 1080,
-     logging: false,
-   });
-   ```
+```tsx
+<BrowserRouter>
+  <SidebarProvider>
+    <SlideNavigationProvider>
+      <div style={{ width: FRAME_W, height: FRAME_H, position: "relative" }}>
+        <SlideComponent slideNumber={i} />
+      </div>
+    </SlideNavigationProvider>
+  </SidebarProvider>
+</BrowserRouter>
+```
 
-5. **Per-slide error isolation** — wrap each slide capture in its own try/catch so one broken slide doesn't kill the whole export. Failed slides get a placeholder page noting which slide failed, and the toast reports `"Exported with N warnings"` rather than total failure.
+Key change:
+- Remove `DeckProvider` from the export renderer.
 
-6. **Keep the existing toast progress / final save / cleanup** flow.
+Why this works:
+- `useDeckId()` falls back to `undefined` when there is no provider.
+- `PitchSlideContainer` and `SlideContainer` only render `SlideCommentLayer` when a deck id exists.
+- No comment layer means no `useAuth()` call and no export crash.
+- The PDF also becomes cleaner because the comment badge is not captured on each slide.
+
+#### 2. Keep the existing export stability fixes already in place
+Retain the current good parts of `DeckPDFExportButton`:
+- fixed on-viewport hidden host
+- double `requestAnimationFrame`
+- `document.fonts.ready`
+- `waitForImages`
+- explicit `1920×1080` capture dimensions
+- per-slide error isolation and warning placeholder pages
 
 ### Files
 
 **Edited**
-- `src/components/DeckPDFExportButton.tsx` — apply fixes 1–5 above.
+- `src/components/DeckPDFExportButton.tsx` — remove `DeckProvider` from the export render tree and any now-unused import.
 
 ### Verification
 
-1. Open `/pitch-technical`, click **Download Deck PDF** on slide 0.
-2. Toast progresses through all 22 slides ("Exporting slide N of 22 — <label>").
-3. `Comply365-Technical-Deep-Dive.pdf` saves; opens with all 22 landscape pages, each fully rendered (typography, charts, dark theme, brand colors).
-4. If any individual slide fails, that page shows a "Slide failed to render" placeholder and the toast shows a warning count instead of error.
-5. No regression on Persona / DTOP single-page exports (untouched).
+1. Open `/pitch-technical`.
+2. Click **Download Deck PDF** on slide 0.
+3. Confirm the toast progresses through all slides instead of hanging/failing immediately.
+4. Confirm the PDF downloads successfully.
+5. Open the PDF and verify:
+   - slides render normally
+   - no comment bubble appears in the export
+   - no “Slide X failed to render” placeholders unless a slide has a separate issue
+6. Confirm the preview no longer throws export-time `useAuth must be used within AuthProvider` errors.
 
 ### Out of scope
 
-- No changes to individual Tech slide components.
-- No changes to `PersonaDownloadButton` / `DTOPDownloadButton` (already fixed).
-- No new export formats (PPTX, etc.).
-
+- No changes to the live comments experience in the preview.
+- No redesign of the export button or slide layouts.
+- No changes to persona/DTOP exporters.
