@@ -1,34 +1,55 @@
 
 
-## Move Download Deck PDF into Slide 0 only
+## Fix: Comments post but never appear ("No comments yet")
 
-The fixed top-left toolbar overlaps the sidebar trigger and persists across all 22 slides. Better solution: **render the download button inside the title slide (`TechSlide0Title`) only**, so it appears once on the opening slide and disappears as soon as the user scrolls.
+### Root cause
 
-### Change
+`useSlideComments.ts` requests:
+```
+.select("*, profile:profiles!slide_comments_user_id_fkey(...)")
+```
+but `slide_comments` has no foreign key to `profiles`. PostgREST returns `400 PGRST200` for every load, so `comments` stays `[]` and the UI always shows the empty state — even though inserts succeed (you can see them in the database).
 
-**`src/pages/TechnicalDeepDive.tsx`**
-- Remove the `fixed top-4 left-4` toolbar wrapper entirely.
-- Pass the `slides` array down to `TechSlide0Title` via a new prop (e.g. `exportSlides`) — only slide 0 needs it.
+### Fix (two parts)
 
-**`src/components/tech-slides/TechSlide0Title.tsx`**
-- Accept optional `exportSlides` prop.
-- Render `<DeckPDFExportButton>` inside the slide's existing layout, positioned in a non-intrusive spot (bottom-right corner of the slide content, above the narration bar — `absolute bottom-24 right-8`), with the small caption underneath.
-- Because it lives inside the slide, it scrolls away naturally on slide 2+, never overlapping the sidebar trigger or any other slide's content.
+**1. Add the missing foreign key (migration)**
+Add `slide_comments.user_id → profiles.id` so PostgREST can resolve the embedded join. This also lets the existing query keep working with no code change to other call sites.
 
-### Why this is better than the fixed toolbar
+```sql
+ALTER TABLE public.slide_comments
+  ADD CONSTRAINT slide_comments_user_id_fkey
+  FOREIGN KEY (user_id) REFERENCES public.profiles(id) ON DELETE CASCADE;
 
-- No z-index fight with `SidebarTrigger` (top-left) or narration bar (bottom).
-- Discoverable: title slide is the natural "deck cover" — download lives with the deck title.
-- Zero impact on the other 21 slides' layouts.
+CREATE INDEX IF NOT EXISTS slide_comments_user_id_idx
+  ON public.slide_comments(user_id);
+```
+
+Note: `profiles.id` already mirrors `auth.users.id` (set on signup), so every existing `slide_comments.user_id` already has a matching `profiles.id`. The constraint will apply cleanly. If a stray row is missing a profile, the migration will create the missing profile rows first as a safety step.
+
+**2. Harden the hook (defensive)**
+In `src/hooks/useSlideComments.ts`:
+- Surface the error to the console (`console.error("Failed to load comments", error)`) instead of swallowing it, so future schema mismatches are visible.
+- Keep the existing `profile:profiles!slide_comments_user_id_fkey(...)` join (now valid).
+- No other changes needed.
 
 ### Files
 
 **Edited**
-- `src/pages/TechnicalDeepDive.tsx` — drop fixed toolbar, pass `exportSlides={slides}` to slide 0.
-- `src/components/tech-slides/TechSlide0Title.tsx` — accept `exportSlides`, render `DeckPDFExportButton` + caption inside the slide.
+- `src/hooks/useSlideComments.ts` — add `console.error` on load failure.
+
+**New**
+- `supabase/migrations/<timestamp>_slide_comments_profile_fk.sql` — backfill any missing profiles + add FK + index.
+
+### Verification
+
+1. Reload `/pitch-technical`, open any slide's comment panel.
+2. Network tab: `slide_comments` GET returns `200` with rows.
+3. Previously posted "test 2" comment now appears with the author avatar/name.
+4. Post a new comment → it appears immediately (realtime subscription already wired).
 
 ### Out of scope
 
-- No changes to `DeckPDFExportButton` itself.
-- No changes to other slides or layout primitives.
+- No UI redesign of the comment panel.
+- No changes to RLS policies (existing policies already allow authenticated reads).
+- No change to the `ReviewDashboard` aggregation query (it doesn't use the join).
 
