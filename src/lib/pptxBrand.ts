@@ -18,6 +18,16 @@ export const PPTX_BRAND = {
     orchestrate: "A78BFA",
     prove: "10B981",
     danger: "EF4444",
+    success: "10B981",
+    warning: "F59E0B",
+    rose: "F43F5E",
+    blue: "3B82F6",
+    emerald: "10B981",
+    violet: "A78BFA",
+    amber: "F59E0B",
+    cyan: "22D3EE",
+    sky: "38BDF8",
+    purple: "C084FC",
   },
   font: { display: "Calibri", body: "Calibri" },
 } as const;
@@ -207,5 +217,179 @@ export async function addBrandLogo(slide: pptxgen.Slide, logoBase64: string, var
   slide.addImage({
     data: logoBase64,
     x: PPTX_BRAND.size.w - 1.5, y: 0.25, w: 1.1, h: 0.32,
+  });
+}
+
+/** Eyebrow label — uppercase tracked. */
+export function addEyebrow(
+  slide: pptxgen.Slide,
+  x: number, y: number, w: number,
+  text: string,
+  color: string = C.primary,
+) {
+  slide.addText(text.toUpperCase(), {
+    x, y, w, h: 0.28,
+    fontFace: PPTX_BRAND.font.body, fontSize: 9, color, bold: true, charSpacing: 4,
+  });
+}
+
+/** Section title — display 22pt bold. */
+export function addSectionTitle(
+  slide: pptxgen.Slide,
+  x: number, y: number, w: number,
+  text: string,
+  color: string = C.ink,
+) {
+  slide.addText(text, {
+    x, y, w, h: 0.4,
+    fontFace: PPTX_BRAND.font.display, fontSize: 14, bold: true, color,
+  });
+}
+
+/** Coloured pill with text inside (for tags / data sources). */
+export function addPill(
+  slide: pptxgen.Slide,
+  x: number, y: number, w: number, h: number,
+  text: string,
+  color: string,
+) {
+  slide.addShape("roundRect", {
+    x, y, w, h,
+    fill: { color: PPTX_BRAND.color.surface },
+    line: { color, width: 1 },
+    rectRadius: h / 2,
+  });
+  slide.addText(text, {
+    x, y, w, h,
+    fontFace: PPTX_BRAND.font.body, fontSize: 9, color, bold: true,
+    align: "center", valign: "middle",
+  });
+}
+
+/** Horizontal pill row with auto sizing. */
+export function addPillRow(
+  slide: pptxgen.Slide,
+  x: number, y: number, w: number, h: number,
+  items: { text: string; color?: string }[],
+) {
+  const gap = 0.12;
+  const pillW = (w - gap * (items.length - 1)) / items.length;
+  items.forEach((it, i) => {
+    addPill(slide, x + i * (pillW + gap), y, pillW, h, it.text, it.color ?? C.primary);
+  });
+}
+
+/** Coloured square icon badge with letter/glyph inside. */
+export function addIconBadge(
+  slide: pptxgen.Slide,
+  x: number, y: number, size: number,
+  color: string,
+  glyph: string = "■",
+) {
+  slide.addShape("roundRect", {
+    x, y, w: size, h: size,
+    fill: { color },
+    line: { type: "none" },
+    rectRadius: size * 0.2,
+  });
+  slide.addText(glyph, {
+    x, y, w: size, h: size,
+    fontFace: PPTX_BRAND.font.display, fontSize: Math.max(10, size * 22),
+    bold: true, color: PPTX_BRAND.color.bg, align: "center", valign: "middle",
+  });
+}
+
+/** Right-pointing chevron between cards. */
+export function addStepArrow(
+  slide: pptxgen.Slide,
+  x: number, y: number, h: number = 0.3,
+  color: string = PPTX_BRAND.color.muted,
+) {
+  slide.addText("›", {
+    x, y, w: h * 0.8, h,
+    fontFace: PPTX_BRAND.font.display, fontSize: Math.max(14, h * 40),
+    bold: true, color, align: "center", valign: "middle",
+  });
+}
+
+/** Card with eyebrow + title + body paragraph. Most-used slide primitive. */
+export function addLabeledCard(
+  slide: pptxgen.Slide,
+  x: number, y: number, w: number, h: number,
+  opts: {
+    eyebrow?: string;
+    title: string;
+    body?: string;
+    accent?: string;
+    fill?: string;
+    titleSize?: number;
+    bodySize?: number;
+  },
+) {
+  const accent = opts.accent ?? C.primary;
+  slide.addShape("roundRect", {
+    x, y, w, h,
+    fill: { color: opts.fill ?? C.surface },
+    line: { color: accent, width: 0.75 },
+    rectRadius: 0.08,
+  });
+  let cy = y + 0.15;
+  if (opts.eyebrow) {
+    slide.addText(opts.eyebrow.toUpperCase(), {
+      x: x + 0.18, y: cy, w: w - 0.36, h: 0.22,
+      fontFace: PPTX_BRAND.font.body, fontSize: 8, color: accent, bold: true, charSpacing: 3,
+    });
+    cy += 0.22;
+  }
+  slide.addText(opts.title, {
+    x: x + 0.18, y: cy, w: w - 0.36, h: 0.34,
+    fontFace: PPTX_BRAND.font.display, fontSize: opts.titleSize ?? 12, bold: true, color: C.ink,
+  });
+  cy += 0.34;
+  if (opts.body) {
+    slide.addText(opts.body, {
+      x: x + 0.18, y: cy, w: w - 0.36, h: y + h - cy - 0.12,
+      fontFace: PPTX_BRAND.font.body, fontSize: opts.bodySize ?? 9.5, color: C.muted,
+      valign: "top", paraSpaceAfter: 2,
+    });
+  }
+}
+
+/** Check / cross row used in capability comparisons. */
+export function addCheckRow(
+  slide: pptxgen.Slide,
+  x: number, y: number, w: number, h: number,
+  label: string,
+  ok: boolean,
+  ok2?: boolean,
+) {
+  slide.addText(label, {
+    x, y, w: w - 1.2, h,
+    fontFace: PPTX_BRAND.font.body, fontSize: 10, color: C.ink, valign: "middle",
+  });
+  const iconX1 = x + w - 1.1;
+  const iconX2 = x + w - 0.5;
+  slide.addText(ok ? "✓" : "✕", {
+    x: iconX1, y, w: 0.5, h,
+    fontFace: PPTX_BRAND.font.display, fontSize: 14, bold: true,
+    color: ok ? C.prove : C.danger, align: "center", valign: "middle",
+  });
+  if (typeof ok2 === "boolean") {
+    slide.addText(ok2 ? "✓" : "✕", {
+      x: iconX2, y, w: 0.5, h,
+      fontFace: PPTX_BRAND.font.display, fontSize: 14, bold: true,
+      color: ok2 ? C.prove : C.danger, align: "center", valign: "middle",
+    });
+  }
+}
+
+/** Small divider line. */
+export function addDivider(
+  slide: pptxgen.Slide,
+  x: number, y: number, w: number, color: string = C.hairline,
+) {
+  slide.addShape("rect", {
+    x, y, w, h: 0.015,
+    fill: { color }, line: { type: "none" },
   });
 }
