@@ -63,8 +63,12 @@ export const heroSubtitle = "Detect → Trigger → Orchestrate → Prove";
 
 export const whyDTOPExists = {
   headline: "Point solutions detect problems. Nobody closes the loop.",
-  industryExposure: "$4.1B",
-  exposureLabel: "Annual industry cost exposure from fragmented safety, content & training systems",
+  industryExposure: "$25–35B",
+  exposureLabel: "Annual addressable cost across global commercial aviation from fragmented safety, content & training systems",
+  industryExposureCitation:
+    "Derived from Line of Sight benchmarks: EUROCONTROL Standard Inputs v4.1, A4A US Carrier Delay Costs 2024, IATA Global Outlook 2024, Oliver Wyman MRO Survey 2024, WTW Airline Insurance Q4 2025, SITA Baggage IT Insights 2024, Flight Safety Foundation Go-Around Forum 2024.",
+  industryExposureMethodology:
+    "Per-carrier addressable envelope (~$30M for a 50-aircraft narrowbody operator) scaled to the global commercial fleet of ~28K aircraft. Represents controllable cost — not total P&L impact. Range reflects sensitivity to fleet mix, region, and baseline maturity.",
   problems: [
     { label: "Siloed Safety Systems", detail: "SMS tools capture events but can't trigger procedural or training responses" },
     { label: "Disconnected Content", detail: "Manual distribution with no link to the incidents that demand updates" },
