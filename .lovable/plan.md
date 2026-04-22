@@ -1,48 +1,67 @@
 
 
-## Stop slide navigation when typing in comment/reply inputs
+## Simplify to Comments-Only (Remove Approval Workflow)
 
-When you press Space (or arrow keys) inside the comment textarea, the deck's window-level keyboard listener fires `preventDefault()` and scrolls to the next slide. Fix: each deck's `keydown` handler should ignore key events whose target is an input, textarea, contentEditable element, or anything inside the comment drawer.
+Strip out the approval system entirely. Reviewers can add, edit, reply to, resolve, and delete comments — everyone signed in sees everything in real time. No Approve / Changes Requested / Pending controls anywhere.
 
-### Change
+## What changes
 
-Add a single guard at the top of every deck-level `keydown` handler:
+### Comment drawer (`SlideCommentLayer.tsx`)
+- Remove the `ApprovalControl` block from the bottom of the drawer.
+- Remove the `useSlideApproval` hook usage.
+- Keep: avatar + display name header, comment list, post box, threaded replies, resolve toggle, delete (own).
+- Add an **Edit** action on each comment the current user owns — inline textarea, Save / Cancel, with the same 1–2000 char validation.
 
-```ts
-const target = e.target as HTMLElement | null;
-if (
-  target &&
-  (target.tagName === "INPUT" ||
-    target.tagName === "TEXTAREA" ||
-    target.isContentEditable ||
-    target.closest("[data-radix-popper-content-wrapper]") ||
-    target.closest("[role=dialog]"))
-) {
-  return;
-}
-```
+### Comment thread (`CommentThread.tsx`)
+- Add inline edit mode for the comment author (textarea pre-filled with current body, Save updates `body` + `updated_at`).
+- Show a small "(edited)" tag when `updated_at > created_at`.
+- Keep Reply / Resolve / Delete actions exactly as today.
 
-This lets the space/arrow keys behave normally inside the comment textarea, reply box, approval note, sign-in fields, and any popover/sheet — while keeping deck navigation working everywhere else.
+### Comments hook (`useSlideComments.ts`)
+- Add `editComment(id, body)` that updates `body` (RLS already allows authors to update their own rows).
 
-### Files touched
+### Review dashboard (`/review`)
+- Drop all approval columns (✓ / ✗ / •).
+- Keep columns: Deck, Slide, Total comments, Unresolved, Last activity, Open link.
+- Stop querying `slide_approvals`.
 
-- `src/pages/TechnicalDeepDive.tsx`
-- `src/pages/PlatformPlaybook.tsx`
-- `src/pages/CoAnalystDeck.tsx`
-- `src/pages/InsightsPlaybook.tsx`
-- `src/pages/AutomationPlaybook.tsx`
-- `src/pages/MobilePlaybook.tsx`
-- `src/pages/DTOPPlaybook.tsx`
-- `src/pages/RegulationManagementPlaybook.tsx`
-- `src/pages/ExecutivePitch.tsx`
-- `src/pages/ExecutivePitch2.tsx`
-- `src/pages/OperationalPitch.tsx`
-- `src/pages/ContentStrategyPage.tsx`
-- `src/pages/SlideDeck.tsx`
-- `src/pages/ValueDeck.tsx`
+### Files to delete
+- `src/components/comments/ApprovalControl.tsx`
+- `src/hooks/useSlideApproval.ts`
 
-### Out of scope
+### Database cleanup
+Migration to drop the now-unused approval objects:
+- `DROP TABLE public.slide_approvals;`
+- `DROP TYPE public.approval_status;`
+- Remove `slide_approvals` from `supabase_realtime` publication first.
 
-- No change to scroll-snap behaviour, narration, or comment UI itself.
-- No change to sidebar shortcuts.
+Comment tables, profiles, user_roles, and the `has_role` function all stay — `user_roles` is still used by the "owner can delete any comment" RLS policy.
+
+### Side fix bundled in
+The current network log shows comments fail to load (`PGRST200` — missing FK from `slide_comments.user_id` → `profiles.id`). Add the foreign key in the same migration so the existing `profile:profiles!slide_comments_user_id_fkey(...)` join actually works and comments render:
+- `ALTER TABLE public.slide_comments ADD CONSTRAINT slide_comments_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.profiles(id) ON DELETE CASCADE;`
+
+Without this the drawer will keep showing "No comments yet" even after posting.
+
+## Out of scope
+
+- No change to auth, sidebar, or which decks have commenting enabled.
+- No email notifications.
+- No change to the comment bubble button position or styling.
+
+## Files touched
+
+**Edited**
+- `src/components/comments/SlideCommentLayer.tsx` — remove approval block, wire `editComment`.
+- `src/components/comments/CommentThread.tsx` — add inline edit UI + "(edited)" marker.
+- `src/hooks/useSlideComments.ts` — add `editComment`.
+- `src/pages/ReviewDashboard.tsx` — remove approval columns and query.
+
+**Deleted**
+- `src/components/comments/ApprovalControl.tsx`
+- `src/hooks/useSlideApproval.ts`
+
+**Migration**
+- Drop `slide_approvals` table + `approval_status` enum (after removing from realtime publication).
+- Add missing `slide_comments.user_id → profiles.id` foreign key so comments actually load.
 
