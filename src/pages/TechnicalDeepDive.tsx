@@ -3,6 +3,7 @@ import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useTechPitchNarration } from "@/hooks/useTechPitchNarration";
 import { DeckProvider } from "@/contexts/DeckContext";
+import DeckPDFExportButton from "@/components/DeckPDFExportButton";
 
 // Act 1 — Frame the problem
 import TechSlide0Title from "@/components/tech-slides/TechSlide0Title";
@@ -151,6 +152,16 @@ const TechnicalDeepDive = () => {
 
   return (
     <DeckProvider deckId="tech-deep-dive">
+    <div className="fixed top-4 right-4 z-50 flex flex-col items-end gap-1">
+      <DeckPDFExportButton
+        slides={slides}
+        filename="Comply365-Technical-Deep-Dive.pdf"
+        deckLabel="Technical Deep Dive"
+      />
+      <span className="text-[10px] text-muted-foreground bg-background/70 backdrop-blur px-2 py-0.5 rounded">
+        Interactive slides export in their default view.
+      </span>
+    </div>
     <div ref={containerRef} className="h-screen overflow-y-auto snap-y snap-mandatory scroll-smooth">
       {slides.map((slide, index) => {
         const SlideComponent = slide.component as React.ComponentType<any>;
