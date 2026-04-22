@@ -28,17 +28,22 @@ import InsightsPlaybook from "./pages/InsightsPlaybook";
 import AutomationPlaybook from "./pages/AutomationPlaybook";
 import MobilePlaybook from "./pages/MobilePlaybook";
 import PlatformPlaybook from "./pages/PlatformPlaybook";
+import AuthPage from "./pages/Auth";
+import ReviewDashboard from "./pages/ReviewDashboard";
+import { AuthProvider } from "./contexts/AuthContext";
 
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
+    <AuthProvider>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
         <Routes>
+          <Route path="/auth" element={<AuthPage />} />
           <Route element={<AppLayout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/strategy" element={<SlideDeck />} />
@@ -64,11 +69,13 @@ const App = () => (
             <Route path="/automation-playbook" element={<AutomationPlaybook />} />
             <Route path="/mobile-playbook" element={<MobilePlaybook />} />
             <Route path="/platform-playbook" element={<PlatformPlaybook />} />
+            <Route path="/review" element={<ReviewDashboard />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 

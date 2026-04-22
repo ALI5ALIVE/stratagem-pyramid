@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import complyIcon from "@/assets/comply365-logo-white.png";
 import SlidePlayButton from "@/components/SlidePlayButton";
+import SlideCommentLayer from "@/components/comments/SlideCommentLayer";
 
 interface SlideContainerProps {
   id: string;
@@ -12,6 +13,7 @@ interface SlideContainerProps {
   variant?: "dark" | "light";
   slideNumber?: number;
   showTitleAccent?: boolean;
+  deckId?: string;
   // Narration props
   isPlaying?: boolean;
   isLoading?: boolean;
@@ -32,6 +34,7 @@ const SlideContainer = ({
   variant = "dark",
   slideNumber,
   showTitleAccent = true,
+  deckId,
   isPlaying = false,
   isLoading = false,
   progress = 0,
@@ -64,6 +67,8 @@ const SlideContainer = ({
           variant={variant}
         />
       )}
+
+      {deckId && <SlideCommentLayer deckId={deckId} slideId={id} variant={variant} />}
 
       {/* Logo icon - top right */}
       <div className="absolute top-6 right-6 sm:top-8 sm:right-10">
