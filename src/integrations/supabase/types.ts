@@ -38,39 +38,6 @@ export type Database = {
         }
         Relationships: []
       }
-      slide_approvals: {
-        Row: {
-          created_at: string
-          deck_id: string
-          id: string
-          note: string | null
-          slide_id: string
-          status: Database["public"]["Enums"]["approval_status"]
-          updated_at: string
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          deck_id: string
-          id?: string
-          note?: string | null
-          slide_id: string
-          status?: Database["public"]["Enums"]["approval_status"]
-          updated_at?: string
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          deck_id?: string
-          id?: string
-          note?: string | null
-          slide_id?: string
-          status?: Database["public"]["Enums"]["approval_status"]
-          updated_at?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
       slide_comments: {
         Row: {
           body: string
@@ -151,7 +118,6 @@ export type Database = {
     }
     Enums: {
       app_role: "owner" | "reviewer"
-      approval_status: "approved" | "changes_requested" | "pending"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -280,7 +246,6 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["owner", "reviewer"],
-      approval_status: ["approved", "changes_requested", "pending"],
     },
   },
 } as const
