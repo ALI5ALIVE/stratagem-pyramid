@@ -1,67 +1,69 @@
 
 
-## Simplify to Comments-Only (Remove Approval Workflow)
+## Persona One-Pager PDF Download
 
-Strip out the approval system entirely. Reviewers can add, edit, reply to, resolve, and delete comments — everyone signed in sees everything in real time. No Approve / Changes Requested / Pending controls anywhere.
+Add a "Download One-Pager PDF" button to each persona on the **Persona Deep-Dive Hub** (`/personas`) that produces a professional, single-page, branded PDF summarising the active persona. Each PDF is generated client-side (no backend, no extra deps — reuses the `jspdf` + `html2canvas` stack already in the project).
 
-## What changes
+## What the one-pager contains
 
-### Comment drawer (`SlideCommentLayer.tsx`)
-- Remove the `ApprovalControl` block from the bottom of the drawer.
-- Remove the `useSlideApproval` hook usage.
-- Keep: avatar + display name header, comment list, post box, threaded replies, resolve toggle, delete (own).
-- Add an **Edit** action on each comment the current user owns — inline textarea, Save / Cancel, with the same 1–2000 char validation.
+Designed to fit on **one A4 landscape page** (matches existing `PrintablePage` format) with a tight, scannable layout:
 
-### Comment thread (`CommentThread.tsx`)
-- Add inline edit mode for the comment author (textarea pre-filled with current body, Save updates `body` + `updated_at`).
-- Show a small "(edited)" tag when `updated_at > created_at`.
-- Keep Reply / Resolve / Delete actions exactly as today.
+```text
+┌─────────────────────────────────────────────────────────────────┐
+│ Comply365 logo            PERSONA ONE-PAGER       Date / Conf. │
+├─────────────────────────────────────────────────────────────────┤
+│ [Icon] CEO / COO                              Seniority: C-Suite│
+│        Variants: CEO · COO · President · Accountable Manager    │
+│        Profile summary (2–3 lines)                              │
+│  Reports To  │  Org Context  │  Budget Influence (3 mini cards) │
+├──────────────────────────┬──────────────────────────────────────┤
+│ Strategic Priorities     │ Daily Pain Points                    │
+│ (top 4, condensed)       │ (top 4, condensed)                   │
+├──────────────────────────┼──────────────────────────────────────┤
+│ Buying Triggers (top 3)  │ Decision Criteria (top 3)            │
+├──────────────────────────┴──────────────────────────────────────┤
+│ Value Proposition (italic, accent border)                       │
+├──────────────────────────┬──────────────────────────────────────┤
+│ Key Messages (top 3)     │ Metrics That Matter (top 4)          │
+├──────────────────────────┴──────────────────────────────────────┤
+│ Top Discovery Question  │  Top Objection + Response             │
+├─────────────────────────────────────────────────────────────────┤
+│ © Comply365 · Sales Enablement · /personas              v1.0    │
+└─────────────────────────────────────────────────────────────────┘
+```
 
-### Comments hook (`useSlideComments.ts`)
-- Add `editComment(id, body)` that updates `body` (RLS already allows authors to update their own rows).
+To guarantee single-page fit, list-heavy sections are **truncated to top N items** (priorities/pains: 4; triggers/criteria/messages: 3; metrics: 4; discovery/objection: 1 each). Persona accent colour drives the header band, icon, and section title accents so each persona's PDF feels visually distinct but on-brand.
 
-### Review dashboard (`/review`)
-- Drop all approval columns (✓ / ✗ / •).
-- Keep columns: Deck, Slide, Total comments, Unresolved, Last activity, Open link.
-- Stop querying `slide_approvals`.
+## How it works
 
-### Files to delete
-- `src/components/comments/ApprovalControl.tsx`
-- `src/hooks/useSlideApproval.ts`
+1. Add a **"Download One-Pager PDF"** button in the persona header area (next to the seniority badge), and a duplicate button in the mobile chips toolbar.
+2. On click: render a new `PersonaPrintablePage` component into a hidden offscreen `<div>` via `createRoot`, capture with `html2canvas` at 2× scale, write to a landscape A4 `jsPDF` (1056×816 px to match existing `PrintablePage`), download as `Comply365-Persona-{persona.id}.pdf`.
+3. Show a `Loader2` spinner + disabled state while generating (same pattern as `DownloadButton.tsx`).
 
-### Database cleanup
-Migration to drop the now-unused approval objects:
-- `DROP TABLE public.slide_approvals;`
-- `DROP TYPE public.approval_status;`
-- Remove `slide_approvals` from `supabase_realtime` publication first.
+## Files
 
-Comment tables, profiles, user_roles, and the `has_role` function all stay — `user_roles` is still used by the "owner can delete any comment" RLS policy.
+**New**
+- `src/components/PersonaPrintablePage.tsx` — single-page print template, inline styles only (so html2canvas captures correctly without Tailwind class race conditions, mirroring `PrintablePage.tsx`). Accepts `{ persona: PersonaProfile }`.
+- `src/components/PersonaDownloadButton.tsx` — wraps the generation logic; reuses the `jspdf` + `html2canvas` + `createRoot` pattern from `DownloadButton.tsx`. Accepts `{ persona: PersonaProfile }`.
 
-### Side fix bundled in
-The current network log shows comments fail to load (`PGRST200` — missing FK from `slide_comments.user_id` → `profiles.id`). Add the foreign key in the same migration so the existing `profile:profiles!slide_comments_user_id_fkey(...)` join actually works and comments render:
-- `ALTER TABLE public.slide_comments ADD CONSTRAINT slide_comments_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.profiles(id) ON DELETE CASCADE;`
+**Edited**
+- `src/pages/PersonaDeepDive.tsx` — import and render `<PersonaDownloadButton persona={active} />` in the persona header card (top-right, next to the seniority badge); also surface it above the mobile chips when on mobile.
 
-Without this the drawer will keep showing "No comments yet" even after posting.
+## Design details
+
+- **Branding**: Comply365 logo top-left, persona accent colour as a 6px top border on the page and on each section card. Inter / Space Grotesk system fallbacks (the print render uses inline `font-family` since html2canvas doesn't load Tailwind fonts reliably).
+- **Colour mapping**: convert each persona's Tailwind tokens (`text-violet-400`, `bg-violet-500/10`, `border-violet-500/30`) to inline hex/rgba in a small `personaColorMap` inside the printable component, so PDF output is deterministic regardless of computed CSS.
+- **Typography**: 11pt body, 9pt mini-cards, 18pt persona name, generous line-height (1.4) for executive readability.
+- **Footer**: copyright, "Sales Enablement", source URL (`/personas`), and a doc version (`v1.0`) for tracking.
 
 ## Out of scope
 
-- No change to auth, sidebar, or which decks have commenting enabled.
-- No email notifications.
-- No change to the comment bubble button position or styling.
+- No bulk "Download all personas" zip — single-persona only (can be added later if requested).
+- No print-from-browser CSS — this is a generated PDF, not a `window.print()` flow.
+- No new external libraries — reuses `jspdf`, `html2canvas`, and `react-dom/client` already in `package.json`.
+- Persona data is unchanged.
 
-## Files touched
+## QA plan
 
-**Edited**
-- `src/components/comments/SlideCommentLayer.tsx` — remove approval block, wire `editComment`.
-- `src/components/comments/CommentThread.tsx` — add inline edit UI + "(edited)" marker.
-- `src/hooks/useSlideComments.ts` — add `editComment`.
-- `src/pages/ReviewDashboard.tsx` — remove approval columns and query.
-
-**Deleted**
-- `src/components/comments/ApprovalControl.tsx`
-- `src/hooks/useSlideApproval.ts`
-
-**Migration**
-- Drop `slide_approvals` table + `approval_status` enum (after removing from realtime publication).
-- Add missing `slide_comments.user_id → profiles.id` foreign key so comments actually load.
+After implementing, verify by downloading each of the 5 personas' PDFs and confirming: single page, no clipped text, accent colour matches, all 10 sections render, logo + footer present.
 
