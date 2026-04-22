@@ -2,6 +2,7 @@ import { SlideNarrationProps } from "@/types/slideProps";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { Plane, Globe, Users } from "lucide-react";
 import DeckPDFExportButton from "@/components/DeckPDFExportButton";
+import DeckPPTXExportButton from "@/components/DeckPPTXExportButton";
 
 interface ExportSlideDef {
   id: string;
@@ -45,11 +46,14 @@ const TechSlide0Title = ({
 
       {exportSlides && exportSlides.length > 0 && (
         <div className="absolute bottom-24 right-8 z-40 flex flex-col items-end gap-1 text-right">
-          <DeckPDFExportButton
-            slides={exportSlides}
-            filename="Comply365-Technical-Deep-Dive.pdf"
-            deckLabel="Technical Deep Dive"
-          />
+          <div className="flex items-center gap-2">
+            <DeckPPTXExportButton deckId="tech-deep-dive" />
+            <DeckPDFExportButton
+              slides={exportSlides}
+              filename="Comply365-Technical-Deep-Dive.pdf"
+              deckLabel="Technical Deep Dive"
+            />
+          </div>
           <span className="text-[10px] text-muted-foreground bg-background/70 backdrop-blur px-2 py-0.5 rounded max-w-[220px]">
             Interactive slides export in their default view.
           </span>
