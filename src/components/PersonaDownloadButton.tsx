@@ -6,6 +6,7 @@ import jsPDF from "jspdf";
 import { createRoot } from "react-dom/client";
 import PersonaPrintablePage from "./PersonaPrintablePage";
 import type { PersonaProfile } from "@/data/personaProfiles";
+import { ensurePrintFontsLoaded, printBrand } from "./print/printBrand";
 
 interface Props {
   persona: PersonaProfile;
@@ -19,6 +20,7 @@ const PersonaDownloadButton: React.FC<Props> = ({ persona, variant = "outline", 
 
   const generatePDF = async () => {
     setIsGenerating(true);
+    await ensurePrintFontsLoaded();
     const tempContainer = document.createElement("div");
     tempContainer.style.position = "absolute";
     tempContainer.style.left = "-9999px";
@@ -29,7 +31,7 @@ const PersonaDownloadButton: React.FC<Props> = ({ persona, variant = "outline", 
     try {
       await new Promise<void>((resolve) => {
         root.render(<PersonaPrintablePage persona={persona} />);
-        setTimeout(resolve, 150);
+        setTimeout(resolve, 200);
       });
 
       const pageElement = tempContainer.querySelector(".persona-printable-page") as HTMLElement | null;
@@ -39,7 +41,7 @@ const PersonaDownloadButton: React.FC<Props> = ({ persona, variant = "outline", 
         scale: 2,
         useCORS: true,
         logging: false,
-        backgroundColor: "#f8fafc",
+        backgroundColor: printBrand.color.paper,
       });
 
       const pdf = new jsPDF({
@@ -48,7 +50,7 @@ const PersonaDownloadButton: React.FC<Props> = ({ persona, variant = "outline", 
         format: [816, 1056],
       });
       pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, 0, 1056, 816);
-      pdf.save(`Comply365-Persona-${persona.id}.pdf`);
+      pdf.save(`Comply365-Persona-${persona.id}-Brief.pdf`);
     } catch (err) {
       console.error("Persona PDF generation failed:", err);
     } finally {
@@ -68,7 +70,7 @@ const PersonaDownloadButton: React.FC<Props> = ({ persona, variant = "outline", 
       ) : (
         <>
           <Download className="w-4 h-4 mr-2" />
-          Download One-Pager PDF
+          Download Persona Brief PDF
         </>
       )}
     </Button>
