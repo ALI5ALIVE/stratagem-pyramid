@@ -152,7 +152,7 @@ const TechnicalDeepDive = () => {
 
   return (
     <DeckProvider deckId="tech-deep-dive">
-    <div className="fixed top-4 right-4 z-[60] flex flex-col items-end gap-1 text-right">
+    <div className="fixed top-4 left-4 z-[60] flex flex-col items-start gap-1 text-left">
       <DeckPDFExportButton
         slides={slides}
         filename="Comply365-Technical-Deep-Dive.pdf"
