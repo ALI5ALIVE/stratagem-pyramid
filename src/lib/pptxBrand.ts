@@ -305,11 +305,10 @@ export function addStepArrow(
   x: number, y: number, h: number = 0.3,
   color: string = PPTX_BRAND.color.muted,
 ) {
-  slide.addShape("rightTriangle", {
-    x, y, w: h * 0.7, h,
-    fill: { color },
-    line: { type: "none" },
-    rotate: 0,
+  slide.addText("›", {
+    x, y, w: h * 0.8, h,
+    fontFace: PPTX_BRAND.font.display, fontSize: Math.max(14, h * 40),
+    bold: true, color, align: "center", valign: "middle",
   });
 }
 
