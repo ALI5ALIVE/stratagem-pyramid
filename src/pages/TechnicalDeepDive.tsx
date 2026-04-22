@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useTechPitchNarration } from "@/hooks/useTechPitchNarration";
+import { DeckProvider } from "@/contexts/DeckContext";
 
 // Act 1 — Frame the problem
 import TechSlide0Title from "@/components/tech-slides/TechSlide0Title";
@@ -138,6 +139,7 @@ const TechnicalDeepDive = () => {
   }, [currentSlide, navigateToSlide]);
 
   return (
+    <DeckProvider deckId="tech-deep-dive">
     <div ref={containerRef} className="h-screen overflow-y-auto snap-y snap-mandatory scroll-smooth">
       {slides.map((slide, index) => {
         const SlideComponent = slide.component as React.ComponentType<any>;
