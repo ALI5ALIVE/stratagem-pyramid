@@ -7,7 +7,6 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { toast } from "sonner";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { DeckProvider } from "@/contexts/DeckContext";
 import { SlideNavigationProvider } from "@/contexts/SlideNavigationContext";
 
 interface SlideDef {
@@ -101,13 +100,11 @@ const DeckPDFExportButton: React.FC<DeckPDFExportButtonProps> = ({
           root.render(
             <BrowserRouter>
               <SidebarProvider>
-                <DeckProvider deckId="tech-deep-dive">
-                  <SlideNavigationProvider>
-                    <div style={{ width: FRAME_W, height: FRAME_H, position: "relative" }}>
-                      <SlideComponent slideNumber={i} />
-                    </div>
-                  </SlideNavigationProvider>
-                </DeckProvider>
+                <SlideNavigationProvider>
+                  <div style={{ width: FRAME_W, height: FRAME_H, position: "relative" }}>
+                    <SlideComponent slideNumber={i} />
+                  </div>
+                </SlideNavigationProvider>
               </SidebarProvider>
             </BrowserRouter>
           );
