@@ -82,7 +82,10 @@ function PersonaDetail({ persona }: { persona: PersonaProfile }) {
               ))}
             </div>
           </div>
-          <Badge className={`${persona.bgColor} ${persona.color} border ${persona.borderColor} text-xs`}>{persona.seniority}</Badge>
+          <div className="flex flex-col items-end gap-2 shrink-0">
+            <Badge className={`${persona.bgColor} ${persona.color} border ${persona.borderColor} text-xs`}>{persona.seniority}</Badge>
+            <PersonaDownloadButton persona={persona} />
+          </div>
         </div>
         <p className="text-sm text-foreground/70 mt-4 leading-relaxed">{persona.profileSummary}</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4">
