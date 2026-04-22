@@ -152,13 +152,13 @@ const TechnicalDeepDive = () => {
 
   return (
     <DeckProvider deckId="tech-deep-dive">
-    <div className="fixed top-4 right-4 z-50 flex flex-col items-end gap-1">
+    <div className="fixed top-4 right-4 z-[60] flex flex-col items-end gap-1 text-right">
       <DeckPDFExportButton
         slides={slides}
         filename="Comply365-Technical-Deep-Dive.pdf"
         deckLabel="Technical Deep Dive"
       />
-      <span className="text-[10px] text-muted-foreground bg-background/70 backdrop-blur px-2 py-0.5 rounded">
+      <span className="text-[10px] text-muted-foreground bg-background/70 backdrop-blur px-2 py-0.5 rounded max-w-[220px]">
         Interactive slides export in their default view.
       </span>
     </div>
