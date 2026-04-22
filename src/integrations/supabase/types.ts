@@ -80,6 +80,13 @@ export type Database = {
             referencedRelation: "slide_comments"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "slide_comments_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
         ]
       }
       user_roles: {
