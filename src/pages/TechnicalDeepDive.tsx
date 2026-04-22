@@ -114,6 +114,17 @@ const TechnicalDeepDive = () => {
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable ||
+          target.closest("[data-radix-popper-content-wrapper]") ||
+          target.closest("[role=dialog]"))
+      ) {
+        return;
+      }
       if (e.key === "ArrowDown" || e.key === "ArrowRight" || e.key === " ") {
         e.preventDefault();
         navigateToSlide(Math.min(currentSlide + 1, slides.length - 1));
