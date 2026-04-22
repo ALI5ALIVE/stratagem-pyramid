@@ -235,6 +235,10 @@ export default function PersonaDeepDive() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
         {/* Mobile: horizontal chips */}
         {isMobile && (
+          <>
+          <div className="flex justify-end mb-3">
+            <PersonaDownloadButton persona={active} />
+          </div>
           <div className="flex gap-2 overflow-x-auto pb-4 -mx-4 px-4 scrollbar-hide">
             {personaProfiles.map((p, i) => {
               const Icon = iconMap[p.iconName] || Briefcase;
@@ -254,6 +258,7 @@ export default function PersonaDeepDive() {
               );
             })}
           </div>
+          </>
         )}
 
         <div className="flex gap-6">
