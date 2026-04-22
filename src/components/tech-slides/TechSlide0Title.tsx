@@ -1,6 +1,13 @@
 import { SlideNarrationProps } from "@/types/slideProps";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { Plane, Globe, Users } from "lucide-react";
+import DeckPDFExportButton from "@/components/DeckPDFExportButton";
+
+interface ExportSlideDef {
+  id: string;
+  label: string;
+  component: React.ComponentType<any>;
+}
 
 const trustStats = [
   { icon: Plane, value: "550+", label: "Airlines Worldwide" },
@@ -8,7 +15,10 @@ const trustStats = [
   { icon: Users, value: "Global", label: "Aviation & AI Experts" },
 ];
 
-const TechSlide0Title = ({ ...narrationProps }: SlideNarrationProps & { slideNumber?: number }) => {
+const TechSlide0Title = ({
+  exportSlides,
+  ...narrationProps
+}: SlideNarrationProps & { slideNumber?: number; exportSlides?: ExportSlideDef[] }) => {
   return (
     <SalesSlideContainer id="tech-slide-0" slideNumber={narrationProps.slideNumber} showHeader={false} {...narrationProps}>
       <div className="flex-1 flex flex-col items-center justify-center text-center gap-6">
@@ -32,6 +42,19 @@ const TechSlide0Title = ({ ...narrationProps }: SlideNarrationProps & { slideNum
           ))}
         </div>
       </div>
+
+      {exportSlides && exportSlides.length > 0 && (
+        <div className="absolute bottom-24 right-8 z-40 flex flex-col items-end gap-1 text-right">
+          <DeckPDFExportButton
+            slides={exportSlides}
+            filename="Comply365-Technical-Deep-Dive.pdf"
+            deckLabel="Technical Deep Dive"
+          />
+          <span className="text-[10px] text-muted-foreground bg-background/70 backdrop-blur px-2 py-0.5 rounded max-w-[220px]">
+            Interactive slides export in their default view.
+          </span>
+        </div>
+      )}
     </SalesSlideContainer>
   );
 };
