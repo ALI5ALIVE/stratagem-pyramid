@@ -27,6 +27,7 @@ export function useSlideComments(deckId: string | undefined, slideId: string | u
       .eq("deck_id", deckId)
       .eq("slide_id", slideId)
       .order("created_at", { ascending: true });
+    if (error) console.error("Failed to load comments", error);
     if (!error && data) setComments(data as any);
     setLoading(false);
   }, [deckId, slideId]);
