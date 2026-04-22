@@ -7,6 +7,7 @@ import { createRoot } from "react-dom/client";
 import PersonaPrintablePage from "./PersonaPrintablePage";
 import type { PersonaProfile } from "@/data/personaProfiles";
 import { ensurePrintFontsLoaded, printBrand } from "./print/printBrand";
+import { toast } from "sonner";
 
 interface Props {
   persona: PersonaProfile;
@@ -22,17 +23,23 @@ const PersonaDownloadButton: React.FC<Props> = ({ persona, variant = "outline", 
     setIsGenerating(true);
     await ensurePrintFontsLoaded();
     const tempContainer = document.createElement("div");
-    tempContainer.style.position = "absolute";
-    tempContainer.style.left = "-9999px";
+    tempContainer.style.position = "fixed";
+    tempContainer.style.left = "0";
     tempContainer.style.top = "0";
+    tempContainer.style.zIndex = "-1";
+    tempContainer.style.opacity = "0";
+    tempContainer.style.pointerEvents = "none";
+    tempContainer.style.width = `${printBrand.page.width}px`;
+    tempContainer.style.height = `${printBrand.page.height}px`;
     document.body.appendChild(tempContainer);
 
     const root = createRoot(tempContainer);
     try {
-      await new Promise<void>((resolve) => {
-        root.render(<PersonaPrintablePage persona={persona} />);
-        setTimeout(resolve, 200);
-      });
+      root.render(<PersonaPrintablePage persona={persona} />);
+      await new Promise<void>((r) =>
+        requestAnimationFrame(() => requestAnimationFrame(() => r()))
+      );
+      await ensurePrintFontsLoaded();
 
       const pageElement = tempContainer.querySelector(".persona-printable-page") as HTMLElement | null;
       if (!pageElement) throw new Error("Printable page not found");
@@ -42,6 +49,10 @@ const PersonaDownloadButton: React.FC<Props> = ({ persona, variant = "outline", 
         useCORS: true,
         logging: false,
         backgroundColor: printBrand.color.paper,
+        width: printBrand.page.width,
+        height: printBrand.page.height,
+        windowWidth: printBrand.page.width,
+        windowHeight: printBrand.page.height,
       });
 
       const pdf = new jsPDF({
@@ -51,8 +62,10 @@ const PersonaDownloadButton: React.FC<Props> = ({ persona, variant = "outline", 
       });
       pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, 0, 1056, 816);
       pdf.save(`Comply365-Persona-${persona.id}-Brief.pdf`);
+      toast.success("Persona brief downloaded");
     } catch (err) {
       console.error("Persona PDF generation failed:", err);
+      toast.error("Could not generate PDF. Please try again.");
     } finally {
       root.unmount();
       tempContainer.remove();
