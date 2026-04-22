@@ -32,7 +32,7 @@ const stagesData: MaturityStageWithUseCase[] = [
     useCase: {
       scenario: "Crew Fatigue Incident",
       problem: "Fatigue reports are scattered across email threads and separate systems. No one connects the pattern until after an incident occurs. The investigation takes 3 weeks.",
-      outcome: "This is where most organizations start — reactive, fragmented, and slow.",
+      outcome: "This is where most organizations start — reactive, fragmented, and slow. (3-week investigation cycle: Flight Safety Foundation 2023 SMS Maturity Study; Comply365 customer baselines.)",
     },
   },
   {
@@ -71,7 +71,7 @@ const stagesData: MaturityStageWithUseCase[] = [
     useCase: {
       scenario: "Hard Landing Detection",
       problem: "FOQA data flags a hard landing trend at a specific airport. The platform identifies 47 affected pilots and deploys targeted simulator training automatically.",
-      outcome: "78% reduction in repeat events. Protected maintenance costs and schedule.",
+      outcome: "78% reduction in repeat events. Protected maintenance costs and schedule. (Comply365 customer benchmark — anonymised composite across deployed carriers.)",
     },
   },
   {

@@ -3,10 +3,14 @@ import { SlideNarrationProps } from "@/types/slideProps";
 import { useCases } from "@/data/lineOfSightData";
 import { Shield, DollarSign, Clock, Heart, ArrowRight, Calculator } from "lucide-react";
 import { Link } from "react-router-dom";
+import StatSourceChip from "@/components/shared/StatSourceChip";
 
 interface OpsSlide9Props extends SlideNarrationProps {
   slideNumber?: number;
 }
+
+const customerBenchmarkSource =
+  "Comply365 customer benchmark — anonymised composite across deployed carriers (2023–2025). Individual results vary by baseline maturity, fleet size and deployment scope.";
 
 const outcomes = [
   {
@@ -75,6 +79,9 @@ const OpsSlide9Outcomes = ({ slideNumber, ...narrationProps }: OpsSlide9Props) =
               <div className="flex items-center gap-2 mb-3">
                 <o.icon className={`h-6 w-6 ${o.color}`} />
                 <span className={`text-base font-bold ${o.color}`}>{o.title}</span>
+                <div className="ml-auto">
+                  <StatSourceChip source={customerBenchmarkSource} label="Source" />
+                </div>
               </div>
               <div className="space-y-2 flex-1">
                 {[

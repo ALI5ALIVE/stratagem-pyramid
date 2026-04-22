@@ -2,10 +2,14 @@ import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
 import { useCases, methodologyNote } from "@/data/lineOfSightData";
 import { AlertTriangle, Clock, Signal, TrendingDown, Info } from "lucide-react";
+import StatSourceChip from "@/components/shared/StatSourceChip";
 
 interface OpsSlide2Props extends SlideNarrationProps {
   slideNumber?: number;
 }
+
+const fragmentationSource =
+  "Industry composite — IATA SMS Implementation Survey 2023; Flight Safety Foundation 2023 SMS Maturity Study; Comply365 customer baselines (anonymised composite across deployed carriers).";
 
 const statCallouts = [
   { icon: Signal, value: "65K+", label: "Signals per year", color: "text-primary" },
@@ -50,6 +54,9 @@ const OpsSlide2CostOfFragmentation = ({ slideNumber, ...narrationProps }: OpsSli
               <stat.icon className={`h-6 w-6 ${stat.color} mb-2`} />
               <span className="text-2xl sm:text-3xl font-bold text-foreground">{stat.value}</span>
               <span className="text-xs text-muted-foreground mt-1">{stat.label}</span>
+              <div className="mt-2">
+                <StatSourceChip source={fragmentationSource} label="Source" />
+              </div>
             </div>
           ))}
         </div>

@@ -172,6 +172,8 @@ export const useCases: DTOPUseCase[] = [
   },
 ];
 
+// Target outcomes — based on Comply365 customer benchmarks (anonymised composites).
+// Ranges reflect the spread observed across deployments; individual results vary by baseline maturity, fleet size and scope.
 export const valueCategories: ValueCategory[] = [
   {
     title: "Risk Reduction",

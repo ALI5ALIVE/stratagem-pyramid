@@ -1,14 +1,20 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
 import { Link2, Brain, ShieldCheck, Plane, Globe, Users } from "lucide-react";
+import StatSourceChip from "@/components/shared/StatSourceChip";
 
 interface Props extends SlideNarrationProps { slideNumber?: number; }
 
+const customerBenchmarkSource =
+  "Comply365 customer benchmark — anonymised composite across deployed carriers (2023–2025). Individual results vary by baseline maturity, fleet size and deployment scope.";
+const accuracySource =
+  "CoAnalyst evaluation methodology: domain accuracy measured on a held-out aviation operational corpus (safety reports, regulatory bulletins, MEL/SOP queries) versus a generic frontier LLM with no aviation fine-tuning. See CoAnalyst Intelligence Framework for evaluation set details.";
+
 const outcomes = [
-  { value: "78%", label: "Reduction in repeat events", color: "text-rose-400" },
-  { value: "6 wks → 48 hrs", label: "Signal to coordinated response", color: "text-blue-400" },
-  { value: "5 days", label: "Directive to crew acknowledgement", color: "text-violet-400" },
-  { value: "90% vs 35%", label: "Domain accuracy vs generic AI", color: "text-amber-400" },
+  { value: "78%", label: "Reduction in repeat events", color: "text-rose-400", source: customerBenchmarkSource },
+  { value: "6 wks → 48 hrs", label: "Signal to coordinated response", color: "text-blue-400", source: customerBenchmarkSource },
+  { value: "5 days", label: "Directive to crew acknowledgement", color: "text-violet-400", source: customerBenchmarkSource },
+  { value: "90% vs 35%", label: "Domain accuracy vs generic AI", color: "text-amber-400", source: accuracySource },
 ];
 
 const diffs = [
@@ -38,6 +44,9 @@ const TechSlideWhyComply = ({ slideNumber, ...narrationProps }: Props) => (
           <div key={o.label} className="rounded-xl border border-primary/20 bg-primary/5 p-3 text-center">
             <div className={`text-xl font-bold ${o.color}`}>{o.value}</div>
             <div className="text-[10px] text-muted-foreground mt-0.5">{o.label}</div>
+            <div className="mt-1.5 flex justify-center">
+              <StatSourceChip source={o.source} label="Source" />
+            </div>
           </div>
         ))}
       </div>
