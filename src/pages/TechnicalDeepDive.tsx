@@ -168,6 +168,7 @@ const TechnicalDeepDive = () => {
         );
       })}
     </div>
+    </DeckProvider>
   );
 };
 

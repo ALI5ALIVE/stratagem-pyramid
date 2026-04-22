@@ -115,6 +115,7 @@ const MobilePlaybook = () => {
         <MOSlide10Closing />
       </div>
     </div>
+    </DeckProvider>
   );
 };
 

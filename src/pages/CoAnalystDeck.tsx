@@ -154,6 +154,7 @@ const CoAnalystDeck = () => {
         <CASlide14DeckStructure {...getNarrationProps(14)} />
       </div>
     </div>
+    </DeckProvider>
   );
 };
 

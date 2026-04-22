@@ -118,6 +118,7 @@ const DTOPPlaybook = () => {
         <DTOPSlide11Closing />
       </div>
     </div>
+    </DeckProvider>
   );
 };
 

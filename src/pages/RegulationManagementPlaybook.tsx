@@ -115,6 +115,7 @@ const RegulationManagementPlaybook = () => {
         <RMSlide10Roadmap />
       </div>
     </div>
+    </DeckProvider>
   );
 };
 

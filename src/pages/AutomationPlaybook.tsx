@@ -115,6 +115,7 @@ const AutomationPlaybook = () => {
         <AUSlide10Closing />
       </div>
     </div>
+    </DeckProvider>
   );
 };
 

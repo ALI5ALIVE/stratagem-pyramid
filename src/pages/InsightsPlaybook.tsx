@@ -115,6 +115,7 @@ const InsightsPlaybook = () => {
         <IRSlide10Closing />
       </div>
     </div>
+    </DeckProvider>
   );
 };
 
