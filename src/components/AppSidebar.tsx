@@ -1,10 +1,13 @@
 import {
   Presentation, Target, FileText, Brain,
-  Rocket, Briefcase, BookOpen, Home, Globe, Users, ScrollText, Workflow, Sparkles, Zap, Smartphone, Layers
+  Rocket, Briefcase, BookOpen, Home, Globe, Users, ScrollText, Workflow, Sparkles, Zap, Smartphone, Layers,
+  MessageSquare, LogIn, LogOut
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
+import { useAuth } from "@/contexts/AuthContext";
+import { Link } from "react-router-dom";
 import {
   Sidebar,
   SidebarContent,
@@ -51,6 +54,10 @@ const referenceItems: NavItem[] = [
   { title: "Homepage Mockup", url: "/homepage-mockup", icon: Globe },
 ];
 
+const collaborationItems: NavItem[] = [
+  { title: "Reviews", url: "/review", icon: MessageSquare },
+];
+
 function NavGroup({ label, items }: { label: string; items: NavItem[] }) {
   return (
     <SidebarGroup>
@@ -88,6 +95,7 @@ function NavGroup({ label, items }: { label: string; items: NavItem[] }) {
 export function AppSidebar() {
   const { slides, activeIndex, onNavigate } = useSlideNavigation();
   const { open } = useSidebar();
+  const { user, profile, signOut } = useAuth();
 
   return (
     <Sidebar collapsible="icon" className="border-r-0">
@@ -121,6 +129,35 @@ export function AppSidebar() {
         <NavGroup label="Strategy" items={strategyItems} />
         <SidebarSeparator />
         <NavGroup label="Reference" items={referenceItems} />
+        <SidebarSeparator />
+        <NavGroup label="Collaboration" items={collaborationItems} />
+
+        <SidebarSeparator />
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                {user ? (
+                  <SidebarMenuButton onClick={() => signOut()} tooltip={profile?.display_name ?? "Sign out"}>
+                    <span className="w-4 h-4 rounded-full text-[9px] font-bold flex items-center justify-center text-white shrink-0"
+                      style={{ background: profile?.avatar_color ?? "#0066FF" }}>
+                      {(profile?.display_name ?? "?").charAt(0).toUpperCase()}
+                    </span>
+                    {open && <span className="flex-1 truncate text-xs">{profile?.display_name ?? user.email}</span>}
+                    <LogOut className="h-3.5 w-3.5 opacity-60" />
+                  </SidebarMenuButton>
+                ) : (
+                  <SidebarMenuButton asChild tooltip="Sign in">
+                    <Link to="/auth" className="text-sidebar-foreground/70 hover:text-sidebar-foreground">
+                      <LogIn className="h-4 w-4" />
+                      <span>Sign in</span>
+                    </Link>
+                  </SidebarMenuButton>
+                )}
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
 
         {/* Slide sub-navigation - only when expanded and slides registered */}
         {open && slides.length > 0 && (
