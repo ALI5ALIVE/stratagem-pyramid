@@ -1,26 +1,10 @@
-import { ChevronDown, Download } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import complyLogo from "@/assets/comply365-logo-white.png";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { Button } from "@/components/ui/button";
-import { heroTagline, heroSubtitle } from "@/data/dtopPlaybook";
+import DTOPDownloadButton from "@/components/DTOPDownloadButton";
+import { heroTagline } from "@/data/dtopPlaybook";
 
 const DTOPSlide0Title = (_props: SlideNarrationProps) => {
-  const handleDownload = async () => {
-    try {
-      const response = await fetch("/Comply365-DTOP-Operating-Model-1-Pager.pdf");
-      const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "Comply365-DTOP-Operating-Model-1-Pager.pdf";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error("Download failed:", err);
-    }
-  };
   return (
     <section className="h-screen w-full flex flex-col snap-start relative overflow-hidden bg-background">
       <div className="absolute inset-0 pointer-events-none">
@@ -57,10 +41,7 @@ const DTOPSlide0Title = (_props: SlideNarrationProps) => {
             ))}
           </div>
           <div className="mt-6">
-            <Button variant="outline" size="sm" className="gap-2" onClick={handleDownload}>
-              <Download className="w-4 h-4" />
-              Download 1-Pager PDF
-            </Button>
+            <DTOPDownloadButton variant="outline" size="sm" />
           </div>
         </div>
       </div>

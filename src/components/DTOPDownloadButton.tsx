@@ -4,23 +4,25 @@ import { Button } from "@/components/ui/button";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { createRoot } from "react-dom/client";
-import PersonaPrintablePage from "./PersonaPrintablePage";
-import type { PersonaProfile } from "@/data/personaProfiles";
+import DTOPPrintablePage from "./print/DTOPPrintablePage";
 import { ensurePrintFontsLoaded, printBrand } from "./print/printBrand";
 
 interface Props {
-  persona: PersonaProfile;
   variant?: "default" | "outline" | "ghost";
   size?: "default" | "sm";
   className?: string;
+  label?: string;
 }
 
-const PersonaDownloadButton: React.FC<Props> = ({ persona, variant = "outline", size = "sm", className }) => {
+const DTOPDownloadButton: React.FC<Props> = ({
+  variant = "outline", size = "sm", className, label = "Download 1-Pager PDF",
+}) => {
   const [isGenerating, setIsGenerating] = useState(false);
 
   const generatePDF = async () => {
     setIsGenerating(true);
     await ensurePrintFontsLoaded();
+
     const tempContainer = document.createElement("div");
     tempContainer.style.position = "absolute";
     tempContainer.style.left = "-9999px";
@@ -30,29 +32,29 @@ const PersonaDownloadButton: React.FC<Props> = ({ persona, variant = "outline", 
     const root = createRoot(tempContainer);
     try {
       await new Promise<void>((resolve) => {
-        root.render(<PersonaPrintablePage persona={persona} />);
+        root.render(<DTOPPrintablePage />);
         setTimeout(resolve, 200);
       });
 
-      const pageElement = tempContainer.querySelector(".persona-printable-page") as HTMLElement | null;
-      if (!pageElement) throw new Error("Printable page not found");
+      const pageElement = tempContainer.querySelector(".dtop-printable-page") as HTMLElement | null;
+      if (!pageElement) throw new Error("DTOP printable page not found");
 
       const canvas = await html2canvas(pageElement, {
-        scale: 2,
-        useCORS: true,
-        logging: false,
+        scale: 2, useCORS: true, logging: false,
         backgroundColor: printBrand.color.paper,
       });
 
       const pdf = new jsPDF({
-        orientation: "landscape",
-        unit: "px",
-        format: [816, 1056],
+        orientation: "landscape", unit: "px",
+        format: [printBrand.page.height, printBrand.page.width],
       });
-      pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, 0, 1056, 816);
-      pdf.save(`Comply365-Persona-${persona.id}-Brief.pdf`);
+      pdf.addImage(
+        canvas.toDataURL("image/png"), "PNG",
+        0, 0, printBrand.page.width, printBrand.page.height,
+      );
+      pdf.save("Comply365-DTOP-Operating-Model-Brief.pdf");
     } catch (err) {
-      console.error("Persona PDF generation failed:", err);
+      console.error("DTOP PDF generation failed:", err);
     } finally {
       root.unmount();
       tempContainer.remove();
@@ -70,11 +72,11 @@ const PersonaDownloadButton: React.FC<Props> = ({ persona, variant = "outline", 
       ) : (
         <>
           <Download className="w-4 h-4 mr-2" />
-          Download Persona Brief PDF
+          {label}
         </>
       )}
     </Button>
   );
 };
 
-export default PersonaDownloadButton;
+export default DTOPDownloadButton;
