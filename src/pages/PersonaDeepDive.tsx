@@ -8,6 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Link } from "react-router-dom";
 import SlideCommentLayer from "@/components/comments/SlideCommentLayer";
+import PersonaDownloadButton from "@/components/PersonaDownloadButton";
 
 const iconMap: Record<string, React.ElementType> = {
   Briefcase, Shield, Plane, GraduationCap, Monitor,
@@ -81,7 +82,10 @@ function PersonaDetail({ persona }: { persona: PersonaProfile }) {
               ))}
             </div>
           </div>
-          <Badge className={`${persona.bgColor} ${persona.color} border ${persona.borderColor} text-xs`}>{persona.seniority}</Badge>
+          <div className="flex flex-col items-end gap-2 shrink-0">
+            <Badge className={`${persona.bgColor} ${persona.color} border ${persona.borderColor} text-xs`}>{persona.seniority}</Badge>
+            <PersonaDownloadButton persona={persona} />
+          </div>
         </div>
         <p className="text-sm text-foreground/70 mt-4 leading-relaxed">{persona.profileSummary}</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4">
@@ -231,6 +235,10 @@ export default function PersonaDeepDive() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
         {/* Mobile: horizontal chips */}
         {isMobile && (
+          <>
+          <div className="flex justify-end mb-3">
+            <PersonaDownloadButton persona={active} />
+          </div>
           <div className="flex gap-2 overflow-x-auto pb-4 -mx-4 px-4 scrollbar-hide">
             {personaProfiles.map((p, i) => {
               const Icon = iconMap[p.iconName] || Briefcase;
@@ -250,6 +258,7 @@ export default function PersonaDeepDive() {
               );
             })}
           </div>
+          </>
         )}
 
         <div className="flex gap-6">
