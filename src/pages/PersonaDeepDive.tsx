@@ -8,6 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Link } from "react-router-dom";
 import SlideCommentLayer from "@/components/comments/SlideCommentLayer";
+import PersonaDownloadButton from "@/components/PersonaDownloadButton";
 
 const iconMap: Record<string, React.ElementType> = {
   Briefcase, Shield, Plane, GraduationCap, Monitor,
