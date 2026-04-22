@@ -3,6 +3,7 @@ import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useTechPitchNarration } from "@/hooks/useTechPitchNarration";
 import { DeckProvider } from "@/contexts/DeckContext";
+import DeckPDFExportButton from "@/components/DeckPDFExportButton";
 
 // Act 1 — Frame the problem
 import TechSlide0Title from "@/components/tech-slides/TechSlide0Title";
