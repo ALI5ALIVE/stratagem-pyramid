@@ -7,6 +7,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Link } from "react-router-dom";
+import SlideCommentLayer from "@/components/comments/SlideCommentLayer";
 
 const iconMap: Record<string, React.ElementType> = {
   Briefcase, Shield, Plane, GraduationCap, Monitor,
@@ -265,7 +266,8 @@ export default function PersonaDeepDive() {
           )}
 
           {/* Content */}
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0 relative">
+            <SlideCommentLayer deckId="personas" slideId={active.id} variant="dark" />
             <PersonaDetail persona={active} />
           </div>
         </div>

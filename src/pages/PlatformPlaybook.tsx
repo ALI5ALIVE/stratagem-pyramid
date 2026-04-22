@@ -15,6 +15,7 @@ import PFSlide9Value from "@/components/platform-slides/PFSlide9Value";
 import PFSlide10Personas from "@/components/platform-slides/PFSlide10Personas";
 import PFSlide11Competitive from "@/components/platform-slides/PFSlide11Competitive";
 import PFSlide12Closing from "@/components/platform-slides/PFSlide12Closing";
+import { DeckProvider } from "@/contexts/DeckContext";
 
 const slides = [
   { id: "pf-title", label: "Title" },
@@ -92,6 +93,7 @@ const PlatformPlaybook = () => {
   }, [activeSlide]);
 
   return (
+    <DeckProvider deckId="platform-playbook">
     <div className="h-screen w-full bg-background overflow-hidden relative">
       <div className="fixed top-0 left-0 right-0 h-1 bg-muted z-50">
         <div className="h-full bg-primary transition-all duration-150" style={{ width: `${scrollProgress}%` }} />
@@ -119,6 +121,7 @@ const PlatformPlaybook = () => {
         <PFSlide12Closing />
       </div>
     </div>
+    </DeckProvider>
   );
 };
 

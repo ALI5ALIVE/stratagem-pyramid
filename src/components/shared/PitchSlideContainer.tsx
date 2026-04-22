@@ -2,6 +2,8 @@ import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import complyLogo from "@/assets/comply365-logo-white.png";
 import SlidePlayButton from "@/components/SlidePlayButton";
+import SlideCommentLayer from "@/components/comments/SlideCommentLayer";
+import { useDeckId } from "@/contexts/DeckContext";
 
 interface PitchSlideContainerProps {
   id: string;
@@ -12,6 +14,7 @@ interface PitchSlideContainerProps {
   variant?: "dark" | "light";
   slideNumber?: number;
   showHeader?: boolean;
+  deckId?: string;
   // Narration props
   isPlaying?: boolean;
   isLoading?: boolean;
@@ -32,6 +35,7 @@ const PitchSlideContainer = ({
   variant = "dark",
   slideNumber,
   showHeader = true,
+  deckId,
   isPlaying = false,
   isLoading = false,
   progress = 0,
@@ -41,6 +45,8 @@ const PitchSlideContainer = ({
   onNextSlide,
   onPrevSlide,
 }: PitchSlideContainerProps) => {
+  const ctxDeckId = useDeckId();
+  const effectiveDeckId = deckId ?? ctxDeckId;
   return (
     <section
       id={id}
@@ -64,6 +70,8 @@ const PitchSlideContainer = ({
           variant={variant}
         />
       )}
+
+      {effectiveDeckId && <SlideCommentLayer deckId={effectiveDeckId} slideId={id} variant={variant} />}
 
       {/* Logo - top right */}
       <div className="absolute top-6 right-6 sm:top-8 sm:right-10">
