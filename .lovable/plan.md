@@ -1,69 +1,60 @@
 
 
-## Persona One-Pager PDF Download
+## Pixel-Perfect PDF Export for the Technical Deep Dive
 
-Add a "Download One-Pager PDF" button to each persona on the **Persona Deep-Dive Hub** (`/personas`) that produces a professional, single-page, branded PDF summarising the active persona. Each PDF is generated client-side (no backend, no extra deps — reuses the `jspdf` + `html2canvas` stack already in the project).
+Add a "Download Deck PDF" button to the Technical Deep Dive (`/pitch-technical`) that exports every slide exactly as it appears on screen — one slide per landscape page, full-bleed, no clipping, no layout drift.
 
-## What the one-pager contains
+## Why the existing approach won't be pixel-perfect on its own
 
-Designed to fit on **one A4 landscape page** (matches existing `PrintablePage` format) with a tight, scannable layout:
+The current `DownloadButton` / `PersonaDownloadButton` pattern works for one custom-built printable component, but the tech deck has **22 live slides** built with Tailwind, Lucide icons, gradients, SVGs, and `h-screen` layouts. Three things break naive `html2canvas` capture:
 
-```text
-┌─────────────────────────────────────────────────────────────────┐
-│ Comply365 logo            PERSONA ONE-PAGER       Date / Conf. │
-├─────────────────────────────────────────────────────────────────┤
-│ [Icon] CEO / COO                              Seniority: C-Suite│
-│        Variants: CEO · COO · President · Accountable Manager    │
-│        Profile summary (2–3 lines)                              │
-│  Reports To  │  Org Context  │  Budget Influence (3 mini cards) │
-├──────────────────────────┬──────────────────────────────────────┤
-│ Strategic Priorities     │ Daily Pain Points                    │
-│ (top 4, condensed)       │ (top 4, condensed)                   │
-├──────────────────────────┼──────────────────────────────────────┤
-│ Buying Triggers (top 3)  │ Decision Criteria (top 3)            │
-├──────────────────────────┴──────────────────────────────────────┤
-│ Value Proposition (italic, accent border)                       │
-├──────────────────────────┬──────────────────────────────────────┤
-│ Key Messages (top 3)     │ Metrics That Matter (top 4)          │
-├──────────────────────────┴──────────────────────────────────────┤
-│ Top Discovery Question  │  Top Objection + Response             │
-├─────────────────────────────────────────────────────────────────┤
-│ © Comply365 · Sales Enablement · /personas              v1.0    │
-└─────────────────────────────────────────────────────────────────┘
-```
+1. **Off-screen slides aren't laid out** — scroll-snap parents collapse children that aren't visible, so capturing them yields blank frames.
+2. **Viewport-relative units** (`h-screen`, `vh`) render at the user's current window size, so a 1366×700 laptop produces a squashed PDF.
+3. **Web fonts + lazy assets** (Space Grotesk, Inter, Lucide SVGs, the platform-ecosystem PNG) aren't always ready when capture fires.
 
-To guarantee single-page fit, list-heavy sections are **truncated to top N items** (priorities/pains: 4; triggers/criteria/messages: 3; metrics: 4; discovery/objection: 1 each). Persona accent colour drives the header band, icon, and section title accents so each persona's PDF feels visually distinct but on-brand.
+The plan below solves all three.
 
-## How it works
+## How the export will work
 
-1. Add a **"Download One-Pager PDF"** button in the persona header area (next to the seniority badge), and a duplicate button in the mobile chips toolbar.
-2. On click: render a new `PersonaPrintablePage` component into a hidden offscreen `<div>` via `createRoot`, capture with `html2canvas` at 2× scale, write to a landscape A4 `jsPDF` (1056×816 px to match existing `PrintablePage`), download as `Comply365-Persona-{persona.id}.pdf`.
-3. Show a `Loader2` spinner + disabled state while generating (same pattern as `DownloadButton.tsx`).
+1. User clicks **Download Deck PDF** (top-right of the deck, next to the sidebar trigger).
+2. A hidden offscreen container (`position: fixed; left: -20000px; width: 1920px; height: 1080px;`) is mounted.
+3. For each of the 22 slides, in sequence:
+   - Render the slide component into the container at a **fixed 1920×1080** frame (forces `h-screen` to resolve to 1080px regardless of the user's viewport).
+   - `await document.fonts.ready` and wait for all `<img>` inside the frame to fire `load` (or error).
+   - Capture with `html2canvas` at `scale: 2` → 3840×2160 canvas.
+   - Add as a new landscape page to a `jsPDF` doc sized 1920×1080 px (16:9, matches every slide's native aspect).
+4. Save as `Comply365-Technical-Deep-Dive.pdf`.
+5. Progress toast: "Exporting slide 7 of 22…" so the user knows it's working (full export takes ~30–60s).
+
+This produces a **true pixel-perfect** capture: each PDF page is the slide rendered at its design resolution, with the same fonts, colors, gradients, and spacing the user sees on screen.
+
+## Constraints handled
+
+- **Narration bar / play buttons** — the printable wrapper passes `isPlaying=false` and omits `onPlay`, so `SlidePlayButton` doesn't render in the PDF.
+- **Comment bubbles** — the offscreen render is outside `DeckProvider`, so `SlideCommentLayer` is skipped.
+- **Interactive sliders / tabs** (Calculator, Use Cases, Safety) — captured in their default state (Quick View + Safety tab). A short note will be added under the button: _"Interactive slides export in their default view."_
+- **Scroll-snap** — bypassed entirely because each slide is rendered standalone in the offscreen frame, not inside the snap container.
+- **Sidebar collapsed** — capture container has no sidebar context, so slides render full-width.
 
 ## Files
 
 **New**
-- `src/components/PersonaPrintablePage.tsx` — single-page print template, inline styles only (so html2canvas captures correctly without Tailwind class race conditions, mirroring `PrintablePage.tsx`). Accepts `{ persona: PersonaProfile }`.
-- `src/components/PersonaDownloadButton.tsx` — wraps the generation logic; reuses the `jspdf` + `html2canvas` + `createRoot` pattern from `DownloadButton.tsx`. Accepts `{ persona: PersonaProfile }`.
+- `src/components/DeckPDFExportButton.tsx` — generic deck exporter. Accepts `{ slides: { id; label; component }[]; filename: string; deckLabel: string }`. Handles offscreen mount, font/image readiness, sequential html2canvas + jsPDF assembly, and a progress toast via the existing `sonner` toaster.
 
 **Edited**
-- `src/pages/PersonaDeepDive.tsx` — import and render `<PersonaDownloadButton persona={active} />` in the persona header card (top-right, next to the seniority badge); also surface it above the mobile chips when on mobile.
+- `src/pages/TechnicalDeepDive.tsx` — import and render `<DeckPDFExportButton slides={slides} filename="Comply365-Technical-Deep-Dive.pdf" deckLabel="Technical Deep Dive" />` in a small fixed top-right toolbar (alongside the sidebar trigger). Reuses the existing `slides` array — zero duplication.
 
-## Design details
+**No changes** to slide components, narration, or the routing layer.
 
-- **Branding**: Comply365 logo top-left, persona accent colour as a 6px top border on the page and on each section card. Inter / Space Grotesk system fallbacks (the print render uses inline `font-family` since html2canvas doesn't load Tailwind fonts reliably).
-- **Colour mapping**: convert each persona's Tailwind tokens (`text-violet-400`, `bg-violet-500/10`, `border-violet-500/30`) to inline hex/rgba in a small `personaColorMap` inside the printable component, so PDF output is deterministic regardless of computed CSS.
-- **Typography**: 11pt body, 9pt mini-cards, 18pt persona name, generous line-height (1.4) for executive readability.
-- **Footer**: copyright, "Sales Enablement", source URL (`/personas`), and a doc version (`v1.0`) for tracking.
+## Out of scope (can be added next)
 
-## Out of scope
+- Bulk export for the other decks (Executive, Operational, CoAnalyst, etc.) — same button can be dropped into each page once you confirm the tech deck output looks right.
+- Capturing alternate states of interactive slides (e.g. Calculator in Full Model + each Use Case tab) — would need a per-slide "states to capture" config.
+- Vector PDF (text selectable). Pixel-perfect requires raster capture; selectable text would mean a different rendering path (e.g. `react-pdf`) and would not match the on-screen design.
 
-- No bulk "Download all personas" zip — single-persona only (can be added later if requested).
-- No print-from-browser CSS — this is a generated PDF, not a `window.print()` flow.
-- No new external libraries — reuses `jspdf`, `html2canvas`, and `react-dom/client` already in `package.json`.
-- Persona data is unchanged.
+## QA checklist (run after implementation)
 
-## QA plan
-
-After implementing, verify by downloading each of the 5 personas' PDFs and confirming: single page, no clipped text, accent colour matches, all 10 sections render, logo + footer present.
+1. Export from a 1366×768 laptop and a 1920×1080 monitor — output PDFs must be byte-identical in dimensions and layout.
+2. Open the PDF and confirm: 22 pages, 16:9, no clipped text on Tiers vs AI / Use Cases / Calculator (the densest slides), Space Grotesk headings render correctly, platform-ecosystem PNG appears, Lucide icons appear.
+3. File size sanity check (~8–15 MB expected at scale: 2).
 
