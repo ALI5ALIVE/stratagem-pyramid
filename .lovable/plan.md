@@ -1,111 +1,86 @@
 
 
-## Editable, branded PowerPoint export — `.pptx` generation
+## Fix: Rebuild PPTX export with full editable content + better visuals
 
-### Why not Figma
+### What's wrong today
 
-Figma can't produce editable PowerPoint — it exports PNG/PDF/SVG only, and the Lovable Figma connector is read-only. Round-tripping Figma → PPTX requires paid third-party tools (Pitchdeck, DeckRobot) and still flattens most content to images.
+`buildTechnicalDeck.ts` uses `imageFallbackSlide(...)` for **17 of 22 slides**. That captures the React component to a 2× PNG via html2canvas and embeds it as a single locked image with a caption. Result:
 
-The right approach is to **author native `.pptx` files in-browser** using `pptxgenjs`. Every title, bullet, shape, table, and brand color becomes a real PowerPoint object that your team can edit in PowerPoint, Keynote, or Google Slides.
+- Most slides are flattened screenshots — no editable text in PowerPoint.
+- Captures are often blurry, clipped, or missing typography because off-screen html2canvas misrenders.
+- Brand styling is inconsistent (image bleed, dark caption strip, no real grid).
 
-### What you'll get
+The user wants **real content** in every slide — bullets, cards, stats, tables, DTOP pills — selectable and editable in PowerPoint.
 
-- A new **"Download Editable PowerPoint"** button next to the existing PDF button on each deck (Technical, Executive, Operational, CoAnalyst, etc.).
-- Output: `Comply365-Technical-Deep-Dive.pptx` (16:9, 13.33"×7.5") with one slide per source slide.
-- Native, editable PowerPoint elements:
-  - Title + subtitle text boxes
-  - Bullet/body text blocks
-  - Coloured shape "cards" matching the dark Comply365 theme
-  - DTOP step pills (Detect / Trigger / Orchestrate / Prove) as real shapes
-  - Tables for use-case timelines and metric grids
-  - Brand-coloured rectangles, dividers, and the Comply365 logo as an embedded image
-- A persistent footer on every slide: deck name, slide number, brand mark.
+### Approach
 
-### Honest scope limits
+Rewrite **every slide** in `buildTechnicalDeck.ts` as a native pptxgenjs composition. Pull the source-of-truth content arrays directly from each `TechSlide*.tsx` (and shared data files like `lineOfSightData.ts`) and reproduce them with brand-styled rectangles, text boxes, pills, and stat tiles. Drop `renderComponentToPng` and `imageFallbackSlide` entirely from this deck.
 
-`pptxgenjs` cannot replicate every React component pixel-perfectly. Two-tier delivery:
+### Visual upgrades to the brand kit
 
-1. **Native rebuild (editable)** — Title, body, bullets, simple cards, DTOP pills, tables, logo. Covers ~80% of slides cleanly.
-2. **High-res image fallback (locked)** — For complex visuals (`PlatformEcosystemDiagram`, `MaturityCurveVisualization`, `LineOfSightTree`, `Pyramid3D`, calculator charts), we render the live React component to a 2× PNG and place it as a single image on the slide. Editable surrounding text, locked image in the middle. Each such image gets a small "edit in source app" caption.
+Edit `src/lib/pptxBrand.ts` to add:
 
-The final `.pptx` opens cleanly in PowerPoint with brand fonts, brand colors, and editable text on every slide.
+- `addEyebrow(slide, x, y, w, text, color)` — uppercase tracked label.
+- `addSectionTitle(slide, ...)` — consistent 28pt display titles across all slides.
+- `addIconBadge(slide, x, y, size, color, glyph)` — coloured rounded square with a unicode glyph (replaces lucide icons for native rendering).
+- `addLabeledCard(slide, x, y, w, h, { eyebrow, title, body, accent })` — single card primitive used by ~12 slides.
+- `addPillRow(slide, x, y, w, items)` — horizontal pill row (used for data sources, tags).
+- `addCheckRow(slide, x, y, w, label, ok)` — green check / red X rows (Tiers vs Generic AI).
+- `addStepArrow(slide, x, y)` — 0.3" right-pointing chevron between cards.
+- Add a subtle gradient background option `paintBackground(slide, "dark-grad")` for hero slides.
 
-### Brand system (centralised)
+### Slide-by-slide native rebuild
 
-New file `src/lib/pptxBrand.ts`:
-
-```ts
-export const PPTX_BRAND = {
-  size: { w: 13.333, h: 7.5 },              // 16:9 inches
-  color: {
-    bg:        "0A0F1C",  // dark theme background
-    surface:   "121A2E",
-    hairline:  "1F2A44",
-    ink:       "F8FAFC",
-    muted:     "94A3B8",
-    primary:   "0066FF",  // Comply365 blue
-    accent:    "00B4D8",
-    detect:    "60A5FA",
-    trigger:   "F59E0B",
-    orchestrate:"A78BFA",
-    prove:     "10B981",
-  },
-  font: { display: "Space Grotesk", body: "Inter" },
-};
-```
-
-Helpers: `addBrandedFooter(slide, n, total, deckLabel)`, `addTitle()`, `addBulletList()`, `addDtopPills()`, `addImageFallback()`, `loadLogoBase64()`.
-
-### Per-deck slide builders
-
-Each deck gets a builder file under `src/exporters/pptx/`:
-
-```text
-src/exporters/pptx/
-  pptxBrand.ts                  # tokens + helpers (above lives in src/lib but re-exported here)
-  buildTechnicalDeck.ts         # 22 slide builders for Tech Deep Dive
-  buildExecutiveDeck.ts         # Exec Pitch
-  buildOperationalDeck.ts
-  buildCoAnalystDeck.ts
-  index.ts                      # registry: deckId -> builder
-  renderToImage.ts              # html2canvas helper for fallback slides
-```
-
-Each builder maps source content (already in `src/data/*.ts` or hard-coded in the slide components) to native pptxgenjs calls. For fallback slides, it briefly mounts the React component into the same hidden 1920×1080 host that `DeckPDFExportButton` uses, captures a 2× PNG, and embeds it.
-
-### New shared component
-
-`src/components/DeckPPTXExportButton.tsx` — twin of `DeckPDFExportButton` but calls the deck's pptxgenjs builder, shows a per-slide progress toast, and saves the `.pptx`.
-
-Wired into the same toolbar locations the PDF button currently lives (Tech, Exec, Ops, CoAnalyst title slides). Persona and DTOP one-pagers stay PDF-only since they're already executive print artefacts.
+| # | Slide | Native composition |
+|---|---|---|
+| 0 | Title | Hero typography + 3 trust stats + DTOP pill row at bottom (already native — refine spacing) |
+| 1 | Strategic Shift | Two-column "Today vs Tomorrow" with bullet lists + 4-card driver grid below |
+| 2 | Industry Challenge | 4 pain-point cards row + cost-waterfall as native horizontal bars (computed from `lineOfSightData.useCases`) + total banner |
+| 3 | Platform Overview | 5-layer architecture stack (rect per layer with color band) + 3 module cards + DTOP pill row |
+| 4 | SafetyManager365 | 2-col: capability cards grid (left) + numbered data-flow steps with chevrons (right) |
+| 5 | ContentManager365 | Same template as #4, content swapped |
+| 6 | TrainingManager365 | Same template as #4, content swapped |
+| 7 | Data Foundation | 4 source pills → unified DB block → 3 capability pillar cards → governance row |
+| 8 | CoAnalyst | Master message banner + 5 pipeline cards + 3 architecture rows + 2 stat tiles (already partially native — extend) |
+| 9 | Insights | 3 capability cards + 4-step worked example timeline with chevrons |
+| 10 | Automation | 4 pipeline cards with chevrons + worked example bar + 2 callouts |
+| 11 | Mobile | 3-col layout: hero device card + capability checklist + offline/AR features |
+| 12 | DTOP | 4 step cards + audit trail strip (already native — refine) |
+| 13 | Tiers vs Generic AI | Capability comparison **table** (native pptx table) + accuracy stats + risk callout |
+| 14 | Use Cases | 3-column grid by tier (Reactive/Proactive/Predictive) with 3-4 cards each |
+| 15 | Platform Integrations | 3 case-study cards with metrics |
+| 16 | Line of Sight Calculator | 3-column cascade table from `lineOfSightData` (use cases → leading measures → outcomes) + total exposure banner. **No live calculator** — replaced with static cost-avoidance summary |
+| 17 | Maturity Roadmap | 5-stage horizontal swimlane with stage cards |
+| 18 | 2026 Roadmap | 3-phase column cards with checklist items |
+| 19 | Why Comply365 | 3 differentiator cards + trust metrics row + CTA banner |
+| 20 | Partnership | Hero + 3 stage cards (Discover / Pilot / Scale) with timelines + closing question |
 
 ### Files
 
-**Created**
-- `src/lib/pptxBrand.ts` — brand tokens and shared shape/text helpers.
-- `src/exporters/pptx/renderToImage.ts` — hidden-host React→PNG capture (reuses provider stack from `DeckPDFExportButton`).
-- `src/exporters/pptx/buildTechnicalDeck.ts` — first deck builder (22 slides).
-- `src/exporters/pptx/index.ts` — deck registry.
-- `src/components/DeckPPTXExportButton.tsx` — shared export button.
-
 **Edited**
-- `src/components/tech-slides/TechSlide0Title.tsx` — add the new PPTX button next to the existing PDF button.
-- `package.json` — add `pptxgenjs` dependency.
+- `src/lib/pptxBrand.ts` — add `addEyebrow`, `addIconBadge`, `addLabeledCard`, `addPillRow`, `addCheckRow`, `addStepArrow`, gradient bg.
+- `src/exporters/pptx/buildTechnicalDeck.ts` — full rewrite: 21 native slide builders, drop `imageFallbackSlide` and `renderComponentToPng` imports.
 
-**Phase 2 (after you approve the Tech deck output)**
-- Add `buildExecutiveDeck.ts`, `buildOperationalDeck.ts`, `buildCoAnalystDeck.ts` and wire buttons into their title slides.
+**Untouched**
+- `src/exporters/pptx/renderToImage.ts` — kept for future decks.
+- `src/components/DeckPPTXExportButton.tsx`, `src/exporters/pptx/index.ts` — unchanged.
+- All `TechSlide*.tsx` source components — only read for content extraction.
 
 ### Verification
 
 1. `/pitch-technical` → click **Download Editable PowerPoint**.
-2. Toast progresses through all 22 slides, then saves `Comply365-Technical-Deep-Dive.pptx`.
-3. Open in PowerPoint: every text element is selectable and editable; brand colours and fonts present; logo on every slide; footer with slide number; complex visuals appear as crisp images with editable surrounding text.
-4. Existing PDF export remains untouched and still works.
+2. Toast progresses through all 21 slides without "Slide failed to render" errors.
+3. Open `Comply365-Technical-Deep-Dive.pptx` in PowerPoint:
+   - Every text element is **selectable and editable** — no flattened screenshots.
+   - Brand dark theme on every slide; primary blue + DTOP step colours present.
+   - Logo top-right, footer with deck label and `01 / 21` slide counter on every page.
+   - Cost waterfall (slide 2), capability table (slide 13), and Line-of-Sight cascade (slide 16) render as real PowerPoint tables/shapes.
+4. Run a quick PDF export of the `.pptx` (LibreOffice) and visually QA all 21 slides for: overlap, text overflow, footer collisions, low-contrast text, uneven spacing. Fix any issues found and re-verify.
 
 ### Out of scope
 
-- Figma round-trip / Figma plugin.
-- Pixel-perfect editable rebuild of charts, 3D pyramid, infinity loop, and ecosystem diagram (these stay as embedded images).
-- `.key` (Keynote) or `.gslides` direct export — the generated `.pptx` opens in both.
-- Per-user OAuth to push the deck into Microsoft 365 / Google Slides automatically (possible later via the Microsoft PowerPoint or Google Slides connector if you want it).
+- Other decks (Executive, Operational, CoAnalyst) — phase 2 after this passes review.
+- Live ROI calculator interactivity inside PowerPoint (not technically possible).
+- Restoring `imageFallbackSlide` for any tech slide.
+- Embedding the React-rendered PlatformArchitectureDiagram / Pyramid3D / InfinityLoop SVGs — replaced with native equivalents using shapes.
 
