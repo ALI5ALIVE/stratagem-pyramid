@@ -125,7 +125,18 @@ const SlideDeck = () => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!containerRef.current) return;
-      
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable ||
+          target.closest("[data-radix-popper-content-wrapper]") ||
+          target.closest("[role=dialog]"))
+      ) {
+        return;
+      }
+
       const slideHeight = containerRef.current.clientHeight;
       
       if (e.key === "ArrowDown" || e.key === " ") {
