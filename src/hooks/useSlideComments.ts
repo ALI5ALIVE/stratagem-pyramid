@@ -59,5 +59,15 @@ export function useSlideComments(deckId: string | undefined, slideId: string | u
     await supabase.from("slide_comments").delete().eq("id", id);
   };
 
-  return { comments, loading, addComment, toggleResolved, deleteComment, reload: load };
+  const editComment = async (id: string, body: string) => {
+    const trimmed = body.trim();
+    if (trimmed.length < 1 || trimmed.length > 2000) throw new Error("Comment must be 1–2000 characters");
+    const { error } = await supabase
+      .from("slide_comments")
+      .update({ body: trimmed, updated_at: new Date().toISOString() })
+      .eq("id", id);
+    if (error) throw error;
+  };
+
+  return { comments, loading, addComment, editComment, toggleResolved, deleteComment, reload: load };
 }
