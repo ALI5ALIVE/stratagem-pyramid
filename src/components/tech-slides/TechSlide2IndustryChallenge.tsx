@@ -2,16 +2,26 @@ import { SlideNarrationProps } from "@/types/slideProps";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { useCases, methodologyNote } from "@/data/lineOfSightData";
 import { AlertTriangle, Clock, FileX, Radio, Info } from "lucide-react";
+import StatSourceChip from "@/components/shared/StatSourceChip";
 
 interface Props extends SlideNarrationProps { slideNumber?: number; }
 
 const formatCurrency = (v: number) => v >= 1_000_000 ? `$${(v / 1_000_000).toFixed(1)}M` : v >= 1_000 ? `$${(v / 1_000).toFixed(0)}K` : `$${v}`;
 
+const painPointSources = {
+  signals:
+    "Industry composite — IATA SMS Implementation Survey 2023; Comply365 customer baselines (anonymised composite across deployed carriers).",
+  investigation:
+    "Flight Safety Foundation 2023 SMS Maturity Study; corroborated by Comply365 customer baselines for mid-size carriers.",
+  recurrence:
+    "Comply365 customer benchmark — anonymised composite across deployed carriers (2023–2025).",
+};
+
 const painPoints = [
-  { icon: Radio, label: "12K+ signals/month", sub: "Across FOQA, reports, audits" },
-  { icon: FileX, label: "8K+ orphaned", sub: "No connected response" },
-  { icon: Clock, label: "3-week investigations", sub: "Manual evidence gathering" },
-  { icon: AlertTriangle, label: "Same events recur", sub: "No closed-loop learning" },
+  { icon: Radio, label: "12K+ signals/month", sub: "Across FOQA, reports, audits", source: painPointSources.signals },
+  { icon: FileX, label: "8K+ orphaned", sub: "No connected response", source: painPointSources.signals },
+  { icon: Clock, label: "3-week investigations", sub: "Manual evidence gathering", source: painPointSources.investigation },
+  { icon: AlertTriangle, label: "Same events recur", sub: "No closed-loop learning", source: painPointSources.recurrence },
 ];
 
 const TechSlide2IndustryChallenge = ({ slideNumber, ...narrationProps }: Props) => {
@@ -35,6 +45,9 @@ const TechSlide2IndustryChallenge = ({ slideNumber, ...narrationProps }: Props) 
               <div className="min-w-0">
                 <span className="text-sm font-bold text-foreground block">{p.label}</span>
                 <p className="text-xs text-muted-foreground leading-snug">{p.sub}</p>
+                <div className="mt-1">
+                  <StatSourceChip source={p.source} label="Source" />
+                </div>
               </div>
             </div>
           ))}

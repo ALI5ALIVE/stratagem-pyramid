@@ -1,8 +1,12 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
 import { XCircle, CheckCircle } from "lucide-react";
+import StatSourceChip from "@/components/shared/StatSourceChip";
 
 interface Props extends SlideNarrationProps { slideNumber?: number; }
+
+const benchmarkSource =
+  "Comply365 customer benchmark — anonymised composite across deployed carriers (2023–2025). Individual results vary by baseline maturity, fleet size and scope.";
 
 const beforeItems = [
   "Safety reports sit in one system",
@@ -43,6 +47,9 @@ const TechSlide3BeforeAfter = ({ slideNumber, ...narrationProps }: Props) => (
             <span className="text-xs text-muted-foreground">{m.label}</span>
             <div className="text-lg font-bold text-foreground mt-1">{m.value}</div>
             <span className="text-xs text-primary">{m.sub}</span>
+            <div className="mt-1.5 flex justify-center">
+              <StatSourceChip source={benchmarkSource} label="Source" />
+            </div>
           </div>
         ))}
       </div>
