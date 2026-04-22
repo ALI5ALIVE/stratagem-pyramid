@@ -1,6 +1,7 @@
 import React from "react";
 import { Briefcase, Shield, Plane, GraduationCap, Monitor } from "lucide-react";
 import type { PersonaProfile } from "@/data/personaProfiles";
+import { printBrand } from "./print/printBrand";
 
 interface Props {
   persona: PersonaProfile;
@@ -10,225 +11,262 @@ const iconMap: Record<string, React.ElementType> = {
   Briefcase, Shield, Plane, GraduationCap, Monitor,
 };
 
-// Map Tailwind tokens → deterministic hex/rgba for html2canvas
-const personaColorMap: Record<string, { accent: string; bg: string; border: string }> = {
-  "ceo-coo":          { accent: "#a78bfa", bg: "rgba(139,92,246,0.10)",  border: "rgba(139,92,246,0.45)" },
-  "vp-safety":        { accent: "#f87171", bg: "rgba(239,68,68,0.10)",   border: "rgba(239,68,68,0.45)" },
-  "vp-ops":           { accent: "#60a5fa", bg: "rgba(59,130,246,0.10)",  border: "rgba(59,130,246,0.45)" },
-  "training-director":{ accent: "#34d399", bg: "rgba(16,185,129,0.10)",  border: "rgba(16,185,129,0.45)" },
-  "cio-it":           { accent: "#fbbf24", bg: "rgba(245,158,11,0.10)",  border: "rgba(245,158,11,0.45)" },
+// Persona accent colours — sober, executive palette (deeper than the in-app neon)
+const personaAccent: Record<string, string> = {
+  "ceo-coo":           "#5B21B6", // deep violet
+  "vp-safety":         "#9F1239", // alert rose
+  "vp-ops":            "#0066FF", // brand blue
+  "training-director": "#047857", // deep emerald
+  "cio-it":            "#B45309", // signal amber
 };
-
-const fallback = { accent: "#60a5fa", bg: "rgba(59,130,246,0.10)", border: "rgba(59,130,246,0.45)" };
 
 const PersonaPrintablePage: React.FC<Props> = ({ persona }) => {
   const Icon = iconMap[persona.iconName] || Briefcase;
-  const c = personaColorMap[persona.id] || fallback;
-  const today = new Date().toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+  const accent = personaAccent[persona.id] || printBrand.color.brand;
+  const C = printBrand.color;
+  const F = printBrand.font;
+  const today = new Date().toLocaleDateString("en-US", {
+    year: "numeric", month: "short", day: "numeric",
+  });
 
-  const baseFont = "'Inter', 'Helvetica Neue', Arial, sans-serif";
-  const displayFont = "'Space Grotesk', 'Inter', 'Helvetica Neue', Arial, sans-serif";
-
-  const sectionStyle: React.CSSProperties = {
-    background: "#ffffff",
-    border: `1px solid ${c.border}`,
-    borderTop: `3px solid ${c.accent}`,
-    borderRadius: 6,
-    padding: "10px 12px",
-  };
-  const sectionTitle: React.CSSProperties = {
-    fontSize: 10,
+  const sectionLabel = (color: string = C.muted): React.CSSProperties => ({
+    fontSize: 9,
     fontWeight: 700,
-    letterSpacing: 1,
+    letterSpacing: "0.14em",
     textTransform: "uppercase",
-    color: c.accent,
-    marginBottom: 6,
-    fontFamily: displayFont,
-  };
+    color,
+    fontFamily: F.display,
+    marginBottom: 8,
+  });
+
   const bullet = (text: string, key: number) => (
-    <li key={key} style={{ fontSize: 10, lineHeight: 1.4, color: "#1f2937", marginBottom: 4, paddingLeft: 10, position: "relative" }}>
-      <span style={{ position: "absolute", left: 0, top: 6, width: 4, height: 4, borderRadius: 4, background: c.accent }} />
+    <li key={key} style={{
+      fontSize: 10.5, lineHeight: 1.5, color: C.slate,
+      marginBottom: 5, paddingLeft: 14, position: "relative",
+      fontFamily: F.body,
+    }}>
+      <span style={{
+        position: "absolute", left: 0, top: 7,
+        width: 5, height: 5, background: accent,
+      }} />
       {text}
     </li>
   );
+
+  const hr: React.CSSProperties = {
+    height: 1, background: C.hairline, border: 0, margin: 0,
+  };
 
   return (
     <div
       className="persona-printable-page"
       style={{
-        width: 1056,
-        height: 816,
-        background: "#f8fafc",
-        borderTop: `6px solid ${c.accent}`,
-        padding: "20px 28px",
-        fontFamily: baseFont,
-        color: "#0f172a",
+        width: printBrand.page.width,
+        height: printBrand.page.height,
+        background: C.paper,
+        padding: "24px 36px 22px",
+        fontFamily: F.body,
+        color: C.ink,
         boxSizing: "border-box",
         display: "flex",
         flexDirection: "column",
       }}
     >
-      {/* Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div style={{
-            width: 32, height: 32, borderRadius: 6, background: "#0066FF",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            color: "#fff", fontWeight: 700, fontFamily: displayFont, fontSize: 14,
-          }}>C3</div>
-          <div style={{ fontFamily: displayFont, fontSize: 14, fontWeight: 700, color: "#0f172a" }}>
-            Comply365
-          </div>
-        </div>
-        <div style={{ fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: "#64748b", fontWeight: 700 }}>
-          Persona One-Pager
-        </div>
-        <div style={{ fontSize: 9, color: "#64748b" }}>
-          {today} · Confidential
-        </div>
-      </div>
-
-      {/* Persona header */}
+      {/* HEADER */}
       <div style={{
-        background: c.bg, border: `1px solid ${c.border}`, borderRadius: 8, padding: "12px 14px", marginBottom: 10,
+        display: "flex", justifyContent: "space-between", alignItems: "baseline",
+        marginBottom: 10,
       }}>
-        <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
-          <div style={{
-            width: 40, height: 40, borderRadius: 8, background: "#ffffff",
-            border: `1px solid ${c.border}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <span style={{
+            fontFamily: F.display, fontSize: 16, fontWeight: 700,
+            color: C.ink, letterSpacing: "-0.01em",
           }}>
-            <Icon size={22} color={c.accent} />
+            Comply365
+          </span>
+          <span style={{
+            display: "inline-block", width: 6, height: 6,
+            background: accent, marginBottom: 2,
+          }} />
+        </div>
+        <div style={{
+          fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase",
+          color: C.muted, fontWeight: 600, fontFamily: F.display,
+        }}>
+          Persona Brief · Confidential · {today}
+        </div>
+      </div>
+      <hr style={hr} />
+
+      {/* TITLE BLOCK */}
+      <div style={{ display: "flex", gap: 20, marginTop: 18, marginBottom: 14 }}>
+        <div style={{ flex: 1, minWidth: 0, borderLeft: `4px solid ${accent}`, paddingLeft: 14 }}>
+          <div style={{
+            fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase",
+            color: accent, fontWeight: 700, fontFamily: F.display, marginBottom: 4,
+          }}>
+            {persona.seniority}
           </div>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8 }}>
-              <h1 style={{ fontSize: 20, fontWeight: 700, color: c.accent, margin: 0, fontFamily: displayFont, lineHeight: 1.1 }}>
-                {persona.title}
-              </h1>
-              <span style={{
-                fontSize: 9, fontWeight: 700, color: c.accent, background: "#fff",
-                border: `1px solid ${c.border}`, borderRadius: 4, padding: "3px 8px", whiteSpace: "nowrap",
-              }}>{persona.seniority}</span>
-            </div>
-            <div style={{ fontSize: 9, color: "#475569", marginTop: 3, lineHeight: 1.4 }}>
-              {persona.titleVariants.slice(0, 5).join(" · ")}
-            </div>
-            <p style={{ fontSize: 10, lineHeight: 1.45, color: "#334155", margin: "6px 0 0", fontFamily: baseFont }}>
-              {persona.profileSummary}
-            </p>
+          <h1 style={{
+            margin: 0, fontFamily: F.display, fontSize: 30, fontWeight: 700,
+            color: C.ink, lineHeight: 1.05, letterSpacing: "-0.02em",
+          }}>
+            {persona.title}
+          </h1>
+          <div style={{
+            fontSize: 10, color: C.muted, marginTop: 5, lineHeight: 1.4,
+          }}>
+            {persona.titleVariants.slice(0, 4).join(" · ")}
           </div>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginTop: 8 }}>
-          {[
-            { label: "Reports To", value: persona.reportsTo },
-            { label: "Org Context", value: persona.orgContext },
-            { label: "Budget Influence", value: persona.budgetInfluence },
-          ].map((m) => (
-            <div key={m.label} style={{ background: "#fff", border: `1px solid ${c.border}`, borderRadius: 4, padding: "6px 8px" }}>
-              <div style={{ fontSize: 8, letterSpacing: 1, textTransform: "uppercase", color: "#64748b", fontWeight: 700, marginBottom: 2 }}>{m.label}</div>
-              <div style={{ fontSize: 9, color: "#1f2937", lineHeight: 1.35 }}>{m.value}</div>
-            </div>
-          ))}
+        <div style={{
+          width: 56, height: 56, flexShrink: 0,
+          border: `1px solid ${C.hairline}`,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          background: C.paperWarm,
+        }}>
+          <Icon size={26} color={accent} strokeWidth={1.5} />
         </div>
       </div>
 
-      {/* Two-column: Priorities + Pains */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 8 }}>
-        <div style={sectionStyle}>
-          <div style={sectionTitle}>Strategic Priorities</div>
+      {/* EXECUTIVE SUMMARY */}
+      <p style={{
+        margin: "0 0 14px", fontSize: 12.5, lineHeight: 1.5,
+        color: C.slate, fontFamily: F.body, maxWidth: "92%",
+      }}>
+        {persona.profileSummary}
+      </p>
+
+      {/* META STRIP */}
+      <div style={{
+        display: "grid", gridTemplateColumns: "1fr 1fr 1fr",
+        borderTop: `1px solid ${C.hairline}`,
+        borderBottom: `1px solid ${C.hairline}`,
+        padding: "10px 0", marginBottom: 14,
+      }}>
+        {[
+          { label: "Reports To", value: persona.reportsTo },
+          { label: "Org Context", value: persona.orgContext },
+          { label: "Budget Influence", value: persona.budgetInfluence },
+        ].map((m, i) => (
+          <div key={m.label} style={{
+            paddingLeft: i === 0 ? 0 : 14,
+            paddingRight: i === 2 ? 0 : 14,
+            borderLeft: i === 0 ? "none" : `1px solid ${C.hairline}`,
+          }}>
+            <div style={sectionLabel(C.subtle)}>{m.label}</div>
+            <div style={{ fontSize: 10.5, color: C.ink, lineHeight: 1.4, fontWeight: 500 }}>
+              {m.value}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* PRIORITIES + PAINS */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28, marginBottom: 14 }}>
+        <div>
+          <div style={sectionLabel()}>Strategic Priorities</div>
           <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
             {persona.strategicPriorities.slice(0, 4).map((t, i) => bullet(t, i))}
           </ul>
         </div>
-        <div style={sectionStyle}>
-          <div style={sectionTitle}>Daily Pain Points</div>
+        <div>
+          <div style={sectionLabel()}>Daily Pain Points</div>
           <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
             {persona.dailyPains.slice(0, 4).map((t, i) => bullet(t, i))}
           </ul>
         </div>
       </div>
 
-      {/* Triggers + Criteria */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 8 }}>
-        <div style={sectionStyle}>
-          <div style={sectionTitle}>Buying Triggers</div>
+      {/* TRIGGERS + CRITERIA */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28, marginBottom: 14 }}>
+        <div>
+          <div style={sectionLabel()}>Buying Triggers</div>
           <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
             {persona.buyingTriggers.slice(0, 3).map((t, i) => bullet(t, i))}
           </ul>
         </div>
-        <div style={sectionStyle}>
-          <div style={sectionTitle}>Decision Criteria</div>
+        <div>
+          <div style={sectionLabel()}>Decision Criteria</div>
           <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
             {persona.decisionCriteria.slice(0, 3).map((t, i) => bullet(t, i))}
           </ul>
         </div>
       </div>
 
-      {/* Value Proposition */}
-      <div style={{ ...sectionStyle, marginBottom: 8 }}>
-        <div style={sectionTitle}>Value Proposition</div>
+      <hr style={hr} />
+
+      {/* VALUE PROPOSITION — pull-quote */}
+      <div style={{ padding: "14px 0 14px", borderLeft: `3px solid ${accent}`, paddingLeft: 16, marginTop: 12, marginBottom: 12 }}>
+        <div style={{ ...sectionLabel(accent), marginBottom: 6 }}>Value Proposition</div>
         <p style={{
-          margin: 0, fontSize: 10, lineHeight: 1.45, color: "#1f2937", fontStyle: "italic",
-          borderLeft: `3px solid ${c.accent}`, paddingLeft: 10,
+          margin: 0, fontFamily: F.display, fontSize: 14, lineHeight: 1.45,
+          color: C.ink, fontWeight: 500, letterSpacing: "-0.005em",
         }}>
           {persona.valueProposition}
         </p>
       </div>
 
-      {/* Key Messages + Metrics */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 8 }}>
-        <div style={sectionStyle}>
-          <div style={sectionTitle}>Key Messages</div>
+      <hr style={hr} />
+
+      {/* KEY MESSAGES + METRICS */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28, marginTop: 14, marginBottom: 14 }}>
+        <div>
+          <div style={sectionLabel()}>Key Messages</div>
           <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
             {persona.keyMessages.slice(0, 3).map((t, i) => bullet(t, i))}
           </ul>
         </div>
-        <div style={sectionStyle}>
-          <div style={sectionTitle}>Metrics That Matter</div>
+        <div>
+          <div style={sectionLabel()}>Metrics That Matter</div>
           <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
             {persona.metricsThatMatter.slice(0, 4).map((t, i) => bullet(t, i))}
           </ul>
         </div>
       </div>
 
-      {/* Discovery + Objection */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, flex: 1 }}>
-        <div style={sectionStyle}>
-          <div style={sectionTitle}>Top Discovery Question</div>
-          <p style={{ margin: 0, fontSize: 10, lineHeight: 1.45, color: "#1f2937", fontStyle: "italic" }}>
+      {/* DISCOVERY + OBJECTION */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28, flex: 1 }}>
+        <div>
+          <div style={sectionLabel()}>Top Discovery Question</div>
+          <p style={{
+            margin: 0, fontSize: 11, lineHeight: 1.5, color: C.ink,
+            fontFamily: F.display, fontWeight: 500, fontStyle: "italic",
+          }}>
             “{persona.discoveryQuestions[0]}”
           </p>
         </div>
-        <div style={sectionStyle}>
-          <div style={sectionTitle}>Top Objection &amp; Response</div>
+        <div>
+          <div style={sectionLabel()}>Top Objection → Response</div>
           {persona.objections[0] && (
             <>
-              <p style={{ margin: "0 0 4px", fontSize: 10, color: "#475569", fontStyle: "italic" }}>
+              <p style={{
+                margin: "0 0 6px", fontSize: 10, color: C.muted,
+                fontStyle: "italic", lineHeight: 1.45,
+              }}>
                 “{persona.objections[0].objection}”
               </p>
               <div style={{
-                background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.35)",
-                borderRadius: 4, padding: "6px 8px",
+                fontSize: 10.5, color: C.success, fontFamily: F.body,
+                fontWeight: 500, lineHeight: 1.5,
+                paddingLeft: 10, borderLeft: `2px solid ${C.success}`,
               }}>
-                <div style={{ fontSize: 8, fontWeight: 700, color: "#059669", letterSpacing: 1, textTransform: "uppercase", marginBottom: 2 }}>
-                  Response
-                </div>
-                <p style={{ margin: 0, fontSize: 10, lineHeight: 1.4, color: "#1f2937" }}>
-                  {persona.objections[0].response}
-                </p>
+                {persona.objections[0].response}
               </div>
             </>
           )}
         </div>
       </div>
 
-      {/* Footer */}
+      {/* FOOTER */}
       <div style={{
-        marginTop: 10, paddingTop: 8, borderTop: "1px solid #e2e8f0",
+        marginTop: 14, paddingTop: 8, borderTop: `1px solid ${C.hairline}`,
         display: "flex", justifyContent: "space-between", alignItems: "center",
-        fontSize: 8, color: "#64748b",
+        fontSize: 8.5, color: C.subtle, fontFamily: F.display,
+        letterSpacing: "0.08em", textTransform: "uppercase", fontWeight: 600,
       }}>
-        <div>© {new Date().getFullYear()} Comply365 · Sales Enablement · /personas</div>
-        <div>Persona One-Pager · v1.0</div>
+        <div>© {new Date().getFullYear()} Comply365 · Sales Enablement</div>
+        <div>Persona Brief · v2.0</div>
       </div>
     </div>
   );
