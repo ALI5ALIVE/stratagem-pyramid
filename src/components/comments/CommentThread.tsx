@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CheckCircle2, Trash2, Reply } from "lucide-react";
+import { CheckCircle2, Trash2, Reply, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
@@ -9,6 +9,7 @@ interface Props {
   comments: SlideComment[];
   currentUserId: string;
   onReply: (body: string, parentId: string) => Promise<void>;
+  onEdit: (id: string, body: string) => Promise<void>;
   onResolve: (id: string, resolved: boolean) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
 }
@@ -18,9 +19,11 @@ const formatTime = (iso: string) => {
   return d.toLocaleString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
 };
 
-const CommentThread = ({ comments, currentUserId, onReply, onResolve, onDelete }: Props) => {
+const CommentThread = ({ comments, currentUserId, onReply, onEdit, onResolve, onDelete }: Props) => {
   const [replyTo, setReplyTo] = useState<string | null>(null);
   const [replyBody, setReplyBody] = useState("");
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editBody, setEditBody] = useState("");
   const [saving, setSaving] = useState(false);
 
   const roots = comments.filter((c) => !c.parent_id);
@@ -36,6 +39,16 @@ const CommentThread = ({ comments, currentUserId, onReply, onResolve, onDelete }
     } finally { setSaving(false); }
   };
 
+  const submitEdit = async (id: string) => {
+    if (!editBody.trim()) return;
+    setSaving(true);
+    try {
+      await onEdit(id, editBody);
+      setEditingId(null);
+      setEditBody("");
+    } finally { setSaving(false); }
+  };
+
   const renderComment = (c: SlideComment, isReply = false) => (
     <div key={c.id} className={cn("group", isReply && "ml-6 pl-3 border-l border-border")}>
       <div className={cn("rounded-lg p-3 bg-muted/40", c.resolved && "opacity-60")}>
@@ -48,9 +61,23 @@ const CommentThread = ({ comments, currentUserId, onReply, onResolve, onDelete }
             <div className="flex items-center gap-2 text-xs">
               <span className="font-semibold text-foreground">{c.profile?.display_name ?? "Reviewer"}</span>
               <span className="text-muted-foreground">{formatTime(c.created_at)}</span>
+              {c.updated_at && c.updated_at !== c.created_at && (
+                <span className="text-muted-foreground text-[10px] italic">(edited)</span>
+              )}
               {c.resolved && <span className="text-emerald-500 text-[10px] font-semibold">RESOLVED</span>}
             </div>
-            <p className="text-sm text-foreground/90 mt-1 whitespace-pre-wrap break-words">{c.body}</p>
+            {editingId === c.id ? (
+              <div className="mt-2 space-y-2">
+                <Textarea value={editBody} onChange={(e) => setEditBody(e.target.value)}
+                  maxLength={2000} className="text-sm min-h-[60px]" />
+                <div className="flex gap-2">
+                  <Button size="sm" onClick={() => submitEdit(c.id)} disabled={saving || !editBody.trim()}>Save</Button>
+                  <Button size="sm" variant="ghost" onClick={() => { setEditingId(null); setEditBody(""); }}>Cancel</Button>
+                </div>
+              </div>
+            ) : (
+              <p className="text-sm text-foreground/90 mt-1 whitespace-pre-wrap break-words">{c.body}</p>
+            )}
             <div className="flex items-center gap-1 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
               {!isReply && (
                 <Button size="sm" variant="ghost" className="h-6 px-2 text-[11px]"
@@ -62,6 +89,12 @@ const CommentThread = ({ comments, currentUserId, onReply, onResolve, onDelete }
                 <Button size="sm" variant="ghost" className="h-6 px-2 text-[11px]"
                   onClick={() => onResolve(c.id, !c.resolved)}>
                   <CheckCircle2 className="h-3 w-3 mr-1" /> {c.resolved ? "Reopen" : "Resolve"}
+                </Button>
+              )}
+              {c.user_id === currentUserId && editingId !== c.id && (
+                <Button size="sm" variant="ghost" className="h-6 px-2 text-[11px]"
+                  onClick={() => { setEditingId(c.id); setEditBody(c.body); }}>
+                  <Pencil className="h-3 w-3 mr-1" /> Edit
                 </Button>
               )}
               {c.user_id === currentUserId && (

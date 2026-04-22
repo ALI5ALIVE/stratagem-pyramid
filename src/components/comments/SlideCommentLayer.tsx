@@ -6,9 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/contexts/AuthContext";
 import { useSlideComments } from "@/hooks/useSlideComments";
-import { useSlideApproval } from "@/hooks/useSlideApproval";
 import CommentThread from "./CommentThread";
-import ApprovalControl from "./ApprovalControl";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -23,8 +21,7 @@ const SlideCommentLayer = ({ deckId, slideId, variant = "dark" }: Props) => {
   const [body, setBody] = useState("");
   const [posting, setPosting] = useState(false);
 
-  const { comments, addComment, toggleResolved, deleteComment } = useSlideComments(deckId, slideId);
-  const { approvals, myApproval, setStatus } = useSlideApproval(deckId, slideId, user?.id);
+  const { comments, addComment, editComment, toggleResolved, deleteComment } = useSlideComments(deckId, slideId);
 
   const total = comments.length;
   const unresolved = comments.filter((c) => !c.parent_id && !c.resolved).length;
@@ -61,14 +58,14 @@ const SlideCommentLayer = ({ deckId, slideId, variant = "dark" }: Props) => {
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent side="right" className="w-[400px] sm:max-w-[400px] flex flex-col p-0">
           <SheetHeader className="px-5 py-4 border-b border-border">
-            <SheetTitle className="text-base">Slide review</SheetTitle>
+            <SheetTitle className="text-base">Slide comments</SheetTitle>
             <p className="text-[11px] text-muted-foreground font-mono">{deckId} / {slideId}</p>
           </SheetHeader>
 
           {!user ? (
             <div className="flex-1 flex flex-col items-center justify-center gap-3 px-6 text-center">
               <LogIn className="h-8 w-8 text-muted-foreground" />
-              <p className="text-sm text-muted-foreground">Sign in to leave comments and approve slides.</p>
+              <p className="text-sm text-muted-foreground">Sign in to leave comments.</p>
               <Button asChild size="sm"><Link to="/auth">Sign in</Link></Button>
             </div>
           ) : (
@@ -78,6 +75,7 @@ const SlideCommentLayer = ({ deckId, slideId, variant = "dark" }: Props) => {
                   comments={comments}
                   currentUserId={user.id}
                   onReply={(b, parentId) => addComment(user.id, b, parentId)}
+                  onEdit={editComment}
                   onResolve={toggleResolved}
                   onDelete={deleteComment}
                 />
@@ -96,7 +94,6 @@ const SlideCommentLayer = ({ deckId, slideId, variant = "dark" }: Props) => {
                 <Button size="sm" className="w-full" onClick={handlePost} disabled={posting || !body.trim()}>
                   Post comment
                 </Button>
-                <ApprovalControl myApproval={myApproval} approvals={approvals} onSetStatus={setStatus} />
               </div>
             </>
           )}
