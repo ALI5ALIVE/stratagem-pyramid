@@ -1,9 +1,6 @@
 import React from "react";
 import { dtopSteps, useCases, valueCategories, whyDTOPExists, heroTagline } from "@/data/dtopPlaybook";
-import { printBrand } from "./printBrand";
-
-// DTOP step accent colours (sober, executive — paired with the in-app palette)
-const stepAccents = ["#0066FF", "#B45309", "#047857", "#5B21B6"];
+import { printBrand, stepAccentsDark } from "./printBrand";
 
 const DTOPPrintablePage: React.FC = () => {
   const C = printBrand.color;
@@ -12,12 +9,12 @@ const DTOPPrintablePage: React.FC = () => {
     year: "numeric", month: "short", day: "numeric",
   });
 
-  const sectionLabel = (color: string = C.muted): React.CSSProperties => ({
+  const sectionLabel = (color: string = C.darkMuted): React.CSSProperties => ({
     fontSize: 9, fontWeight: 700, letterSpacing: "0.14em",
     textTransform: "uppercase", color, fontFamily: F.display,
     marginBottom: 8,
   });
-  const hr: React.CSSProperties = { height: 1, background: C.hairline, border: 0, margin: 0 };
+  const hr: React.CSSProperties = { height: 1, background: C.darkHairline, border: 0, margin: 0 };
 
   return (
     <div
@@ -25,10 +22,11 @@ const DTOPPrintablePage: React.FC = () => {
       style={{
         width: printBrand.page.width,
         height: printBrand.page.height,
-        background: C.paper,
+        background: C.darkPaper,
+        backgroundImage: `radial-gradient(800px 500px at 0% 0%, rgba(0,102,255,0.10), transparent 60%), radial-gradient(700px 500px at 100% 100%, rgba(139,92,246,0.06), transparent 65%)`,
         padding: "24px 36px 22px",
         fontFamily: F.body,
-        color: C.ink,
+        color: C.darkInk,
         boxSizing: "border-box",
         display: "flex",
         flexDirection: "column",
@@ -48,12 +46,12 @@ const DTOPPrintablePage: React.FC = () => {
           }}>C</span>
           <span style={{
             fontFamily: F.display, fontSize: 16, fontWeight: 700,
-            color: C.ink, letterSpacing: "-0.01em",
+            color: C.darkInk, letterSpacing: "-0.01em",
           }}>Comply<span style={{ color: C.brand }}>365</span></span>
         </div>
         <div style={{
           fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase",
-          color: C.muted, fontWeight: 600, fontFamily: F.display,
+          color: C.darkMuted, fontWeight: 600, fontFamily: F.display,
         }}>
           Operating Model · Confidential · {today}
         </div>
@@ -64,17 +62,17 @@ const DTOPPrintablePage: React.FC = () => {
       <div style={{ marginTop: 16, marginBottom: 14, borderLeft: `4px solid ${C.brand}`, paddingLeft: 14 }}>
         <div style={{
           fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase",
-          color: C.brand, fontWeight: 700, fontFamily: F.display, marginBottom: 4,
+          color: "#3D8BFF", fontWeight: 700, fontFamily: F.display, marginBottom: 4,
         }}>
           The DTOP Operating Model
         </div>
         <h1 style={{
           margin: 0, fontFamily: F.display, fontSize: 28, fontWeight: 700,
-          color: C.ink, lineHeight: 1.05, letterSpacing: "-0.02em",
+          color: C.darkInk, lineHeight: 1.05, letterSpacing: "-0.02em",
         }}>
           Detect → Trigger → Orchestrate → Prove
         </h1>
-        <div style={{ fontSize: 11.5, color: C.muted, marginTop: 5, fontStyle: "italic" }}>
+        <div style={{ fontSize: 11.5, color: C.darkSlate, marginTop: 5, fontStyle: "italic" }}>
           {heroTagline}.
         </div>
       </div>
@@ -84,40 +82,40 @@ const DTOPPrintablePage: React.FC = () => {
         {dtopSteps.map((step, i) => (
           <React.Fragment key={step.letter}>
             <div style={{
-              borderTop: `3px solid ${stepAccents[i]}`,
-              background: C.paperWarm,
-              border: `1px solid ${C.hairline}`,
-              borderTopWidth: 3,
-              borderTopColor: stepAccents[i],
+              background: C.darkPaperWarm,
+              border: `1px solid ${C.darkHairline}`,
+              borderTop: `3px solid ${stepAccentsDark[i]}`,
               padding: "10px 12px 11px",
               display: "flex", flexDirection: "column",
+              boxShadow: `inset 0 1px 0 rgba(255,255,255,0.04)`,
             }}>
               <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 4 }}>
                 <span style={{
                   fontFamily: F.display, fontSize: 28, fontWeight: 700,
-                  color: stepAccents[i], lineHeight: 1, letterSpacing: "-0.03em",
+                  color: stepAccentsDark[i], lineHeight: 1, letterSpacing: "-0.03em",
+                  textShadow: `0 0 16px ${stepAccentsDark[i]}55`,
                 }}>{step.letter}</span>
                 <span style={{
                   fontFamily: F.display, fontSize: 12, fontWeight: 700,
-                  color: C.ink, textTransform: "uppercase", letterSpacing: "0.08em",
+                  color: C.darkInk, textTransform: "uppercase", letterSpacing: "0.08em",
                 }}>{step.label}</span>
               </div>
               <div style={{
                 fontFamily: F.display, fontSize: 9.5, fontWeight: 600,
-                color: stepAccents[i], textTransform: "uppercase",
+                color: stepAccentsDark[i], textTransform: "uppercase",
                 letterSpacing: "0.08em", marginBottom: 6,
               }}>{step.tagline}</div>
-              <div style={{ fontSize: 9, color: C.slate, lineHeight: 1.4 }}>
-                <span style={{ color: C.subtle, fontWeight: 600 }}>In:</span> {step.dataSources.slice(0, 2).join(" · ")}
+              <div style={{ fontSize: 9, color: C.darkSlate, lineHeight: 1.4 }}>
+                <span style={{ color: C.darkSubtle, fontWeight: 600 }}>In:</span> {step.dataSources.slice(0, 2).join(" · ")}
               </div>
-              <div style={{ fontSize: 9, color: C.slate, lineHeight: 1.4, marginTop: 3 }}>
-                <span style={{ color: C.subtle, fontWeight: 600 }}>Out:</span> {step.outputs[0]}
+              <div style={{ fontSize: 9, color: C.darkSlate, lineHeight: 1.4, marginTop: 3 }}>
+                <span style={{ color: C.darkSubtle, fontWeight: 600 }}>Out:</span> {step.outputs[0]}
               </div>
             </div>
             {i < 3 && (
               <div style={{
                 display: "flex", alignItems: "center", justifyContent: "center",
-                color: C.subtle, fontSize: 18, fontWeight: 400,
+                color: C.darkSubtle, fontSize: 18, fontWeight: 400,
               }}>›</div>
             )}
           </React.Fragment>
@@ -127,23 +125,25 @@ const DTOPPrintablePage: React.FC = () => {
       {/* WHY IT EXISTS */}
       <div style={{
         display: "grid", gridTemplateColumns: "auto 1fr", gap: 20, alignItems: "center",
-        padding: "12px 0", borderTop: `1px solid ${C.hairline}`, borderBottom: `1px solid ${C.hairline}`,
+        padding: "12px 0", borderTop: `1px solid ${C.darkHairline}`, borderBottom: `1px solid ${C.darkHairline}`,
         marginBottom: 14,
       }}>
         <div>
           <div style={sectionLabel()}>Why It Exists</div>
           <div style={{
             fontFamily: F.display, fontSize: 38, fontWeight: 700,
-            color: C.ink, lineHeight: 1, letterSpacing: "-0.03em",
+            color: C.darkInk, lineHeight: 1, letterSpacing: "-0.03em",
+            borderBottom: `3px solid ${C.brand}`,
+            paddingBottom: 4, display: "inline-block",
           }}>
             {whyDTOPExists.industryExposure}
           </div>
         </div>
         <div>
-          <div style={{ fontSize: 11, color: C.slate, lineHeight: 1.5, fontFamily: F.body }}>
+          <div style={{ fontSize: 11, color: C.darkSlate, lineHeight: 1.5, fontFamily: F.body }}>
             {whyDTOPExists.exposureLabel}.
           </div>
-          <div style={{ fontSize: 7.5, color: C.subtle, lineHeight: 1.4, marginTop: 4, fontStyle: "italic" }}>
+          <div style={{ fontSize: 7.5, color: C.darkSubtle, lineHeight: 1.4, marginTop: 4, fontStyle: "italic" }}>
             {whyDTOPExists.industryExposureMethodology}
           </div>
         </div>
@@ -155,19 +155,20 @@ const DTOPPrintablePage: React.FC = () => {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16 }}>
           {useCases.map((uc, i) => (
             <div key={uc.title} style={{
-              borderLeft: `2px solid ${stepAccents[i]}`,
+              borderLeft: `2px solid ${stepAccentsDark[i]}`,
               paddingLeft: 12,
             }}>
               <div style={{
                 fontFamily: F.display, fontSize: 18, fontWeight: 700,
-                color: stepAccents[i], lineHeight: 1.05, letterSpacing: "-0.02em",
+                color: stepAccentsDark[i], lineHeight: 1.05, letterSpacing: "-0.02em",
                 marginBottom: 3,
+                textShadow: `0 0 14px ${stepAccentsDark[i]}40`,
               }}>{uc.metric}</div>
               <div style={{
                 fontFamily: F.display, fontSize: 10, fontWeight: 600,
-                color: C.ink, marginBottom: 4, lineHeight: 1.3,
+                color: C.darkInk, marginBottom: 4, lineHeight: 1.3,
               }}>{uc.title}</div>
-              <div style={{ fontSize: 9, color: C.muted, lineHeight: 1.4 }}>
+              <div style={{ fontSize: 9, color: C.darkSlate, lineHeight: 1.4 }}>
                 {uc.scenario}
               </div>
             </div>
@@ -180,21 +181,21 @@ const DTOPPrintablePage: React.FC = () => {
         <div style={sectionLabel()}>What It Unlocks</div>
         <div style={{
           display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr",
-          borderTop: `1px solid ${C.hairline}`,
+          borderTop: `1px solid ${C.darkHairline}`,
           paddingTop: 10,
         }}>
           {valueCategories.map((vc, i) => (
             <div key={vc.title} style={{
               paddingLeft: i === 0 ? 0 : 14,
               paddingRight: i === 3 ? 0 : 14,
-              borderLeft: i === 0 ? "none" : `1px solid ${C.hairline}`,
+              borderLeft: i === 0 ? "none" : `1px solid ${C.darkHairline}`,
             }}>
               <div style={{
                 fontFamily: F.display, fontSize: 11, fontWeight: 700,
-                color: stepAccents[i], textTransform: "uppercase",
+                color: stepAccentsDark[i], textTransform: "uppercase",
                 letterSpacing: "0.08em", marginBottom: 5,
               }}>{vc.title}</div>
-              <div style={{ fontSize: 9, color: C.slate, lineHeight: 1.4 }}>
+              <div style={{ fontSize: 9, color: C.darkSlate, lineHeight: 1.4 }}>
                 {vc.metrics[0]}
               </div>
             </div>
@@ -206,7 +207,7 @@ const DTOPPrintablePage: React.FC = () => {
       <div style={{
         marginTop: 12, paddingTop: 8, borderTop: `2px solid ${C.brand}`,
         display: "flex", justifyContent: "space-between", alignItems: "center",
-        fontSize: 8.5, color: C.subtle, fontFamily: F.display,
+        fontSize: 8.5, color: C.darkSubtle, fontFamily: F.display,
         letterSpacing: "0.08em", textTransform: "uppercase", fontWeight: 600,
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
