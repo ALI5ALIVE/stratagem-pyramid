@@ -1,6 +1,14 @@
 import { SlideNarrationProps } from "@/types/slideProps";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { Plane, Globe, Users } from "lucide-react";
+import DeckPDFExportButton from "@/components/DeckPDFExportButton";
+import DeckPPTXExportButton from "@/components/DeckPPTXExportButton";
+
+interface ExportSlideDef {
+  id: string;
+  label: string;
+  component: React.ComponentType<any>;
+}
 
 const trustStats = [
   { icon: Plane, value: "550+", label: "Airlines Worldwide" },
@@ -10,10 +18,12 @@ const trustStats = [
 
 interface ExecSlide0TitleProps extends SlideNarrationProps {
   slideNumber?: number;
+  exportSlides?: ExportSlideDef[];
 }
 
 const ExecSlide0Title = ({
   slideNumber,
+  exportSlides,
   isPlaying,
   isLoading,
   progress,
@@ -76,6 +86,22 @@ const ExecSlide0Title = ({
           ))}
         </div>
       </div>
+
+      {exportSlides && exportSlides.length > 0 && (
+        <div className="absolute bottom-24 right-8 z-40 flex flex-col items-end gap-1 text-right">
+          <div className="flex items-center gap-2">
+            <DeckPPTXExportButton deckId="executive-pitch" />
+            <DeckPDFExportButton
+              slides={exportSlides}
+              filename="Comply365-Executive-Pitch.pdf"
+              deckLabel="Executive Pitch"
+            />
+          </div>
+          <span className="text-[10px] text-muted-foreground bg-background/70 backdrop-blur px-2 py-0.5 rounded max-w-[220px]">
+            Interactive slides export in their default view.
+          </span>
+        </div>
+      )}
     </SalesSlideContainer>
   );
 };
