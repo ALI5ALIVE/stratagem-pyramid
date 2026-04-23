@@ -1,85 +1,73 @@
 
 
-## Align architecture diagram layers to the slides that follow
+## Remove "Act" language + add "Journey Ahead" dividers for the two roadmaps
 
-### Problem
+### 1. Strip "Act" comments and any user-visible "Act" language
 
-Slide 4 (The Operational Performance Platform) shows a 5-layer stack: **DTOP · Unified Mobile · Intelligence & Orchestration · Operational Data Foundation · Core Operational Apps**. The slides that follow drill into each layer (Safety/Content/Training apps, Data Foundation, Insights & Intelligence, Recommendations & Prescriptive Actions, Automation, Mobile, DTOP), but there's no visual handshake between the diagram tile and the deep-dive slide. The viewer loses the thread.
+The word "Act" only appears in three places:
 
-### Solution: layer-coded section dividers + a recurring "you are here" badge
+- **`src/pages/TechnicalDeepDive.tsx`** — five `// Act N — …` source comments. These are dev-only but the plan says remove for clarity. Replace with neutral grouping comments (e.g. `// Frame the problem`, `// Architecture`, `// Intelligence & Orchestration`, `// Delivery & operating model`, `// Value & close`).
+- **`src/exporters/pptx/buildTechnicalDeck.ts`** — section divider builder calls that pass titles like `"Act 3 — Intelligence & Orchestration"`. Drop the `Act N — ` prefix on every divider so the PPTX shows just the section name (e.g. `"Intelligence & Orchestration"`).
+- **`src/data/technicalPitchNarration.ts`** — any narration line that says "in this act" → rewrite as "in this section" / "next we look at…".
 
-Two reinforcing devices, both reusing brand chrome that already exists.
+After this pass, a global search for `\bAct\b` in tech-deck files returns zero hits.
 
-### 1. Insert 5 lightweight **layer divider slides** before each deep-dive group
+### 2. Add two "Journey Ahead" divider slides
 
-One full-bleed dark divider per architecture layer, in the same top-down order the diagram reads. Each divider is the visual "chapter card" for the slides that follow it.
+Reuse the existing `TechSlideLayerDivider` component pattern, but introduce a **lighter sibling** divider for non-architectural sections — `TechSlideJourneyDivider` — so we don't have to fake a "Layer N" badge for things that aren't platform layers.
 
-Each divider contains:
-- **Eyebrow**: `LAYER N · ARCHITECTURE` in the layer's accent colour (emerald / violet / amber / cyan / blue — same tokens as the diagram).
-- **Title**: layer name (e.g. `Intelligence & Orchestration Layer`).
-- **One-line tagline**: pulled straight from the diagram's sub-label (e.g. `Insights & Intelligence · Recommendations & Prescriptive Actions · Automation`).
-- **Mini-stack on the right**: a compact 5-row replica of the architecture stack with the active layer lit up in its accent colour and the other 4 dimmed to 20% opacity. Same visual grammar as the main diagram, so the viewer instantly recognises "we're now inside this layer."
-- **Footer**: `Up next: <list of slide titles in this layer>`.
+New component **`src/components/tech-slides/TechSlideJourneyDivider.tsx`**:
+- Eyebrow: `THE JOURNEY AHEAD` (in primary blue accent).
+- Title: configurable (e.g. `Maturity Roadmap` or `2026 Use Case Roadmap`).
+- Tagline: configurable one-liner.
+- **No mini-stack** (this isn't an architecture layer) — instead a clean horizontal stepper showing: `Today → Near term → Long term` with the current focus pill lit.
+- `Up next:` list of slides this section introduces.
+- Same dark theme, brand chrome, narration-controlled play button.
 
-Divider sequence (inserted into `TechnicalDeepDive.tsx` slide registry):
+Slot two instances into the deck **immediately before** the two roadmap slides:
 
-| # | Divider | Slides it introduces |
+| Position | Divider | Introduces |
 |---|---|---|
-| A | Layer 5 · DTOP — System of Work | DTOP slide |
-| B | Layer 4 · Unified Mobile Experience | Mobile slide |
-| C | Layer 3 · Intelligence & Orchestration | Insights & Intelligence, Recommendations & Prescriptive Actions, Automation, Tiers vs Generic AI |
-| D | Layer 2 · Operational Data Foundation | Data Foundation slide |
-| E | Layer 1 · Core Operational Apps | Safety Manager, Content Manager, Training Manager |
+| Before `tech-slide-14` | **The Journey Ahead — Maturity Roadmap** ("Where customers are today and how Comply365 moves them forward") | Maturity Roadmap |
+| Before `tech-slide-15` | **The Journey Ahead — 2026 Use Case Roadmap** ("Phased delivery — each phase builds on proven value") | 2026 Roadmap |
 
-Order in the deck stays the same as today; only the 5 dividers are slotted in front of their respective groups.
+Sidebar labels: `▸ Journey Ahead · Maturity` and `▸ Journey Ahead · 2026 Use Cases` so they visually group like the existing `▸ Layer N` items.
 
-### 2. Add a persistent **"You are here" architecture badge** to every deep-dive slide
-
-Reuse the existing `ArchitectureLayerBadge` component (already in the codebase). On every layer-specific slide, place the badge top-right, just under the slide header:
-
-- 5 layer pills in the same top-down order as the diagram.
-- Active layer pill lit in its accent colour; others dimmed.
-- For Layer 3 slides, the badge also shows the active sublayer pill (Insights & Intelligence / Recommendations & Prescriptive Actions / Automation) — matching the sublayer the slide is about.
-
-This means the viewer can glance at any slide and instantly map it back to the diagram on Slide 4.
-
-### 3. Light tweak to Slide 4 itself
-
-On the architecture diagram slide, add a tiny `→ deep dive` chevron on each layer band that hints the deck will visit that layer. Subtle — same accent colour as the layer, ~10px, right edge of the band. No layout change.
-
-### 4. PPTX export mirror
+### 3. PPTX export mirror
 
 In `src/exporters/pptx/buildTechnicalDeck.ts`:
-- Add 5 native section divider slides (using the existing `addSectionDivider` helper) in the same positions.
-- Each divider gets the layer accent colour, the eyebrow/title/tagline, and a small native 5-rect stack on the right with the active layer highlighted.
-- Add a small native version of the architecture badge (5 pills) to the header strip of every deep-dive slide builder. Same accent rule — active pill lit, others dimmed.
+- Remove `Act N — ` prefixes from every `addSectionDivider` call.
+- Add two new native divider slides using a new `buildJourneyDivider` helper (same look as the layer dividers but with a horizontal stepper instead of the mini-stack), inserted at the matching positions in the export order.
 
-Final deck length: ~26 slides today → ~31 slides after dividers. Acceptable; dividers are scannable and add navigability rather than density.
+### 4. Narration
+
+Add two short ~10-second narration entries in `technicalPitchNarration.ts` for the new dividers: one framing the maturity journey, one framing the 2026 use-case roadmap.
 
 ### Files
 
+**Created**
+- `src/components/tech-slides/TechSlideJourneyDivider.tsx`
+
 **Edited**
-- `src/pages/TechnicalDeepDive.tsx` — register the 5 new divider slides in the correct slots; sidebar labels prefixed with `▸ Layer N` to group visually.
-- `src/components/tech-slides/` — new `TechSlideLayerDivider.tsx` component (props: `layerNumber`, `layerName`, `tagline`, `accentColor`, `upNext: string[]`); add `<ArchitectureLayerBadge active=… sublayer=… />` to the header of each layer-specific deep-dive slide that doesn't already render one.
-- `src/components/tech-slides/TechSlide4Platform.tsx` — add the small `→ deep dive` chevron on each layer band.
-- `src/exporters/pptx/buildTechnicalDeck.ts` — insert the 5 native divider slides; add the native 5-pill architecture badge to every deep-dive slide header.
-- `src/data/technicalPitchNarration.ts` — add 5 short narration entries for the dividers (~10 seconds each: "We're now entering Layer 3. This is where data becomes action…").
+- `src/pages/TechnicalDeepDive.tsx` — replace "Act" comments with neutral section headings; register the two new journey dividers; add their `journeyProps` config.
+- `src/exporters/pptx/buildTechnicalDeck.ts` — drop `Act N — ` prefixes on all section dividers; add `buildJourneyDivider` helper; insert two journey divider slides in the export sequence.
+- `src/data/technicalPitchNarration.ts` — rewrite any "act" wording; add narration for `tech-divider-journey-maturity` and `tech-divider-journey-2026`.
 
 **Untouched**
-- `PlatformArchitectureDiagram.tsx` (already correct after the previous rename pass).
-- `ArchitectureLayerBadge.tsx` (already supports the new sublayer IDs).
+- All architecture layer dividers (already correct).
+- `TechSlideLayerDivider.tsx` (kept as-is for the 5 architecture layers).
 - All other decks.
 
 ### Verification
 
-1. `/pitch-technical` — sidebar now visibly groups slides under 5 layer headings; each deep-dive slide shows the architecture badge top-right with the active layer/sublayer lit.
-2. Scroll the deck end-to-end — every layer transition is announced by a divider in that layer's colour with a mini-stack showing where you are.
-3. Download Editable PowerPoint — confirm the 5 native dividers appear in the right slots and every deep-dive slide carries the 5-pill native badge in the header.
-4. PDF QA: convert pptx → PDF → JPEGs at 150 dpi; visually check divider colour coding is consistent with the main diagram and that the badge doesn't collide with slide titles.
+1. `/pitch-technical` — global text search for "Act 1" / "Act 2" / etc. returns zero hits in the deck (sidebar, slides, narration captions).
+2. Two new "The Journey Ahead" divider slides appear immediately before the Maturity Roadmap and 2026 Roadmap slides; sidebar shows them grouped with `▸ Journey Ahead · …`.
+3. Download Editable PowerPoint — `.pptx` text search for "Act" returns zero hits; the two journey dividers render with the eyebrow + stepper + "Up next" list.
+4. PDF QA: convert pptx → PDF → JPEGs at 150 dpi; visually confirm the two new dividers match the visual grammar of the existing layer dividers.
 
 ### Out of scope
 
-- Other decks (Executive, Operational, CoAnalyst Playbook, Platform Playbook). Phase 2 once you sign off here.
-- Reordering existing deep-dive slides.
-- Renaming layers or sublayers.
+- Other decks.
+- Reordering the roadmap slides themselves.
+- Changing the maturity/roadmap content.
 
