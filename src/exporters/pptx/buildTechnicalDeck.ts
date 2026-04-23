@@ -1925,10 +1925,10 @@ export async function buildTechnicalDeck(opts: BuildOpts = {}): Promise<Blob> {
   // Original slide indices we want to gate behind dividers:
   //   3 → Foundations, 8 → Intelligence, 16 → Outcomes, 17 → Roadmap
   const dividerBeforeIndex: Record<number, { eyebrow: string; title: string; subtitle: string }> = {
-    3: { eyebrow: "Act 2", title: "Foundations", subtitle: "Architecture, data and the core operational apps." },
-    8: { eyebrow: "Act 3", title: "Intelligence", subtitle: "Insights & Intelligence, Recommendations & Prescriptive Actions, and Automation across the unified mobile shell." },
-    16: { eyebrow: "Act 5", title: "Outcomes", subtitle: "Line of sight from costed use case to executive outcome." },
-    17: { eyebrow: "Act 5", title: "Roadmap", subtitle: "Maturity, phased delivery, and the partnership model." },
+    3: { eyebrow: "Section", title: "Foundations", subtitle: "Architecture, data and the core operational apps." },
+    8: { eyebrow: "Section", title: "Intelligence", subtitle: "Insights & Intelligence, Recommendations & Prescriptive Actions, and Automation across the unified mobile shell." },
+    16: { eyebrow: "Section", title: "Outcomes", subtitle: "Line of sight from costed use case to executive outcome." },
+    17: { eyebrow: "Section", title: "Roadmap", subtitle: "Maturity, phased delivery, and the partnership model." },
   };
 
   const composed: SlideSpec[] = [];
