@@ -852,10 +852,11 @@ const outcomesSpec: SlideSpec = {
       },
     ];
     const cY = CONTENT_TOP;
-    const cH = 3.7;
-    const cW = (W - 1 - 3 * 0.18) / 4;
+    const cH = 4.1;
+    const cardGap = 0.12;
+    const cW = (W - 1 - 3 * cardGap) / 4;
     cards.forEach((c, i) => {
-      const x = 0.5 + i * (cW + 0.18);
+      const x = 0.5 + i * (cW + cardGap);
       addCard(slide, x, cY, cW, cH, { border: c.color });
       slide.addShape("rect", {
         x, y: cY, w: cW, h: 0.06,
@@ -881,7 +882,7 @@ const outcomesSpec: SlideSpec = {
         });
         slide.addText(r.text, {
           x: x + 0.18, y: ry + 0.27, w: cW - 0.36, h: rH - 0.32,
-          fontFace: PPTX_BRAND.font.body, fontSize: 10, color: C.ink, valign: "top",
+          fontFace: PPTX_BRAND.font.body, fontSize: 10.5, color: C.ink, valign: "top",
         });
         if (j < rows.length - 1) {
           slide.addShape("line", {
