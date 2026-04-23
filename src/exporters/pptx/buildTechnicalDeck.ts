@@ -17,9 +17,20 @@ import {
   addDivider,
   addIconBadge,
   addDtopPills,
+  addBrandMaster,
+  addSectionDivider,
+  addBrandStatBlock,
+  addCalloutBanner,
+  addGlowWash,
 } from "@/lib/pptxBrand";
 import logoUrl from "@/assets/comply365-logo-white.png";
-import { useCases, methodologyNote, leadingMeasures, executiveOutcomes } from "@/data/lineOfSightData";
+import {
+  useCases,
+  methodologyNote,
+  leadingMeasures,
+  executiveOutcomes,
+  sourceCitations,
+} from "@/data/lineOfSightData";
 
 const C = PPTX_BRAND.color;
 const W = PPTX_BRAND.size.w;
