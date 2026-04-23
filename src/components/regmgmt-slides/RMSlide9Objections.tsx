@@ -8,7 +8,7 @@ const RMSlide9Objections = (props: SlideNarrationProps) => {
       id="rm-objections"
       title="Objection Handling"
       subtitle="Strategic responses to common objections"
-      slideNumber={9}
+      slideNumber={10}
       {...props}
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">

@@ -23,7 +23,7 @@ const RMSlide5HowItWorks = (props: SlideNarrationProps) => {
       id="rm-how-it-works"
       title="How It Works"
       subtitle="Three-layer delivery model"
-      slideNumber={5}
+      slideNumber={6}
       {...props}
     >
       <div className="flex flex-col gap-3">
