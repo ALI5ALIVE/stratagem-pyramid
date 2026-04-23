@@ -28,8 +28,24 @@ export const PPTX_BRAND = {
     cyan: "22D3EE",
     sky: "38BDF8",
     purple: "C084FC",
+    // Extended tokens (added for brand polish)
+    gridLine: "16213A",
+    glow: "0A2A6B",
+    tier1: "F59E0B", // Reactive
+    tier2: "A78BFA", // Proactive
+    tier3: "10B981", // Predictive
+    gradStart: "0A0F1C",
+    gradEnd: "0E1B3D",
+    dataViz1: "0066FF",
+    dataViz2: "22D3EE",
+    dataViz3: "A78BFA",
+    dataViz4: "F59E0B",
+    dataViz5: "F43F5E",
+    dataViz6: "10B981",
+    wordmarkInk: "16213A",
   },
-  font: { display: "Calibri", body: "Calibri" },
+  // Brand fonts (PowerPoint will substitute Calibri locally if not installed)
+  font: { display: "Space Grotesk", body: "Inter" },
 } as const;
 
 const C = PPTX_BRAND.color;
