@@ -1,78 +1,53 @@
 
 
-## Rename: "CoAnalyst" → "Insights & Intelligence" across the Technical Deep Dive
+## Final CoAnalyst cleanup + slide-9 title shortening
 
-### Renaming rules
+### 1. PlatformArchitectureDiagram (shared diagram used in Tech, Platform, and other decks)
 
-| Where | Old | New |
+In `src/components/platform-slides/PlatformArchitectureDiagram.tsx`, Layer 2 ("Intelligence & Orchestration Layer") still shows the old sub-capability tiles. Update them so they match the renamed sublayers:
+
+| Tile | Old | New |
 |---|---|---|
-| Slide 8 (intelligence pipeline) | `CoAnalyst` | **Insights & Intelligence** |
-| Slide 9 (recommendations) | `Insights & Recommendations` | **Recommendations & Prescriptive Actions on the Operational Performance Platform** |
-| Inline body copy / pillars / quotes | `CoAnalyst` | **Insights & Intelligence** (or "the platform" where natural) |
-| Architecture badge sublayer label | `CoAnalyst` | **Insights & Intelligence** |
-| Roadmap items | `(CoAnalyst)` suffix | drop entirely |
-| Tiers vs Generic AI table column | `CoAnalyst` | **Insights & Intelligence** |
+| 1 | `CoAnalyst` — "Ask anything in plain English" | **Insights & Intelligence** — "Ask anything in plain English" |
+| 2 | `Insights & Rec.` — "Patterns + Recommended Actions" | **Recommendations & Prescriptive Actions** — "Patterns + prescriptive next steps" |
+| 3 | `Automation` — unchanged | unchanged |
 
-Scope: **Technical Deep Dive deck only** (`/pitch-technical`) and its PPTX export. Other decks (Executive, Operational, CoAnalyst Playbook) are untouched.
+Tile 1 keeps the `Brain` icon; tile 2 keeps the `Sparkles` icon; tile 3 keeps `Zap`. Colours unchanged. Font sizing on tile 2 may need to drop to `text-[10px]` for the longer label so it doesn't wrap awkwardly inside the small card.
 
-### Files to edit
+### 2. Slide 9 title shortened
 
-1. **`src/pages/TechnicalDeepDive.tsx`** — sidebar registry: `"CoAnalyst"` → `"Insights & Intelligence"`; `"Insights & Recommendations"` → `"Recommendations & Prescriptive Actions"` (short label for sidebar).
+In `src/components/tech-slides/TechSlideInsights.tsx`, change the title from
+`Recommendations & Prescriptive Actions on the Operational Performance Platform`
+→ **`Intelligence & Orchestration Layer — Recommendations & Prescriptive Actions`**
 
-2. **`src/components/tech-slides/TechSlide7CoAnalyst.tsx`** —
-   - Title → `Intelligence & Orchestration Layer — Insights & Intelligence`
-   - Subtitle unchanged.
-   - Master message attribution swapped from `CoAnalyst` to `Insights & Intelligence`.
-   - Stat tile `90% CoAnalyst at Level 4–5` → `90% Insights & Intelligence at Level 4–5`.
-   - `<ArchitectureLayerBadge sublayer="coanalyst">` → `sublayer="insights-intelligence"`.
-   - Component file/export name kept (`TechSlide7CoAnalyst`) — internal only, never shown to user.
+This matches the sibling Slide 8 pattern (`Intelligence & Orchestration Layer — Insights & Intelligence`). Subtitle unchanged.
 
-3. **`src/components/tech-slides/TechSlideInsights.tsx`** —
-   - Title → `Recommendations & Prescriptive Actions on the Operational Performance Platform`
-   - Subtitle → `From insight to prescriptive action — proactive signals across the platform`
-   - Architecture badge sublayer changes to match new IDs.
+### 3. PPTX export mirror (`src/exporters/pptx/buildTechnicalDeck.ts`)
 
-4. **`src/components/tech-slides/ArchitectureLayerBadge.tsx`** — `Sublayer` type updated:
-   - `"coanalyst"` → `"insights-intelligence"` (label `Insights & Intelligence`)
-   - `"insights"` → `"recommendations"` (label `Recommendations & Prescriptive Actions`)
-   - `"automation"` unchanged.
-   - Update both consumers above.
+- Slide 9 builder: title string updated to the new shorter form. The shorter title also fixes any wrapping/overflow risk from the previous QA note.
+- Section divider for Act 3: subtitle already uses platform-centric language — no change needed.
+- Sidebar short label in `src/pages/TechnicalDeepDive.tsx` stays as `"Recommendations & Prescriptive Actions"` (already correct, doesn't include the long suffix).
 
-5. **`src/components/tech-slides/TechSlide4Platform.tsx`** — Layer 3 description → `Insights & Intelligence · Recommendations & Prescriptive Actions · Automation.`
+### Files
 
-6. **`src/components/tech-slides/TechSlide4aSafetyManager.tsx`** —
-   - `How CoAnalyst Activates Safety Data` → `How Insights & Intelligence Activates Safety Data`
-   - Pattern Detection desc: `CoAnalyst identifies…` → `Insights & Intelligence identifies…`
+**Edited**
+- `src/components/platform-slides/PlatformArchitectureDiagram.tsx` — rename tiles 1 and 2 in the Intelligence & Orchestration layer.
+- `src/components/tech-slides/TechSlideInsights.tsx` — shorten Slide 9 title.
+- `src/exporters/pptx/buildTechnicalDeck.ts` — mirror Slide 9 title in the PPTX builder.
 
-7. **`src/components/tech-slides/TechSlide17WhyUs.tsx`** — Embedded Intelligence card: replace `CoAnalyst,` reference with `Insights & Intelligence,` in the differentiator list.
-
-8. **`src/components/tech-slides/TechSlide15Roadmap2026.tsx`** —
-   - `Safety report auto-categorisation (CoAnalyst)` → `Safety report auto-categorisation`
-   - `CoAnalyst proactive pattern detection (smoke & fumes, fatigue)` → `Proactive pattern detection (smoke & fumes, fatigue)`
-
-9. **`src/data/technicalPitchNarration.ts`** —
-   - `tech-slide-coanalyst` script: replace `CoAnalyst` mentions with `Insights & Intelligence`; title field updated.
-   - `tech-slide-insights` script: rewrite opening so it references `Insights & Intelligence answers questions; Recommendations & Prescriptive Actions go a step further…`; title updated.
-
-10. **`src/exporters/pptx/buildTechnicalDeck.ts`** — mirror every change above:
-    - Slide 8 builder: header eyebrow + title + master-message attribution + stat tile + closing quote (`"Generative AI reads reports. Insights & Intelligence understands aviation operations."`).
-    - Slide 9 builder: title `Recommendations & Prescriptive Actions on the Operational Performance Platform` (shrink font size if it wraps awkwardly during QA).
-    - Tiers vs Generic AI table column header `CoAnalyst` → `Insights & Intelligence`.
-    - Platform Overview Layer 3 desc updated.
-    - Roadmap items: drop `(CoAnalyst)` suffixes.
-    - Section divider for Act 3: subtitle updated to `Insights & Intelligence, Recommendations & Prescriptive Actions, and Automation across the unified mobile shell.`
-    - Why Comply differentiator copy updated.
+**Untouched**
+- All other tech-slide components (already cleaned in previous turn).
+- Other decks that consume `PlatformArchitectureDiagram` will inherit the new tile names — desired since CoAnalyst should not appear on the platform architecture diagram anywhere.
 
 ### Verification
 
-1. `/pitch-technical` — sidebar shows **Insights & Intelligence** and **Recommendations & Prescriptive Actions**, no `CoAnalyst`.
-2. Scroll all 21 slides; DOM search for `CoAnalyst` returns zero hits in tech-slide components.
-3. Click **Download Editable PowerPoint**, open the `.pptx`, search text — no occurrence of `CoAnalyst`. Confirm the longer slide-9 title fits without wrapping awkwardly.
-4. PDF QA: convert pptx → PDF → JPEGs at 150 dpi, visually inspect slides 8, 9, Platform Overview, Tiers table, Why Us, and 2026 Roadmap; tighten font sizing if any overflow appears.
+1. `/pitch-technical` → Slide 4 (Platform Overview) shows the architecture diagram with **Insights & Intelligence**, **Recommendations & Prescriptive Actions**, **Automation** in Layer 2. No "CoAnalyst" or "Insights & Rec." text.
+2. Slide 9 header reads `Intelligence & Orchestration Layer — Recommendations & Prescriptive Actions`.
+3. Download Editable PowerPoint → Slide 9 title fits cleanly on one line; architecture diagram references in PPTX are consistent.
+4. Global DOM search for `CoAnalyst` on `/pitch-technical` returns zero hits.
 
 ### Out of scope
 
-- Other decks (Executive Pitch, Operational Pitch, CoAnalyst Playbook page, Platform Playbook). The standalone CoAnalyst Playbook keeps its name.
-- Renaming the React component file `TechSlide7CoAnalyst.tsx` on disk — internal name only.
-- Memory file updates — `CoAnalyst` brand still applies to the standalone playbook.
+- The standalone CoAnalyst Playbook (`/coanalyst-deck`) — keeps its branding.
+- Memory file updates.
 
