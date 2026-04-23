@@ -55,6 +55,70 @@ export interface CommercialElement {
   icon: string;
 }
 
+export interface DTOPMappingStep {
+  step: "D" | "T" | "O" | "P";
+  label: string;
+  whatHappens: string;
+  modules: string[];
+  evidence: string;
+  color: string;
+  bg: string;
+  border: string;
+  text: string;
+}
+
+// ─── DTOP Mapping (canonical for Regulation Management) ──────────────
+export const dtopMapping: DTOPMappingStep[] = [
+  {
+    step: "D",
+    label: "Detect",
+    whatHappens:
+      "Continuous monitoring of EASA, FAA, ICAO and CAA publications. Every change is structured, tagged and ingested into the regulation database in near real time.",
+    modules: ["Regulation Management"],
+    evidence: "Structured regulation feed — no manual scraping of PDFs",
+    color: "sky",
+    bg: "bg-sky-500/10",
+    border: "border-sky-500/30",
+    text: "text-sky-400",
+  },
+  {
+    step: "T",
+    label: "Trigger",
+    whatHappens:
+      "When a regulatory change touches a linked procedure, syllabus or risk assessment, the platform fires an automated impact alert to the right owner.",
+    modules: ["Cross-System Intelligence"],
+    evidence: "Impact alerts in minutes, not weeks",
+    color: "amber",
+    bg: "bg-amber-500/10",
+    border: "border-amber-500/30",
+    text: "text-amber-400",
+  },
+  {
+    step: "O",
+    label: "Orchestrate",
+    whatHappens:
+      "Updates cascade into ContentManager365, TrainingManager365 and SafetyManager365 — the right people receive the right action with full context.",
+    modules: ["ContentManager365", "TrainingManager365", "SafetyManager365"],
+    evidence: "One change → coordinated action across every connected module",
+    color: "violet",
+    bg: "bg-violet-500/10",
+    border: "border-violet-500/30",
+    text: "text-violet-400",
+  },
+  {
+    step: "P",
+    label: "Prove",
+    whatHappens:
+      "Real-time compliance dashboards, audit-ready evidence and CoAnalyst impact reports close the loop — from detection to closure.",
+    modules: ["CoAnalyst", "Compliance Dashboard"],
+    evidence: "Audit-ready trail for every regulatory change",
+    color: "emerald",
+    bg: "bg-emerald-500/10",
+    border: "border-emerald-500/30",
+    text: "text-emerald-400",
+  },
+];
+
 // ─── Solution Overview ───────────────────────────────────────────────
 
 export const solutionOverview = {
