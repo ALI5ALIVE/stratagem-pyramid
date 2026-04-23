@@ -17,6 +17,16 @@ export const printBrand = {
     rose: "#9F1239",
     violet: "#5B21B6",
     emerald: "#047857",
+    // Dark print palette — for executive PDF one-pagers
+    darkPaper: "#0B1220",
+    darkPaperWarm: "#111A2E",
+    darkPaperRaised: "#16223C",
+    darkInk: "#F4F7FB",
+    darkSlate: "#C9D3E2",
+    darkMuted: "#8FA0B8",
+    darkSubtle: "#5E6E87",
+    darkHairline: "rgba(255,255,255,0.10)",
+    darkSuccess: "#34D399",
   },
   font: {
     display: "'Space Grotesk', 'Inter', 'Helvetica Neue', Arial, sans-serif",
@@ -28,6 +38,9 @@ export const printBrand = {
     margin: 36,
   },
 } as const;
+
+/** Brightened step accents tuned for dark print surfaces */
+export const stepAccentsDark = ["#3D8BFF", "#F59E0B", "#10B981", "#8B5CF6"] as const;
 
 /**
  * Inject Google Fonts link (idempotent) and wait for fonts to be ready.
