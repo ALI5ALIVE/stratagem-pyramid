@@ -185,6 +185,96 @@ const dividerSpec = (opts: {
   build: (slide, ctx) => buildLayerDivider(slide, ctx, opts),
 });
 
+// ─── Journey-ahead divider (non-architectural sections) ──────────
+function buildJourneyDivider(
+  slide: pptxgen.Slide,
+  ctx: { logo: string; index: number; total: number },
+  opts: { title: string; tagline: string; activeStage: "today" | "near" | "long"; upNext: string[] },
+) {
+  chrome(slide, ctx);
+  const accent = PPTX_BRAND.color.primary;
+
+  // Eyebrow
+  slide.addText("THE JOURNEY AHEAD", {
+    x: 0.6, y: 1.7, w: 8, h: 0.4,
+    fontFace: PPTX_BRAND.font.body, fontSize: 12, bold: true, color: accent, charSpacing: 6,
+  });
+  // Title
+  slide.addText(opts.title, {
+    x: 0.6, y: 2.15, w: 8, h: 1.1,
+    fontFace: PPTX_BRAND.font.display, fontSize: 44, bold: true, color: C.ink,
+  });
+  // Tagline
+  slide.addText(opts.tagline, {
+    x: 0.6, y: 3.35, w: 8, h: 1.0,
+    fontFace: PPTX_BRAND.font.body, fontSize: 14, color: C.muted, italic: true,
+  });
+  // Up next
+  slide.addText("UP NEXT IN THIS SECTION", {
+    x: 0.6, y: 4.55, w: 8, h: 0.3,
+    fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.muted, charSpacing: 4,
+  });
+  opts.upNext.forEach((item, i) => {
+    slide.addShape("rect", {
+      x: 0.6, y: 4.95 + i * 0.36, w: 0.04, h: 0.22,
+      fill: { color: accent }, line: { type: "none" },
+    });
+    slide.addText(item, {
+      x: 0.78, y: 4.88 + i * 0.36, w: 7.5, h: 0.32,
+      fontFace: PPTX_BRAND.font.body, fontSize: 13, color: C.ink,
+    });
+  });
+
+  // Right: horizontal Today → Near term → Long term stepper
+  const stages: { key: "today" | "near" | "long"; label: string }[] = [
+    { key: "today", label: "Today" },
+    { key: "near", label: "Near term" },
+    { key: "long", label: "Long term" },
+  ];
+  const stepX = 9.1;
+  const stepW = 3.7;
+  const stepY = 1.7;
+  slide.addText("WHERE WE'RE GOING", {
+    x: stepX, y: stepY - 0.45, w: stepW, h: 0.3,
+    fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.muted, charSpacing: 4, align: "right",
+  });
+  const cellW = (stepW - 0.4) / 3;
+  stages.forEach((s, i) => {
+    const isActive = s.key === opts.activeStage;
+    const x = stepX + i * (cellW + 0.2);
+    slide.addShape("roundRect", {
+      x, y: stepY, w: cellW, h: 0.9,
+      fill: { color: isActive ? accent : "1A1F2E", transparency: isActive ? 80 : 70 },
+      line: { color: isActive ? accent : C.hairline, width: isActive ? 1.5 : 0.5 },
+      rectRadius: 0.08,
+    });
+    slide.addText(s.label, {
+      x, y: stepY, w: cellW, h: 0.9,
+      fontFace: PPTX_BRAND.font.body, fontSize: 12, bold: isActive,
+      color: isActive ? accent : C.muted,
+      align: "center", valign: "middle",
+    });
+    if (i < stages.length - 1) {
+      slide.addText("→", {
+        x: x + cellW, y: stepY, w: 0.2, h: 0.9,
+        fontFace: PPTX_BRAND.font.body, fontSize: 14, color: C.muted,
+        align: "center", valign: "middle",
+      });
+    }
+  });
+}
+
+const journeyDividerSpec = (opts: {
+  label: string;
+  title: string;
+  tagline: string;
+  activeStage: "today" | "near" | "long";
+  upNext: string[];
+}): SlideSpec => ({
+  label: opts.label,
+  build: (slide, ctx) => buildJourneyDivider(slide, ctx, opts),
+});
+
 const slideSpecs: SlideSpec[] = [
   // ─── 0. TITLE ──────────────────────────────────────────────────
   {
@@ -1521,6 +1611,13 @@ slideSpecs.push(
   },
 
   // ─── 17. MATURITY ROADMAP ─────────────────────────────────────
+  journeyDividerSpec({
+    label: "▸ Journey Ahead · Maturity",
+    title: "Maturity Roadmap",
+    tagline: "Where customers are today and how Comply365 moves them forward — from fragmented to predictive in 12–18 months.",
+    activeStage: "today",
+    upNext: ["Maturity Roadmap"],
+  }),
   {
     label: "Maturity Roadmap",
     build: (slide, ctx) => {
@@ -1598,6 +1695,13 @@ slideSpecs.push(
   },
 
   // ─── 18. 2026 ROADMAP ─────────────────────────────────────────
+  journeyDividerSpec({
+    label: "▸ Journey Ahead · 2026 Use Cases",
+    title: "2026 Use Case Roadmap",
+    tagline: "Phased delivery — each phase builds on proven value, layering capability without disrupting operations.",
+    activeStage: "near",
+    upNext: ["2026 Roadmap"],
+  }),
   {
     label: "2026 Roadmap",
     build: (slide, ctx) => {
