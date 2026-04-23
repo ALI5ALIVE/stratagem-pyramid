@@ -172,7 +172,7 @@ export const personaProfiles: PersonaProfile[] = [
       "Proactive alerting — must identify emerging hazards from trend analysis, not just report on historical data",
       "Data security and regulatory compliance — safety data is sensitive; must meet aviation data handling requirements"
     ],
-    valueProposition: "CoAnalyst transforms your safety management from reactive investigation to proactive intelligence. It processes your safety reports, identifies hazard patterns across your entire operation, monitors control effectiveness, and generates audit-ready documentation — all with aviation-specific AI that understands ICAO taxonomy and SMS methodology. Your team spends less time processing and more time preventing.",
+    valueProposition: "The Comply365 Operational Performance Platform connects safety, content and training on one operational data foundation — so a hazard detected today can trigger a procedure revision and crew retraining tomorrow, with auditable proof of the loop. CoAnalyst is the intelligence layer that accelerates this: aviation-specific AI that processes your safety reports, identifies hazard patterns across the whole operation, monitors control effectiveness, and generates audit-ready documentation. Platform first, intelligence on top.",
     keyMessages: [
       "Your investigators spend 60% of their time on report processing and triage. CoAnalyst automates that work so they can focus on what matters — preventing the next incident.",
       "You're sitting on years of safety data that contains patterns your team hasn't had time to find. CoAnalyst surfaces those patterns automatically.",
