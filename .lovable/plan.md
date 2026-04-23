@@ -1,30 +1,27 @@
 
 
-## Executive Pitch 3 — Swap slides 4 and 5
+## Executive Pitch 3 — Move Core Apps divider after Platform Capabilities
 
-Move the **Core Apps divider** (currently slide 5) to appear **before** the **Platform Overview** (currently slide 4).
+Move the **▸ Core Apps divider** so it appears **after** the **Platform Capabilities** slide (`TechSlide6Capabilities`), not before it.
 
-### New order (slides 4 & 5 only)
+### New order (slides 4–7)
 
 ```text
-Before:                              After:
-4. Platform Overview (5-layer)       4. ▸ Core Apps divider
-5. ▸ Core Apps divider               5. Platform Overview (5-layer)
+Before:                                  After:
+4. ▸ Core Apps divider                   4. The Platform (5-layer)
+5. The Platform (5-layer)                5. Platform Capabilities
+6. Platform Capabilities                 6. ▸ Core Apps divider
+7. Content · Safety · Training           7. Content · Safety · Training
 ```
 
-All other slides (1-3 and 6-20) remain in their current positions.
+All other slides unchanged.
 
 ### File touched
 
-- `src/pages/ExecutivePitch3.tsx` — reorder two entries in the `slides` array: move `exec3-divider-core` before `exec3-slide-4`.
-
-### Not touched
-
-- All slide components.
-- `HomePage.tsx` — slide count unchanged at 20.
+- `src/pages/ExecutivePitch3.tsx` — move the `exec3-divider-core` entry from its current position (before `exec3-slide-4`) to immediately after `exec3-slide-core` (Platform Capabilities) and before `exec3-slide-core-modules` (Content/Safety/Training summary).
 
 ### QA
 
-- Open `/pitch-executive-3`, confirm the Core Apps divider appears immediately after Industry Challenge and before the 5-layer Platform Overview.
-- Sidebar slide navigator reflects the new order.
+- Open `/pitch-executive-3`, confirm order: Industry Challenge → The Platform → Platform Capabilities → ▸ Core Apps divider → Content/Safety/Training summary → ▸ Data Foundation divider.
+- Sidebar reflects new order; total stays at 20 slides.
 
