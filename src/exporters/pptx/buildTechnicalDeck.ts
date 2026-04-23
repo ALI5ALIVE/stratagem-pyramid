@@ -2572,6 +2572,7 @@ export async function buildTechnicalDeck(opts: BuildOpts = {}): Promise<Blob> {
     byLabel("Title"),
     byLabel("Strategic Shift"),
     byLabel("Industry Challenge"),
+    whyExistsSpec,
     platformSnapshotSpec,
     // ── Architecture overview ──
     byLabel("Platform Overview"),
