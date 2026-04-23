@@ -196,6 +196,10 @@ export const personaProfiles: PersonaProfile[] = [
       {
         objection: "Our data quality isn't good enough for AI.",
         response: "We hear this often, and it's rarely as bad as people think. CoAnalyst is designed to work with real-world aviation safety data — including inconsistent taxonomy, free-text narratives, and incomplete records. Part of the value is that it actually helps improve data quality by standardizing and categorizing as it processes."
+      },
+      {
+        objection: "Why CoAnalyst over generic AI (ChatGPT, Copilot, etc.)?",
+        response: "Generic AI is trained on the open internet — it doesn't know ICAO taxonomy, SMS frameworks, or your fleet's specific procedures, and it can't be trusted with safety-sensitive data on shared infrastructure. CoAnalyst runs on a tiered intelligence model (Historical → Reactive → Proactive → Predictive) trained on aviation operational data, with your data isolated in your tenant. Generic AI hits ~35% accuracy on aviation safety classification; CoAnalyst delivers ~90% because it understands the domain. It's the difference between a brilliant generalist and a specialist who's read every safety report you've ever filed."
       }
     ],
     contentAlignment: {
