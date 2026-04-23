@@ -2861,7 +2861,8 @@ export async function buildTechnicalDeck(opts: BuildOpts = {}): Promise<Blob> {
     // ── Value & close ──
     byLabel("Line of Sight Cascade"),
     byLabel("▸ Journey Ahead · Maturity"),
-    byLabel("Maturity Roadmap"),
+    byLabel("Maturity Roadmap · Curve & Behaviour"),
+    byLabel("Maturity Roadmap · Results & Value"),
     byLabel("▸ Journey Ahead · 2026 Use Cases"),
     byLabel("2026 Roadmap"),
     byLabel("Why Comply365"),
