@@ -1,78 +1,103 @@
 
 
-## Render the full Maturity Roadmap detail in the PPTX export
+## Use the real Comply365 logo, in correct proportion, across all downloads
 
-### Problem
+### What's wrong today
 
-The interactive web slide (`TechSlide14MaturityRoadmap`) reveals five blocks of detail per stage when clicked:
+| Asset | Logo source | Issue |
+|---|---|---|
+| DTOP PDF | none — typed `Comply` + `365` text | Not the real brand mark |
+| Persona PDF | none — typed `Comply` + `365` text | Not the real brand mark |
+| Tech Deck PPTX | `comply365-logo-white.png` (1920×199, ~9.65:1) | Drawn into a 1.1" × 0.32" box (~3.4:1) → **squashed horizontally**; also placed on light-variant slides where the white logo disappears |
 
-1. **What it looks like** (3 bullets)
-2. **How Work Changes** (from → to + cultural marker quote)
-3. **Where Teams Spend Time** (3-segment % bar)
-4. **Result** (2 bullets)
-5. **Value Proof** (3 metric chips + ROI statement)
+There are three logo assets available:
+- `comply365-logo-white.png` — 1920×199, transparent, **for dark backgrounds**
+- `comply365-logo.png` — 124×13, **for light backgrounds**
+- `comply365-icon.png` — 35×20, square-ish glyph (not the full wordmark)
 
-The current PPTX export only shows: stage number, label, sublabel, and a single one-line `result` string. The rich detail is invisible because PPTX is static — there's no click reveal.
+### Fix
 
-### Fix: turn the single Maturity Roadmap slide into a 2-slide sequence
+#### 1. PDFs: render the real logo image instead of typed text
 
-Static decks can't do "click to reveal", so we surface everything by laying it out at full size. One slide cannot fit 5 stages × 5 detail blocks legibly at 13.3×7.5". We split into two slides that share the same divider header, so it still reads as one beat in the deck:
+**`src/components/print/DTOPPrintablePage.tsx`** and **`src/components/PersonaPrintablePage.tsx`**
 
-#### Slide A — "Maturity Roadmap · The Curve & Behaviour Shift"
-Scope: visual arc + per-stage **What it looks like** + **How Work Changes** + **Time Allocation** bar.
+Both PDFs render on the dark `C.darkPaper` background, so they should use `comply365-logo-white.png`.
 
-Layout (13.33 × 7.5):
-- Top band (1.5" tall): the rising-curve arc with 5 numbered nodes, label + sublabel under each — same arc that's there today, kept as the visual anchor.
-- Below the arc: 5 columns (≈2.5" wide each), one per stage, top-to-bottom:
-  - Coloured stage chip (`1. Fragmented` etc.) — full-bleed top accent already in use.
-  - **What it looks like** — eyebrow in stage colour + 3 ✓ bullets at 9pt with 1.35 line-height.
-  - Hairline divider.
-  - **How Work Changes** — small "from" pill (muted bg) → arrow → "to" pill (stage tint), then italic 8pt cultural marker quote underneath.
-  - Hairline divider.
-  - **Where Teams Spend Time** — a 3-segment horizontal bar (Coordination / Admin / Improvement) with inline % labels and a 7pt three-swatch legend. Segment colours match the web (red / sky / teal).
+- Import the logo: `import complyLogo from "@/assets/comply365-logo-white.png";`
+- Replace the typed `Comply<span>365</span>` wordmark in the header with:
+  ```tsx
+  <img
+    src={complyLogo}
+    alt="Comply365"
+    style={{ height: 18, width: "auto", display: "block" }}
+  />
+  ```
+  (height 18 px × natural ratio 9.65 ≈ 174 px wide — clean, in proportion, sits next to the date on the right exactly like the typed wordmark does today). Drop the small blue square glyph (currently a "C" mark) since the real logo includes the brand mark.
+- In the **footer**, keep the typed `© Comply365` line — that's body copy, not a logo placement, and the typed treatment matches the legal/footer convention used in the rest of the app.
+- `html2canvas` already inlines images during PDF capture (used elsewhere for `complyLogo` in slides), so no exporter changes needed.
 
-#### Slide B — "Maturity Roadmap · Results & Value Proof"
-Scope: per-stage **Result** + **Value Proof** (chips + ROI statement), plus a footer band that summarises the journey.
+#### 2. PPTX: fix the squashed logo and use the right asset per variant
 
-Layout:
-- Slim recap strip at top (0.5"): 5 small numbered dots + labels in stage colour, no arc — keeps continuity with Slide A.
-- 5 columns, each containing:
-  - Stage chip header.
-  - **Result** — eyebrow + 2 dot-bullets at 10pt.
-  - Hairline divider.
-  - **Value Proof** — three pill chips (`Recurrence ↓ 50%` etc.) tinted in the stage colour, then the italic ROI statement at 9pt.
-- Bottom callout band (0.55"): "Stage 1 → Stage 5: ~70% admin reduction · ~50% fewer repeat issues · OTP +15%" — single-line summary in brand-blue accent so the deck closes the arc with one quotable line.
+**`src/lib/pptxBrand.ts`** — `addBrandLogo(slide, logoBase64, variant)`
 
-Both slides reuse `chrome(slide, ctx)`, `header(...)`, `addCard`, `addPill`, `addBulletList`, and `addDivider` from `pptxBrand.ts` — no new primitives.
+- Compute width from a fixed height using the wordmark's true aspect ratio (9.65:1) so the logo never stretches:
+  ```ts
+  const h = 0.32;             // inches — same height as today
+  const w = h * 9.65;         // ≈ 3.09" — true wordmark width
+  slide.addImage({ data: logoBase64, x: PPTX_BRAND.size.w - w - 0.4, y: 0.25, w, h });
+  ```
+- Today the box is 1.1 × 0.32 (3.4:1). The true asset is 9.65:1. The new box restores correct proportion. (3.09" wide is comfortable on a 13.33" slide and still leaves margin from any title text.)
 
-### Data source
+**`src/exporters/pptx/buildTechnicalDeck.ts`**
 
-A single `stages` array in the build function (mirrors the shape of `stages` in `TechSlide14MaturityRoadmap.tsx`) with all five fields per stage. Hard-coded in the exporter so the PPTX is self-contained and matches the web copy exactly.
+- Import both assets:
+  ```ts
+  import logoUrlDark from "@/assets/comply365-logo-white.png";  // for dark slides
+  import logoUrlLight from "@/assets/comply365-logo.png";        // for light slides
+  ```
+- Load both at the top of `buildTechnicalDeck`:
+  ```ts
+  const logo = await loadImageAsBase64(logoUrlDark).catch(() => "");
+  const logoLight = await loadImageAsBase64(logoUrlLight).catch(() => "");
+  ```
+- Pass both into the per-slide context (extend the context type from `{ logo }` to `{ logo, logoLight }`).
+- In the master chrome wrapper (`addBrandMaster` call), pass the variant-appropriate logo:
+  ```ts
+  const isLight = variant === "light";
+  addBrandMaster(slide, { logo: isLight ? ctx.logoLight : ctx.logo, ... });
+  ```
+- Same swap inside `addSectionDivider` calls (currently always `dark`).
+- Note: `comply365-logo.png` is only 124×13 px — sharp at 0.32" PPTX render height (≈ 30 px target). Acceptable. If we ever need higher fidelity for light slides we can swap in a higher-res light logo later, but the proportion fix is the priority.
+
+#### 3. Other PDF/printable already in tree
+
+`PrintablePage.tsx` (the legacy maturity-model multi-page PDF used by `DownloadButton.tsx`) currently renders no logo at all — out of scope for this change since the user specifically called out the DTOP and Persona downloads as the squashed/incorrect ones. Leave untouched.
 
 ### Files touched
 
 **Edited**
-- `src/exporters/pptx/buildTechnicalDeck.ts`
-  - Replace the single `{ label: "Maturity Roadmap", build: ... }` spec (the one starting around line 1708) with two specs: `Maturity Roadmap · Curve & Behaviour` and `Maturity Roadmap · Results & Value`.
-  - Add both labels to the `composed` slide order array (around line 2524) immediately after the journey divider, replacing the existing single `byLabel("Maturity Roadmap")` reference.
+- `src/components/print/DTOPPrintablePage.tsx` — swap typed wordmark for `comply365-logo-white.png` at proportional `h: 18px`.
+- `src/components/PersonaPrintablePage.tsx` — same swap, same sizing.
+- `src/lib/pptxBrand.ts` — `addBrandLogo` uses fixed height × true aspect ratio (9.65:1) instead of a hardcoded 1.1 × 0.32 box.
+- `src/exporters/pptx/buildTechnicalDeck.ts` — load both light/dark logo assets, pass both through context, select per-variant inside chrome and section dividers.
 
 **Not touched**
-- `TechSlide14MaturityRoadmap.tsx` — interactive web slide unchanged.
-- `pptxBrand.ts` — uses existing primitives.
-- All other decks, narration, and exporters.
+- `comply365-icon.png` (square glyph — not a wordmark; not used for these brand placements).
+- `PrintablePage.tsx`, `DownloadButton.tsx`, `DeckPDFExportButton.tsx` — no logo logic to change.
+- All slide components — they already use the white logo correctly via `<img>` (browser preserves aspect ratio with `w-auto`).
 
 ### QA
 
-Build the deck, convert these two slides to images at 150 DPI, and verify:
-1. Curve + 5 stage cards on Slide A all sit within margins.
-2. Time-allocation segments add to 100% with legible inline labels.
-3. Slide B columns align under the same x-positions as Slide A so the eye reads them as a continuous spread.
-4. No text wraps awkwardly or clips at 9–10pt.
-5. Footer summary band on Slide B does not collide with the page footer chrome.
+1. Generate DTOP PDF → verify the white wordmark appears top-left, sized at ~18 px tall, sharp, not stretched, sitting cleanly next to the date.
+2. Generate Persona PDF → same check.
+3. Build the Technical Deep Dive PPTX, convert to PDF, render slide images at 150 DPI, and inspect:
+   - Dark slides show the white wordmark at correct ~3.1" × 0.32" proportion (not squashed).
+   - Any light-variant slides (section dividers / hero) show the dark wordmark instead of an invisible white one.
+   - Logo doesn't collide with title text on any slide (3.1" wide leaves > 9" of horizontal headroom on a 13.33" slide).
 
 ### Out of scope
 
-- No changes to the interactive web slide.
-- No copy rewrites — content lifted verbatim from the web `stages` array.
-- No animation in PPTX (impossible reliably across PowerPoint versions); using two static slides is the conventional substitute.
+- No new logo assets sourced — using only the three already in `src/assets/`.
+- No changes to web slide logo placements (already correct).
+- No copy or layout changes outside the logo placement itself.
 
