@@ -2509,27 +2509,68 @@ export async function buildTechnicalDeck(opts: BuildOpts = {}): Promise<Blob> {
     },
   };
 
-  // Compose the final deck order with dividers + appendix.
-  // Original slide indices we want to gate behind dividers:
-  //   3 → Foundations, 8 → Intelligence, 16 → Outcomes, 17 → Roadmap
-  const dividerBeforeIndex: Record<number, { eyebrow: string; title: string; subtitle: string }> = {
-    3: { eyebrow: "Section", title: "Foundations", subtitle: "Architecture, data and the core operational apps." },
-    8: { eyebrow: "Section", title: "Intelligence", subtitle: "Insights & Intelligence, Recommendations & Prescriptive Actions, and Automation across the unified mobile shell." },
-    16: { eyebrow: "Section", title: "Outcomes", subtitle: "Line of sight from costed use case to executive outcome." },
-    17: { eyebrow: "Section", title: "Roadmap", subtitle: "Maturity, phased delivery, and the partnership model." },
+  // Compose the final deck order to mirror the live web deck exactly.
+  // Lookup helper — find an existing spec by label.
+  const byLabel = (label: string): SlideSpec => {
+    const s = slideSpecs.find((x) => x.label === label);
+    if (!s) throw new Error(`PPTX exporter: missing slide spec "${label}"`);
+    return s;
   };
 
-  const composed: SlideSpec[] = [];
-  let sectionIdx = 1;
-  slideSpecs.forEach((spec, i) => {
-    const div = dividerBeforeIndex[i];
-    if (div) {
-      composed.push(dividerSpec(div.eyebrow, div.title, div.subtitle, sectionIdx));
-      sectionIdx += 1;
-    }
-    composed.push(spec);
-  });
-  composed.push(appendixSpec);
+  const composed: SlideSpec[] = [
+    // ── Frame the problem ──
+    openerSpec,
+    byLabel("Title"),
+    byLabel("Strategic Shift"),
+    byLabel("Industry Challenge"),
+    platformSnapshotSpec,
+    // ── Architecture overview ──
+    byLabel("Platform Overview"),
+    // ── Layer 1 · Core Operational Apps ──
+    byLabel("▸ Layer 1 · Core Operational Apps"),
+    byLabel("SafetyManager365"),
+    byLabel("ContentManager365"),
+    byLabel("TrainingManager365"),
+    // ── Layer 2 · Operational Data Foundation ──
+    byLabel("▸ Layer 2 · Operational Data Foundation"),
+    byLabel("Data Foundation"),
+    // ── Layer 3 · Intelligence & Orchestration ──
+    byLabel("▸ Layer 3 · Intelligence & Orchestration"),
+    byLabel("Insights & Intelligence"),
+    byLabel("Recommendations & Prescriptive Actions"),
+    byLabel("Automation"),
+    byLabel("Tiers vs Generic AI"),
+    // ── Layer 4 · Unified Mobile ──
+    byLabel("▸ Layer 4 · Unified Mobile"),
+    byLabel("Unified Mobile"),
+    // ── Layer 5 · DTOP ──
+    byLabel("▸ Layer 5 · DTOP"),
+    byLabel("DTOP Operating Model"),
+    byLabel("Use Cases"),
+    byLabel("Platform Integrations"),
+    // ── Regulation Solution sub-section ──
+    rmSectionDividerSpec,
+    rmOverviewSpec,
+    rmProblemSpec,
+    rmValuePillarsSpec,
+    rmHowItWorksSpec,
+    rmUseCasesSpec,
+    // ── Value & close ──
+    byLabel("Line of Sight Cascade"),
+    byLabel("▸ Journey Ahead · Maturity"),
+    byLabel("Maturity Roadmap"),
+    byLabel("▸ Journey Ahead · 2026 Use Cases"),
+    byLabel("2026 Roadmap"),
+    byLabel("Why Comply365"),
+    whyOnlyComply365Spec,
+    ctaSpec,
+    // ── Appendix ──
+    appendixSpec,
+  ];
+  // Suppress unused-warnings for the legacy section divider helper —
+  // the new compose order does not need it but we keep it available
+  // for future section grouping if needed.
+  void dividerSpec;
 
   const total = composed.length;
 
