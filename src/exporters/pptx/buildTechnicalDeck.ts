@@ -633,7 +633,7 @@ slideSpecs.push(
     label: "SafetyManager365",
     build: buildModuleSlide({
       eyebrow: "Architecture",
-      title: "Core Operational Apps — SafetyManager365",
+      title: "Layer 1 · Core Operational Apps — SafetyManager365",
       subtitle: "Advanced Safety, Quality & Risk Management — from reactive reporting to predictive safety intelligence",
       accent: C.rose,
       capsTitle: "Core Capabilities",
@@ -660,7 +660,7 @@ slideSpecs.push(
     label: "ContentManager365",
     build: buildModuleSlide({
       eyebrow: "Architecture",
-      title: "Core Operational Apps — ContentManager365 + CoAuthor",
+      title: "Layer 1 · Core Operational Apps — ContentManager365 + CoAuthor",
       subtitle: "Next-gen operational content management — from manual revisions to intelligent document orchestration",
       accent: C.blue,
       capsTitle: "Core Capabilities",
@@ -687,7 +687,7 @@ slideSpecs.push(
     label: "TrainingManager365",
     build: buildModuleSlide({
       eyebrow: "Architecture",
-      title: "Core Operational Apps — TrainingManager365 + CoTrainer",
+      title: "Layer 1 · Core Operational Apps — TrainingManager365 + CoTrainer",
       subtitle: "Higher-quality training with less effort — from compliance checklists to competency-driven readiness",
       accent: C.prove,
       capsTitle: "Core Capabilities",
@@ -723,7 +723,7 @@ slideSpecs.push(
     label: "Data Foundation",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Architecture", "The Operational Data Foundation",
+      header(slide, "Architecture", "Layer 2 · Operational Data Foundation",
         "Unified taxonomy + operational knowledge graph + custom aviation LLMs — the substrate every other layer reasons over");
 
       // Top: 3 sources → unified DB block
@@ -863,7 +863,7 @@ slideSpecs.push(
     label: "Insights & Intelligence",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Intelligence & Orchestration", "Insights & Intelligence — Intelligence & Orchestration",
+      header(slide, "Intelligence & Orchestration", "Layer 3 · Intelligence & Orchestration — Insights & Intelligence",
         "From Reports to Intelligence. From Events to Control.");
 
       // Master message banner
@@ -915,7 +915,7 @@ slideSpecs.push(
     label: "Recommendations & Prescriptive Actions",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Intelligence & Orchestration", "Intelligence & Orchestration Layer — Recommendations & Prescriptive Actions",
+      header(slide, "Intelligence & Orchestration", "Layer 3 · Intelligence & Orchestration — Recommendations & Prescriptive Actions",
         "From insight to prescriptive action — proactive signals across the platform");
 
       const caps = [
@@ -981,7 +981,7 @@ slideSpecs.push(
     label: "Automation",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Intelligence & Orchestration", "Automation & Orchestration",
+      header(slide, "Intelligence & Orchestration", "Layer 3 · Intelligence & Orchestration — Automation",
         "One automation layer across the platform — closing the loop on cross-product workflows");
 
       const pipe = [
@@ -1058,7 +1058,7 @@ slideSpecs.push(
     label: "Unified Mobile",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Intelligence & Orchestration", "The Unified Mobile Experience",
+      header(slide, "Architecture", "Layer 4 · Unified Mobile Experience",
         "One trusted entry point for the frontline — Content, Training and Safety in a single shell");
 
       // Phone mock (left)
@@ -1133,7 +1133,7 @@ slideSpecs.push(
     label: "DTOP Operating Model",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Operating model", "Detect → Trigger → Orchestrate → Prove",
+      header(slide, "Operating model", "Layer 5 · DTOP — The System of Work",
         "A closed-loop operating model that turns signals into provable outcomes.");
 
       const steps = [
@@ -1223,7 +1223,7 @@ slideSpecs.push(
     label: "Tiers vs Generic AI",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Operating model", "Intelligence Tiers vs Generic AI",
+      header(slide, "Intelligence & Orchestration", "Layer 3 · Intelligence & Orchestration — Tiers vs Generic AI",
         "Four tiers of operational intelligence — and the precision gap generic AI cannot close");
 
       const tiers = [

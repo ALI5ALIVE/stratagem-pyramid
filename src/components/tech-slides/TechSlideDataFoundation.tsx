@@ -65,7 +65,7 @@ const guarantees = [
 const TechSlideDataFoundation = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer
     id="tech-slide-data-foundation"
-    title="The Operational Data Foundation"
+    title="Layer 2 · Operational Data Foundation"
     subtitle="Unified taxonomy + operational knowledge graph + custom aviation LLMs — the substrate every other layer reasons over"
     slideNumber={slideNumber}
     {...narrationProps}

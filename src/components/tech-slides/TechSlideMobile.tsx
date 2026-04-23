@@ -21,7 +21,7 @@ const pillars = [
 const TechSlideMobile = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer
     id="tech-slide-mobile"
-    title="The Unified Mobile Experience"
+    title="Layer 4 · Unified Mobile Experience"
     subtitle="One trusted entry point for the frontline — Content, Training and Safety in a single shell"
     slideNumber={slideNumber}
     {...narrationProps}
