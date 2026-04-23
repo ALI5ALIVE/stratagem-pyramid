@@ -24,7 +24,7 @@ const DTOPPrintablePage: React.FC = () => {
         height: printBrand.page.height,
         background: C.darkPaper,
         backgroundImage: `radial-gradient(800px 500px at 0% 0%, rgba(0,102,255,0.10), transparent 60%), radial-gradient(700px 500px at 100% 100%, rgba(139,92,246,0.06), transparent 65%)`,
-        padding: "24px 36px 22px",
+        padding: "28px 40px 24px",
         fontFamily: F.body,
         color: C.darkInk,
         boxSizing: "border-box",
@@ -85,7 +85,7 @@ const DTOPPrintablePage: React.FC = () => {
               background: C.darkPaperWarm,
               border: `1px solid ${C.darkHairline}`,
               borderTop: `3px solid ${stepAccentsDark[i]}`,
-              padding: "10px 12px 11px",
+              padding: "12px 14px 13px",
               display: "flex", flexDirection: "column",
               boxShadow: `inset 0 1px 0 rgba(255,255,255,0.04)`,
             }}>
@@ -105,10 +105,10 @@ const DTOPPrintablePage: React.FC = () => {
                 color: stepAccentsDark[i], textTransform: "uppercase",
                 letterSpacing: "0.08em", marginBottom: 6,
               }}>{step.tagline}</div>
-              <div style={{ fontSize: 9, color: C.darkSlate, lineHeight: 1.4 }}>
+              <div style={{ fontSize: 9.5, color: C.darkSlate, lineHeight: 1.5 }}>
                 <span style={{ color: C.darkSubtle, fontWeight: 600 }}>In:</span> {step.dataSources.slice(0, 2).join(" · ")}
               </div>
-              <div style={{ fontSize: 9, color: C.darkSlate, lineHeight: 1.4, marginTop: 3 }}>
+              <div style={{ fontSize: 9.5, color: C.darkSlate, lineHeight: 1.5, marginTop: 3 }}>
                 <span style={{ color: C.darkSubtle, fontWeight: 600 }}>Out:</span> {step.outputs[0]}
               </div>
             </div>
