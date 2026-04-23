@@ -1212,9 +1212,8 @@ export async function buildExecutiveDeck(opts: BuildOpts = {}): Promise<Blob> {
     transformationSpec,
     pyramidSpec,
     aiVisionSpec,
+    maturityRoadmapSpec,
     outcomesSpec,
-    whyUsSpec,
-    ctaSpec,
   ];
 
   const total = composed.length;
