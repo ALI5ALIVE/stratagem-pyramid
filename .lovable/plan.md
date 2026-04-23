@@ -1,86 +1,79 @@
 
 
-## Fix: Rebuild PPTX export with full editable content + better visuals
+## PPTX export polish — pinpoint visuals + deeper Comply365 brand
 
-### What's wrong today
+### Goal
 
-`buildTechnicalDeck.ts` uses `imageFallbackSlide(...)` for **17 of 22 slides**. That captures the React component to a 2× PNG via html2canvas and embeds it as a single locked image with a caption. Result:
+Keep everything that already works in the Technical Deep Dive `.pptx` and layer on three things:
 
-- Most slides are flattened screenshots — no editable text in PowerPoint.
-- Captures are often blurry, clipped, or missing typography because off-screen html2canvas misrenders.
-- Brand styling is inconsistent (image bleed, dark caption strip, no real grid).
+1. **Pinpoint-accurate visualisations** — every diagram (Platform stack, DTOP loop, Maturity curve, Line-of-Sight cascade, Cost waterfall, Tiers comparison) matches the on-screen React component beat-for-beat.
+2. **Deeper Comply365 brand identity** — real brand fonts, real logo, brand-coloured master template applied to every slide, and a recurring visual motif so the deck feels designed, not generated.
+3. **No regressions** — every native, editable element stays editable; nothing gets flattened to an image.
 
-The user wants **real content** in every slide — bullets, cards, stats, tables, DTOP pills — selectable and editable in PowerPoint.
+### 1. Brand identity upgrade (`src/lib/pptxBrand.ts`)
 
-### Approach
+**Typography**
+- Replace `Calibri` placeholders with the real brand pairing: `Space Grotesk` (display) and `Inter` (body), with `Calibri` as the auto-fallback PowerPoint will substitute on machines without the brand fonts. Embed both fonts as base64 in the pptx via `pptx.theme` so PowerPoint renders them correctly even off-network.
 
-Rewrite **every slide** in `buildTechnicalDeck.ts` as a native pptxgenjs composition. Pull the source-of-truth content arrays directly from each `TechSlide*.tsx` (and shared data files like `lineOfSightData.ts`) and reproduce them with brand-styled rectangles, text boxes, pills, and stat tiles. Drop `renderComponentToPng` and `imageFallbackSlide` entirely from this deck.
+**Colour system — extend, don't replace**
+- Keep all existing tokens. Add: `gridLine` (faint surface grid), `glow` (primary @ 20% for accent washes), `tier1/tier2/tier3` (Reactive / Proactive / Predictive), `gradStart` / `gradEnd` for hero gradients, `dataViz1–6` for chart series so colours are deterministic.
 
-### Visual upgrades to the brand kit
+**New shared chrome**
+- `addBrandMaster(slide, variant)` — paints background, top hairline, top-right Comply365 logo, bottom footer, faint dotted grid in the safe area. One call replaces the 4 separate calls every builder makes today.
+- `addBrandHero(slide)` — gradient bg + large Comply365 wordmark watermark at 8% opacity for title and section dividers.
+- `addSectionDivider(slide, eyebrow, title)` — full-bleed dark slide that introduces an act (Foundations / Intelligence / Outcomes / Roadmap). Adds 4 of these to break the deck into chapters.
+- `addBrandStatBlock(slide, x, y, w, h, value, label, accent)` — refined stat tile with subtle accent bar on the left.
+- `addCalloutBanner(slide, x, y, w, h, text, accent)` — replaces the inconsistent "callout" rects used today.
 
-Edit `src/lib/pptxBrand.ts` to add:
+**Visual motif (the new repeated brand element)**
+- A 0.04" left accent bar in the brand primary on every card. Tiny, consistent, immediately recognisable. Carries across all 21 slides + future decks.
 
-- `addEyebrow(slide, x, y, w, text, color)` — uppercase tracked label.
-- `addSectionTitle(slide, ...)` — consistent 28pt display titles across all slides.
-- `addIconBadge(slide, x, y, size, color, glyph)` — coloured rounded square with a unicode glyph (replaces lucide icons for native rendering).
-- `addLabeledCard(slide, x, y, w, h, { eyebrow, title, body, accent })` — single card primitive used by ~12 slides.
-- `addPillRow(slide, x, y, w, items)` — horizontal pill row (used for data sources, tags).
-- `addCheckRow(slide, x, y, w, label, ok)` — green check / red X rows (Tiers vs Generic AI).
-- `addStepArrow(slide, x, y)` — 0.3" right-pointing chevron between cards.
-- Add a subtle gradient background option `paintBackground(slide, "dark-grad")` for hero slides.
+### 2. Pinpoint visualisation upgrades (`src/exporters/pptx/buildTechnicalDeck.ts`)
 
-### Slide-by-slide native rebuild
+For each diagram, redraw natively to match the React source 1:1. No image fallback returns.
 
-| # | Slide | Native composition |
+| Slide | Today | Upgrade |
 |---|---|---|
-| 0 | Title | Hero typography + 3 trust stats + DTOP pill row at bottom (already native — refine spacing) |
-| 1 | Strategic Shift | Two-column "Today vs Tomorrow" with bullet lists + 4-card driver grid below |
-| 2 | Industry Challenge | 4 pain-point cards row + cost-waterfall as native horizontal bars (computed from `lineOfSightData.useCases`) + total banner |
-| 3 | Platform Overview | 5-layer architecture stack (rect per layer with color band) + 3 module cards + DTOP pill row |
-| 4 | SafetyManager365 | 2-col: capability cards grid (left) + numbered data-flow steps with chevrons (right) |
-| 5 | ContentManager365 | Same template as #4, content swapped |
-| 6 | TrainingManager365 | Same template as #4, content swapped |
-| 7 | Data Foundation | 4 source pills → unified DB block → 3 capability pillar cards → governance row |
-| 8 | CoAnalyst | Master message banner + 5 pipeline cards + 3 architecture rows + 2 stat tiles (already partially native — extend) |
-| 9 | Insights | 3 capability cards + 4-step worked example timeline with chevrons |
-| 10 | Automation | 4 pipeline cards with chevrons + worked example bar + 2 callouts |
-| 11 | Mobile | 3-col layout: hero device card + capability checklist + offline/AR features |
-| 12 | DTOP | 4 step cards + audit trail strip (already native — refine) |
-| 13 | Tiers vs Generic AI | Capability comparison **table** (native pptx table) + accuracy stats + risk callout |
-| 14 | Use Cases | 3-column grid by tier (Reactive/Proactive/Predictive) with 3-4 cards each |
-| 15 | Platform Integrations | 3 case-study cards with metrics |
-| 16 | Line of Sight Calculator | 3-column cascade table from `lineOfSightData` (use cases → leading measures → outcomes) + total exposure banner. **No live calculator** — replaced with static cost-avoidance summary |
-| 17 | Maturity Roadmap | 5-stage horizontal swimlane with stage cards |
-| 18 | 2026 Roadmap | 3-phase column cards with checklist items |
-| 19 | Why Comply365 | 3 differentiator cards + trust metrics row + CTA banner |
-| 20 | Partnership | Hero + 3 stage cards (Discover / Pilot / Scale) with timelines + closing question |
+| **3 Platform Overview** | 5 plain rects | Full architecture stack: 5 rounded layer bands with icon badges, layer numbers, capability sub-pills inside each layer (mirrors `PlatformArchitectureDiagram.tsx`) + DTOP "way of working" ribbon overlay on the right edge. |
+| **2 Industry Challenge** | Bullet bars | True horizontal **waterfall** computed from `lineOfSightData.useCases`: each bar width proportional to `computescaledCostMidpoint`, sorted desc, value labels right-aligned, total bar in primary at the bottom, citation chip row beneath. |
+| **8 CoAnalyst** | Pipeline cards | Add the 4-tier intelligence ladder (Historical → Reactive → Proactive → Predictive) as a stacked staircase with tier accuracy stats (35% generic AI vs 90% CoAnalyst) on the right. |
+| **12 DTOP** | 4 step cards | Closed-loop visualisation: 4 step cards arranged in a rounded-rectangle loop with curved arrows between them and a centre "Continuous Improvement" hub. Audit-trail strip below each card stays. |
+| **13 Tiers vs Generic AI** | Native table | Keep table, add capability heat-map cells (✓ in tier accent green, ✕ in danger red, "partial" in amber half-fill) and an accuracy gauge row at the bottom. |
+| **16 Line of Sight** | Cascade table | True 3-tier **cascade diagram**: use-case nodes (left) → leading-measure nodes (middle) → executive-outcome nodes (right) connected by weighted Bezier-style segments built from `executiveOutcomes[].metrics[].weights`. Total exposure banner stays. |
+| **17 Maturity Roadmap** | Swimlane | Curved 5-stage maturity arc (rises from Stage 1 to Stage 5) with stage cards docked beneath each plotted point — mirrors `MaturityCurveVisualization.tsx`. |
+| **18 2026 Roadmap** | 3 columns | Add a horizontal timeline ruler across the top with H1/H2/2027+ markers, then drop the 3 phase cards onto it. |
+| **0 Title** | Hero + stats | Add the Comply365 wordmark watermark, refine stat block to use new `addBrandStatBlock`, add subtle DTOP loop motif bottom-right at 15% opacity. |
+| **All slides** | Mixed chrome | Apply `addBrandMaster` everywhere → consistent grid, footer, logo, and the new 0.04" left accent bar on every card. |
+
+### 3. Structural polish
+
+- Insert 4 lightweight **section divider slides** (Foundations / Intelligence / Outcomes / Roadmap) using `addBrandHero` — gives the 21-slide deck visible chapters without bloating it (final deck = 25 slides).
+- Add a **"Sources & methodology"** appendix slide pulling from `sourceCitations` + `methodologyNote` in `lineOfSightData.ts` so every stat is traceable in the exported file.
+- Footer gains a faint Comply365 mark left of the deck label for stronger brand presence on every page.
+
+### 4. Quality assurance (mandatory)
+
+After regenerating:
+
+1. Trigger export from `/pitch-technical`.
+2. Convert the `.pptx` to PDF (LibreOffice headless) → `pdftoppm` → JPEGs at 150 dpi.
+3. Visually inspect every slide for: text overflow, card collisions, label overlap on cascade/waterfall, footer collisions, contrast on dark cards, alignment of the new accent bar.
+4. Fix anything found, re-render, re-inspect. Repeat until a full pass is clean.
+5. Confirm in PowerPoint that all text remains selectable and the new section dividers + cascade + waterfall + maturity arc are real shapes (not images).
 
 ### Files
 
 **Edited**
-- `src/lib/pptxBrand.ts` — add `addEyebrow`, `addIconBadge`, `addLabeledCard`, `addPillRow`, `addCheckRow`, `addStepArrow`, gradient bg.
-- `src/exporters/pptx/buildTechnicalDeck.ts` — full rewrite: 21 native slide builders, drop `imageFallbackSlide` and `renderComponentToPng` imports.
+- `src/lib/pptxBrand.ts` — new master/hero/divider/stat/banner helpers, font embedding, expanded colour tokens, accent-bar motif on existing card helpers.
+- `src/exporters/pptx/buildTechnicalDeck.ts` — upgrade the 8 diagram slides above, add 4 section dividers, add appendix slide, swap every `paintBackground + footer + logo` trio for `addBrandMaster`.
 
 **Untouched**
-- `src/exporters/pptx/renderToImage.ts` — kept for future decks.
-- `src/components/DeckPPTXExportButton.tsx`, `src/exporters/pptx/index.ts` — unchanged.
-- All `TechSlide*.tsx` source components — only read for content extraction.
-
-### Verification
-
-1. `/pitch-technical` → click **Download Editable PowerPoint**.
-2. Toast progresses through all 21 slides without "Slide failed to render" errors.
-3. Open `Comply365-Technical-Deep-Dive.pptx` in PowerPoint:
-   - Every text element is **selectable and editable** — no flattened screenshots.
-   - Brand dark theme on every slide; primary blue + DTOP step colours present.
-   - Logo top-right, footer with deck label and `01 / 21` slide counter on every page.
-   - Cost waterfall (slide 2), capability table (slide 13), and Line-of-Sight cascade (slide 16) render as real PowerPoint tables/shapes.
-4. Run a quick PDF export of the `.pptx` (LibreOffice) and visually QA all 21 slides for: overlap, text overflow, footer collisions, low-contrast text, uneven spacing. Fix any issues found and re-verify.
+- `src/components/DeckPPTXExportButton.tsx`, `src/exporters/pptx/index.ts`, `src/exporters/pptx/renderToImage.ts`, all `TechSlide*.tsx` source components, the existing PDF exporter.
 
 ### Out of scope
 
-- Other decks (Executive, Operational, CoAnalyst) — phase 2 after this passes review.
-- Live ROI calculator interactivity inside PowerPoint (not technically possible).
-- Restoring `imageFallbackSlide` for any tech slide.
-- Embedding the React-rendered PlatformArchitectureDiagram / Pyramid3D / InfinityLoop SVGs — replaced with native equivalents using shapes.
+- Other decks (Executive / Operational / CoAnalyst) — phase 2 once you sign off on the Tech deck visuals.
+- Animations / transitions / speaker notes.
+- Replacing any currently-working slide's content — this plan only enhances visuals and brand chrome.
+- Re-introducing image fallbacks.
 
