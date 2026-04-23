@@ -286,88 +286,155 @@ const afterSpec: SlideSpec = {
   },
 };
 
-// ─── Slide 4 · DTOP Operating Model ─────────────────────────────
+// ─── Slide 4 · The Operational Intelligence Layer ───────────────
 const dtopSpec: SlideSpec = {
-  label: "DTOP Operating Model",
-  build: (slide, ctx) => {
+  label: "The Operational Intelligence Layer",
+  build: async (slide, ctx) => {
     chrome(slide, ctx);
-    header(slide, "The new operating model", "DTOP — From Signals to Provable Outcomes",
-      "A closed-loop operating model that turns signals into provable outcomes.");
+    header(
+      slide,
+      "The new operating model",
+      "The Operational Intelligence Layer",
+      "A connected, intelligent, and predictive platform turning signals into orchestrated change and measurable outcomes",
+    );
 
+    // Left: ecosystem image (Safety/Content/Training + CoAnalyst hub)
+    const leftX = 0.5;
+    const leftW = 4.2;
+    const leftY = CONTENT_TOP;
+    const leftH = CONTENT_BOTTOM - leftY;
+    try {
+      const img = await loadImageAsBase64(platformEcosystemUrl);
+      slide.addImage({
+        data: img,
+        x: leftX, y: leftY, w: leftW, h: leftH,
+        sizing: { type: "contain", w: leftW, h: leftH },
+      });
+    } catch {
+      addCard(slide, leftX, leftY, leftW, leftH);
+    }
+
+    // Right column: Sources → DTOP pipeline → Value Generated
+    const rightX = leftX + leftW + 0.3;
+    const rightW = W - rightX - 0.5;
+
+    // 1) Sources strip
+    let cy = leftY;
+    slide.addText("SOURCES", {
+      x: rightX, y: cy, w: 1.0, h: 0.28,
+      fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true,
+      color: C.subtle, charSpacing: 3, valign: "middle",
+    });
+    const sources = ["FOQA", "ASAP", "Audit", "Ops", "Crew", "Mx"];
+    let sx = rightX + 1.0;
+    const pillH = 0.28;
+    sources.forEach((s) => {
+      const w = 0.62;
+      addPill(slide, sx, cy, w, pillH, s, C.subtle);
+      sx += w + 0.08;
+    });
+    // 65K+ signals/mo highlight pill
+    const highlightW = 1.55;
+    slide.addShape("roundRect", {
+      x: sx, y: cy, w: highlightW, h: pillH,
+      fill: { color: C.primary, transparency: 80 },
+      line: { color: C.primary, width: 0.75 },
+      rectRadius: pillH / 2,
+    });
+    slide.addText(
+      [
+        { text: "65K+", options: { bold: true, color: C.primary } },
+        { text: "  signals/mo", options: { color: C.muted } },
+      ],
+      {
+        x: sx, y: cy, w: highlightW, h: pillH,
+        fontFace: PPTX_BRAND.font.body, fontSize: 9,
+        align: "center", valign: "middle",
+      },
+    );
+
+    // 2) DTOP pipeline (4 horizontal cards) with per-step metric
+    cy += pillH + 0.25;
     const steps = [
-      { letter: "D", label: "Detect", color: "0EA5E9", desc: "Continuous signal capture across ops, safety, content, training." },
-      { letter: "T", label: "Trigger", color: "F59E0B", desc: "Policy + AI evaluate, escalate, route to the right owner." },
-      { letter: "O", label: "Orchestrate", color: "A855F7", desc: "Workflows, tasks, manuals, training updates run in lock-step." },
-      { letter: "P", label: "Prove", color: "10B981", desc: "Auditable evidence chain — every action timestamped and signed." },
+      { letter: "D", label: "Detect", color: "0EA5E9", metric: "12K", metricLabel: "signals/mo",
+        desc: "Exceedance triggers automatic alert. Signal captured with flight ID, crew, and timestamp." },
+      { letter: "T", label: "Trigger", color: "F59E0B", metric: "850", metricLabel: "actions",
+        desc: "Procedure review workflow initiated. Linked to source signal, owner assigned, due date set." },
+      { letter: "O", label: "Orchestrate", color: "A855F7", metric: "340", metricLabel: "changes",
+        desc: "SOP updated. Training module activated for affected crew. All changes version-controlled." },
+      { letter: "P", label: "Prove", color: "10B981", metric: "100%", metricLabel: "tracked",
+        desc: "Complete audit trail generated. Signal → change → training → completion linked and exportable." },
     ];
-    const sY = CONTENT_TOP;
-    const sH = 3.2;
-    const sW = (W - 1 - 3 * 0.2) / 4;
+    const stepGap = 0.12;
+    const stepW = (rightW - stepGap * 3) / 4;
+    const stepH = 2.55;
     steps.forEach((s, i) => {
-      const x = 0.5 + i * (sW + 0.2);
-      addCard(slide, x, sY, sW, sH, { border: s.color });
+      const x = rightX + i * (stepW + stepGap);
+      addCard(slide, x, cy, stepW, stepH, { border: s.color });
       slide.addShape("rect", {
-        x, y: sY, w: sW, h: 0.06,
+        x, y: cy, w: stepW, h: 0.05,
         fill: { color: s.color }, line: { type: "none" },
       });
       slide.addShape("ellipse", {
-        x: x + sW / 2 - 0.45, y: sY + 0.25, w: 0.9, h: 0.9,
+        x: x + stepW / 2 - 0.28, y: cy + 0.18, w: 0.56, h: 0.56,
         fill: { color: s.color }, line: { type: "none" },
       });
       slide.addText(s.letter, {
-        x: x + sW / 2 - 0.45, y: sY + 0.25, w: 0.9, h: 0.9,
-        fontFace: PPTX_BRAND.font.display, fontSize: 36, bold: true, color: C.bg,
+        x: x + stepW / 2 - 0.28, y: cy + 0.18, w: 0.56, h: 0.56,
+        fontFace: PPTX_BRAND.font.display, fontSize: 22, bold: true, color: C.bg,
         align: "center", valign: "middle",
       });
       slide.addText(s.label, {
-        x: x + 0.18, y: sY + 1.3, w: sW - 0.36, h: 0.4,
-        fontFace: PPTX_BRAND.font.display, fontSize: 18, bold: true, color: s.color, align: "center",
+        x: x + 0.1, y: cy + 0.82, w: stepW - 0.2, h: 0.3,
+        fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true,
+        color: s.color, align: "center",
       });
+      slide.addText(
+        [
+          { text: s.metric, options: { bold: true, color: s.color, fontSize: 16 } },
+          { text: ` ${s.metricLabel}`, options: { color: C.muted, fontSize: 8 } },
+        ],
+        {
+          x: x + 0.1, y: cy + 1.15, w: stepW - 0.2, h: 0.3,
+          fontFace: PPTX_BRAND.font.display, align: "center", valign: "middle",
+        },
+      );
       slide.addText(s.desc, {
-        x: x + 0.18, y: sY + 1.8, w: sW - 0.36, h: sH - 1.95,
-        fontFace: PPTX_BRAND.font.body, fontSize: 10, color: C.muted, align: "center", valign: "top",
+        x: x + 0.12, y: cy + 1.5, w: stepW - 0.24, h: stepH - 1.55,
+        fontFace: PPTX_BRAND.font.body, fontSize: 8, color: C.muted,
+        align: "center", valign: "top",
       });
-      if (i < steps.length - 1) {
-        slide.addText("›", {
-          x: x + sW + 0.02, y: sY + sH / 2 - 0.25, w: 0.18, h: 0.5,
-          fontFace: PPTX_BRAND.font.display, fontSize: 28, bold: true,
-          color: C.subtle, align: "center", valign: "middle",
-        });
-      }
     });
 
-    // Continuous loop bar
-    slide.addShape("rect", {
-      x: 0.5, y: sY + sH + 0.05, w: W - 1, h: 0.04,
-      fill: { color: C.primary }, line: { type: "none" },
+    // 3) Value Generated row
+    cy += stepH + 0.2;
+    const valueLabelH = 0.22;
+    slide.addText("VALUE GENERATED", {
+      x: rightX, y: cy, w: rightW, h: valueLabelH,
+      fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true,
+      color: C.primary, charSpacing: 3, align: "center",
     });
-    slide.addText("↺  Continuous Improvement Loop", {
-      x: W / 2 - 2, y: sY + sH + 0.0, w: 4, h: 0.18,
-      fontFace: PPTX_BRAND.font.body, fontSize: 8, bold: true,
-      color: C.primary, align: "center", charSpacing: 3,
-    });
-
-    // Audit banner
-    const aY = sY + sH + 0.25;
-    addCalloutBanner(slide, 0.5, aY, W - 1, 0.6,
-      "Every step is observable, governed and auditable — that is the durable moat.", C.primary);
-
-    // Example chain
-    const eY = aY + 0.75;
-    const eH = CONTENT_BOTTOM - eY;
-    const chainItems = [
-      "Safety signal detected",
-      "Policy triggers procedure review",
-      "Targeted training assigned",
-      "Audit-ready evidence generated",
+    cy += valueLabelH + 0.05;
+    const outputs = [
+      { v: "+3%", l: "OTP" },
+      { v: "94%", l: "Ready" },
+      { v: "2hr", l: "Audit" },
+      { v: "Zero", l: "Repeat" },
     ];
-    const cw = (W - 1 - 3 * 0.15) / 4;
-    chainItems.forEach((t, i) => {
-      const x = 0.5 + i * (cw + 0.15);
-      addCard(slide, x, eY, cw, eH, { fill: C.surface });
-      slide.addText(t, {
-        x: x + 0.15, y: eY, w: cw - 0.3, h: eH,
-        fontFace: PPTX_BRAND.font.body, fontSize: 10, color: C.ink, align: "center", valign: "middle",
+    const outW = (rightW - stepGap * 3) / 4;
+    const outH = Math.max(0.55, CONTENT_BOTTOM - cy);
+    outputs.forEach((o, i) => {
+      const x = rightX + i * (outW + stepGap);
+      addCard(slide, x, cy, outW, outH, { border: C.primary });
+      slide.addText(o.v, {
+        x, y: cy + 0.05, w: outW, h: outH * 0.55,
+        fontFace: PPTX_BRAND.font.display, fontSize: 18, bold: true,
+        color: C.primary, align: "center", valign: "middle",
+      });
+      slide.addText(o.l, {
+        x, y: cy + outH * 0.55, w: outW, h: outH * 0.4,
+        fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted,
+        align: "center", valign: "middle",
       });
     });
   },
