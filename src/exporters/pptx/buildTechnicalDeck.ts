@@ -1468,17 +1468,38 @@ slideSpecs.push(
         },
       ];
       const pY = CONTENT_TOP;
-      const pH = CONTENT_BOTTOM - pY - 0.6;
+      // Timeline ruler at top
+      const rulerY = pY;
+      slide.addShape("rect", {
+        x: 0.5, y: rulerY + 0.18, w: W - 1, h: 0.04,
+        fill: { color: C.hairline }, line: { type: "none" },
+      });
+      const tickPositions = [0.5, (W) / 2, W - 0.5];
+      const tickColors = [C.sky, C.violet, C.prove];
+      const tickLabels = ["H1 2026", "H2 2026", "2027+"];
+      tickPositions.forEach((tx, i) => {
+        slide.addShape("ellipse", {
+          x: tx - 0.1, y: rulerY + 0.1, w: 0.2, h: 0.2,
+          fill: { color: tickColors[i] }, line: { type: "none" },
+        });
+        slide.addText(tickLabels[i], {
+          x: tx - 1, y: rulerY + 0.32, w: 2, h: 0.22,
+          fontFace: PPTX_BRAND.font.body, fontSize: 8, bold: true, color: tickColors[i],
+          align: "center", charSpacing: 3,
+        });
+      });
+      const phasesY = pY + 0.65;
+      const pH = CONTENT_BOTTOM - phasesY - 0.6;
       const pW = (W - 1 - 2 * 0.25) / 3;
       phases.forEach((p, i) => {
         const x = 0.5 + i * (pW + 0.25);
-        addCard(slide, x, pY, pW, pH, { border: p.color });
+        addCard(slide, x, phasesY, pW, pH, { border: p.color });
         slide.addText(p.phase, {
-          x: x + 0.2, y: pY + 0.15, w: pW - 0.4, h: 0.25,
+          x: x + 0.2, y: phasesY + 0.15, w: pW - 0.4, h: 0.25,
           fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.subtle, charSpacing: 3,
         });
         slide.addText(p.label, {
-          x: x + 0.2, y: pY + 0.42, w: pW - 0.4, h: 0.4,
+          x: x + 0.2, y: phasesY + 0.42, w: pW - 0.4, h: 0.4,
           fontFace: PPTX_BRAND.font.display, fontSize: 14, bold: true, color: p.color,
         });
         const items = p.items.map((it) => ({
@@ -1486,7 +1507,7 @@ slideSpecs.push(
           options: { bullet: { code: it.startsWith("✓") ? "2713" : "25CF" }, color: it.startsWith("✓") ? C.prove : C.ink },
         }));
         slide.addText(items, {
-          x: x + 0.2, y: pY + 0.95, w: pW - 0.4, h: pH - 1.05,
+          x: x + 0.2, y: phasesY + 0.95, w: pW - 0.4, h: pH - 1.05,
           fontFace: PPTX_BRAND.font.body, fontSize: 10.5, color: C.ink, paraSpaceAfter: 6,
         });
       });
