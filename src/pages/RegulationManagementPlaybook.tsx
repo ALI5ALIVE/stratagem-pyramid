@@ -2,6 +2,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
 import { DeckProvider } from "@/contexts/DeckContext";
+import BackToDeckButton from "@/components/shared/BackToDeckButton";
 
 import RMSlide0Title from "@/components/regmgmt-slides/RMSlide0Title";
 import RMSlide1Overview from "@/components/regmgmt-slides/RMSlide1Overview";
@@ -101,6 +102,7 @@ const RegulationManagementPlaybook = () => {
 
   return (
     <DeckProvider deckId="regulation-management">
+    <BackToDeckButton />
     <div className="h-screen w-full bg-background overflow-hidden relative">
       <div className="fixed top-0 left-0 right-0 h-1 bg-muted z-50">
         <div className="h-full bg-primary transition-all duration-150" style={{ width: `${scrollProgress}%` }} />

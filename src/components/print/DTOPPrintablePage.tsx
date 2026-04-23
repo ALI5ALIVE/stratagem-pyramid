@@ -41,13 +41,15 @@ const DTOPPrintablePage: React.FC = () => {
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <span style={{
+            display: "inline-flex", alignItems: "center", justifyContent: "center",
+            width: 22, height: 22, background: C.brand, color: "#FFFFFF",
+            fontFamily: F.display, fontSize: 12, fontWeight: 700,
+            letterSpacing: "-0.02em",
+          }}>C</span>
+          <span style={{
             fontFamily: F.display, fontSize: 16, fontWeight: 700,
             color: C.ink, letterSpacing: "-0.01em",
-          }}>Comply365</span>
-          <span style={{
-            display: "inline-block", width: 6, height: 6,
-            background: C.brand, marginBottom: 2,
-          }} />
+          }}>Comply<span style={{ color: C.brand }}>365</span></span>
         </div>
         <div style={{
           fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase",
@@ -202,13 +204,18 @@ const DTOPPrintablePage: React.FC = () => {
 
       {/* FOOTER */}
       <div style={{
-        marginTop: 12, paddingTop: 8, borderTop: `1px solid ${C.hairline}`,
+        marginTop: 12, paddingTop: 8, borderTop: `2px solid ${C.brand}`,
         display: "flex", justifyContent: "space-between", alignItems: "center",
         fontSize: 8.5, color: C.subtle, fontFamily: F.display,
         letterSpacing: "0.08em", textTransform: "uppercase", fontWeight: 600,
       }}>
-        <div>© {new Date().getFullYear()} Comply365 · DTOP Operating Model</div>
-        <div>Operating Model Brief · v2.0</div>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{
+            display: "inline-block", width: 4, height: 4, background: C.brand,
+          }} />
+          <span>© {new Date().getFullYear()} Comply<span style={{ color: C.brand }}>365</span> · DTOP Operating Model</span>
+        </div>
+        <div>Operating Model Brief · v2.0 · comply365.com</div>
       </div>
     </div>
   );

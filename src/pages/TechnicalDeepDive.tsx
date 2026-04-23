@@ -5,9 +5,11 @@ import { useTechPitchNarration } from "@/hooks/useTechPitchNarration";
 import { DeckProvider } from "@/contexts/DeckContext";
 
 // Frame the problem
+import TechSlideOpener from "@/components/tech-slides/TechSlideOpener";
 import TechSlide0Title from "@/components/tech-slides/TechSlide0Title";
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
 import TechSlide2IndustryChallenge from "@/components/tech-slides/TechSlide2IndustryChallenge";
+import TechSlidePlatformSnapshot from "@/components/tech-slides/TechSlidePlatformSnapshot";
 
 // Architecture
 import TechSlide4Platform from "@/components/tech-slides/TechSlide4Platform";
@@ -28,12 +30,21 @@ import TechSlide5DTOP from "@/components/tech-slides/TechSlide5DTOP";
 import TechSlideUseCases from "@/components/tech-slides/TechSlideUseCases";
 import TechSlide6PlatformIntegrations from "@/components/tech-slides/TechSlide6PlatformIntegrations";
 
+// Regulation Solution section (cloned from RM playbook)
+import RMSlide0Title from "@/components/regmgmt-slides/RMSlide0Title";
+import RMSlide1Overview from "@/components/regmgmt-slides/RMSlide1Overview";
+import RMSlide2Problem from "@/components/regmgmt-slides/RMSlide2Problem";
+import RMSlide4ValuePillars from "@/components/regmgmt-slides/RMSlide4ValuePillars";
+import RMSlide5HowItWorks from "@/components/regmgmt-slides/RMSlide5HowItWorks";
+import RMSlide6UseCases from "@/components/regmgmt-slides/RMSlide6UseCases";
+
 // Value & close
 import TechSlideCalculator from "@/components/tech-slides/TechSlideCalculator";
 import TechSlide14MaturityRoadmap from "@/components/tech-slides/TechSlide14MaturityRoadmap";
 import TechSlide15Roadmap2026 from "@/components/tech-slides/TechSlide15Roadmap2026";
 import TechSlideWhyComply from "@/components/tech-slides/TechSlideWhyComply";
-import TechSlide18Partnership from "@/components/tech-slides/TechSlide18Partnership";
+import TechSlideWhyOnlyComply365 from "@/components/tech-slides/TechSlideWhyOnlyComply365";
+import TechSlideCTA from "@/components/tech-slides/TechSlideCTA";
 
 // Layer dividers — one per architecture layer, slotted before each layer's deep-dive group
 import TechSlideLayerDivider from "@/components/tech-slides/TechSlideLayerDivider";
@@ -95,9 +106,11 @@ const journeyProps = {
 
 const slides = [
   // Frame the problem
+  { id: "tech-slide-opener", label: "Why It Exists", component: TechSlideOpener },
   { id: "tech-slide-0", label: "Title", component: TechSlide0Title },
   { id: "tech-slide-1", label: "Strategic Shift", component: TechSlide1StrategicShift },
   { id: "tech-slide-2", label: "Industry Challenge", component: TechSlide2IndustryChallenge },
+  { id: "tech-slide-3b-platform-snapshot", label: "Platform Snapshot", component: TechSlidePlatformSnapshot },
   // Architecture
   { id: "tech-slide-4", label: "Platform Overview", component: TechSlide4Platform },
   { id: "tech-divider-core", label: "▸ Layer 1 · Core Apps", component: TechSlideLayerDivider, dividerProps: dividerProps.core },
@@ -119,6 +132,13 @@ const slides = [
   { id: "tech-slide-5", label: "L5 · DTOP", component: TechSlide5DTOP },
   { id: "tech-slide-use-cases", label: "Use Cases", component: TechSlideUseCases },
   { id: "tech-slide-6", label: "Platform Integrations", component: TechSlide6PlatformIntegrations },
+  // Regulation Solution sub-section
+  { id: "tech-rm-title", label: "▸ Regulation Solution", component: RMSlide0Title },
+  { id: "tech-rm-overview", label: "RM · Solution Overview", component: RMSlide1Overview },
+  { id: "tech-rm-problem", label: "RM · The Problem Today", component: RMSlide2Problem },
+  { id: "tech-rm-value", label: "RM · Value Pillars", component: RMSlide4ValuePillars },
+  { id: "tech-rm-how", label: "RM · How It Works", component: RMSlide5HowItWorks },
+  { id: "tech-rm-uc", label: "RM · Use Cases", component: RMSlide6UseCases },
   // Value & close
   { id: "tech-slide-calculator", label: "Line of Sight Calculator", component: TechSlideCalculator },
   { id: "tech-divider-journey-maturity", label: "▸ Journey Ahead · Maturity", component: TechSlideJourneyDivider, dividerProps: journeyProps.maturity },
@@ -126,7 +146,8 @@ const slides = [
   { id: "tech-divider-journey-2026", label: "▸ Journey Ahead · 2026 Use Cases", component: TechSlideJourneyDivider, dividerProps: journeyProps.roadmap2026 },
   { id: "tech-slide-15", label: "2026 Roadmap", component: TechSlide15Roadmap2026 },
   { id: "tech-slide-why-comply", label: "Why Comply365", component: TechSlideWhyComply },
-  { id: "tech-slide-18", label: "Partnership", component: TechSlide18Partnership },
+  { id: "tech-slide-why-only-comply365", label: "Why Only Comply365", component: TechSlideWhyOnlyComply365 },
+  { id: "tech-slide-cta", label: "CTA — Find Out More", component: TechSlideCTA },
 ];
 
 const TechnicalDeepDive = () => {

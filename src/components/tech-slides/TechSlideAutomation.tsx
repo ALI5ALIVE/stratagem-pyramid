@@ -2,6 +2,7 @@ import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import ArchitectureLayerBadge from "@/components/tech-slides/ArchitectureLayerBadge";
 import { SlideNarrationProps } from "@/types/slideProps";
 import { Zap, Workflow, ShieldCheck, FileCheck2, ArrowRight, UserCheck, Plug } from "lucide-react";
+import DeepDiveLink from "@/components/shared/DeepDiveLink";
 
 interface Props extends SlideNarrationProps { slideNumber?: number; }
 
@@ -21,7 +22,10 @@ const TechSlideAutomation = ({ slideNumber, ...narrationProps }: Props) => (
     {...narrationProps}
   >
     <div className="flex-1 flex flex-col gap-4 min-h-0">
-      <ArchitectureLayerBadge active="intelligence" sublayer="automation" />
+      <div className="flex items-center justify-between gap-3">
+        <ArchitectureLayerBadge active="intelligence" sublayer="automation" />
+        <DeepDiveLink to="/automation-playbook" label="Automation" returnTo="/pitch-technical" />
+      </div>
       {/* Pipeline */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-2 auto-rows-fr shrink-0">
         {pipeline.map((s, i, arr) => (
