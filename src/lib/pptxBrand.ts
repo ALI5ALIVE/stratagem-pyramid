@@ -230,9 +230,13 @@ export async function loadImageAsBase64(url: string): Promise<string> {
 /** Add the Comply365 logo to top-right of a slide. */
 export async function addBrandLogo(slide: pptxgen.Slide, logoBase64: string, variant: "dark" | "light" = "dark") {
   if (!logoBase64) return;
+  // Comply365 wordmark natural aspect ratio is ~9.65:1 (1920×199).
+  // Compute width from a fixed height so the logo never stretches.
+  const h = 0.32;
+  const w = h * 9.65; // ≈ 3.09"
   slide.addImage({
     data: logoBase64,
-    x: PPTX_BRAND.size.w - 1.5, y: 0.25, w: 1.1, h: 0.32,
+    x: PPTX_BRAND.size.w - w - 0.4, y: 0.25, w, h,
   });
 }
 
