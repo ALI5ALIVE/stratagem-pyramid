@@ -141,7 +141,7 @@ const beforeSpec: SlideSpec = {
       { name: "TRAINING", color: C.violet, vol: "Disconnected records" },
     ];
     const siloY = leftY + 0.7;
-    const siloH = 1.6;
+    const siloH = 1.85;
     const siloGap = 0.18;
     const siloW = (leftW - 0.5 - siloGap * 2) / 3;
     silos.forEach((s, i) => {
