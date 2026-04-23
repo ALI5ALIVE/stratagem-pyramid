@@ -6,7 +6,7 @@ interface Props extends SlideNarrationProps { slideNumber?: number; }
 
 const diffs = [
   { icon: Link, title: "Connected Foundation", desc: "Operational content, training, safety and compliance – unified in one connected platform that detects operational signals across all, triggers the right response automatically, driving performance and predictive insights for safer outcomes.", color: "text-sky-400", bg: "bg-sky-400/10", border: "border-sky-400/30" },
-  { icon: Brain, title: "Embedded Intelligence", desc: "Accelerated decisioning and organizational agility with industry specific AI innovation across our platform – CoAnalyst, CoAuthor and CoTrainer – so that airlines can operate smarter, faster, and safer.", color: "text-primary", bg: "bg-primary/10", border: "border-primary/30" },
+  { icon: Brain, title: "Embedded Intelligence", desc: "Accelerated decisioning and organizational agility with industry specific AI innovation across our platform – Insights & Intelligence, CoAuthor and CoTrainer – so that airlines can operate smarter, faster, and safer.", color: "text-primary", bg: "bg-primary/10", border: "border-primary/30" },
   { icon: TrendingUp, title: "Superior Performance", desc: "A connected, intelligent ecosystem that means fewer disruptions, protected revenue & schedules, lower operating costs, and higher trust – when operational performance becomes a growth enabler, not just a compliance function.", color: "text-emerald-400", bg: "bg-emerald-400/10", border: "border-emerald-400/30" },
 ];
 

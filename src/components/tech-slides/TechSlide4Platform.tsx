@@ -7,7 +7,7 @@ interface Props extends SlideNarrationProps { slideNumber?: number; }
 const guide = [
   { tag: "Layer 5", title: "DTOP — The Way of Working", desc: "Detect, Trigger, Orchestrate, Prove — wraps the whole stack.", color: "text-emerald-400" },
   { tag: "Layer 4", title: "Unified Mobile", desc: "One trusted shell for the frontline — Content, Training, Safety.", color: "text-violet-400" },
-  { tag: "Layer 3", title: "Intelligence & Orchestration", desc: "CoAnalyst · Insights & Recommendations · Automation.", color: "text-amber-400" },
+  { tag: "Layer 3", title: "Intelligence & Orchestration", desc: "Insights & Intelligence · Recommendations & Prescriptive Actions · Automation.", color: "text-amber-400" },
   { tag: "Layer 2", title: "Operational Data Foundation", desc: "One unified data lake — the substrate every layer reasons over.", color: "text-cyan-400" },
   { tag: "Layer 1", title: "Core Operational Apps", desc: "ContentManager365 · TrainingManager365 · SafetyManager365.", color: "text-blue-400" },
 ];

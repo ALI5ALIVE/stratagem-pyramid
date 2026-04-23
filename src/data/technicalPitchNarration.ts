@@ -41,21 +41,21 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "Safety Manager 365",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Safety Manager is your investigation and assurance engine — from initial report through corrective action and closure. It ingests FOQA, ASAP, LOSA, and audit data. Here's where CoAnalyst activates this. Instead of your analysts manually reviewing hundreds of reports, CoAnalyst processes them in real time. It identifies clusters — a series of hard landings at a specific airport — and cross-references with weather, crew rosters, and procedure versions. Weeks of manual correlation compressed to hours, at ninety percent accuracy on domain-specific patterns. Your safety team stops chasing data and starts acting on intelligence.",
+      "Safety Manager is your investigation and assurance engine — from initial report through corrective action and closure. It ingests FOQA, ASAP, LOSA, and audit data. Here's where Insights and Intelligence activates this. Instead of your analysts manually reviewing hundreds of reports, the platform processes them in real time. It identifies clusters — a series of hard landings at a specific airport — and cross-references with weather, crew rosters, and procedure versions. Weeks of manual correlation compressed to hours, at ninety percent accuracy on domain-specific patterns. Your safety team stops chasing data and starts acting on intelligence.",
   },
   {
     slideId: "tech-slide-4b",
     title: "Content Manager 365",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Content Manager is the procedural backbone — authoring, distribution, version control, and electronic acknowledgment across all operational documents. CoAnalyst transforms regulatory change management. When a new airworthiness directive arrives, it maps against your procedure library, identifies every affected document, flags sections needing revision, and queues updates for the right subject matter expert. Then it tracks the cascade — every affected crew member receives the updated version and acknowledges it. Four to six weeks of manual effort compressed to days. For your documentation team, that's the difference between reactive firefighting and controlled change management.",
+      "Content Manager is the procedural backbone — authoring, distribution, version control, and electronic acknowledgment across all operational documents. Insights and Intelligence transforms regulatory change management. When a new airworthiness directive arrives, it maps against your procedure library, identifies every affected document, flags sections needing revision, and queues updates for the right subject matter expert. Then it tracks the cascade — every affected crew member receives the updated version and acknowledges it. Four to six weeks of manual effort compressed to days. For your documentation team, that's the difference between reactive firefighting and controlled change management.",
   },
   {
     slideId: "tech-slide-4c",
     title: "Training Manager 365",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Training Manager handles the competency lifecycle — qualification, recurrent training, checking events, and revalidation across every crew member. CoAnalyst's activation here is powerful. Instead of generic recurrent cycles, it analyses individual operational data — FOQA trends, route exposure, safety report history — and recommends targeted interventions specific to each crew member's risk profile. When a hard landing cluster is detected at a specific airport, CoAnalyst identifies the forty-seven pilots who've flown that approach and assigns approach-specific simulator scenarios within forty-eight hours. Not generic training. Targeted, evidence-based crew development.",
+      "Training Manager handles the competency lifecycle — qualification, recurrent training, checking events, and revalidation across every crew member. The platform's activation here is powerful. Instead of generic recurrent cycles, it analyses individual operational data — FOQA trends, route exposure, safety report history — and recommends targeted interventions specific to each crew member's risk profile. When a hard landing cluster is detected at a specific airport, Insights and Intelligence identifies the forty-seven pilots who've flown that approach and assigns approach-specific simulator scenarios within forty-eight hours. Not generic training. Targeted, evidence-based crew development.",
   },
   {
     slideId: "tech-slide-data-foundation",
@@ -66,17 +66,17 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
   },
   {
     slideId: "tech-slide-coanalyst",
-    title: "CoAnalyst",
+    title: "Insights & Intelligence",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "CoAnalyst is the conversational intelligence layer. Master message: from reports to intelligence, from events to control. It's a hybrid AI architecture — domain-trained ML models for the heavy lifting, an LLM augmentation layer for natural-language interaction, and continuous learning that keeps both improving. Domain models are trained on millions of aviation reports since twenty twenty-three, delivering ninety percent accuracy at four thousand categories — where generic AI collapses to thirty-five. The LLM layer handles plain-English questions, summarisation and sixty-plus languages, but it's guardrailed by the domain models so you don't get aviation-critical hallucination. And it's tenant-isolated — your data never crosses customer boundaries.",
+      "Insights and Intelligence is the conversational intelligence layer of the Operational Performance Platform. Master message: from reports to intelligence, from events to control. It's a hybrid AI architecture — domain-trained ML models for the heavy lifting, an LLM augmentation layer for natural-language interaction, and continuous learning that keeps both improving. Domain models are trained on millions of aviation reports since twenty twenty-three, delivering ninety percent accuracy at four thousand categories — where generic AI collapses to thirty-five. The LLM layer handles plain-English questions, summarisation and sixty-plus languages, but it's guardrailed by the domain models so you don't get aviation-critical hallucination. And it's tenant-isolated — your data never crosses customer boundaries.",
   },
   {
     slideId: "tech-slide-insights",
-    title: "Insights & Recommendations",
+    title: "Recommendations & Prescriptive Actions",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "CoAnalyst answers questions. Insights and Recommendations goes a step further — it surfaces the questions you should be asking. Three capabilities. Pattern detection: cross-domain correlation that links training gaps to safety events to procedural ambiguity. Recommended actions: every insight comes paired with a concrete next step and a traceable reasoning trail. Trend and foresight: continuous, exploratory analysis that turns reactive reporting into proactive risk identification. Worked example: a COO asks, are dangerous goods incidents linked to training gaps? Sixty seconds later: three hub stations correlate with overdue DG recurrent training. Targeted retraining for one hundred and eighty ground crew, expedite SOP republish, audit pack generated. Question to evidence-backed action plan in under a minute.",
+      "Insights and Intelligence answers questions. Recommendations and Prescriptive Actions go a step further — surfacing the questions you should be asking and the next move you should make. Three capabilities. Pattern detection: cross-domain correlation that links training gaps to safety events to procedural ambiguity. Recommended actions: every insight comes paired with a concrete next step and a traceable reasoning trail. Trend and foresight: continuous, exploratory analysis that turns reactive reporting into proactive risk identification. Worked example: a COO asks, are dangerous goods incidents linked to training gaps? Sixty seconds later: three hub stations correlate with overdue DG recurrent training. Targeted retraining for one hundred and eighty ground crew, expedite SOP republish, audit pack generated. Question to evidence-backed action plan in under a minute.",
   },
   {
     slideId: "tech-slide-automation",
@@ -90,7 +90,7 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "Intelligence Tiers vs Generic AI",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Four intelligence tiers, each compounding on the last. Historical — query past data in plain English. Reactive — real-time alerts on threshold breach. Proactive — pattern detection before incidents. Predictive — probabilistic risk modelling. Most carriers start at tier one and reach tier three within twelve months. And here's why generic AI cannot get you there. At level one — fifty occurrence types — generic AI is roughly comparable. At level two and three, hundreds of categories, generic AI drops to sixty percent. At level four and five — the cause and root cause, thousands of categories — generic AI collapses to thirty to forty percent. CoAnalyst holds ninety. The real-world risk: generic AI calls a repeated bird strike a one-off — missing the cluster pattern that signals a runway hazard trend.",
+      "Four intelligence tiers, each compounding on the last. Historical — query past data in plain English. Reactive — real-time alerts on threshold breach. Proactive — pattern detection before incidents. Predictive — probabilistic risk modelling. Most carriers start at tier one and reach tier three within twelve months. And here's why generic AI cannot get you there. At level one — fifty occurrence types — generic AI is roughly comparable. At level two and three, hundreds of categories, generic AI drops to sixty percent. At level four and five — the cause and root cause, thousands of categories — generic AI collapses to thirty to forty percent. Insights and Intelligence holds ninety. The real-world risk: generic AI calls a repeated bird strike a one-off — missing the cluster pattern that signals a runway hazard trend.",
   },
   {
     slideId: "tech-slide-mobile",
@@ -139,14 +139,14 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "Outcomes & Why Comply365",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Measured outcomes from carriers running on the platform today. Seventy-eight percent reduction in repeat events. Signal-to-coordinated-response compressed from six weeks to forty-eight hours. Directive to crew acknowledgement in five days. Ninety percent domain accuracy where generic AI sits at thirty-five. Three things make those outcomes possible. Connected foundation — one data model, three core apps, one intelligence layer. Domain-trained intelligence — CoAnalyst built on aviation data since twenty twenty-three, not a generic AI with an aviation wrapper. Proof by design — every action logged automatically, the audit trail is a byproduct, not a report. Point solutions manage silos. Generic AI creates noise. We close the loop.",
+      "Measured outcomes from carriers running on the platform today. Seventy-eight percent reduction in repeat events. Signal-to-coordinated-response compressed from six weeks to forty-eight hours. Directive to crew acknowledgement in five days. Ninety percent domain accuracy where generic AI sits at thirty-five. Three things make those outcomes possible. Connected foundation — one data model, three core apps, one intelligence layer. Domain-trained intelligence — Insights and Intelligence built on aviation data since twenty twenty-three, not a generic AI with an aviation wrapper. Proof by design — every action logged automatically, the audit trail is a byproduct, not a report. Point solutions manage silos. Generic AI creates noise. We close the loop.",
   },
   {
     slideId: "tech-slide-18",
     title: "Partnership",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Three phases. Technical discovery — one to two days mapping your data architecture and integration points. Ninety-day proof of value — deploying against your highest-impact use case with full CoAnalyst activation. Measurable outcomes in the first quarter. Then enterprise rollout — full DTOP activation across all modules. Average time to full deployment: six to nine months. Your architecture is unique. Let's design the right approach together.",
+      "Three phases. Technical discovery — one to two days mapping your data architecture and integration points. Ninety-day proof of value — deploying against your highest-impact use case with full platform activation. Measurable outcomes in the first quarter. Then enterprise rollout — full DTOP activation across all modules. Average time to full deployment: six to nine months. Your architecture is unique. Let's design the right approach together.",
   },
 ];
 

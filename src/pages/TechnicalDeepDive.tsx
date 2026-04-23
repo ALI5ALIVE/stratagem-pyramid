@@ -47,8 +47,8 @@ const slides = [
   { id: "tech-slide-4c", label: "TrainingManager365", component: TechSlide4cTrainingManager },
   { id: "tech-slide-data-foundation", label: "Data Foundation", component: TechSlideDataFoundation },
   // Act 3 — Intelligence
-  { id: "tech-slide-coanalyst", label: "CoAnalyst", component: TechSlide7CoAnalyst },
-  { id: "tech-slide-insights", label: "Insights & Recommendations", component: TechSlideInsights },
+  { id: "tech-slide-coanalyst", label: "Insights & Intelligence", component: TechSlide7CoAnalyst },
+  { id: "tech-slide-insights", label: "Recommendations & Prescriptive Actions", component: TechSlideInsights },
   { id: "tech-slide-automation", label: "Automation", component: TechSlideAutomation },
   { id: "tech-slide-mobile", label: "Unified Mobile", component: TechSlideMobile },
   // Act 4 — Delivery & operating model

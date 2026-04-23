@@ -21,13 +21,13 @@ const workedSteps = [
 const TechSlideInsights = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer
     id="tech-slide-insights"
-    title="Intelligence & Orchestration Layer — Insights & Recommendations"
-    subtitle="From data to intelligence to action — proactive signals across the platform"
+    title="Recommendations & Prescriptive Actions on the Operational Performance Platform"
+    subtitle="From insight to prescriptive action — proactive signals across the platform"
     slideNumber={slideNumber}
     {...narrationProps}
   >
     <div className="flex-1 flex flex-col gap-4 min-h-0">
-      <ArchitectureLayerBadge active="intelligence" sublayer="insights" />
+      <ArchitectureLayerBadge active="intelligence" sublayer="recommendations" />
       {/* 3 capability cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 auto-rows-fr shrink-0">
         {capabilities.map((c) => (
