@@ -18,6 +18,7 @@ import ContentStrategyPage from "./pages/ContentStrategyPage";
 import CoAnalystDeck from "./pages/CoAnalystDeck";
 import ExecutivePitch from "./pages/ExecutivePitch";
 import ExecutivePitch2 from "./pages/ExecutivePitch2";
+import ExecutivePitch3 from "./pages/ExecutivePitch3";
 import OperationalPitch from "./pages/OperationalPitch";
 import TechnicalDeepDive from "./pages/TechnicalDeepDive";
 import CoAnalystPreview from "./pages/CoAnalystPreview";
@@ -53,6 +54,7 @@ const App = () => (
             <Route path="/coanalyst" element={<CoAnalystDeck />} />
             <Route path="/pitch-executive" element={<ExecutivePitch />} />
             <Route path="/pitch-executive-2" element={<ExecutivePitch2 />} />
+            <Route path="/pitch-executive-3" element={<ExecutivePitch3 />} />
             <Route path="/pitch-operational" element={<OperationalPitch />} />
             <Route path="/pitch-technical" element={<TechnicalDeepDive />} />
             <Route path="/coanalyst-preview" element={<CoAnalystPreview />} />
