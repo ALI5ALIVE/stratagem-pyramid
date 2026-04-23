@@ -1,78 +1,89 @@
 
 
-## Executive Pitch 3 — "The Executive Cut of the Platform Story"
+## Executive Pitch 3 — Expand the Platform Story Into Per-Layer Summary Slides
 
-A new pitch deck that keeps the executive narrative arc of Pitch 2 but borrows the **strongest visual storytelling components** from the Technical Deep Dive — platform architecture diagram, layer dividers, intelligence depth, calculator, and maturity roadmap — without descending into engineering detail.
+Right now Pitch 3 introduces the 5-layer platform on slide 5 (`TechSlide4Platform`) and then jumps straight to the Intelligence and DTOP layers — skipping Core Apps, Data Foundation, and Mobile. The deck reads as if the platform = Intelligence + DTOP, which undersells the foundation and overweights the top layers.
 
-### Narrative arc (14 slides, ~12 min)
+You're right: the executive arc lands harder if **every layer gets its own summary slide**, with Core Apps framed as **table stakes** and the four upper layers framed as **the new platform capabilities** that differentiate Comply365.
+
+### New narrative arc (18 slides)
 
 ```text
-ACT 1 — The shift                ACT 2 — The platform              ACT 3 — The proof
-1. Title (hero)                  5. Platform Overview (5-layer)    11. Use Cases in Action
-2. Strategic Shift               6. ▸ Intelligence Layer divider   12. Maturity Roadmap
-3. Industry Challenge ($25–35B)  7. Insights & Intelligence        13. Customer Outcomes
-4. The DTOP Operating Model      8. ▸ DTOP divider                 14. Why Comply365 + CTA
-                                 9. DTOP — Detect→Trigger→...
-                                10. The Transformation
+ACT 1 — The shift                ACT 2 — The platform, layer by layer       ACT 3 — The proof
+1. Title                         5. Platform Overview (5-layer map)         15. Use Cases in Action
+2. Strategic Shift               6. ▸ Layer 1 divider — Core Apps           16. Maturity Roadmap
+3. Industry Challenge            7. Core Apps (table stakes)                17. Customer Outcomes
+4. The DTOP Operating Model      8. ▸ Layer 2 divider — Data Foundation     18. Why Comply365 + CTA
+                                 9. Operational Data Foundation
+                                10. ▸ Layer 3 divider — Intelligence
+                                11. Insights & Intelligence
+                                12. ▸ Layer 4 divider — Mobile
+                                13. Unified Mobile Experience
+                                14. ▸ Layer 5 divider — DTOP
+                                14b. DTOP — System of Work
+                                14c. The Transformation
 ```
 
-### Slide-by-slide composition (every slide reuses an existing component — zero new visuals)
+(Final numbering will be sequential 1–18 in the file; the chapter rhythm above just shows the structure.)
 
-| # | Slide | Component reused | Source deck |
+### Slide-by-slide composition
+
+| # | Slide | Component reused | Layer |
 |---|---|---|---|
-| 1 | Title — Operational Performance Platform | `ExecSlide0Title` | Exec |
-| 2 | Strategic Shift (executive framing) | `TechSlide1StrategicShift` | Tech |
-| 3 | Industry Challenge — $25–35B exposure | `TechSlide2IndustryChallenge` | Tech |
-| 4 | The Operating Model (DTOP narrative) | `Slide3OperatingModel` | Shared |
-| 5 | The Platform — 5 layers, click to jump | `TechSlide4Platform` | Tech |
-| 6 | ▸ Intelligence Layer divider | `TechSlideLayerDivider` (intelligence) | Tech |
-| 7 | Insights & Intelligence (exec-level) | `TechSlide7CoAnalyst` | Tech |
-| 8 | ▸ DTOP divider | `TechSlideLayerDivider` (dtop) | Tech |
-| 9 | DTOP — System of Work | `TechSlide5DTOP` | Tech |
-| 10 | The Transformation (From → To) | `Slide4Transformation` | Shared |
-| 11 | Use Cases in Action | `SlideUseCases` | Shared |
-| 12 | Maturity Roadmap | `Slide5MaturityCurve` | Shared |
-| 13 | Customer Outcomes | `CustomerOutcomesSlide` | Shared |
-| 14 | Why Comply365 + CTA | `TechSlideWhyComply` | Tech |
+| 1 | Title | `ExecSlide0Title` | — |
+| 2 | Strategic Shift | `TechSlide1StrategicShift` | — |
+| 3 | Industry Challenge | `TechSlide2IndustryChallenge` | — |
+| 4 | DTOP Operating Model | `Slide3OperatingModel` | — |
+| 5 | Platform Overview (5-layer map) | `TechSlide4Platform` | All |
+| 6 | ▸ Core Apps divider — *"Table stakes — the system of record"* | `TechSlideLayerDivider` (new `core` props) | 1 |
+| 7 | Core Operational Apps summary | `TechSlide6Capabilities` | 1 |
+| 8 | ▸ Data Foundation divider | `TechSlideLayerDivider` (new `data` props) | 2 |
+| 9 | Operational Data Foundation | `TechSlideDataFoundation` | 2 |
+| 10 | ▸ Intelligence divider (existing) | `TechSlideLayerDivider` (intelligence) | 3 |
+| 11 | Insights & Intelligence | `TechSlide7CoAnalyst` | 3 |
+| 12 | ▸ Mobile divider — *"One trusted shell for the frontline"* | `TechSlideLayerDivider` (new `mobile` props) | 4 |
+| 13 | Unified Mobile Experience | `TechSlideMobile` | 4 |
+| 14 | ▸ DTOP divider (existing) | `TechSlideLayerDivider` (dtop) | 5 |
+| 15 | DTOP — System of Work | `TechSlide5DTOP` | 5 |
+| 16 | The Transformation | `Slide4Transformation` | — |
+| 17 | Use Cases in Action | `SlideUseCases` | — |
+| 18 | Maturity Roadmap | `Slide5MaturityCurve` | — |
+| 19 | Customer Outcomes | `CustomerOutcomesSlide` | — |
+| 20 | Why Comply365 + CTA | `TechSlideWhyComply` | — |
 
-### Why this works for an exec audience
+Total: **20 slides**. (If too long for an exec, easiest trim is dropping the Maturity Roadmap or merging Transformation into Customer Outcomes — flag if you want me to keep it under 18.)
 
-- **Keeps Pitch 2's pacing** (under 15 slides, no engineering deep-dives like SafetyManager365/ContentManager365/TrainingManager365 module pages).
-- **Adds the Tech deck's two strongest signature visuals**: the 5-layer Platform Overview (`TechSlide4Platform`) and the Strategic Shift / Industry Challenge framing — both are visually richer than anything in Pitch 2.
-- **Uses two layer dividers** (Intelligence + DTOP) to give the deck Tech-deck-style chapter breaks without overwhelming an exec.
-- Drops Pitch 2's weaker slides (Performance Ladder, Intelligence Journey AI Vision) in favour of the more defensible `TechSlide7CoAnalyst` + `TechSlide5DTOP`.
+### Why the framing works
+
+- **Slide 5 sets the map**, then each layer gets its own divider + summary — exec sees the same structure repeat 5 times, which is memorable.
+- **Core Apps are explicitly framed as table stakes** in the divider tagline ("Every operator needs these — we built them right"), so the exec doesn't think "you're selling me a CMS." Then layers 2–5 are positioned as the *net-new platform capabilities* on top of that foundation.
+- **No new slide components** — every slide already exists in the Tech Deep Dive; we're just composing them in a tighter executive sequence and dropping the engineering-level module deep-dives (Safety/Content/Training individual slides).
 
 ### Implementation
 
-**New files**
-- `src/pages/ExecutivePitch3.tsx` — pattern-identical to `ExecutivePitch2.tsx` (scroll/snap container, sidebar nav, keyboard nav, narration). Reuses `useExecPitch2Narration` (existing narration map already covers the shared slides; tech slides will simply not auto-play, matching Pitch 2's behaviour for non-mapped slides).
-
-**Edited files**
-- `src/App.tsx` — add `<Route path="/pitch-executive-3" element={<ExecutivePitch3 />} />`.
-- `src/pages/HomePage.tsx` — add a third card to the **Customer Pitch Decks** section:
-  - Title: **"Executive Pitch 3"**
-  - Description: *"Executive narrative powered by the platform's strongest visuals — DTOP, 5-layer architecture, and intelligence depth in 14 slides."*
-  - Badge: `14 slides`
-  - Icon: `Sparkles` (or `Layers` to signal the platform-overview emphasis)
-  - Href: `/pitch-executive-3`
-  - Accent: `from-comply-teal to-accent`
-- `src/components/exec-slides/ExecSlide0Title.tsx` — no change needed; it already accepts `exportSlides` for the download buttons. Pitch 3 will pass its own `slides` array, so the existing PPTX/PDF buttons render without code changes (they target `deckId="executive-pitch"`, which is fine for now — PPTX export parity is **out of scope** for this task).
+**Edited only**
+- `src/pages/ExecutivePitch3.tsx`:
+  - Add three new `dividerProps` entries for `core`, `data`, `mobile` matching the existing `intelligence` / `dtop` shape.
+  - Import `TechSlide6Capabilities`, `TechSlideDataFoundation`, `TechSlideMobile`.
+  - Replace the current `slides` array with the 20-slide ordering above.
 
 **Not touched**
-- All slide components (zero edits — pure composition).
-- Narration data / hooks.
-- PPTX exporters (Pitch 3 reuses the existing Exec PPTX button; a dedicated Pitch 3 PPTX builder is a follow-up if needed).
-- Tech deep-dive page.
+- `TechSlideLayerDivider` already supports all 5 `LayerKey` values (`dtop | mobile | intelligence | data | core`) — no edits needed.
+- All slide components — pure reuse.
+- Home page card — still says "14 slides"; will update the badge to **"20 slides"**.
+
+**Also edited**
+- `src/pages/HomePage.tsx` — bump the Executive Pitch 3 card badge from `14 slides` to `20 slides`.
 
 ### QA
 
-- Open `/pitch-executive-3`, scroll through all 14 slides, confirm snap behaviour and sidebar navigation work.
-- Confirm Home page shows the new card alongside Executive Pitch / Operational Pitch / Technical Deep-Dive (4 cards in the row, grid stays balanced on `lg:grid-cols-3` — may bump to `lg:grid-cols-4` if needed for layout symmetry).
-- Confirm keyboard arrows + space advance slides; narration play button on the title works.
+- Open `/pitch-executive-3`, scroll all 20 slides, confirm each layer divider lands before its summary slide.
+- Confirm the 5 dividers visually mirror each other (same `TechSlideLayerDivider` chrome, different accent per layer).
+- Confirm Core Apps divider tagline reads as table-stakes framing, not as a sales pitch for the modules.
 
 ### Out of scope
 
-- New PPTX export builder for Pitch 3 (uses the existing Exec one until requested).
-- Any new narration scripts; missing slides simply have no audio (same as Pitch 2 behaviour).
-- Any edits to existing slide components — all reuse, no rewrites.
+- New PPTX builder for the expanded Pitch 3 (existing Exec PPTX still targets the 11-slide Pitch 2 narrative).
+- Per-layer narration scripts.
+- Any edits to slide components themselves.
 
