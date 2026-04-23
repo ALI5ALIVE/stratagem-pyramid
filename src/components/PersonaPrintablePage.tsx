@@ -2,6 +2,7 @@ import React from "react";
 import { Briefcase, Shield, Plane, GraduationCap, Monitor } from "lucide-react";
 import type { PersonaProfile } from "@/data/personaProfiles";
 import { printBrand } from "./print/printBrand";
+import complyLogo from "@/assets/comply365-logo-white.png";
 
 interface Props {
   persona: PersonaProfile;
@@ -136,12 +137,11 @@ const PersonaPrintablePage: React.FC<Props> = ({ persona }) => {
         marginBottom: 10,
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <span style={{
-            fontFamily: F.display, fontSize: 16, fontWeight: 700,
-            color: C.darkInk, letterSpacing: "-0.01em",
-          }}>
-            Comply<span style={{ color: C.brand }}>365</span>
-          </span>
+          <img
+            src={complyLogo}
+            alt="Comply365"
+            style={{ height: 18, width: "auto", display: "block" }}
+          />
           <span style={{
             display: "inline-block", width: 6, height: 6,
             background: accent, marginBottom: 2,
