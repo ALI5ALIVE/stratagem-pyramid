@@ -6,7 +6,6 @@ import { DeckProvider } from "@/contexts/DeckContext";
 
 // Frame the problem
 import TechSlideOpener from "@/components/tech-slides/TechSlideOpener";
-import TechSlide0Title from "@/components/tech-slides/TechSlide0Title";
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
 import TechSlide2IndustryChallenge from "@/components/tech-slides/TechSlide2IndustryChallenge";
 import TechSlideWhyExists from "@/components/tech-slides/TechSlideWhyExists";
@@ -103,7 +102,6 @@ const journeyProps = {
 const slides = [
   // Frame the problem
   { id: "tech-slide-opener", label: "Hero — Operational Performance Platform", component: TechSlideOpener },
-  { id: "tech-slide-0", label: "Title", component: TechSlide0Title },
   { id: "tech-slide-1", label: "Strategic Shift", component: TechSlide1StrategicShift },
   { id: "tech-slide-2", label: "Industry Challenge", component: TechSlide2IndustryChallenge },
   { id: "tech-slide-why-exists", label: "Why It Exists", component: TechSlideWhyExists },
