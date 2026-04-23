@@ -1,88 +1,78 @@
 
 
-## Bring the Executive Pitch PPTX into true parity with the live web deck
+## Executive Pitch 3 — "The Executive Cut of the Platform Story"
 
-### What's actually wrong (audit)
+A new pitch deck that keeps the executive narrative arc of Pitch 2 but borrows the **strongest visual storytelling components** from the Technical Deep Dive — platform architecture diagram, layer dividers, intelligence depth, calculator, and maturity roadmap — without descending into engineering detail.
 
-The PPTX exports 12 slides, but the web deck (`/pitch-executive-2`) has 11 — and they don't line up:
+### Narrative arc (14 slides, ~12 min)
 
-| # | Web slide | PPTX slide | Status |
+```text
+ACT 1 — The shift                ACT 2 — The platform              ACT 3 — The proof
+1. Title (hero)                  5. Platform Overview (5-layer)    11. Use Cases in Action
+2. Strategic Shift               6. ▸ Intelligence Layer divider   12. Maturity Roadmap
+3. Industry Challenge ($25–35B)  7. Insights & Intelligence        13. Customer Outcomes
+4. The DTOP Operating Model      8. ▸ DTOP divider                 14. Why Comply365 + CTA
+                                 9. DTOP — Detect→Trigger→...
+                                10. The Transformation
+```
+
+### Slide-by-slide composition (every slide reuses an existing component — zero new visuals)
+
+| # | Slide | Component reused | Source deck |
 |---|---|---|---|
-| 1 | Title | Title | ✅ matches |
-| 2 | Before — Disconnected | Before | 🟡 layout OK, silo visual cramped |
-| 3 | After — Connected | After | 🟡 OK, but DTOP closed-loop not emphasized |
-| 4 | **The Operational Intelligence Layer** (Slide3OperatingModel) | **DTOP — From Signals to Provable Outcomes** | ❌ **wrong slide** — missing platform ecosystem diagram, sources row (65K+ signals/mo), and value-outputs row (OTP +3%, Ready 94%, Audit 2hr, Repeat Zero) |
-| 5 | The Platform | The Platform | ✅ matches |
-| 6 | Use Cases in Action | Use Cases | ✅ matches (vertical DTOP timeline correct) |
-| 7 | The Transformation | The Transformation | ✅ matches |
-| 8 | Performance Ladder (Value Pyramid) | Performance Ladder | ❌ **duplicates Maturity stages** — uses Fragmented→Predictive labels instead of the web's actual 5 layers (with time-allocation + ROI proof per layer via `DetailsPanel`) |
-| 9 | Intelligence Journey (AI Vision) | Intelligence Journey | ✅ matches |
-| 10 | **Maturity Roadmap** (Slide5MaturityCurve) | — | ❌ **missing entirely** — no hockey-stick curve, no per-stage scenario/problem/outcome cards |
-| 11 | Customer Outcomes | Customer Outcomes | 🟡 layout cramped, signal/action/result text wraps awkwardly in narrow cells |
-| — | — | Why Comply365 | ❌ **not on web** — fabricated slide |
-| — | — | CTA | ❌ **not on web** — fabricated slide |
+| 1 | Title — Operational Performance Platform | `ExecSlide0Title` | Exec |
+| 2 | Strategic Shift (executive framing) | `TechSlide1StrategicShift` | Tech |
+| 3 | Industry Challenge — $25–35B exposure | `TechSlide2IndustryChallenge` | Tech |
+| 4 | The Operating Model (DTOP narrative) | `Slide3OperatingModel` | Shared |
+| 5 | The Platform — 5 layers, click to jump | `TechSlide4Platform` | Tech |
+| 6 | ▸ Intelligence Layer divider | `TechSlideLayerDivider` (intelligence) | Tech |
+| 7 | Insights & Intelligence (exec-level) | `TechSlide7CoAnalyst` | Tech |
+| 8 | ▸ DTOP divider | `TechSlideLayerDivider` (dtop) | Tech |
+| 9 | DTOP — System of Work | `TechSlide5DTOP` | Tech |
+| 10 | The Transformation (From → To) | `Slide4Transformation` | Shared |
+| 11 | Use Cases in Action | `SlideUseCases` | Shared |
+| 12 | Maturity Roadmap | `Slide5MaturityCurve` | Shared |
+| 13 | Customer Outcomes | `CustomerOutcomesSlide` | Shared |
+| 14 | Why Comply365 + CTA | `TechSlideWhyComply` | Tech |
 
-### Fix plan
+### Why this works for an exec audience
 
-Edit `src/exporters/pptx/buildExecutiveDeck.ts` only.
+- **Keeps Pitch 2's pacing** (under 15 slides, no engineering deep-dives like SafetyManager365/ContentManager365/TrainingManager365 module pages).
+- **Adds the Tech deck's two strongest signature visuals**: the 5-layer Platform Overview (`TechSlide4Platform`) and the Strategic Shift / Industry Challenge framing — both are visually richer than anything in Pitch 2.
+- **Uses two layer dividers** (Intelligence + DTOP) to give the deck Tech-deck-style chapter breaks without overwhelming an exec.
+- Drops Pitch 2's weaker slides (Performance Ladder, Intelligence Journey AI Vision) in favour of the more defensible `TechSlide7CoAnalyst` + `TechSlide5DTOP`.
 
-#### 1. Replace the DTOP slide (slide 4) with the real "Operational Intelligence Layer"
+### Implementation
 
-Rebuild `dtopSpec` to mirror `Slide3OperatingModel.tsx`:
-- Title = "The Operational Intelligence Layer", subtitle from the web component verbatim.
-- Embed `platform-ecosystem.png` centered (as the web does), ~3.2" × 3.2" at the top.
-- Sources strip: "SOURCES:" label + pills (Reports, Ops, Crew, Mx, etc.) + **"65K+ signals/mo"** highlighted pill.
-- 4-step DTOP pipeline as horizontal cards with the canonical sky/amber/purple/emerald accents (existing build is fine — keep this part) and the **per-step metric** the web shows.
-- Bottom **Value Generated** row: 4 mini-stat cards — OTP +3% / Ready 94% / Audit 2hr / Repeat Zero.
+**New files**
+- `src/pages/ExecutivePitch3.tsx` — pattern-identical to `ExecutivePitch2.tsx` (scroll/snap container, sidebar nav, keyboard nav, narration). Reuses `useExecPitch2Narration` (existing narration map already covers the shared slides; tech slides will simply not auto-play, matching Pitch 2's behaviour for non-mapped slides).
 
-#### 2. Rebuild the Performance Ladder slide (slide 8)
-
-Read the actual web `Slide4ValuePyramid` `layersData` (5 layers with `timeAllocation` and `roiProof` per layer) and use those values — not the maturity stage labels. The pyramid stays (5 stacked trapezoids) but the right-column descriptions become **per-tier time-allocation + ROI-proof bullets**, distinct from the Maturity Roadmap content.
-
-#### 3. Insert the missing Maturity Roadmap slide (new slide 10)
-
-New `maturityRoadmapSpec` modelled on the tech deck's two-slide split pattern (already proven). Single slide for Exec, since it's a summary deck:
-- Left half: native hockey-stick curve drawn with `slide.addShape("line", ...)` between 5 control points + 5 stage markers (color-coded dots).
-- Right half: 5 stacked `addLabeledCard`s, one per stage, showing **Scenario · Problem · Outcome** from `stagesData` in `Slide5MaturityCurve.tsx`.
-- Bottom strip: `MaturitySummaryBanner` text equivalent ("Most ops live at Stage 1–2. The platform moves you to 4–5.").
-
-#### 4. Remove the two fabricated slides
-
-Delete `whyUsSpec` and `ctaSpec` from the `composed` array. They are not in `slides[]` on `/pitch-executive-2`. (The closing message is already implicit in the Customer Outcomes CTA banner pointing to `/line-of-sight`.)
-
-Result: PPTX becomes 11 slides, matching the web deck 1:1.
-
-#### 5. Polish two minor layout issues
-
-- **Before slide silos**: enlarge each silo card to fit the volume label inside (currently the ellipse is centered above text that gets clipped on small widths). Increase `siloH` from 1.6 to 1.85.
-- **Customer Outcomes**: widen cards by reducing horizontal gap from 0.18 to 0.12 and increase `bodySize` to 10.5; raise `cH` from 3.7 to 4.1 so signal/action/result rows breathe.
-
-### Files touched
-
-**Edited only**
-- `src/exporters/pptx/buildExecutiveDeck.ts` — the 5 fixes above. Imports needed: `stagesData` from `Slide5MaturityCurve` (or copy as local constant if the component doesn't export it — extract to a shared data file if needed), `layersData` from `Slide4ValuePyramid` (same pattern).
+**Edited files**
+- `src/App.tsx` — add `<Route path="/pitch-executive-3" element={<ExecutivePitch3 />} />`.
+- `src/pages/HomePage.tsx` — add a third card to the **Customer Pitch Decks** section:
+  - Title: **"Executive Pitch 3"**
+  - Description: *"Executive narrative powered by the platform's strongest visuals — DTOP, 5-layer architecture, and intelligence depth in 14 slides."*
+  - Badge: `14 slides`
+  - Icon: `Sparkles` (or `Layers` to signal the platform-overview emphasis)
+  - Href: `/pitch-executive-3`
+  - Accent: `from-comply-teal to-accent`
+- `src/components/exec-slides/ExecSlide0Title.tsx` — no change needed; it already accepts `exportSlides` for the download buttons. Pitch 3 will pass its own `slides` array, so the existing PPTX/PDF buttons render without code changes (they target `deckId="executive-pitch"`, which is fine for now — PPTX export parity is **out of scope** for this task).
 
 **Not touched**
-- `src/lib/pptxBrand.ts` — uses existing primitives.
-- `src/exporters/pptx/index.ts` — registration unchanged.
-- All web slides — unchanged.
-- Tech deck builder — unchanged.
+- All slide components (zero edits — pure composition).
+- Narration data / hooks.
+- PPTX exporters (Pitch 3 reuses the existing Exec PPTX button; a dedicated Pitch 3 PPTX builder is a follow-up if needed).
+- Tech deep-dive page.
 
-### QA gate
+### QA
 
-After build: render the new `Comply365-Executive-Pitch.pptx` to PDF at 150 DPI and verify slide-by-slide against the live `/pitch-executive-2`:
-1. Slide 4 has the platform ecosystem image, sources row with **65K+ signals/mo**, and value-outputs row.
-2. Slide 8 (Pyramid) descriptions reference time-allocation + ROI proof — **not** the maturity stage labels.
-3. Slide 10 is the Maturity Roadmap with curve + 5 scenario cards.
-4. Total slide count = 11.
-5. No "Why Comply365" or stand-alone "CTA" slide.
-6. DTOP colours (sky/amber/purple/emerald) consistent with tech deck.
-7. Logo proportions correct on both dark and light slides.
+- Open `/pitch-executive-3`, scroll through all 14 slides, confirm snap behaviour and sidebar navigation work.
+- Confirm Home page shows the new card alongside Executive Pitch / Operational Pitch / Technical Deep-Dive (4 cards in the row, grid stays balanced on `lg:grid-cols-3` — may bump to `lg:grid-cols-4` if needed for layout symmetry).
+- Confirm keyboard arrows + space advance slides; narration play button on the title works.
 
 ### Out of scope
 
-- No web slide changes.
-- No new branding primitives.
-- No PPTX exports for v1 Exec deck (`/pitch-executive`) beyond what the shared builder already produces — same builder serves both pages.
-- No copy rewrites; all text lifted from the live web slide components.
+- New PPTX export builder for Pitch 3 (uses the existing Exec one until requested).
+- Any new narration scripts; missing slides simply have no audio (same as Pitch 2 behaviour).
+- Any edits to existing slide components — all reuse, no rewrites.
 
