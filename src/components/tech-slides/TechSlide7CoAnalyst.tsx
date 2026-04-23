@@ -2,6 +2,7 @@ import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import ArchitectureLayerBadge from "@/components/tech-slides/ArchitectureLayerBadge";
 import { SlideNarrationProps } from "@/types/slideProps";
 import { Brain, Database, Sparkles, Search, Zap, Languages, Quote } from "lucide-react";
+import DeepDiveLink from "@/components/shared/DeepDiveLink";
 
 interface Props extends SlideNarrationProps { slideNumber?: number; }
 
@@ -22,13 +23,16 @@ const archCards = [
 const TechSlide7CoAnalyst = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer
     id="tech-slide-coanalyst"
-    title="Layer 3 · Intelligence & Orchestration — Insights & Intelligence"
+    title="Layer 3 · Intelligence & Orchestration — Insights & Intelligence (CoAnalyst)"
     subtitle="Conversational intelligence purpose-built for aviation operations"
     slideNumber={slideNumber}
     {...narrationProps}
   >
     <div className="flex-1 flex flex-col gap-4 min-h-0">
-      <ArchitectureLayerBadge active="intelligence" sublayer="insights-intelligence" />
+      <div className="flex items-center justify-between gap-3">
+        <ArchitectureLayerBadge active="intelligence" sublayer="insights-intelligence" />
+        <DeepDiveLink to="/coanalyst" label="CoAnalyst" returnTo="/pitch-technical" />
+      </div>
       {/* Master message */}
       <div className="rounded-xl border border-primary/30 bg-primary/10 p-4 flex items-center gap-3 shrink-0">
         <Quote className="h-5 w-5 text-primary shrink-0" />
