@@ -2262,7 +2262,7 @@ const regulationSummarySpec: SlideSpec = {
     // Left — problems
     problems.forEach((p, i) => {
       const cy = itemsTop + i * (rowH + 0.12);
-      addCard(slide, lx, cy, colW, rowH, { fill: C.dangerSoft ?? C.surfaceAlt, border: C.danger });
+      addCard(slide, lx, cy, colW, rowH, { fill: C.surfaceAlt, border: C.danger });
       addIconBadge(slide, lx + 0.15, cy + 0.18, 0.34, C.danger, "!");
       slide.addText(p.headline, {
         x: lx + 0.6, y: cy + 0.1, w: colW - 0.75, h: 0.3,
