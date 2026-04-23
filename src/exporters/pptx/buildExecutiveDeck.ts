@@ -12,6 +12,7 @@ import {
   addCalloutBanner,
   addGlowWash,
   addDivider,
+  addPill,
 } from "@/lib/pptxBrand";
 import logoUrlDark from "@/assets/comply365-logo-white.png";
 import logoUrlLight from "@/assets/comply365-logo.png";
