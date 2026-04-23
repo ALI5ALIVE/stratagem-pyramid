@@ -1,6 +1,7 @@
 import React from "react";
 import { dtopSteps, useCases, valueCategories, whyDTOPExists, heroTagline } from "@/data/dtopPlaybook";
 import { printBrand, stepAccentsDark } from "./printBrand";
+import complyLogo from "@/assets/comply365-logo-white.png";
 
 const DTOPPrintablePage: React.FC = () => {
   const C = printBrand.color;
@@ -38,16 +39,11 @@ const DTOPPrintablePage: React.FC = () => {
         marginBottom: 10,
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <span style={{
-            display: "inline-flex", alignItems: "center", justifyContent: "center",
-            width: 22, height: 22, background: C.brand, color: "#FFFFFF",
-            fontFamily: F.display, fontSize: 12, fontWeight: 700,
-            letterSpacing: "-0.02em",
-          }}>C</span>
-          <span style={{
-            fontFamily: F.display, fontSize: 16, fontWeight: 700,
-            color: C.darkInk, letterSpacing: "-0.01em",
-          }}>Comply<span style={{ color: C.brand }}>365</span></span>
+          <img
+            src={complyLogo}
+            alt="Comply365"
+            style={{ height: 18, width: "auto", display: "block" }}
+          />
         </div>
         <div style={{
           fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase",
