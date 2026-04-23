@@ -122,7 +122,7 @@ const PersonaPrintablePage: React.FC<Props> = ({ persona }) => {
         height: printBrand.page.height,
         background: C.darkPaper,
         backgroundImage: `radial-gradient(700px 480px at 100% 0%, ${accentRgba(0.10)}, transparent 60%), radial-gradient(600px 400px at 0% 100%, rgba(0,102,255,0.05), transparent 65%)`,
-        padding: "22px 36px 20px",
+        padding: "26px 40px 22px",
         fontFamily: F.body,
         color: C.darkInk,
         boxSizing: "border-box",
@@ -158,7 +158,7 @@ const PersonaPrintablePage: React.FC<Props> = ({ persona }) => {
       <hr style={hr} />
 
       {/* TITLE BLOCK with persona medallion */}
-      <div style={{ display: "flex", gap: 20, marginTop: 16, marginBottom: 12, alignItems: "center" }}>
+      <div style={{ display: "flex", gap: 20, marginTop: 18, marginBottom: 14, alignItems: "center" }}>
         <div style={{ flex: 1, minWidth: 0, borderLeft: `4px solid ${accent}`, paddingLeft: 14 }}>
           <div style={{
             fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase",
@@ -167,8 +167,8 @@ const PersonaPrintablePage: React.FC<Props> = ({ persona }) => {
             {persona.seniority}
           </div>
           <h1 style={{
-            margin: 0, fontFamily: F.display, fontSize: 30, fontWeight: 700,
-            color: C.darkInk, lineHeight: 1.05, letterSpacing: "-0.02em",
+            margin: 0, fontFamily: F.display, fontSize: 28, fontWeight: 700,
+            color: C.darkInk, lineHeight: 1.1, letterSpacing: "-0.02em",
           }}>
             {persona.title}
           </h1>
@@ -193,8 +193,8 @@ const PersonaPrintablePage: React.FC<Props> = ({ persona }) => {
 
       {/* EXECUTIVE SUMMARY */}
       <p style={{
-        margin: "0 0 12px", fontSize: 12, lineHeight: 1.5,
-        color: C.darkSlate, fontFamily: F.body, maxWidth: "92%",
+        margin: "0 0 14px", fontSize: 11.5, lineHeight: 1.6,
+        color: C.darkSlate, fontFamily: F.body,
       }}>
         {persona.profileSummary}
       </p>
@@ -205,8 +205,8 @@ const PersonaPrintablePage: React.FC<Props> = ({ persona }) => {
           background: C.darkPaperWarm,
           border: `1px solid ${accentRgba(0.35)}`,
           borderLeft: `3px solid ${accent}`,
-          padding: "10px 14px",
-          marginBottom: 12,
+          padding: "12px 16px",
+          marginBottom: 14,
           display: "grid",
           gridTemplateColumns: "1.1fr 1fr",
           gap: 16,
@@ -228,7 +228,7 @@ const PersonaPrintablePage: React.FC<Props> = ({ persona }) => {
             </div>
             <div style={{
               fontSize: 10, color: C.darkSlate, fontStyle: "italic",
-              marginTop: 2, lineHeight: 1.35,
+              marginTop: 2, lineHeight: 1.45,
             }}>
               {exemplar.role} · {exemplar.archetype}
             </div>
