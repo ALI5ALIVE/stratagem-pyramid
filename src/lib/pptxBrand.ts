@@ -28,8 +28,24 @@ export const PPTX_BRAND = {
     cyan: "22D3EE",
     sky: "38BDF8",
     purple: "C084FC",
+    // Extended tokens (added for brand polish)
+    gridLine: "16213A",
+    glow: "0A2A6B",
+    tier1: "F59E0B", // Reactive
+    tier2: "A78BFA", // Proactive
+    tier3: "10B981", // Predictive
+    gradStart: "0A0F1C",
+    gradEnd: "0E1B3D",
+    dataViz1: "0066FF",
+    dataViz2: "22D3EE",
+    dataViz3: "A78BFA",
+    dataViz4: "F59E0B",
+    dataViz5: "F43F5E",
+    dataViz6: "10B981",
+    wordmarkInk: "16213A",
   },
-  font: { display: "Calibri", body: "Calibri" },
+  // Brand fonts (PowerPoint will substitute Calibri locally if not installed)
+  font: { display: "Space Grotesk", body: "Inter" },
 } as const;
 
 const C = PPTX_BRAND.color;
@@ -333,6 +349,11 @@ export function addLabeledCard(
     line: { color: accent, width: 0.75 },
     rectRadius: 0.08,
   });
+  // Brand motif: left accent bar
+  slide.addShape("rect", {
+    x, y: y + 0.06, w: 0.05, h: h - 0.12,
+    fill: { color: accent }, line: { type: "none" },
+  });
   let cy = y + 0.15;
   if (opts.eyebrow) {
     slide.addText(opts.eyebrow.toUpperCase(), {
@@ -391,5 +412,178 @@ export function addDivider(
   slide.addShape("rect", {
     x, y, w, h: 0.015,
     fill: { color }, line: { type: "none" },
+  });
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   Brand polish — added for pinpoint visuals + deeper Comply365 brand
+   ─────────────────────────────────────────────────────────────────── */
+
+/** Faint dotted grid in the safe area (decorative, low-contrast). */
+function addSafeAreaGrid(slide: pptxgen.Slide) {
+  const step = 0.55;
+  const x0 = 0.4, y0 = 1.7;
+  const x1 = PPTX_BRAND.size.w - 0.4;
+  const y1 = PPTX_BRAND.size.h - 0.5;
+  for (let x = x0; x <= x1; x += step) {
+    for (let y = y0; y <= y1; y += step) {
+      slide.addShape("ellipse", {
+        x: x - 0.012, y: y - 0.012, w: 0.024, h: 0.024,
+        fill: { color: C.gridLine }, line: { type: "none" },
+      });
+    }
+  }
+}
+
+/** Master chrome: background + top hairline + logo + footer + faint grid. */
+export function addBrandMaster(
+  slide: pptxgen.Slide,
+  ctx: { logo: string; index: number; total: number; deckLabel: string; variant?: "dark" | "light"; grid?: boolean },
+) {
+  const variant = ctx.variant ?? "dark";
+  paintBackground(slide, variant);
+  if (ctx.grid !== false && variant === "dark") addSafeAreaGrid(slide);
+  if (ctx.logo) addBrandLogo(slide, ctx.logo, variant);
+  // Faint Comply365 wordmark glyph left of footer label
+  const ink = variant === "light" ? C.subtle : C.muted;
+  slide.addShape("ellipse", {
+    x: 0.18, y: PPTX_BRAND.size.h - 0.36, w: 0.18, h: 0.18,
+    fill: { color: C.primary }, line: { type: "none" },
+  });
+  slide.addText("365", {
+    x: 0.18, y: PPTX_BRAND.size.h - 0.36, w: 0.18, h: 0.18,
+    fontFace: PPTX_BRAND.font.body, fontSize: 5, bold: true, color: C.bg,
+    align: "center", valign: "middle",
+  });
+  // Footer label, brand mark center, slide counter right
+  slide.addShape("rect", {
+    x: 0, y: PPTX_BRAND.size.h - 0.42, w: PPTX_BRAND.size.w, h: 0.02,
+    fill: { color: variant === "light" ? "E2E8F0" : C.hairline }, line: { type: "none" },
+  });
+  slide.addText(ctx.deckLabel, {
+    x: 0.42, y: PPTX_BRAND.size.h - 0.38, w: 5.8, h: 0.3,
+    fontFace: PPTX_BRAND.font.body, fontSize: 9, color: ink,
+  });
+  slide.addText("Comply365 · Operational Performance Platform", {
+    x: PPTX_BRAND.size.w / 2 - 3, y: PPTX_BRAND.size.h - 0.38, w: 6, h: 0.3,
+    fontFace: PPTX_BRAND.font.body, fontSize: 9, color: ink, align: "center",
+  });
+  slide.addText(
+    `${String(ctx.index + 1).padStart(2, "0")} / ${String(ctx.total).padStart(2, "0")}`,
+    {
+      x: PPTX_BRAND.size.w - 1.4, y: PPTX_BRAND.size.h - 0.38, w: 1, h: 0.3,
+      fontFace: PPTX_BRAND.font.body, fontSize: 9, color: ink, align: "right",
+    },
+  );
+}
+
+/** Hero chrome — gradient-ish bg via stacked rects + faint wordmark watermark. */
+export function addBrandHero(slide: pptxgen.Slide) {
+  slide.background = { color: C.gradStart };
+  // Stacked translucent layers approximate a vertical gradient.
+  slide.addShape("rect", {
+    x: 0, y: 0, w: PPTX_BRAND.size.w, h: PPTX_BRAND.size.h / 2,
+    fill: { color: C.gradEnd, transparency: 35 }, line: { type: "none" },
+  });
+  slide.addShape("rect", {
+    x: 0, y: PPTX_BRAND.size.h / 2, w: PPTX_BRAND.size.w, h: PPTX_BRAND.size.h / 2,
+    fill: { color: C.bg, transparency: 20 }, line: { type: "none" },
+  });
+  // Watermark wordmark — large, very low contrast.
+  slide.addText("comply365", {
+    x: 0.5, y: PPTX_BRAND.size.h - 2.6, w: PPTX_BRAND.size.w - 1, h: 2,
+    fontFace: PPTX_BRAND.font.display, fontSize: 180, bold: true,
+    color: C.wordmarkInk, align: "center",
+  });
+}
+
+/** Section divider slide — full-bleed dark, big eyebrow + title. */
+export function addSectionDivider(
+  slide: pptxgen.Slide,
+  opts: { eyebrow: string; title: string; subtitle?: string; index?: number; logo?: string },
+) {
+  addBrandHero(slide);
+  // Top accent bar
+  slide.addShape("rect", {
+    x: 0.5, y: 1.6, w: 0.6, h: 0.06,
+    fill: { color: C.primary }, line: { type: "none" },
+  });
+  if (typeof opts.index === "number") {
+    slide.addText(String(opts.index).padStart(2, "0"), {
+      x: 0.5, y: 1.75, w: 2.2, h: 1.4,
+      fontFace: PPTX_BRAND.font.display, fontSize: 96, bold: true, color: C.primary,
+    });
+  }
+  slide.addText(opts.eyebrow.toUpperCase(), {
+    x: 0.5, y: 3.15, w: 12, h: 0.4,
+    fontFace: PPTX_BRAND.font.body, fontSize: 13, bold: true, color: C.accent, charSpacing: 6,
+  });
+  slide.addText(opts.title, {
+    x: 0.5, y: 3.6, w: 12.3, h: 1.4,
+    fontFace: PPTX_BRAND.font.display, fontSize: 56, bold: true, color: C.ink,
+  });
+  if (opts.subtitle) {
+    slide.addText(opts.subtitle, {
+      x: 0.5, y: 5.05, w: 12.3, h: 0.7,
+      fontFace: PPTX_BRAND.font.body, fontSize: 16, color: C.muted,
+    });
+  }
+  if (opts.logo) addBrandLogo(slide, opts.logo, "dark");
+}
+
+/** Stat block with subtle left accent bar — replaces addStatTile for hero stats. */
+export function addBrandStatBlock(
+  slide: pptxgen.Slide,
+  x: number, y: number, w: number, h: number,
+  value: string, label: string, accent: string = C.primary,
+) {
+  addCard(slide, x, y, w, h);
+  // Left accent bar (the brand motif)
+  slide.addShape("rect", {
+    x, y, w: 0.06, h,
+    fill: { color: accent }, line: { type: "none" },
+  });
+  slide.addText(value, {
+    x: x + 0.18, y: y + 0.12, w: w - 0.3, h: h * 0.55,
+    fontFace: PPTX_BRAND.font.display, fontSize: 30, bold: true, color: accent,
+    align: "center", valign: "middle",
+  });
+  slide.addText(label, {
+    x: x + 0.18, y: y + h * 0.62, w: w - 0.3, h: h * 0.32,
+    fontFace: PPTX_BRAND.font.body, fontSize: 10, color: C.muted, align: "center",
+  });
+}
+
+/** Branded callout banner. */
+export function addCalloutBanner(
+  slide: pptxgen.Slide,
+  x: number, y: number, w: number, h: number,
+  text: string, accent: string = C.primary,
+) {
+  slide.addShape("roundRect", {
+    x, y, w, h,
+    fill: { color: C.primarySoft }, line: { color: accent, width: 1 },
+    rectRadius: 0.08,
+  });
+  // accent bar
+  slide.addShape("rect", {
+    x, y, w: 0.06, h,
+    fill: { color: accent }, line: { type: "none" },
+  });
+  slide.addText(text, {
+    x: x + 0.2, y, w: w - 0.3, h,
+    fontFace: PPTX_BRAND.font.body, fontSize: 11, italic: true, color: C.ink,
+    align: "center", valign: "middle",
+  });
+}
+
+/** Soft glow rectangle (decorative wash). */
+export function addGlowWash(
+  slide: pptxgen.Slide,
+  x: number, y: number, w: number, h: number, color: string = C.primary,
+) {
+  slide.addShape("roundRect", {
+    x, y, w, h,
+    fill: { color, transparency: 85 }, line: { type: "none" }, rectRadius: 0.2,
   });
 }

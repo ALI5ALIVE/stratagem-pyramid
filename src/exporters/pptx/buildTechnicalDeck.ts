@@ -17,9 +17,20 @@ import {
   addDivider,
   addIconBadge,
   addDtopPills,
+  addBrandMaster,
+  addSectionDivider,
+  addBrandStatBlock,
+  addCalloutBanner,
+  addGlowWash,
 } from "@/lib/pptxBrand";
 import logoUrl from "@/assets/comply365-logo-white.png";
-import { useCases, methodologyNote, leadingMeasures, executiveOutcomes } from "@/data/lineOfSightData";
+import {
+  useCases,
+  methodologyNote,
+  leadingMeasures,
+  executiveOutcomes,
+  sourceCitations,
+} from "@/data/lineOfSightData";
 
 const C = PPTX_BRAND.color;
 const W = PPTX_BRAND.size.w;
@@ -39,9 +50,14 @@ const fmtMoney = (v: number) =>
   v >= 1_000_000 ? `$${(v / 1_000_000).toFixed(1)}M` : v >= 1_000 ? `$${(v / 1_000).toFixed(0)}K` : `$${v}`;
 
 function chrome(slide: pptxgen.Slide, ctx: { logo: string; index: number; total: number }) {
-  paintBackground(slide, "dark");
-  addBrandLogo(slide, ctx.logo, "dark");
-  addBrandedFooter(slide, ctx.index, ctx.total, DECK_LABEL, "dark");
+  addBrandMaster(slide, {
+    logo: ctx.logo,
+    index: ctx.index,
+    total: ctx.total,
+    deckLabel: DECK_LABEL,
+    variant: "dark",
+    grid: true,
+  });
 }
 
 function header(
@@ -72,6 +88,12 @@ const slideSpecs: SlideSpec[] = [
     label: "Title",
     build: (slide, ctx) => {
       chrome(slide, ctx);
+      // Subtle wordmark watermark (very low contrast)
+      slide.addText("comply365", {
+        x: 0.5, y: 4.0, w: W - 1, h: 1.6,
+        fontFace: PPTX_BRAND.font.display, fontSize: 130, bold: true,
+        color: C.wordmarkInk, align: "center",
+      });
       slide.addText("THE COMPLETE PLATFORM STORY", {
         x: 0.5, y: 1.9, w: 12.3, h: 0.4,
         fontFace: PPTX_BRAND.font.body, fontSize: 12, bold: true, color: C.primary, charSpacing: 6, align: "center",
@@ -91,15 +113,15 @@ const slideSpecs: SlideSpec[] = [
         },
       );
       const stats = [
-        { v: "550+", l: "Airlines Worldwide" },
-        { v: "~2.5M", l: "Users" },
-        { v: "6", l: "Continents" },
+        { v: "550+", l: "Airlines Worldwide", c: C.primary },
+        { v: "~2.5M", l: "Users", c: C.accent },
+        { v: "6", l: "Continents", c: C.violet },
       ];
       const tileW = 2.4, tileH = 0.95, gap = 0.3;
       const totalW = stats.length * tileW + (stats.length - 1) * gap;
       let x = (W - totalW) / 2;
       stats.forEach((s) => {
-        addStatTile(slide, x, 5.65, tileW, tileH, s.v, s.l);
+        addBrandStatBlock(slide, x, 5.65, tileW, tileH, s.v, s.l, s.c);
         x += tileW + gap;
       });
       addDtopPills(slide, 0.7, 6.85 - 0.55, W - 1.4);
@@ -224,7 +246,7 @@ const slideSpecs: SlideSpec[] = [
       const max = sorted[0]?.annual || 1;
 
       const wfTop = pY + 1.15;
-      const wfBottom = CONTENT_BOTTOM - 1.05;
+      const wfBottom = CONTENT_BOTTOM - 1.45;
       const rowH = (wfBottom - wfTop) / sorted.length;
       const labelW = 2.2;
       const sevW = 0.7;
@@ -253,18 +275,41 @@ const slideSpecs: SlideSpec[] = [
       });
 
       // Total banner
-      const tY = CONTENT_BOTTOM - 0.85;
+      const tY = CONTENT_BOTTOM - 1.25;
       slide.addShape("roundRect", {
-        x: 0.5, y: tY, w: W - 1, h: 0.7,
+        x: 0.5, y: tY, w: W - 1, h: 0.55,
         fill: { color: "1F0A12" }, line: { color: C.danger, width: 1 }, rectRadius: 0.1,
       });
       slide.addText(`${fmtMoney(total)}`, {
-        x: 0.7, y: tY + 0.08, w: 2, h: 0.55,
-        fontFace: PPTX_BRAND.font.display, fontSize: 22, bold: true, color: C.danger, valign: "middle",
+        x: 0.7, y: tY, w: 2, h: 0.55,
+        fontFace: PPTX_BRAND.font.display, fontSize: 20, bold: true, color: C.danger, valign: "middle",
       });
       slide.addText("per year — total annual cost of operational fragmentation across 8 costed use cases", {
-        x: 2.7, y: tY + 0.08, w: W - 3.2, h: 0.55,
+        x: 2.7, y: tY, w: W - 3.2, h: 0.55,
         fontFace: PPTX_BRAND.font.body, fontSize: 11, color: C.muted, valign: "middle",
+      });
+      // Citation chip strip
+      const citY = tY + 0.65;
+      slide.addText("SOURCES", {
+        x: 0.5, y: citY, w: 0.9, h: 0.25,
+        fontFace: PPTX_BRAND.font.body, fontSize: 8, bold: true, color: C.subtle, charSpacing: 3, valign: "middle",
+      });
+      const citationSources = ["EUROCONTROL", "IATA", "A4A", "SITA", "WTW", "Flight Safety Foundation", "FAA", "Oliver Wyman"];
+      const chipH = 0.25;
+      const chipGap = 0.06;
+      let cx = 1.4;
+      citationSources.forEach((src) => {
+        const chipW = Math.max(0.8, src.length * 0.075 + 0.2);
+        if (cx + chipW > W - 0.5) return;
+        slide.addShape("roundRect", {
+          x: cx, y: citY, w: chipW, h: chipH,
+          fill: { color: C.surfaceAlt }, line: { color: C.hairline, width: 0.5 }, rectRadius: chipH / 2,
+        });
+        slide.addText(src, {
+          x: cx, y: citY, w: chipW, h: chipH,
+          fontFace: PPTX_BRAND.font.body, fontSize: 7.5, color: C.muted, align: "center", valign: "middle",
+        });
+        cx += chipW + chipGap;
       });
     },
   },
@@ -866,6 +911,11 @@ slideSpecs.push(
       steps.forEach((s, i) => {
         const x = 0.5 + i * (sW + 0.2);
         addCard(slide, x, sY, sW, sH, { border: s.color });
+        // Brand motif: top accent strip on each step card
+        slide.addShape("rect", {
+          x, y: sY, w: sW, h: 0.06,
+          fill: { color: s.color }, line: { type: "none" },
+        });
         slide.addShape("ellipse", {
           x: x + sW / 2 - 0.45, y: sY + 0.25, w: 0.9, h: 0.9,
           fill: { color: s.color }, line: { type: "none" },
@@ -882,6 +932,24 @@ slideSpecs.push(
           x: x + 0.18, y: sY + 1.8, w: sW - 0.36, h: sH - 1.95,
           fontFace: PPTX_BRAND.font.body, fontSize: 10, color: C.muted, align: "center", valign: "top",
         });
+        // Step arrow between cards
+        if (i < steps.length - 1) {
+          slide.addText("›", {
+            x: x + sW + 0.02, y: sY + sH / 2 - 0.25, w: 0.18, h: 0.5,
+            fontFace: PPTX_BRAND.font.display, fontSize: 28, bold: true,
+            color: C.subtle, align: "center", valign: "middle",
+          });
+        }
+      });
+      // Closed-loop return arrow (last → first) under the cards
+      slide.addShape("rect", {
+        x: 0.5, y: sY + sH + 0.05, w: W - 1, h: 0.04,
+        fill: { color: C.primary }, line: { type: "none" },
+      });
+      slide.addText("↺  Continuous Improvement Loop", {
+        x: W / 2 - 2, y: sY + sH + 0.0, w: 4, h: 0.18,
+        fontFace: PPTX_BRAND.font.body, fontSize: 8, bold: true,
+        color: C.primary, align: "center", charSpacing: 3,
       });
 
       // Audit trail strip
@@ -1326,25 +1394,46 @@ slideSpecs.push(
       const sH = CONTENT_BOTTOM - sY;
       const sW = (W - 1 - 4 * 0.15) / 5;
 
-      // background line
-      slide.addShape("rect", {
-        x: 0.5, y: sY + 0.45, w: W - 1, h: 0.04,
-        fill: { color: C.hairline }, line: { type: "none" },
+      // Maturity arc — circles plotted on a rising curve (Stage 1 low → Stage 5 high)
+      // Y positions roughly form a curve.
+      const arcY = [0.78, 0.62, 0.45, 0.26, 0.05];
+      // Background curve approximated by short line segments connecting circles.
+      stages.forEach((_, i) => {
+        if (i === stages.length - 1) return;
+        const x1 = 0.5 + i * (sW + 0.15) + sW / 2;
+        const x2 = 0.5 + (i + 1) * (sW + 0.15) + sW / 2;
+        const y1 = sY + arcY[i] + 0.3;
+        const y2 = sY + arcY[i + 1] + 0.3;
+        slide.addShape("line", {
+          x: x1, y: y1, w: x2 - x1, h: y2 - y1,
+          line: { color: C.primary, width: 1.5, dashType: "dash" },
+        });
       });
 
       stages.forEach((s, i) => {
         const x = 0.5 + i * (sW + 0.15);
-        // numbered circle on the line
+        const cy = sY + arcY[i];
+        // Glow halo
         slide.addShape("ellipse", {
-          x: x + sW / 2 - 0.3, y: sY + 0.2, w: 0.6, h: 0.6,
+          x: x + sW / 2 - 0.42, y: cy - 0.12, w: 0.84, h: 0.84,
+          fill: { color: s.color, transparency: 75 }, line: { type: "none" },
+        });
+        // numbered circle
+        slide.addShape("ellipse", {
+          x: x + sW / 2 - 0.3, y: cy, w: 0.6, h: 0.6,
           fill: { color: s.color }, line: { type: "none" },
         });
         slide.addText(s.n, {
-          x: x + sW / 2 - 0.3, y: sY + 0.2, w: 0.6, h: 0.6,
+          x: x + sW / 2 - 0.3, y: cy, w: 0.6, h: 0.6,
           fontFace: PPTX_BRAND.font.display, fontSize: 22, bold: true, color: C.bg, align: "center", valign: "middle",
         });
         // card below
         addCard(slide, x, sY + 1.0, sW, sH - 1.0, { border: s.color });
+        // Brand motif: top accent strip
+        slide.addShape("rect", {
+          x, y: sY + 1.0, w: sW, h: 0.06,
+          fill: { color: s.color }, line: { type: "none" },
+        });
         slide.addText(s.label, {
           x: x + 0.18, y: sY + 1.15, w: sW - 0.36, h: 0.4,
           fontFace: PPTX_BRAND.font.display, fontSize: 14, bold: true, color: s.color, align: "center",
@@ -1400,17 +1489,38 @@ slideSpecs.push(
         },
       ];
       const pY = CONTENT_TOP;
-      const pH = CONTENT_BOTTOM - pY - 0.6;
+      // Timeline ruler at top
+      const rulerY = pY;
+      slide.addShape("rect", {
+        x: 0.5, y: rulerY + 0.18, w: W - 1, h: 0.04,
+        fill: { color: C.hairline }, line: { type: "none" },
+      });
+      const tickPositions = [0.5, (W) / 2, W - 0.5];
+      const tickColors = [C.sky, C.violet, C.prove];
+      const tickLabels = ["H1 2026", "H2 2026", "2027+"];
+      tickPositions.forEach((tx, i) => {
+        slide.addShape("ellipse", {
+          x: tx - 0.1, y: rulerY + 0.1, w: 0.2, h: 0.2,
+          fill: { color: tickColors[i] }, line: { type: "none" },
+        });
+        slide.addText(tickLabels[i], {
+          x: tx - 1, y: rulerY + 0.32, w: 2, h: 0.22,
+          fontFace: PPTX_BRAND.font.body, fontSize: 8, bold: true, color: tickColors[i],
+          align: "center", charSpacing: 3,
+        });
+      });
+      const phasesY = pY + 0.65;
+      const pH = CONTENT_BOTTOM - phasesY - 0.6;
       const pW = (W - 1 - 2 * 0.25) / 3;
       phases.forEach((p, i) => {
         const x = 0.5 + i * (pW + 0.25);
-        addCard(slide, x, pY, pW, pH, { border: p.color });
+        addCard(slide, x, phasesY, pW, pH, { border: p.color });
         slide.addText(p.phase, {
-          x: x + 0.2, y: pY + 0.15, w: pW - 0.4, h: 0.25,
+          x: x + 0.2, y: phasesY + 0.15, w: pW - 0.4, h: 0.25,
           fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.subtle, charSpacing: 3,
         });
         slide.addText(p.label, {
-          x: x + 0.2, y: pY + 0.42, w: pW - 0.4, h: 0.4,
+          x: x + 0.2, y: phasesY + 0.42, w: pW - 0.4, h: 0.4,
           fontFace: PPTX_BRAND.font.display, fontSize: 14, bold: true, color: p.color,
         });
         const items = p.items.map((it) => ({
@@ -1418,7 +1528,7 @@ slideSpecs.push(
           options: { bullet: { code: it.startsWith("✓") ? "2713" : "25CF" }, color: it.startsWith("✓") ? C.prove : C.ink },
         }));
         slide.addText(items, {
-          x: x + 0.2, y: pY + 0.95, w: pW - 0.4, h: pH - 1.05,
+          x: x + 0.2, y: phasesY + 0.95, w: pW - 0.4, h: pH - 1.05,
           fontFace: PPTX_BRAND.font.body, fontSize: 10.5, color: C.ink, paraSpaceAfter: 6,
         });
       });
@@ -1579,10 +1689,117 @@ export async function buildTechnicalDeck(opts: BuildOpts = {}): Promise<Blob> {
   pptx.company = "Comply365";
 
   const logo = await loadImageAsBase64(logoUrl).catch(() => "");
-  const total = slideSpecs.length;
 
-  for (let i = 0; i < slideSpecs.length; i++) {
-    const spec = slideSpecs[i];
+  // Section divider helper specs.
+  const dividerSpec = (
+    eyebrow: string,
+    title: string,
+    subtitle: string,
+    sectionIndex: number,
+  ): SlideSpec => ({
+    label: `Section · ${title}`,
+    build: (slide, ctx) => {
+      addSectionDivider(slide, {
+        eyebrow,
+        title,
+        subtitle,
+        index: sectionIndex,
+        logo: ctx.logo,
+      });
+      // Slide counter footer only (no full chrome over the hero).
+      slide.addText(
+        `${String(ctx.index + 1).padStart(2, "0")} / ${String(ctx.total).padStart(2, "0")}`,
+        {
+          x: PPTX_BRAND.size.w - 1.4, y: PPTX_BRAND.size.h - 0.38, w: 1, h: 0.3,
+          fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, align: "right",
+        },
+      );
+      slide.addText(DECK_LABEL, {
+        x: 0.42, y: PPTX_BRAND.size.h - 0.38, w: 5.8, h: 0.3,
+        fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted,
+      });
+    },
+  });
+
+  // Sources & methodology appendix.
+  const appendixSpec: SlideSpec = {
+    label: "Sources & Methodology",
+    build: (slide, ctx) => {
+      addBrandMaster(slide, {
+        logo: ctx.logo, index: ctx.index, total: ctx.total,
+        deckLabel: DECK_LABEL, variant: "dark", grid: false,
+      });
+      addEyebrow(slide, 0.5, 0.45, 12, "Appendix");
+      slide.addText("Sources & Methodology", {
+        x: 0.5, y: 0.72, w: 12.3, h: 0.55,
+        fontFace: PPTX_BRAND.font.display, fontSize: 24, bold: true, color: C.ink,
+      });
+      slide.addText(
+        "Every cost figure in this deck traces to published industry benchmarks. Use the citations below to validate assumptions during your discovery workshop.",
+        {
+          x: 0.5, y: 1.25, w: 12.3, h: 0.45,
+          fontFace: PPTX_BRAND.font.body, fontSize: 12, color: C.muted, italic: true,
+        },
+      );
+
+      // Methodology callout
+      addCalloutBanner(slide, 0.5, 1.85, W - 1, 0.7, methodologyNote, C.primary);
+
+      // Two-column citation list
+      const entries = Object.entries(sourceCitations);
+      const half = Math.ceil(entries.length / 2);
+      const colW = (W - 1 - 0.3) / 2;
+      const top = 2.75;
+      const rowH = (CONTENT_BOTTOM - top) / half;
+      entries.forEach(([key, src], i) => {
+        const col = i < half ? 0 : 1;
+        const row = i % half;
+        const x = 0.5 + col * (colW + 0.3);
+        const y = top + row * rowH;
+        // small id chip
+        slide.addShape("roundRect", {
+          x, y: y + 0.05, w: 0.6, h: 0.28,
+          fill: { color: C.surfaceAlt }, line: { color: C.primary, width: 0.5 }, rectRadius: 0.05,
+        });
+        slide.addText(key.toUpperCase(), {
+          x, y: y + 0.05, w: 0.6, h: 0.28,
+          fontFace: PPTX_BRAND.font.body, fontSize: 8, bold: true, color: C.primary,
+          align: "center", valign: "middle",
+        });
+        slide.addText(src, {
+          x: x + 0.7, y, w: colW - 0.7, h: rowH - 0.1,
+          fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, valign: "top",
+        });
+      });
+    },
+  };
+
+  // Compose the final deck order with dividers + appendix.
+  // Original slide indices we want to gate behind dividers:
+  //   3 → Foundations, 8 → Intelligence, 16 → Outcomes, 17 → Roadmap
+  const dividerBeforeIndex: Record<number, { eyebrow: string; title: string; subtitle: string }> = {
+    3: { eyebrow: "Act 2", title: "Foundations", subtitle: "Architecture, data and the core operational apps." },
+    8: { eyebrow: "Act 3", title: "Intelligence", subtitle: "CoAnalyst, Insights, Automation and the unified mobile shell." },
+    16: { eyebrow: "Act 5", title: "Outcomes", subtitle: "Line of sight from costed use case to executive outcome." },
+    17: { eyebrow: "Act 5", title: "Roadmap", subtitle: "Maturity, phased delivery, and the partnership model." },
+  };
+
+  const composed: SlideSpec[] = [];
+  let sectionIdx = 1;
+  slideSpecs.forEach((spec, i) => {
+    const div = dividerBeforeIndex[i];
+    if (div) {
+      composed.push(dividerSpec(div.eyebrow, div.title, div.subtitle, sectionIdx));
+      sectionIdx += 1;
+    }
+    composed.push(spec);
+  });
+  composed.push(appendixSpec);
+
+  const total = composed.length;
+
+  for (let i = 0; i < composed.length; i++) {
+    const spec = composed[i];
     opts.onProgress?.(i, total, spec.label);
     const slide = pptx.addSlide();
     try {
