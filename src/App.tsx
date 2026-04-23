@@ -29,6 +29,7 @@ import InsightsPlaybook from "./pages/InsightsPlaybook";
 import AutomationPlaybook from "./pages/AutomationPlaybook";
 import MobilePlaybook from "./pages/MobilePlaybook";
 import PlatformPlaybook from "./pages/PlatformPlaybook";
+import SalesEnablement from "./pages/SalesEnablement";
 import AuthPage from "./pages/Auth";
 import ReviewDashboard from "./pages/ReviewDashboard";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -71,6 +72,7 @@ const App = () => (
             <Route path="/automation-playbook" element={<AutomationPlaybook />} />
             <Route path="/mobile-playbook" element={<MobilePlaybook />} />
             <Route path="/platform-playbook" element={<PlatformPlaybook />} />
+            <Route path="/sales-enablement" element={<SalesEnablement />} />
             <Route path="/review" element={<ReviewDashboard />} />
           </Route>
           <Route path="*" element={<NotFound />} />
