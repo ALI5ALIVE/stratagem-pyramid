@@ -55,12 +55,12 @@ const TechSlideTiersVsAI = ({ slideNumber, ...narrationProps }: Props) => (
       {/* Bottom: capability table + accuracy/risk */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 flex-1 min-h-0 items-stretch">
         <div className="lg:col-span-3 rounded-xl border border-muted/20 bg-card/60 p-4 flex flex-col h-full">
-          <h3 className="text-xs font-bold text-foreground uppercase tracking-wider mb-3 shrink-0">Capability — CoAnalyst vs Generative AI</h3>
+          <h3 className="text-xs font-bold text-foreground uppercase tracking-wider mb-3 shrink-0">Capability — Insights & Intelligence vs Generative AI</h3>
           <table className="w-full text-xs flex-1">
             <thead>
               <tr className="border-b border-border">
                 <th className="text-left py-1.5 text-xs text-muted-foreground font-medium">Capability</th>
-                <th className="text-center py-1.5 text-xs text-primary font-bold w-20">CoAnalyst</th>
+                <th className="text-center py-1.5 text-xs text-primary font-bold w-24">Insights & Intelligence</th>
                 <th className="text-center py-1.5 text-xs text-muted-foreground w-20">Generative</th>
               </tr>
             </thead>
@@ -94,7 +94,7 @@ const TechSlideTiersVsAI = ({ slideNumber, ...narrationProps }: Props) => (
             </div>
           </div>
           <div className="rounded-xl border border-primary/30 bg-primary/10 p-3 text-center">
-            <p className="text-xs font-semibold text-foreground italic">"Generative AI reads reports. CoAnalyst understands aviation operations."</p>
+            <p className="text-xs font-semibold text-foreground italic">"Generative AI reads reports. Insights & Intelligence understands aviation operations."</p>
           </div>
         </div>
       </div>
