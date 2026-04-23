@@ -1689,10 +1689,117 @@ export async function buildTechnicalDeck(opts: BuildOpts = {}): Promise<Blob> {
   pptx.company = "Comply365";
 
   const logo = await loadImageAsBase64(logoUrl).catch(() => "");
-  const total = slideSpecs.length;
 
-  for (let i = 0; i < slideSpecs.length; i++) {
-    const spec = slideSpecs[i];
+  // Section divider helper specs.
+  const dividerSpec = (
+    eyebrow: string,
+    title: string,
+    subtitle: string,
+    sectionIndex: number,
+  ): SlideSpec => ({
+    label: `Section · ${title}`,
+    build: (slide, ctx) => {
+      addSectionDivider(slide, {
+        eyebrow,
+        title,
+        subtitle,
+        index: sectionIndex,
+        logo: ctx.logo,
+      });
+      // Slide counter footer only (no full chrome over the hero).
+      slide.addText(
+        `${String(ctx.index + 1).padStart(2, "0")} / ${String(ctx.total).padStart(2, "0")}`,
+        {
+          x: PPTX_BRAND.size.w - 1.4, y: PPTX_BRAND.size.h - 0.38, w: 1, h: 0.3,
+          fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, align: "right",
+        },
+      );
+      slide.addText(DECK_LABEL, {
+        x: 0.42, y: PPTX_BRAND.size.h - 0.38, w: 5.8, h: 0.3,
+        fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted,
+      });
+    },
+  });
+
+  // Sources & methodology appendix.
+  const appendixSpec: SlideSpec = {
+    label: "Sources & Methodology",
+    build: (slide, ctx) => {
+      addBrandMaster(slide, {
+        logo: ctx.logo, index: ctx.index, total: ctx.total,
+        deckLabel: DECK_LABEL, variant: "dark", grid: false,
+      });
+      addEyebrow(slide, 0.5, 0.45, 12, "Appendix");
+      slide.addText("Sources & Methodology", {
+        x: 0.5, y: 0.72, w: 12.3, h: 0.55,
+        fontFace: PPTX_BRAND.font.display, fontSize: 24, bold: true, color: C.ink,
+      });
+      slide.addText(
+        "Every cost figure in this deck traces to published industry benchmarks. Use the citations below to validate assumptions during your discovery workshop.",
+        {
+          x: 0.5, y: 1.25, w: 12.3, h: 0.45,
+          fontFace: PPTX_BRAND.font.body, fontSize: 12, color: C.muted, italic: true,
+        },
+      );
+
+      // Methodology callout
+      addCalloutBanner(slide, 0.5, 1.85, W - 1, 0.7, methodologyNote, C.primary);
+
+      // Two-column citation list
+      const entries = Object.entries(sourceCitations);
+      const half = Math.ceil(entries.length / 2);
+      const colW = (W - 1 - 0.3) / 2;
+      const top = 2.75;
+      const rowH = (CONTENT_BOTTOM - top) / half;
+      entries.forEach(([key, src], i) => {
+        const col = i < half ? 0 : 1;
+        const row = i % half;
+        const x = 0.5 + col * (colW + 0.3);
+        const y = top + row * rowH;
+        // small id chip
+        slide.addShape("roundRect", {
+          x, y: y + 0.05, w: 0.6, h: 0.28,
+          fill: { color: C.surfaceAlt }, line: { color: C.primary, width: 0.5 }, rectRadius: 0.05,
+        });
+        slide.addText(key.toUpperCase(), {
+          x, y: y + 0.05, w: 0.6, h: 0.28,
+          fontFace: PPTX_BRAND.font.body, fontSize: 8, bold: true, color: C.primary,
+          align: "center", valign: "middle",
+        });
+        slide.addText(src, {
+          x: x + 0.7, y, w: colW - 0.7, h: rowH - 0.1,
+          fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, valign: "top",
+        });
+      });
+    },
+  };
+
+  // Compose the final deck order with dividers + appendix.
+  // Original slide indices we want to gate behind dividers:
+  //   3 → Foundations, 8 → Intelligence, 16 → Outcomes, 17 → Roadmap
+  const dividerBeforeIndex: Record<number, { eyebrow: string; title: string; subtitle: string }> = {
+    3: { eyebrow: "Act 2", title: "Foundations", subtitle: "Architecture, data and the core operational apps." },
+    8: { eyebrow: "Act 3", title: "Intelligence", subtitle: "CoAnalyst, Insights, Automation and the unified mobile shell." },
+    16: { eyebrow: "Act 5", title: "Outcomes", subtitle: "Line of sight from costed use case to executive outcome." },
+    17: { eyebrow: "Act 5", title: "Roadmap", subtitle: "Maturity, phased delivery, and the partnership model." },
+  };
+
+  const composed: SlideSpec[] = [];
+  let sectionIdx = 1;
+  slideSpecs.forEach((spec, i) => {
+    const div = dividerBeforeIndex[i];
+    if (div) {
+      composed.push(dividerSpec(div.eyebrow, div.title, div.subtitle, sectionIdx));
+      sectionIdx += 1;
+    }
+    composed.push(spec);
+  });
+  composed.push(appendixSpec);
+
+  const total = composed.length;
+
+  for (let i = 0; i < composed.length; i++) {
+    const spec = composed[i];
     opts.onProgress?.(i, total, spec.label);
     const slide = pptx.addSlide();
     try {
