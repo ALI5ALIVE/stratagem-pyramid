@@ -1,42 +1,36 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
-import { whyItExists } from "@/data/platformPlaybook";
-import { Boxes, Database, Lightbulb, Shuffle, Smartphone, FileQuestion } from "lucide-react";
+import { Layers } from "lucide-react";
 import type { SlideNarrationProps } from "@/types/slideProps";
+import { heroEyebrow, heroTagline, heroSubtitle, statusLabel } from "@/data/platformPlaybook";
 
 interface Props extends SlideNarrationProps { slideNumber?: number; }
 
-const icons = [Boxes, Database, Lightbulb, Shuffle, Smartphone, FileQuestion];
-
 /**
- * Tech-deck opener — adapted from PFSlide1WhyExists.
- * Frames the problem before the title slide so audiences see the "why" first.
+ * Tech-deck opener — platform-hero. Mirrors the Platform Playbook title slide
+ * to frame the deck around "The Operational Performance Platform".
  */
 const TechSlideOpener = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer
     id="tech-slide-opener"
-    title="Why It Exists"
-    subtitle={whyItExists.headline}
+    showHeader={false}
     slideNumber={slideNumber}
     {...narrationProps}
   >
-    <div className="flex-1 flex flex-col gap-4 min-h-0">
-      <div className="p-4 rounded-xl border border-destructive/30 bg-destructive/5 shrink-0">
-        <p className="text-sm text-foreground/80">{whyItExists.exposureLabel}</p>
-      </div>
-
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 flex-1 min-h-0">
-        {whyItExists.problems.map((problem, i) => {
-          const Icon = icons[i];
-          return (
-            <div key={i} className="p-3 rounded-lg border border-border bg-card">
-              <div className="flex items-center gap-2 mb-2">
-                <Icon className="h-4 w-4 text-destructive/70 shrink-0" />
-                <h4 className="text-sm font-semibold text-foreground">{problem.label}</h4>
-              </div>
-              <p className="text-xs text-muted-foreground leading-relaxed">{problem.detail}</p>
-            </div>
-          );
-        })}
+    <div className="flex-1 flex flex-col justify-center">
+      <p className="text-primary text-sm font-medium tracking-widest uppercase mb-4 flex items-center gap-2">
+        <Layers className="h-4 w-4" />
+        {heroEyebrow}
+      </p>
+      <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold leading-tight mb-4">
+        <span className="title-accent">One platform.</span>
+        <br />
+        <span className="text-foreground">One operating model. One entry point.</span>
+      </h1>
+      <p className="text-muted-foreground text-lg sm:text-xl max-w-3xl mb-3">{heroTagline}</p>
+      <p className="text-foreground/70 text-sm sm:text-base max-w-3xl mb-6">{heroSubtitle}</p>
+      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/5 self-start">
+        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+        <span className="text-xs text-emerald-300 font-medium">{statusLabel}</span>
       </div>
     </div>
   </SalesSlideContainer>
