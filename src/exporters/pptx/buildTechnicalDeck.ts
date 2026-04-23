@@ -31,6 +31,19 @@ import {
   executiveOutcomes,
   sourceCitations,
 } from "@/data/lineOfSightData";
+import {
+  whyItExists,
+  platformDefinition,
+  competitiveContrast,
+  moatStatements,
+} from "@/data/platformPlaybook";
+import {
+  solutionOverview,
+  painPoints as rmPainPoints,
+  valuePillars as rmValuePillars,
+  howItWorksLayers as rmHowItWorksLayers,
+  useCases as rmUseCases,
+} from "@/data/regulationManagementPlaybook";
 
 const C = PPTX_BRAND.color;
 const W = PPTX_BRAND.size.w;
