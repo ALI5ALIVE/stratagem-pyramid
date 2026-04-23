@@ -1,54 +1,80 @@
 
 
-## Add expanded "Why DTOP exists" + "What DTOP is" content to the 1-pager PDF
+## Executive Pitch 3 — Consolidate Core App modules into one summary slide + remove Operating Model slide
 
-### What's there today (`src/components/print/DTOPPrintablePage.tsx`)
+### Two changes to `src/pages/ExecutivePitch3.tsx`
 
-1. Title + tagline
-2. **Pipeline** — 4 D/T/O/P cards (hero)
-3. **Why It Exists** — single big "$25–35B" stat + one-line label
-4. **Proof** — 3 use case metrics
-5. **What It Unlocks** — 4 value tiles
-6. Footer
+**1. Remove slide — "DTOP Operating Model" (`Slide3OperatingModel`)**
+Redundant: the DTOP layer already has its own divider + summary later in the deck.
 
-Missing: an explicit **definition** of DTOP, and the Why section omits the 6 specific problems from `whyDTOPExists.problems`.
+**2. Add ONE consolidated Core Apps module summary slide after `TechSlide6Capabilities`**
+Instead of three separate slides (Content / Safety / Training), create a single executive-level summary slide showing all three modules side-by-side. This keeps the executive arc tight and avoids the engineering-level depth of the Tech Deep Dive.
 
-### Plan
+### New slide: `ExecCoreAppsSummary` (new file)
 
-Edit only `src/components/print/DTOPPrintablePage.tsx`. Restructure into a tighter single-page A4-landscape layout:
+`src/components/exec-slides/ExecCoreAppsSummary.tsx` — a new slide component built from existing patterns (`SalesSlideContainer` + `ArchitectureLayerBadge`). Three-column layout, one column per module:
 
-1. **New "What DTOP Is" band** — directly under the title, before the pipeline:
-   - One-sentence definition: *"DTOP is the closed-loop operating model that connects detection of operational signals to provable outcomes — across Safety, Content, and Training, in one continuous workflow."*
-   - 3 short qualifier chips on the right: **Closed-loop** · **Cross-module** · **Auditable by design**
+| Column | Module | Accent | Content |
+|---|---|---|---|
+| 1 | **ContentManager365 + CoAuthor** | blue | Icon + 1-line definition + 3 bullets (Procedure authoring · Revision cascades · Regulatory change impact) |
+| 2 | **SafetyManager365** | red | Icon + 1-line definition + 3 bullets (SMS event reporting · Investigation workflows · Risk & audit management) |
+| 3 | **TrainingManager365 + CoTrainer** | emerald | Icon + 1-line definition + 3 bullets (Competency-based training · Recurrent automation · Gap analysis) |
 
-2. **Expand "Why It Exists"** — keep the $25–35B hero stat on the left, but on the right replace the single sentence with a compact 2×3 grid of the 6 problems from `whyDTOPExists.problems` (label in bold + 1-line detail in muted ink, ~9pt). Keeps the methodology footnote.
+Footer line: *"Three best-in-class apps on one shared data foundation — the table stakes done right, so every layer above can do something new."*
 
-3. **Keep Pipeline, Proof, Value tiles, Footer** as-is — these are already the strongest blocks.
+Pulls bullet content directly from existing `TechSlide4a/4b/4cSafety/Content/TrainingManager.tsx` files (no new copy).
 
-4. **Re-balance vertical rhythm** — reduce Pipeline card vertical padding by ~2px and tighten the Value tiles section so the new What/Why content fits without spilling. Page stays single-sheet A4 landscape.
+### New slide order (20 slides)
+
+```text
+1. Title
+2. Strategic Shift
+3. Industry Challenge
+4. Platform Overview (5-layer)
+5. ▸ Core Apps divider
+6. Core Operational Apps summary (TechSlide6Capabilities)
+7. Core Apps — Content / Safety / Training (NEW consolidated slide)
+8. ▸ Data Foundation divider
+9. Operational Data Foundation
+10. ▸ Intelligence divider
+11. Insights & Intelligence
+12. ▸ Mobile divider
+13. Unified Mobile Experience
+14. ▸ DTOP divider
+15. DTOP — System of Work
+16. The Transformation
+17. Use Cases in Action
+18. Maturity Roadmap
+19. Customer Outcomes
+20. Why Comply365 + CTA
+```
+
+Total: **20 slides** (removed 1 Operating Model, added 1 consolidated Core Apps module slide — net zero vs current 20).
 
 ### Files touched
 
-- `src/components/print/DTOPPrintablePage.tsx` — additions + Why section restructure only.
+- **NEW** `src/components/exec-slides/ExecCoreAppsSummary.tsx` — three-column module summary slide.
+- **EDITED** `src/pages/ExecutivePitch3.tsx`:
+  - Remove `Slide3OperatingModel` import + slide entry.
+  - Import `ExecCoreAppsSummary`.
+  - Insert it after `exec3-slide-core` (Layer 1 capabilities).
+- **No change** to `src/pages/HomePage.tsx` — slide count stays at 20.
 
 ### Not touched
 
-- `dtopPlaybook.ts` — uses existing `whyDTOPExists.problems`, `heroTagline`, etc.
-- `DTOPDownloadButton.tsx` — same component, same filename (`Comply365-DTOP-Operating-Model-Brief.pdf`).
-- `printBrand.ts` — uses existing tokens.
+- `TechSlide4a/4b/4cSafety/Content/TrainingManager.tsx` — left intact for the Tech Deep Dive.
+- All other slide components, narration, PPTX exporters.
 
-### QA gate
+### QA
 
-After change, generate the PDF from the DTOP title slide and verify:
-1. New "What DTOP Is" band renders below the title with definition + 3 qualifier chips.
-2. "Why It Exists" shows $25–35B on the left and 6 problem cards on the right (2 rows × 3 cols).
-3. Methodology footnote still present and legible.
-4. Pipeline, Proof, Value, Footer still render — single page, no overflow.
-5. Dark theme + Comply365 brand colors preserved (sky/amber/emerald/violet step accents).
+- Open `/pitch-executive-3`, confirm no "Operating Model" slide in act 1.
+- Confirm Layer 1 reads: divider → capabilities summary → 3-column module summary → Data Foundation divider.
+- Confirm new slide renders all 3 modules side-by-side at 1132px viewport without overflow.
+- Sidebar nav lists 20 slides.
 
 ### Out of scope
 
-- Multi-page PDF.
-- Copy rewrites of the 6 problems.
-- Changes to any web slides or playbook data.
+- PPTX exporter updates.
+- Narration scripts for the new slide.
+- Any edits to existing Tech Deep Dive module slides.
 
