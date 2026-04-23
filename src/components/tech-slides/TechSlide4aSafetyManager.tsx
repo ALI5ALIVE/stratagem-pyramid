@@ -16,7 +16,7 @@ const capabilities = [
 
 const dataFlow = [
   { step: "Safety Events", desc: "Reports, operational data, audit findings flow in" },
-  { step: "Pattern Detection", desc: "CoAnalyst identifies recurring themes across 4,000+ categories" },
+  { step: "Pattern Detection", desc: "Insights & Intelligence identifies recurring themes across 4,000+ categories" },
   { step: "Risk Prediction", desc: "Proactive alerts surface emerging hazards before incidents" },
   { step: "Recommended Action", desc: "Automated triggers to training, procedures, and management review" },
 ];
@@ -43,7 +43,7 @@ const TechSlide4aSafetyManager = ({ slideNumber, ...narrationProps }: Props) => 
         <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 flex-1 flex flex-col">
           <div className="flex items-center gap-3 mb-4 shrink-0">
             <Shield className="w-6 h-6 text-red-400" />
-            <h3 className="text-base font-bold text-red-400">How CoAnalyst Activates Safety Data</h3>
+            <h3 className="text-base font-bold text-red-400">How Insights & Intelligence Activates Safety Data</h3>
           </div>
           <div className="space-y-3 flex-1 flex flex-col justify-center">
             {dataFlow.map((d, i) => (
