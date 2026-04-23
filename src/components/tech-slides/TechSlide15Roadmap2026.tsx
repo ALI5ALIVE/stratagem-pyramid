@@ -36,7 +36,7 @@ const phases = [
 ];
 
 const TechSlide15Roadmap2026 = ({ slideNumber, ...narrationProps }: Props) => (
-  <SalesSlideContainer id="tech-slide-15" title="2026 Use Case Roadmap" subtitle="Phased delivery — each phase builds on proven value" slideNumber={slideNumber} {...narrationProps}>
+  <SalesSlideContainer id="tech-slide-15" title="2026 Use Case Roadmap [Pending refresh]" subtitle="Phased delivery — each phase builds on proven value · revisit with Paul: refresh with latest Regulation Solution, Automation, Intelligence & CoAnalyst content" slideNumber={slideNumber} {...narrationProps}>
     <div className="flex-1 flex flex-col gap-4 min-h-0">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 flex-1 min-h-0 auto-rows-fr items-stretch">
         {phases.map((p) => (
