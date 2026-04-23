@@ -2,6 +2,7 @@ import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import ArchitectureLayerBadge from "@/components/tech-slides/ArchitectureLayerBadge";
 import { SlideNarrationProps } from "@/types/slideProps";
 import { Smartphone, FileText, GraduationCap, ShieldCheck, KeyRound, Bell, Layers } from "lucide-react";
+import DeepDiveLink from "@/components/shared/DeepDiveLink";
 
 interface Props extends SlideNarrationProps { slideNumber?: number; }
 
@@ -27,7 +28,10 @@ const TechSlideMobile = ({ slideNumber, ...narrationProps }: Props) => (
     {...narrationProps}
   >
     <div className="flex-1 flex flex-col gap-4 min-h-0">
-      <ArchitectureLayerBadge active="mobile" />
+      <div className="flex items-center justify-between gap-3">
+        <ArchitectureLayerBadge active="mobile" />
+        <DeepDiveLink to="/mobile-playbook" label="Unified Mobile" returnTo="/pitch-technical" />
+      </div>
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 flex-1 min-h-0 items-stretch">
         {/* Phone mock — fixed width */}
         <div className="lg:col-span-2 flex items-center justify-center">
