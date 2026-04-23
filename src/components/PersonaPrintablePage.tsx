@@ -92,13 +92,13 @@ const PersonaPrintablePage: React.FC<Props> = ({ persona }) => {
     textTransform: "uppercase",
     color,
     fontFamily: F.display,
-    marginBottom: 8,
+    marginBottom: 10,
   });
 
   const bullet = (text: string, key: number) => (
     <li key={key} style={{
-      fontSize: 10.5, lineHeight: 1.5, color: C.darkSlate,
-      marginBottom: 5, paddingLeft: 14, position: "relative",
+      fontSize: 11, lineHeight: 1.55, color: C.darkSlate,
+      marginBottom: 6, paddingLeft: 14, position: "relative",
       fontFamily: F.body,
     }}>
       <span style={{
