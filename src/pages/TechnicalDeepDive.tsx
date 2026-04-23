@@ -220,6 +220,8 @@ const TechnicalDeepDive = () => {
               slideNumber={index}
               onNavigateToSlide={index === 0 ? navigateToSlide : undefined}
               exportSlides={index === 0 ? slides : undefined}
+              id={slide.id}
+              {...((slide as any).dividerProps ?? {})}
               {...narrationProps}
             />
           </div>
