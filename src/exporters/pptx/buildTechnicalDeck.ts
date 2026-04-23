@@ -50,9 +50,14 @@ const fmtMoney = (v: number) =>
   v >= 1_000_000 ? `$${(v / 1_000_000).toFixed(1)}M` : v >= 1_000 ? `$${(v / 1_000).toFixed(0)}K` : `$${v}`;
 
 function chrome(slide: pptxgen.Slide, ctx: { logo: string; index: number; total: number }) {
-  paintBackground(slide, "dark");
-  addBrandLogo(slide, ctx.logo, "dark");
-  addBrandedFooter(slide, ctx.index, ctx.total, DECK_LABEL, "dark");
+  addBrandMaster(slide, {
+    logo: ctx.logo,
+    index: ctx.index,
+    total: ctx.total,
+    deckLabel: DECK_LABEL,
+    variant: "dark",
+    grid: true,
+  });
 }
 
 function header(
