@@ -3,12 +3,10 @@ import {
   PPTX_BRAND,
   paintBackground,
   addCard,
-  addStatTile,
   loadImageAsBase64,
   addEyebrow,
   addLabeledCard,
   addPillRow,
-  addIconBadge,
   addBrandMaster,
   addBrandStatBlock,
   addCalloutBanner,
@@ -22,7 +20,6 @@ import { useCases } from "@/data/lineOfSightData";
 
 const C = PPTX_BRAND.color;
 const W = PPTX_BRAND.size.w;
-const H = PPTX_BRAND.size.h;
 const DECK_LABEL = "Executive Pitch";
 
 export interface BuildOpts {
