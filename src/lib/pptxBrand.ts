@@ -349,6 +349,11 @@ export function addLabeledCard(
     line: { color: accent, width: 0.75 },
     rectRadius: 0.08,
   });
+  // Brand motif: left accent bar
+  slide.addShape("rect", {
+    x, y: y + 0.06, w: 0.05, h: h - 0.12,
+    fill: { color: accent }, line: { type: "none" },
+  });
   let cy = y + 0.15;
   if (opts.eyebrow) {
     slide.addText(opts.eyebrow.toUpperCase(), {
