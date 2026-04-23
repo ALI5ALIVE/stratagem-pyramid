@@ -2,14 +2,25 @@ import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { Layers } from "lucide-react";
 import type { SlideNarrationProps } from "@/types/slideProps";
 import { heroEyebrow, heroTagline, heroSubtitle, statusLabel } from "@/data/platformPlaybook";
+import DeckPDFExportButton from "@/components/DeckPDFExportButton";
+import DeckPPTXExportButton from "@/components/DeckPPTXExportButton";
 
-interface Props extends SlideNarrationProps { slideNumber?: number; }
+interface ExportSlideDef {
+  id: string;
+  label: string;
+  component: React.ComponentType<any>;
+}
+
+interface Props extends SlideNarrationProps {
+  slideNumber?: number;
+  exportSlides?: ExportSlideDef[];
+}
 
 /**
  * Tech-deck opener — platform-hero. Mirrors the Platform Playbook title slide
  * to frame the deck around "The Operational Performance Platform".
  */
-const TechSlideOpener = ({ slideNumber, ...narrationProps }: Props) => (
+const TechSlideOpener = ({ slideNumber, exportSlides, ...narrationProps }: Props) => (
   <SalesSlideContainer
     id="tech-slide-opener"
     showHeader={false}
@@ -33,6 +44,21 @@ const TechSlideOpener = ({ slideNumber, ...narrationProps }: Props) => (
         <span className="text-xs text-emerald-300 font-medium">{statusLabel}</span>
       </div>
     </div>
+    {exportSlides && exportSlides.length > 0 && (
+      <div className="absolute bottom-24 right-8 z-40 flex flex-col items-end gap-1 text-right">
+        <div className="flex items-center gap-2">
+          <DeckPPTXExportButton deckId="tech-deep-dive" />
+          <DeckPDFExportButton
+            slides={exportSlides}
+            filename="Comply365-Technical-Deep-Dive.pdf"
+            deckLabel="Technical Deep Dive"
+          />
+        </div>
+        <span className="text-[10px] text-muted-foreground bg-background/70 backdrop-blur px-2 py-0.5 rounded max-w-[220px]">
+          Interactive slides export in their default view.
+        </span>
+      </div>
+    )}
   </SalesSlideContainer>
 );
 
