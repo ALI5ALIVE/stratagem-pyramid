@@ -18,7 +18,7 @@ const RMSlide8Commercial = (props: SlideNarrationProps) => {
       id="rm-commercial"
       title="Commercial Model"
       subtitle="Pricing and packaging strategy"
-      slideNumber={8}
+      slideNumber={9}
       {...props}
     >
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

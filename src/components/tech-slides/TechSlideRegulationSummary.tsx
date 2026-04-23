@@ -5,6 +5,7 @@ import {
   painPoints,
   valuePillars,
   positioning,
+  dtopMapping,
 } from "@/data/regulationManagementPlaybook";
 import {
   FileSpreadsheet,
@@ -29,8 +30,8 @@ const pillarIcons = [Eye, Network, Shield];
  * to the full Regulation Management Playbook via DeepDiveLink.
  */
 const TechSlideRegulationSummary = ({ slideNumber, ...narrationProps }: Props) => {
-  const problems = painPoints.slice(0, 3);
-  const pillars = valuePillars.slice(0, 3);
+  const problems = painPoints.slice(0, 2);
+  const pillars = valuePillars.slice(0, 2);
 
   return (
     <SalesSlideContainer
@@ -49,6 +50,30 @@ const TechSlideRegulationSummary = ({ slideNumber, ...narrationProps }: Props) =
           <p className="text-xs font-semibold text-primary mt-2 tracking-wide uppercase">
             {solutionOverview.narrativeArc}
           </p>
+        </div>
+
+        {/* DTOP strip — RM as a first-class expression of the operating model */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 shrink-0">
+          {dtopMapping.map((s) => (
+            <div
+              key={s.step}
+              className={`border ${s.border} ${s.bg} rounded-lg p-2 flex gap-2 items-start`}
+            >
+              <div
+                className={`h-7 w-7 rounded-md ${s.border} border flex items-center justify-center shrink-0`}
+              >
+                <span className={`text-sm font-bold ${s.text}`}>{s.step}</span>
+              </div>
+              <div className="min-w-0">
+                <h4 className={`text-[11px] font-bold uppercase tracking-wider ${s.text}`}>
+                  {s.label}
+                </h4>
+                <p className="text-[10px] text-foreground/80 leading-snug mt-0.5">
+                  {s.whatHappens.split(/\.\s/)[0]}.
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* Two-column: Problem | Value Pillars */}

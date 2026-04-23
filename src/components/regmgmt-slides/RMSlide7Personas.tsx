@@ -9,7 +9,7 @@ const RMSlide7Personas = (props: SlideNarrationProps) => {
       id="rm-personas"
       title="Persona Relevance"
       subtitle="Who buys this and why"
-      slideNumber={7}
+      slideNumber={8}
       {...props}
     >
       <div className="grid grid-cols-1 md:grid-cols-5 gap-3">

@@ -9,6 +9,7 @@ import RMSlide1Overview from "@/components/regmgmt-slides/RMSlide1Overview";
 import RMSlide2Problem from "@/components/regmgmt-slides/RMSlide2Problem";
 import RMSlide3Positioning from "@/components/regmgmt-slides/RMSlide3Positioning";
 import RMSlide4ValuePillars from "@/components/regmgmt-slides/RMSlide4ValuePillars";
+import RMSlide4bDTOP from "@/components/regmgmt-slides/RMSlide4bDTOP";
 import RMSlide5HowItWorks from "@/components/regmgmt-slides/RMSlide5HowItWorks";
 import RMSlide6UseCases from "@/components/regmgmt-slides/RMSlide6UseCases";
 import RMSlide7Personas from "@/components/regmgmt-slides/RMSlide7Personas";
@@ -22,6 +23,7 @@ const slides = [
   { id: "rm-problem", label: "The Problem Today" },
   { id: "rm-positioning", label: "Solution Positioning" },
   { id: "rm-value-pillars", label: "Value Pillars" },
+  { id: "rm-dtop", label: "DTOP Mapping" },
   { id: "rm-how-it-works", label: "How It Works" },
   { id: "rm-use-cases", label: "Use Cases" },
   { id: "rm-personas", label: "Persona Relevance" },
@@ -120,6 +122,7 @@ const RegulationManagementPlaybook = () => {
         <RMSlide2Problem />
         <RMSlide3Positioning />
         <RMSlide4ValuePillars />
+        <RMSlide4bDTOP />
         <RMSlide5HowItWorks />
         <RMSlide6UseCases />
         <RMSlide7Personas />

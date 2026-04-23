@@ -15,7 +15,7 @@ const RMSlide10Roadmap = (props: SlideNarrationProps) => {
       id="rm-roadmap"
       title="Roadmap & Talking Points"
       subtitle="Phased delivery and conversation starters"
-      slideNumber={10}
+      slideNumber={11}
       {...props}
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
