@@ -47,16 +47,16 @@ const PlatformArchitectureDiagram = ({ compact = false }: { compact?: boolean })
           <div className="rounded-md border border-amber-500/30 bg-background/40 p-1.5">
             <div className="flex items-center gap-1.5 mb-0.5">
               <Brain className="h-3 w-3 text-amber-400" />
-              <span className={`${labelSize} font-semibold text-amber-300`}>CoAnalyst</span>
+              <span className={`${labelSize} font-semibold text-amber-300`}>Insights & Intelligence</span>
             </div>
             <div className="text-[10px] text-muted-foreground leading-tight">Ask anything in plain English</div>
           </div>
           <div className="rounded-md border border-cyan-500/30 bg-background/40 p-1.5">
             <div className="flex items-center gap-1.5 mb-0.5">
               <Sparkles className="h-3 w-3 text-cyan-400" />
-              <span className={`${labelSize} font-semibold text-cyan-300`}>Insights & Rec.</span>
+              <span className="text-[10px] font-semibold text-cyan-300">Recommendations & Prescriptive Actions</span>
             </div>
-            <div className="text-[10px] text-muted-foreground leading-tight">Patterns + Recommended Actions</div>
+            <div className="text-[10px] text-muted-foreground leading-tight">Patterns + prescriptive next steps</div>
           </div>
           <div className="rounded-md border border-violet-500/30 bg-background/40 p-1.5">
             <div className="flex items-center gap-1.5 mb-0.5">

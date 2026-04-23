@@ -694,7 +694,7 @@ slideSpecs.push(
     label: "Recommendations & Prescriptive Actions",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Act 3 · Intelligence layer", "Recommendations & Prescriptive Actions on the Operational Performance Platform",
+      header(slide, "Act 3 · Intelligence layer", "Intelligence & Orchestration Layer — Recommendations & Prescriptive Actions",
         "From insight to prescriptive action — proactive signals across the platform");
 
       const caps = [
