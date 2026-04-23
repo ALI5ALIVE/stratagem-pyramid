@@ -531,6 +531,14 @@ function buildModuleSlide(opts: {
 
 slideSpecs.push(
   // ─── 4. SAFETY MANAGER 365 ────────────────────────────────────
+  dividerSpec({
+    label: "▸ Layer 1 · Core Operational Apps",
+    layerNumber: 1,
+    layerName: "Core Operational Apps",
+    tagline: "ContentManager365 · TrainingManager365 · SafetyManager365 — the systems of record that emit every operational event.",
+    active: "core",
+    upNext: ["SafetyManager365", "ContentManager365", "TrainingManager365"],
+  }),
   {
     label: "SafetyManager365",
     build: buildModuleSlide({
@@ -613,6 +621,14 @@ slideSpecs.push(
   },
 
   // ─── 7. DATA FOUNDATION ───────────────────────────────────────
+  dividerSpec({
+    label: "▸ Layer 2 · Operational Data Foundation",
+    layerNumber: 2,
+    layerName: "Operational Data Foundation",
+    tagline: "One unified data lake, taxonomy, knowledge graph and aviation LLMs — the substrate every layer reasons over.",
+    active: "data",
+    upNext: ["The Operational Data Foundation"],
+  }),
   {
     label: "Data Foundation",
     build: (slide, ctx) => {
@@ -741,6 +757,18 @@ slideSpecs.push(
   },
 
   // ─── 8. INSIGHTS & INTELLIGENCE ───────────────────────────────
+  dividerSpec({
+    label: "▸ Layer 3 · Intelligence & Orchestration",
+    layerNumber: 3,
+    layerName: "Intelligence & Orchestration Layer",
+    tagline: "Insights & Intelligence · Recommendations & Prescriptive Actions · Automation — turning data into action.",
+    active: "intelligence",
+    upNext: [
+      "Insights & Intelligence",
+      "Recommendations & Prescriptive Actions",
+      "Automation",
+    ],
+  }),
   {
     label: "Insights & Intelligence",
     build: (slide, ctx) => {
