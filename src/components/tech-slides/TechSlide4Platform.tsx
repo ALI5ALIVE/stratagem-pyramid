@@ -1,5 +1,6 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import PlatformArchitectureDiagram from "@/components/platform-slides/PlatformArchitectureDiagram";
+import { ChevronRight } from "lucide-react";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 interface Props extends SlideNarrationProps { slideNumber?: number; }
@@ -32,6 +33,9 @@ const TechSlide4Platform = ({ slideNumber, ...narrationProps }: Props) => (
             <div className="flex items-baseline gap-2">
               <span className={`text-[10px] font-bold uppercase tracking-wider ${g.color}`}>{g.tag}</span>
               <span className="text-sm font-bold text-foreground">{g.title}</span>
+              <span className={`ml-auto inline-flex items-center gap-0.5 text-[9px] uppercase tracking-wider ${g.color} opacity-70`}>
+                deep dive <ChevronRight className="h-2.5 w-2.5" />
+              </span>
             </div>
             <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{g.desc}</p>
           </div>

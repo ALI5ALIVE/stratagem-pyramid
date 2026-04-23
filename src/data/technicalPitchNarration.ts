@@ -9,6 +9,41 @@ const DEFAULT_VOICE_ID = "JBFqnCBsd6RMkjVDRZzb"; // George
 
 export const technicalPitchNarrations: TechNarrationSlide[] = [
   {
+    slideId: "tech-divider-core",
+    title: "Layer 1 · Core Operational Apps",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "We're now entering Layer 1 of the platform — the Core Operational Apps. ContentManager365, TrainingManager365 and SafetyManager365. These are the systems of record that emit every operational event the rest of the platform reasons over.",
+  },
+  {
+    slideId: "tech-divider-data",
+    title: "Layer 2 · Operational Data Foundation",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Layer 2 — the Operational Data Foundation. One unified data lake, one shared aviation taxonomy, an operational knowledge graph and domain-trained LLMs. This is the substrate every layer above depends on.",
+  },
+  {
+    slideId: "tech-divider-intelligence",
+    title: "Layer 3 · Intelligence & Orchestration",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Layer 3 — Intelligence and Orchestration. This is where data becomes action. Three capabilities: Insights and Intelligence, Recommendations and Prescriptive Actions, and Automation. Together they turn the data foundation into operational outcomes.",
+  },
+  {
+    slideId: "tech-divider-mobile",
+    title: "Layer 4 · Unified Mobile",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Layer 4 — the Unified Mobile Experience. One trusted shell for the frontline. Procedures, Training and Safety in a single app crews already use every shift.",
+  },
+  {
+    slideId: "tech-divider-dtop",
+    title: "Layer 5 · DTOP — System of Work",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Layer 5 — DTOP. Detect, Trigger, Orchestrate, Prove. The operating model that wraps every layer below it and turns intelligence into measurable, auditable outcomes.",
+  },
+  {
     slideId: "tech-slide-0",
     title: "Title",
     voiceId: DEFAULT_VOICE_ID,
