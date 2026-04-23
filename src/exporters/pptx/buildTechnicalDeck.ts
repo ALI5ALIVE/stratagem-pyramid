@@ -31,6 +31,19 @@ import {
   executiveOutcomes,
   sourceCitations,
 } from "@/data/lineOfSightData";
+import {
+  whyItExists,
+  platformDefinition,
+  competitiveContrast,
+  moatStatements,
+} from "@/data/platformPlaybook";
+import {
+  solutionOverview,
+  painPoints as rmPainPoints,
+  valuePillars as rmValuePillars,
+  howItWorksLayers as rmHowItWorksLayers,
+  useCases as rmUseCases,
+} from "@/data/regulationManagementPlaybook";
 
 const C = PPTX_BRAND.color;
 const W = PPTX_BRAND.size.w;
@@ -1931,6 +1944,477 @@ slideSpecs.push(
   },
 );
 
+// ─── NEW SLIDES — mirror the live web deck ────────────────────────
+// These are not pushed into slideSpecs; they are composed explicitly
+// inside buildTechnicalDeck() to control exact ordering.
+
+const openerSpec: SlideSpec = {
+  label: "Why It Exists (Opener)",
+  build: (slide, ctx) => {
+    chrome(slide, ctx);
+    header(slide, "Why It Exists", "Why It Exists", whyItExists.headline);
+
+    // Exposure callout
+    const exY = CONTENT_TOP;
+    addCard(slide, 0.5, exY, W - 1, 0.85, { fill: "1F0A12", border: C.danger });
+    slide.addText(whyItExists.exposureLabel, {
+      x: 0.7, y: exY, w: W - 1.4, h: 0.85,
+      fontFace: PPTX_BRAND.font.body, fontSize: 11, color: C.ink, valign: "middle",
+    });
+
+    // 6 problem cards — 3x2 grid
+    const gY = exY + 1.0;
+    const gH = CONTENT_BOTTOM - gY;
+    const cols = 3;
+    const rows = 2;
+    const cw = (W - 1 - (cols - 1) * 0.18) / cols;
+    const ch = (gH - (rows - 1) * 0.18) / rows;
+    whyItExists.problems.forEach((p, i) => {
+      const cx = 0.5 + (i % cols) * (cw + 0.18);
+      const cy = gY + Math.floor(i / cols) * (ch + 0.18);
+      addCard(slide, cx, cy, cw, ch, { border: C.hairline });
+      addIconBadge(slide, cx + 0.18, cy + 0.18, 0.42, C.danger, "!");
+      slide.addText(p.label, {
+        x: cx + 0.72, y: cy + 0.15, w: cw - 0.85, h: 0.32,
+        fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true, color: C.ink,
+      });
+      slide.addText(p.detail, {
+        x: cx + 0.2, y: cy + 0.65, w: cw - 0.35, h: ch - 0.75,
+        fontFace: PPTX_BRAND.font.body, fontSize: 10, color: C.muted, valign: "top",
+      });
+    });
+  },
+};
+
+const platformSnapshotSpec: SlideSpec = {
+  label: "Platform Snapshot",
+  build: (slide, ctx) => {
+    chrome(slide, ctx);
+    header(slide, "Platform Snapshot", "What the Platform Is — at a Glance",
+      "One connected platform — defined by what it joins together.");
+
+    // One-liner banner
+    const olY = CONTENT_TOP;
+    addCard(slide, 0.5, olY, W - 1, 0.85, { fill: C.primarySoft, border: C.primary });
+    slide.addText(platformDefinition.oneLiner, {
+      x: 0.7, y: olY, w: W - 1.4, h: 0.85,
+      fontFace: PPTX_BRAND.font.body, fontSize: 11, color: C.ink, valign: "middle",
+    });
+
+    // 5 from→to shift cards
+    const sY = olY + 1.0;
+    const sH = CONTENT_BOTTOM - sY - 0.7;
+    const n = platformDefinition.shifts.length;
+    const sw = (W - 1 - (n - 1) * 0.15) / n;
+    platformDefinition.shifts.forEach((shift, i) => {
+      const x = 0.5 + i * (sw + 0.15);
+      addCard(slide, x, sY, sw, sH, { border: C.hairline });
+      slide.addText("FROM", {
+        x: x + 0.15, y: sY + 0.12, w: sw - 0.3, h: 0.22,
+        fontFace: PPTX_BRAND.font.body, fontSize: 8, bold: true, color: C.subtle, charSpacing: 2,
+      });
+      slide.addText(shift.from, {
+        x: x + 0.15, y: sY + 0.34, w: sw - 0.3, h: 0.65,
+        fontFace: PPTX_BRAND.font.body, fontSize: 10, color: C.muted, italic: true, valign: "top",
+      });
+      slide.addText("TO", {
+        x: x + 0.15, y: sY + sH * 0.45, w: sw - 0.3, h: 0.22,
+        fontFace: PPTX_BRAND.font.body, fontSize: 8, bold: true, color: C.primary, charSpacing: 2,
+      });
+      slide.addText(shift.to, {
+        x: x + 0.15, y: sY + sH * 0.45 + 0.22, w: sw - 0.3, h: sH - sH * 0.45 - 0.3,
+        fontFace: PPTX_BRAND.font.display, fontSize: 11, bold: true, color: C.ink, valign: "top",
+      });
+    });
+
+    // Signature line
+    const sigY = sY + sH + 0.18;
+    addCard(slide, 0.5, sigY, W - 1, 0.5, { fill: "0A1F18", border: C.prove });
+    slide.addText(`➜  ${platformDefinition.signatureLine}`, {
+      x: 0.7, y: sigY, w: W - 1.4, h: 0.5,
+      fontFace: PPTX_BRAND.font.display, fontSize: 12, color: C.ink, valign: "middle",
+    });
+  },
+};
+
+const whyOnlyComply365Spec: SlideSpec = {
+  label: "Why Only Comply365",
+  build: (slide, ctx) => {
+    chrome(slide, ctx);
+    header(slide, "Why Only Comply365", "Why Only Comply365",
+      "No competitor owns the operational core, the data foundation, the intelligence layer and the mobile shell — let alone the operating model.");
+
+    // Comparative table
+    const tblY = CONTENT_TOP;
+    const headerRow = [
+      { text: "Approach",     options: { bold: true, color: C.subtle, fontSize: 9, charSpacing: 2, fill: { color: C.surfaceAlt } } },
+      { text: "Data",         options: { bold: true, color: C.subtle, fontSize: 9, charSpacing: 2, fill: { color: C.surfaceAlt } } },
+      { text: "Intelligence", options: { bold: true, color: C.subtle, fontSize: 9, charSpacing: 2, fill: { color: C.surfaceAlt } } },
+      { text: "Action",       options: { bold: true, color: C.subtle, fontSize: 9, charSpacing: 2, fill: { color: C.surfaceAlt } } },
+      { text: "Delivery",     options: { bold: true, color: C.subtle, fontSize: 9, charSpacing: 2, fill: { color: C.surfaceAlt } } },
+    ];
+    const dataRows = competitiveContrast.map((row) => {
+      const rowFill = row.isUs ? C.primarySoft : undefined;
+      const approachColor = row.isUs ? C.primary : C.ink;
+      const cellOpts = (extraColor?: string) => ({
+        color: extraColor ?? C.muted, fontSize: 9,
+        ...(rowFill ? { fill: { color: rowFill } } : {}),
+      });
+      return [
+        { text: (row.isUs ? "✓ " : "") + row.approach, options: { ...cellOpts(approachColor), bold: true } },
+        { text: row.data,         options: cellOpts() },
+        { text: row.intelligence, options: cellOpts() },
+        { text: row.action,       options: cellOpts() },
+        { text: row.delivery,     options: cellOpts() },
+      ];
+    });
+
+    slide.addTable([headerRow, ...dataRows], {
+      x: 0.5, y: tblY, w: W - 1,
+      colW: [3.0, 2.3, 2.3, 2.3, 2.4],
+      rowH: 0.4,
+      border: { type: "solid", pt: 0.5, color: C.hairline },
+      fontFace: PPTX_BRAND.font.body,
+      valign: "middle",
+    });
+
+    // Moat statements grid (2 cols)
+    const moatY = tblY + 0.4 * (1 + dataRows.length) + 0.25;
+    const moatH = CONTENT_BOTTOM - moatY;
+    const cols = 2;
+    const cw = (W - 1 - (cols - 1) * 0.2) / cols;
+    const rows = Math.ceil(moatStatements.length / cols);
+    const rh = (moatH - (rows - 1) * 0.12) / rows;
+    moatStatements.forEach((s, i) => {
+      const cx = 0.5 + (i % cols) * (cw + 0.2);
+      const cy = moatY + Math.floor(i / cols) * (rh + 0.12);
+      addCard(slide, cx, cy, cw, rh, { fill: C.primarySoft, border: C.primary });
+      slide.addText("✓", {
+        x: cx + 0.15, y: cy, w: 0.35, h: rh,
+        fontFace: PPTX_BRAND.font.display, fontSize: 14, bold: true, color: C.primary, valign: "middle",
+      });
+      slide.addText(s, {
+        x: cx + 0.55, y: cy + 0.05, w: cw - 0.65, h: rh - 0.1,
+        fontFace: PPTX_BRAND.font.body, fontSize: 10, color: C.ink, valign: "middle",
+      });
+    });
+  },
+};
+
+const ctaSpec: SlideSpec = {
+  label: "CTA — Find Out More",
+  build: (slide, ctx) => {
+    chrome(slide, ctx);
+
+    // Eyebrow
+    slide.addText("FIND OUT MORE", {
+      x: 0.5, y: 1.8, w: W - 1, h: 0.4,
+      fontFace: PPTX_BRAND.font.body, fontSize: 12, bold: true, color: C.primary,
+      charSpacing: 6, align: "center",
+    });
+    // Headline
+    slide.addText([
+      { text: "The Comply365 ", options: { color: C.ink } },
+      { text: "Operational Performance Platform", options: { color: C.primary } },
+    ], {
+      x: 1.0, y: 2.3, w: W - 2, h: 1.4,
+      fontFace: PPTX_BRAND.font.display, fontSize: 38, bold: true, align: "center",
+    });
+    // Sub copy
+    slide.addText(
+      "See how Comply365 connects safety, content and training on one operational data foundation — with the intelligence and operating model to turn signals into proof.",
+      {
+        x: 1.5, y: 3.85, w: W - 3, h: 0.9,
+        fontFace: PPTX_BRAND.font.body, fontSize: 13, color: C.muted, align: "center",
+      },
+    );
+    // CTA pills
+    const pillY = 4.95;
+    const pills = [
+      { text: "Request a deep-dive · hello@comply365.com", color: C.primary, w: 4.6 },
+      { text: "comply365.com ↗", color: C.hairline, w: 2.6 },
+    ];
+    const totalW = pills.reduce((s, p) => s + p.w, 0) + (pills.length - 1) * 0.2;
+    let px = (W - totalW) / 2;
+    pills.forEach((p, i) => {
+      slide.addShape("roundRect", {
+        x: px, y: pillY, w: p.w, h: 0.55,
+        fill: { color: i === 0 ? p.color : C.surfaceAlt },
+        line: { color: p.color, width: 1 }, rectRadius: 0.27,
+      });
+      slide.addText(p.text, {
+        x: px, y: pillY, w: p.w, h: 0.55,
+        fontFace: PPTX_BRAND.font.body, fontSize: 12, bold: i === 0,
+        color: i === 0 ? C.bg : C.ink, align: "center", valign: "middle",
+      });
+      px += p.w + 0.2;
+    });
+
+    // Trust strip — 3 stats
+    const stats = [
+      { v: "550+", l: "Airlines worldwide", c: C.primary },
+      { v: "~2.5M", l: "Users", c: C.accent },
+      { v: "6", l: "Continents", c: C.violet },
+    ];
+    const tileW = 2.4, tileH = 0.95, gap = 0.3;
+    const totW = stats.length * tileW + (stats.length - 1) * gap;
+    let sx = (W - totW) / 2;
+    stats.forEach((s) => {
+      addBrandStatBlock(slide, sx, 5.85, tileW, tileH, s.v, s.l, s.c);
+      sx += tileW + gap;
+    });
+  },
+};
+
+// ─── Regulation Solution sub-section (6 slides, mirrored from RM playbook)
+
+const rmSectionDividerSpec: SlideSpec = {
+  label: "▸ Regulation Solution",
+  build: (slide, ctx) => {
+    chrome(slide, ctx);
+    slide.addText("REGULATION SOLUTION", {
+      x: 0.6, y: 1.7, w: W - 1.2, h: 0.4,
+      fontFace: PPTX_BRAND.font.body, fontSize: 12, bold: true, color: C.primary, charSpacing: 6,
+    });
+    slide.addText("Regulation Management", {
+      x: 0.6, y: 2.15, w: W - 1.2, h: 1.1,
+      fontFace: PPTX_BRAND.font.display, fontSize: 48, bold: true, color: C.ink,
+    });
+    slide.addText(solutionOverview.tagline, {
+      x: 0.6, y: 3.4, w: W - 1.2, h: 0.6,
+      fontFace: PPTX_BRAND.font.display, fontSize: 18, color: C.primary, italic: true,
+    });
+    slide.addText(solutionOverview.elevatorPitch, {
+      x: 0.6, y: 4.2, w: W - 1.2, h: 1.5,
+      fontFace: PPTX_BRAND.font.body, fontSize: 13, color: C.muted,
+    });
+  },
+};
+
+const rmOverviewSpec: SlideSpec = {
+  label: "RM · Solution Overview",
+  build: (slide, ctx) => {
+    chrome(slide, ctx);
+    header(slide, "Regulation Solution", "Solution Overview",
+      "Regulation Management by Comply365");
+
+    const colW = (W - 1 - 0.3) / 2;
+    // Left: elevator + arc
+    addCard(slide, 0.5, CONTENT_TOP, colW, CONTENT_BOTTOM - CONTENT_TOP, { border: C.primary });
+    slide.addText("ELEVATOR PITCH", {
+      x: 0.7, y: CONTENT_TOP + 0.15, w: colW - 0.4, h: 0.3,
+      fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.primary, charSpacing: 3,
+    });
+    slide.addText(solutionOverview.elevatorPitch, {
+      x: 0.7, y: CONTENT_TOP + 0.5, w: colW - 0.4, h: 2.0,
+      fontFace: PPTX_BRAND.font.body, fontSize: 11, color: C.ink, valign: "top",
+    });
+    slide.addText("NARRATIVE ARC", {
+      x: 0.7, y: CONTENT_TOP + 2.7, w: colW - 0.4, h: 0.3,
+      fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.primary, charSpacing: 3,
+    });
+    slide.addText(solutionOverview.narrativeArc, {
+      x: 0.7, y: CONTENT_TOP + 3.05, w: colW - 0.4, h: 0.5,
+      fontFace: PPTX_BRAND.font.display, fontSize: 14, bold: true, color: C.ink,
+    });
+    slide.addText(solutionOverview.tagline, {
+      x: 0.7, y: CONTENT_TOP + 3.65, w: colW - 0.4, h: 0.4,
+      fontFace: PPTX_BRAND.font.body, fontSize: 11, color: C.primary, italic: true,
+    });
+
+    // Right: key insight
+    const rx = 0.5 + colW + 0.3;
+    addCard(slide, rx, CONTENT_TOP, colW, CONTENT_BOTTOM - CONTENT_TOP, { fill: C.primarySoft, border: C.primary });
+    slide.addText("KEY INSIGHT", {
+      x: rx + 0.2, y: CONTENT_TOP + 0.15, w: colW - 0.4, h: 0.3,
+      fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.primary, charSpacing: 3,
+    });
+    slide.addText(solutionOverview.keyInsight, {
+      x: rx + 0.2, y: CONTENT_TOP + 0.5, w: colW - 0.4, h: CONTENT_BOTTOM - CONTENT_TOP - 0.7,
+      fontFace: PPTX_BRAND.font.body, fontSize: 12, color: C.ink, valign: "top",
+    });
+  },
+};
+
+const rmProblemSpec: SlideSpec = {
+  label: "RM · The Problem Today",
+  build: (slide, ctx) => {
+    chrome(slide, ctx);
+    header(slide, "Regulation Solution", "The Problem Today",
+      "Regulatory compliance is fragmented, manual and disconnected from operations");
+
+    const cols = 3;
+    const rows = 2;
+    const gY = CONTENT_TOP;
+    const gH = CONTENT_BOTTOM - gY;
+    const cw = (W - 1 - (cols - 1) * 0.18) / cols;
+    const ch = (gH - (rows - 1) * 0.18) / rows;
+    rmPainPoints.forEach((p, i) => {
+      const cx = 0.5 + (i % cols) * (cw + 0.18);
+      const cy = gY + Math.floor(i / cols) * (ch + 0.18);
+      addCard(slide, cx, cy, cw, ch, { border: C.danger });
+      addIconBadge(slide, cx + 0.18, cy + 0.18, 0.42, C.danger, "!");
+      slide.addText(p.headline, {
+        x: cx + 0.72, y: cy + 0.15, w: cw - 0.85, h: 0.32,
+        fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true, color: C.ink,
+      });
+      slide.addText(p.detail, {
+        x: cx + 0.2, y: cy + 0.7, w: cw - 0.35, h: ch - 0.8,
+        fontFace: PPTX_BRAND.font.body, fontSize: 9.5, color: C.muted, valign: "top",
+      });
+    });
+  },
+};
+
+const rmValuePillarsSpec: SlideSpec = {
+  label: "RM · Value Pillars",
+  build: (slide, ctx) => {
+    chrome(slide, ctx);
+    header(slide, "Regulation Solution", "Value Pillars",
+      "Five connected value drivers — from real-time visibility to a future-proof foundation");
+
+    const n = rmValuePillars.length;
+    const gY = CONTENT_TOP;
+    const gH = CONTENT_BOTTOM - gY;
+    const cw = (W - 1 - (n - 1) * 0.15) / n;
+    rmValuePillars.forEach((p, i) => {
+      const cx = 0.5 + i * (cw + 0.15);
+      addCard(slide, cx, gY, cw, gH, { border: C.primary });
+      // index badge
+      slide.addShape("roundRect", {
+        x: cx + 0.18, y: gY + 0.18, w: 0.55, h: 0.32,
+        fill: { color: C.primary }, line: { type: "none" }, rectRadius: 0.05,
+      });
+      slide.addText(`0${i + 1}`, {
+        x: cx + 0.18, y: gY + 0.18, w: 0.55, h: 0.32,
+        fontFace: PPTX_BRAND.font.display, fontSize: 11, bold: true, color: C.bg,
+        align: "center", valign: "middle",
+      });
+      slide.addText(p.title, {
+        x: cx + 0.18, y: gY + 0.6, w: cw - 0.36, h: 0.7,
+        fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true, color: C.ink,
+      });
+      slide.addText(p.description, {
+        x: cx + 0.18, y: gY + 1.4, w: cw - 0.36, h: gH - 2.0,
+        fontFace: PPTX_BRAND.font.body, fontSize: 9.5, color: C.muted, valign: "top",
+      });
+      if (p.metrics) {
+        slide.addShape("roundRect", {
+          x: cx + 0.18, y: gY + gH - 0.55, w: cw - 0.36, h: 0.4,
+          fill: { color: C.surfaceAlt }, line: { color: C.primary, width: 0.5 }, rectRadius: 0.05,
+        });
+        slide.addText(p.metrics, {
+          x: cx + 0.2, y: gY + gH - 0.55, w: cw - 0.4, h: 0.4,
+          fontFace: PPTX_BRAND.font.body, fontSize: 8.5, bold: true, color: C.primary,
+          align: "center", valign: "middle",
+        });
+      }
+    });
+  },
+};
+
+const rmHowItWorksSpec: SlideSpec = {
+  label: "RM · How It Works",
+  build: (slide, ctx) => {
+    chrome(slide, ctx);
+    header(slide, "Regulation Solution", "How It Works",
+      "Three-layer delivery model");
+
+    const layerColors = [C.primary, C.accent, C.cyan];
+    const n = rmHowItWorksLayers.length;
+    const gY = CONTENT_TOP;
+    const gH = CONTENT_BOTTOM - gY;
+    const cw = (W - 1 - (n - 1) * 0.2) / n;
+    rmHowItWorksLayers.forEach((layer, i) => {
+      const accent = layerColors[i] ?? C.primary;
+      const cx = 0.5 + i * (cw + 0.2);
+      addCard(slide, cx, gY, cw, gH, { border: accent });
+      // Layer number badge
+      slide.addShape("ellipse", {
+        x: cx + 0.2, y: gY + 0.2, w: 0.5, h: 0.5,
+        fill: { color: accent }, line: { type: "none" },
+      });
+      slide.addText(String(layer.layer), {
+        x: cx + 0.2, y: gY + 0.2, w: 0.5, h: 0.5,
+        fontFace: PPTX_BRAND.font.display, fontSize: 16, bold: true, color: C.bg,
+        align: "center", valign: "middle",
+      });
+      slide.addText(layer.title, {
+        x: cx + 0.85, y: gY + 0.2, w: cw - 1.0, h: 0.55,
+        fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true, color: accent, valign: "middle",
+      });
+      slide.addText(layer.description, {
+        x: cx + 0.2, y: gY + 0.85, w: cw - 0.4, h: 1.2,
+        fontFace: PPTX_BRAND.font.body, fontSize: 10, color: C.ink, valign: "top",
+      });
+      slide.addText(
+        layer.details.map((d) => ({ text: d, options: { bullet: { code: "25CF" } } })),
+        {
+          x: cx + 0.2, y: gY + 2.1, w: cw - 0.4, h: gH - 2.25,
+          fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, paraSpaceAfter: 4,
+        },
+      );
+    });
+  },
+};
+
+const rmUseCasesSpec: SlideSpec = {
+  label: "RM · Use Cases",
+  build: (slide, ctx) => {
+    chrome(slide, ctx);
+    header(slide, "Regulation Solution", "Use Cases",
+      "Six connected use cases across compliance, change, AI insights and executive assurance");
+
+    const cols = 3;
+    const rows = 2;
+    const gY = CONTENT_TOP;
+    const gH = CONTENT_BOTTOM - gY;
+    const cw = (W - 1 - (cols - 1) * 0.2) / cols;
+    const ch = (gH - (rows - 1) * 0.18) / rows;
+    rmUseCases.slice(0, 6).forEach((uc, i) => {
+      const cx = 0.5 + (i % cols) * (cw + 0.2);
+      const cy = gY + Math.floor(i / cols) * (ch + 0.18);
+      addCard(slide, cx, cy, cw, ch, { border: C.primary });
+      slide.addText(uc.title, {
+        x: cx + 0.18, y: cy + 0.12, w: cw - 0.36, h: 0.32,
+        fontFace: PPTX_BRAND.font.display, fontSize: 11, bold: true, color: C.primary,
+      });
+      slide.addText("SCENARIO", {
+        x: cx + 0.18, y: cy + 0.5, w: cw - 0.36, h: 0.2,
+        fontFace: PPTX_BRAND.font.body, fontSize: 7.5, bold: true, color: C.subtle, charSpacing: 2,
+      });
+      slide.addText(uc.scenario, {
+        x: cx + 0.18, y: cy + 0.7, w: cw - 0.36, h: 0.85,
+        fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, valign: "top",
+      });
+      slide.addText("OUTCOME", {
+        x: cx + 0.18, y: cy + 1.6, w: cw - 0.36, h: 0.2,
+        fontFace: PPTX_BRAND.font.body, fontSize: 7.5, bold: true, color: C.prove, charSpacing: 2,
+      });
+      slide.addText(uc.outcome, {
+        x: cx + 0.18, y: cy + 1.8, w: cw - 0.36, h: ch - 2.2,
+        fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.ink, valign: "top",
+      });
+      // Product chips
+      const chipsY = cy + ch - 0.35;
+      let chx = cx + 0.18;
+      uc.products.slice(0, 4).forEach((prod) => {
+        const chipW = Math.min(cw - 0.4, prod.length * 0.07 + 0.15);
+        if (chx + chipW > cx + cw - 0.18) return;
+        slide.addShape("roundRect", {
+          x: chx, y: chipsY, w: chipW, h: 0.22,
+          fill: { color: C.surfaceAlt }, line: { color: C.primary, width: 0.5 }, rectRadius: 0.11,
+        });
+        slide.addText(prod, {
+          x: chx, y: chipsY, w: chipW, h: 0.22,
+          fontFace: PPTX_BRAND.font.body, fontSize: 7, color: C.ink,
+          align: "center", valign: "middle",
+        });
+        chx += chipW + 0.06;
+      });
+    });
+  },
+};
 export async function buildTechnicalDeck(opts: BuildOpts = {}): Promise<Blob> {
   const pptx = new pptxgen();
   pptx.defineLayout({ name: "WIDE_16_9", width: PPTX_BRAND.size.w, height: PPTX_BRAND.size.h });
@@ -2025,27 +2509,68 @@ export async function buildTechnicalDeck(opts: BuildOpts = {}): Promise<Blob> {
     },
   };
 
-  // Compose the final deck order with dividers + appendix.
-  // Original slide indices we want to gate behind dividers:
-  //   3 → Foundations, 8 → Intelligence, 16 → Outcomes, 17 → Roadmap
-  const dividerBeforeIndex: Record<number, { eyebrow: string; title: string; subtitle: string }> = {
-    3: { eyebrow: "Section", title: "Foundations", subtitle: "Architecture, data and the core operational apps." },
-    8: { eyebrow: "Section", title: "Intelligence", subtitle: "Insights & Intelligence, Recommendations & Prescriptive Actions, and Automation across the unified mobile shell." },
-    16: { eyebrow: "Section", title: "Outcomes", subtitle: "Line of sight from costed use case to executive outcome." },
-    17: { eyebrow: "Section", title: "Roadmap", subtitle: "Maturity, phased delivery, and the partnership model." },
+  // Compose the final deck order to mirror the live web deck exactly.
+  // Lookup helper — find an existing spec by label.
+  const byLabel = (label: string): SlideSpec => {
+    const s = slideSpecs.find((x) => x.label === label);
+    if (!s) throw new Error(`PPTX exporter: missing slide spec "${label}"`);
+    return s;
   };
 
-  const composed: SlideSpec[] = [];
-  let sectionIdx = 1;
-  slideSpecs.forEach((spec, i) => {
-    const div = dividerBeforeIndex[i];
-    if (div) {
-      composed.push(dividerSpec(div.eyebrow, div.title, div.subtitle, sectionIdx));
-      sectionIdx += 1;
-    }
-    composed.push(spec);
-  });
-  composed.push(appendixSpec);
+  const composed: SlideSpec[] = [
+    // ── Frame the problem ──
+    openerSpec,
+    byLabel("Title"),
+    byLabel("Strategic Shift"),
+    byLabel("Industry Challenge"),
+    platformSnapshotSpec,
+    // ── Architecture overview ──
+    byLabel("Platform Overview"),
+    // ── Layer 1 · Core Operational Apps ──
+    byLabel("▸ Layer 1 · Core Operational Apps"),
+    byLabel("SafetyManager365"),
+    byLabel("ContentManager365"),
+    byLabel("TrainingManager365"),
+    // ── Layer 2 · Operational Data Foundation ──
+    byLabel("▸ Layer 2 · Operational Data Foundation"),
+    byLabel("Data Foundation"),
+    // ── Layer 3 · Intelligence & Orchestration ──
+    byLabel("▸ Layer 3 · Intelligence & Orchestration"),
+    byLabel("Insights & Intelligence"),
+    byLabel("Recommendations & Prescriptive Actions"),
+    byLabel("Automation"),
+    byLabel("Tiers vs Generic AI"),
+    // ── Layer 4 · Unified Mobile ──
+    byLabel("▸ Layer 4 · Unified Mobile"),
+    byLabel("Unified Mobile"),
+    // ── Layer 5 · DTOP ──
+    byLabel("▸ Layer 5 · DTOP"),
+    byLabel("DTOP Operating Model"),
+    byLabel("Use Cases"),
+    byLabel("Platform Integrations"),
+    // ── Regulation Solution sub-section ──
+    rmSectionDividerSpec,
+    rmOverviewSpec,
+    rmProblemSpec,
+    rmValuePillarsSpec,
+    rmHowItWorksSpec,
+    rmUseCasesSpec,
+    // ── Value & close ──
+    byLabel("Line of Sight Cascade"),
+    byLabel("▸ Journey Ahead · Maturity"),
+    byLabel("Maturity Roadmap"),
+    byLabel("▸ Journey Ahead · 2026 Use Cases"),
+    byLabel("2026 Roadmap"),
+    byLabel("Why Comply365"),
+    whyOnlyComply365Spec,
+    ctaSpec,
+    // ── Appendix ──
+    appendixSpec,
+  ];
+  // Suppress unused-warnings for the legacy section divider helper —
+  // the new compose order does not need it but we keep it available
+  // for future section grouping if needed.
+  void dividerSpec;
 
   const total = composed.length;
 
