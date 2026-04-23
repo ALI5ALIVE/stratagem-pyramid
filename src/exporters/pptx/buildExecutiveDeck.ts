@@ -599,7 +599,6 @@ const pyramidSpec: SlideSpec = {
         x: tx, y: ty, w: tw, h: tierH - 0.08,
         fill: { color: t.color, transparency: 30 },
         line: { color: t.color, width: 1 },
-        flipV: i !== 0 ? false : true,
       });
       slide.addText(`${t.n}. ${t.label}`, {
         x: tx, y: ty, w: tw, h: tierH - 0.08,
