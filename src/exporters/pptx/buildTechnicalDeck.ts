@@ -911,6 +911,11 @@ slideSpecs.push(
       steps.forEach((s, i) => {
         const x = 0.5 + i * (sW + 0.2);
         addCard(slide, x, sY, sW, sH, { border: s.color });
+        // Brand motif: top accent strip on each step card
+        slide.addShape("rect", {
+          x, y: sY, w: sW, h: 0.06,
+          fill: { color: s.color }, line: { type: "none" },
+        });
         slide.addShape("ellipse", {
           x: x + sW / 2 - 0.45, y: sY + 0.25, w: 0.9, h: 0.9,
           fill: { color: s.color }, line: { type: "none" },
@@ -927,6 +932,24 @@ slideSpecs.push(
           x: x + 0.18, y: sY + 1.8, w: sW - 0.36, h: sH - 1.95,
           fontFace: PPTX_BRAND.font.body, fontSize: 10, color: C.muted, align: "center", valign: "top",
         });
+        // Step arrow between cards
+        if (i < steps.length - 1) {
+          slide.addText("›", {
+            x: x + sW + 0.02, y: sY + sH / 2 - 0.25, w: 0.18, h: 0.5,
+            fontFace: PPTX_BRAND.font.display, fontSize: 28, bold: true,
+            color: C.subtle, align: "center", valign: "middle",
+          });
+        }
+      });
+      // Closed-loop return arrow (last → first) under the cards
+      slide.addShape("rect", {
+        x: 0.5, y: sY + sH + 0.05, w: W - 1, h: 0.04,
+        fill: { color: C.primary }, line: { type: "none" },
+      });
+      slide.addText("↺  Continuous Improvement Loop", {
+        x: W / 2 - 2, y: sY + sH + 0.0, w: 4, h: 0.18,
+        fontFace: PPTX_BRAND.font.body, fontSize: 8, bold: true,
+        color: C.primary, align: "center", charSpacing: 3,
       });
 
       // Audit trail strip
