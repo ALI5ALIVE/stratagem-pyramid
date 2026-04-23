@@ -55,7 +55,7 @@ const DTOPPrintablePage: React.FC = () => {
       <hr style={hr} />
 
       {/* TITLE */}
-      <div style={{ marginTop: 16, marginBottom: 14, borderLeft: `4px solid ${C.brand}`, paddingLeft: 14 }}>
+      <div style={{ marginTop: 14, marginBottom: 10, borderLeft: `4px solid ${C.brand}`, paddingLeft: 14 }}>
         <div style={{
           fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase",
           color: "#3D8BFF", fontWeight: 700, fontFamily: F.display, marginBottom: 4,
@@ -63,7 +63,7 @@ const DTOPPrintablePage: React.FC = () => {
           The DTOP Operating Model
         </div>
         <h1 style={{
-          margin: 0, fontFamily: F.display, fontSize: 28, fontWeight: 700,
+          margin: 0, fontFamily: F.display, fontSize: 26, fontWeight: 700,
           color: C.darkInk, lineHeight: 1.05, letterSpacing: "-0.02em",
         }}>
           Detect → Trigger → Orchestrate → Prove
@@ -73,15 +73,47 @@ const DTOPPrintablePage: React.FC = () => {
         </div>
       </div>
 
+      {/* WHAT DTOP IS */}
+      <div style={{
+        display: "grid", gridTemplateColumns: "1fr auto", gap: 18, alignItems: "center",
+        padding: "10px 14px", marginBottom: 12,
+        background: C.darkPaperWarm,
+        border: `1px solid ${C.darkHairline}`,
+        borderLeft: `3px solid ${stepAccentsDark[0]}`,
+      }}>
+        <div>
+          <div style={sectionLabel("#3D8BFF")}>What DTOP Is</div>
+          <div style={{ fontSize: 11, color: C.darkInk, lineHeight: 1.5, fontFamily: F.body }}>
+            DTOP is the <span style={{ fontWeight: 700 }}>closed-loop operating model</span> that connects detection of operational signals to provable outcomes — across Safety, Content, and Training, in one continuous workflow.
+          </div>
+        </div>
+        <div style={{ display: "flex", gap: 6, flexWrap: "nowrap" }}>
+          {[
+            { label: "Closed-loop", color: stepAccentsDark[0] },
+            { label: "Cross-module", color: stepAccentsDark[2] },
+            { label: "Auditable by design", color: stepAccentsDark[3] },
+          ].map((chip) => (
+            <span key={chip.label} style={{
+              fontSize: 8.5, fontWeight: 700, fontFamily: F.display,
+              letterSpacing: "0.08em", textTransform: "uppercase",
+              color: chip.color, padding: "5px 9px",
+              border: `1px solid ${chip.color}55`,
+              background: `${chip.color}12`,
+              whiteSpace: "nowrap",
+            }}>{chip.label}</span>
+          ))}
+        </div>
+      </div>
+
       {/* PIPELINE — hero */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 14px 1fr 14px 1fr 14px 1fr", gap: 0, alignItems: "stretch", marginBottom: 14 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 14px 1fr 14px 1fr 14px 1fr", gap: 0, alignItems: "stretch", marginBottom: 12 }}>
         {dtopSteps.map((step, i) => (
           <React.Fragment key={step.letter}>
             <div style={{
               background: C.darkPaperWarm,
               border: `1px solid ${C.darkHairline}`,
               borderTop: `3px solid ${stepAccentsDark[i]}`,
-              padding: "12px 14px 13px",
+              padding: "10px 14px 11px",
               display: "flex", flexDirection: "column",
               boxShadow: `inset 0 1px 0 rgba(255,255,255,0.04)`,
             }}>
@@ -120,33 +152,54 @@ const DTOPPrintablePage: React.FC = () => {
 
       {/* WHY IT EXISTS */}
       <div style={{
-        display: "grid", gridTemplateColumns: "auto 1fr", gap: 24, alignItems: "center",
-        padding: "14px 0", borderTop: `1px solid ${C.darkHairline}`, borderBottom: `1px solid ${C.darkHairline}`,
-        marginBottom: 14,
+        display: "grid", gridTemplateColumns: "200px 1fr", gap: 20, alignItems: "start",
+        padding: "12px 0", borderTop: `1px solid ${C.darkHairline}`, borderBottom: `1px solid ${C.darkHairline}`,
+        marginBottom: 12,
       }}>
         <div>
           <div style={sectionLabel()}>Why It Exists</div>
           <div style={{
-            fontFamily: F.display, fontSize: 38, fontWeight: 700,
+            fontFamily: F.display, fontSize: 32, fontWeight: 700,
             color: C.darkInk, lineHeight: 1, letterSpacing: "-0.03em",
             borderBottom: `3px solid ${C.brand}`,
-            paddingBottom: 4, display: "inline-block",
+            paddingBottom: 4, display: "inline-block", marginBottom: 6,
           }}>
             {whyDTOPExists.industryExposure}
           </div>
-        </div>
-        <div>
-          <div style={{ fontSize: 11, color: C.darkSlate, lineHeight: 1.5, fontFamily: F.body }}>
+          <div style={{ fontSize: 9.5, color: C.darkSlate, lineHeight: 1.4, fontFamily: F.body }}>
             {whyDTOPExists.exposureLabel}.
           </div>
           <div style={{ fontSize: 7.5, color: C.darkSubtle, lineHeight: 1.4, marginTop: 4, fontStyle: "italic" }}>
             {whyDTOPExists.industryExposureMethodology}
           </div>
         </div>
+        <div>
+          <div style={{ ...sectionLabel(), marginBottom: 6 }}>{whyDTOPExists.headline}</div>
+          <div style={{
+            display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8,
+          }}>
+            {whyDTOPExists.problems.map((p, i) => (
+              <div key={p.label} style={{
+                background: C.darkPaperWarm,
+                border: `1px solid ${C.darkHairline}`,
+                borderLeft: `2px solid ${stepAccentsDark[i % 4]}`,
+                padding: "6px 8px",
+              }}>
+                <div style={{
+                  fontFamily: F.display, fontSize: 9, fontWeight: 700,
+                  color: C.darkInk, marginBottom: 2, lineHeight: 1.2,
+                }}>{p.label}</div>
+                <div style={{ fontSize: 8.5, color: C.darkMuted, lineHeight: 1.35 }}>
+                  {p.detail}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* PROOF — three closed loops */}
-      <div style={{ marginBottom: 14 }}>
+      <div style={{ marginBottom: 10 }}>
         <div style={sectionLabel()}>Proof — Three Closed Loops</div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16 }}>
           {useCases.map((uc, i) => (
@@ -155,7 +208,7 @@ const DTOPPrintablePage: React.FC = () => {
               paddingLeft: 14,
             }}>
               <div style={{
-                fontFamily: F.display, fontSize: 20, fontWeight: 700,
+                fontFamily: F.display, fontSize: 18, fontWeight: 700,
                 color: stepAccentsDark[i], lineHeight: 1.05, letterSpacing: "-0.02em",
                 marginBottom: 3,
                 textShadow: `0 0 14px ${stepAccentsDark[i]}40`,
@@ -173,12 +226,12 @@ const DTOPPrintablePage: React.FC = () => {
       </div>
 
       {/* WHAT IT UNLOCKS — value tiles */}
-      <div style={{ marginBottom: 14 }}>
+      <div style={{ marginBottom: 8 }}>
         <div style={sectionLabel()}>What It Unlocks</div>
         <div style={{
           display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr",
           borderTop: `1px solid ${C.darkHairline}`,
-          paddingTop: 12,
+          paddingTop: 8,
         }}>
           {valueCategories.map((vc, i) => (
             <div key={vc.title} style={{
