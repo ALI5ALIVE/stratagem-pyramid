@@ -35,6 +35,47 @@ import TechSlide15Roadmap2026 from "@/components/tech-slides/TechSlide15Roadmap2
 import TechSlideWhyComply from "@/components/tech-slides/TechSlideWhyComply";
 import TechSlide18Partnership from "@/components/tech-slides/TechSlide18Partnership";
 
+// Layer dividers — one per architecture layer, slotted before each layer's deep-dive group
+import TechSlideLayerDivider from "@/components/tech-slides/TechSlideLayerDivider";
+
+const dividerProps = {
+  core: {
+    layerNumber: 1, layerName: "Core Operational Apps",
+    tagline: "ContentManager365 · TrainingManager365 · SafetyManager365 — the systems of record that emit every operational event.",
+    active: "core" as const,
+    upNext: ["SafetyManager365", "ContentManager365", "TrainingManager365"],
+  },
+  data: {
+    layerNumber: 2, layerName: "Operational Data Foundation",
+    tagline: "One unified data lake, taxonomy, knowledge graph and aviation LLMs — the substrate every layer reasons over.",
+    active: "data" as const,
+    upNext: ["The Operational Data Foundation"],
+  },
+  intelligence: {
+    layerNumber: 3, layerName: "Intelligence & Orchestration Layer",
+    tagline: "Insights & Intelligence · Recommendations & Prescriptive Actions · Automation — turning data into action.",
+    active: "intelligence" as const,
+    upNext: [
+      "Insights & Intelligence",
+      "Recommendations & Prescriptive Actions",
+      "Automation",
+      "Tiers vs Generic AI",
+    ],
+  },
+  mobile: {
+    layerNumber: 4, layerName: "Unified Mobile Experience",
+    tagline: "One trusted shell for the frontline — Procedures, Training and Safety in a single app.",
+    active: "mobile" as const,
+    upNext: ["Unified Mobile"],
+  },
+  dtop: {
+    layerNumber: 5, layerName: "DTOP — The System of Work",
+    tagline: "Detect → Trigger → Orchestrate → Prove. The operating model that wraps the whole stack.",
+    active: "dtop" as const,
+    upNext: ["DTOP Operating Model"],
+  },
+};
+
 const slides = [
   // Act 1
   { id: "tech-slide-0", label: "Title", component: TechSlide0Title },
@@ -42,18 +83,23 @@ const slides = [
   { id: "tech-slide-2", label: "Industry Challenge", component: TechSlide2IndustryChallenge },
   // Act 2 — Architecture
   { id: "tech-slide-4", label: "Platform Overview", component: TechSlide4Platform },
+  { id: "tech-divider-core", label: "▸ Layer 1 · Core Apps", component: TechSlideLayerDivider, dividerProps: dividerProps.core },
   { id: "tech-slide-4a", label: "SafetyManager365", component: TechSlide4aSafetyManager },
   { id: "tech-slide-4b", label: "ContentManager365", component: TechSlide4bContentManager },
   { id: "tech-slide-4c", label: "TrainingManager365", component: TechSlide4cTrainingManager },
+  { id: "tech-divider-data", label: "▸ Layer 2 · Data Foundation", component: TechSlideLayerDivider, dividerProps: dividerProps.data },
   { id: "tech-slide-data-foundation", label: "Data Foundation", component: TechSlideDataFoundation },
   // Act 3 — Intelligence
+  { id: "tech-divider-intelligence", label: "▸ Layer 3 · Intelligence & Orchestration", component: TechSlideLayerDivider, dividerProps: dividerProps.intelligence },
   { id: "tech-slide-coanalyst", label: "Insights & Intelligence", component: TechSlide7CoAnalyst },
   { id: "tech-slide-insights", label: "Recommendations & Prescriptive Actions", component: TechSlideInsights },
   { id: "tech-slide-automation", label: "Automation", component: TechSlideAutomation },
+  { id: "tech-slide-tiers-vs-ai", label: "Tiers vs Generic AI", component: TechSlideTiersVsAI },
+  { id: "tech-divider-mobile", label: "▸ Layer 4 · Unified Mobile", component: TechSlideLayerDivider, dividerProps: dividerProps.mobile },
   { id: "tech-slide-mobile", label: "Unified Mobile", component: TechSlideMobile },
   // Act 4 — Delivery & operating model
+  { id: "tech-divider-dtop", label: "▸ Layer 5 · DTOP", component: TechSlideLayerDivider, dividerProps: dividerProps.dtop },
   { id: "tech-slide-5", label: "DTOP Operating Model", component: TechSlide5DTOP },
-  { id: "tech-slide-tiers-vs-ai", label: "Tiers vs Generic AI", component: TechSlideTiersVsAI },
   { id: "tech-slide-use-cases", label: "Use Cases", component: TechSlideUseCases },
   { id: "tech-slide-6", label: "Platform Integrations", component: TechSlide6PlatformIntegrations },
   // Act 5 — Value & close
