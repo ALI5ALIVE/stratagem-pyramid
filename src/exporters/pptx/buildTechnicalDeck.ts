@@ -82,6 +82,109 @@ function header(
 const CONTENT_TOP = 1.85;
 const CONTENT_BOTTOM = 6.85;
 
+// Layer accent colours — match the React PlatformArchitectureDiagram tokens.
+const LAYER_ACCENT: Record<"core" | "data" | "intelligence" | "mobile" | "dtop", string> = {
+  core: "60A5FA",         // blue-400
+  data: "22D3EE",         // cyan-400
+  intelligence: "F59E0B", // amber-500
+  mobile: "A78BFA",       // violet-400
+  dtop: "34D399",         // emerald-400
+};
+
+const LAYER_STACK: { key: keyof typeof LAYER_ACCENT; label: string }[] = [
+  { key: "dtop",         label: "Layer 5 · DTOP — System of Work" },
+  { key: "mobile",       label: "Layer 4 · Unified Mobile Experience" },
+  { key: "intelligence", label: "Layer 3 · Intelligence & Orchestration" },
+  { key: "data",         label: "Layer 2 · Operational Data Foundation" },
+  { key: "core",         label: "Layer 1 · Core Operational Apps" },
+];
+
+function buildLayerDivider(
+  slide: pptxgen.Slide,
+  ctx: { logo: string; index: number; total: number },
+  opts: { layerNumber: number; layerName: string; tagline: string; active: keyof typeof LAYER_ACCENT; upNext: string[] },
+) {
+  chrome(slide, ctx);
+  const accent = LAYER_ACCENT[opts.active];
+
+  // Eyebrow
+  slide.addText(`LAYER ${opts.layerNumber} · ARCHITECTURE`, {
+    x: 0.6, y: 1.7, w: 8, h: 0.4,
+    fontFace: PPTX_BRAND.font.body, fontSize: 12, bold: true, color: accent, charSpacing: 6,
+  });
+  // Title
+  slide.addText(opts.layerName, {
+    x: 0.6, y: 2.15, w: 8, h: 1.1,
+    fontFace: PPTX_BRAND.font.display, fontSize: 44, bold: true, color: C.ink,
+  });
+  // Tagline
+  slide.addText(opts.tagline, {
+    x: 0.6, y: 3.35, w: 8, h: 1.0,
+    fontFace: PPTX_BRAND.font.body, fontSize: 14, color: C.muted, italic: true,
+  });
+  // "Up next in this layer"
+  slide.addText("UP NEXT IN THIS LAYER", {
+    x: 0.6, y: 4.55, w: 8, h: 0.3,
+    fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.muted, charSpacing: 4,
+  });
+  opts.upNext.forEach((item, i) => {
+    slide.addShape("rect", {
+      x: 0.6, y: 4.95 + i * 0.36, w: 0.04, h: 0.22,
+      fill: { color: accent }, line: { type: "none" },
+    });
+    slide.addText(item, {
+      x: 0.78, y: 4.88 + i * 0.36, w: 7.5, h: 0.32,
+      fontFace: PPTX_BRAND.font.body, fontSize: 13, color: C.ink,
+    });
+  });
+
+  // Right: 5-row mini stack with active layer lit
+  const stackX = 9.1;
+  const stackW = 3.7;
+  const stackY = 1.7;
+  const rowH = 0.78;
+  const gap = 0.12;
+  slide.addText("YOU ARE HERE", {
+    x: stackX, y: stackY - 0.45, w: stackW, h: 0.3,
+    fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.muted, charSpacing: 4, align: "right",
+  });
+  LAYER_STACK.forEach((l, i) => {
+    const isActive = l.key === opts.active;
+    const y = stackY + i * (rowH + gap);
+    const layerAccent = LAYER_ACCENT[l.key];
+    slide.addShape("roundRect", {
+      x: stackX, y, w: stackW, h: rowH,
+      fill: { color: isActive ? layerAccent : "1A1F2E", transparency: isActive ? 80 : 70 },
+      line: { color: isActive ? layerAccent : C.hairline, width: isActive ? 1.5 : 0.5 },
+      rectRadius: 0.08,
+    });
+    if (isActive) {
+      slide.addShape("rect", {
+        x: stackX, y, w: 0.06, h: rowH,
+        fill: { color: layerAccent }, line: { type: "none" },
+      });
+    }
+    slide.addText(l.label, {
+      x: stackX + 0.2, y, w: stackW - 0.3, h: rowH,
+      fontFace: PPTX_BRAND.font.body, fontSize: 11, bold: isActive,
+      color: isActive ? layerAccent : C.muted,
+      valign: "middle",
+    });
+  });
+}
+
+const dividerSpec = (opts: {
+  label: string;
+  layerNumber: number;
+  layerName: string;
+  tagline: string;
+  active: keyof typeof LAYER_ACCENT;
+  upNext: string[];
+}): SlideSpec => ({
+  label: opts.label,
+  build: (slide, ctx) => buildLayerDivider(slide, ctx, opts),
+});
+
 const slideSpecs: SlideSpec[] = [
   // ─── 0. TITLE ──────────────────────────────────────────────────
   {
