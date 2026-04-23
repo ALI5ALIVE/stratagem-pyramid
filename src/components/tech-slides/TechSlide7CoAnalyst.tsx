@@ -22,13 +22,13 @@ const archCards = [
 const TechSlide7CoAnalyst = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer
     id="tech-slide-coanalyst"
-    title="Intelligence & Orchestration Layer — From Reports to Intelligence"
+    title="Intelligence & Orchestration Layer — Insights & Intelligence"
     subtitle="Conversational intelligence purpose-built for aviation operations"
     slideNumber={slideNumber}
     {...narrationProps}
   >
     <div className="flex-1 flex flex-col gap-4 min-h-0">
-      <ArchitectureLayerBadge active="intelligence" sublayer="coanalyst" />
+      <ArchitectureLayerBadge active="intelligence" sublayer="insights-intelligence" />
       {/* Master message */}
       <div className="rounded-xl border border-primary/30 bg-primary/10 p-4 flex items-center gap-3 shrink-0">
         <Quote className="h-5 w-5 text-primary shrink-0" />
@@ -66,7 +66,7 @@ const TechSlide7CoAnalyst = ({ slideNumber, ...narrationProps }: Props) => (
         <div className="grid grid-rows-2 gap-3 h-full">
           <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 flex flex-col justify-center h-full">
             <div className="text-3xl font-bold text-emerald-400">90%</div>
-            <div className="text-sm text-foreground font-bold mt-1">CoAnalyst at Level 4–5</div>
+            <div className="text-sm text-foreground font-bold mt-1">Insights & Intelligence at Level 4–5</div>
             <div className="text-xs text-muted-foreground">vs ~35% generic AI · cause / root cause</div>
           </div>
           <div className="rounded-xl border border-violet-500/30 bg-violet-500/10 p-4 flex items-center gap-3 h-full">

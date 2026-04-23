@@ -10,7 +10,7 @@ const phases = [
     items: [
       "✅ Regulation Database Integration with ContentManager365",
       "✅ ContentManager365 to TrainingManager365 Integration",
-      "Safety report auto-categorisation (CoAnalyst)",
+      "Safety report auto-categorisation",
       "Audit evidence package generation",
     ],
   },
@@ -20,7 +20,7 @@ const phases = [
       "Safety Report Submissions within ContentManager365",
       "UI Unification across all solutions",
       "Platform PoCs with early adopter airlines",
-      "CoAnalyst proactive pattern detection (smoke & fumes, fatigue)",
+      "Proactive pattern detection (smoke & fumes, fatigue)",
       "Executive outcome dashboards",
     ],
   },

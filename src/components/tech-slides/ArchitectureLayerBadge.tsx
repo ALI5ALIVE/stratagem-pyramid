@@ -2,8 +2,8 @@ import { cn } from "@/lib/utils";
 
 export type Layer = "dtop" | "mobile" | "intelligence" | "data" | "core";
 export type Sublayer =
-  | "coanalyst"
-  | "insights"
+  | "insights-intelligence"
+  | "recommendations"
   | "automation"
   | "content"
   | "training"
@@ -25,9 +25,9 @@ const layers: { id: Layer; label: string; color: string; bg: string; border: str
 
 const sublayersByLayer: Record<string, { id: Sublayer; label: string }[]> = {
   intelligence: [
-    { id: "coanalyst",  label: "CoAnalyst" },
-    { id: "insights",   label: "Insights" },
-    { id: "automation", label: "Automation" },
+    { id: "insights-intelligence", label: "Insights & Intelligence" },
+    { id: "recommendations",       label: "Recommendations & Prescriptive Actions" },
+    { id: "automation",            label: "Automation" },
   ],
   core: [
     { id: "content",  label: "ContentManager365" },
