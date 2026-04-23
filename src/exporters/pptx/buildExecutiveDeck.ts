@@ -905,7 +905,159 @@ const outcomesSpec: SlideSpec = {
   },
 };
 
-// ─── Slide 11 · Why Comply365 ───────────────────────────────────
+// ─── Slide · Maturity Roadmap (mirrors Slide5MaturityCurve) ─────
+const maturityRoadmapSpec: SlideSpec = {
+  label: "Maturity Roadmap",
+  build: (slide, ctx) => {
+    chrome(slide, ctx);
+    header(
+      slide,
+      "The maturity roadmap",
+      "From Fragmented to Predictive",
+      "Five stages, one operating model — each stage compounds the value of the last.",
+    );
+
+    const stages = [
+      { n: 1, label: "Fragmented & Reactive", sub: "Manual / Reactive", color: C.danger,
+        scenario: "Crew Fatigue Incident",
+        problem: "Fatigue reports are scattered across email and separate systems. The pattern is only spotted after an incident; investigations take 3 weeks.",
+        outcome: "Reactive, fragmented, slow — where most operations start." },
+      { n: 2, label: "Managed (Siloed)", sub: "Silo Optimisation", color: C.sky,
+        scenario: "Runway Incursion Investigation",
+        problem: "Safety completes a thorough investigation, but training never updates. Six months later the same issue recurs with different crew.",
+        outcome: "Strong departments — but no connection between them." },
+      { n: 3, label: "Connected Governance", sub: "Closed Loop", color: "14B8A6",
+        scenario: "MEL Procedure Update",
+        problem: "An MEL change is published. The platform automatically triggers procedure revision, reassigns affected training, and creates an audit trail.",
+        outcome: "No manual handoffs. Full traceability by default." },
+      { n: 4, label: "Intelligent Operations", sub: "AI-Assisted Execution", color: C.violet,
+        scenario: "Hard Landing Detection",
+        problem: "Operational data flags a hard-landing trend at a specific airport. The platform identifies 47 affected pilots and auto-deploys targeted simulator training.",
+        outcome: "78% reduction in repeat events. Schedule and maintenance protected." },
+      { n: 5, label: "Predictive Operations", sub: "AI-Accelerated Performance", color: C.amber,
+        scenario: "Smoke & Fumes Prevention",
+        problem: "AI surfaces a weak-signal cluster around a specific hub. Before any reportable event occurs, the de-icing SOP is revised proactively.",
+        outcome: "Zero incidents. Prevention, not reaction." },
+    ];
+
+    // Left half: native hockey-stick curve
+    const leftX = 0.5;
+    const leftW = 5.4;
+    const leftY = CONTENT_TOP;
+    const leftH = CONTENT_BOTTOM - leftY - 0.55;
+    addCard(slide, leftX, leftY, leftW, leftH, { fill: C.surfaceAlt });
+    slide.addText("PERFORMANCE", {
+      x: leftX + 0.2, y: leftY + 0.15, w: leftW - 0.4, h: 0.22,
+      fontFace: PPTX_BRAND.font.body, fontSize: 8, bold: true, color: C.subtle, charSpacing: 2,
+    });
+    // Axes
+    const axOriginX = leftX + 0.6;
+    const axOriginY = leftY + leftH - 0.55;
+    const axW = leftW - 0.9;
+    const axH = leftH - 1.0;
+    slide.addShape("line", {
+      x: axOriginX, y: leftY + 0.45, w: 0, h: axH + 0.1,
+      line: { color: C.hairline, width: 0.5 },
+    });
+    slide.addShape("line", {
+      x: axOriginX, y: axOriginY, w: axW, h: 0,
+      line: { color: C.hairline, width: 0.5 },
+    });
+    slide.addText("MATURITY", {
+      x: axOriginX, y: axOriginY + 0.05, w: axW, h: 0.22,
+      fontFace: PPTX_BRAND.font.body, fontSize: 8, color: C.subtle, charSpacing: 2, align: "center",
+    });
+
+    // Hockey-stick curve via 4 line segments (5 markers, exponential rise)
+    const yFrom = (frac: number) => axOriginY - frac * axH;
+    const fractions = [0.05, 0.12, 0.28, 0.55, 0.92];
+    const markers = stages.map((s, i) => ({
+      cx: axOriginX + ((i) / (stages.length - 1)) * axW,
+      cy: yFrom(fractions[i]),
+      color: s.color,
+      n: s.n,
+    }));
+    for (let i = 0; i < markers.length - 1; i++) {
+      const a = markers[i];
+      const b = markers[i + 1];
+      slide.addShape("line", {
+        x: a.cx, y: a.cy, w: b.cx - a.cx, h: b.cy - a.cy,
+        line: { color: C.primary, width: 2 },
+      });
+    }
+    markers.forEach((m) => {
+      slide.addShape("ellipse", {
+        x: m.cx - 0.18, y: m.cy - 0.18, w: 0.36, h: 0.36,
+        fill: { color: m.color }, line: { color: C.bg, width: 1.5 },
+      });
+      slide.addText(String(m.n), {
+        x: m.cx - 0.18, y: m.cy - 0.18, w: 0.36, h: 0.36,
+        fontFace: PPTX_BRAND.font.display, fontSize: 11, bold: true, color: C.bg,
+        align: "center", valign: "middle",
+      });
+    });
+
+    // Bottom strip — summary
+    const sumY = leftY + leftH + 0.15;
+    addCalloutBanner(slide, leftX, sumY, leftW, 0.4,
+      "Most operations live at Stage 1–2. The platform moves you to 4–5.", C.primary);
+
+    // Right half: 5 stage cards (Scenario · Problem · Outcome)
+    const rightX = leftX + leftW + 0.3;
+    const rightW = W - rightX - 0.5;
+    const totalH = CONTENT_BOTTOM - CONTENT_TOP;
+    const sGap = 0.08;
+    const sH = (totalH - sGap * (stages.length - 1)) / stages.length;
+    stages.forEach((s, i) => {
+      const sy = CONTENT_TOP + i * (sH + sGap);
+      addCard(slide, rightX, sy, rightW, sH, { border: s.color });
+      slide.addShape("rect", {
+        x: rightX, y: sy, w: 0.05, h: sH,
+        fill: { color: s.color }, line: { type: "none" },
+      });
+      // Stage number badge
+      slide.addShape("ellipse", {
+        x: rightX + 0.15, y: sy + 0.15, w: 0.36, h: 0.36,
+        fill: { color: s.color }, line: { type: "none" },
+      });
+      slide.addText(String(s.n), {
+        x: rightX + 0.15, y: sy + 0.15, w: 0.36, h: 0.36,
+        fontFace: PPTX_BRAND.font.display, fontSize: 11, bold: true, color: C.bg,
+        align: "center", valign: "middle",
+      });
+      slide.addText(
+        [
+          { text: s.label, options: { bold: true, color: C.ink, fontSize: 11 } },
+          { text: `   ${s.sub}`, options: { color: s.color, fontSize: 8.5 } },
+        ],
+        {
+          x: rightX + 0.6, y: sy + 0.12, w: rightW - 0.7, h: 0.32,
+          fontFace: PPTX_BRAND.font.display, valign: "middle",
+        },
+      );
+      // Scenario / Problem / Outcome compact rows
+      const bodyY = sy + 0.5;
+      const bodyH = sH - 0.55;
+      slide.addText(
+        [
+          { text: "SCENARIO  ", options: { bold: true, color: C.subtle, fontSize: 7.5, charSpacing: 2 } },
+          { text: s.scenario + "\n", options: { color: C.ink, fontSize: 9 } },
+          { text: "PROBLEM  ", options: { bold: true, color: C.subtle, fontSize: 7.5, charSpacing: 2 } },
+          { text: s.problem + "\n", options: { color: C.muted, fontSize: 9 } },
+          { text: "OUTCOME  ", options: { bold: true, color: s.color, fontSize: 7.5, charSpacing: 2 } },
+          { text: s.outcome, options: { color: C.ink, fontSize: 9, italic: true } },
+        ],
+        {
+          x: rightX + 0.18, y: bodyY, w: rightW - 0.36, h: bodyH,
+          fontFace: PPTX_BRAND.font.body, valign: "top",
+          paraSpaceAfter: 2,
+        },
+      );
+    });
+  },
+};
+
+// ─── Slide · Why Comply365 (kept for reference, not in composed) ─
 const whyUsSpec: SlideSpec = {
   label: "Why Comply365",
   build: (slide, ctx) => {
