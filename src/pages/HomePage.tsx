@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { 
   Rocket, Briefcase, BookOpen, 
   Presentation, Brain, FileText, 
-  ArrowRight, Users, ScrollText, Workflow, Layers, Sparkles, Zap, Smartphone
+  ArrowRight, Users, ScrollText, Workflow, Layers, Sparkles, Zap, Smartphone, GraduationCap
 } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
 
@@ -161,6 +161,24 @@ export default function HomePage() {
             {strategyDecks.map((card) => (
               <DeckCardComponent key={card.href} card={card} />
             ))}
+          </div>
+        </section>
+
+        {/* Sales Enablement & Training */}
+        <section>
+          <SectionHeader 
+            title="Sales Enablement & Training" 
+            subtitle="Onboarding and ongoing training for the sales team" 
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <DeckCardComponent card={{
+              title: "Sales Enablement Training",
+              description: "Plain-English walkthrough of the Operational Performance Platform — built to onboard a new rep in their first week.",
+              href: "/sales-enablement",
+              icon: GraduationCap,
+              badge: "24 slides · ~35 min",
+              accent: "from-emerald-500 to-primary",
+            }} />
           </div>
         </section>
 
