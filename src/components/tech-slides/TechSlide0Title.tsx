@@ -13,6 +13,7 @@ interface ExportSlideDef {
 const trustStats = [
   { icon: Plane, value: "550+", label: "Airlines Worldwide" },
   { icon: Globe, value: "6", label: "Continents" },
+  { icon: Users, value: "2.5M+", label: "Users" },
   { icon: Users, value: "Global", label: "Aviation & AI Experts" },
 ];
 

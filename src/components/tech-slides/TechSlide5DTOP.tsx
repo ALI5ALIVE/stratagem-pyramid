@@ -40,7 +40,7 @@ const TechSlide5DTOP = ({ slideNumber, ...narrationProps }: Props) => {
               <p className="text-xs text-muted-foreground leading-relaxed">{s.description}</p>
               <div className="mt-auto pt-3 border-t border-muted/20">
                 <span className="text-[10px] uppercase tracking-wider text-muted-foreground/60 font-semibold">Audit Trail Example</span>
-                <p className={cn("text-xs mt-1 italic leading-relaxed transition-opacity", active === i ? "text-foreground/80 opacity-100" : "text-muted-foreground/40 opacity-60")}>{s.auditTrail}</p>
+                <p className={cn("text-xs mt-1 italic leading-relaxed transition-opacity align-top", active === i ? "text-foreground/90 opacity-100" : "text-muted-foreground opacity-90")}>{s.auditTrail}</p>
               </div>
             </button>
           ))}
@@ -48,6 +48,9 @@ const TechSlide5DTOP = ({ slideNumber, ...narrationProps }: Props) => {
 
         <div className="p-3 rounded-xl border border-primary/20 bg-primary/5 text-center shrink-0">
           <p className="text-sm text-muted-foreground"><span className="text-primary font-semibold">Every step is auditable.</span> Every action is traceable. Every outcome is provable.</p>
+        </div>
+        <div className="flex justify-end shrink-0 -mt-2">
+          <span className="text-[10px] text-muted-foreground/80 px-2 py-0.5 rounded-full border border-muted/30 bg-muted/10">DG = Dangerous Goods</span>
         </div>
       </div>
     </SalesSlideContainer>

@@ -12,10 +12,10 @@ const miniApps = [
 ];
 
 const pillars = [
-  { icon: Smartphone, title: "Less Context Shifting", desc: "Crews stay in the app they already trust. Training and Safety stop being detours — they become tabs.", color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/30" },
+  { icon: Smartphone, title: "Less Context Shifting, Reduced Cognitive Load", desc: "Crews stay in the app they already trust. Training and Safety stop being detours — they become tabs.", color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/30" },
   { icon: KeyRound, title: "Single Sign-On", desc: "One identity across the platform. Authenticate once, access ContentManager365, TrainingManager365 and SafetyManager365 from one shell.", color: "text-amber-400", bg: "bg-amber-500/10", border: "border-amber-500/30" },
   { icon: Bell, title: "Unified Notifications", desc: "One notification stream — procedure changes, training due, safety follow-ups — all in the same inbox.", color: "text-violet-400", bg: "bg-violet-500/10", border: "border-violet-500/30" },
-  { icon: Layers, title: "Simpler Deployment", desc: "One MDM footprint, one certification, one approval cycle through customer mobile estates — instead of three.", color: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/30" },
+  { icon: Layers, title: "Simpler Deployment, Drives IT Efficiency", desc: "One MDM (Mobile Device Management) footprint, one certification, one approval cycle through customer mobile estates — instead of three. Drives IT efficiency.", color: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/30" },
 ];
 
 const TechSlideMobile = ({ slideNumber, ...narrationProps }: Props) => (

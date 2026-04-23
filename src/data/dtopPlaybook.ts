@@ -146,10 +146,10 @@ export const useCases: DTOPUseCase[] = [
   },
   {
     title: "Regulatory Change Management",
-    scenario: "EASA publishes a new Safety Directive requiring changes to cabin crew emergency procedures within 90 days.",
+    scenario: "EASA or FAA publishes a new Safety Directive requiring changes to cabin crew emergency procedures within 90 days.",
     icon: "FileCheck",
     steps: {
-      detect: "Regulatory monitoring surfaces the new EASA directive. Impact analysis identifies 12 affected SOPs and 3,200 cabin crew requiring updated training.",
+      detect: "Regulatory monitoring surfaces the new EASA / FAA directive. Impact analysis identifies 12 affected SOPs and 3,200 cabin crew requiring updated training.",
       trigger: "Compliance task automatically generated: SOP revision workflow initiated, training curriculum update flagged, compliance deadline tracker activated.",
       orchestrate: "Revised emergency procedures authored, reviewed, and published in 15 days. Updated training module deployed to all 3,200 cabin crew. Acknowledgment tracking activated with escalation for non-completion.",
       prove: "100% procedure distribution confirmed. 98.5% training completion achieved 30 days before deadline. Audit-ready compliance package generated showing full traceability from directive to crew competency.",
@@ -178,21 +178,21 @@ export const valueCategories: ValueCategory[] = [
   {
     title: "Risk Reduction",
     description: "Turn reactive incident management into proactive risk prevention through early signal detection and coordinated response.",
-    metrics: ["40-60% reduction in repeat incidents", "3x faster response to safety signals", "Systemic pattern identification vs isolated event tracking"],
+    metrics: ["Fewer repeat incidents through systemic pattern detection", "Shorter detect-to-action cycle on safety signals", "Systemic pattern identification vs isolated event tracking"],
     icon: "Shield",
     color: "text-blue-400",
   },
   {
     title: "Operational Efficiency",
     description: "Eliminate the manual coordination burden that consumes safety, training, and compliance teams today.",
-    metrics: ["70% reduction in manual coordination effort", "50% faster procedure revision cycles", "Automated workflow vs email chains and spreadsheets"],
+    metrics: ["Less manual coordination across safety, content & training", "Faster procedure revision cycles", "Automated workflow vs email chains and spreadsheets"],
     icon: "Zap",
     color: "text-amber-400",
   },
   {
     title: "Continuous Compliance",
     description: "Move from audit preparation panic to always-ready compliance with automatic evidence generation.",
-    metrics: ["90% reduction in audit preparation time", "100% traceability from signal to outcome", "Real-time compliance posture dashboards"],
+    metrics: ["Faster directive close-out and audit preparation", "End-to-end traceability from signal to outcome", "Real-time compliance posture dashboards"],
     icon: "CheckCircle",
     color: "text-emerald-400",
   },

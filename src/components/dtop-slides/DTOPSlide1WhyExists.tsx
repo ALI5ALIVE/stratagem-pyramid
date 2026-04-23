@@ -31,10 +31,10 @@ const DTOPSlide1WhyExists = (props: SlideNarrationProps) => {
             return (
               <div key={i} className="p-3 rounded-lg border border-border bg-card">
                 <div className="flex items-center gap-2 mb-2">
-                  <Icon className="h-4 w-4 text-destructive/70 shrink-0" />
-                  <h4 className="text-xs font-semibold text-foreground">{problem.label}</h4>
+                  <Icon className="h-5 w-5 text-destructive/70 shrink-0" />
+                  <h4 className="text-sm font-semibold text-foreground">{problem.label}</h4>
                 </div>
-                <p className="text-[11px] text-muted-foreground leading-relaxed">{problem.detail}</p>
+                <p className="text-base text-muted-foreground leading-relaxed">{problem.detail}</p>
               </div>
             );
           })}
