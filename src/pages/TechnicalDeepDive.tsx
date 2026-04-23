@@ -5,9 +5,11 @@ import { useTechPitchNarration } from "@/hooks/useTechPitchNarration";
 import { DeckProvider } from "@/contexts/DeckContext";
 
 // Frame the problem
+import TechSlideOpener from "@/components/tech-slides/TechSlideOpener";
 import TechSlide0Title from "@/components/tech-slides/TechSlide0Title";
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
 import TechSlide2IndustryChallenge from "@/components/tech-slides/TechSlide2IndustryChallenge";
+import TechSlidePlatformSnapshot from "@/components/tech-slides/TechSlidePlatformSnapshot";
 
 // Architecture
 import TechSlide4Platform from "@/components/tech-slides/TechSlide4Platform";
@@ -33,7 +35,8 @@ import TechSlideCalculator from "@/components/tech-slides/TechSlideCalculator";
 import TechSlide14MaturityRoadmap from "@/components/tech-slides/TechSlide14MaturityRoadmap";
 import TechSlide15Roadmap2026 from "@/components/tech-slides/TechSlide15Roadmap2026";
 import TechSlideWhyComply from "@/components/tech-slides/TechSlideWhyComply";
-import TechSlide18Partnership from "@/components/tech-slides/TechSlide18Partnership";
+import TechSlideWhyOnlyComply365 from "@/components/tech-slides/TechSlideWhyOnlyComply365";
+import TechSlideCTA from "@/components/tech-slides/TechSlideCTA";
 
 // Layer dividers — one per architecture layer, slotted before each layer's deep-dive group
 import TechSlideLayerDivider from "@/components/tech-slides/TechSlideLayerDivider";
@@ -95,9 +98,11 @@ const journeyProps = {
 
 const slides = [
   // Frame the problem
+  { id: "tech-slide-opener", label: "Why It Exists", component: TechSlideOpener },
   { id: "tech-slide-0", label: "Title", component: TechSlide0Title },
   { id: "tech-slide-1", label: "Strategic Shift", component: TechSlide1StrategicShift },
   { id: "tech-slide-2", label: "Industry Challenge", component: TechSlide2IndustryChallenge },
+  { id: "tech-slide-3b-platform-snapshot", label: "Platform Snapshot", component: TechSlidePlatformSnapshot },
   // Architecture
   { id: "tech-slide-4", label: "Platform Overview", component: TechSlide4Platform },
   { id: "tech-divider-core", label: "▸ Layer 1 · Core Apps", component: TechSlideLayerDivider, dividerProps: dividerProps.core },
@@ -126,7 +131,8 @@ const slides = [
   { id: "tech-divider-journey-2026", label: "▸ Journey Ahead · 2026 Use Cases", component: TechSlideJourneyDivider, dividerProps: journeyProps.roadmap2026 },
   { id: "tech-slide-15", label: "2026 Roadmap", component: TechSlide15Roadmap2026 },
   { id: "tech-slide-why-comply", label: "Why Comply365", component: TechSlideWhyComply },
-  { id: "tech-slide-18", label: "Partnership", component: TechSlide18Partnership },
+  { id: "tech-slide-why-only-comply365", label: "Why Only Comply365", component: TechSlideWhyOnlyComply365 },
+  { id: "tech-slide-cta", label: "CTA — Find Out More", component: TechSlideCTA },
 ];
 
 const TechnicalDeepDive = () => {
