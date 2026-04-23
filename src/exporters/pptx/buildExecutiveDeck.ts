@@ -675,21 +675,79 @@ const pyramidSpec: SlideSpec = {
       });
     });
 
-    // Right: tier descriptions
+    // Right: per-tier time-allocation + ROI proof
     const rightX = pyrX + pyrW + 0.4;
     const rightW = W - rightX - 0.5;
-    const descs = [
-      { title: "Stage 5 · Predictive", body: "Risk modelled probabilistically. Decisions made before incidents occur. AI-accelerated, human-validated.", color: C.amber },
-      { title: "Stage 4 · Intelligent", body: "Cross-system patterns surfaced automatically. Actions recommended; humans approve.", color: C.violet },
-      { title: "Stage 3 · Connected", body: "Detect → Trigger → Orchestrate → Prove runs end-to-end. Audit trail by design.", color: "14B8A6" },
-      { title: "Stage 2 · Managed", body: "Each silo is well-run, but the connections are still manual.", color: C.sky },
-      { title: "Stage 1 · Fragmented", body: "Reactive, manual, document-driven. The starting point for most operations.", color: C.danger },
+    // Top→bottom order matches the pyramid (Predictive → Fragmented)
+    const layers = [
+      { title: "Predictive Operations", sub: "AI-Accelerated", color: C.amber,
+        improvement: 70, admin: 20, coord: 10,
+        roi: "70% less time on administration, 30% faster decision cycles" },
+      { title: "Intelligent Operations", sub: "AI-Assisted Execution", color: C.violet,
+        improvement: 50, admin: 30, coord: 20,
+        roi: "50% reduction in repeat issues, measurable readiness lift" },
+      { title: "Connected Governance", sub: "Platform Foundation", color: "14B8A6",
+        improvement: 35, admin: 35, coord: 30,
+        roi: "Single source of truth reduces coordination overhead by 40%" },
+      { title: "Managed (Siloed)", sub: "Structured but disconnected", color: C.sky,
+        improvement: 20, admin: 35, coord: 45,
+        roi: "Structured compliance, but limited cross-functional ROI" },
+      { title: "Fragmented & Reactive", sub: "Manual / Reactive", color: C.danger,
+        improvement: 10, admin: 30, coord: 60,
+        roi: "Hidden costs: repeat work, audit scrambles, inconsistent readiness" },
     ];
-    const dh = (CONTENT_BOTTOM - CONTENT_TOP - (descs.length - 1) * 0.1) / descs.length;
-    descs.forEach((d, i) => {
-      const dy = CONTENT_TOP + i * (dh + 0.1);
-      addLabeledCard(slide, rightX, dy, rightW, dh, {
-        title: d.title, body: d.body, accent: d.color, titleSize: 11, bodySize: 9.5,
+    const dh = (CONTENT_BOTTOM - CONTENT_TOP - (layers.length - 1) * 0.08) / layers.length;
+    layers.forEach((l, i) => {
+      const dy = CONTENT_TOP + i * (dh + 0.08);
+      addCard(slide, rightX, dy, rightW, dh, { border: l.color });
+      slide.addShape("rect", {
+        x: rightX, y: dy, w: 0.05, h: dh,
+        fill: { color: l.color }, line: { type: "none" },
+      });
+      // Title row
+      slide.addText(
+        [
+          { text: l.title, options: { bold: true, color: l.color, fontSize: 11 } },
+          { text: `   ${l.sub}`, options: { color: C.subtle, fontSize: 8.5 } },
+        ],
+        {
+          x: rightX + 0.15, y: dy + 0.06, w: rightW - 0.3, h: 0.26,
+          fontFace: PPTX_BRAND.font.display, valign: "middle",
+        },
+      );
+      // Time allocation stacked bar
+      const barY = dy + 0.36;
+      const barH = 0.16;
+      const barX = rightX + 0.15;
+      const barW = rightW - 0.3;
+      const segCoord = barW * (l.coord / 100);
+      const segAdmin = barW * (l.admin / 100);
+      const segImp = barW * (l.improvement / 100);
+      slide.addShape("rect", {
+        x: barX, y: barY, w: segCoord, h: barH,
+        fill: { color: C.danger, transparency: 30 }, line: { type: "none" },
+      });
+      slide.addShape("rect", {
+        x: barX + segCoord, y: barY, w: segAdmin, h: barH,
+        fill: { color: C.amber, transparency: 30 }, line: { type: "none" },
+      });
+      slide.addShape("rect", {
+        x: barX + segCoord + segAdmin, y: barY, w: segImp, h: barH,
+        fill: { color: C.prove, transparency: 30 }, line: { type: "none" },
+      });
+      // Legend caption
+      slide.addText(
+        `Coordination ${l.coord}%   ·   Admin ${l.admin}%   ·   Improvement ${l.improvement}%`,
+        {
+          x: rightX + 0.15, y: dy + 0.55, w: rightW - 0.3, h: 0.2,
+          fontFace: PPTX_BRAND.font.body, fontSize: 7.5, color: C.subtle,
+        },
+      );
+      // ROI proof
+      slide.addText(`ROI · ${l.roi}`, {
+        x: rightX + 0.15, y: dy + 0.78, w: rightW - 0.3, h: dh - 0.85,
+        fontFace: PPTX_BRAND.font.body, fontSize: 9, italic: true,
+        color: C.muted, valign: "top",
       });
     });
   },
