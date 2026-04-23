@@ -56,19 +56,24 @@ export interface BuildOpts {
 
 interface SlideSpec {
   label: string;
-  build: (slide: pptxgen.Slide, ctx: { logo: string; index: number; total: number }) => Promise<void> | void;
+  build: (slide: pptxgen.Slide, ctx: { logo: string; logoLight: string; index: number; total: number }) => Promise<void> | void;
 }
 
 const fmtMoney = (v: number) =>
   v >= 1_000_000 ? `$${(v / 1_000_000).toFixed(1)}M` : v >= 1_000 ? `$${(v / 1_000).toFixed(0)}K` : `$${v}`;
 
-function chrome(slide: pptxgen.Slide, ctx: { logo: string; index: number; total: number }) {
+function chrome(
+  slide: pptxgen.Slide,
+  ctx: { logo: string; logoLight: string; index: number; total: number },
+  variant: "dark" | "light" = "dark",
+) {
+  const isLight = variant === "light";
   addBrandMaster(slide, {
-    logo: ctx.logo,
+    logo: isLight ? ctx.logoLight : ctx.logo,
     index: ctx.index,
     total: ctx.total,
     deckLabel: DECK_LABEL,
-    variant: "dark",
+    variant,
     grid: true,
   });
 }
