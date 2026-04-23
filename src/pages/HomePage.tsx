@@ -25,6 +25,14 @@ const pitchDecks: DeckCard[] = [
     accent: "from-accent to-comply-plum",
   },
   {
+    title: "Executive Pitch 3",
+    description: "Executive narrative powered by the platform's strongest visuals — DTOP, 5-layer architecture, and intelligence depth.",
+    href: "/pitch-executive-3",
+    icon: Layers,
+    badge: "14 slides",
+    accent: "from-comply-teal to-accent",
+  },
+  {
     title: "Operational Pitch",
     description: "VP Ops & Safety workflow depth. Daily pain to 90-day pilot.",
     href: "/pitch-operational",
