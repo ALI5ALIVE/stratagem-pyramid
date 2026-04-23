@@ -139,6 +139,7 @@ const ExecutivePitch = () => {
             <SlideComponent
               key={slide.id}
               slideNumber={index}
+              {...(index === 0 ? { exportSlides: slides } : {})}
               {...narrationProps}
             />
           );
