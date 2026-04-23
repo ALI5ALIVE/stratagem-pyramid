@@ -261,7 +261,7 @@ const PersonaPrintablePage: React.FC<Props> = ({ persona }) => {
         display: "grid", gridTemplateColumns: "1fr 1fr 1fr",
         borderTop: `1px solid ${C.darkHairline}`,
         borderBottom: `1px solid ${C.darkHairline}`,
-        padding: "9px 0", marginBottom: 12,
+        padding: "11px 0", marginBottom: 14,
       }}>
         {[
           { label: "Reports To", value: persona.reportsTo },
@@ -274,7 +274,7 @@ const PersonaPrintablePage: React.FC<Props> = ({ persona }) => {
             borderLeft: i === 0 ? "none" : `1px solid ${C.darkHairline}`,
           }}>
             <div style={sectionLabel(C.darkSubtle)}>{m.label}</div>
-            <div style={{ fontSize: 10.5, color: C.darkInk, lineHeight: 1.4, fontWeight: 500 }}>
+            <div style={{ fontSize: 11, color: C.darkInk, lineHeight: 1.5, fontWeight: 500 }}>
               {m.value}
             </div>
           </div>
@@ -282,7 +282,7 @@ const PersonaPrintablePage: React.FC<Props> = ({ persona }) => {
       </div>
 
       {/* PRIORITIES + PAINS */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28, marginBottom: 12 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, marginBottom: 14 }}>
         <div>
           <div style={sectionLabel()}>Strategic Priorities</div>
           <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
@@ -298,7 +298,7 @@ const PersonaPrintablePage: React.FC<Props> = ({ persona }) => {
       </div>
 
       {/* TRIGGERS + CRITERIA */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28, marginBottom: 12 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, marginBottom: 14 }}>
         <div>
           <div style={sectionLabel()}>Buying Triggers</div>
           <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
@@ -313,18 +313,17 @@ const PersonaPrintablePage: React.FC<Props> = ({ persona }) => {
         </div>
       </div>
 
-      <hr style={hr} />
+      <hr style={{ ...hr, margin: "6px 0" }} />
 
       {/* VALUE PROPOSITION — pull-quote */}
       <div style={{
-        padding: "12px 0 12px",
+        padding: "14px 0",
         borderLeft: `4px solid ${accent}`,
         paddingLeft: 16,
-        marginTop: 10, marginBottom: 10,
       }}>
         <div style={{ ...sectionLabel(accent), marginBottom: 6 }}>Value Proposition</div>
         <p style={{
-          margin: 0, fontFamily: F.display, fontSize: 14, lineHeight: 1.45,
+          margin: 0, fontFamily: F.display, fontSize: 15, lineHeight: 1.5,
           color: C.darkInk, fontWeight: 500, letterSpacing: "-0.005em",
           textShadow: `0 0 18px ${accentRgba(0.15)}`,
         }}>
@@ -332,10 +331,10 @@ const PersonaPrintablePage: React.FC<Props> = ({ persona }) => {
         </p>
       </div>
 
-      <hr style={hr} />
+      <hr style={{ ...hr, margin: "6px 0" }} />
 
       {/* KEY MESSAGES + METRICS */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28, marginTop: 12, marginBottom: 12 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, marginTop: 14, marginBottom: 14 }}>
         <div>
           <div style={sectionLabel()}>Key Messages</div>
           <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
@@ -351,7 +350,7 @@ const PersonaPrintablePage: React.FC<Props> = ({ persona }) => {
       </div>
 
       {/* DISCOVERY + OBJECTION */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28, flex: 1 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
         <div>
           <div style={sectionLabel()}>Top Discovery Question</div>
           <p style={{
@@ -372,7 +371,7 @@ const PersonaPrintablePage: React.FC<Props> = ({ persona }) => {
                 “{persona.objections[0].objection}”
               </p>
               <div style={{
-                fontSize: 10.5, color: C.darkSuccess, fontFamily: F.body,
+                fontSize: 11, color: C.darkSuccess, fontFamily: F.body,
                 fontWeight: 500, lineHeight: 1.5,
                 paddingLeft: 10, borderLeft: `2px solid ${C.darkSuccess}`,
               }}>
@@ -385,7 +384,7 @@ const PersonaPrintablePage: React.FC<Props> = ({ persona }) => {
 
       {/* FOOTER */}
       <div style={{
-        marginTop: 12, paddingTop: 8, borderTop: `1px solid ${C.darkHairline}`,
+        marginTop: "auto", paddingTop: 8, borderTop: `1px solid ${C.darkHairline}`,
         display: "flex", justifyContent: "space-between", alignItems: "center",
         fontSize: 8.5, color: C.darkSubtle, fontFamily: F.display,
         letterSpacing: "0.08em", textTransform: "uppercase", fontWeight: 600,
