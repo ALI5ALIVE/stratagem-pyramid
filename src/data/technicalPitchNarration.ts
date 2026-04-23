@@ -44,6 +44,20 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
       "Layer 5 — DTOP. Detect, Trigger, Orchestrate, Prove. The operating model that wraps every layer below it and turns intelligence into measurable, auditable outcomes.",
   },
   {
+    slideId: "tech-divider-journey-maturity",
+    title: "The Journey Ahead · Maturity Roadmap",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Now to the journey ahead. The next slide shows the maturity roadmap — where customers are today, and how Comply365 moves them from fragmented and reactive to predictive and proactive, typically inside twelve to eighteen months.",
+  },
+  {
+    slideId: "tech-divider-journey-2026",
+    title: "The Journey Ahead · 2026 Use Case Roadmap",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "And the journey continues with the 2026 use case roadmap — a phased delivery plan where each phase builds on proven value, layering capability without disrupting operations.",
+  },
+  {
     slideId: "tech-slide-0",
     title: "Title",
     voiceId: DEFAULT_VOICE_ID,
