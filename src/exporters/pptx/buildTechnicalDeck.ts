@@ -1949,7 +1949,56 @@ slideSpecs.push(
 // inside buildTechnicalDeck() to control exact ordering.
 
 const openerSpec: SlideSpec = {
-  label: "Why It Exists (Opener)",
+  label: "Hero — Operational Performance Platform",
+  build: (slide, ctx) => {
+    chrome(slide, ctx);
+    // Centred platform-hero — mirrors PFSlide0Title.
+    const cy = 1.6;
+    slide.addText("The Operational Performance Platform", {
+      x: 0.6, y: cy, w: W - 1.2, h: 0.4,
+      fontFace: PPTX_BRAND.font.body, fontSize: 12, bold: true,
+      color: C.primary, charSpacing: 4,
+    });
+    slide.addText(
+      [
+        { text: "One platform.", options: { color: C.primary, breakLine: true } },
+        { text: "One operating model. One entry point.", options: { color: C.ink } },
+      ],
+      {
+        x: 0.6, y: cy + 0.55, w: W - 1.2, h: 1.8,
+        fontFace: PPTX_BRAND.font.display, fontSize: 40, bold: true,
+      },
+    );
+    slide.addText("From fragmented operations to closed-loop performance.", {
+      x: 0.6, y: cy + 2.45, w: W - 1.2, h: 0.5,
+      fontFace: PPTX_BRAND.font.body, fontSize: 18, color: C.muted,
+    });
+    slide.addText(
+      "Comply365 unifies content, training and safety into a single operational data foundation — activated by intelligence and automation, governed by DTOP, delivered through one trusted mobile shell.",
+      {
+        x: 0.6, y: cy + 3.05, w: W - 1.2, h: 0.9,
+        fontFace: PPTX_BRAND.font.body, fontSize: 13, color: C.ink,
+      },
+    );
+    // Status pill (emerald)
+    const pillY = cy + 4.05;
+    slide.addShape("roundRect", {
+      x: 0.6, y: pillY, w: 5.6, h: 0.36,
+      fill: { color: "052E1B" }, line: { color: "10B981", width: 0.75 },
+      rectRadius: 0.18,
+    });
+    slide.addShape("ellipse", {
+      x: 0.78, y: pillY + 0.13, w: 0.1, h: 0.1, fill: { color: "34D399" }, line: { color: "34D399" },
+    });
+    slide.addText("Foundational platform · Live core · Intelligence & orchestration in active delivery", {
+      x: 0.95, y: pillY, w: 5.2, h: 0.36,
+      fontFace: PPTX_BRAND.font.body, fontSize: 10, color: "6EE7B7", valign: "middle",
+    });
+  },
+};
+
+const whyExistsSpec: SlideSpec = {
+  label: "Why It Exists",
   build: (slide, ctx) => {
     chrome(slide, ctx);
     header(slide, "Why It Exists", "Why It Exists", whyItExists.headline);
