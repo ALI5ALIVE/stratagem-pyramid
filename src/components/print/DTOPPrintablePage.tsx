@@ -217,16 +217,6 @@ const DTOPPrintablePage: React.FC = () => {
         </div>
         <div>Operating Model Brief · v2.0 · comply365.com</div>
       </div>
-      <div style={{ display: "none" }}>
-        {/* Spacer kept for layout-stable swap; old block removed */}
-        marginTop: 12, paddingTop: 8, borderTop: `1px solid ${C.hairline}`,
-        display: "flex", justifyContent: "space-between", alignItems: "center",
-        fontSize: 8.5, color: C.subtle, fontFamily: F.display,
-        letterSpacing: "0.08em", textTransform: "uppercase", fontWeight: 600,
-      }}>
-        <div>© {new Date().getFullYear()} Comply365 · DTOP Operating Model</div>
-        <div>Operating Model Brief · v2.0</div>
-      </div>
     </div>
   );
 };
