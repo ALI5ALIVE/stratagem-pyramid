@@ -32,7 +32,7 @@ const rows = [
 const TechSlideTiersVsAI = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer
     id="tech-slide-tiers-vs-ai"
-    title="Intelligence Tiers & Why Generic AI Falls Short"
+    title="Layer 3 · Intelligence & Orchestration — Tiers vs Generic AI"
     subtitle="Four tiers of operational intelligence — and the precision gap generic AI cannot close"
     slideNumber={slideNumber}
     {...narrationProps}
