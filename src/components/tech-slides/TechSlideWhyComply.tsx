@@ -8,7 +8,7 @@ interface Props extends SlideNarrationProps { slideNumber?: number; }
 const customerBenchmarkSource =
   "Comply365 customer benchmark — anonymised composite across deployed carriers (2023–2025). Individual results vary by baseline maturity, fleet size and deployment scope.";
 const accuracySource =
-  "CoAnalyst evaluation methodology: domain accuracy measured on a held-out aviation operational corpus (safety reports, regulatory bulletins, MEL/SOP queries) versus a generic frontier LLM with no aviation fine-tuning. See CoAnalyst Intelligence Framework for evaluation set details.";
+  "Insights & Intelligence evaluation methodology: domain accuracy measured on a held-out aviation operational corpus (safety reports, regulatory bulletins, MEL/SOP queries) versus a generic frontier LLM with no aviation fine-tuning. See Insights & Intelligence Framework for evaluation set details.";
 
 const outcomes = [
   { value: "78%", label: "Reduction in repeat events", color: "text-rose-400", source: customerBenchmarkSource },
@@ -19,7 +19,7 @@ const outcomes = [
 
 const diffs = [
   { icon: Link2, title: "Connected Foundation", desc: "One data model, three core apps, one intelligence layer. Content, training and safety reason together — not in parallel.", color: "text-sky-400", bg: "bg-sky-400/10", border: "border-sky-400/30" },
-  { icon: Brain, title: "Domain-Trained Intelligence", desc: "CoAnalyst built on aviation data since 2023. Not a generic AI with an aviation wrapper — purpose-built for the operational corpus.", color: "text-primary", bg: "bg-primary/10", border: "border-primary/30" },
+  { icon: Brain, title: "Domain-Trained Intelligence", desc: "Insights & Intelligence built on aviation data since 2023. Not a generic AI with an aviation wrapper — purpose-built for the operational corpus.", color: "text-primary", bg: "bg-primary/10", border: "border-primary/30" },
   { icon: ShieldCheck, title: "Proof by Design", desc: "Every action logged automatically. The audit trail is a byproduct, not a report. Closed loop — Detect, Trigger, Orchestrate, Prove.", color: "text-emerald-400", bg: "bg-emerald-400/10", border: "border-emerald-400/30" },
 ];
 
