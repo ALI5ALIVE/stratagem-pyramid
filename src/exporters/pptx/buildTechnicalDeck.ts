@@ -956,6 +956,14 @@ slideSpecs.push(
   },
 
   // ─── 11. MOBILE ───────────────────────────────────────────────
+  dividerSpec({
+    label: "▸ Layer 4 · Unified Mobile",
+    layerNumber: 4,
+    layerName: "Unified Mobile Experience",
+    tagline: "One trusted shell for the frontline — Procedures, Training and Safety in a single app.",
+    active: "mobile",
+    upNext: ["Unified Mobile"],
+  }),
   {
     label: "Unified Mobile",
     build: (slide, ctx) => {
@@ -1023,6 +1031,14 @@ slideSpecs.push(
   },
 
   // ─── 12. DTOP ─────────────────────────────────────────────────
+  dividerSpec({
+    label: "▸ Layer 5 · DTOP",
+    layerNumber: 5,
+    layerName: "DTOP — The System of Work",
+    tagline: "Detect → Trigger → Orchestrate → Prove. The operating model that wraps the whole stack.",
+    active: "dtop",
+    upNext: ["DTOP Operating Model"],
+  }),
   {
     label: "DTOP Operating Model",
     build: (slide, ctx) => {
