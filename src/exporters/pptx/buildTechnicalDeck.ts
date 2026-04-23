@@ -287,6 +287,420 @@ const journeyDividerSpec = (opts: {
   build: (slide, ctx) => buildJourneyDivider(slide, ctx, opts),
 });
 
+// ─── Maturity Roadmap (2-slide expansion) ─────────────────────────
+interface MaturityStage {
+  n: string;
+  label: string;
+  sub: string;
+  color: string;
+  whatItLooksLike: string[];
+  from: string;
+  to: string;
+  marker: string;
+  time: { coord: number; admin: number; improve: number };
+  result: string[];
+  metrics: string[];
+  roi: string;
+}
+
+const MATURITY_STAGES: MaturityStage[] = [
+  {
+    n: "1", label: "Fragmented", sub: "Manual / Reactive", color: C.danger,
+    whatItLooksLike: [
+      "Disconnected systems across safety, content, training",
+      "Investigations and changes happen manually",
+      "Training not tied to operational signals",
+    ],
+    from: "Firefighting across disconnected systems",
+    to: "Reactive compliance just to keep up",
+    marker: "Compliance is a burden; issues recur",
+    time: { coord: 60, admin: 30, improve: 10 },
+    result: ["High variability and repeat issues", "Slow recovery and inconsistent readiness proof"],
+    metrics: ["Variability ↑", "Recovery time ↑", "Risk exposure ↑"],
+    roi: "Hidden costs: repeat work, audit scrambles, inconsistent readiness",
+  },
+  {
+    n: "2", label: "Managed", sub: "Silo Optimisation", color: C.sky,
+    whatItLooksLike: [
+      "Strong systems in specific departments",
+      "Compliance structured but disconnected",
+      "Actions produced but follow-through inconsistent",
+    ],
+    from: "Firefighting with limited visibility",
+    to: "Structured processes within each silo",
+    marker: "We're compliant, but not learning",
+    time: { coord: 45, admin: 35, improve: 20 },
+    result: ["Compliance managed, but no systematic improvement", "Repeat issues persist"],
+    metrics: ["Dept compliance ↑", "Process consistency ↑", "Cross-func ROI limited"],
+    roi: "Structured compliance, but limited cross-functional ROI",
+  },
+  {
+    n: "3", label: "Connected", sub: "Closed Loop", color: "14B8A6",
+    whatItLooksLike: [
+      "Safety, content, training unified in one system",
+      "Traceability and approvals established",
+      "Fragmentation reduces; visibility improves",
+    ],
+    from: "Chasing information across systems",
+    to: "Single source of truth, async collaboration",
+    marker: "We can see what's happening across the operation",
+    time: { coord: 30, admin: 35, improve: 35 },
+    result: ["Improved governance and confidence", "Audit readiness increases"],
+    metrics: ["Audit prep ↓ 30%", "Handoffs ↓ 50%", "Visibility ↑"],
+    roi: "Single source of truth reduces coordination overhead by 40%",
+  },
+  {
+    n: "4", label: "Intelligent", sub: "AI-Assisted", color: C.violet,
+    whatItLooksLike: [
+      "Signals trigger coordinated workflows",
+      "Recommended actions drive controlled change",
+      "Training targeted and triggered by change",
+    ],
+    from: "Reactive fixes and compliance checklists",
+    to: "Proactive improvement with outcome ownership",
+    marker: "Issues drive real change, not just reports",
+    time: { coord: 20, admin: 30, improve: 50 },
+    result: ["Reduced recurrence and drift", "Faster time-to-change and measurable KPI lift"],
+    metrics: ["Recurrence ↓ 50%", "Time-to-change ↓ 60%", "KPI lift ↑"],
+    roi: "50% reduction in repeat issues, measurable readiness lift",
+  },
+  {
+    n: "5", label: "Predictive", sub: "AI-Accelerated", color: C.amber,
+    whatItLooksLike: [
+      "AI detects weak signals and forecasts risk",
+      "Assisted drafting of procedures and training",
+      "Exception-led oversight, humans govern approvals",
+    ],
+    from: "Administration and process gatekeeping",
+    to: "Performance leadership and strategic focus",
+    marker: "Reliability is a competitive advantage",
+    time: { coord: 10, admin: 20, improve: 70 },
+    result: ["Reliability becomes proactive and scalable", "Teams shift from admin to performance leadership"],
+    metrics: ["OTP ↑ 15%", "Delay mins ↓ 40%", "Admin hours ↓ 70%"],
+    roi: "70% less time on administration, 30% faster decision cycles",
+  },
+];
+
+// Time-allocation segment colours (mirror the web slide: red / sky / teal)
+const TIME_COLOR = { coord: "DC2626", admin: "0EA5E9", improve: "14B8A6" };
+
+function maturityColumnGeometry() {
+  const gap = 0.18;
+  const left = 0.5;
+  const totalW = W - 1.0;
+  const colW = (totalW - gap * 4) / 5;
+  const xs = MATURITY_STAGES.map((_, i) => left + i * (colW + gap));
+  return { gap, left, colW, xs };
+}
+
+function drawTimeBar(slide: pptxgen.Slide, x: number, y: number, w: number, h: number, t: MaturityStage["time"]) {
+  const segs = [
+    { pct: t.coord, color: TIME_COLOR.coord },
+    { pct: t.admin, color: TIME_COLOR.admin },
+    { pct: t.improve, color: TIME_COLOR.improve },
+  ];
+  let cursor = x;
+  segs.forEach((s) => {
+    const sw = (w * s.pct) / 100;
+    slide.addShape("rect", {
+      x: cursor, y, w: sw, h,
+      fill: { color: s.color }, line: { type: "none" },
+    });
+    if (s.pct >= 18) {
+      slide.addText(`${s.pct}%`, {
+        x: cursor, y, w: sw, h,
+        fontFace: PPTX_BRAND.font.body, fontSize: 7, bold: true, color: "FFFFFF",
+        align: "center", valign: "middle", margin: 0,
+      });
+    }
+    cursor += sw;
+  });
+}
+
+const maturityRoadmapSpecs = (): SlideSpec[] => [
+  // ── Slide A: Curve & Behaviour Shift ───────────────────────────
+  {
+    label: "Maturity Roadmap · Curve & Behaviour",
+    build: (slide, ctx) => {
+      chrome(slide, ctx);
+      header(slide, "Value & close · 1 of 2", "The Maturity Roadmap",
+        "How teams change their way of working at every stage");
+
+      const { colW, xs } = maturityColumnGeometry();
+
+      // Top arc band
+      const arcTop = CONTENT_TOP;
+      const arcH = 1.2;
+      const arcY = [0.85, 0.65, 0.45, 0.22, 0.02];
+      MATURITY_STAGES.forEach((_, i) => {
+        if (i === MATURITY_STAGES.length - 1) return;
+        const x1 = xs[i] + colW / 2;
+        const x2 = xs[i + 1] + colW / 2;
+        const y1 = arcTop + arcY[i] + 0.18;
+        const y2 = arcTop + arcY[i + 1] + 0.18;
+        slide.addShape("line", {
+          x: x1, y: y1, w: x2 - x1, h: y2 - y1,
+          line: { color: C.primary, width: 1.25, dashType: "dash" },
+        });
+      });
+      MATURITY_STAGES.forEach((s, i) => {
+        const cx = xs[i] + colW / 2;
+        const cy = arcTop + arcY[i];
+        slide.addShape("ellipse", {
+          x: cx - 0.27, y: cy - 0.05, w: 0.54, h: 0.54,
+          fill: { color: s.color, transparency: 75 }, line: { type: "none" },
+        });
+        slide.addShape("ellipse", {
+          x: cx - 0.2, y: cy, w: 0.4, h: 0.4,
+          fill: { color: s.color }, line: { type: "none" },
+        });
+        slide.addText(s.n, {
+          x: cx - 0.2, y: cy, w: 0.4, h: 0.4,
+          fontFace: PPTX_BRAND.font.display, fontSize: 14, bold: true, color: C.bg,
+          align: "center", valign: "middle", margin: 0,
+        });
+      });
+
+      // Per-stage column cards
+      const cardY = arcTop + arcH;
+      const cardH = CONTENT_BOTTOM - cardY;
+      MATURITY_STAGES.forEach((s, i) => {
+        const x = xs[i];
+        addCard(slide, x, cardY, colW, cardH, { border: s.color });
+        // top accent strip
+        slide.addShape("rect", {
+          x, y: cardY, w: colW, h: 0.06,
+          fill: { color: s.color }, line: { type: "none" },
+        });
+        // Stage chip header
+        slide.addText(`${s.n}. ${s.label}`, {
+          x: x + 0.12, y: cardY + 0.12, w: colW - 0.24, h: 0.28,
+          fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true, color: s.color, align: "center",
+        });
+        slide.addText(s.sub.toUpperCase(), {
+          x: x + 0.12, y: cardY + 0.4, w: colW - 0.24, h: 0.2,
+          fontFace: PPTX_BRAND.font.body, fontSize: 7, color: C.subtle, align: "center", charSpacing: 2,
+        });
+
+        // Section: What it looks like
+        let cursorY = cardY + 0.66;
+        slide.addText("WHAT IT LOOKS LIKE", {
+          x: x + 0.14, y: cursorY, w: colW - 0.28, h: 0.18,
+          fontFace: PPTX_BRAND.font.body, fontSize: 7, bold: true, color: s.color, charSpacing: 2,
+        });
+        cursorY += 0.2;
+        slide.addText(
+          s.whatItLooksLike.map((t) => ({ text: t, options: { bullet: { code: "2713" } } })),
+          {
+            x: x + 0.14, y: cursorY, w: colW - 0.28, h: 0.95,
+            fontFace: PPTX_BRAND.font.body, fontSize: 8, color: C.muted,
+            paraSpaceAfter: 2, valign: "top",
+          },
+        );
+        cursorY += 0.98;
+
+        // Hairline
+        slide.addShape("line", {
+          x: x + 0.14, y: cursorY, w: colW - 0.28, h: 0,
+          line: { color: C.hairline, width: 0.5 },
+        });
+        cursorY += 0.06;
+
+        // How Work Changes
+        slide.addText("HOW WORK CHANGES", {
+          x: x + 0.14, y: cursorY, w: colW - 0.28, h: 0.18,
+          fontFace: PPTX_BRAND.font.body, fontSize: 7, bold: true, color: s.color, charSpacing: 2,
+        });
+        cursorY += 0.2;
+        // From pill
+        slide.addShape("roundRect", {
+          x: x + 0.14, y: cursorY, w: colW - 0.28, h: 0.34,
+          fill: { color: "1A1F2E", transparency: 30 }, line: { type: "none" }, rectRadius: 0.05,
+        });
+        slide.addText(s.from, {
+          x: x + 0.18, y: cursorY, w: colW - 0.36, h: 0.34,
+          fontFace: PPTX_BRAND.font.body, fontSize: 7.5, color: C.muted, valign: "middle", margin: 0,
+        });
+        cursorY += 0.36;
+        // arrow
+        slide.addText("↓", {
+          x: x + 0.14, y: cursorY, w: colW - 0.28, h: 0.18,
+          fontFace: PPTX_BRAND.font.body, fontSize: 10, bold: true, color: s.color, align: "center", margin: 0,
+        });
+        cursorY += 0.18;
+        // To pill
+        slide.addShape("roundRect", {
+          x: x + 0.14, y: cursorY, w: colW - 0.28, h: 0.34,
+          fill: { color: s.color, transparency: 80 }, line: { color: s.color, width: 0.5 }, rectRadius: 0.05,
+        });
+        slide.addText(s.to, {
+          x: x + 0.18, y: cursorY, w: colW - 0.36, h: 0.34,
+          fontFace: PPTX_BRAND.font.body, fontSize: 7.5, bold: true, color: C.ink, valign: "middle", margin: 0,
+        });
+        cursorY += 0.38;
+        slide.addText(`"${s.marker}"`, {
+          x: x + 0.14, y: cursorY, w: colW - 0.28, h: 0.24,
+          fontFace: PPTX_BRAND.font.body, fontSize: 7, italic: true, color: C.subtle, align: "center", margin: 0,
+        });
+        cursorY += 0.26;
+
+        // Hairline
+        slide.addShape("line", {
+          x: x + 0.14, y: cursorY, w: colW - 0.28, h: 0,
+          line: { color: C.hairline, width: 0.5 },
+        });
+        cursorY += 0.06;
+
+        // Where Teams Spend Time
+        slide.addText("WHERE TEAMS SPEND TIME", {
+          x: x + 0.14, y: cursorY, w: colW - 0.28, h: 0.18,
+          fontFace: PPTX_BRAND.font.body, fontSize: 7, bold: true, color: s.color, charSpacing: 2,
+        });
+        cursorY += 0.2;
+        drawTimeBar(slide, x + 0.14, cursorY, colW - 0.28, 0.18, s.time);
+        cursorY += 0.22;
+        // Legend (compact)
+        const legendItems = [
+          { c: TIME_COLOR.coord, label: "Coord" },
+          { c: TIME_COLOR.admin, label: "Admin" },
+          { c: TIME_COLOR.improve, label: "Improve" },
+        ];
+        const legW = (colW - 0.28) / 3;
+        legendItems.forEach((li, j) => {
+          const lx = x + 0.14 + j * legW;
+          slide.addShape("rect", {
+            x: lx, y: cursorY + 0.04, w: 0.08, h: 0.08,
+            fill: { color: li.c }, line: { type: "none" },
+          });
+          slide.addText(li.label, {
+            x: lx + 0.1, y: cursorY, w: legW - 0.1, h: 0.16,
+            fontFace: PPTX_BRAND.font.body, fontSize: 6.5, color: C.subtle, valign: "middle", margin: 0,
+          });
+        });
+      });
+    },
+  },
+
+  // ── Slide B: Results & Value Proof ─────────────────────────────
+  {
+    label: "Maturity Roadmap · Results & Value",
+    build: (slide, ctx) => {
+      chrome(slide, ctx);
+      header(slide, "Value & close · 2 of 2", "The Maturity Roadmap",
+        "Results and value proof at every stage");
+
+      const { colW, xs } = maturityColumnGeometry();
+
+      // Slim recap strip — 5 numbered dots + labels
+      const recapY = CONTENT_TOP;
+      const recapH = 0.5;
+      MATURITY_STAGES.forEach((s, i) => {
+        const x = xs[i];
+        const cx = x + 0.22;
+        slide.addShape("ellipse", {
+          x: cx - 0.15, y: recapY + 0.05, w: 0.3, h: 0.3,
+          fill: { color: s.color }, line: { type: "none" },
+        });
+        slide.addText(s.n, {
+          x: cx - 0.15, y: recapY + 0.05, w: 0.3, h: 0.3,
+          fontFace: PPTX_BRAND.font.display, fontSize: 11, bold: true, color: C.bg,
+          align: "center", valign: "middle", margin: 0,
+        });
+        slide.addText(s.label, {
+          x: x + 0.45, y: recapY + 0.05, w: colW - 0.45, h: 0.3,
+          fontFace: PPTX_BRAND.font.display, fontSize: 11, bold: true, color: s.color, valign: "middle", margin: 0,
+        });
+      });
+
+      // Footer summary band geometry — reserve at the bottom
+      const footerH = 0.55;
+      const footerY = CONTENT_BOTTOM - footerH;
+
+      // Per-stage cards
+      const cardY = recapY + recapH + 0.08;
+      const cardH = footerY - cardY - 0.15;
+      MATURITY_STAGES.forEach((s, i) => {
+        const x = xs[i];
+        addCard(slide, x, cardY, colW, cardH, { border: s.color });
+        slide.addShape("rect", {
+          x, y: cardY, w: colW, h: 0.06,
+          fill: { color: s.color }, line: { type: "none" },
+        });
+        slide.addText(`${s.n}. ${s.label}`, {
+          x: x + 0.14, y: cardY + 0.12, w: colW - 0.28, h: 0.3,
+          fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true, color: s.color, align: "center",
+        });
+
+        let cursorY = cardY + 0.5;
+        // Result
+        slide.addText("RESULT", {
+          x: x + 0.14, y: cursorY, w: colW - 0.28, h: 0.2,
+          fontFace: PPTX_BRAND.font.body, fontSize: 8, bold: true, color: s.color, charSpacing: 2,
+        });
+        cursorY += 0.22;
+        slide.addText(
+          s.result.map((t) => ({ text: t, options: { bullet: { code: "25CF" } } })),
+          {
+            x: x + 0.14, y: cursorY, w: colW - 0.28, h: 0.9,
+            fontFace: PPTX_BRAND.font.body, fontSize: 9.5, color: C.muted,
+            paraSpaceAfter: 3, valign: "top",
+          },
+        );
+        cursorY += 0.95;
+
+        // Hairline
+        slide.addShape("line", {
+          x: x + 0.14, y: cursorY, w: colW - 0.28, h: 0,
+          line: { color: C.hairline, width: 0.5 },
+        });
+        cursorY += 0.08;
+
+        // Value Proof
+        slide.addText("VALUE PROOF", {
+          x: x + 0.14, y: cursorY, w: colW - 0.28, h: 0.2,
+          fontFace: PPTX_BRAND.font.body, fontSize: 8, bold: true, color: s.color, charSpacing: 2,
+        });
+        cursorY += 0.22;
+
+        // Three metric pill chips stacked
+        s.metrics.forEach((m) => {
+          slide.addShape("roundRect", {
+            x: x + 0.14, y: cursorY, w: colW - 0.28, h: 0.26,
+            fill: { color: s.color, transparency: 78 }, line: { color: s.color, width: 0.5 }, rectRadius: 0.04,
+          });
+          slide.addText(m, {
+            x: x + 0.14, y: cursorY, w: colW - 0.28, h: 0.26,
+            fontFace: PPTX_BRAND.font.body, fontSize: 8.5, bold: true, color: s.color,
+            align: "center", valign: "middle", margin: 0,
+          });
+          cursorY += 0.3;
+        });
+
+        cursorY += 0.04;
+        slide.addText(s.roi, {
+          x: x + 0.14, y: cursorY, w: colW - 0.28, h: cardY + cardH - cursorY - 0.08,
+          fontFace: PPTX_BRAND.font.body, fontSize: 8, italic: true, color: C.subtle,
+          align: "center", valign: "top",
+        });
+      });
+
+      // Bottom callout band
+      slide.addShape("roundRect", {
+        x: 0.5, y: footerY, w: W - 1.0, h: footerH,
+        fill: { color: C.primary, transparency: 80 }, line: { color: C.primary, width: 1 }, rectRadius: 0.08,
+      });
+      slide.addText(
+        "Stage 1 → Stage 5:  ~70% admin reduction  ·  ~50% fewer repeat issues  ·  OTP +15%",
+        {
+          x: 0.5, y: footerY, w: W - 1.0, h: footerH,
+          fontFace: PPTX_BRAND.font.display, fontSize: 13, bold: true, color: C.primary,
+          align: "center", valign: "middle", margin: 0,
+        },
+      );
+    },
+  },
+];
+
 const slideSpecs: SlideSpec[] = [
   // ─── 0. TITLE ──────────────────────────────────────────────────
   {
@@ -1705,81 +2119,7 @@ slideSpecs.push(
     activeStage: "today",
     upNext: ["Maturity Roadmap"],
   }),
-  {
-    label: "Maturity Roadmap",
-    build: (slide, ctx) => {
-      chrome(slide, ctx);
-      header(slide, "Value & close", "The Maturity Roadmap",
-        "How teams change their way of working at every stage");
-
-      const stages = [
-        { n: "1", label: "Fragmented", sub: "Manual / Reactive", color: C.danger, result: "High variability and repeat issues. Hidden cost of repeat work and audit scrambles." },
-        { n: "2", label: "Managed", sub: "Silo Optimisation", color: C.sky, result: "Compliance managed in silos, but no systematic learning." },
-        { n: "3", label: "Connected", sub: "Closed Loop", color: "14B8A6", result: "Single source of truth · Audit prep ↓ 30% · Handoffs ↓ 50%." },
-        { n: "4", label: "Intelligent", sub: "AI-Assisted", color: C.violet, result: "Recurrence ↓ 50% · Time-to-change ↓ 60% · Measurable KPI lift." },
-        { n: "5", label: "Predictive", sub: "AI-Accelerated", color: C.amber, result: "OTP ↑ 15% · Delay mins ↓ 40% · Admin hours ↓ 70%." },
-      ];
-
-      // Top: connector line
-      const sY = CONTENT_TOP;
-      const sH = CONTENT_BOTTOM - sY;
-      const sW = (W - 1 - 4 * 0.15) / 5;
-
-      // Maturity arc — circles plotted on a rising curve (Stage 1 low → Stage 5 high)
-      // Y positions roughly form a curve.
-      const arcY = [0.78, 0.62, 0.45, 0.26, 0.05];
-      // Background curve approximated by short line segments connecting circles.
-      stages.forEach((_, i) => {
-        if (i === stages.length - 1) return;
-        const x1 = 0.5 + i * (sW + 0.15) + sW / 2;
-        const x2 = 0.5 + (i + 1) * (sW + 0.15) + sW / 2;
-        const y1 = sY + arcY[i] + 0.3;
-        const y2 = sY + arcY[i + 1] + 0.3;
-        slide.addShape("line", {
-          x: x1, y: y1, w: x2 - x1, h: y2 - y1,
-          line: { color: C.primary, width: 1.5, dashType: "dash" },
-        });
-      });
-
-      stages.forEach((s, i) => {
-        const x = 0.5 + i * (sW + 0.15);
-        const cy = sY + arcY[i];
-        // Glow halo
-        slide.addShape("ellipse", {
-          x: x + sW / 2 - 0.42, y: cy - 0.12, w: 0.84, h: 0.84,
-          fill: { color: s.color, transparency: 75 }, line: { type: "none" },
-        });
-        // numbered circle
-        slide.addShape("ellipse", {
-          x: x + sW / 2 - 0.3, y: cy, w: 0.6, h: 0.6,
-          fill: { color: s.color }, line: { type: "none" },
-        });
-        slide.addText(s.n, {
-          x: x + sW / 2 - 0.3, y: cy, w: 0.6, h: 0.6,
-          fontFace: PPTX_BRAND.font.display, fontSize: 22, bold: true, color: C.bg, align: "center", valign: "middle",
-        });
-        // card below
-        addCard(slide, x, sY + 1.0, sW, sH - 1.0, { border: s.color });
-        // Brand motif: top accent strip
-        slide.addShape("rect", {
-          x, y: sY + 1.0, w: sW, h: 0.06,
-          fill: { color: s.color }, line: { type: "none" },
-        });
-        slide.addText(s.label, {
-          x: x + 0.18, y: sY + 1.15, w: sW - 0.36, h: 0.4,
-          fontFace: PPTX_BRAND.font.display, fontSize: 14, bold: true, color: s.color, align: "center",
-        });
-        slide.addText(s.sub.toUpperCase(), {
-          x: x + 0.18, y: sY + 1.55, w: sW - 0.36, h: 0.25,
-          fontFace: PPTX_BRAND.font.body, fontSize: 8, color: C.subtle, align: "center", charSpacing: 2,
-        });
-        slide.addText(s.result, {
-          x: x + 0.18, y: sY + 1.9, w: sW - 0.36, h: sH - 2.05,
-          fontFace: PPTX_BRAND.font.body, fontSize: 10, color: C.muted, align: "center", valign: "top",
-        });
-      });
-    },
-  },
+  ...maturityRoadmapSpecs(),
 
   // ─── 18. 2026 ROADMAP ─────────────────────────────────────────
   journeyDividerSpec({
@@ -2521,7 +2861,8 @@ export async function buildTechnicalDeck(opts: BuildOpts = {}): Promise<Blob> {
     // ── Value & close ──
     byLabel("Line of Sight Cascade"),
     byLabel("▸ Journey Ahead · Maturity"),
-    byLabel("Maturity Roadmap"),
+    byLabel("Maturity Roadmap · Curve & Behaviour"),
+    byLabel("Maturity Roadmap · Results & Value"),
     byLabel("▸ Journey Ahead · 2026 Use Cases"),
     byLabel("2026 Roadmap"),
     byLabel("Why Comply365"),
