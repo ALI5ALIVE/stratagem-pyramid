@@ -156,10 +156,10 @@ const DTOPPrintablePage: React.FC = () => {
           {useCases.map((uc, i) => (
             <div key={uc.title} style={{
               borderLeft: `2px solid ${stepAccentsDark[i]}`,
-              paddingLeft: 12,
+              paddingLeft: 14,
             }}>
               <div style={{
-                fontFamily: F.display, fontSize: 18, fontWeight: 700,
+                fontFamily: F.display, fontSize: 20, fontWeight: 700,
                 color: stepAccentsDark[i], lineHeight: 1.05, letterSpacing: "-0.02em",
                 marginBottom: 3,
                 textShadow: `0 0 14px ${stepAccentsDark[i]}40`,
@@ -168,7 +168,7 @@ const DTOPPrintablePage: React.FC = () => {
                 fontFamily: F.display, fontSize: 10, fontWeight: 600,
                 color: C.darkInk, marginBottom: 4, lineHeight: 1.3,
               }}>{uc.title}</div>
-              <div style={{ fontSize: 9, color: C.darkSlate, lineHeight: 1.4 }}>
+              <div style={{ fontSize: 9, color: C.darkSlate, lineHeight: 1.5 }}>
                 {uc.scenario}
               </div>
             </div>
@@ -177,12 +177,12 @@ const DTOPPrintablePage: React.FC = () => {
       </div>
 
       {/* WHAT IT UNLOCKS — value tiles */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+      <div style={{ marginBottom: 14 }}>
         <div style={sectionLabel()}>What It Unlocks</div>
         <div style={{
           display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr",
           borderTop: `1px solid ${C.darkHairline}`,
-          paddingTop: 10,
+          paddingTop: 12,
         }}>
           {valueCategories.map((vc, i) => (
             <div key={vc.title} style={{
@@ -195,7 +195,7 @@ const DTOPPrintablePage: React.FC = () => {
                 color: stepAccentsDark[i], textTransform: "uppercase",
                 letterSpacing: "0.08em", marginBottom: 5,
               }}>{vc.title}</div>
-              <div style={{ fontSize: 9, color: C.darkSlate, lineHeight: 1.4 }}>
+              <div style={{ fontSize: 10, color: C.darkSlate, lineHeight: 1.5 }}>
                 {vc.metrics[0]}
               </div>
             </div>
@@ -205,7 +205,7 @@ const DTOPPrintablePage: React.FC = () => {
 
       {/* FOOTER */}
       <div style={{
-        marginTop: 12, paddingTop: 8, borderTop: `2px solid ${C.brand}`,
+        marginTop: "auto", paddingTop: 8, borderTop: `2px solid ${C.brand}`,
         display: "flex", justifyContent: "space-between", alignItems: "center",
         fontSize: 8.5, color: C.darkSubtle, fontFamily: F.display,
         letterSpacing: "0.08em", textTransform: "uppercase", fontWeight: 600,
