@@ -29,7 +29,7 @@ const pitchDecks: DeckCard[] = [
     description: "Executive narrative powered by the platform's strongest visuals — DTOP, 5-layer architecture, and intelligence depth.",
     href: "/pitch-executive-3",
     icon: Layers,
-    badge: "14 slides",
+    badge: "20 slides",
     accent: "from-comply-teal to-accent",
   },
   {
