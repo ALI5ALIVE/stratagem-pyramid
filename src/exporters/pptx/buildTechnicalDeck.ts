@@ -1394,25 +1394,46 @@ slideSpecs.push(
       const sH = CONTENT_BOTTOM - sY;
       const sW = (W - 1 - 4 * 0.15) / 5;
 
-      // background line
-      slide.addShape("rect", {
-        x: 0.5, y: sY + 0.45, w: W - 1, h: 0.04,
-        fill: { color: C.hairline }, line: { type: "none" },
+      // Maturity arc — circles plotted on a rising curve (Stage 1 low → Stage 5 high)
+      // Y positions roughly form a curve.
+      const arcY = [0.78, 0.62, 0.45, 0.26, 0.05];
+      // Background curve approximated by short line segments connecting circles.
+      stages.forEach((_, i) => {
+        if (i === stages.length - 1) return;
+        const x1 = 0.5 + i * (sW + 0.15) + sW / 2;
+        const x2 = 0.5 + (i + 1) * (sW + 0.15) + sW / 2;
+        const y1 = sY + arcY[i] + 0.3;
+        const y2 = sY + arcY[i + 1] + 0.3;
+        slide.addShape("line", {
+          x: x1, y: y1, w: x2 - x1, h: y2 - y1,
+          line: { color: C.primary, width: 1.5, dashType: "dash" },
+        });
       });
 
       stages.forEach((s, i) => {
         const x = 0.5 + i * (sW + 0.15);
-        // numbered circle on the line
+        const cy = sY + arcY[i];
+        // Glow halo
         slide.addShape("ellipse", {
-          x: x + sW / 2 - 0.3, y: sY + 0.2, w: 0.6, h: 0.6,
+          x: x + sW / 2 - 0.42, y: cy - 0.12, w: 0.84, h: 0.84,
+          fill: { color: s.color, transparency: 75 }, line: { type: "none" },
+        });
+        // numbered circle
+        slide.addShape("ellipse", {
+          x: x + sW / 2 - 0.3, y: cy, w: 0.6, h: 0.6,
           fill: { color: s.color }, line: { type: "none" },
         });
         slide.addText(s.n, {
-          x: x + sW / 2 - 0.3, y: sY + 0.2, w: 0.6, h: 0.6,
+          x: x + sW / 2 - 0.3, y: cy, w: 0.6, h: 0.6,
           fontFace: PPTX_BRAND.font.display, fontSize: 22, bold: true, color: C.bg, align: "center", valign: "middle",
         });
         // card below
         addCard(slide, x, sY + 1.0, sW, sH - 1.0, { border: s.color });
+        // Brand motif: top accent strip
+        slide.addShape("rect", {
+          x, y: sY + 1.0, w: sW, h: 0.06,
+          fill: { color: s.color }, line: { type: "none" },
+        });
         slide.addText(s.label, {
           x: x + 0.18, y: sY + 1.15, w: sW - 0.36, h: 0.4,
           fontFace: PPTX_BRAND.font.display, fontSize: 14, bold: true, color: s.color, align: "center",
