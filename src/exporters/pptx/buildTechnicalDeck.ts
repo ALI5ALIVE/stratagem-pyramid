@@ -41,8 +41,7 @@ import {
   solutionOverview,
   painPoints as rmPainPoints,
   valuePillars as rmValuePillars,
-  howItWorksLayers as rmHowItWorksLayers,
-  useCases as rmUseCases,
+  positioning as rmPositioning,
 } from "@/data/regulationManagementPlaybook";
 
 const C = PPTX_BRAND.color;

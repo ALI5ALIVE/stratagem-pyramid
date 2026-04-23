@@ -31,13 +31,8 @@ import TechSlide5DTOP from "@/components/tech-slides/TechSlide5DTOP";
 import TechSlideUseCases from "@/components/tech-slides/TechSlideUseCases";
 import TechSlide6PlatformIntegrations from "@/components/tech-slides/TechSlide6PlatformIntegrations";
 
-// Regulation Solution section (cloned from RM playbook)
-import RMSlide0Title from "@/components/regmgmt-slides/RMSlide0Title";
-import RMSlide1Overview from "@/components/regmgmt-slides/RMSlide1Overview";
-import RMSlide2Problem from "@/components/regmgmt-slides/RMSlide2Problem";
-import RMSlide4ValuePillars from "@/components/regmgmt-slides/RMSlide4ValuePillars";
-import RMSlide5HowItWorks from "@/components/regmgmt-slides/RMSlide5HowItWorks";
-import RMSlide6UseCases from "@/components/regmgmt-slides/RMSlide6UseCases";
+// Regulation Solution — single summary slide that links to the full playbook
+import TechSlideRegulationSummary from "@/components/tech-slides/TechSlideRegulationSummary";
 
 // Value & close
 import TechSlideCalculator from "@/components/tech-slides/TechSlideCalculator";
@@ -134,13 +129,8 @@ const slides = [
   { id: "tech-slide-5", label: "L5 · DTOP", component: TechSlide5DTOP },
   { id: "tech-slide-use-cases", label: "Use Cases", component: TechSlideUseCases },
   { id: "tech-slide-6", label: "Platform Integrations", component: TechSlide6PlatformIntegrations },
-  // Regulation Solution sub-section
-  { id: "tech-rm-title", label: "▸ Regulation Solution", component: RMSlide0Title },
-  { id: "tech-rm-overview", label: "RM · Solution Overview", component: RMSlide1Overview },
-  { id: "tech-rm-problem", label: "RM · The Problem Today", component: RMSlide2Problem },
-  { id: "tech-rm-value", label: "RM · Value Pillars", component: RMSlide4ValuePillars },
-  { id: "tech-rm-how", label: "RM · How It Works", component: RMSlide5HowItWorks },
-  { id: "tech-rm-uc", label: "RM · Use Cases", component: RMSlide6UseCases },
+  // Regulation Solution — summary that links to the full Regulation Management Playbook
+  { id: "tech-slide-regulation", label: "Regulation Management", component: TechSlideRegulationSummary },
   // Value & close
   { id: "tech-slide-calculator", label: "Line of Sight Calculator", component: TechSlideCalculator },
   { id: "tech-divider-journey-maturity", label: "▸ Journey Ahead · Maturity", component: TechSlideJourneyDivider, dividerProps: journeyProps.maturity },
