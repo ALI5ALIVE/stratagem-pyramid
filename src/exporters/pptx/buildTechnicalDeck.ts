@@ -2214,252 +2214,97 @@ const ctaSpec: SlideSpec = {
   },
 };
 
-// ─── Regulation Solution sub-section (6 slides, mirrored from RM playbook)
+// ─── Regulation Solution — single summary slide (mirrors web Tech Deep Dive)
 
-const rmSectionDividerSpec: SlideSpec = {
-  label: "▸ Regulation Solution",
+const regulationSummarySpec: SlideSpec = {
+  label: "Regulation Management",
   build: (slide, ctx) => {
     chrome(slide, ctx);
-    slide.addText("REGULATION SOLUTION", {
-      x: 0.6, y: 1.7, w: W - 1.2, h: 0.4,
-      fontFace: PPTX_BRAND.font.body, fontSize: 12, bold: true, color: C.primary, charSpacing: 6,
-    });
-    slide.addText("Regulation Management", {
-      x: 0.6, y: 2.15, w: W - 1.2, h: 1.1,
-      fontFace: PPTX_BRAND.font.display, fontSize: 48, bold: true, color: C.ink,
-    });
-    slide.addText(solutionOverview.tagline, {
-      x: 0.6, y: 3.4, w: W - 1.2, h: 0.6,
-      fontFace: PPTX_BRAND.font.display, fontSize: 18, color: C.primary, italic: true,
-    });
-    slide.addText(solutionOverview.elevatorPitch, {
-      x: 0.6, y: 4.2, w: W - 1.2, h: 1.5,
-      fontFace: PPTX_BRAND.font.body, fontSize: 13, color: C.muted,
-    });
-  },
-};
+    header(slide, "Regulation Solution", "Regulation Management", solutionOverview.tagline);
 
-const rmOverviewSpec: SlideSpec = {
-  label: "RM · Solution Overview",
-  build: (slide, ctx) => {
-    chrome(slide, ctx);
-    header(slide, "Regulation Solution", "Solution Overview",
-      "Regulation Management by Comply365");
-
-    const colW = (W - 1 - 0.3) / 2;
-    // Left: elevator + arc
-    addCard(slide, 0.5, CONTENT_TOP, colW, CONTENT_BOTTOM - CONTENT_TOP, { border: C.primary });
-    slide.addText("ELEVATOR PITCH", {
-      x: 0.7, y: CONTENT_TOP + 0.15, w: colW - 0.4, h: 0.3,
-      fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.primary, charSpacing: 3,
-    });
+    // Top banner — elevator pitch + narrative arc
+    const bannerH = 1.15;
+    addCard(slide, 0.5, CONTENT_TOP, W - 1, bannerH, { fill: C.primarySoft, border: C.primary });
     slide.addText(solutionOverview.elevatorPitch, {
-      x: 0.7, y: CONTENT_TOP + 0.5, w: colW - 0.4, h: 2.0,
+      x: 0.7, y: CONTENT_TOP + 0.12, w: W - 1.4, h: bannerH - 0.5,
       fontFace: PPTX_BRAND.font.body, fontSize: 11, color: C.ink, valign: "top",
     });
-    slide.addText("NARRATIVE ARC", {
-      x: 0.7, y: CONTENT_TOP + 2.7, w: colW - 0.4, h: 0.3,
-      fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.primary, charSpacing: 3,
-    });
     slide.addText(solutionOverview.narrativeArc, {
-      x: 0.7, y: CONTENT_TOP + 3.05, w: colW - 0.4, h: 0.5,
-      fontFace: PPTX_BRAND.font.display, fontSize: 14, bold: true, color: C.ink,
-    });
-    slide.addText(solutionOverview.tagline, {
-      x: 0.7, y: CONTENT_TOP + 3.65, w: colW - 0.4, h: 0.4,
-      fontFace: PPTX_BRAND.font.body, fontSize: 11, color: C.primary, italic: true,
+      x: 0.7, y: CONTENT_TOP + bannerH - 0.4, w: W - 1.4, h: 0.32,
+      fontFace: PPTX_BRAND.font.body, fontSize: 9.5, bold: true, color: C.primary, charSpacing: 3,
     });
 
-    // Right: key insight
+    // Two-column problem / value pillars
+    const colTop = CONTENT_TOP + bannerH + 0.2;
+    const footerH = 0.55;
+    const colBottom = CONTENT_BOTTOM - footerH - 0.2;
+    const colH = colBottom - colTop;
+    const colW = (W - 1 - 0.3) / 2;
+    const lx = 0.5;
     const rx = 0.5 + colW + 0.3;
-    addCard(slide, rx, CONTENT_TOP, colW, CONTENT_BOTTOM - CONTENT_TOP, { fill: C.primarySoft, border: C.primary });
-    slide.addText("KEY INSIGHT", {
-      x: rx + 0.2, y: CONTENT_TOP + 0.15, w: colW - 0.4, h: 0.3,
+
+    // Section labels
+    slide.addText("THE PROBLEM TODAY", {
+      x: lx, y: colTop, w: colW, h: 0.28,
+      fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.danger, charSpacing: 3,
+    });
+    slide.addText("THE THREE VALUE PILLARS", {
+      x: rx, y: colTop, w: colW, h: 0.28,
       fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.primary, charSpacing: 3,
     });
-    slide.addText(solutionOverview.keyInsight, {
-      x: rx + 0.2, y: CONTENT_TOP + 0.5, w: colW - 0.4, h: CONTENT_BOTTOM - CONTENT_TOP - 0.7,
-      fontFace: PPTX_BRAND.font.body, fontSize: 12, color: C.ink, valign: "top",
-    });
-  },
-};
 
-const rmProblemSpec: SlideSpec = {
-  label: "RM · The Problem Today",
-  build: (slide, ctx) => {
-    chrome(slide, ctx);
-    header(slide, "Regulation Solution", "The Problem Today",
-      "Regulatory compliance is fragmented, manual and disconnected from operations");
+    const itemsTop = colTop + 0.35;
+    const itemsH = colH - 0.35;
+    const problems = rmPainPoints.slice(0, 3);
+    const pillars = rmValuePillars.slice(0, 3);
+    const rowH = (itemsH - 2 * 0.12) / 3;
 
-    const cols = 3;
-    const rows = 2;
-    const gY = CONTENT_TOP;
-    const gH = CONTENT_BOTTOM - gY;
-    const cw = (W - 1 - (cols - 1) * 0.18) / cols;
-    const ch = (gH - (rows - 1) * 0.18) / rows;
-    rmPainPoints.forEach((p, i) => {
-      const cx = 0.5 + (i % cols) * (cw + 0.18);
-      const cy = gY + Math.floor(i / cols) * (ch + 0.18);
-      addCard(slide, cx, cy, cw, ch, { border: C.danger });
-      addIconBadge(slide, cx + 0.18, cy + 0.18, 0.42, C.danger, "!");
+    // Left — problems
+    problems.forEach((p, i) => {
+      const cy = itemsTop + i * (rowH + 0.12);
+      addCard(slide, lx, cy, colW, rowH, { fill: C.dangerSoft ?? C.surfaceAlt, border: C.danger });
+      addIconBadge(slide, lx + 0.15, cy + 0.18, 0.34, C.danger, "!");
       slide.addText(p.headline, {
-        x: cx + 0.72, y: cy + 0.15, w: cw - 0.85, h: 0.32,
-        fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true, color: C.ink,
+        x: lx + 0.6, y: cy + 0.1, w: colW - 0.75, h: 0.3,
+        fontFace: PPTX_BRAND.font.display, fontSize: 11, bold: true, color: C.ink,
       });
       slide.addText(p.detail, {
-        x: cx + 0.2, y: cy + 0.7, w: cw - 0.35, h: ch - 0.8,
-        fontFace: PPTX_BRAND.font.body, fontSize: 9.5, color: C.muted, valign: "top",
+        x: lx + 0.6, y: cy + 0.42, w: colW - 0.75, h: rowH - 0.5,
+        fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, valign: "top",
       });
     });
-  },
-};
 
-const rmValuePillarsSpec: SlideSpec = {
-  label: "RM · Value Pillars",
-  build: (slide, ctx) => {
-    chrome(slide, ctx);
-    header(slide, "Regulation Solution", "Value Pillars",
-      "Five connected value drivers — from real-time visibility to a future-proof foundation");
-
-    const n = rmValuePillars.length;
-    const gY = CONTENT_TOP;
-    const gH = CONTENT_BOTTOM - gY;
-    const cw = (W - 1 - (n - 1) * 0.15) / n;
-    rmValuePillars.forEach((p, i) => {
-      const cx = 0.5 + i * (cw + 0.15);
-      addCard(slide, cx, gY, cw, gH, { border: C.primary });
-      // index badge
-      slide.addShape("roundRect", {
-        x: cx + 0.18, y: gY + 0.18, w: 0.55, h: 0.32,
-        fill: { color: C.primary }, line: { type: "none" }, rectRadius: 0.05,
-      });
-      slide.addText(`0${i + 1}`, {
-        x: cx + 0.18, y: gY + 0.18, w: 0.55, h: 0.32,
-        fontFace: PPTX_BRAND.font.display, fontSize: 11, bold: true, color: C.bg,
-        align: "center", valign: "middle",
-      });
+    // Right — value pillars
+    pillars.forEach((p, i) => {
+      const cy = itemsTop + i * (rowH + 0.12);
+      addCard(slide, rx, cy, colW, rowH, { border: C.primary });
       slide.addText(p.title, {
-        x: cx + 0.18, y: gY + 0.6, w: cw - 0.36, h: 0.7,
-        fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true, color: C.ink,
+        x: rx + 0.18, y: cy + 0.1, w: colW - 0.36, h: 0.3,
+        fontFace: PPTX_BRAND.font.display, fontSize: 11, bold: true, color: C.primary,
       });
       slide.addText(p.description, {
-        x: cx + 0.18, y: gY + 1.4, w: cw - 0.36, h: gH - 2.0,
-        fontFace: PPTX_BRAND.font.body, fontSize: 9.5, color: C.muted, valign: "top",
+        x: rx + 0.18, y: cy + 0.42, w: colW - 0.36, h: rowH - 0.78,
+        fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, valign: "top",
       });
       if (p.metrics) {
-        slide.addShape("roundRect", {
-          x: cx + 0.18, y: gY + gH - 0.55, w: cw - 0.36, h: 0.4,
-          fill: { color: C.surfaceAlt }, line: { color: C.primary, width: 0.5 }, rectRadius: 0.05,
-        });
         slide.addText(p.metrics, {
-          x: cx + 0.2, y: gY + gH - 0.55, w: cw - 0.4, h: 0.4,
+          x: rx + 0.18, y: cy + rowH - 0.32, w: colW - 0.36, h: 0.26,
           fontFace: PPTX_BRAND.font.body, fontSize: 8.5, bold: true, color: C.primary,
-          align: "center", valign: "middle",
         });
       }
     });
-  },
-};
 
-const rmHowItWorksSpec: SlideSpec = {
-  label: "RM · How It Works",
-  build: (slide, ctx) => {
-    chrome(slide, ctx);
-    header(slide, "Regulation Solution", "How It Works",
-      "Three-layer delivery model");
-
-    const layerColors = [C.primary, C.accent, C.cyan];
-    const n = rmHowItWorksLayers.length;
-    const gY = CONTENT_TOP;
-    const gH = CONTENT_BOTTOM - gY;
-    const cw = (W - 1 - (n - 1) * 0.2) / n;
-    rmHowItWorksLayers.forEach((layer, i) => {
-      const accent = layerColors[i] ?? C.primary;
-      const cx = 0.5 + i * (cw + 0.2);
-      addCard(slide, cx, gY, cw, gH, { border: accent });
-      // Layer number badge
-      slide.addShape("ellipse", {
-        x: cx + 0.2, y: gY + 0.2, w: 0.5, h: 0.5,
-        fill: { color: accent }, line: { type: "none" },
-      });
-      slide.addText(String(layer.layer), {
-        x: cx + 0.2, y: gY + 0.2, w: 0.5, h: 0.5,
-        fontFace: PPTX_BRAND.font.display, fontSize: 16, bold: true, color: C.bg,
-        align: "center", valign: "middle",
-      });
-      slide.addText(layer.title, {
-        x: cx + 0.85, y: gY + 0.2, w: cw - 1.0, h: 0.55,
-        fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true, color: accent, valign: "middle",
-      });
-      slide.addText(layer.description, {
-        x: cx + 0.2, y: gY + 0.85, w: cw - 0.4, h: 1.2,
-        fontFace: PPTX_BRAND.font.body, fontSize: 10, color: C.ink, valign: "top",
-      });
-      slide.addText(
-        layer.details.map((d) => ({ text: d, options: { bullet: { code: "25CF" } } })),
-        {
-          x: cx + 0.2, y: gY + 2.1, w: cw - 0.4, h: gH - 2.25,
-          fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, paraSpaceAfter: 4,
-        },
-      );
+    // Footer — key framing + deep-dive pointer
+    const fy = CONTENT_BOTTOM - footerH;
+    addCard(slide, 0.5, fy, W - 1, footerH, { fill: C.surfaceAlt, border: C.hairline });
+    slide.addText(rmPositioning.keyFraming, {
+      x: 0.7, y: fy + 0.1, w: W - 4.2, h: footerH - 0.2,
+      fontFace: PPTX_BRAND.font.body, fontSize: 9.5, italic: true, color: C.muted, valign: "middle",
     });
-  },
-};
-
-const rmUseCasesSpec: SlideSpec = {
-  label: "RM · Use Cases",
-  build: (slide, ctx) => {
-    chrome(slide, ctx);
-    header(slide, "Regulation Solution", "Use Cases",
-      "Six connected use cases across compliance, change, AI insights and executive assurance");
-
-    const cols = 3;
-    const rows = 2;
-    const gY = CONTENT_TOP;
-    const gH = CONTENT_BOTTOM - gY;
-    const cw = (W - 1 - (cols - 1) * 0.2) / cols;
-    const ch = (gH - (rows - 1) * 0.18) / rows;
-    rmUseCases.slice(0, 6).forEach((uc, i) => {
-      const cx = 0.5 + (i % cols) * (cw + 0.2);
-      const cy = gY + Math.floor(i / cols) * (ch + 0.18);
-      addCard(slide, cx, cy, cw, ch, { border: C.primary });
-      slide.addText(uc.title, {
-        x: cx + 0.18, y: cy + 0.12, w: cw - 0.36, h: 0.32,
-        fontFace: PPTX_BRAND.font.display, fontSize: 11, bold: true, color: C.primary,
-      });
-      slide.addText("SCENARIO", {
-        x: cx + 0.18, y: cy + 0.5, w: cw - 0.36, h: 0.2,
-        fontFace: PPTX_BRAND.font.body, fontSize: 7.5, bold: true, color: C.subtle, charSpacing: 2,
-      });
-      slide.addText(uc.scenario, {
-        x: cx + 0.18, y: cy + 0.7, w: cw - 0.36, h: 0.85,
-        fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, valign: "top",
-      });
-      slide.addText("OUTCOME", {
-        x: cx + 0.18, y: cy + 1.6, w: cw - 0.36, h: 0.2,
-        fontFace: PPTX_BRAND.font.body, fontSize: 7.5, bold: true, color: C.prove, charSpacing: 2,
-      });
-      slide.addText(uc.outcome, {
-        x: cx + 0.18, y: cy + 1.8, w: cw - 0.36, h: ch - 2.2,
-        fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.ink, valign: "top",
-      });
-      // Product chips
-      const chipsY = cy + ch - 0.35;
-      let chx = cx + 0.18;
-      uc.products.slice(0, 4).forEach((prod) => {
-        const chipW = Math.min(cw - 0.4, prod.length * 0.07 + 0.15);
-        if (chx + chipW > cx + cw - 0.18) return;
-        slide.addShape("roundRect", {
-          x: chx, y: chipsY, w: chipW, h: 0.22,
-          fill: { color: C.surfaceAlt }, line: { color: C.primary, width: 0.5 }, rectRadius: 0.11,
-        });
-        slide.addText(prod, {
-          x: chx, y: chipsY, w: chipW, h: 0.22,
-          fontFace: PPTX_BRAND.font.body, fontSize: 7, color: C.ink,
-          align: "center", valign: "middle",
-        });
-        chx += chipW + 0.06;
-      });
+    slide.addText("Full deep dive: Regulation Management Playbook →", {
+      x: W - 3.6, y: fy + 0.1, w: 3.0, h: footerH - 0.2,
+      fontFace: PPTX_BRAND.font.body, fontSize: 10, bold: true, color: C.primary,
+      align: "right", valign: "middle",
     });
   },
 };
@@ -2597,13 +2442,8 @@ export async function buildTechnicalDeck(opts: BuildOpts = {}): Promise<Blob> {
     byLabel("DTOP Operating Model"),
     byLabel("Use Cases"),
     byLabel("Platform Integrations"),
-    // ── Regulation Solution sub-section ──
-    rmSectionDividerSpec,
-    rmOverviewSpec,
-    rmProblemSpec,
-    rmValuePillarsSpec,
-    rmHowItWorksSpec,
-    rmUseCasesSpec,
+    // ── Regulation Solution — single summary slide ──
+    regulationSummarySpec,
     // ── Value & close ──
     byLabel("Line of Sight Cascade"),
     byLabel("▸ Journey Ahead · Maturity"),
