@@ -1,69 +1,66 @@
 
 
-## Reorder Tech Deep Dive opener + add Platform-style hero as new slide 1
+## Replace 6 Regulation slides with single summary + deep-dive link
 
-### Changes
+### Current state
 
-**1. Replace `TechSlideOpener` (position 0) with a new platform-hero opener**
-
-Rebuild `src/components/tech-slides/TechSlideOpener.tsx` to mirror the Platform Playbook title slide (`PFSlide0Title`) content:
-
-- Eyebrow (with `Layers` icon): **"The Operational Performance Platform"**
-- Headline (two lines):
-  - `One platform.`
-  - `One operating model. One entry point.`
-- Tagline: **"From fragmented operations to closed-loop performance."**
-- Subtitle: **"Comply365 unifies content, training and safety into a single operational data foundation — activated by intelligence and automation, governed by DTOP, delivered through one trusted mobile shell."**
-- Status pill (emerald, pulsing dot): **"Foundational platform · Live core · Intelligence & orchestration in active delivery"**
-
-Use `SalesSlideContainer` with `id="tech-slide-opener"`, `showHeader={false}` so the hero is centred (matches the visual grammar of `TechSlide0Title`). Keep the existing `slideNumber` + narration prop pass-through.
-
-**2. Move the "Why It Exists" content into a new slide between `tech-slide-3b-platform-snapshot` and `tech-slide-4`**
-
-Wait — re-reading the request: the user says "before the *What the Platform Is — at a Glance* slide". That slide is `tech-slide-3b-platform-snapshot` (TechSlidePlatformSnapshot). So Why It Exists should sit immediately **before** Platform Snapshot.
-
-Create a new component `src/components/tech-slides/TechSlideWhyExists.tsx` containing the current TechSlideOpener body (the 6-problem grid sourced from `whyItExists` in `platformPlaybook.ts`), with `id="tech-slide-why-exists"`, title "Why It Exists", subtitle = `whyItExists.headline`.
-
-**3. Update `src/pages/TechnicalDeepDive.tsx` slide order**
-
-New "Frame the problem" sequence at the top of the `slides` array:
+The Tech Deep Dive currently embeds 6 cloned slides from the Regulation Management playbook:
 
 ```text
-1. tech-slide-opener           (NEW hero — "The Operational Performance Platform")
-2. tech-slide-0                (Title — "Operational Performance Platform" deep-dive)
-3. tech-slide-1                (Strategic Shift)
-4. tech-slide-2                (Industry Challenge)
-5. tech-slide-why-exists       (MOVED — Why It Exists, 6-problem grid)
-6. tech-slide-3b-platform-snapshot  (What the Platform Is — at a Glance)
-7. tech-slide-4                (Platform Overview / architecture)
-… rest unchanged
+tech-rm-title     RMSlide0Title
+tech-rm-overview  RMSlide1Overview
+tech-rm-problem   RMSlide2Problem
+tech-rm-value     RMSlide4ValuePillars
+tech-rm-how       RMSlide5HowItWorks
+tech-rm-uc        RMSlide6UseCases
 ```
 
-Update the imports + the `slides` array ordering. Sidebar labels:
-- `tech-slide-opener` → `"Hero — Operational Performance Platform"`
-- `tech-slide-why-exists` → `"Why It Exists"` (moved entry, replaces current opener position)
+This duplicates the Regulation Management Playbook and makes the Tech deck overly long.
 
-**4. Mirror the change in the PPTX exporter**
+### Change
 
-Update `src/exporters/pptx/buildTechnicalDeck.ts`:
+Replace all 6 slides with **one** summary slide that previews Regulation Management and links out to the full playbook via the existing `DeepDiveLink` component (same pattern already used for CoAnalyst, Automation, Mobile, Platform).
 
-- Rewrite `openerSpec` so it renders the new platform-hero (eyebrow + two-line headline + tagline + subtitle + emerald status pill) instead of the 6-problem grid.
-- Add a new `whyExistsSpec` containing the 6-problem grid (the previous `openerSpec` body).
-- In the `composed` array, place `whyExistsSpec` immediately before `platformSnapshotSpec`.
+**1. New component — `src/components/tech-slides/TechSlideRegulationSummary.tsx`**
 
-### Files touched
+A single dense summary slide using `SalesSlideContainer`:
 
-**Edited**
-- `src/components/tech-slides/TechSlideOpener.tsx` — replace body with platform-hero content.
-- `src/pages/TechnicalDeepDive.tsx` — import new `TechSlideWhyExists`, reorder `slides[]`.
-- `src/exporters/pptx/buildTechnicalDeck.ts` — rewrite `openerSpec`, add `whyExistsSpec`, reorder.
+- `id="tech-slide-regulation"`, title **"Regulation Management"**, subtitle **"Always Current. Always Connected. Always Compliant."**
+- Top banner: elevator pitch (`solutionOverview.elevatorPitch` — one paragraph) + narrative arc tagline ("System of Record → System of Work → System of Intelligence").
+- Left column — **The Problem** (3 condensed pain points from `painPoints[0,1,2]`: Manual & Fragmented, Reactive-Only, No Cross-System Linkage), each as an icon row.
+- Right column — **The Three Value Pillars** (`valuePillars[0..2]`: Real-Time Visibility, Cross-System Intelligence, Proactive Change Readiness) as icon-led cards with the `metrics` line as the accent.
+- Footer strip: small "Key framing" italic line (`positioning.keyFraming`) + a `<DeepDiveLink to="/regulation-management" label="Regulation Management Playbook" returnLabel="Back to Tech Deep Dive" />` chip on the right.
+
+Pulls all copy from `regulationManagementPlaybook.ts` — no new content. Uses the already-implemented `DeepDiveLink` (sessionStorage return path) so `BackToDeckButton` on the Regulation Playbook page sends the user back to `/pitch-technical`.
+
+**2. `src/pages/TechnicalDeepDive.tsx`**
+
+- Remove imports: `RMSlide0Title`, `RMSlide1Overview`, `RMSlide2Problem`, `RMSlide4ValuePillars`, `RMSlide5HowItWorks`, `RMSlide6UseCases`.
+- Remove the 6 slide entries from the `slides` array (`tech-rm-title` through `tech-rm-uc`).
+- Insert one new entry in the same position (between `tech-slide-6` Platform Integrations and `tech-slide-calculator`):
+
+```ts
+{ id: "tech-slide-regulation", label: "Regulation Management", component: TechSlideRegulationSummary },
+```
+
+**3. `src/exporters/pptx/buildTechnicalDeck.ts`**
+
+- Remove the 6 RM specs (overview / problem / value / how / use cases / divider) from the `composed` array.
+- Add a single `regulationSummarySpec` that mirrors the new web slide: title + subtitle, elevator pitch banner, two-column problem/value layout, and a small "See full playbook" footer (no clickable link in pptx — just text "Full deep dive: Regulation Management Playbook").
+- Insert it in the same position the RM block previously occupied.
+
+### Files
 
 **New**
-- `src/components/tech-slides/TechSlideWhyExists.tsx` — moved Why It Exists 6-problem grid (the current opener body).
+- `src/components/tech-slides/TechSlideRegulationSummary.tsx`
+
+**Edited**
+- `src/pages/TechnicalDeepDive.tsx` — drop 6 RM slide entries + imports, add summary entry.
+- `src/exporters/pptx/buildTechnicalDeck.ts` — drop 6 RM specs, add `regulationSummarySpec`.
 
 ### Out of scope
 
-- Platform Playbook (`PFSlide0Title` / `PFSlide1WhyExists`) is unchanged — only the Technical Deep Dive is re-shaped.
-- No narration audio regeneration.
-- No content edits to the 6 problem cards or the hero copy beyond what's quoted above.
+- The Regulation Management Playbook itself (`/regulation-management`) is unchanged — it already renders all 6 slides in their canonical home and supports `BackToDeckButton`.
+- No content rewrites; all copy reused from `regulationManagementPlaybook.ts`.
+- No narration regeneration.
 
