@@ -54,7 +54,7 @@ const dividerProps = {
     upNext: ["The Operational Data Foundation"],
   },
   intelligence: {
-    layerNumber: 3, layerName: "Intelligence & Orchestration Layer",
+    layerNumber: 3, layerName: "Intelligence & Orchestration",
     tagline: "Insights & Intelligence · Recommendations & Prescriptive Actions · Automation — turning data into action.",
     active: "intelligence" as const,
     upNext: [
@@ -101,22 +101,22 @@ const slides = [
   // Architecture
   { id: "tech-slide-4", label: "Platform Overview", component: TechSlide4Platform },
   { id: "tech-divider-core", label: "▸ Layer 1 · Core Apps", component: TechSlideLayerDivider, dividerProps: dividerProps.core },
-  { id: "tech-slide-4a", label: "SafetyManager365", component: TechSlide4aSafetyManager },
-  { id: "tech-slide-4b", label: "ContentManager365", component: TechSlide4bContentManager },
-  { id: "tech-slide-4c", label: "TrainingManager365", component: TechSlide4cTrainingManager },
+  { id: "tech-slide-4a", label: "L1 · SafetyManager365", component: TechSlide4aSafetyManager },
+  { id: "tech-slide-4b", label: "L1 · ContentManager365", component: TechSlide4bContentManager },
+  { id: "tech-slide-4c", label: "L1 · TrainingManager365", component: TechSlide4cTrainingManager },
   { id: "tech-divider-data", label: "▸ Layer 2 · Data Foundation", component: TechSlideLayerDivider, dividerProps: dividerProps.data },
-  { id: "tech-slide-data-foundation", label: "Data Foundation", component: TechSlideDataFoundation },
+  { id: "tech-slide-data-foundation", label: "L2 · Data Foundation", component: TechSlideDataFoundation },
   // Intelligence & Orchestration
   { id: "tech-divider-intelligence", label: "▸ Layer 3 · Intelligence & Orchestration", component: TechSlideLayerDivider, dividerProps: dividerProps.intelligence },
-  { id: "tech-slide-coanalyst", label: "Insights & Intelligence", component: TechSlide7CoAnalyst },
-  { id: "tech-slide-insights", label: "Recommendations & Prescriptive Actions", component: TechSlideInsights },
-  { id: "tech-slide-automation", label: "Automation", component: TechSlideAutomation },
-  { id: "tech-slide-tiers-vs-ai", label: "Tiers vs Generic AI", component: TechSlideTiersVsAI },
+  { id: "tech-slide-coanalyst", label: "L3 · Insights & Intelligence", component: TechSlide7CoAnalyst },
+  { id: "tech-slide-insights", label: "L3 · Recommendations & Prescriptive Actions", component: TechSlideInsights },
+  { id: "tech-slide-automation", label: "L3 · Automation", component: TechSlideAutomation },
+  { id: "tech-slide-tiers-vs-ai", label: "L3 · Tiers vs Generic AI", component: TechSlideTiersVsAI },
   { id: "tech-divider-mobile", label: "▸ Layer 4 · Unified Mobile", component: TechSlideLayerDivider, dividerProps: dividerProps.mobile },
-  { id: "tech-slide-mobile", label: "Unified Mobile", component: TechSlideMobile },
+  { id: "tech-slide-mobile", label: "L4 · Unified Mobile", component: TechSlideMobile },
   // Delivery & operating model
   { id: "tech-divider-dtop", label: "▸ Layer 5 · DTOP", component: TechSlideLayerDivider, dividerProps: dividerProps.dtop },
-  { id: "tech-slide-5", label: "DTOP Operating Model", component: TechSlide5DTOP },
+  { id: "tech-slide-5", label: "L5 · DTOP", component: TechSlide5DTOP },
   { id: "tech-slide-use-cases", label: "Use Cases", component: TechSlideUseCases },
   { id: "tech-slide-6", label: "Platform Integrations", component: TechSlide6PlatformIntegrations },
   // Value & close
