@@ -4,6 +4,7 @@ import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useCoAnalystNarration } from "@/hooks/useCoAnalystNarration";
 import { DeckProvider } from "@/contexts/DeckContext";
+import BackToDeckButton from "@/components/shared/BackToDeckButton";
 import CASlide0Title from "@/components/coanalyst-slides/CASlide0Title";
 import CASlide1ExecutiveSummary from "@/components/coanalyst-slides/CASlide1ExecutiveSummary";
 import CASlide2CategoryNarrative from "@/components/coanalyst-slides/CASlide2CategoryNarrative";
