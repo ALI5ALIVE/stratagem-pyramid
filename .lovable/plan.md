@@ -1,92 +1,54 @@
 
 
-## Overlay DTOP onto Regulation Management — consistently across summary + playbook
+## Status check — PPTX export vs recent web updates
 
-### Why
+Short answer: **no, the PPTX export is partially behind the web version.** Here's the audit and the fix.
 
-The Regulation Management story today doesn't visibly map to the platform's master operating model (Detect → Trigger → Orchestrate → Prove). That makes it feel like a standalone product rather than a first-class expression of DTOP. Fixing this in two places — the **Tech Deep Dive summary slide** and the **RM Playbook itself** — gives one consistent story.
+### What's already in the PPTX ✅
 
-### The DTOP overlay for Regulation Management
+- Maturity Roadmap split into 2 slides (Curve & Behaviour + Results & Value).
+- Logo proportions fixed (true 9.65:1 ratio) and light/dark variant logos plumbed through.
+- Platform Snapshot, layer dividers, all core architecture/intelligence slides.
 
-Map RM's existing capabilities to the four DTOP steps. This becomes the canonical mapping reused everywhere:
+### What's missing in the PPTX ❌
 
-| DTOP step | RM expression | Source data |
-|---|---|---|
-| **Detect** (sky) | Continuous monitoring of EASA/FAA/ICAO/CAA changes; structured regulation ingestion | Layer 1 + Pillar "Proactive Change Readiness" |
-| **Trigger** (amber) | Automated impact alerts when a regulation change hits a linked procedure / syllabus / risk assessment | Pillar "Connected Cross-System Intelligence" |
-| **Orchestrate** (purple) | Cascade updates into ContentManager365, TrainingManager365, SafetyManager365 — the right people get the right action | Layer 2 |
-| **Prove** (emerald) | Real-time compliance dashboard, audit-ready evidence, CoAnalyst impact reports | Pillar "Real-Time Compliance Visibility" + Layer 3 |
+The Regulation Management summary slide (`regulationSummarySpec` in `buildTechnicalDeck.ts`, lines 2640–2731) still uses the **old layout**: elevator-pitch banner → 3-problems × 3-pillars grid → footer. It does **not** include the DTOP overlay strip we added to the web slide (`TechSlideRegulationSummary.tsx`).
 
-### 1. Tech Deep Dive — `TechSlideRegulationSummary.tsx`
+The data is already imported in the web component (`dtopMapping` from `regulationManagementPlaybook.ts`), but the PPTX builder doesn't import it or render it.
 
-Currently: 2-column "Problem | Value Pillars" with footer. No DTOP.
+### Fix — bring PPTX into parity with the web slide
 
-Change: insert a **slim DTOP strip** between the elevator-pitch banner and the two-column grid. 4 equal cards, one per step, each with:
-- Coloured letter chip (`D` `T` `O` `P`) using the canonical DTOP colours (sky/amber/purple/emerald — same as `OpsSlide4DTOP`, `ExecSlide3DTOP`, `TechSlide5DTOP`)
-- Step label
-- One-line RM-specific expression (~12 words) from the mapping above
+Edit one file: `src/exporters/pptx/buildTechnicalDeck.ts`
 
-Keep the existing problem/pillars grid below it but reduce to 2 problems + 2 pillars to make room (currently 3+3). Footer + DeepDiveLink unchanged.
-
-Net effect: the summary slide now reads "here's the problem → here's how DTOP solves it for regulation → here are the value pillars → deep dive" in one frame.
-
-### 2. RM Playbook — new dedicated DTOP slide
-
-Insert a new slide between the existing **Slide 4 (Value Pillars)** and **Slide 5 (How It Works)** so the narrative becomes:
-
-```
-Title → Overview → Problem → Positioning → Value Pillars
-   → DTOP Mapping ← NEW
-→ How It Works (3 layers) → Use Cases → Personas → Commercial → Objections → Roadmap
-```
-
-**New file**: `src/components/regmgmt-slides/RMSlide4bDTOP.tsx`
-
-Layout:
-- `SlideContainer` titled **"Regulation Management on the DTOP Operating Model"**, subtitle **"How always-current regulation data flows through Detect → Trigger → Orchestrate → Prove"**
-- 4-column grid (responsive to 2×2 on smaller widths), each column = one DTOP step:
-  - Letter chip (large, coloured)
-  - Step label
-  - **What happens** (2-3 sentences specific to RM)
-  - **Connected modules** (small pill row, e.g., for Orchestrate: ContentManager365 · TrainingManager365 · SafetyManager365)
-  - **Evidence** line (one outcome metric or audit artefact)
-- Bottom callout: *"Every regulatory change generates a complete audit trail — from detection to closure — across every connected module."*
-
-**Data source**: Add a new exported constant `dtopMapping` to `src/data/regulationManagementPlaybook.ts` with the 4-step structure above. Keeps the slide thin and re-usable.
-
-**Wire-up**:
-- `src/pages/RegulationManagementPlaybook.tsx` — import `RMSlide4bDTOP`, add to `slides` array (`{ id: "rm-dtop", label: "DTOP Mapping" }` between value-pillars and how-it-works), and render it in the JSX in the same position.
-
-### 3. RM Playbook — light DTOP visual cue on existing slides
-
-Two small additions for narrative consistency, not new slides:
-
-- **`RMSlide5HowItWorks.tsx`** — add a tiny DTOP-step badge in the top-right of each of the 3 layer cards (`Layer 1 → Detect`, `Layer 2 → Orchestrate`, `Layer 3 → Trigger + Prove`) so the reader sees the layer-to-DTOP mapping. Single coloured pill, no layout change.
-- **`RMSlide6UseCases.tsx`** — replace the "Scenario / Outcome" pair inside each card with a 4-line micro-DTOP arc (`D:` short / `T:` short / `O:` short / `P:` short), reusing the use-case copy already in `regulationManagementPlaybook.ts` (no copy rewrite — split existing scenario+outcome into 4 beats). This mirrors the standardized vertical DTOP timeline used in `OpsSlide6NearTermUseCases` and elsewhere — and matches the **Use Case Timeline Standardization** memory.
-
-### 4. Out of scope
-
-- No copy rewrites of Pillars, Personas, Objections, Roadmap, or Commercial slides.
-- No PPTX exporter changes (RM playbook isn't currently in the PPTX export pipeline).
-- No changes to the canonical DTOP colour tokens.
-- Tech deck DTOP slide (`TechSlide5DTOP`) is unchanged — it remains the master DTOP definition; the RM summary just *applies* it.
+1. **Import `dtopMapping`** alongside the existing `regulationManagementPlaybook` imports (around line 44).
+2. **Insert a 4-card DTOP strip** between the elevator-pitch banner and the problem/pillars columns, mirroring the web layout:
+   - 4 equal cards across the full content width (~3.0" wide each, 0.95" tall).
+   - Each card: coloured letter badge (`D`/`T`/`O`/`P`) using canonical DTOP hex tokens (sky `#0EA5E9`, amber `#F59E0B`, purple `#A855F7`, emerald `#10B981`) → step label → first sentence of `whatHappens`.
+   - Use existing `addCard` + `addIconBadge` primitives — no new helpers.
+3. **Trim the problem/pillar grid to 2+2** (matches the web slide change) so layout stays balanced. Replace `slice(0, 3)` with `slice(0, 2)` on both `rmPainPoints` and `rmValuePillars`, and recompute `rowH` over 2 rows.
+4. **Recompute vertical math**: banner (1.15") + DTOP strip (0.95" + 0.2 gap) + columns + footer (0.55") all fit within `CONTENT_TOP → CONTENT_BOTTOM`.
 
 ### Files touched
 
-**New**
-- `src/components/regmgmt-slides/RMSlide4bDTOP.tsx`
-
 **Edited**
-- `src/data/regulationManagementPlaybook.ts` — add `dtopMapping` constant + interface.
-- `src/pages/RegulationManagementPlaybook.tsx` — register and render the new slide.
-- `src/components/regmgmt-slides/RMSlide5HowItWorks.tsx` — add DTOP badge per layer.
-- `src/components/regmgmt-slides/RMSlide6UseCases.tsx` — restructure card body to a 4-step DTOP micro-timeline.
-- `src/components/tech-slides/TechSlideRegulationSummary.tsx` — insert DTOP strip; trim problem/pillars to 2+2.
+- `src/exporters/pptx/buildTechnicalDeck.ts` — `regulationSummarySpec` only.
 
 **Not touched**
-- Other RM slides, all other decks, PPTX exporters, narration data.
+- Any web slides (already correct).
+- Any other PPTX spec.
+- `pptxBrand.ts` (uses existing primitives).
 
 ### QA
 
-After implementation: scroll the RM playbook end-to-end and confirm DTOP appears (a) explicitly on its own slide, (b) as a layer-mapping badge on How It Works, (c) as the structure of each Use Case card, and (d) in the Tech Deep Dive summary. Same four colours used everywhere.
+After the change: build the Technical Deep Dive PPTX, render the Regulation Management slide to image at 150 DPI, and verify:
+1. The 4 DTOP cards sit between the banner and the problem/pillar grid, evenly spaced.
+2. Letter badges show the correct DTOP colours and don't collide with the step label.
+3. Problem and pillar columns each show 2 cards, no clipping, balanced height.
+4. Footer ("Full deep dive: Regulation Management Playbook →") still anchors above the page chrome.
+
+### Out of scope
+
+- No copy rewrites (uses existing `dtopMapping[].whatHappens` text from the playbook data).
+- No new RM slides in the PPTX (the playbook itself isn't exported; only the summary slide is in the Tech deck).
+- No changes to the maturity roadmap or logo work — those are already shipped correctly.
 
