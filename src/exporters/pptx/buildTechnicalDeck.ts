@@ -88,6 +88,12 @@ const slideSpecs: SlideSpec[] = [
     label: "Title",
     build: (slide, ctx) => {
       chrome(slide, ctx);
+      // Subtle wordmark watermark (very low contrast)
+      slide.addText("comply365", {
+        x: 0.5, y: 4.0, w: W - 1, h: 1.6,
+        fontFace: PPTX_BRAND.font.display, fontSize: 130, bold: true,
+        color: C.wordmarkInk, align: "center",
+      });
       slide.addText("THE COMPLETE PLATFORM STORY", {
         x: 0.5, y: 1.9, w: 12.3, h: 0.4,
         fontFace: PPTX_BRAND.font.body, fontSize: 12, bold: true, color: C.primary, charSpacing: 6, align: "center",
@@ -107,15 +113,15 @@ const slideSpecs: SlideSpec[] = [
         },
       );
       const stats = [
-        { v: "550+", l: "Airlines Worldwide" },
-        { v: "~2.5M", l: "Users" },
-        { v: "6", l: "Continents" },
+        { v: "550+", l: "Airlines Worldwide", c: C.primary },
+        { v: "~2.5M", l: "Users", c: C.accent },
+        { v: "6", l: "Continents", c: C.violet },
       ];
       const tileW = 2.4, tileH = 0.95, gap = 0.3;
       const totalW = stats.length * tileW + (stats.length - 1) * gap;
       let x = (W - totalW) / 2;
       stats.forEach((s) => {
-        addStatTile(slide, x, 5.65, tileW, tileH, s.v, s.l);
+        addBrandStatBlock(slide, x, 5.65, tileW, tileH, s.v, s.l, s.c);
         x += tileW + gap;
       });
       addDtopPills(slide, 0.7, 6.85 - 0.55, W - 1.4);
