@@ -6,7 +6,6 @@ import { useExecPitch2Narration } from "@/hooks/useExecPitch2Narration";
 import ExecSlide0Title from "@/components/exec-slides/ExecSlide0Title";
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
 import TechSlide2IndustryChallenge from "@/components/tech-slides/TechSlide2IndustryChallenge";
-import Slide3OperatingModel from "@/components/slides/Slide3OperatingModel";
 import TechSlide4Platform from "@/components/tech-slides/TechSlide4Platform";
 import TechSlideLayerDivider from "@/components/tech-slides/TechSlideLayerDivider";
 import TechSlide7CoAnalyst from "@/components/tech-slides/TechSlide7CoAnalyst";
@@ -19,6 +18,7 @@ import TechSlideWhyComply from "@/components/tech-slides/TechSlideWhyComply";
 import TechSlide6Capabilities from "@/components/tech-slides/TechSlide6Capabilities";
 import TechSlideDataFoundation from "@/components/tech-slides/TechSlideDataFoundation";
 import TechSlideMobile from "@/components/tech-slides/TechSlideMobile";
+import ExecCoreAppsSummary from "@/components/exec-slides/ExecCoreAppsSummary";
 
 const dividerProps = {
   core: {
@@ -67,10 +67,10 @@ const slides = [
   { id: "exec3-slide-0", label: "Title", component: ExecSlide0Title },
   { id: "exec3-slide-1", label: "Strategic Shift", component: TechSlide1StrategicShift },
   { id: "exec3-slide-2", label: "Industry Challenge", component: TechSlide2IndustryChallenge },
-  { id: "exec3-slide-3", label: "DTOP Operating Model", component: Slide3OperatingModel },
   { id: "exec3-slide-4", label: "The Platform", component: TechSlide4Platform },
   { id: "exec3-divider-core", label: "▸ Core Apps", component: TechSlideLayerDivider, dividerProps: dividerProps.core },
   { id: "exec3-slide-core", label: "Core Operational Apps", component: TechSlide6Capabilities },
+  { id: "exec3-slide-core-modules", label: "Content · Safety · Training", component: ExecCoreAppsSummary },
   { id: "exec3-divider-data", label: "▸ Data Foundation", component: TechSlideLayerDivider, dividerProps: dividerProps.data },
   { id: "exec3-slide-data", label: "Operational Data Foundation", component: TechSlideDataFoundation },
   { id: "exec3-divider-intelligence", label: "▸ Intelligence Layer", component: TechSlideLayerDivider, dividerProps: dividerProps.intelligence },
