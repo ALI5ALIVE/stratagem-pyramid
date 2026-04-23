@@ -17,6 +17,14 @@ interface DeckCard {
 
 const pitchDecks: DeckCard[] = [
   {
+    title: "Customer Overview",
+    description: "Customer-facing · Sales-led. 10-slide narrative from today's reality to the first 90 days. No architecture, no acronyms.",
+    href: "/customer-overview",
+    icon: Presentation,
+    badge: "10 slides · ~20 min",
+    accent: "from-primary to-comply-teal",
+  },
+  {
     title: "Executive Pitch",
     description: "Strategic Before & After narrative. From fragmentation to intelligent operations.",
     href: "/pitch-executive-2",

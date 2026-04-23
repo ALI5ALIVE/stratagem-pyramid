@@ -32,6 +32,7 @@ import PlatformPlaybook from "./pages/PlatformPlaybook";
 import SalesEnablement from "./pages/SalesEnablement";
 import AuthPage from "./pages/Auth";
 import ReviewDashboard from "./pages/ReviewDashboard";
+import CustomerOverview from "./pages/CustomerOverview";
 import { AuthProvider } from "./contexts/AuthContext";
 
 
@@ -74,6 +75,7 @@ const App = () => (
             <Route path="/platform-playbook" element={<PlatformPlaybook />} />
             <Route path="/sales-enablement" element={<SalesEnablement />} />
             <Route path="/review" element={<ReviewDashboard />} />
+            <Route path="/customer-overview" element={<CustomerOverview />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
