@@ -246,7 +246,7 @@ const slideSpecs: SlideSpec[] = [
       const max = sorted[0]?.annual || 1;
 
       const wfTop = pY + 1.15;
-      const wfBottom = CONTENT_BOTTOM - 1.05;
+      const wfBottom = CONTENT_BOTTOM - 1.45;
       const rowH = (wfBottom - wfTop) / sorted.length;
       const labelW = 2.2;
       const sevW = 0.7;
@@ -275,18 +275,41 @@ const slideSpecs: SlideSpec[] = [
       });
 
       // Total banner
-      const tY = CONTENT_BOTTOM - 0.85;
+      const tY = CONTENT_BOTTOM - 1.25;
       slide.addShape("roundRect", {
-        x: 0.5, y: tY, w: W - 1, h: 0.7,
+        x: 0.5, y: tY, w: W - 1, h: 0.55,
         fill: { color: "1F0A12" }, line: { color: C.danger, width: 1 }, rectRadius: 0.1,
       });
       slide.addText(`${fmtMoney(total)}`, {
-        x: 0.7, y: tY + 0.08, w: 2, h: 0.55,
-        fontFace: PPTX_BRAND.font.display, fontSize: 22, bold: true, color: C.danger, valign: "middle",
+        x: 0.7, y: tY, w: 2, h: 0.55,
+        fontFace: PPTX_BRAND.font.display, fontSize: 20, bold: true, color: C.danger, valign: "middle",
       });
       slide.addText("per year — total annual cost of operational fragmentation across 8 costed use cases", {
-        x: 2.7, y: tY + 0.08, w: W - 3.2, h: 0.55,
+        x: 2.7, y: tY, w: W - 3.2, h: 0.55,
         fontFace: PPTX_BRAND.font.body, fontSize: 11, color: C.muted, valign: "middle",
+      });
+      // Citation chip strip
+      const citY = tY + 0.65;
+      slide.addText("SOURCES", {
+        x: 0.5, y: citY, w: 0.9, h: 0.25,
+        fontFace: PPTX_BRAND.font.body, fontSize: 8, bold: true, color: C.subtle, charSpacing: 3, valign: "middle",
+      });
+      const citationSources = ["EUROCONTROL", "IATA", "A4A", "SITA", "WTW", "Flight Safety Foundation", "FAA", "Oliver Wyman"];
+      const chipH = 0.25;
+      const chipGap = 0.06;
+      let cx = 1.4;
+      citationSources.forEach((src) => {
+        const chipW = Math.max(0.8, src.length * 0.075 + 0.2);
+        if (cx + chipW > W - 0.5) return;
+        slide.addShape("roundRect", {
+          x: cx, y: citY, w: chipW, h: chipH,
+          fill: { color: C.surfaceAlt }, line: { color: C.hairline, width: 0.5 }, rectRadius: chipH / 2,
+        });
+        slide.addText(src, {
+          x: cx, y: citY, w: chipW, h: chipH,
+          fontFace: PPTX_BRAND.font.body, fontSize: 7.5, color: C.muted, align: "center", valign: "middle",
+        });
+        cx += chipW + chipGap;
       });
     },
   },
