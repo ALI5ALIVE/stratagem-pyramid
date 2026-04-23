@@ -4,31 +4,31 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { useTechPitchNarration } from "@/hooks/useTechPitchNarration";
 import { DeckProvider } from "@/contexts/DeckContext";
 
-// Act 1 — Frame the problem
+// Frame the problem
 import TechSlide0Title from "@/components/tech-slides/TechSlide0Title";
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
 import TechSlide2IndustryChallenge from "@/components/tech-slides/TechSlide2IndustryChallenge";
 
-// Act 2 — Architecture
+// Architecture
 import TechSlide4Platform from "@/components/tech-slides/TechSlide4Platform";
 import TechSlide4aSafetyManager from "@/components/tech-slides/TechSlide4aSafetyManager";
 import TechSlide4bContentManager from "@/components/tech-slides/TechSlide4bContentManager";
 import TechSlide4cTrainingManager from "@/components/tech-slides/TechSlide4cTrainingManager";
 import TechSlideDataFoundation from "@/components/tech-slides/TechSlideDataFoundation";
 
-// Act 3 — Intelligence layer
+// Intelligence & Orchestration
 import TechSlide7CoAnalyst from "@/components/tech-slides/TechSlide7CoAnalyst";
 import TechSlideInsights from "@/components/tech-slides/TechSlideInsights";
 import TechSlideAutomation from "@/components/tech-slides/TechSlideAutomation";
 import TechSlideTiersVsAI from "@/components/tech-slides/TechSlideTiersVsAI";
 
-// Act 4 — Delivery & operating model
+// Delivery & operating model
 import TechSlideMobile from "@/components/tech-slides/TechSlideMobile";
 import TechSlide5DTOP from "@/components/tech-slides/TechSlide5DTOP";
 import TechSlideUseCases from "@/components/tech-slides/TechSlideUseCases";
 import TechSlide6PlatformIntegrations from "@/components/tech-slides/TechSlide6PlatformIntegrations";
 
-// Act 5 — Value & close
+// Value & close
 import TechSlideCalculator from "@/components/tech-slides/TechSlideCalculator";
 import TechSlide14MaturityRoadmap from "@/components/tech-slides/TechSlide14MaturityRoadmap";
 import TechSlide15Roadmap2026 from "@/components/tech-slides/TechSlide15Roadmap2026";
@@ -37,6 +37,8 @@ import TechSlide18Partnership from "@/components/tech-slides/TechSlide18Partners
 
 // Layer dividers — one per architecture layer, slotted before each layer's deep-dive group
 import TechSlideLayerDivider from "@/components/tech-slides/TechSlideLayerDivider";
+// Journey-ahead dividers — for non-architectural roadmap sections
+import TechSlideJourneyDivider from "@/components/tech-slides/TechSlideJourneyDivider";
 
 const dividerProps = {
   core: {
