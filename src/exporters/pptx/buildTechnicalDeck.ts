@@ -325,7 +325,7 @@ const slideSpecs: SlideSpec[] = [
       const layers = [
         { tag: "LAYER 5", title: "DTOP — The Way of Working", desc: "Detect, Trigger, Orchestrate, Prove — wraps the whole stack.", color: C.prove },
         { tag: "LAYER 4", title: "Unified Mobile", desc: "One trusted shell for the frontline — Content, Training, Safety.", color: C.violet },
-        { tag: "LAYER 3", title: "Intelligence & Orchestration", desc: "CoAnalyst · Insights & Recommendations · Automation.", color: C.amber },
+        { tag: "LAYER 3", title: "Intelligence & Orchestration", desc: "Insights & Intelligence · Recommendations & Prescriptive Actions · Automation.", color: C.amber },
         { tag: "LAYER 2", title: "Operational Data Foundation", desc: "One unified data lake — the substrate every layer reasons over.", color: C.cyan },
         { tag: "LAYER 1", title: "Core Operational Apps", desc: "ContentManager365 · TrainingManager365 · SafetyManager365.", color: C.blue },
       ];
@@ -444,10 +444,10 @@ slideSpecs.push(
         { label: "Hazard Register", desc: "Centralised hazard identification, assessment, and mitigation tracking" },
         { label: "Risk Assessment", desc: "Quantitative risk matrices with trend analysis and threshold alerts" },
       ],
-      flowTitle: "How CoAnalyst Activates Safety Data",
+      flowTitle: "How Insights & Intelligence Activates Safety Data",
       flow: [
         { step: "Safety Events", desc: "Reports, operational data, audit findings flow in" },
-        { step: "Pattern Detection", desc: "CoAnalyst identifies recurring themes across 4,000+ categories" },
+        { step: "Pattern Detection", desc: "Insights & Intelligence identifies recurring themes across 4,000+ categories" },
         { step: "Risk Prediction", desc: "Proactive alerts surface emerging hazards before incidents" },
         { step: "Recommended Action", desc: "Automated triggers to training, procedures and management review" },
       ],
@@ -637,12 +637,12 @@ slideSpecs.push(
     },
   },
 
-  // ─── 8. CO-ANALYST ────────────────────────────────────────────
+  // ─── 8. INSIGHTS & INTELLIGENCE ───────────────────────────────
   {
-    label: "CoAnalyst",
+    label: "Insights & Intelligence",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Act 3 · Intelligence layer", "CoAnalyst — Intelligence & Orchestration",
+      header(slide, "Act 3 · Intelligence layer", "Insights & Intelligence — Intelligence & Orchestration",
         "From Reports to Intelligence. From Events to Control.");
 
       // Master message banner
@@ -689,13 +689,13 @@ slideSpecs.push(
     },
   },
 
-  // ─── 9. INSIGHTS ──────────────────────────────────────────────
+  // ─── 9. RECOMMENDATIONS & PRESCRIPTIVE ACTIONS ───────────────
   {
-    label: "Insights & Recommendations",
+    label: "Recommendations & Prescriptive Actions",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Act 3 · Intelligence layer", "Insights & Recommended Actions",
-        "From data to intelligence to action — proactive signals across the platform");
+      header(slide, "Act 3 · Intelligence layer", "Recommendations & Prescriptive Actions on the Operational Performance Platform",
+        "From insight to prescriptive action — proactive signals across the platform");
 
       const caps = [
         { title: "Pattern Detection", desc: "Cross-domain correlation surfaces patterns no single dashboard would catch — linking training gaps to safety events to procedural ambiguity.", color: C.amber },
@@ -1024,7 +1024,7 @@ slideSpecs.push(
       const tblData = [
         [
           { text: "Capability", options: { bold: true, color: C.subtle, fontSize: 10, fill: { color: C.surfaceAlt } } },
-          { text: "CoAnalyst", options: { bold: true, color: C.primary, fontSize: 10, align: "center" as const, fill: { color: C.surfaceAlt } } },
+          { text: "Insights & Intelligence", options: { bold: true, color: C.primary, fontSize: 10, align: "center" as const, fill: { color: C.surfaceAlt } } },
           { text: "Generic AI", options: { bold: true, color: C.subtle, fontSize: 10, align: "center" as const, fill: { color: C.surfaceAlt } } },
         ],
         ...rows.map((r) => [
@@ -1081,7 +1081,7 @@ slideSpecs.push(
       // Quote
       const qY = bY + bH - 0.45;
       addCard(slide, rx, qY, rw, 0.45, { fill: C.primarySoft, border: C.primary });
-      slide.addText('"Generative AI reads reports. CoAnalyst understands aviation operations."', {
+      slide.addText('"Generative AI reads reports. Insights & Intelligence understands aviation operations."', {
         x: rx + 0.1, y: qY, w: rw - 0.2, h: 0.45,
         fontFace: PPTX_BRAND.font.body, fontSize: 10, italic: true, color: C.ink, align: "center", valign: "middle",
       });
@@ -1464,7 +1464,7 @@ slideSpecs.push(
           items: [
             "✓ Regulation Database Integration with ContentManager365",
             "✓ ContentManager365 ↔ TrainingManager365 Integration",
-            "Safety report auto-categorisation (CoAnalyst)",
+            "Safety report auto-categorisation",
             "Audit evidence package generation",
           ],
         },
@@ -1474,7 +1474,7 @@ slideSpecs.push(
             "Safety Report Submissions within ContentManager365",
             "UI Unification across all solutions",
             "Platform PoCs with early adopter airlines",
-            "CoAnalyst proactive pattern detection (smoke & fumes, fatigue)",
+            "Proactive pattern detection (smoke & fumes, fatigue)",
             "Executive outcome dashboards",
           ],
         },
@@ -1576,7 +1576,7 @@ slideSpecs.push(
       // 3 differentiators
       const diffs = [
         { title: "Connected Foundation", desc: "One data model, three core apps, one intelligence layer. Content, training and safety reason together — not in parallel.", color: C.sky },
-        { title: "Domain-Trained Intelligence", desc: "CoAnalyst built on aviation data since 2023. Not a generic AI with an aviation wrapper — purpose-built for the operational corpus.", color: C.primary },
+        { title: "Domain-Trained Intelligence", desc: "Insights & Intelligence built on aviation data since 2023. Not a generic AI with an aviation wrapper — purpose-built for the operational corpus.", color: C.primary },
         { title: "Proof by Design", desc: "Every action logged automatically. The audit trail is a byproduct, not a report. Closed loop — Detect, Trigger, Orchestrate, Prove.", color: C.prove },
       ];
       const dY = oY + oH + 0.25;
@@ -1779,7 +1779,7 @@ export async function buildTechnicalDeck(opts: BuildOpts = {}): Promise<Blob> {
   //   3 → Foundations, 8 → Intelligence, 16 → Outcomes, 17 → Roadmap
   const dividerBeforeIndex: Record<number, { eyebrow: string; title: string; subtitle: string }> = {
     3: { eyebrow: "Act 2", title: "Foundations", subtitle: "Architecture, data and the core operational apps." },
-    8: { eyebrow: "Act 3", title: "Intelligence", subtitle: "CoAnalyst, Insights, Automation and the unified mobile shell." },
+    8: { eyebrow: "Act 3", title: "Intelligence", subtitle: "Insights & Intelligence, Recommendations & Prescriptive Actions, and Automation across the unified mobile shell." },
     16: { eyebrow: "Act 5", title: "Outcomes", subtitle: "Line of sight from costed use case to executive outcome." },
     17: { eyebrow: "Act 5", title: "Roadmap", subtitle: "Maturity, phased delivery, and the partnership model." },
   };
