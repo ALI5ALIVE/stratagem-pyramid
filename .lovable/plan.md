@@ -1,89 +1,54 @@
 
 
-## Executive Pitch 3 — Expand the Platform Story Into Per-Layer Summary Slides
+## Add expanded "Why DTOP exists" + "What DTOP is" content to the 1-pager PDF
 
-Right now Pitch 3 introduces the 5-layer platform on slide 5 (`TechSlide4Platform`) and then jumps straight to the Intelligence and DTOP layers — skipping Core Apps, Data Foundation, and Mobile. The deck reads as if the platform = Intelligence + DTOP, which undersells the foundation and overweights the top layers.
+### What's there today (`src/components/print/DTOPPrintablePage.tsx`)
 
-You're right: the executive arc lands harder if **every layer gets its own summary slide**, with Core Apps framed as **table stakes** and the four upper layers framed as **the new platform capabilities** that differentiate Comply365.
+1. Title + tagline
+2. **Pipeline** — 4 D/T/O/P cards (hero)
+3. **Why It Exists** — single big "$25–35B" stat + one-line label
+4. **Proof** — 3 use case metrics
+5. **What It Unlocks** — 4 value tiles
+6. Footer
 
-### New narrative arc (18 slides)
+Missing: an explicit **definition** of DTOP, and the Why section omits the 6 specific problems from `whyDTOPExists.problems`.
 
-```text
-ACT 1 — The shift                ACT 2 — The platform, layer by layer       ACT 3 — The proof
-1. Title                         5. Platform Overview (5-layer map)         15. Use Cases in Action
-2. Strategic Shift               6. ▸ Layer 1 divider — Core Apps           16. Maturity Roadmap
-3. Industry Challenge            7. Core Apps (table stakes)                17. Customer Outcomes
-4. The DTOP Operating Model      8. ▸ Layer 2 divider — Data Foundation     18. Why Comply365 + CTA
-                                 9. Operational Data Foundation
-                                10. ▸ Layer 3 divider — Intelligence
-                                11. Insights & Intelligence
-                                12. ▸ Layer 4 divider — Mobile
-                                13. Unified Mobile Experience
-                                14. ▸ Layer 5 divider — DTOP
-                                14b. DTOP — System of Work
-                                14c. The Transformation
-```
+### Plan
 
-(Final numbering will be sequential 1–18 in the file; the chapter rhythm above just shows the structure.)
+Edit only `src/components/print/DTOPPrintablePage.tsx`. Restructure into a tighter single-page A4-landscape layout:
 
-### Slide-by-slide composition
+1. **New "What DTOP Is" band** — directly under the title, before the pipeline:
+   - One-sentence definition: *"DTOP is the closed-loop operating model that connects detection of operational signals to provable outcomes — across Safety, Content, and Training, in one continuous workflow."*
+   - 3 short qualifier chips on the right: **Closed-loop** · **Cross-module** · **Auditable by design**
 
-| # | Slide | Component reused | Layer |
-|---|---|---|---|
-| 1 | Title | `ExecSlide0Title` | — |
-| 2 | Strategic Shift | `TechSlide1StrategicShift` | — |
-| 3 | Industry Challenge | `TechSlide2IndustryChallenge` | — |
-| 4 | DTOP Operating Model | `Slide3OperatingModel` | — |
-| 5 | Platform Overview (5-layer map) | `TechSlide4Platform` | All |
-| 6 | ▸ Core Apps divider — *"Table stakes — the system of record"* | `TechSlideLayerDivider` (new `core` props) | 1 |
-| 7 | Core Operational Apps summary | `TechSlide6Capabilities` | 1 |
-| 8 | ▸ Data Foundation divider | `TechSlideLayerDivider` (new `data` props) | 2 |
-| 9 | Operational Data Foundation | `TechSlideDataFoundation` | 2 |
-| 10 | ▸ Intelligence divider (existing) | `TechSlideLayerDivider` (intelligence) | 3 |
-| 11 | Insights & Intelligence | `TechSlide7CoAnalyst` | 3 |
-| 12 | ▸ Mobile divider — *"One trusted shell for the frontline"* | `TechSlideLayerDivider` (new `mobile` props) | 4 |
-| 13 | Unified Mobile Experience | `TechSlideMobile` | 4 |
-| 14 | ▸ DTOP divider (existing) | `TechSlideLayerDivider` (dtop) | 5 |
-| 15 | DTOP — System of Work | `TechSlide5DTOP` | 5 |
-| 16 | The Transformation | `Slide4Transformation` | — |
-| 17 | Use Cases in Action | `SlideUseCases` | — |
-| 18 | Maturity Roadmap | `Slide5MaturityCurve` | — |
-| 19 | Customer Outcomes | `CustomerOutcomesSlide` | — |
-| 20 | Why Comply365 + CTA | `TechSlideWhyComply` | — |
+2. **Expand "Why It Exists"** — keep the $25–35B hero stat on the left, but on the right replace the single sentence with a compact 2×3 grid of the 6 problems from `whyDTOPExists.problems` (label in bold + 1-line detail in muted ink, ~9pt). Keeps the methodology footnote.
 
-Total: **20 slides**. (If too long for an exec, easiest trim is dropping the Maturity Roadmap or merging Transformation into Customer Outcomes — flag if you want me to keep it under 18.)
+3. **Keep Pipeline, Proof, Value tiles, Footer** as-is — these are already the strongest blocks.
 
-### Why the framing works
+4. **Re-balance vertical rhythm** — reduce Pipeline card vertical padding by ~2px and tighten the Value tiles section so the new What/Why content fits without spilling. Page stays single-sheet A4 landscape.
 
-- **Slide 5 sets the map**, then each layer gets its own divider + summary — exec sees the same structure repeat 5 times, which is memorable.
-- **Core Apps are explicitly framed as table stakes** in the divider tagline ("Every operator needs these — we built them right"), so the exec doesn't think "you're selling me a CMS." Then layers 2–5 are positioned as the *net-new platform capabilities* on top of that foundation.
-- **No new slide components** — every slide already exists in the Tech Deep Dive; we're just composing them in a tighter executive sequence and dropping the engineering-level module deep-dives (Safety/Content/Training individual slides).
+### Files touched
 
-### Implementation
+- `src/components/print/DTOPPrintablePage.tsx` — additions + Why section restructure only.
 
-**Edited only**
-- `src/pages/ExecutivePitch3.tsx`:
-  - Add three new `dividerProps` entries for `core`, `data`, `mobile` matching the existing `intelligence` / `dtop` shape.
-  - Import `TechSlide6Capabilities`, `TechSlideDataFoundation`, `TechSlideMobile`.
-  - Replace the current `slides` array with the 20-slide ordering above.
+### Not touched
 
-**Not touched**
-- `TechSlideLayerDivider` already supports all 5 `LayerKey` values (`dtop | mobile | intelligence | data | core`) — no edits needed.
-- All slide components — pure reuse.
-- Home page card — still says "14 slides"; will update the badge to **"20 slides"**.
+- `dtopPlaybook.ts` — uses existing `whyDTOPExists.problems`, `heroTagline`, etc.
+- `DTOPDownloadButton.tsx` — same component, same filename (`Comply365-DTOP-Operating-Model-Brief.pdf`).
+- `printBrand.ts` — uses existing tokens.
 
-**Also edited**
-- `src/pages/HomePage.tsx` — bump the Executive Pitch 3 card badge from `14 slides` to `20 slides`.
+### QA gate
 
-### QA
-
-- Open `/pitch-executive-3`, scroll all 20 slides, confirm each layer divider lands before its summary slide.
-- Confirm the 5 dividers visually mirror each other (same `TechSlideLayerDivider` chrome, different accent per layer).
-- Confirm Core Apps divider tagline reads as table-stakes framing, not as a sales pitch for the modules.
+After change, generate the PDF from the DTOP title slide and verify:
+1. New "What DTOP Is" band renders below the title with definition + 3 qualifier chips.
+2. "Why It Exists" shows $25–35B on the left and 6 problem cards on the right (2 rows × 3 cols).
+3. Methodology footnote still present and legible.
+4. Pipeline, Proof, Value, Footer still render — single page, no overflow.
+5. Dark theme + Comply365 brand colors preserved (sky/amber/emerald/violet step accents).
 
 ### Out of scope
 
-- New PPTX builder for the expanded Pitch 3 (existing Exec PPTX still targets the 11-slide Pitch 2 narrative).
-- Per-layer narration scripts.
-- Any edits to slide components themselves.
+- Multi-page PDF.
+- Copy rewrites of the 6 problems.
+- Changes to any web slides or playbook data.
 
