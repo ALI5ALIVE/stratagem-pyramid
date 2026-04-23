@@ -16,8 +16,27 @@ import SlideUseCases from "@/components/slides/SlideUseCases";
 import Slide5MaturityCurve from "@/components/slides/Slide5MaturityCurve";
 import CustomerOutcomesSlide from "@/components/shared/CustomerOutcomesSlide";
 import TechSlideWhyComply from "@/components/tech-slides/TechSlideWhyComply";
+import TechSlide6Capabilities from "@/components/tech-slides/TechSlide6Capabilities";
+import TechSlideDataFoundation from "@/components/tech-slides/TechSlideDataFoundation";
+import TechSlideMobile from "@/components/tech-slides/TechSlideMobile";
 
 const dividerProps = {
+  core: {
+    layerNumber: 1,
+    layerName: "Core Operational Apps",
+    tagline:
+      "Table stakes — the system of record. ContentManager365 · TrainingManager365 · SafetyManager365 — built right, so the layers above can do something new.",
+    active: "core" as const,
+    upNext: ["Core Operational Apps summary"],
+  },
+  data: {
+    layerNumber: 2,
+    layerName: "Operational Data Foundation",
+    tagline:
+      "One unified data lake — the substrate every layer above reasons over. No silos, no exports, no reconciliation.",
+    active: "data" as const,
+    upNext: ["Operational Data Foundation"],
+  },
   intelligence: {
     layerNumber: 3,
     layerName: "Intelligence & Orchestration",
@@ -25,6 +44,14 @@ const dividerProps = {
       "Insights & Intelligence · Recommendations & Prescriptive Actions · Automation — turning data into action.",
     active: "intelligence" as const,
     upNext: ["Insights & Intelligence"],
+  },
+  mobile: {
+    layerNumber: 4,
+    layerName: "Unified Mobile Experience",
+    tagline:
+      "One trusted shell for the frontline — Content, Training and Safety in a single app the crew already uses every shift.",
+    active: "mobile" as const,
+    upNext: ["Unified Mobile Experience"],
   },
   dtop: {
     layerNumber: 5,
@@ -42,15 +69,21 @@ const slides = [
   { id: "exec3-slide-2", label: "Industry Challenge", component: TechSlide2IndustryChallenge },
   { id: "exec3-slide-3", label: "DTOP Operating Model", component: Slide3OperatingModel },
   { id: "exec3-slide-4", label: "The Platform", component: TechSlide4Platform },
+  { id: "exec3-divider-core", label: "▸ Core Apps", component: TechSlideLayerDivider, dividerProps: dividerProps.core },
+  { id: "exec3-slide-core", label: "Core Operational Apps", component: TechSlide6Capabilities },
+  { id: "exec3-divider-data", label: "▸ Data Foundation", component: TechSlideLayerDivider, dividerProps: dividerProps.data },
+  { id: "exec3-slide-data", label: "Operational Data Foundation", component: TechSlideDataFoundation },
   { id: "exec3-divider-intelligence", label: "▸ Intelligence Layer", component: TechSlideLayerDivider, dividerProps: dividerProps.intelligence },
-  { id: "exec3-slide-6", label: "Insights & Intelligence", component: TechSlide7CoAnalyst },
+  { id: "exec3-slide-intelligence", label: "Insights & Intelligence", component: TechSlide7CoAnalyst },
+  { id: "exec3-divider-mobile", label: "▸ Mobile", component: TechSlideLayerDivider, dividerProps: dividerProps.mobile },
+  { id: "exec3-slide-mobile", label: "Unified Mobile", component: TechSlideMobile },
   { id: "exec3-divider-dtop", label: "▸ DTOP", component: TechSlideLayerDivider, dividerProps: dividerProps.dtop },
-  { id: "exec3-slide-8", label: "DTOP — System of Work", component: TechSlide5DTOP },
-  { id: "exec3-slide-9", label: "The Transformation", component: Slide4Transformation },
-  { id: "exec3-slide-10", label: "Use Cases in Action", component: SlideUseCases },
-  { id: "exec3-slide-11", label: "Maturity Roadmap", component: Slide5MaturityCurve },
-  { id: "exec3-slide-12", label: "Customer Outcomes", component: CustomerOutcomesSlide },
-  { id: "exec3-slide-13", label: "Why Comply365", component: TechSlideWhyComply },
+  { id: "exec3-slide-dtop", label: "DTOP — System of Work", component: TechSlide5DTOP },
+  { id: "exec3-slide-transformation", label: "The Transformation", component: Slide4Transformation },
+  { id: "exec3-slide-usecases", label: "Use Cases in Action", component: SlideUseCases },
+  { id: "exec3-slide-maturity", label: "Maturity Roadmap", component: Slide5MaturityCurve },
+  { id: "exec3-slide-outcomes", label: "Customer Outcomes", component: CustomerOutcomesSlide },
+  { id: "exec3-slide-why", label: "Why Comply365", component: TechSlideWhyComply },
 ];
 
 const ExecutivePitch3 = () => {
