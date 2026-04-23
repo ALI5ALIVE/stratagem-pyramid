@@ -2413,7 +2413,6 @@ export async function buildTechnicalDeck(opts: BuildOpts = {}): Promise<Blob> {
   const composed: SlideSpec[] = [
     // ── Frame the problem ──
     openerSpec,
-    byLabel("Title"),
     byLabel("Strategic Shift"),
     byLabel("Industry Challenge"),
     whyExistsSpec,
