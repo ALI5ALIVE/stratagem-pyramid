@@ -43,6 +43,7 @@ import {
   painPoints as rmPainPoints,
   valuePillars as rmValuePillars,
   positioning as rmPositioning,
+  dtopMapping as rmDtopMapping,
 } from "@/data/regulationManagementPlaybook";
 
 const C = PPTX_BRAND.color;
@@ -2655,8 +2656,36 @@ const regulationSummarySpec: SlideSpec = {
       fontFace: PPTX_BRAND.font.body, fontSize: 9.5, bold: true, color: C.primary, charSpacing: 3,
     });
 
+    // DTOP overlay strip — 4 cards mirroring the web slide
+    const stripY = CONTENT_TOP + bannerH + 0.2;
+    const stripH = 0.95;
+    const dtopColors: Record<string, string> = {
+      sky: "0EA5E9",
+      amber: "F59E0B",
+      purple: "A855F7",
+      emerald: "10B981",
+    };
+    const stripGap = 0.18;
+    const stripCount = rmDtopMapping.length;
+    const stripCardW = (W - 1 - stripGap * (stripCount - 1)) / stripCount;
+    rmDtopMapping.forEach((s, i) => {
+      const sx = 0.5 + i * (stripCardW + stripGap);
+      const accent = dtopColors[s.color] ?? C.primary;
+      addCard(slide, sx, stripY, stripCardW, stripH, { border: accent });
+      addIconBadge(slide, sx + 0.14, stripY + 0.14, 0.42, accent, s.step);
+      slide.addText(s.label.toUpperCase(), {
+        x: sx + 0.65, y: stripY + 0.14, w: stripCardW - 0.75, h: 0.28,
+        fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: accent, charSpacing: 3,
+      });
+      const firstSentence = (s.whatHappens.split(/\.\s+/)[0] || s.whatHappens).replace(/\.$/, "") + ".";
+      slide.addText(firstSentence, {
+        x: sx + 0.14, y: stripY + 0.5, w: stripCardW - 0.28, h: stripH - 0.55,
+        fontFace: PPTX_BRAND.font.body, fontSize: 8.5, color: C.ink, valign: "top",
+      });
+    });
+
     // Two-column problem / value pillars
-    const colTop = CONTENT_TOP + bannerH + 0.2;
+    const colTop = stripY + stripH + 0.2;
     const footerH = 0.55;
     const colBottom = CONTENT_BOTTOM - footerH - 0.2;
     const colH = colBottom - colTop;
@@ -2669,16 +2698,16 @@ const regulationSummarySpec: SlideSpec = {
       x: lx, y: colTop, w: colW, h: 0.28,
       fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.danger, charSpacing: 3,
     });
-    slide.addText("THE THREE VALUE PILLARS", {
+    slide.addText("KEY VALUE PILLARS", {
       x: rx, y: colTop, w: colW, h: 0.28,
       fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.primary, charSpacing: 3,
     });
 
     const itemsTop = colTop + 0.35;
     const itemsH = colH - 0.35;
-    const problems = rmPainPoints.slice(0, 3);
-    const pillars = rmValuePillars.slice(0, 3);
-    const rowH = (itemsH - 2 * 0.12) / 3;
+    const problems = rmPainPoints.slice(0, 2);
+    const pillars = rmValuePillars.slice(0, 2);
+    const rowH = (itemsH - 1 * 0.12) / 2;
 
     // Left — problems
     problems.forEach((p, i) => {
