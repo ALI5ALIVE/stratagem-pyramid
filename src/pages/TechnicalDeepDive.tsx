@@ -4,31 +4,31 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { useTechPitchNarration } from "@/hooks/useTechPitchNarration";
 import { DeckProvider } from "@/contexts/DeckContext";
 
-// Act 1 — Frame the problem
+// Frame the problem
 import TechSlide0Title from "@/components/tech-slides/TechSlide0Title";
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
 import TechSlide2IndustryChallenge from "@/components/tech-slides/TechSlide2IndustryChallenge";
 
-// Act 2 — Architecture
+// Architecture
 import TechSlide4Platform from "@/components/tech-slides/TechSlide4Platform";
 import TechSlide4aSafetyManager from "@/components/tech-slides/TechSlide4aSafetyManager";
 import TechSlide4bContentManager from "@/components/tech-slides/TechSlide4bContentManager";
 import TechSlide4cTrainingManager from "@/components/tech-slides/TechSlide4cTrainingManager";
 import TechSlideDataFoundation from "@/components/tech-slides/TechSlideDataFoundation";
 
-// Act 3 — Intelligence layer
+// Intelligence & Orchestration
 import TechSlide7CoAnalyst from "@/components/tech-slides/TechSlide7CoAnalyst";
 import TechSlideInsights from "@/components/tech-slides/TechSlideInsights";
 import TechSlideAutomation from "@/components/tech-slides/TechSlideAutomation";
 import TechSlideTiersVsAI from "@/components/tech-slides/TechSlideTiersVsAI";
 
-// Act 4 — Delivery & operating model
+// Delivery & operating model
 import TechSlideMobile from "@/components/tech-slides/TechSlideMobile";
 import TechSlide5DTOP from "@/components/tech-slides/TechSlide5DTOP";
 import TechSlideUseCases from "@/components/tech-slides/TechSlideUseCases";
 import TechSlide6PlatformIntegrations from "@/components/tech-slides/TechSlide6PlatformIntegrations";
 
-// Act 5 — Value & close
+// Value & close
 import TechSlideCalculator from "@/components/tech-slides/TechSlideCalculator";
 import TechSlide14MaturityRoadmap from "@/components/tech-slides/TechSlide14MaturityRoadmap";
 import TechSlide15Roadmap2026 from "@/components/tech-slides/TechSlide15Roadmap2026";
@@ -37,6 +37,8 @@ import TechSlide18Partnership from "@/components/tech-slides/TechSlide18Partners
 
 // Layer dividers — one per architecture layer, slotted before each layer's deep-dive group
 import TechSlideLayerDivider from "@/components/tech-slides/TechSlideLayerDivider";
+// Journey-ahead dividers — for non-architectural roadmap sections
+import TechSlideJourneyDivider from "@/components/tech-slides/TechSlideJourneyDivider";
 
 const dividerProps = {
   core: {
@@ -76,12 +78,27 @@ const dividerProps = {
   },
 };
 
+const journeyProps = {
+  maturity: {
+    title: "Maturity Roadmap",
+    tagline: "Where customers are today and how Comply365 moves them forward — from fragmented to predictive in 12–18 months.",
+    activeStage: "today" as const,
+    upNext: ["Maturity Roadmap"],
+  },
+  roadmap2026: {
+    title: "2026 Use Case Roadmap",
+    tagline: "Phased delivery — each phase builds on proven value, layering capability without disrupting operations.",
+    activeStage: "near" as const,
+    upNext: ["2026 Roadmap"],
+  },
+};
+
 const slides = [
-  // Act 1
+  // Frame the problem
   { id: "tech-slide-0", label: "Title", component: TechSlide0Title },
   { id: "tech-slide-1", label: "Strategic Shift", component: TechSlide1StrategicShift },
   { id: "tech-slide-2", label: "Industry Challenge", component: TechSlide2IndustryChallenge },
-  // Act 2 — Architecture
+  // Architecture
   { id: "tech-slide-4", label: "Platform Overview", component: TechSlide4Platform },
   { id: "tech-divider-core", label: "▸ Layer 1 · Core Apps", component: TechSlideLayerDivider, dividerProps: dividerProps.core },
   { id: "tech-slide-4a", label: "SafetyManager365", component: TechSlide4aSafetyManager },
@@ -89,7 +106,7 @@ const slides = [
   { id: "tech-slide-4c", label: "TrainingManager365", component: TechSlide4cTrainingManager },
   { id: "tech-divider-data", label: "▸ Layer 2 · Data Foundation", component: TechSlideLayerDivider, dividerProps: dividerProps.data },
   { id: "tech-slide-data-foundation", label: "Data Foundation", component: TechSlideDataFoundation },
-  // Act 3 — Intelligence
+  // Intelligence & Orchestration
   { id: "tech-divider-intelligence", label: "▸ Layer 3 · Intelligence & Orchestration", component: TechSlideLayerDivider, dividerProps: dividerProps.intelligence },
   { id: "tech-slide-coanalyst", label: "Insights & Intelligence", component: TechSlide7CoAnalyst },
   { id: "tech-slide-insights", label: "Recommendations & Prescriptive Actions", component: TechSlideInsights },
@@ -97,14 +114,16 @@ const slides = [
   { id: "tech-slide-tiers-vs-ai", label: "Tiers vs Generic AI", component: TechSlideTiersVsAI },
   { id: "tech-divider-mobile", label: "▸ Layer 4 · Unified Mobile", component: TechSlideLayerDivider, dividerProps: dividerProps.mobile },
   { id: "tech-slide-mobile", label: "Unified Mobile", component: TechSlideMobile },
-  // Act 4 — Delivery & operating model
+  // Delivery & operating model
   { id: "tech-divider-dtop", label: "▸ Layer 5 · DTOP", component: TechSlideLayerDivider, dividerProps: dividerProps.dtop },
   { id: "tech-slide-5", label: "DTOP Operating Model", component: TechSlide5DTOP },
   { id: "tech-slide-use-cases", label: "Use Cases", component: TechSlideUseCases },
   { id: "tech-slide-6", label: "Platform Integrations", component: TechSlide6PlatformIntegrations },
-  // Act 5 — Value & close
+  // Value & close
   { id: "tech-slide-calculator", label: "Line of Sight Calculator", component: TechSlideCalculator },
+  { id: "tech-divider-journey-maturity", label: "▸ Journey Ahead · Maturity", component: TechSlideJourneyDivider, dividerProps: journeyProps.maturity },
   { id: "tech-slide-14", label: "Maturity Roadmap", component: TechSlide14MaturityRoadmap },
+  { id: "tech-divider-journey-2026", label: "▸ Journey Ahead · 2026 Use Cases", component: TechSlideJourneyDivider, dividerProps: journeyProps.roadmap2026 },
   { id: "tech-slide-15", label: "2026 Roadmap", component: TechSlide15Roadmap2026 },
   { id: "tech-slide-why-comply", label: "Why Comply365", component: TechSlideWhyComply },
   { id: "tech-slide-18", label: "Partnership", component: TechSlide18Partnership },

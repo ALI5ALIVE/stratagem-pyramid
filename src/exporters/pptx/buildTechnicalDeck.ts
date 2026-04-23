@@ -185,6 +185,96 @@ const dividerSpec = (opts: {
   build: (slide, ctx) => buildLayerDivider(slide, ctx, opts),
 });
 
+// ─── Journey-ahead divider (non-architectural sections) ──────────
+function buildJourneyDivider(
+  slide: pptxgen.Slide,
+  ctx: { logo: string; index: number; total: number },
+  opts: { title: string; tagline: string; activeStage: "today" | "near" | "long"; upNext: string[] },
+) {
+  chrome(slide, ctx);
+  const accent = PPTX_BRAND.color.primary;
+
+  // Eyebrow
+  slide.addText("THE JOURNEY AHEAD", {
+    x: 0.6, y: 1.7, w: 8, h: 0.4,
+    fontFace: PPTX_BRAND.font.body, fontSize: 12, bold: true, color: accent, charSpacing: 6,
+  });
+  // Title
+  slide.addText(opts.title, {
+    x: 0.6, y: 2.15, w: 8, h: 1.1,
+    fontFace: PPTX_BRAND.font.display, fontSize: 44, bold: true, color: C.ink,
+  });
+  // Tagline
+  slide.addText(opts.tagline, {
+    x: 0.6, y: 3.35, w: 8, h: 1.0,
+    fontFace: PPTX_BRAND.font.body, fontSize: 14, color: C.muted, italic: true,
+  });
+  // Up next
+  slide.addText("UP NEXT IN THIS SECTION", {
+    x: 0.6, y: 4.55, w: 8, h: 0.3,
+    fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.muted, charSpacing: 4,
+  });
+  opts.upNext.forEach((item, i) => {
+    slide.addShape("rect", {
+      x: 0.6, y: 4.95 + i * 0.36, w: 0.04, h: 0.22,
+      fill: { color: accent }, line: { type: "none" },
+    });
+    slide.addText(item, {
+      x: 0.78, y: 4.88 + i * 0.36, w: 7.5, h: 0.32,
+      fontFace: PPTX_BRAND.font.body, fontSize: 13, color: C.ink,
+    });
+  });
+
+  // Right: horizontal Today → Near term → Long term stepper
+  const stages: { key: "today" | "near" | "long"; label: string }[] = [
+    { key: "today", label: "Today" },
+    { key: "near", label: "Near term" },
+    { key: "long", label: "Long term" },
+  ];
+  const stepX = 9.1;
+  const stepW = 3.7;
+  const stepY = 1.7;
+  slide.addText("WHERE WE'RE GOING", {
+    x: stepX, y: stepY - 0.45, w: stepW, h: 0.3,
+    fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.muted, charSpacing: 4, align: "right",
+  });
+  const cellW = (stepW - 0.4) / 3;
+  stages.forEach((s, i) => {
+    const isActive = s.key === opts.activeStage;
+    const x = stepX + i * (cellW + 0.2);
+    slide.addShape("roundRect", {
+      x, y: stepY, w: cellW, h: 0.9,
+      fill: { color: isActive ? accent : "1A1F2E", transparency: isActive ? 80 : 70 },
+      line: { color: isActive ? accent : C.hairline, width: isActive ? 1.5 : 0.5 },
+      rectRadius: 0.08,
+    });
+    slide.addText(s.label, {
+      x, y: stepY, w: cellW, h: 0.9,
+      fontFace: PPTX_BRAND.font.body, fontSize: 12, bold: isActive,
+      color: isActive ? accent : C.muted,
+      align: "center", valign: "middle",
+    });
+    if (i < stages.length - 1) {
+      slide.addText("→", {
+        x: x + cellW, y: stepY, w: 0.2, h: 0.9,
+        fontFace: PPTX_BRAND.font.body, fontSize: 14, color: C.muted,
+        align: "center", valign: "middle",
+      });
+    }
+  });
+}
+
+const journeyDividerSpec = (opts: {
+  label: string;
+  title: string;
+  tagline: string;
+  activeStage: "today" | "near" | "long";
+  upNext: string[];
+}): SlideSpec => ({
+  label: opts.label,
+  build: (slide, ctx) => buildJourneyDivider(slide, ctx, opts),
+});
+
 const slideSpecs: SlideSpec[] = [
   // ─── 0. TITLE ──────────────────────────────────────────────────
   {
@@ -236,7 +326,7 @@ const slideSpecs: SlideSpec[] = [
     label: "Strategic Shift",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Act 1 · Frame the problem", "The Strategic Shift",
+      header(slide, "Frame the problem", "The Strategic Shift",
         "From point tools to an Operational Performance Platform — and why the category exists now");
 
       const before = [
@@ -313,7 +403,7 @@ const slideSpecs: SlideSpec[] = [
     label: "Industry Challenge",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Act 1 · Frame the problem", "The Industry Challenge",
+      header(slide, "Frame the problem", "The Industry Challenge",
         "The daily reality of fragmented operations — and the cost of inaction");
 
       const pains = [
@@ -422,7 +512,7 @@ const slideSpecs: SlideSpec[] = [
     label: "Platform Overview",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Act 2 · Architecture", "The Operational Performance Platform",
+      header(slide, "Architecture", "The Operational Performance Platform",
         "Five layers. One platform. Wired together by DTOP.");
 
       const layers = [
@@ -542,7 +632,7 @@ slideSpecs.push(
   {
     label: "SafetyManager365",
     build: buildModuleSlide({
-      eyebrow: "Act 2 · Architecture",
+      eyebrow: "Architecture",
       title: "Core Operational Apps — SafetyManager365",
       subtitle: "Advanced Safety, Quality & Risk Management — from reactive reporting to predictive safety intelligence",
       accent: C.rose,
@@ -569,7 +659,7 @@ slideSpecs.push(
   {
     label: "ContentManager365",
     build: buildModuleSlide({
-      eyebrow: "Act 2 · Architecture",
+      eyebrow: "Architecture",
       title: "Core Operational Apps — ContentManager365 + CoAuthor",
       subtitle: "Next-gen operational content management — from manual revisions to intelligent document orchestration",
       accent: C.blue,
@@ -596,7 +686,7 @@ slideSpecs.push(
   {
     label: "TrainingManager365",
     build: buildModuleSlide({
-      eyebrow: "Act 2 · Architecture",
+      eyebrow: "Architecture",
       title: "Core Operational Apps — TrainingManager365 + CoTrainer",
       subtitle: "Higher-quality training with less effort — from compliance checklists to competency-driven readiness",
       accent: C.prove,
@@ -633,7 +723,7 @@ slideSpecs.push(
     label: "Data Foundation",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Act 2 · Architecture", "The Operational Data Foundation",
+      header(slide, "Architecture", "The Operational Data Foundation",
         "Unified taxonomy + operational knowledge graph + custom aviation LLMs — the substrate every other layer reasons over");
 
       // Top: 3 sources → unified DB block
@@ -773,7 +863,7 @@ slideSpecs.push(
     label: "Insights & Intelligence",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Act 3 · Intelligence layer", "Insights & Intelligence — Intelligence & Orchestration",
+      header(slide, "Intelligence & Orchestration", "Insights & Intelligence — Intelligence & Orchestration",
         "From Reports to Intelligence. From Events to Control.");
 
       // Master message banner
@@ -825,7 +915,7 @@ slideSpecs.push(
     label: "Recommendations & Prescriptive Actions",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Act 3 · Intelligence layer", "Intelligence & Orchestration Layer — Recommendations & Prescriptive Actions",
+      header(slide, "Intelligence & Orchestration", "Intelligence & Orchestration Layer — Recommendations & Prescriptive Actions",
         "From insight to prescriptive action — proactive signals across the platform");
 
       const caps = [
@@ -891,7 +981,7 @@ slideSpecs.push(
     label: "Automation",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Act 3 · Intelligence layer", "Automation & Orchestration",
+      header(slide, "Intelligence & Orchestration", "Automation & Orchestration",
         "One automation layer across the platform — closing the loop on cross-product workflows");
 
       const pipe = [
@@ -968,7 +1058,7 @@ slideSpecs.push(
     label: "Unified Mobile",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Act 3 · Intelligence layer", "The Unified Mobile Experience",
+      header(slide, "Intelligence & Orchestration", "The Unified Mobile Experience",
         "One trusted entry point for the frontline — Content, Training and Safety in a single shell");
 
       // Phone mock (left)
@@ -1043,7 +1133,7 @@ slideSpecs.push(
     label: "DTOP Operating Model",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Act 4 · Operating model", "Detect → Trigger → Orchestrate → Prove",
+      header(slide, "Operating model", "Detect → Trigger → Orchestrate → Prove",
         "A closed-loop operating model that turns signals into provable outcomes.");
 
       const steps = [
@@ -1133,7 +1223,7 @@ slideSpecs.push(
     label: "Tiers vs Generic AI",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Act 4 · Operating model", "Intelligence Tiers vs Generic AI",
+      header(slide, "Operating model", "Intelligence Tiers vs Generic AI",
         "Four tiers of operational intelligence — and the precision gap generic AI cannot close");
 
       const tiers = [
@@ -1240,7 +1330,7 @@ slideSpecs.push(
     label: "Use Cases",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Act 4 · Operating model", "Use Cases — Safety, Operations & Financial",
+      header(slide, "Operating model", "Use Cases — Safety, Operations & Financial",
         "Every signal follows the same DTOP loop — different domain, same architecture");
 
       // DTOP legend
@@ -1321,7 +1411,7 @@ slideSpecs.push(
     label: "Platform Integrations",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Act 4 · Operating model", "Platform Integration Case Studies",
+      header(slide, "Operating model", "Platform Integration Case Studies",
         "Live integrations proving the connected platform — in production today");
 
       const cs = [
@@ -1433,7 +1523,7 @@ slideSpecs.push(
     label: "Line of Sight Cascade",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Act 5 · Value & close", "Line of Sight — From Use Case to Executive Outcome",
+      header(slide, "Value & close", "Line of Sight — From Use Case to Executive Outcome",
         "Costed use cases drive leading measures — leading measures drive executive outcomes");
 
       const cY = CONTENT_TOP;
@@ -1521,11 +1611,18 @@ slideSpecs.push(
   },
 
   // ─── 17. MATURITY ROADMAP ─────────────────────────────────────
+  journeyDividerSpec({
+    label: "▸ Journey Ahead · Maturity",
+    title: "Maturity Roadmap",
+    tagline: "Where customers are today and how Comply365 moves them forward — from fragmented to predictive in 12–18 months.",
+    activeStage: "today",
+    upNext: ["Maturity Roadmap"],
+  }),
   {
     label: "Maturity Roadmap",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Act 5 · Value & close", "The Maturity Roadmap",
+      header(slide, "Value & close", "The Maturity Roadmap",
         "How teams change their way of working at every stage");
 
       const stages = [
@@ -1598,11 +1695,18 @@ slideSpecs.push(
   },
 
   // ─── 18. 2026 ROADMAP ─────────────────────────────────────────
+  journeyDividerSpec({
+    label: "▸ Journey Ahead · 2026 Use Cases",
+    title: "2026 Use Case Roadmap",
+    tagline: "Phased delivery — each phase builds on proven value, layering capability without disrupting operations.",
+    activeStage: "near",
+    upNext: ["2026 Roadmap"],
+  }),
   {
     label: "2026 Roadmap",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Act 5 · Value & close", "2026 Use Case Roadmap",
+      header(slide, "Value & close", "2026 Use Case Roadmap",
         "Phased delivery — each phase builds on proven value");
 
       const phases = [
@@ -1694,7 +1798,7 @@ slideSpecs.push(
     label: "Why Comply365",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Act 5 · Value & close", "Outcomes & Why Comply365",
+      header(slide, "Value & close", "Outcomes & Why Comply365",
         "Measured outcomes from carriers running on the platform — and the three things that make them possible");
 
       // Outcomes strip
@@ -1768,7 +1872,7 @@ slideSpecs.push(
     label: "Partnership",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Act 5 · Value & close", "Partnership Model",
+      header(slide, "Value & close", "Partnership Model",
         "Your path to connected operational performance");
 
       const steps = [
@@ -1925,10 +2029,10 @@ export async function buildTechnicalDeck(opts: BuildOpts = {}): Promise<Blob> {
   // Original slide indices we want to gate behind dividers:
   //   3 → Foundations, 8 → Intelligence, 16 → Outcomes, 17 → Roadmap
   const dividerBeforeIndex: Record<number, { eyebrow: string; title: string; subtitle: string }> = {
-    3: { eyebrow: "Act 2", title: "Foundations", subtitle: "Architecture, data and the core operational apps." },
-    8: { eyebrow: "Act 3", title: "Intelligence", subtitle: "Insights & Intelligence, Recommendations & Prescriptive Actions, and Automation across the unified mobile shell." },
-    16: { eyebrow: "Act 5", title: "Outcomes", subtitle: "Line of sight from costed use case to executive outcome." },
-    17: { eyebrow: "Act 5", title: "Roadmap", subtitle: "Maturity, phased delivery, and the partnership model." },
+    3: { eyebrow: "Section", title: "Foundations", subtitle: "Architecture, data and the core operational apps." },
+    8: { eyebrow: "Section", title: "Intelligence", subtitle: "Insights & Intelligence, Recommendations & Prescriptive Actions, and Automation across the unified mobile shell." },
+    16: { eyebrow: "Section", title: "Outcomes", subtitle: "Line of sight from costed use case to executive outcome." },
+    17: { eyebrow: "Section", title: "Roadmap", subtitle: "Maturity, phased delivery, and the partnership model." },
   };
 
   const composed: SlideSpec[] = [];
