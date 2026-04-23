@@ -124,8 +124,8 @@ const DTOPPrintablePage: React.FC = () => {
 
       {/* WHY IT EXISTS */}
       <div style={{
-        display: "grid", gridTemplateColumns: "auto 1fr", gap: 20, alignItems: "center",
-        padding: "12px 0", borderTop: `1px solid ${C.darkHairline}`, borderBottom: `1px solid ${C.darkHairline}`,
+        display: "grid", gridTemplateColumns: "auto 1fr", gap: 24, alignItems: "center",
+        padding: "14px 0", borderTop: `1px solid ${C.darkHairline}`, borderBottom: `1px solid ${C.darkHairline}`,
         marginBottom: 14,
       }}>
         <div>
