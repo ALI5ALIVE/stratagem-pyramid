@@ -1,73 +1,114 @@
 
 
-## Remove "Act" language + add "Journey Ahead" dividers for the two roadmaps
+## Align all deep-dive slide titles to the architecture diagram
 
-### 1. Strip "Act" comments and any user-visible "Act" language
+### Problem
 
-The word "Act" only appears in three places:
+The architecture diagram on Slide 4 names 5 layers crisply:
 
-- **`src/pages/TechnicalDeepDive.tsx`** — five `// Act N — …` source comments. These are dev-only but the plan says remove for clarity. Replace with neutral grouping comments (e.g. `// Frame the problem`, `// Architecture`, `// Intelligence & Orchestration`, `// Delivery & operating model`, `// Value & close`).
-- **`src/exporters/pptx/buildTechnicalDeck.ts`** — section divider builder calls that pass titles like `"Act 3 — Intelligence & Orchestration"`. Drop the `Act N — ` prefix on every divider so the PPTX shows just the section name (e.g. `"Intelligence & Orchestration"`).
-- **`src/data/technicalPitchNarration.ts`** — any narration line that says "in this act" → rewrite as "in this section" / "next we look at…".
+1. **Layer 1 · Core Operational Apps** (ContentManager365 · TrainingManager365 · SafetyManager365)
+2. **Layer 2 · Operational Data Foundation**
+3. **Layer 3 · Intelligence & Orchestration Layer** (Insights & Intelligence · Recommendations & Prescriptive Actions · Automation)
+4. **Layer 4 · Unified Mobile Experience**
+5. **Layer 5 · DTOP — The System of Work**
 
-After this pass, a global search for `\bAct\b` in tech-deck files returns zero hits.
+Today's deep-dive slide titles use inconsistent wording — some say "Core Operational Apps —", some say "Operating Model: DTOP", "The Operational Data Foundation", "Intelligence & Orchestration Layer — Automation & Orchestration". A viewer cannot scan a slide title and instantly know which layer of the diagram they're inside.
 
-### 2. Add two "Journey Ahead" divider slides
+### Solution: one consistent title pattern across every deep-dive slide
 
-Reuse the existing `TechSlideLayerDivider` component pattern, but introduce a **lighter sibling** divider for non-architectural sections — `TechSlideJourneyDivider` — so we don't have to fake a "Layer N" badge for things that aren't platform layers.
+**Pattern:** `Layer N · <Layer Name> — <Specific Topic>`
 
-New component **`src/components/tech-slides/TechSlideJourneyDivider.tsx`**:
-- Eyebrow: `THE JOURNEY AHEAD` (in primary blue accent).
-- Title: configurable (e.g. `Maturity Roadmap` or `2026 Use Case Roadmap`).
-- Tagline: configurable one-liner.
-- **No mini-stack** (this isn't an architecture layer) — instead a clean horizontal stepper showing: `Today → Near term → Long term` with the current focus pill lit.
-- `Up next:` list of slides this section introduces.
-- Same dark theme, brand chrome, narration-controlled play button.
+This mirrors the exact wording on the diagram tile, prefixed with the layer number for instant cross-reference. Subtitles stay as-is (they explain *what* the slide covers).
 
-Slot two instances into the deck **immediately before** the two roadmap slides:
+### Title changes
 
-| Position | Divider | Introduces |
+| Slide | Current title | New title |
 |---|---|---|
-| Before `tech-slide-14` | **The Journey Ahead — Maturity Roadmap** ("Where customers are today and how Comply365 moves them forward") | Maturity Roadmap |
-| Before `tech-slide-15` | **The Journey Ahead — 2026 Use Case Roadmap** ("Phased delivery — each phase builds on proven value") | 2026 Roadmap |
+| `tech-slide-4a` SafetyManager | Core Operational Apps — SafetyManager365 | **Layer 1 · Core Operational Apps — SafetyManager365** |
+| `tech-slide-4b` ContentManager | Core Operational Apps — ContentManager365 + CoAuthor | **Layer 1 · Core Operational Apps — ContentManager365 + CoAuthor** |
+| `tech-slide-4c` TrainingManager | Core Operational Apps — TrainingManager365 + CoTrainer | **Layer 1 · Core Operational Apps — TrainingManager365 + CoTrainer** |
+| `tech-slide-data-foundation` | The Operational Data Foundation | **Layer 2 · Operational Data Foundation** |
+| `tech-slide-coanalyst` Insights | Intelligence & Orchestration Layer — Insights & Intelligence | **Layer 3 · Intelligence & Orchestration — Insights & Intelligence** |
+| `tech-slide-insights` Recommendations | Intelligence & Orchestration Layer — Recommendations & Prescriptive Actions | **Layer 3 · Intelligence & Orchestration — Recommendations & Prescriptive Actions** |
+| `tech-slide-automation` | Intelligence & Orchestration Layer — Automation & Orchestration | **Layer 3 · Intelligence & Orchestration — Automation** |
+| `tech-slide-tiers-vs-ai` | Intelligence Tiers & Why Generic AI Falls Short | **Layer 3 · Intelligence & Orchestration — Tiers vs Generic AI** |
+| `tech-slide-mobile` | (current "Unified Mobile Experience") | **Layer 4 · Unified Mobile Experience** |
+| `tech-slide-5` DTOP | Operating Model: DTOP | **Layer 5 · DTOP — The System of Work** |
 
-Sidebar labels: `▸ Journey Ahead · Maturity` and `▸ Journey Ahead · 2026 Use Cases` so they visually group like the existing `▸ Layer N` items.
+Notes:
+- Drop the redundant word "Layer" from Layer 3 titles (the prefix already says "Layer 3"); keep the diagram's wording "Intelligence & Orchestration".
+- "Automation & Orchestration" → just "Automation" to match the diagram tile exactly.
+- "Operating Model: DTOP" → "DTOP — The System of Work" to match the diagram's tagline.
+- Slide 4 itself keeps its current title (`The Operational Performance Platform`) — it's the index slide, not a layer slide.
 
-### 3. PPTX export mirror
+### Slides not in any layer (left unchanged)
 
-In `src/exporters/pptx/buildTechnicalDeck.ts`:
-- Remove `Act N — ` prefixes from every `addSectionDivider` call.
-- Add two new native divider slides using a new `buildJourneyDivider` helper (same look as the layer dividers but with a horizontal stepper instead of the mini-stack), inserted at the matching positions in the export order.
+These are framing, value, or close slides — they shouldn't pretend to be architecture layers:
 
-### 4. Narration
+- Title, Strategic Shift, Industry Challenge
+- Use Cases, Platform Integration Case Studies
+- Line of Sight Calculator, Maturity Roadmap, 2026 Roadmap, Why Comply365, Partnership
 
-Add two short ~10-second narration entries in `technicalPitchNarration.ts` for the new dividers: one framing the maturity journey, one framing the 2026 use-case roadmap.
+### Layer divider slides (already exist) — wording polish
+
+The 5 architecture dividers added in the previous pass already say `Layer N · Architecture` as the eyebrow and the layer name as the title. Two small consistency tweaks:
+
+- Layer 3 divider title: `Intelligence & Orchestration Layer` → **`Intelligence & Orchestration`** (drop trailing "Layer" — it's redundant after "Layer 3 · Architecture").
+- Layer 5 divider title: keep `DTOP — The System of Work` (already correct).
+
+### Sidebar labels (`TechnicalDeepDive.tsx`)
+
+Update the per-slide sidebar labels so the navigator reads cleanly grouped under each `▸ Layer N` divider:
+
+| Current sidebar label | New |
+|---|---|
+| SafetyManager365 | L1 · SafetyManager365 |
+| ContentManager365 | L1 · ContentManager365 |
+| TrainingManager365 | L1 · TrainingManager365 |
+| Data Foundation | L2 · Data Foundation |
+| Insights & Intelligence | L3 · Insights & Intelligence |
+| Recommendations & Prescriptive Actions | L3 · Recommendations & Prescriptive Actions |
+| Automation | L3 · Automation |
+| Tiers vs Generic AI | L3 · Tiers vs Generic AI |
+| Unified Mobile | L4 · Unified Mobile |
+| DTOP Operating Model | L5 · DTOP |
+
+The `▸ Layer N · …` divider rows stay as-is so each group reads as a header followed by its members.
+
+### PPTX export mirror
+
+In `src/exporters/pptx/buildTechnicalDeck.ts`, update the title strings passed to each layer-specific slide builder to match the new titles above. No structural changes — only the title strings change.
 
 ### Files
 
-**Created**
-- `src/components/tech-slides/TechSlideJourneyDivider.tsx`
-
 **Edited**
-- `src/pages/TechnicalDeepDive.tsx` — replace "Act" comments with neutral section headings; register the two new journey dividers; add their `journeyProps` config.
-- `src/exporters/pptx/buildTechnicalDeck.ts` — drop `Act N — ` prefixes on all section dividers; add `buildJourneyDivider` helper; insert two journey divider slides in the export sequence.
-- `src/data/technicalPitchNarration.ts` — rewrite any "act" wording; add narration for `tech-divider-journey-maturity` and `tech-divider-journey-2026`.
+- `src/components/tech-slides/TechSlide4aSafetyManager.tsx` — title prefix `Layer 1 · `
+- `src/components/tech-slides/TechSlide4bContentManager.tsx` — title prefix `Layer 1 · `
+- `src/components/tech-slides/TechSlide4cTrainingManager.tsx` — title prefix `Layer 1 · `
+- `src/components/tech-slides/TechSlideDataFoundation.tsx` — title `Layer 2 · Operational Data Foundation`
+- `src/components/tech-slides/TechSlide7CoAnalyst.tsx` — title `Layer 3 · Intelligence & Orchestration — Insights & Intelligence`
+- `src/components/tech-slides/TechSlideInsights.tsx` — title `Layer 3 · Intelligence & Orchestration — Recommendations & Prescriptive Actions`
+- `src/components/tech-slides/TechSlideAutomation.tsx` — title `Layer 3 · Intelligence & Orchestration — Automation`
+- `src/components/tech-slides/TechSlideTiersVsAI.tsx` — title `Layer 3 · Intelligence & Orchestration — Tiers vs Generic AI`
+- `src/components/tech-slides/TechSlideMobile.tsx` — title `Layer 4 · Unified Mobile Experience`
+- `src/components/tech-slides/TechSlide5DTOP.tsx` — title `Layer 5 · DTOP — The System of Work`
+- `src/pages/TechnicalDeepDive.tsx` — sidebar labels prefixed `L1·…L5·`; tweak divider props (Layer 3 name)
+- `src/exporters/pptx/buildTechnicalDeck.ts` — mirror all new titles in the PPTX header strings
 
 **Untouched**
-- All architecture layer dividers (already correct).
-- `TechSlideLayerDivider.tsx` (kept as-is for the 5 architecture layers).
-- All other decks.
+- All other slides (title/framing/value/close).
+- Architecture diagram on Slide 4 (already canonical wording).
 
 ### Verification
 
-1. `/pitch-technical` — global text search for "Act 1" / "Act 2" / etc. returns zero hits in the deck (sidebar, slides, narration captions).
-2. Two new "The Journey Ahead" divider slides appear immediately before the Maturity Roadmap and 2026 Roadmap slides; sidebar shows them grouped with `▸ Journey Ahead · …`.
-3. Download Editable PowerPoint — `.pptx` text search for "Act" returns zero hits; the two journey dividers render with the eyebrow + stepper + "Up next" list.
-4. PDF QA: convert pptx → PDF → JPEGs at 150 dpi; visually confirm the two new dividers match the visual grammar of the existing layer dividers.
+1. `/pitch-technical` — every layer-specific slide title starts with `Layer N · <Layer Name>` matching the diagram on Slide 4.
+2. Sidebar reads as 5 grouped sections (each `▸ Layer N` divider followed by `L N · …` children).
+3. Download Editable PowerPoint — every layer slide header in the `.pptx` matches the new convention; nothing overflows the title bar.
+4. PDF QA: convert pptx → PDF → JPEGs at 150 dpi; visually confirm no title clipping on the longest line (Layer 3 · Intelligence & Orchestration — Recommendations & Prescriptive Actions).
 
 ### Out of scope
 
+- Changing slide content/layouts.
 - Other decks.
-- Reordering the roadmap slides themselves.
-- Changing the maturity/roadmap content.
+- Renaming the layers themselves.
 
