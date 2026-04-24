@@ -1,3 +1,8 @@
+// SUPERSEDED — these category-naming explorations ("Operational Excellence",
+// "Operational Orchestration", "Operational Performance", "Operational Assurance")
+// are NOT used in any active customer-facing deck. The canonical platform name
+// is the "Operational Performance Platform" — see src/data/platformPlaybook.ts.
+// This file is retained for internal historical reference only.
 import { LucideIcon, Link, Zap, CheckCircle2, Brain, Layers } from "lucide-react";
 
 // Type definitions
