@@ -103,7 +103,7 @@ const TechSlideLayerDivider = ({
           <div className="text-[10px] uppercase tracking-wider text-muted-foreground/70 font-semibold mb-1 text-right">
             You are here
           </div>
-          {stack.map((l) => {
+          {(hideLayerNumber ? v4Stack : stack).map((l) => {
             const isActive = l.key === active;
             return (
               <div
