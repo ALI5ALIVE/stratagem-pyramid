@@ -1,68 +1,53 @@
 
 
-## Sales Enablement — Promote Use Cases to a dedicated DTOP-led module
+## Sales Enablement Title Slide — Remove "5 Layers" references
 
-Right now use cases live as two slides tucked inside Module 4 ("How we sell it"), mixed with Before/After, Maturity and Outcomes. This makes it hard for a rep to anchor a value conversation on the DTOP loop. This plan promotes use cases to their own module so each one walks the prospect through Detect → Trigger → Orchestrate → Prove with a clear cost story.
+The title slide (`SESlide0Title`) and rep checklist (`SEClosingForReps`) still describe the deck as a 5-module course built around "The 5 Layers." After the recent restructure, the deck has 6 modules and the architecture is 4 capability bands (no layer numbers). This pass aligns the title agenda and rep checklist to the new structure.
 
-### New module structure
+### Changes
 
-Renumber to 6 modules. New **Module 5 — Use Cases & Value through DTOP** sits between today's M4 and M5.
+**1. `src/components/sales-enablement-slides/SESlide0Title.tsx`**
 
-| # | Module | Purpose |
+Update the `modules` array from 5 entries to 6, matching the live deck:
+
+| # | Title | Desc |
 |---|---|---|
-| 1 | The Shift | (unchanged) |
-| 2 | What the platform is | (unchanged) |
-| 3 | How the capabilities fit together | (unchanged) |
-| 4 | How we sell it | Trimmed: Before/After + Maturity + Outcomes only |
-| **5** | **Use Cases & Value through DTOP** | **NEW — dedicated value-articulation section** |
-| 6 | Why we win | (was M5) |
+| 1 | The Market Shift | Why this exists |
+| 2 | What It Is | Plain-English pitch |
+| 3 | The Capabilities | How it fits together |
+| 4 | How We Sell It | Discovery → demo → close |
+| 5 | Use Cases & DTOP | Value through Detect→Prove |
+| 6 | Why We Win | Objections & next steps |
 
-### Module 5 contents (NEW)
+- Replace `"The 5 Layers"` → `"The Capabilities"`.
+- Insert new M5 `"Use Cases & DTOP"` (icon: `Target` or reuse `Layers`; accent rose/cyan to differ from M6).
+- Renumber Why We Win from M5 → M6 (keep rose accent or shift M6 to a new accent).
+- Change grid from `md:grid-cols-5` → `md:grid-cols-6` so all six module cards fit on one row at desktop, with `md:grid-cols-3` fallback already covered by `grid-cols-1`.
+- Update the header meta line `"24 slides · ~35 min"` to reflect the current count — recompute from `SalesEnablement.tsx` (likely ~28 slides · ~45 min; final number set when implementing).
+- Imports: add an additional Lucide icon for the new M5 (e.g. `Target`).
 
-A short opener, then one slide per value domain, each following the DTOP loop and grounded in cost data. Reuses existing v4-aligned use-case slides — no new components needed.
+**2. `src/components/sales-enablement-slides/SEClosingForReps.tsx`**
 
-| Slide | Component | Purpose |
-|---|---|---|
-| M5 divider | `SEModuleDivider` | Frames "every use case = same DTOP loop, different domain" |
-| M5 · Use Case Framework (DTOP overview) | `SlideUseCases` | Generic 3-up DTOP intro — sets the pattern |
-| M5 · Safety Use Cases | `TechSlide10SafetyUseCases` | Detect→Prove for safety signals + cost exposure |
-| M5 · Operations Use Cases | `TechSlide11OpsUseCases` | AOG, delays, fuel, baggage through DTOP |
-| M5 · Financial Use Cases | `TechSlide12FinancialUseCases` | Insurance + revenue protection through DTOP |
-| M5 · Regulation Management Use Case | `TechSlideRegulationSummary` | Flagship regulation play (moved from M4) |
-| M5 · Customer Outcomes | `CustomerOutcomesSlide` | Proof points tying use cases to outcomes (moved from M4) |
+In the `checklist` array, replace:
+- `"I can name the 5 layers and what each does in plain English"`  
+  →  `"I can name the four capabilities (Core Apps, Intelligence & Orchestration, Mobile, DTOP) and what each does in plain English"`
 
-Module 5 divider props:
-- `title`: "Use cases & value through DTOP"
-- `learningGoal`: "By the end of this module you can pick the right use case for the prospect's pain and walk them through Detect → Trigger → Orchestrate → Prove with a defensible cost figure."
-- `estimatedMinutes`: 12
-- `upNext`: ["DTOP framework", "Safety use cases", "Operations use cases", "Financial use cases", "Regulation Management", "Customer outcomes"]
-
-### Module 4 trimmed
-
-Remove from M4: `se-slide-usecases`, `se-slide-regmgmt`, `se-slide-outcomes`. M4 keeps Before/After and Maturity Roadmap only. Update `moduleProps.m4.upNext` to `["Before vs After", "Maturity roadmap"]` and shorten learning goal to focus on the sell motion (discovery → demo → close), with use-case articulation handed off to M5.
-
-### Module renumbering
-
-Today's M5 (Why we win) becomes **M6**:
-- Update `moduleProps.m5` → `moduleProps.m6` (moduleNumber: 6)
-- Re-label `se-slide-objections`, `se-slide-why`, `se-slide-closing` from `M5 ·` → `M6 ·`
-- Divider id `se-module-5` (Why we win) → `se-module-6`; new use-case divider takes `se-module-5`
+Leave the rest of the checklist untouched.
 
 ### Files
 
 **EDITED**
-- `src/pages/SalesEnablement.tsx` — add 3 new imports (`TechSlide10SafetyUseCases`, `TechSlide11OpsUseCases`, `TechSlide12FinancialUseCases`), add `m5` (use cases) module props, renumber existing M5 → M6, restructure the `slides` array as above.
+- `src/components/sales-enablement-slides/SESlide0Title.tsx`
+- `src/components/sales-enablement-slides/SEClosingForReps.tsx`
 
 **NOT TOUCHED**
-- All slide components themselves — pure reuse.
-- Other decks (`/customer-overview`, `/pitch-technical-v4`, `/pitch-executive-3`).
-- Navigation/scroll/keyboard logic.
+- Module dividers (`SEModuleDivider` usage in `SalesEnablement.tsx`) — already updated in prior pass.
+- All other SE slides, talk track, recap.
+- v3/v4 tech decks, customer overview, executive decks.
 
 ### QA
 
-- `/sales-enablement` sidebar shows 6 modules; M5 is "Use Cases & Value through DTOP" with 6 slides + divider.
-- Each M5 use-case slide renders the DTOP four-step pattern with cost exposure.
-- M4 contains only Before/After and Maturity Roadmap.
-- M6 (formerly M5) labels read "M6 · Objections / Why Comply365 / Your First 7 Days".
-- No duplicate Regulation Management or Customer Outcomes slides.
+- `/sales-enablement` title slide shows 6 module cards, no "5 Layers" wording, M5 reads "Use Cases & DTOP", M6 reads "Why We Win".
+- Rep checklist at end of deck references "four capabilities" with the four band names, not "5 layers".
+- Slide count/time in the eyebrow matches the actual deck length.
 
