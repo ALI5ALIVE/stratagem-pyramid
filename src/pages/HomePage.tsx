@@ -143,19 +143,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Strategy */}
-        <section>
-          <SectionHeader 
-            title="Strategy & Positioning" 
-            subtitle="Internal playbooks and frameworks" 
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
-            {strategyDecks.map((card) => (
-              <DeckCardComponent key={card.href} card={card} />
-            ))}
-          </div>
-        </section>
-
         {/* Sales Enablement & Training */}
         <section>
           <SectionHeader 
