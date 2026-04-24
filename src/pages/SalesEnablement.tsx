@@ -1,6 +1,9 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
+import SpeakerNotesPanel from "@/components/shared/SpeakerNotesPanel";
+import { useSalesEnablementNarration } from "@/hooks/useSalesEnablementNarration";
+import { getSalesEnablementNarration } from "@/data/salesEnablementNarration";
 
 import SESlide0Title from "@/components/sales-enablement-slides/SESlide0Title";
 import SEModuleDivider from "@/components/sales-enablement-slides/SEModuleDivider";
@@ -116,6 +119,7 @@ const SalesEnablement = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { register, unregister } = useSlideNavigation();
   const { open, setOpen } = useSidebar();
+  const narration = useSalesEnablementNarration();
 
   const navigateToSlide = useCallback((index: number) => {
     const slideElement = document.getElementById(slides[index].id);
@@ -179,16 +183,35 @@ const SalesEnablement = () => {
       >
         {slides.map((slide, index) => {
           const SlideComponent = slide.component as React.ComponentType<any>;
+          const isActive = index === currentSlide;
+          const slideNarrationProps = (slide as any).dividerProps
+            ? {}
+            : {
+                isActive,
+                isPlaying: isActive && narration.isPlaying,
+                isLoading: isActive && narration.isLoading,
+                progress: isActive ? narration.progress : 0,
+                hasCompleted: isActive && narration.hasCompleted,
+                onPlay: () => narration.play(slide.id),
+                onPause: () => narration.pause(),
+              };
           return (
             <SlideComponent
               key={slide.id}
               slideNumber={index}
               id={slide.id}
               {...((slide as any).dividerProps ?? {})}
+              {...slideNarrationProps}
             />
           );
         })}
       </div>
+      <SpeakerNotesPanel
+        title={slides[currentSlide]?.label ?? ""}
+        script={getSalesEnablementNarration(slides[currentSlide]?.id)?.script}
+        slideNumber={currentSlide}
+        totalSlides={slides.length}
+      />
     </div>
   );
 };
