@@ -20,6 +20,8 @@ import CASlide11Taglines from "@/components/coanalyst-slides/CASlide11Taglines";
 import CASlide12WebsiteMessaging from "@/components/coanalyst-slides/CASlide12WebsiteMessaging";
 import CASlide13VisualNarrative from "@/components/coanalyst-slides/CASlide13VisualNarrative";
 import CASlide14DeckStructure from "@/components/coanalyst-slides/CASlide14DeckStructure";
+import SpeakerNotesPanel from "@/components/shared/SpeakerNotesPanel";
+import { coanalystNarrations } from "@/data/coanalystNarration";
 
 const slides = [
   { id: "ca-title", label: "Contents" },
@@ -166,6 +168,12 @@ const CoAnalystDeck = () => {
         <CASlide13VisualNarrative {...getNarrationProps(13)} />
         <CASlide14DeckStructure {...getNarrationProps(14)} />
       </div>
+      <SpeakerNotesPanel
+        title={slides[activeSlide]?.label ?? ""}
+        script={coanalystNarrations.find((n) => n.slideId === activeSlide)?.script}
+        slideNumber={activeSlide}
+        totalSlides={slides.length}
+      />
     </div>
     </DeckProvider>
   );

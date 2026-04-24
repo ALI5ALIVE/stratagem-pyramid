@@ -17,6 +17,8 @@ import OpsSlide8MaturityRoadmap from "@/components/ops-slides/OpsSlide8MaturityR
 import OpsSlide10WhyUs from "@/components/ops-slides/OpsSlide10WhyUs";
 import OpsSlide11GettingStarted from "@/components/ops-slides/OpsSlide11GettingStarted";
 import CustomerOutcomesSlide from "@/components/shared/CustomerOutcomesSlide";
+import SpeakerNotesPanel from "@/components/shared/SpeakerNotesPanel";
+import { getOpsPitchNarration } from "@/data/operationalPitchNarration";
 
 const slides = [
   { id: "ops-slide-0", label: "Title", component: OpsSlide0Title },
@@ -145,6 +147,12 @@ const OperationalPitch = () => {
           return <SlideComponent key={slide.id} slideNumber={index} {...narrationProps} />;
         })}
       </div>
+      <SpeakerNotesPanel
+        title={slides[currentSlide]?.label ?? ""}
+        script={getOpsPitchNarration(slides[currentSlide]?.id ?? "")?.script}
+        slideNumber={currentSlide}
+        totalSlides={slides.length}
+      />
     </div>
   );
 };

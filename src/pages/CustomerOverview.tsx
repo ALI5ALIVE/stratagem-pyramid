@@ -13,6 +13,8 @@ import TechSlideRegulationSummary from "@/components/tech-slides/TechSlideRegula
 import CustomerOutcomesSlide from "@/components/shared/CustomerOutcomesSlide";
 import Slide5MaturityCurve from "@/components/slides/Slide5MaturityCurve";
 import COClosingFirst90Days from "@/components/customer-overview-slides/COClosingFirst90Days";
+import SpeakerNotesPanel from "@/components/shared/SpeakerNotesPanel";
+import { getCustomerOverviewNarration } from "@/data/customerOverviewNarration";
 
 const slides = [
   { id: "co-slide-0", label: "Title", component: COSlide0Title },
@@ -115,6 +117,12 @@ const CustomerOverview = () => {
           );
         })}
       </div>
+      <SpeakerNotesPanel
+        title={slides[currentSlide]?.label ?? ""}
+        script={getCustomerOverviewNarration(slides[currentSlide]?.id ?? "")?.script}
+        slideNumber={currentSlide}
+        totalSlides={slides.length}
+      />
     </div>
   );
 };
