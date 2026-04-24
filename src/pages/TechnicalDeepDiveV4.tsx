@@ -43,8 +43,6 @@ import TechSlideCTA from "@/components/tech-slides/TechSlideCTA";
 // Dividers
 import TechSlideLayerDivider from "@/components/tech-slides/TechSlideLayerDivider";
 import TechSlideJourneyDivider from "@/components/tech-slides/TechSlideJourneyDivider";
-import SpeakerNotesPanel from "@/components/shared/SpeakerNotesPanel";
-import { getTechPitchNarration } from "@/data/technicalPitchNarration";
 
 const dividerProps = {
   core: {
@@ -256,12 +254,6 @@ const TechnicalDeepDiveV4 = () => {
         );
       })}
     </div>
-    <SpeakerNotesPanel
-      title={slides[currentSlide]?.label ?? ""}
-      script={getTechPitchNarration(slides[currentSlide]?.id ?? "")?.script}
-      slideNumber={currentSlide}
-      totalSlides={slides.length}
-    />
     </DeckProvider>
   );
 };

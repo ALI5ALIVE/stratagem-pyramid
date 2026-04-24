@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
-import { useExecPitch2Narration } from "@/hooks/useExecPitch2Narration";
+import { useExec3PitchNarration } from "@/hooks/useExec3PitchNarration";
 
 import ExecSlide0Title from "@/components/exec-slides/ExecSlide0Title";
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
@@ -22,8 +22,6 @@ import TechV4SlideAutomation from "@/components/tech-slides/v4/TechV4SlideAutoma
 import TechV4SlideTiersVsAI from "@/components/tech-slides/v4/TechV4SlideTiersVsAI";
 import TechV4SlideMobile from "@/components/tech-slides/v4/TechV4SlideMobile";
 import TechV4Slide5DTOP from "@/components/tech-slides/v4/TechV4Slide5DTOP";
-import SpeakerNotesPanel from "@/components/shared/SpeakerNotesPanel";
-import { getExec3PitchNarration } from "@/data/executivePitchNarration";
 
 const dividerProps = {
   core: {
@@ -94,7 +92,7 @@ const ExecutivePitch3 = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { register, unregister } = useSlideNavigation();
   const { open, setOpen } = useSidebar();
-  const narration = useExecPitch2Narration();
+  const narration = useExec3PitchNarration();
 
   const navigateToSlide = useCallback((index: number) => {
     const slideElement = document.getElementById(slides[index].id);
@@ -198,12 +196,6 @@ const ExecutivePitch3 = () => {
           );
         })}
       </div>
-      <SpeakerNotesPanel
-        title={slides[currentSlide]?.label ?? ""}
-        script={getExec3PitchNarration(slides[currentSlide]?.id ?? "")?.script}
-        slideNumber={currentSlide}
-        totalSlides={slides.length}
-      />
     </div>
   );
 };
