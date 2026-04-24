@@ -325,7 +325,7 @@ const dtopSpec: SlideSpec = {
       fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true,
       color: C.subtle, charSpacing: 3, valign: "middle",
     });
-    const sources = ["FOQA", "ASAP", "Audit", "Ops", "Crew", "Mx"];
+    const sources = ["Operational Data", "Safety Reports", "Audit", "Ops", "Crew", "Mx"];
     let sx = rightX + 1.0;
     const pillH = 0.28;
     sources.forEach((s) => {

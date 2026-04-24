@@ -10,7 +10,7 @@ import IndustryCTA from "@/components/solutions/IndustryCTA";
 const AirlinesPage = () => {
   const challenges = [
     {
-      before: "FOQA data sits in isolation, disconnected from procedures",
+      before: "Operational data sits in isolation, disconnected from procedures",
       after: "Safety signals automatically trigger procedure updates",
     },
     {
@@ -32,7 +32,7 @@ const AirlinesPage = () => {
       step: "Detect" as const,
       title: "Capture Safety Signals",
       description: "Automatically identify events requiring action across your operation.",
-      example: "FOQA exceedance, ASAP report, or audit finding captured",
+      example: "Operational data exceedance, crew safety report, or audit finding captured",
     },
     {
       step: "Trigger" as const,
@@ -79,7 +79,7 @@ const AirlinesPage = () => {
         industry="Airlines"
         headline="The Operational Performance Platform"
         scopeLine="for Airline Safety, Content, and Training"
-        subhead="From FOQA signal to crew action — automatically. Connect safety events, procedure updates, and targeted training into one governed system. Close investigations faster, eliminate audit scrambles, and prove continuous improvement to FAA and EASA."
+        subhead="From operational data signal to crew action — automatically. Connect safety events, procedure updates, and targeted training into one governed system. Close investigations faster, eliminate audit scrambles, and prove continuous improvement to FAA and EASA."
       />
       
       <IndustryTrustBar

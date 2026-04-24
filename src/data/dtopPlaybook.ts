@@ -85,7 +85,7 @@ export const dtopSteps: DTOPStep[] = [
     label: "Detect",
     tagline: "From noise to signal",
     description: "Continuously monitor operational data streams to surface safety signals, regulatory changes, and performance anomalies before they become incidents.",
-    dataSources: ["Safety reports (ASR/ASAP)", "Flight data (FOQA/FDM)", "Audit findings", "Regulatory bulletins (EASA/FAA)", "Training assessment scores", "Crew feedback"],
+    dataSources: ["Crew safety reports", "Flight operational data", "Audit findings", "Regulatory bulletins (EASA/FAA)", "Training assessment scores", "Crew feedback"],
     actions: ["Pattern recognition across event types", "Threshold monitoring and anomaly detection", "Regulatory change impact scanning", "Cross-domain correlation"],
     outputs: ["Prioritised risk signals", "Regulatory change alerts", "Performance trend indicators"],
     color: "text-blue-400",
@@ -112,9 +112,9 @@ export const dtopSteps: DTOPStep[] = [
     dataSources: ["Content authoring workflows", "Distribution & acknowledgment tracking", "LMS assignment engine", "Crew scheduling integration"],
     actions: ["Revise and publish updated procedures", "Push targeted content to affected crews", "Assign scenario-specific training modules", "Track acknowledgment and completion"],
     outputs: ["Updated SOPs in crew hands", "Training completion records", "Acknowledgment confirmations", "Distribution audit trail"],
-    color: "text-emerald-400",
-    bg: "bg-emerald-500/10",
-    border: "border-emerald-500/30",
+    color: "text-violet-400",
+    bg: "bg-violet-500/10",
+    border: "border-violet-500/30",
   },
   {
     letter: "P",
@@ -124,9 +124,9 @@ export const dtopSteps: DTOPStep[] = [
     dataSources: ["Post-intervention performance data", "Repeat incident rates", "Training effectiveness scores", "Audit readiness dashboards"],
     actions: ["Compare pre/post intervention metrics", "Generate compliance evidence packages", "Measure training transfer effectiveness", "Update risk scoring models"],
     outputs: ["Measurable risk reduction evidence", "Regulatory compliance proof", "ROI documentation", "Continuous improvement baseline"],
-    color: "text-violet-400",
-    bg: "bg-violet-500/10",
-    border: "border-violet-500/30",
+    color: "text-emerald-400",
+    bg: "bg-emerald-500/10",
+    border: "border-emerald-500/30",
   },
 ];
 
@@ -260,7 +260,7 @@ export const competitorGaps: CompetitorGap[] = [
   { competitor: "Traditional SMS (e.g., IQSMS, Intelex)", canDetect: true, canTrigger: false, canOrchestrate: false, canProve: false },
   { competitor: "Generic LMS (e.g., SAP SuccessFactors)", canDetect: false, canTrigger: false, canOrchestrate: false, canProve: false },
   { competitor: "Document Management (e.g., SharePoint)", canDetect: false, canTrigger: false, canOrchestrate: false, canProve: false },
-  { competitor: "Flight Data Analytics (e.g., GE FDM)", canDetect: true, canTrigger: false, canOrchestrate: false, canProve: false },
+  { competitor: "Flight data analytics tools", canDetect: true, canTrigger: false, canOrchestrate: false, canProve: false },
   { competitor: "Comply365 with DTOP", canDetect: true, canTrigger: true, canOrchestrate: true, canProve: true },
 ];
 

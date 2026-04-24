@@ -34,7 +34,7 @@ export const executivePitchNarrations: ExecNarrationSlide[] = [
     title: "The New Operating Model",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "We call it Detect, Trigger, Orchestrate, Prove. Detect — your systems listen continuously across Foqua, safety, and ops data. Trigger — the right workflow fires automatically, no email chains. Orchestrate — training, procedures, and compliance move together, not in sequence. Prove — every action logged, audit-ready by default. One example: a hard landing trend detected Tuesday, affected crews retrained by Thursday, repeat events down seventy-eight percent. That's the loop.",
+      "We call it Detect, Trigger, Orchestrate, Prove. Detect — your systems listen continuously across flight operational data, safety, and ops data. Trigger — the right workflow fires automatically, no email chains. Orchestrate — training, procedures, and compliance move together, not in sequence. Prove — every action logged, audit-ready by default. One example: a hard landing trend detected Tuesday, affected crews retrained by Thursday, repeat events down seventy-eight percent. That's the loop.",
   },
   {
     slideId: "exec-slide-4",

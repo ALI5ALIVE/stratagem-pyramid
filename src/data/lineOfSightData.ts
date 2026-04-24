@@ -85,8 +85,8 @@ export const useCases: UseCase[] = [
     },
     impactOnMeasures: { lm1: 0.15, lm3: 0.15, lm4: 0.1 },
     methodology:
-      "We reduce go-around frequency by connecting FOQA trend detection to procedure updates and targeted crew training — closing the loop between what's detected and what's trained.",
-    platformMechanism: "Detect (FOQA exceedance trends) → Trigger (procedure review) → Orchestrate (targeted sim training for high-risk crews) → Prove (reduced recurrence rate)",
+      "We reduce go-around frequency by connecting operational data trend detection to procedure updates and targeted crew training — closing the loop between what's detected and what's trained.",
+    platformMechanism: "Detect (operational data exceedance trends) → Trigger (procedure review) → Orchestrate (targeted sim training for high-risk crews) → Prove (reduced recurrence rate)",
     pointSolutionGap: "A standalone safety tool detects the trend. A standalone TMS delivers training. Only the connected platform ensures the right crews get the right training based on the specific procedural gap identified.",
   },
   {
@@ -206,7 +206,7 @@ export const useCases: UseCase[] = [
     impactOnMeasures: { lm4: 0.3, lm6: 0.15 },
     methodology:
       "We reduce injury recurrence by connecting safety reports to root-cause analysis, triggering procedure updates and targeted crew training — with full evidentiary proof of the corrective action cycle.",
-    platformMechanism: "Detect (ASAP/injury report pattern) → Trigger (hazard assessment and procedure review) → Orchestrate (crew safety briefing and competency check) → Prove (corrective action closure with audit trail)",
+    platformMechanism: "Detect (crew safety / injury report pattern) → Trigger (hazard assessment and procedure review) → Orchestrate (crew safety briefing and competency check) → Prove (corrective action closure with audit trail)",
     pointSolutionGap: "A safety tool logs the incident. Only the connected platform ensures the corrective action flows through to updated procedures, verified crew training, and documented proof of closure.",
   },
   {

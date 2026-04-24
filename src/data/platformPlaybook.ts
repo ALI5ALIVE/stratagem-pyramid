@@ -250,7 +250,7 @@ export const intelligenceCapabilities: IntelligenceCapability[] = [
     short: "Ask anything",
     role: "Plain-English questions across the operational data foundation — answered in seconds with cited evidence.",
     bullets: [
-      "Aviation-trained AI (>90% accuracy)",
+      "Aviation-trained AI · ~90% accuracy vs ~35% generic",
       "Cross-product correlation",
       "Cited, auditable answers",
       "60+ languages",

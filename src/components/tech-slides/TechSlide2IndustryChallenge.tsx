@@ -18,7 +18,7 @@ const painPointSources = {
 };
 
 const painPoints = [
-  { icon: Radio, label: "12K+ signals/month", sub: "Across FOQA, reports, audits", source: painPointSources.signals },
+  { icon: Radio, label: "12K+ signals/month", sub: "Across operational data, reports, audits", source: painPointSources.signals },
   { icon: FileX, label: "8K+ orphaned", sub: "No connected response", source: painPointSources.signals },
   { icon: Clock, label: "3-week investigations", sub: "Manual evidence gathering", source: painPointSources.investigation },
   { icon: AlertTriangle, label: "Same events recur", sub: "No closed-loop learning", source: painPointSources.recurrence },

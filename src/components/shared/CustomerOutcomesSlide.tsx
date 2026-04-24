@@ -17,7 +17,7 @@ const valueOutcomes = [
     bgColor: "bg-primary/5",
     textColor: "text-primary",
     example: {
-      signal: "Hard landing trend detected in FOQA data",
+      signal: "Hard landing trend detected in operational data",
       action: "Targeted pilot retraining deployed",
       result: "Fewer maintenance delays, protected departures",
     },
