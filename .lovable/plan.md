@@ -1,171 +1,180 @@
+## Consistency Audit — Decks & Capabilities
 
-## Sales Enablement Academy
-
-Convert the existing single-scroll Sales Enablement deck into a structured **6-module learning portal**. Each module is a focused ~5-minute lesson built from the slides already in `SalesEnablement.tsx`, followed by a short multiple-choice **competency quiz** that the rep must pass to mark the module complete. All progress is tied to a logged-in user and visible to managers in an admin view.
-
-The existing `/sales-enablement` deck is preserved as the "full presentation" view. The new portal lives at `/academy`.
+A full pass across all customer pitch decks (excl. CEO pitch), capability playbooks (Platform, CoAnalyst, DTOP, Insights, Automation, Mobile, Regulation Management), the Sales Enablement deck and Academy, and supporting components. Below is what's misleading, contradictory or off-brand today, and exactly how we'll align it. One implementation pass — no UX redesign, just content/terminology fixes.
 
 ---
 
-### What the rep experiences
+### 1. Forbidden terminology still in play (memory rule violation)
 
-```
-/academy                  → Module landing page (6 cards, progress ring per module)
-/academy/m1               → Module 1 lesson view (focused subset of slides, ~5 min)
-/academy/m1/quiz          → 5-question quiz, must score ≥80% to pass
-/academy/m1/result        → Pass/fail, retry button, next module CTA
-... m2 … m6
-/academy/certificate      → Issued when all 6 modules passed
-```
+Memory rule: use **"Generative AI"**, **"Recommended Actions"**, **"Operational Data"** — never FOQA / FDM / Foqua / ASAP raw acronyms in customer-facing copy.
 
-- Login required. Unauthenticated users redirected to `/auth` then back.
-- Modules unlock sequentially (M2 unlocks once M1 passed). Override flag for managers.
-- A persistent header strip shows: module N of 6 · est. 5 min · "Mark complete & take quiz".
-- Quiz: 5 multiple-choice questions per module, randomized order, 80% pass mark, unlimited retries (each attempt logged).
-- On full completion: simple printable certificate page with rep name + date.
+Violations found:
+- `src/components/slides/Slide3OperatingModel.tsx` — "FOQA exceedance triggers automatic alert", `dataSources` chips `FOQA`, `ASAP`.
+- `src/components/slides/SlideUseCases.tsx` — "FOQA data shows elevated hard landing rates… Flight Operations Quality Assurance".
+- `src/components/shared/CustomerOutcomesSlide.tsx`, `src/components/slides/Slide7Customers.tsx` — "Hard landing trend detected in FOQA data".
+- `src/components/slides/SlideMessagingContext.tsx` — "FOQA exceedance detected".
+- `src/pages/HomepageMockup.tsx` — "FOQA, ASAP, audit finding captured" (×2).
+- `src/pages/solutions/AirlinesPage.tsx` — multiple FOQA references including hero subhead "From FOQA signal to crew action".
+- `src/exporters/pptx/buildTechnicalDeck.ts` — "FOQA exceedance detected", "FOQA exceedance trends".
+- `src/data/dtopPlaybook.ts` — `dataSources: ["Safety reports (ASR/ASAP)", "Flight data (FOQA/FDM)", …]`, competitor row `"Flight Data Analytics (e.g., GE FDM)"`.
+- `src/data/operationalPitchNarration.ts` — "Foqua, Aviation Safety Action Program reports".
+- `src/data/lineOfSightData.ts` — methodology copy refers to "FOQA trend detection", "ASAP/injury report pattern".
+- `src/data/technicalPitchNarration.ts` — "ingesting FOQA, ASAP, voluntary reports".
 
-### What the manager (owner role) experiences
+Fix: global swap to neutral language:
+- "FOQA" / "FDM" / "Foqua" → **"flight operational data"** (or **"Operational Data signals"** in chip context).
+- "ASAP / ASR" raw chips → **"Crew safety reports"**.
+- "Hard landing detected in FOQA data" → **"Hard landing trend detected in operational data"**.
+- Competitor row "GE FDM" → **"Flight data analytics tools"**.
+- Narration scripts: same substitutions, re-record-safe (just text).
 
-- New `/academy/admin` page (gated by `has_role(uid,'owner')`).
-- Table of all reviewers: name · modules passed (e.g. 4/6) · last activity · best score per module · attempts.
-- Drill-down: per-rep timeline of attempts, per-module question-level pass rate (so managers can see which questions everyone fails — a signal the content needs work).
+### 2. Product naming drift (memory rule: BrandNumber, no spaces)
 
----
+Rule: `Comply365`, `SafetyManager365`, `ContentManager365`, `TrainingManager365` — no spaces, no "365" gap.
 
-### The 6 modules (5 min each)
+Violations:
+- `src/components/ops-slides/OpsSlide4DTOP.tsx` — `Safety Manager365`, `Content Manager365`, `Training Manager365` (space before 365).
+- `src/components/coanalyst-slides/CASlide14DeckStructure.tsx`, `CASlide2CategoryNarrative.tsx` — "Safety, Content, Training Manager 365" / "Training Manager 365".
+- `src/components/coanalyst-slides/CASlide11Taglines.tsx` — "Safety, Content, and Training Manager 365".
+- `src/data/executivePitchNarration.ts` — "Safety Manager", "Content Manager", "Training Manager" (no 365).
+- `src/data/operationalPitchNarration.ts` — "Safety Manager three six five" (acceptable for narration phonetics — keep), but also "Safety Manager", "Content Manager", "Training Manager" used loosely elsewhere — normalize to "SafetyManager365" in non-narration copy.
+- `src/data/technicalPitchNarration.ts` — "Safety Manager", "Content Manager", "Training Manager", and slide title `"Safety Manager 365"` — align in titles to `SafetyManager365`. (Inside narration scripts, keep phonetic spelling "three six five" but tighten to "Safety Manager three six five" consistently — already correct in ops, drift in exec.)
+- `src/pages/HomepageMockup.tsx` nav links list "Safety Manager", "Content Manager", "Training Manager" — fix to `SafetyManager365`, etc.
 
-Built from slides already present in `SalesEnablement.tsx`. The existing `SEModuleDivider` content is repurposed as each module's intro card.
+Fix: normalize all visible UI strings to `SafetyManager365` / `ContentManager365` / `TrainingManager365`. Narration `script` strings keep the phonetic `"three six five"` form for TTS quality, but standardize to "Safety Manager three six five", etc., everywhere.
 
-| # | Title | Lesson slides (reused) | Quiz focus |
-|---|---|---|---|
-| **M1** | Why this matters: the strategic shift | `TechSlide1StrategicShift`, `TechSlide2IndustryChallenge` | Industry pain, the shift from fragmentation to platform |
-| **M2** | What the platform is, in plain English | `TechV4PlatformOverview`, `PFSlide9Value`, `SERecapSlide` | One-sentence pitch, the four capability bands |
-| **M3** | How the capabilities fit together | The 8 capability slides + `SELayerTalkTrack` | Naming each capability, 60-second descriptions, discovery Qs |
-| **M4** | How we sell it: before/after & maturity | `Slide4Transformation`, `Slide5MaturityCurve` | Before/after framing, where maturity fits the conversation |
-| **M5** | Use cases & value through DTOP | `SlideUseCases`, Safety/Ops/Financial UCs, `TechSlideRegulationSummary`, `CustomerOutcomesSlide` | Pick the right UC for the pain, walk D→T→O→P with a metric |
-| **M6** | Why we win | `SEObjections`, `TechSlideWhyComply`, `SEClosingForReps` | Top 5 objections, the 3 differentiators, first 7 days |
+### 3. Category / platform naming conflict
 
-Each lesson view reuses the existing slide components in a vertical scroll-snap layout (same UX as today, scoped to that module's slides only).
+Two competing platform names live in different parts of the app:
+- **"Operational Performance Platform"** — the canonical name (memory + platform playbook + customer overview + tech v4).
+- **"Operational Excellence Platform" / "Operational Orchestration Platform" / "Operational Assurance Platform"** — alternative category options in `src/components/slides/category-options/categoryOptionData.ts`, surfaced via `Slide9CategoryRationale` / `SlideCategoryAssurance` etc.
 
----
+These category-options slides were exploration artifacts. They contradict the "Operational Performance Platform" we use everywhere customer-facing.
 
-### Quiz content (sample seed — first pass)
+Fix: the 4 category-option slides remain in the codebase but are **not referenced from any active deck route**. Verify (search for imports) and, if any active deck imports them, drop those slides. Keep the data file for internal reference but add a top-of-file comment marking it as superseded by "Operational Performance Platform".
 
-A starter set of ~30 questions (5 per module) is seeded into the database. Authoring pulls directly from the module learning goals already defined in `moduleProps` and from the playbook data files (`platformPlaybook.ts`, `dtopPlaybook.ts`, etc.). Example for M2:
+### 4. Accuracy stat inconsistencies (CoAnalyst)
 
-> Q: Which is NOT one of the four capability bands of the platform?
-> A) Core Apps  B) Intelligence & Orchestration  C) Unified Mobile  D) Data Warehouse ✗
+The "domain accuracy" headline number drifts:
+- Platform playbook: **">90% accuracy"** (CoAnalyst card).
+- Tech deck `TechSlide8IntelligenceTiers.tsx`: rows show "**90%** accuracy at granular categorization" + Level 4–5 `~90%` vs `30–40%`.
+- Operational narration: "**over ninety percent** … vs roughly **thirty-five percent**".
+- PPTX exporter: stat tile "**90%** … vs ~35% generic AI" and bullet "90% vs 35% accuracy" — but bullet just below says "fine-tuned… since 2023".
+- CoAnalyst narration slide 8: ranges are "70–80%" generic at L1–L2, "30–40%" at L4–L5, vs CoAnalyst ">90%" — internally consistent but framing differs from the ops/tech "35%" generic baseline.
 
-Questions are stored in the database (not hardcoded) so they can be edited later without a deploy. An "edit quiz" view for owners is a fast follow — out of scope for this pass.
+Fix: lock the canonical line everywhere customer-facing as:
+> **"~90% domain accuracy at deep classification (Level 4–5) — vs ~35% for generic AI."**
 
----
+Update:
+- Tech `TechSlide8IntelligenceTiers.tsx` accuracy table — keep, it's the most precise breakdown; reword summary row to match.
+- Platform playbook `intelligenceCapabilities[CoAnalyst].bullets[0]` "Aviation-trained AI (>90% accuracy)" → **"Aviation-trained AI · ~90% domain accuracy (vs ~35% generic)"**.
+- CoAnalyst narration scripts: keep "over ninety percent" but replace the "70–80% generic at L1–L2" framing with the canonical 90% vs 35% headline; preserve the L4–L5 detail for the comparison slide only.
 
-### Technical changes
+### 5. Roadmap dates — pick one source of truth
 
-#### 1. Database (new migration)
+Mixed dates across files for the same milestones:
+- Mobile Phase 1 (TrainingManager365 in shell): platform playbook "**Q2 2026**", mobile playbook "**Phase 1 · Q2 2026**", PPTX "Phase 1 · Q2 2026" — ✅ consistent.
+- Mobile Phase 2 (Safety in shell): "**Q4 2026**" everywhere — ✅.
+- Mobile Phase 3: "**2027+**" everywhere — ✅.
+- Insights & Recommendations: platform playbook **"POC · Targeted Q2 2026"**, insights playbook **"Q2 2026"** — ✅.
+- Automation: platform playbook **"POC · Targeted April 2026"**, automation playbook **"April 2026"** — ✅ (but note: April 2026 is *before* Q2 2026 — Insights ships *after* Automation, which is fine but should be acknowledged in any roadmap visual).
+- Tech V4 PPTX `buildTechnicalDeck.ts` roadmap — uses "H1 2026 / H2 2026 / 2027+". Acceptable abstraction, but the H1/H2 mapping doesn't show Automation (April) vs Insights (Q2) — keep but verify slide doesn't claim Insights ships before Automation.
 
-Three new tables:
+Fix: no date changes needed. **Add a single roadmap memory** `mem://product/roadmap-dates` so future slides don't drift. Audit `buildTechnicalDeck.ts` roadmap section to ensure ordering (Automation → Insights → Mobile P2) is right.
 
-- **`academy_modules`** — `id text PK` (e.g. `'m1'`), `module_number int`, `title text`, `learning_goal text`, `estimated_minutes int`, `slide_ids text[]`, `order_index int`, `created_at`. Seeded with the 6 modules above.
-- **`academy_questions`** — `id uuid PK`, `module_id text FK → academy_modules`, `prompt text`, `options jsonb` (array of `{key, label}`), `correct_key text`, `explanation text`, `order_index int`. Seeded with 5 starter questions per module (30 total).
-- **`academy_attempts`** — `id uuid PK`, `user_id uuid`, `module_id text`, `score int` (0–100), `passed boolean`, `answers jsonb` (`[{question_id, chosen_key, correct}]`), `started_at`, `completed_at`. One row per quiz attempt.
+### 6. DTOP framing inconsistencies
 
-RLS:
-- Reps: read own attempts; insert own attempts. Read all `academy_modules` and `academy_questions` (questions table excludes `correct_key` from the rep client by using a SECURITY DEFINER RPC `submit_quiz_attempt(module_id, answers jsonb)` — keys are evaluated server-side and never sent to the browser).
-- Owners: select all attempts (for admin view), update modules/questions.
+- Platform playbook `dtopModel.steps[O]`: **Orchestrate = violet**, **Prove = emerald**.
+- DTOP playbook `dtopSteps`: **Orchestrate = emerald**, **Prove = violet**.
+- Memory `mem://ui/dtop-visual-prominence` doesn't fix colors per step but visualizations across slides use both mappings inconsistently.
 
-A view `academy_progress_per_user` aggregates best score per (user, module) for fast admin rendering.
+Fix: lock canonical DTOP color mapping (matches what most exec/tech slides already use):
+- D = blue · T = amber · O = violet · P = emerald
 
-#### 2. Quiz delivery — server-graded
+Update `src/data/dtopPlaybook.ts` `dtopSteps` to swap O/P colors to match the platform playbook (violet for O, emerald for P). Audit any per-slide overrides (`OpsSlide4DTOP`, `RMSlide4bDTOP`, exec slides) and conform.
 
-Critical: never send `correct_key` to the client. Pattern:
+### 7. DTOP industry exposure figure
 
-- Client fetches questions via RPC `get_module_quiz(module_id)` which returns `id`, `prompt`, `options` only.
-- Client posts answers to RPC `submit_quiz_attempt(module_id, answers)` which:
-  1. Loads `correct_key` server-side
-  2. Computes score, passed (≥80%)
-  3. Inserts row into `academy_attempts`
-  4. Returns `{score, passed, per_question: [{id, correct, explanation}]}` so the result page can show what was right/wrong.
+- DTOP playbook: **"$25–35B"** with citation stack — ✅ matches `mem://content/dtop/industry-exposure-figure`.
+- Verify no slide still uses the legacy **"$4.1B"** figure. Quick grep shows none in active files; will re-confirm in the implementation pass.
 
-#### 3. New routes & pages
+### 8. Trust signals drift
 
-- `src/pages/academy/AcademyHome.tsx` — module grid with per-module status (locked/in-progress/passed), uses `academy_progress_per_user`.
-- `src/pages/academy/ModuleLesson.tsx` — wraps a subset of existing slides in scroll-snap container (extracted shared layout from `SalesEnablement.tsx`).
-- `src/pages/academy/ModuleQuiz.tsx` — fetches questions, renders one question at a time, posts to `submit_quiz_attempt`.
-- `src/pages/academy/QuizResult.tsx` — pass/fail + per-question feedback + Retry / Next module CTAs.
-- `src/pages/academy/Certificate.tsx` — printable summary when all 6 passed.
-- `src/pages/academy/AdminDashboard.tsx` — owner-only table of users × modules with attempts drill-down.
+Memory rule: **"550+ Airlines Worldwide", "~2.5M Users", "6 Continents"**.
 
-All routes registered under `<Route path="/academy">` in `src/App.tsx` inside `<AppLayout>`. Auth guard wrapper component `RequireAuth` redirects to `/auth?next=…`.
+Spot checks:
+- `COSlide0Title` trust stats — verify exact labels match.
+- `personaProfiles.ts` says "550+ airlines" ✅.
+- Various CTA / footer slides — confirm same numbers everywhere.
 
-#### 4. Sidebar + Home updates
+Fix: scan every component using these stats and align to the three canonical strings.
 
-- Sidebar **Sales Enablement** group gains a second item: **Academy** (`/academy`, `GraduationCap` icon). Existing "Sales Enablement Training" entry stays as the full deck.
-- HomePage **Sales Enablement & Training** section gains an "Academy" card alongside the existing one.
+### 9. Sales Enablement Academy ↔ Source decks
 
-#### 5. Shared lesson layout
+The Academy registry (`src/components/academy/slideRegistry.ts`) reuses live slide components. After the fixes above (FOQA → operational data, naming, accuracy stat, DTOP colors), the Academy modules will inherit the corrected content automatically. **No separate Academy-content edits required**, but the **quiz seed in the migration** may reference outdated specifics (e.g. "FOQA", "Operational Excellence"). I'll review the seed migration and update questions/answers to match the corrected canonical messaging — via a new follow-on migration, not by editing the historical one.
 
-Extract the scroll-snap container + keyboard nav from `SalesEnablement.tsx` into `src/components/academy/LessonScroller.tsx` so both the full deck and per-module lessons share the same UX. The existing `/sales-enablement` page is refactored to use it.
+### 10. Smaller copy inconsistencies
 
-#### 6. Quiz UX details
-
-- Single question per screen, 4 options (radio), Next button disabled until selection.
-- Progress bar (Question 3 of 5).
-- No back navigation mid-quiz (prevents look-ahead). Final review screen before submit.
-- Result screen shows score, pass threshold (80%), per-question correct/incorrect with explanation, and either "Retry" (if failed) or "Next module" (if passed).
-- Attempts are unlimited but every attempt is logged so managers see if someone retried 8 times.
-
-#### 7. Admin analytics
-
-`AdminDashboard.tsx` queries:
-- `academy_progress_per_user` for the user × module matrix.
-- `academy_attempts` aggregated for attempts-per-question pass rate (highlights questions everyone fails).
-
-Simple table UI built from existing `Card` / `Table` shadcn components. CSV export button (client-side, no extra deps).
-
----
-
-### Files
-
-**NEW**
-- `supabase/migrations/<timestamp>_academy.sql` — 3 tables + RLS + 2 RPCs + seed
-- `src/pages/academy/AcademyHome.tsx`
-- `src/pages/academy/ModuleLesson.tsx`
-- `src/pages/academy/ModuleQuiz.tsx`
-- `src/pages/academy/QuizResult.tsx`
-- `src/pages/academy/Certificate.tsx`
-- `src/pages/academy/AdminDashboard.tsx`
-- `src/components/academy/LessonScroller.tsx`
-- `src/components/academy/ModuleCard.tsx`
-- `src/components/academy/RequireAuth.tsx`
-- `src/hooks/useAcademyProgress.ts`
-
-**EDITED**
-- `src/App.tsx` (routes)
-- `src/components/AppSidebar.tsx` (Academy item)
-- `src/pages/HomePage.tsx` (Academy card)
-- `src/pages/SalesEnablement.tsx` (use shared `LessonScroller`)
-
-**NOT TOUCHED**
-- Existing slide components, playbook data, `/auth`, `/review`.
+- `src/data/insightsPlaybook.ts` describes Insights as *"Generative AI on connected data"* (good — matches memory). Other places still say "AI" generically — tighten to **"Generative AI"** when describing Insights & CoAnalyst.
+- `automationPlaybook.ts` `objections` mentions "Prismatic" is correctly NOT named externally (memory says don't name underlying engine) — ✅ already abstracted.
+- `regulationManagementPlaybook.ts` references "1,400+ regulations" tied to "British Airways" — remove the named customer; rephrase to **"At a major flag carrier, ~1,100 people interact with regulatory content daily"** stays but drop "British Airways" specifically (avoid unverified named-customer claim in playbook copy).
 
 ---
 
-### QA
+## Files to be edited (single remediation pass)
 
-- Logged-out user visiting `/academy` is redirected to `/auth` then back.
-- Logged-in rep sees 6 module cards; only M1 unlocked initially.
-- Completing M1 lesson → quiz → ≥80% unlocks M2; <80% allows immediate retry.
-- `correct_key` is never present in any network response (verified in DevTools).
-- Owner user sees `/academy/admin` link; reviewer does not.
-- Admin table shows reviewer × 6-module grid with best scores and attempt counts.
-- Refreshing mid-quiz does not double-count attempts (attempt row written only on submit).
-- All 6 modules passed → certificate page renders with display name and date.
+**Data / playbooks**
+- `src/data/dtopPlaybook.ts` — rewrite FOQA/FDM/ASAP refs; swap O/P colors; replace "GE FDM" competitor row label.
+- `src/data/platformPlaybook.ts` — tighten CoAnalyst accuracy bullet.
+- `src/data/insightsPlaybook.ts` — minor "Generative AI" tightening.
+- `src/data/regulationManagementPlaybook.ts` — remove "British Airways" name.
+- `src/data/lineOfSightData.ts` — methodology strings: FOQA → "flight operational data".
+- `src/data/operationalPitchNarration.ts`, `src/data/technicalPitchNarration.ts`, `src/data/executivePitchNarration.ts`, `src/data/coanalystNarration.ts` — terminology + accuracy stat alignment; product-name normalization (phonetic OK in TTS).
+
+**Slides**
+- `src/components/slides/Slide3OperatingModel.tsx`
+- `src/components/slides/SlideUseCases.tsx`
+- `src/components/slides/Slide7Customers.tsx`
+- `src/components/slides/SlideMessagingContext.tsx`
+- `src/components/shared/CustomerOutcomesSlide.tsx`
+- `src/components/ops-slides/OpsSlide4DTOP.tsx`
+- `src/components/coanalyst-slides/CASlide14DeckStructure.tsx`
+- `src/components/coanalyst-slides/CASlide2CategoryNarrative.tsx`
+- `src/components/coanalyst-slides/CASlide11Taglines.tsx`
+- `src/components/tech-slides/TechSlide8IntelligenceTiers.tsx` — accuracy summary line.
+- Any slide importing the 4 category-option slides (`SlideCategoryAssurance`, `SlideCategoryExcellence`, `SlideCategoryOrchestration`, `Slide9CategoryRationale`) — verify and remove if surfaced anywhere customer-facing.
+
+**Pages**
+- `src/pages/HomepageMockup.tsx` — FOQA → operational data; product names.
+- `src/pages/solutions/AirlinesPage.tsx` — FOQA → operational data (incl. hero subhead).
+
+**PPTX exporters**
+- `src/exporters/pptx/buildTechnicalDeck.ts` — FOQA refs; CoAnalyst accuracy line; roadmap ordering check.
+- `src/exporters/pptx/buildExecutiveDeck.ts` — quick scan for same drift.
+
+**Academy seed alignment**
+- New Supabase migration only if quiz questions reference outdated terms.
+
+**Memory updates**
+- New: `mem://product/roadmap-dates` — locks Mobile P1 Q2 2026, P2 Q4 2026, P3 2027+; Insights Q2 2026; Automation April 2026.
+- New: `mem://content/dtop/color-mapping` — D blue · T amber · O violet · P emerald.
+- Update: `mem://index.md` Core line for AI terminology to also include the canonical "~90% vs ~35%" stat.
 
 ---
 
-### Open question (please confirm before build)
+## Out of scope
 
-**Pass mark:** Plan uses **80%** (4/5 correct per module). If you'd prefer 100% (must get all right) or 60% (3/5) say so and we'll adjust. We can also make it configurable per-module in the seed.
+- CEO Pitch (`/pitch-executive-2`) — explicitly excluded.
+- Visual redesign / layout changes — content-only pass.
+- Re-recording narration audio — text fixes only; existing audio stays until next regeneration.
+- New slides or new decks.
 
-If happy with the above, approve and we'll implement.
+---
+
+## QA after the pass
+
+1. Repo-wide grep: `FOQA|FDM|Foqua|ASAP\b` → only allowed inside narration phonetic spellings or removed entirely.
+2. Repo-wide grep for product-name spacing: `Safety Manager 365|Content Manager 365|Training Manager 365|Safety Manager365` → zero hits.
+3. Repo-wide grep: `Operational Excellence Platform|Operational Assurance Platform|Operational Orchestration Platform` → only inside `categoryOptionData.ts` (marked superseded).
+4. Spot-check 5 representative slides in the preview (Customer Overview title, Tech V4 platform overview, Platform Playbook DTOP slide, Ops DTOP, CoAnalyst tagline) for visible terminology consistency.
+5. Confirm Academy lessons render the corrected slides (registry passthrough — should be automatic).
