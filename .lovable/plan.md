@@ -1,53 +1,62 @@
 
 
-## Sales Enablement Title Slide — Remove "5 Layers" references
+## Home page + sidebar reorganization
 
-The title slide (`SESlide0Title`) and rep checklist (`SEClosingForReps`) still describe the deck as a 5-module course built around "The 5 Layers." After the recent restructure, the deck has 6 modules and the architecture is 4 capability bands (no layer numbers). This pass aligns the title agenda and rep checklist to the new structure.
+Reorder the Command Centre home page and the left sidebar so the three primary customer-facing decks lead, sales enablement follows, capabilities sit next, target-audience content gets its own section, and internal strategy/positioning drops to the bottom.
+
+### New section order (HomePage + Sidebar)
+
+| # | Section | Items |
+|---|---|---|
+| 1 | **Customer Pitch Decks** | Customer Overview · Executive Pitch 3 · Technical Deep Dive v4 |
+| 2 | **Sales Enablement & Training** | Sales Enablement Training |
+| 3 | **Capabilities** (renamed from "Tools & Reference") | Platform Playbook · CoAnalyst · Regulation Management · DTOP Operating Model · Insights & Recommendations · Automation · Unified Mobile App |
+| 4 | **Target Audience** (NEW) | Persona Deep-Dive |
+| 5 | **Strategy & Positioning** (moved to bottom) | Strategy Deck · Content Strategy |
+
+Other existing decks (Executive Pitch [v2], Operational Pitch, Technical Deep-Dive [v3]) are removed from the home page top section to keep the customer-facing trio clean. They remain reachable via direct URL but are not surfaced. Confirm in QA — if user wants them retained, fold into a collapsed "Other decks" group at the bottom.
 
 ### Changes
 
-**1. `src/components/sales-enablement-slides/SESlide0Title.tsx`**
+**1. `src/pages/HomePage.tsx`**
 
-Update the `modules` array from 5 entries to 6, matching the live deck:
+- Rebuild the `pitchDecks` array to contain only: Customer Overview, Executive Pitch 3, Technical Deep Dive v4 (in that order).
+- Remove Executive Pitch (v2), Operational Pitch, Technical Deep-Dive (v3) cards from "Customer Pitch Decks". 
+- Keep "Sales Enablement & Training" section as-is, second.
+- Rename "Tools & Reference" section heading to **"Capabilities"** with subtitle "Per-capability playbooks for the Operational Performance Platform". Remove the Persona Deep-Dive card from this grid.
+- Add new section **"Target Audience"** with subtitle "Buyer personas, messaging and discovery questions" containing the Persona Deep-Dive card (and Line of Sight + Homepage Mockup if we want to keep them surfaced — confirmed kept under Capabilities; Personas moves alone into Target Audience).
+- Move "Strategy & Positioning" section to the bottom of the page.
+- Final render order in JSX: Pitch Decks → Sales Enablement → Capabilities → Target Audience → Strategy & Positioning.
 
-| # | Title | Desc |
-|---|---|---|
-| 1 | The Market Shift | Why this exists |
-| 2 | What It Is | Plain-English pitch |
-| 3 | The Capabilities | How it fits together |
-| 4 | How We Sell It | Discovery → demo → close |
-| 5 | Use Cases & DTOP | Value through Detect→Prove |
-| 6 | Why We Win | Objections & next steps |
+**2. `src/components/AppSidebar.tsx`**
 
-- Replace `"The 5 Layers"` → `"The Capabilities"`.
-- Insert new M5 `"Use Cases & DTOP"` (icon: `Target` or reuse `Layers`; accent rose/cyan to differ from M6).
-- Renumber Why We Win from M5 → M6 (keep rose accent or shift M6 to a new accent).
-- Change grid from `md:grid-cols-5` → `md:grid-cols-6` so all six module cards fit on one row at desktop, with `md:grid-cols-3` fallback already covered by `grid-cols-1`.
-- Update the header meta line `"24 slides · ~35 min"` to reflect the current count — recompute from `SalesEnablement.tsx` (likely ~28 slides · ~45 min; final number set when implementing).
-- Imports: add an additional Lucide icon for the new M5 (e.g. `Target`).
+Reorder and rename groups to match home:
 
-**2. `src/components/sales-enablement-slides/SEClosingForReps.tsx`**
+- **Pitch Decks** group: replace `pitchItems` with three entries — Customer Overview (`/customer-overview`, `Presentation`), Executive Pitch 3 (`/pitch-executive-3`, `Rocket`), Technical Deep Dive v4 (`/pitch-technical-v4`, `BookOpen`).
+- **Sales Enablement** group (NEW between Pitch Decks and Capabilities): single item — Sales Enablement Training (`/sales-enablement`, `GraduationCap`).
+- **Capabilities** group (renamed from "Platform & Capabilities"): keep existing platform items (Platform Playbook, CoAnalyst, Insights & Recs, Automation, Unified Mobile, DTOP Operating Model, Regulation Mgmt). Remove Personas from `referenceItems`.
+- **Target Audience** group (NEW): Personas (`/personas`, `Users`).
+- **Reference** group: remaining items — Line of Sight, Homepage Mockup.
+- **Strategy** group: moved to the bottom — Strategy Deck, Content Strategy.
+- **Collaboration** (Reviews) stays at the very bottom under Strategy.
 
-In the `checklist` array, replace:
-- `"I can name the 5 layers and what each does in plain English"`  
-  →  `"I can name the four capabilities (Core Apps, Intelligence & Orchestration, Mobile, DTOP) and what each does in plain English"`
-
-Leave the rest of the checklist untouched.
+Render order in `AppSidebar`: Home → Pitch Decks → Sales Enablement → Capabilities → Target Audience → Reference → Strategy → Collaboration → user/auth.
 
 ### Files
 
 **EDITED**
-- `src/components/sales-enablement-slides/SESlide0Title.tsx`
-- `src/components/sales-enablement-slides/SEClosingForReps.tsx`
+- `src/pages/HomePage.tsx`
+- `src/components/AppSidebar.tsx`
 
 **NOT TOUCHED**
-- Module dividers (`SEModuleDivider` usage in `SalesEnablement.tsx`) — already updated in prior pass.
-- All other SE slides, talk track, recap.
-- v3/v4 tech decks, customer overview, executive decks.
+- Routing (`src/App.tsx`) — all URLs unchanged.
+- Slide components, playbooks, persona data.
+- `MainNavigation` (top header used on marketing pages, not the command centre).
 
 ### QA
 
-- `/sales-enablement` title slide shows 6 module cards, no "5 Layers" wording, M5 reads "Use Cases & DTOP", M6 reads "Why We Win".
-- Rep checklist at end of deck references "four capabilities" with the four band names, not "5 layers".
-- Slide count/time in the eyebrow matches the actual deck length.
+- `/` shows sections in order: Customer Pitch Decks (3 cards) → Sales Enablement & Training → Capabilities (7 cards, no Personas) → Target Audience (Personas card) → Strategy & Positioning (2 cards).
+- Sidebar groups in order: Home, Pitch Decks (3), Sales Enablement (1), Capabilities (7), Target Audience (1), Reference (2), Strategy (2), Collaboration.
+- All deck links route correctly.
+- No broken icon imports.
 
