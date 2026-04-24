@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { 
   Rocket, Briefcase, BookOpen, 
-  Presentation, Brain, FileText, 
+  Presentation, Brain, 
   ArrowRight, Users, ScrollText, Workflow, Layers, Sparkles, Zap, Smartphone, GraduationCap
 } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
@@ -47,24 +47,6 @@ const pitchDecks: DeckCard[] = [
     icon: BookOpen,
     badge: "Long · ~45–60 min · 30 slides",
     accent: "from-primary to-comply-teal",
-  },
-];
-
-const strategyDecks: DeckCard[] = [
-  {
-    title: "Strategy Deck",
-    description: "Master positioning narrative and category creation framework.",
-    href: "/strategy",
-    icon: Presentation,
-    badge: "15 slides",
-    accent: "from-primary to-accent",
-  },
-  {
-    title: "Content Strategy",
-    description: "Channel architecture, content inventory, and sales enablement.",
-    href: "/content-strategy",
-    icon: FileText,
-    accent: "from-comply-teal to-accent",
   },
 ];
 
@@ -258,19 +240,6 @@ export default function HomePage() {
               badge: "11 slides",
               accent: "from-accent to-comply-teal",
             }} />
-          </div>
-        </section>
-
-        {/* Strategy */}
-        <section>
-          <SectionHeader 
-            title="Strategy & Positioning" 
-            subtitle="Internal playbooks and frameworks" 
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
-            {strategyDecks.map((card) => (
-              <DeckCardComponent key={card.href} card={card} />
-            ))}
           </div>
         </section>
 

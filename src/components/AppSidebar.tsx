@@ -53,11 +53,6 @@ const targetAudienceItems: NavItem[] = [
   { title: "Personas", url: "/personas", icon: Users },
 ];
 
-const strategyItems: NavItem[] = [
-  { title: "Strategy Deck", url: "/strategy", icon: Presentation },
-  { title: "Content Strategy", url: "/content-strategy", icon: FileText },
-];
-
 const referenceItems: NavItem[] = [
   { title: "Line of Sight", url: "/line-of-sight", icon: Target },
   { title: "Homepage Mockup", url: "/homepage-mockup", icon: Globe },
@@ -140,8 +135,6 @@ export function AppSidebar() {
         <NavGroup label="Capabilities" items={capabilityItems} />
         <SidebarSeparator />
         <NavGroup label="Reference" items={referenceItems} />
-        <SidebarSeparator />
-        <NavGroup label="Strategy" items={strategyItems} />
         <SidebarSeparator />
         <NavGroup label="Collaboration" items={collaborationItems} />
 
