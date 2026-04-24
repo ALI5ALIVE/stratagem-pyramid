@@ -18,7 +18,6 @@ import TechSlide4bContentManager from "@/components/tech-slides/TechSlide4bConte
 import TechSlide4cTrainingManager from "@/components/tech-slides/TechSlide4cTrainingManager";
 
 // Intelligence & Orchestration (now includes data substrate)
-import TechV4SlideIntelligenceSubstrate from "@/components/tech-slides/v4/TechV4SlideIntelligenceSubstrate";
 import TechSlide7CoAnalyst from "@/components/tech-slides/TechSlide7CoAnalyst";
 import TechSlideInsights from "@/components/tech-slides/TechSlideInsights";
 import TechSlideAutomation from "@/components/tech-slides/TechSlideAutomation";
@@ -54,10 +53,9 @@ const dividerProps = {
   },
   intelligence: {
     layerNumber: 2, layerName: "Intelligence & Orchestration",
-    tagline: "The data substrate — unified taxonomy, knowledge graph and aviation LLMs — plus Insights, Recommendations and Automation. One layer that turns operational data into action.",
+    tagline: "Insights, Recommendations and Automation — one layer that turns operational data into action.",
     active: "intelligence" as const,
     upNext: [
-      "Data substrate (taxonomy · graph · LLMs)",
       "Insights & Intelligence",
       "Recommendations & Prescriptive Actions",
       "Automation",
@@ -108,7 +106,6 @@ const slides = [
   { id: "tech-slide-4c", label: "L1 · TrainingManager365", component: TechSlide4cTrainingManager },
   // Intelligence & Orchestration (data substrate folded in)
   { id: "tech-divider-intelligence", label: "▸ Layer 2 · Intelligence & Orchestration", component: TechSlideLayerDivider, dividerProps: dividerProps.intelligence },
-  { id: "tech-slide-intelligence-substrate", label: "L2 · Data Substrate", component: TechV4SlideIntelligenceSubstrate },
   { id: "tech-slide-coanalyst", label: "L2 · Insights & Intelligence", component: TechSlide7CoAnalyst },
   { id: "tech-slide-insights", label: "L2 · Recommendations & Prescriptive Actions", component: TechSlideInsights },
   { id: "tech-slide-automation", label: "L2 · Automation", component: TechSlideAutomation },

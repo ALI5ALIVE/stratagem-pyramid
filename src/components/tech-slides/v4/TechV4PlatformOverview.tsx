@@ -1,5 +1,5 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
-import PlatformArchitectureDiagram from "@/components/platform-slides/PlatformArchitectureDiagram";
+import PlatformArchitectureDiagramV4 from "@/components/platform-slides/PlatformArchitectureDiagramV4";
 import { ChevronRight } from "lucide-react";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
@@ -29,7 +29,7 @@ const TechV4PlatformOverview = ({ slideNumber, ...narrationProps }: Props) => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0 items-stretch">
         <div className="lg:col-span-2 flex items-center justify-center min-h-0">
           <div className="w-full">
-            <PlatformArchitectureDiagram compact />
+            <PlatformArchitectureDiagramV4 compact />
           </div>
         </div>
         <div className="grid grid-rows-4 gap-2 h-full">
