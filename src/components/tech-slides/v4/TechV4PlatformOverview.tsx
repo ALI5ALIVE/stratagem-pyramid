@@ -32,18 +32,49 @@ const TechV4PlatformOverview = ({ slideNumber, ...narrationProps }: Props) => {
             <PlatformArchitectureDiagramV4 compact />
           </div>
         </div>
-        <div className="grid grid-rows-4 gap-2 h-full">
-          {guide.map((g) => (
+        <div className="flex flex-col gap-2 h-full">
+          <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
+            Layers 2–4 = The Platform · Layer 1 = The Foundation
+          </div>
+          {/* Platform group: L4, L3, L2 (top-down) */}
+          <div className="relative flex-1 rounded-xl border-2 border-primary/30 bg-primary/5 p-2 pt-5 flex flex-col gap-2">
+            <div className="absolute -top-2 left-3 px-2 bg-background">
+              <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-primary">
+                The Platform · One Integrated Solution
+              </span>
+            </div>
+            {guide.slice(0, 3).map((g) => (
+              <button
+                key={g.tag}
+                type="button"
+                onClick={() => jumpTo(g.target)}
+                title={`Jump to ${g.title}`}
+                className="text-left rounded-lg border border-muted/20 bg-card/40 hover:bg-card/70 hover:border-primary/40 transition-all p-2.5 flex flex-col justify-center flex-1 group cursor-pointer"
+              >
+                <div className="flex items-baseline gap-2">
+                  <span className={`text-[10px] font-bold uppercase tracking-wider ${g.color}`}>{g.tag}</span>
+                  <span className="text-sm font-bold text-foreground">{g.title}</span>
+                  <span className={`ml-auto inline-flex items-center gap-0.5 text-[9px] uppercase tracking-wider ${g.color} opacity-70 group-hover:opacity-100 transition-opacity`}>
+                    jump <ChevronRight className="h-2.5 w-2.5" />
+                  </span>
+                </div>
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{g.desc}</p>
+              </button>
+            ))}
+          </div>
+          {/* Foundation: L1 sits outside the bracket */}
+          {guide.slice(3).map((g) => (
             <button
               key={g.tag}
               type="button"
               onClick={() => jumpTo(g.target)}
               title={`Jump to ${g.title}`}
-              className="text-left rounded-xl border border-muted/20 bg-card/40 hover:bg-card/70 hover:border-primary/40 transition-all p-3 flex flex-col justify-center h-full group cursor-pointer"
+              className="text-left rounded-xl border border-muted/20 bg-card/40 hover:bg-card/70 hover:border-primary/40 transition-all p-2.5 flex flex-col justify-center group cursor-pointer"
             >
               <div className="flex items-baseline gap-2">
                 <span className={`text-[10px] font-bold uppercase tracking-wider ${g.color}`}>{g.tag}</span>
                 <span className="text-sm font-bold text-foreground">{g.title}</span>
+                <span className="ml-2 text-[9px] uppercase tracking-wider text-muted-foreground/70">Foundation</span>
                 <span className={`ml-auto inline-flex items-center gap-0.5 text-[9px] uppercase tracking-wider ${g.color} opacity-70 group-hover:opacity-100 transition-opacity`}>
                   jump <ChevronRight className="h-2.5 w-2.5" />
                 </span>
