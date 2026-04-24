@@ -22,6 +22,7 @@ import TechV4SlideAutomation from "@/components/tech-slides/v4/TechV4SlideAutoma
 import TechV4SlideTiersVsAI from "@/components/tech-slides/v4/TechV4SlideTiersVsAI";
 import TechV4SlideMobile from "@/components/tech-slides/v4/TechV4SlideMobile";
 import TechV4Slide5DTOP from "@/components/tech-slides/v4/TechV4Slide5DTOP";
+import TechSlideRegulationSummary from "@/components/tech-slides/TechSlideRegulationSummary";
 import Slide4Transformation from "@/components/slides/Slide4Transformation";
 import SlideUseCases from "@/components/slides/SlideUseCases";
 import Slide5MaturityCurve from "@/components/slides/Slide5MaturityCurve";
@@ -48,7 +49,7 @@ const moduleProps = {
     title: "How we sell it",
     learningGoal: "By the end of this module you understand the discovery → demo → close motion, and which proof points land where.",
     estimatedMinutes: 8,
-    upNext: ["Before vs After", "Use cases", "Maturity roadmap", "Customer outcomes"],
+    upNext: ["Before vs After", "Use cases", "Regulation Management use case", "Maturity roadmap", "Customer outcomes"],
   },
   m5: {
     moduleNumber: 5,
@@ -85,6 +86,7 @@ const slides = [
   { id: "se-module-4", label: "▸ Module 4", component: SEModuleDivider, dividerProps: moduleProps.m4 },
   { id: "se-slide-transform", label: "M4 · Before vs After", component: Slide4Transformation },
   { id: "se-slide-usecases", label: "M4 · Use Cases", component: SlideUseCases },
+  { id: "se-slide-regmgmt", label: "M4 · Use Case — Regulation Management", component: TechSlideRegulationSummary },
   { id: "se-slide-maturity", label: "M4 · Maturity Roadmap", component: Slide5MaturityCurve },
   { id: "se-slide-outcomes", label: "M4 · Customer Outcomes", component: CustomerOutcomesSlide },
   // MODULE 5
