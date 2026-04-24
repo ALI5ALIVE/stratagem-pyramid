@@ -28,9 +28,9 @@ type NavItem = {
 };
 
 const pitchItems: NavItem[] = [
-  { title: "Customer Overview", url: "/customer-overview", icon: Presentation },
-  { title: "Executive Pitch 3", url: "/pitch-executive-3", icon: Rocket },
-  { title: "Technical Deep Dive v4", url: "/pitch-technical-v4", icon: BookOpen },
+  { title: "Short — Customer Overview", url: "/customer-overview", icon: Presentation },
+  { title: "Medium — Executive Pitch", url: "/pitch-executive-3", icon: Rocket },
+  { title: "Long — Technical Deep Dive", url: "/pitch-technical-v4", icon: BookOpen },
 ];
 
 const salesEnablementItems: NavItem[] = [
