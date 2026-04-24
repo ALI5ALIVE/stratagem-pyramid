@@ -164,8 +164,8 @@ export default function HomePage() {
         {/* Tools */}
         <section>
           <SectionHeader 
-            title="Tools & Reference" 
-            subtitle="Sales enablement resources and interactive tools" 
+            title="Capabilities" 
+            subtitle="Per-capability playbooks for the Operational Performance Platform" 
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <DeckCardComponent card={{
@@ -183,14 +183,6 @@ export default function HomePage() {
               icon: Brain,
               badge: "15 slides",
               accent: "from-comply-plum to-primary",
-            }} />
-            <DeckCardComponent card={{
-              title: "Persona Deep-Dive",
-              description: "Comprehensive buyer personas with messaging, objections, and discovery questions for every stakeholder.",
-              href: "/personas",
-              icon: Users,
-              badge: "5 personas",
-              accent: "from-violet-500 to-cyan-500",
             }} />
             <DeckCardComponent card={{
               title: "Regulation Management",
