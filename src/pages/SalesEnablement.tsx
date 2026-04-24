@@ -11,14 +11,17 @@ import SEClosingForReps from "@/components/sales-enablement-slides/SEClosingForR
 
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
 import TechSlide2IndustryChallenge from "@/components/tech-slides/TechSlide2IndustryChallenge";
-import PFSlide2WhatIs from "@/components/platform-slides/PFSlide2WhatIs";
-import TechSlide4Platform from "@/components/tech-slides/TechSlide4Platform";
 import PFSlide9Value from "@/components/platform-slides/PFSlide9Value";
-import ExecCoreAppsSummary from "@/components/exec-slides/ExecCoreAppsSummary";
-import TechSlideDataFoundation from "@/components/tech-slides/TechSlideDataFoundation";
-import TechSlide7CoAnalyst from "@/components/tech-slides/TechSlide7CoAnalyst";
-import TechSlideMobile from "@/components/tech-slides/TechSlideMobile";
-import TechSlide5DTOP from "@/components/tech-slides/TechSlide5DTOP";
+import TechV4PlatformOverview from "@/components/tech-slides/v4/TechV4PlatformOverview";
+import TechV4Slide4aSafetyManager from "@/components/tech-slides/v4/TechV4Slide4aSafetyManager";
+import TechV4Slide4bContentManager from "@/components/tech-slides/v4/TechV4Slide4bContentManager";
+import TechV4Slide4cTrainingManager from "@/components/tech-slides/v4/TechV4Slide4cTrainingManager";
+import TechV4Slide7CoAnalyst from "@/components/tech-slides/v4/TechV4Slide7CoAnalyst";
+import TechV4SlideInsights from "@/components/tech-slides/v4/TechV4SlideInsights";
+import TechV4SlideAutomation from "@/components/tech-slides/v4/TechV4SlideAutomation";
+import TechV4SlideTiersVsAI from "@/components/tech-slides/v4/TechV4SlideTiersVsAI";
+import TechV4SlideMobile from "@/components/tech-slides/v4/TechV4SlideMobile";
+import TechV4Slide5DTOP from "@/components/tech-slides/v4/TechV4Slide5DTOP";
 import Slide4Transformation from "@/components/slides/Slide4Transformation";
 import SlideUseCases from "@/components/slides/SlideUseCases";
 import Slide5MaturityCurve from "@/components/slides/Slide5MaturityCurve";
@@ -29,16 +32,16 @@ const moduleProps = {
   m2: {
     moduleNumber: 2,
     title: "What the platform is, in plain English",
-    learningGoal: "By the end of this module you can give the one-sentence pitch and name the five layers without reading them off a slide.",
+    learningGoal: "By the end of this module you can give the one-sentence pitch and name the four capability bands without reading them off a slide.",
     estimatedMinutes: 6,
-    upNext: ["Plain-English definition", "The 5-layer mental model", "Value unlocked", "Recap talk track"],
+    upNext: ["Plain-English definition", "The platform at a glance", "Value unlocked", "Recap talk track"],
   },
   m3: {
     moduleNumber: 3,
-    title: "How the 5 layers fit together",
-    learningGoal: "By the end of this module you can describe each layer in 60 seconds and ask one good discovery question per layer.",
+    title: "How the capabilities fit together",
+    learningGoal: "By the end of this module you can describe each capability in 60 seconds and ask one good discovery question per capability.",
     estimatedMinutes: 12,
-    upNext: ["Core Apps", "Data Foundation", "Intelligence", "Mobile", "DTOP", "Layer cheat sheet"],
+    upNext: ["Core Apps", "Intelligence & Orchestration", "Mobile", "DTOP", "Capability cheat sheet"],
   },
   m4: {
     moduleNumber: 4,
@@ -63,18 +66,21 @@ const slides = [
   { id: "se-slide-challenge", label: "M1 · Industry Challenge", component: TechSlide2IndustryChallenge },
   // MODULE 2
   { id: "se-module-2", label: "▸ Module 2", component: SEModuleDivider, dividerProps: moduleProps.m2 },
-  { id: "se-slide-whatis", label: "M2 · What It Is", component: PFSlide2WhatIs },
-  { id: "se-slide-5layer", label: "M2 · 5-Layer Map", component: TechSlide4Platform },
+  { id: "se-slide-whatis", label: "M2 · The Platform", component: TechV4PlatformOverview },
   { id: "se-slide-value", label: "M2 · Value Unlocked", component: PFSlide9Value },
   { id: "se-slide-recap-m2", label: "M2 · Recap", component: SERecapSlide },
   // MODULE 3
   { id: "se-module-3", label: "▸ Module 3", component: SEModuleDivider, dividerProps: moduleProps.m3 },
-  { id: "se-slide-l1", label: "M3 · Layer 1 — Core Apps", component: ExecCoreAppsSummary },
-  { id: "se-slide-l2", label: "M3 · Layer 2 — Data", component: TechSlideDataFoundation },
-  { id: "se-slide-l3", label: "M3 · Layer 3 — Intelligence", component: TechSlide7CoAnalyst },
-  { id: "se-slide-l4", label: "M3 · Layer 4 — Mobile", component: TechSlideMobile },
-  { id: "se-slide-l5", label: "M3 · Layer 5 — DTOP", component: TechSlide5DTOP },
-  { id: "se-slide-talktrack", label: "M3 · Layer Talk Track", component: SELayerTalkTrack },
+  { id: "se-slide-4a", label: "M3 · Core Apps — SafetyManager365", component: TechV4Slide4aSafetyManager },
+  { id: "se-slide-4b", label: "M3 · Core Apps — ContentManager365", component: TechV4Slide4bContentManager },
+  { id: "se-slide-4c", label: "M3 · Core Apps — TrainingManager365", component: TechV4Slide4cTrainingManager },
+  { id: "se-slide-coanalyst", label: "M3 · Intelligence — CoAnalyst", component: TechV4Slide7CoAnalyst },
+  { id: "se-slide-insights", label: "M3 · Intelligence — Insights", component: TechV4SlideInsights },
+  { id: "se-slide-automation", label: "M3 · Intelligence — Automation", component: TechV4SlideAutomation },
+  { id: "se-slide-tiers-vs-ai", label: "M3 · CoAnalyst vs Generic AI", component: TechV4SlideTiersVsAI },
+  { id: "se-slide-mobile", label: "M3 · Mobile", component: TechV4SlideMobile },
+  { id: "se-slide-dtop", label: "M3 · DTOP", component: TechV4Slide5DTOP },
+  { id: "se-slide-talktrack", label: "M3 · Capability Talk Track", component: SELayerTalkTrack },
   // MODULE 4
   { id: "se-module-4", label: "▸ Module 4", component: SEModuleDivider, dividerProps: moduleProps.m4 },
   { id: "se-slide-transform", label: "M4 · Before vs After", component: Slide4Transformation },
