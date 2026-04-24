@@ -26,6 +26,13 @@ const stack: { key: LayerKey; label: string; accent: string; bg: string; border:
   { key: "core",         label: "Layer 1 · Core Operational Apps",        accent: "blue",    bg: "bg-blue-500/10",    border: "border-blue-500/40",    text: "text-blue-300" },
 ];
 
+const v4Stack: { key: LayerKey; label: string; bg: string; border: string; text: string }[] = [
+  { key: "dtop",         label: "DTOP — System of Work",        bg: "bg-emerald-500/10", border: "border-emerald-500/40", text: "text-emerald-300" },
+  { key: "mobile",       label: "Unified Mobile Experience",    bg: "bg-violet-500/10",  border: "border-violet-500/40",  text: "text-violet-300" },
+  { key: "intelligence", label: "Intelligence & Orchestration", bg: "bg-amber-500/10",   border: "border-amber-500/40",   text: "text-amber-300" },
+  { key: "core",         label: "Core Operational Apps",        bg: "bg-blue-500/10",    border: "border-blue-500/40",    text: "text-blue-300" },
+];
+
 const accentTextByKey: Record<LayerKey, string> = {
   dtop: "text-emerald-300",
   mobile: "text-violet-300",
