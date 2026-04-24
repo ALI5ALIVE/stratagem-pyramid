@@ -22,6 +22,8 @@ import TechV4SlideAutomation from "@/components/tech-slides/v4/TechV4SlideAutoma
 import TechV4SlideTiersVsAI from "@/components/tech-slides/v4/TechV4SlideTiersVsAI";
 import TechV4SlideMobile from "@/components/tech-slides/v4/TechV4SlideMobile";
 import TechV4Slide5DTOP from "@/components/tech-slides/v4/TechV4Slide5DTOP";
+import SpeakerNotesPanel from "@/components/shared/SpeakerNotesPanel";
+import { getExec3PitchNarration } from "@/data/executivePitchNarration";
 
 const dividerProps = {
   core: {
@@ -196,6 +198,12 @@ const ExecutivePitch3 = () => {
           );
         })}
       </div>
+      <SpeakerNotesPanel
+        title={slides[currentSlide]?.label ?? ""}
+        script={getExec3PitchNarration(slides[currentSlide]?.id ?? "")?.script}
+        slideNumber={currentSlide}
+        totalSlides={slides.length}
+      />
     </div>
   );
 };
