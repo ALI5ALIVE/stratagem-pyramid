@@ -8,35 +8,46 @@ const phases = [
   {
     icon: Target, phase: "H1 2026", label: "In Production & Quick Wins", color: "text-sky-400", bg: "bg-sky-400/10", border: "border-sky-400/30",
     items: [
-      "✅ Regulation Database Integration with ContentManager365",
-      "✅ ContentManager365 to TrainingManager365 Integration",
-      "Safety report auto-categorisation",
-      "Audit evidence package generation",
+      "✅ Link Training Modules to Documents (Operational Data Foundation)",
+      "✅ Regulation Database Replatforming POC (Operational Data Foundation)",
+      "✅ Automation POC (Intelligence & Orchestration Layer)",
+      "✅ Platform-wide Insights & Recommendations POC (Intelligence & Orchestration Layer)",
+      "🔄 Regulation Database integration with ContentManager365 (Operational Data Foundation)",
+      "🔄 Surface Training screens in the Comply iOS Mobile app (Unified Mobile Experience)",
     ],
   },
   {
     icon: Rocket, phase: "H2 2026", label: "Connected Operations", color: "text-purple-400", bg: "bg-purple-400/10", border: "border-purple-400/30",
     items: [
-      "Safety Report Submissions within ContentManager365",
-      "UI Unification across all solutions",
-      "Platform PoCs with early adopter airlines",
-      "Proactive pattern detection (smoke & fumes, fatigue)",
-      "Executive outcome dashboards",
+      "🔄 Standardise UI Fonts & Colors (Unified Experience)",
+      "🔄 Regulation Database Replatforming (Operational Data Foundation)",
+      "🔄 Surface Safety Reporting in the Comply iOS Mobile app (Unified Experience)",
+      "📋 Platform-wide Automation POC (Intelligence & Orchestration Layer)",
+      "📋 Platform-wide Business Intelligence POC (Intelligence & Orchestration Layer)",
     ],
   },
   {
     icon: Eye, phase: "2027+", label: "Intelligent Operations", color: "text-emerald-400", bg: "bg-emerald-400/10", border: "border-emerald-400/30",
     items: [
-      "Predictive risk modelling across fleet",
-      "Full platform use-case coverage",
-      "Insurance portfolio evidence automation",
-      "Industry benchmarking and peer comparison",
+      "Next Phase Regulation Management Integration — sync compliance mappings, TM365 integration, automation triggers (Operational Data Foundation)",
+      "Roll out of Platform-wide Automation engine (Intelligence & Orchestration Layer)",
+      "Roll out of Platform-wide Business Intelligence (Intelligence & Orchestration Layer)",
+      "Unification of Mobile Experience",
+      "Contextual Document Viewing from TrainingManager365 (Operational Data Foundation)",
+      "Roll out of Platform-wide Insights & Recommendations (Intelligence & Orchestration Layer)",
     ],
   },
 ];
 
+const STATUS_PREFIXES = ["✅", "🔄", "📋"];
+const getStatusMeta = (item: string) => {
+  const prefix = STATUS_PREFIXES.find((p) => item.startsWith(p));
+  if (!prefix) return { prefix: null as string | null, rest: item };
+  return { prefix, rest: item.slice(prefix.length).trimStart() };
+};
+
 const TechSlide15Roadmap2026 = ({ slideNumber, ...narrationProps }: Props) => (
-  <SalesSlideContainer id="tech-slide-15" title="2026 Use Case Roadmap [Pending refresh]" subtitle="Phased delivery — each phase builds on proven value · revisit with Paul: refresh with latest Regulation Solution, Automation, Intelligence & CoAnalyst content" slideNumber={slideNumber} {...narrationProps}>
+  <SalesSlideContainer id="tech-slide-15" title="2026 Use Case Roadmap" subtitle="Phased delivery — each phase builds on proven value, layering capability without disrupting operations" slideNumber={slideNumber} {...narrationProps}>
     <div className="flex-1 flex flex-col gap-4 min-h-0">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 flex-1 min-h-0 auto-rows-fr items-stretch">
         {phases.map((p) => (
@@ -49,22 +60,28 @@ const TechSlide15Roadmap2026 = ({ slideNumber, ...narrationProps }: Props) => (
               </div>
             </div>
             <ul className="space-y-2 flex-1 flex flex-col justify-center">
-              {p.items.map((item) => (
-                <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground leading-relaxed">
-                  {item.startsWith("✅") ? (
-                    <span className="mt-0.5 shrink-0">{item.slice(0, 2)}</span>
-                  ) : (
-                    <span className={`w-1.5 h-1.5 rounded-full mt-2 shrink-0 ${p.color.replace("text-", "bg-")}/60`} />
-                  )}
-                  {item.startsWith("✅") ? item.slice(3) : item}
-                </li>
-              ))}
+              {p.items.map((item) => {
+                const { prefix, rest } = getStatusMeta(item);
+                return (
+                  <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground leading-relaxed">
+                    {prefix ? (
+                      <span className="mt-0.5 shrink-0 text-base leading-none">{prefix}</span>
+                    ) : (
+                      <span className={`w-1.5 h-1.5 rounded-full mt-2 shrink-0 ${p.color.replace("text-", "bg-")}/60`} />
+                    )}
+                    <span>{rest}</span>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         ))}
       </div>
-      <div className="p-3 rounded-xl border border-amber-500/20 bg-amber-500/5 text-center shrink-0">
-        <p className="text-xs text-muted-foreground"><span className="text-amber-400 font-semibold">Note:</span> Roadmap content is illustrative — specific deliverables to be defined during the discovery workshop based on your operational priorities.</p>
+      <div className="p-3 rounded-xl border border-border/40 bg-muted/10 flex flex-wrap items-center justify-center gap-x-6 gap-y-1 shrink-0">
+        <span className="text-xs text-muted-foreground flex items-center gap-1.5"><span className="text-base leading-none">✅</span> Done</span>
+        <span className="text-xs text-muted-foreground flex items-center gap-1.5"><span className="text-base leading-none">🔄</span> In Progress</span>
+        <span className="text-xs text-muted-foreground flex items-center gap-1.5"><span className="text-base leading-none">📋</span> Planned</span>
+        <span className="text-xs text-muted-foreground/70">· Specific deliverables refined during discovery</span>
       </div>
     </div>
   </SalesSlideContainer>
