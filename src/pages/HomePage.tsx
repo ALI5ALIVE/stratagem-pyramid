@@ -25,6 +25,14 @@ const pitchDecks: DeckCard[] = [
     accent: "from-primary to-comply-teal",
   },
   {
+    title: "CEO Overview",
+    description: "Boardroom-grade narrative: the before/after of operational performance, DTOP operating model, and the path to maturity.",
+    href: "/pitch-executive-2",
+    icon: Rocket,
+    badge: "CEO · ~20–25 min · 11 slides",
+    accent: "from-accent to-primary",
+  },
+  {
     title: "Medium — Executive Pitch",
     description: "Executive narrative powered by the platform's strongest visuals — DTOP, 5-layer architecture, and intelligence depth.",
     href: "/pitch-executive-3",
