@@ -31,6 +31,7 @@ import AutomationPlaybook from "./pages/AutomationPlaybook";
 import MobilePlaybook from "./pages/MobilePlaybook";
 import PlatformPlaybook from "./pages/PlatformPlaybook";
 import SalesEnablement from "./pages/SalesEnablement";
+import RoadmapDeck from "./pages/RoadmapDeck";
 import AuthPage from "./pages/Auth";
 import ReviewDashboard from "./pages/ReviewDashboard";
 import CustomerOverview from "./pages/CustomerOverview";
@@ -83,6 +84,7 @@ const App = () => (
             <Route path="/mobile-playbook" element={<MobilePlaybook />} />
             <Route path="/platform-playbook" element={<PlatformPlaybook />} />
             <Route path="/sales-enablement" element={<SalesEnablement />} />
+            <Route path="/roadmap" element={<RoadmapDeck />} />
             <Route path="/review" element={<ReviewDashboard />} />
             <Route path="/customer-overview" element={<CustomerOverview />} />
             <Route path="/academy" element={<RequireAuth><AcademyHome /></RequireAuth>} />

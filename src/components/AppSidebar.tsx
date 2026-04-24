@@ -1,7 +1,7 @@
 import {
   Presentation, Brain,
   Rocket, BookOpen, Home, Users, ScrollText, Workflow, Sparkles, Zap, Smartphone, Layers,
-  LogIn, LogOut, GraduationCap
+  LogIn, LogOut, GraduationCap, Map
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
@@ -32,6 +32,7 @@ const pitchItems: NavItem[] = [
   { title: "CEO Overview", url: "/pitch-executive-2", icon: Rocket },
   { title: "Medium — Executive Pitch", url: "/pitch-executive-3", icon: Rocket },
   { title: "Long — Technical Deep Dive", url: "/pitch-technical-v4", icon: BookOpen },
+  { title: "Use Cases & Roadmap", url: "/roadmap", icon: Map, badge: "New" },
 ];
 
 const salesEnablementItems: NavItem[] = [
