@@ -29,6 +29,7 @@ type NavItem = {
 
 const pitchItems: NavItem[] = [
   { title: "Short — Customer Overview", url: "/customer-overview", icon: Presentation },
+  { title: "CEO Overview", url: "/pitch-executive-2", icon: Rocket },
   { title: "Medium — Executive Pitch", url: "/pitch-executive-3", icon: Rocket },
   { title: "Long — Technical Deep Dive", url: "/pitch-technical-v4", icon: BookOpen },
 ];
