@@ -14,6 +14,136 @@ export type Database = {
   }
   public: {
     Tables: {
+      academy_attempts: {
+        Row: {
+          answers: Json
+          completed_at: string
+          correct_count: number
+          id: string
+          module_id: string
+          passed: boolean
+          score: number
+          started_at: string
+          total_questions: number
+          user_id: string
+        }
+        Insert: {
+          answers: Json
+          completed_at?: string
+          correct_count: number
+          id?: string
+          module_id: string
+          passed: boolean
+          score: number
+          started_at?: string
+          total_questions: number
+          user_id: string
+        }
+        Update: {
+          answers?: Json
+          completed_at?: string
+          correct_count?: number
+          id?: string
+          module_id?: string
+          passed?: boolean
+          score?: number
+          started_at?: string
+          total_questions?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "academy_attempts_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "academy_modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      academy_modules: {
+        Row: {
+          created_at: string
+          estimated_minutes: number
+          id: string
+          learning_goal: string
+          module_number: number
+          order_index: number
+          pass_threshold: number
+          slide_ids: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          estimated_minutes?: number
+          id: string
+          learning_goal: string
+          module_number: number
+          order_index: number
+          pass_threshold?: number
+          slide_ids?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          estimated_minutes?: number
+          id?: string
+          learning_goal?: string
+          module_number?: number
+          order_index?: number
+          pass_threshold?: number
+          slide_ids?: string[]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      academy_questions: {
+        Row: {
+          correct_key: string
+          created_at: string
+          explanation: string
+          id: string
+          module_id: string
+          options: Json
+          order_index: number
+          prompt: string
+          updated_at: string
+        }
+        Insert: {
+          correct_key: string
+          created_at?: string
+          explanation?: string
+          id?: string
+          module_id: string
+          options: Json
+          order_index?: number
+          prompt: string
+          updated_at?: string
+        }
+        Update: {
+          correct_key?: string
+          created_at?: string
+          explanation?: string
+          id?: string
+          module_id?: string
+          options?: Json
+          order_index?: number
+          prompt?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "academy_questions_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "academy_modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_color: string
@@ -112,15 +242,46 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      academy_progress_per_user: {
+        Row: {
+          attempts: number | null
+          best_score: number | null
+          last_attempt_at: string | null
+          module_id: string | null
+          passed: boolean | null
+          user_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "academy_attempts_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "academy_modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
+      get_module_quiz: {
+        Args: { _module_id: string }
+        Returns: {
+          id: string
+          options: Json
+          order_index: number
+          prompt: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
+      }
+      submit_quiz_attempt: {
+        Args: { _answers: Json; _module_id: string }
+        Returns: Json
       }
     }
     Enums: {
