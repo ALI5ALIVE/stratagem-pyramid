@@ -21,6 +21,7 @@ import ExecutivePitch2 from "./pages/ExecutivePitch2";
 import ExecutivePitch3 from "./pages/ExecutivePitch3";
 import OperationalPitch from "./pages/OperationalPitch";
 import TechnicalDeepDive from "./pages/TechnicalDeepDive";
+import TechnicalDeepDiveV4 from "./pages/TechnicalDeepDiveV4";
 import CoAnalystPreview from "./pages/CoAnalystPreview";
 import PersonaDeepDive from "./pages/PersonaDeepDive";
 import RegulationManagementPlaybook from "./pages/RegulationManagementPlaybook";
@@ -59,6 +60,7 @@ const App = () => (
             <Route path="/pitch-executive-3" element={<ExecutivePitch3 />} />
             <Route path="/pitch-operational" element={<OperationalPitch />} />
             <Route path="/pitch-technical" element={<TechnicalDeepDive />} />
+            <Route path="/pitch-technical-v4" element={<TechnicalDeepDiveV4 />} />
             <Route path="/coanalyst-preview" element={<CoAnalystPreview />} />
             
             <Route path="/homepage-mockup" element={<HomepageMockup />} />
