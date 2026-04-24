@@ -1,5 +1,4 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
-import ArchitectureLayerBadge from "@/components/tech-slides/ArchitectureLayerBadge";
 import { SlideNarrationProps } from "@/types/slideProps";
 import { Search, Lightbulb, TrendingUp, Zap, CheckCircle2, ChevronRight } from "lucide-react";
 
@@ -27,7 +26,6 @@ const TechV4SlideInsights = ({ slideNumber, ...narrationProps }: Props) => (
     {...narrationProps}
   >
     <div className="flex-1 flex flex-col gap-4 min-h-0">
-      <ArchitectureLayerBadge active="intelligence" sublayer="recommendations" />
       {/* 3 capability cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 auto-rows-fr shrink-0">
         {capabilities.map((c) => (

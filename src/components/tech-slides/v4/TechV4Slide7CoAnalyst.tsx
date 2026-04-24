@@ -1,5 +1,4 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
-import ArchitectureLayerBadge from "@/components/tech-slides/ArchitectureLayerBadge";
 import { SlideNarrationProps } from "@/types/slideProps";
 import { Brain, Database, Sparkles, Search, Zap, Languages, Quote } from "lucide-react";
 import DeepDiveLink from "@/components/shared/DeepDiveLink";
@@ -29,8 +28,7 @@ const TechV4Slide7CoAnalyst = ({ slideNumber, ...narrationProps }: Props) => (
     {...narrationProps}
   >
     <div className="flex-1 flex flex-col gap-4 min-h-0">
-      <div className="flex items-center justify-between gap-3">
-        <ArchitectureLayerBadge active="intelligence" sublayer="insights-intelligence" />
+      <div className="flex items-center justify-end gap-3">
         <DeepDiveLink to="/coanalyst" label="CoAnalyst" returnTo="/pitch-technical" />
       </div>
       {/* Master message */}
