@@ -17,27 +17,27 @@ interface DeckCard {
 
 const pitchDecks: DeckCard[] = [
   {
-    title: "Customer Overview",
+    title: "Short — Customer Overview",
     description: "Customer-facing · Sales-led. 10-slide narrative from today's reality to the first 90 days. No architecture, no acronyms.",
     href: "/customer-overview",
     icon: Presentation,
-    badge: "10 slides · ~20 min",
+    badge: "Short · ~15–20 min · 10 slides",
     accent: "from-primary to-comply-teal",
   },
   {
-    title: "Executive Pitch 3",
+    title: "Medium — Executive Pitch",
     description: "Executive narrative powered by the platform's strongest visuals — DTOP, 5-layer architecture, and intelligence depth.",
     href: "/pitch-executive-3",
     icon: Layers,
-    badge: "20 slides",
+    badge: "Medium · ~30–35 min · 20 slides",
     accent: "from-comply-teal to-accent",
   },
   {
-    title: "Technical Deep Dive v4",
+    title: "Long — Technical Deep Dive",
     description: "Compressed architecture · Data substrate folded into Intelligence. Same arc, simpler 4-layer story.",
     href: "/pitch-technical-v4",
     icon: BookOpen,
-    badge: "4-layer model · ~30 slides",
+    badge: "Long · ~45–60 min · 30 slides",
     accent: "from-primary to-comply-teal",
   },
 ];
