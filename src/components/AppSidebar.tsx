@@ -34,6 +34,7 @@ const pitchItems: NavItem[] = [
 ];
 
 const salesEnablementItems: NavItem[] = [
+  { title: "Academy (Modules + Quiz)", url: "/academy", icon: GraduationCap, badge: "New" },
   { title: "Sales Enablement Training", url: "/sales-enablement", icon: GraduationCap },
 ];
 
