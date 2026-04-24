@@ -112,9 +112,9 @@ export const dtopSteps: DTOPStep[] = [
     dataSources: ["Content authoring workflows", "Distribution & acknowledgment tracking", "LMS assignment engine", "Crew scheduling integration"],
     actions: ["Revise and publish updated procedures", "Push targeted content to affected crews", "Assign scenario-specific training modules", "Track acknowledgment and completion"],
     outputs: ["Updated SOPs in crew hands", "Training completion records", "Acknowledgment confirmations", "Distribution audit trail"],
-    color: "text-emerald-400",
-    bg: "bg-emerald-500/10",
-    border: "border-emerald-500/30",
+    color: "text-violet-400",
+    bg: "bg-violet-500/10",
+    border: "border-violet-500/30",
   },
   {
     letter: "P",
@@ -124,9 +124,9 @@ export const dtopSteps: DTOPStep[] = [
     dataSources: ["Post-intervention performance data", "Repeat incident rates", "Training effectiveness scores", "Audit readiness dashboards"],
     actions: ["Compare pre/post intervention metrics", "Generate compliance evidence packages", "Measure training transfer effectiveness", "Update risk scoring models"],
     outputs: ["Measurable risk reduction evidence", "Regulatory compliance proof", "ROI documentation", "Continuous improvement baseline"],
-    color: "text-violet-400",
-    bg: "bg-violet-500/10",
-    border: "border-violet-500/30",
+    color: "text-emerald-400",
+    bg: "bg-emerald-500/10",
+    border: "border-emerald-500/30",
   },
 ];
 
