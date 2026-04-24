@@ -20,7 +20,7 @@ export const operationalPitchNarrations: OpsNarrationSlide[] = [
     title: "Your Daily Reality",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Picture your Monday morning. You open your inbox. There's a Foqua alert about a hard landing trend at one of your hubs. A safety report flagging repeat turbulence injuries on a specific route. A compliance notice about an expiring training qualification for forty-seven crew members. And a maintenance team asking why they weren't told about a procedure change from three weeks ago. Every one of these is urgent. None of them are connected. Your safety team is working in one system. Training in another. Compliance in a third. And the information that could prevent next week's event is trapped in last month's email thread. This isn't a people problem. Your teams are excellent. It's a wiring problem.",
+      "Picture your Monday morning. You open your inbox. There's a flight operational data alert about a hard landing trend at one of your hubs. A safety report flagging repeat turbulence injuries on a specific route. A compliance notice about an expiring training qualification for forty-seven crew members. And a maintenance team asking why they weren't told about a procedure change from three weeks ago. Every one of these is urgent. None of them are connected. Your safety team is working in one system. Training in another. Compliance in a third. And the information that could prevent next week's event is trapped in last month's email thread. This isn't a people problem. Your teams are excellent. It's a wiring problem.",
   },
   {
     slideId: "ops-slide-2",
@@ -34,7 +34,7 @@ export const operationalPitchNarrations: OpsNarrationSlide[] = [
     title: "Before & After",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Let me show you the contrast. Today, a Foqua signal is detected. Safety logs it. An email goes to training. Training opens a spreadsheet. Content gets a request three weeks later. And when audit asks for the thread, someone spends days reconstructing it. Six weeks from signal to action, if the loop closes at all. Now imagine the alternative. The same signal is detected, and within hours the affected crew are identified, targeted training is assigned, the relevant procedure is verified, and every step is logged automatically. Not because someone chased it — because the system is wired to close the loop. Same teams. Same data. Completely different outcome.",
+      "Let me show you the contrast. Today, an operational data signal is detected. Safety logs it. An email goes to training. Training opens a spreadsheet. Content gets a request three weeks later. And when audit asks for the thread, someone spends days reconstructing it. Six weeks from signal to action, if the loop closes at all. Now imagine the alternative. The same signal is detected, and within hours the affected crew are identified, targeted training is assigned, the relevant procedure is verified, and every step is logged automatically. Not because someone chased it — because the system is wired to close the loop. Same teams. Same data. Completely different outcome.",
   },
   {
     slideId: "ops-slide-4",
@@ -55,7 +55,7 @@ export const operationalPitchNarrations: OpsNarrationSlide[] = [
     title: "Near-Term Use Cases",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Let me make this tangible with four use cases you could deploy in the first ninety days. First: hard landing response. Foqua detects a trend, CoAnalyst identifies the affected crew, and targeted simulator training deploys within forty-eight hours. Second: regulatory change cascade. A new directive arrives, and every affected procedure, training record, and crew qualification is updated automatically. Third: fatigue risk management. Cross-referencing roster data with safety reports to flag fatigue-related patterns before they become incidents. Fourth: compliance gap closure. Identifying expiring qualifications and triggering retraining before the gap creates exposure. Each of these delivers measurable value within ninety days. Pick one. Prove the model. Then scale.",
+      "Let me make this tangible with four use cases you could deploy in the first ninety days. First: hard landing response. Flight operational data detects a trend, CoAnalyst identifies the affected crew, and targeted simulator training deploys within forty-eight hours. Second: regulatory change cascade. A new directive arrives, and every affected procedure, training record, and crew qualification is updated automatically. Third: fatigue risk management. Cross-referencing roster data with safety reports to flag fatigue-related patterns before they become incidents. Fourth: compliance gap closure. Identifying expiring qualifications and triggering retraining before the gap creates exposure. Each of these delivers measurable value within ninety days. Pick one. Prove the model. Then scale.",
   },
   {
     slideId: "ops-slide-7",

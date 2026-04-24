@@ -104,7 +104,7 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "Training Manager 365",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Training Manager handles the competency lifecycle — qualification, recurrent training, checking events, and revalidation across every crew member. The platform's activation here is powerful. Instead of generic recurrent cycles, it analyses individual operational data — FOQA trends, route exposure, safety report history — and recommends targeted interventions specific to each crew member's risk profile. When a hard landing cluster is detected at a specific airport, Insights and Intelligence identifies the forty-seven pilots who've flown that approach and assigns approach-specific simulator scenarios within forty-eight hours. Not generic training. Targeted, evidence-based crew development.",
+      "Training Manager three six five handles the competency lifecycle — qualification, recurrent training, checking events, and revalidation across every crew member. The platform's activation here is powerful. Instead of generic recurrent cycles, it analyses individual operational data — flight operational data trends, route exposure, safety report history — and recommends targeted interventions specific to each crew member's risk profile. When a hard landing cluster is detected at a specific airport, Insights and Intelligence identifies the forty-seven pilots who've flown that approach and assigns approach-specific simulator scenarios within forty-eight hours. Not generic training. Targeted, evidence-based crew development.",
   },
   {
     slideId: "tech-slide-data-foundation",
