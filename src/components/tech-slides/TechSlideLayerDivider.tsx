@@ -8,12 +8,13 @@ export type LayerKey = "dtop" | "mobile" | "intelligence" | "data" | "core";
 interface Props extends SlideNarrationProps {
   slideNumber?: number;
   id: string;
-  layerNumber: number;
+  layerNumber?: number;
   layerName: string;
   tagline: string;
   active: LayerKey;
   upNext: string[];
   platformGroupLabel?: string;
+  hideLayerNumber?: boolean;
 }
 
 // Top-down stack order (matches PlatformArchitectureDiagram)
@@ -23,6 +24,13 @@ const stack: { key: LayerKey; label: string; accent: string; bg: string; border:
   { key: "intelligence", label: "Layer 3 · Intelligence & Orchestration", accent: "amber",   bg: "bg-amber-500/10",   border: "border-amber-500/40",   text: "text-amber-300" },
   { key: "data",         label: "Layer 2 · Operational Data Foundation",  accent: "cyan",    bg: "bg-cyan-500/10",    border: "border-cyan-500/40",    text: "text-cyan-300" },
   { key: "core",         label: "Layer 1 · Core Operational Apps",        accent: "blue",    bg: "bg-blue-500/10",    border: "border-blue-500/40",    text: "text-blue-300" },
+];
+
+const v4Stack: { key: LayerKey; label: string; bg: string; border: string; text: string }[] = [
+  { key: "dtop",         label: "DTOP — System of Work",        bg: "bg-emerald-500/10", border: "border-emerald-500/40", text: "text-emerald-300" },
+  { key: "mobile",       label: "Unified Mobile Experience",    bg: "bg-violet-500/10",  border: "border-violet-500/40",  text: "text-violet-300" },
+  { key: "intelligence", label: "Intelligence & Orchestration", bg: "bg-amber-500/10",   border: "border-amber-500/40",   text: "text-amber-300" },
+  { key: "core",         label: "Core Operational Apps",        bg: "bg-blue-500/10",    border: "border-blue-500/40",    text: "text-blue-300" },
 ];
 
 const accentTextByKey: Record<LayerKey, string> = {
@@ -42,6 +50,7 @@ const TechSlideLayerDivider = ({
   active,
   upNext,
   platformGroupLabel,
+  hideLayerNumber,
   ...narrationProps
 }: Props) => {
   const accentText = accentTextByKey[active];
@@ -63,9 +72,11 @@ const TechSlideLayerDivider = ({
               </span>
             </div>
           )}
-          <div className={cn("text-xs font-bold uppercase tracking-[0.25em]", accentText)}>
-            Layer {layerNumber} · Architecture
-          </div>
+          {!hideLayerNumber && layerNumber !== undefined && (
+            <div className={cn("text-xs font-bold uppercase tracking-[0.25em]", accentText)}>
+              Layer {layerNumber} · Architecture
+            </div>
+          )}
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold leading-tight text-foreground">
             {layerName}
           </h2>
@@ -92,7 +103,7 @@ const TechSlideLayerDivider = ({
           <div className="text-[10px] uppercase tracking-wider text-muted-foreground/70 font-semibold mb-1 text-right">
             You are here
           </div>
-          {stack.map((l) => {
+          {(hideLayerNumber ? v4Stack : stack).map((l) => {
             const isActive = l.key === active;
             return (
               <div

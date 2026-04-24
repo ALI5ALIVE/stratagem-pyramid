@@ -40,7 +40,7 @@ const ArchitectureLayerBadge = ({ active, sublayer, className }: Props) => {
   const subs = sublayersByLayer[active];
   return (
     <div className={cn("flex items-center justify-end gap-2 flex-wrap shrink-0", className)}>
-      <span className="text-[10px] uppercase tracking-wider text-muted-foreground/70 font-semibold mr-1">Architecture</span>
+      <span className="text-[10px] uppercase tracking-wider text-muted-foreground/70 font-semibold mr-1">Platform</span>
       <div className="flex items-center gap-1">
         {layers.map((l, i) => {
           const isActive = l.id === active;

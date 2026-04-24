@@ -6,10 +6,10 @@ import type { SlideNarrationProps } from "@/types/slideProps";
 interface Props extends SlideNarrationProps { slideNumber?: number; }
 
 const guide = [
-  { tag: "Layer 4", title: "DTOP — The Way of Working", desc: "Detect, Trigger, Orchestrate, Prove — wraps the whole stack.", color: "text-emerald-400", target: "tech-divider-dtop" },
-  { tag: "Layer 3", title: "Unified Mobile", desc: "One trusted shell for the frontline — Content, Training, Safety.", color: "text-violet-400", target: "tech-divider-mobile" },
-  { tag: "Layer 2", title: "Intelligence & Orchestration", desc: "Data substrate (taxonomy · graph · LLMs) + Insights · Recommendations · Automation.", color: "text-amber-400", target: "tech-divider-intelligence" },
-  { tag: "Layer 1", title: "Core Operational Apps", desc: "ContentManager365 · TrainingManager365 · SafetyManager365.", color: "text-blue-400", target: "tech-divider-core" },
+  { tag: "Platform", title: "DTOP — The Way of Working", desc: "Detect, Trigger, Orchestrate, Prove — wraps the whole stack.", color: "text-emerald-400", target: "tech-divider-dtop" },
+  { tag: "Platform", title: "Unified Mobile", desc: "One trusted shell for the frontline — Content, Training, Safety.", color: "text-violet-400", target: "tech-divider-mobile" },
+  { tag: "Platform", title: "Intelligence & Orchestration", desc: "Data substrate (taxonomy · graph · LLMs) + Insights · Recommendations · Automation.", color: "text-amber-400", target: "tech-divider-intelligence" },
+  { tag: "Foundation", title: "Core Operational Apps", desc: "ContentManager365 · TrainingManager365 · SafetyManager365.", color: "text-blue-400", target: "tech-divider-core" },
 ];
 
 const TechV4PlatformOverview = ({ slideNumber, ...narrationProps }: Props) => {
@@ -22,7 +22,7 @@ const TechV4PlatformOverview = ({ slideNumber, ...narrationProps }: Props) => {
     <SalesSlideContainer
       id="tech-slide-4"
       title="The Operational Performance Platform"
-      subtitle="Four layers. One platform. Wired together by DTOP. · Click any layer to jump."
+      subtitle="One integrated platform. Wired together by DTOP. · Click any capability to jump."
       slideNumber={slideNumber}
       {...narrationProps}
     >
@@ -34,7 +34,7 @@ const TechV4PlatformOverview = ({ slideNumber, ...narrationProps }: Props) => {
         </div>
         <div className="flex flex-col gap-2 h-full">
           <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
-            Layers 2–4 = The Platform · Layer 1 = The Foundation
+            The Platform · The Foundation
           </div>
           {/* Platform group: L4, L3, L2 (top-down) */}
           <div className="relative flex-1 rounded-xl border-2 border-primary/30 bg-primary/5 p-2 pt-5 flex flex-col gap-2">
