@@ -35,6 +35,13 @@ import AuthPage from "./pages/Auth";
 import ReviewDashboard from "./pages/ReviewDashboard";
 import CustomerOverview from "./pages/CustomerOverview";
 import { AuthProvider } from "./contexts/AuthContext";
+import RequireAuth from "./components/academy/RequireAuth";
+import AcademyHome from "./pages/academy/AcademyHome";
+import ModuleLesson from "./pages/academy/ModuleLesson";
+import ModuleQuiz from "./pages/academy/ModuleQuiz";
+import QuizResult from "./pages/academy/QuizResult";
+import Certificate from "./pages/academy/Certificate";
+import AdminDashboard from "./pages/academy/AdminDashboard";
 
 
 const queryClient = new QueryClient();
@@ -78,6 +85,12 @@ const App = () => (
             <Route path="/sales-enablement" element={<SalesEnablement />} />
             <Route path="/review" element={<ReviewDashboard />} />
             <Route path="/customer-overview" element={<CustomerOverview />} />
+            <Route path="/academy" element={<RequireAuth><AcademyHome /></RequireAuth>} />
+            <Route path="/academy/admin" element={<RequireAuth><AdminDashboard /></RequireAuth>} />
+            <Route path="/academy/certificate" element={<RequireAuth><Certificate /></RequireAuth>} />
+            <Route path="/academy/:moduleId" element={<RequireAuth><ModuleLesson /></RequireAuth>} />
+            <Route path="/academy/:moduleId/quiz" element={<RequireAuth><ModuleQuiz /></RequireAuth>} />
+            <Route path="/academy/:moduleId/result" element={<RequireAuth><QuizResult /></RequireAuth>} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

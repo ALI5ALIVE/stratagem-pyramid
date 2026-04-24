@@ -169,6 +169,14 @@ export default function HomePage() {
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <DeckCardComponent card={{
+              title: "Sales Enablement Academy",
+              description: "Six 5-minute modules with a quiz at the end of each. Login required — progress and competency are tracked per rep.",
+              href: "/academy",
+              icon: GraduationCap,
+              badge: "6 modules · ~30 min · quizzed",
+              accent: "from-primary to-emerald-500",
+            }} />
+            <DeckCardComponent card={{
               title: "Sales Enablement Training",
               description: "Plain-English walkthrough of the Operational Performance Platform — built to onboard a new rep in their first week.",
               href: "/sales-enablement",
