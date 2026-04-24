@@ -48,7 +48,7 @@ const domains = [
 const dtopFlow = [
   {
     step: "Detect",
-    example: "FOQA exceedance detected",
+    example: "Operational data exceedance detected",
     domain: "Safety",
     color: "bg-red-500",
   },

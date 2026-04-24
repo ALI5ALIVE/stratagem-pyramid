@@ -11,7 +11,7 @@ interface OpsSlide4Props extends SlideNarrationProps {
 const platformModules = [
   {
     icon: Shield,
-    name: "Safety Manager365",
+    name: "SafetyManager365",
     desc: "SMS reporting, flight data analysis, audit & hazard management",
     color: "text-red-400",
     bg: "bg-red-500/10",
@@ -19,7 +19,7 @@ const platformModules = [
   },
   {
     icon: FileText,
-    name: "Content Manager365",
+    name: "ContentManager365",
     desc: "Procedure authoring, revision cascades, regulatory change analysis",
     color: "text-blue-400",
     bg: "bg-blue-500/10",
@@ -27,7 +27,7 @@ const platformModules = [
   },
   {
     icon: GraduationCap,
-    name: "Training Manager365",
+    name: "TrainingManager365",
     desc: "Competency tracking, targeted assignments, completion evidence",
     color: "text-emerald-400",
     bg: "bg-emerald-500/10",

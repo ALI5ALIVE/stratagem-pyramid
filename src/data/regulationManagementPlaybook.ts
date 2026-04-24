@@ -161,7 +161,7 @@ export const painPoints: PainPoint[] = [
   {
     headline: "Massive Scale, No Automation",
     detail:
-      "At airlines like British Airways, ~1,100 people interact with regulatory content daily. The volume makes manual management unsustainable.",
+      "At a major flag carrier, ~1,100 people interact with regulatory content daily. The volume makes manual management unsustainable.",
     icon: "Users",
   },
   {

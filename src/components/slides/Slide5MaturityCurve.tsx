@@ -70,7 +70,7 @@ const stagesData: MaturityStageWithUseCase[] = [
     curveAnnotations: ["Weak-signal detection", "Prioritised interventions", "Faster decisions"],
     useCase: {
       scenario: "Hard Landing Detection",
-      problem: "FOQA data flags a hard landing trend at a specific airport. The platform identifies 47 affected pilots and deploys targeted simulator training automatically.",
+      problem: "Operational data flags a hard landing trend at a specific airport. The platform identifies 47 affected pilots and deploys targeted simulator training automatically.",
       outcome: "78% reduction in repeat events. Protected maintenance costs and schedule. (Comply365 customer benchmark — anonymised composite across deployed carriers.)",
     },
   },

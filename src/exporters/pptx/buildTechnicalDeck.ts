@@ -1709,7 +1709,7 @@ slideSpecs.push(
       const eY = aY + 0.75;
       const eH = CONTENT_BOTTOM - eY;
       const chainItems = [
-        "FOQA exceedance detected",
+        "Operational data exceedance detected",
         "Policy triggers procedure review",
         "Targeted sim training assigned",
         "Audit-ready evidence generated",

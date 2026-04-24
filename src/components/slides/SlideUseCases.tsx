@@ -51,7 +51,7 @@ const useCases: UseCase[] = [
     signal: {
       label: "Report Cluster",
       description: "Elevated smoke & fumes reports cluster around specific hub during de-icing operations",
-      source: "Safety Reports + ASAP",
+      source: "Safety Reports + Crew Reports",
     },
     action: {
       label: "Root Cause Correlation",
@@ -102,8 +102,8 @@ const useCases: UseCase[] = [
     iconColor: "hsl(199 89% 48%)",
     signal: {
       label: "Hard Landing Trend",
-      description: "FOQA data shows elevated hard landing rates for specific pilots at particular airports",
-      source: "Flight Operations Quality Assurance",
+      description: "Operational data shows elevated hard landing rates for specific pilots at particular airports",
+      source: "Flight Operational Data",
     },
     action: {
       label: "AI Pattern Detection",

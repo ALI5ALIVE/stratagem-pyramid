@@ -65,7 +65,7 @@ const dtopSteps = [
   {
     step: "Detect",
     description: "Signal identified",
-    detail: "FOQA, ASAP, audit finding captured",
+    detail: "Operational data, safety report or audit finding captured",
   },
   {
     step: "Trigger",
@@ -95,7 +95,7 @@ const comparisonRows = [
 const footerColumns = [
   {
     title: "Solutions",
-    links: ["Safety Manager", "Content Manager", "Training Manager", "Governance Hub"],
+    links: ["SafetyManager365", "ContentManager365", "TrainingManager365", "Governance Hub"],
   },
   {
     title: "Resources",
@@ -412,7 +412,7 @@ const HomepageMockup = () => {
               <div className="p-6 rounded-xl bg-primary/5 border border-primary/20">
                 <p className="text-sm font-medium text-primary mb-2">Example Scenario</p>
                 <p className="text-foreground">
-                  FOQA exceedance detected → triggers procedure review → activates targeted training for affected crew → generates audit evidence — <span className="font-semibold">all automatic, all connected.</span>
+                  Operational data exceedance detected → triggers procedure review → activates targeted training for affected crew → generates audit evidence — <span className="font-semibold">all automatic, all connected.</span>
                 </p>
               </div>
             </div>

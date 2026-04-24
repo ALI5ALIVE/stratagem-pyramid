@@ -47,10 +47,10 @@ const Slide3OperatingModel = ({
       id: "detect",
       icon: Radio,
       label: "Detect",
-      description: "FOQA exceedance triggers automatic alert. Signal captured with flight ID, crew, and timestamp.",
+      description: "Operational data exceedance triggers automatic alert. Signal captured with flight ID, crew, and timestamp.",
       metric: "12K",
       metricLabel: "signals/mo",
-      auditTrail: "Signal ID: FOQA-2024-00847 logged",
+      auditTrail: "Signal ID: OPS-2024-00847 logged",
       color: "text-amber-500",
       bgColor: "bg-amber-500/10",
       borderColor: "border-amber-500/50",
@@ -94,8 +94,8 @@ const Slide3OperatingModel = ({
   ];
 
   const dataSources = [
-    { id: "foqa", label: "FOQA" },
-    { id: "asap", label: "ASAP" },
+    { id: "ops-data", label: "Operational Data" },
+    { id: "safety-reports", label: "Safety Reports" },
     { id: "audit", label: "Audit" },
     { id: "ops", label: "Ops" },
     { id: "crew", label: "Crew" },

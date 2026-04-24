@@ -83,14 +83,14 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "The Platform",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Three core applications sharing a single data model. Safety Manager handles hazard identification, risk assessment, investigation, and safety assurance — ingesting FOQA, ASAP, voluntary reports, and audit data. Content Manager manages the full document lifecycle — authoring, version control, distribution, and acknowledgment for over ten thousand procedures per carrier. Training Manager provides competency management, curriculum assignment, and qualification tracking across all personnel. These aren't integrations bolted together. They're one platform, one shared data layer. Over sixty-five thousand data points flow through this ecosystem every month. That connected foundation is what makes everything else possible.",
+      "Three core applications sharing a single data model. Safety Manager three six five handles hazard identification, risk assessment, investigation, and safety assurance — ingesting flight operational data, crew safety reports, voluntary reports, and audit data. Content Manager three six five manages the full document lifecycle — authoring, version control, distribution, and acknowledgment for over ten thousand procedures per carrier. Training Manager three six five provides competency management, curriculum assignment, and qualification tracking across all personnel. These aren't integrations bolted together. They're one platform, one shared data layer. Over sixty-five thousand data points flow through this ecosystem every month. That connected foundation is what makes everything else possible.",
   },
   {
     slideId: "tech-slide-4a",
     title: "Safety Manager 365",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Safety Manager is your investigation and assurance engine — from initial report through corrective action and closure. It ingests FOQA, ASAP, LOSA, and audit data. Here's where Insights and Intelligence activates this. Instead of your analysts manually reviewing hundreds of reports, the platform processes them in real time. It identifies clusters — a series of hard landings at a specific airport — and cross-references with weather, crew rosters, and procedure versions. Weeks of manual correlation compressed to hours, at ninety percent accuracy on domain-specific patterns. Your safety team stops chasing data and starts acting on intelligence.",
+      "Safety Manager three six five is your investigation and assurance engine — from initial report through corrective action and closure. It ingests flight operational data, crew safety reports, line operations safety audits, and audit data. Here's where Insights and Intelligence activates this. Instead of your analysts manually reviewing hundreds of reports, the platform processes them in real time. It identifies clusters — a series of hard landings at a specific airport — and cross-references with weather, crew rosters, and procedure versions. Weeks of manual correlation compressed to hours, at around ninety percent accuracy on domain-specific patterns — versus around thirty-five percent for generic AI. Your safety team stops chasing data and starts acting on intelligence.",
   },
   {
     slideId: "tech-slide-4b",

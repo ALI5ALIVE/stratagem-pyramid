@@ -71,7 +71,7 @@ const CASlide2CategoryNarrative = (props: SlideNarrationProps) => {
           <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3 mt-auto">
             <p className="text-[11px] font-semibold text-emerald-400 mb-1.5">CoAnalyst fills this gap:</p>
             <p className="text-[10px] text-muted-foreground leading-relaxed">
-              The intelligence layer that sits above Safety, Content, and Training Manager 365 — enriching data and driving the Detect → Trigger → Orchestrate → Prove model across safety, ops, maintenance, training, and crew.
+              The intelligence layer that sits above SafetyManager365, ContentManager365 and TrainingManager365 — enriching data and driving the Detect → Trigger → Orchestrate → Prove model across safety, ops, maintenance, training, and crew.
             </p>
           </div>
           <div className="mt-3 space-y-1">
