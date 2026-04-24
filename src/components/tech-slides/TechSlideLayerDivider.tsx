@@ -85,7 +85,7 @@ const TechSlideLayerDivider = ({
           </p>
           <div className="mt-2">
             <div className="text-[10px] uppercase tracking-wider text-muted-foreground/70 font-semibold mb-2">
-              Up next in this layer
+              {hideLayerNumber ? "Up next" : "Up next in this layer"}
             </div>
             <ul className="space-y-1.5">
               {upNext.map((item) => (
