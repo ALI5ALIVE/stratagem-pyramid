@@ -13,6 +13,7 @@ interface Props extends SlideNarrationProps {
   tagline: string;
   active: LayerKey;
   upNext: string[];
+  platformGroupLabel?: string;
 }
 
 // Top-down stack order (matches PlatformArchitectureDiagram)
@@ -40,6 +41,7 @@ const TechSlideLayerDivider = ({
   tagline,
   active,
   upNext,
+  platformGroupLabel,
   ...narrationProps
 }: Props) => {
   const accentText = accentTextByKey[active];
@@ -53,6 +55,14 @@ const TechSlideLayerDivider = ({
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center flex-1 min-h-0">
         {/* Left: eyebrow + title + tagline + up next */}
         <div className="lg:col-span-3 flex flex-col gap-6">
+          {platformGroupLabel && (
+            <div className="inline-flex items-center gap-2 self-start rounded-full border border-primary/30 bg-primary/10 px-3 py-1">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+              <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-primary">
+                {platformGroupLabel}
+              </span>
+            </div>
+          )}
           <div className={cn("text-xs font-bold uppercase tracking-[0.25em]", accentText)}>
             Layer {layerNumber} · Architecture
           </div>

@@ -15,28 +15,36 @@ const PlatformArchitectureDiagramV4 = ({ compact = false }: { compact?: boolean 
 
   return (
     <div className="w-full h-full flex flex-col gap-1.5">
-      {/* L4 — DTOP */}
-      <div className="rounded-lg border-2 border-emerald-500/50 bg-emerald-500/5 p-2.5 flex items-center gap-3">
+      {/* L2–L4 wrapped as "The Platform" */}
+      <div className="relative rounded-xl border-2 border-primary/40 bg-gradient-to-b from-emerald-500/5 via-violet-500/5 to-amber-500/5 p-2 pt-6">
+        <div className="absolute -top-2.5 left-3 px-2 bg-background">
+          <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-primary">
+            The Operational Performance Platform · One Integrated Solution
+          </span>
+        </div>
+        <div className="flex flex-col gap-1.5">
+          {/* L4 — DTOP */}
+          <div className="rounded-lg border-2 border-emerald-500/50 bg-emerald-500/5 p-2.5 flex items-center gap-3">
         <Repeat className="h-5 w-5 text-emerald-400 shrink-0" />
         <div className="flex-1 min-w-0">
           <div className={`${titleSize} font-semibold text-emerald-300`}>DTOP — The System of Work</div>
           <div className={`${labelSize} text-muted-foreground`}>Detect → Trigger → Orchestrate → Prove · wraps the whole stack</div>
         </div>
         <span className={`${labelSize} text-emerald-300/80 font-medium`}>System of work</span>
-      </div>
+          </div>
 
-      {/* L3 — Unified Mobile */}
-      <div className="rounded-lg border border-violet-500/40 bg-violet-500/5 p-2.5 flex items-center gap-3">
+          {/* L3 — Unified Mobile */}
+          <div className="rounded-lg border border-violet-500/40 bg-violet-500/5 p-2.5 flex items-center gap-3">
         <Smartphone className="h-5 w-5 text-violet-400 shrink-0" />
         <div className="flex-1 min-w-0">
           <div className={`${titleSize} font-semibold text-violet-300`}>Unified Mobile Experience</div>
           <div className={`${labelSize} text-muted-foreground`}>One trusted shell · SSO · Procedures · Training · Safety</div>
         </div>
         <span className={`${labelSize} text-violet-300/80 font-medium`}>Delivery</span>
-      </div>
+          </div>
 
-      {/* L2 — Intelligence & Orchestration (data substrate folded in) */}
-      <div className="rounded-lg border border-amber-500/40 bg-amber-500/5 p-2.5">
+          {/* L2 — Intelligence & Orchestration (data substrate folded in) */}
+          <div className="rounded-lg border border-amber-500/40 bg-amber-500/5 p-2.5">
         <div className="flex items-center gap-2 mb-2">
           <Brain className="h-5 w-5 text-amber-400 shrink-0" />
           <div className={`${titleSize} font-semibold text-amber-300 flex-1`}>Intelligence & Orchestration Layer</div>
@@ -68,9 +76,14 @@ const PlatformArchitectureDiagramV4 = ({ compact = false }: { compact?: boolean 
             <div className="text-[10px] text-muted-foreground leading-tight">Cross-product workflows</div>
           </div>
         </div>
+          </div>
+        </div>
       </div>
 
-      {/* L1 — Core Operational Apps */}
+      {/* L1 — Core Operational Apps (foundation, sits below the platform) */}
+      <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-muted-foreground/70 mt-1 ml-1">
+        Foundation · Systems of Record
+      </div>
       <div className="rounded-lg border border-blue-500/40 bg-blue-500/5 p-2.5">
         <div className="flex items-center gap-2 mb-2">
           <div className={`${titleSize} font-semibold text-blue-300 flex-1`}>Core Operational Apps</div>
