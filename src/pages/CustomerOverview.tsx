@@ -5,7 +5,7 @@ import { useSidebar } from "@/components/ui/sidebar";
 import COSlide0Title from "@/components/customer-overview-slides/COSlide0Title";
 import TechSlide2IndustryChallenge from "@/components/tech-slides/TechSlide2IndustryChallenge";
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
-import PFSlide2WhatIs from "@/components/platform-slides/PFSlide2WhatIs";
+import TechV4PlatformOverview from "@/components/tech-slides/v4/TechV4PlatformOverview";
 import Slide4Transformation from "@/components/slides/Slide4Transformation";
 import PFSlide9Value from "@/components/platform-slides/PFSlide9Value";
 import SlideUseCases from "@/components/slides/SlideUseCases";
@@ -17,7 +17,7 @@ const slides = [
   { id: "co-slide-0", label: "Title", component: COSlide0Title },
   { id: "co-slide-1", label: "The Reality Today", component: TechSlide2IndustryChallenge },
   { id: "co-slide-2", label: "The Strategic Shift", component: TechSlide1StrategicShift },
-  { id: "co-slide-3", label: "What the Platform Is", component: PFSlide2WhatIs },
+  { id: "co-slide-3", label: "The Platform", component: TechV4PlatformOverview },
   { id: "co-slide-4", label: "Before vs After", component: Slide4Transformation },
   { id: "co-slide-5", label: "The Value You Unlock", component: PFSlide9Value },
   { id: "co-slide-6", label: "Use Cases in Action", component: SlideUseCases },
