@@ -227,6 +227,37 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Target Audience */}
+        <section>
+          <SectionHeader 
+            title="Target Audience" 
+            subtitle="Buyer personas, messaging and discovery questions" 
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <DeckCardComponent card={{
+              title: "Persona Deep-Dive",
+              description: "Comprehensive buyer personas with messaging, objections, and discovery questions for every stakeholder.",
+              href: "/personas",
+              icon: Users,
+              badge: "5 personas",
+              accent: "from-violet-500 to-cyan-500",
+            }} />
+          </div>
+        </section>
+
+        {/* Strategy */}
+        <section>
+          <SectionHeader 
+            title="Strategy & Positioning" 
+            subtitle="Internal playbooks and frameworks" 
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+            {strategyDecks.map((card) => (
+              <DeckCardComponent key={card.href} card={card} />
+            ))}
+          </div>
+        </section>
+
       </div>
     </div>
   );
