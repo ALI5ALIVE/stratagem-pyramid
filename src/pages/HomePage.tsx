@@ -56,6 +56,14 @@ const pitchDecks: DeckCard[] = [
     badge: "20 slides",
     accent: "from-comply-teal to-primary",
   },
+  {
+    title: "Technical Deep Dive v4",
+    description: "Compressed architecture · Data substrate folded into Intelligence. Same arc, simpler 4-layer story.",
+    href: "/pitch-technical-v4",
+    icon: BookOpen,
+    badge: "4-layer model · ~30 slides",
+    accent: "from-primary to-comply-teal",
+  },
 ];
 
 const strategyDecks: DeckCard[] = [
