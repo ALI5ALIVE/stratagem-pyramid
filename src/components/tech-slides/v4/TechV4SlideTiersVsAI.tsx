@@ -1,5 +1,4 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
-import ArchitectureLayerBadge from "@/components/tech-slides/ArchitectureLayerBadge";
 import { SlideNarrationProps } from "@/types/slideProps";
 import { Clock, Bell, Eye, TrendingUp, Check, X } from "lucide-react";
 
@@ -38,7 +37,6 @@ const TechV4SlideTiersVsAI = ({ slideNumber, ...narrationProps }: Props) => (
     {...narrationProps}
   >
     <div className="flex flex-col gap-4 flex-1 min-h-0">
-      <ArchitectureLayerBadge active="intelligence" />
       {/* Tiers row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 auto-rows-fr shrink-0">
         {tiers.map((t) => (

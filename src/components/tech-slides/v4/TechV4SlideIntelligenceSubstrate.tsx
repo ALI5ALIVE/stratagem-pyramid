@@ -1,5 +1,4 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
-import ArchitectureLayerBadge from "@/components/tech-slides/ArchitectureLayerBadge";
 import { SlideNarrationProps } from "@/types/slideProps";
 import { Layers, Network, Brain, Lock, Radio, Plug } from "lucide-react";
 
@@ -65,8 +64,6 @@ const TechV4SlideIntelligenceSubstrate = ({ slideNumber, ...narrationProps }: Pr
     {...narrationProps}
   >
     <div className="flex-1 flex flex-col gap-4 min-h-0">
-      <ArchitectureLayerBadge active="intelligence" />
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 flex-1 min-h-0 auto-rows-fr items-stretch">
         {pillars.map((p) => (
           <div key={p.title} className={`rounded-xl border ${p.border} ${p.bg} p-4 flex flex-col h-full justify-between`}>
