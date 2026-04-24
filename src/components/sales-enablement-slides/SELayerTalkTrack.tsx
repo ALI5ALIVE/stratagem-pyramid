@@ -1,6 +1,6 @@
 import PitchSlideContainer from "@/components/shared/PitchSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { Boxes, Database, Brain, Smartphone, Workflow, HelpCircle } from "lucide-react";
+import { Boxes, Brain, Smartphone, Workflow, HelpCircle } from "lucide-react";
 
 interface Props extends SlideNarrationProps {
   slideNumber?: number;
@@ -8,38 +8,31 @@ interface Props extends SlideNarrationProps {
 
 const rows = [
   {
-    layer: "Layer 1 — Core Apps",
+    layer: "Core Apps",
     icon: Boxes,
     accent: "text-blue-400",
-    plain: "The three apps your customer probably already owns versions of: Content, Safety, Training. Ours are best-in-class — but the magic is they share data.",
+    plain: "The three apps your customer probably already owns versions of: Content, Safety, Training. Ours are best-in-class — but the magic is they share one operational data foundation.",
     question: "Which of Safety, Content, and Training do you run today, and how connected are they really?",
   },
   {
-    layer: "Layer 2 — Operational Data Foundation",
-    icon: Database,
-    accent: "text-cyan-400",
-    plain: "One unified data lake under the apps. No exports, no spreadsheets, no reconciliation. Every layer above reasons over the same truth.",
-    question: "How long does it take to answer a cross-system question — like 'did training fix this risk'?",
-  },
-  {
-    layer: "Layer 3 — Intelligence (CoAnalyst)",
+    layer: "Intelligence & Orchestration",
     icon: Brain,
     accent: "text-violet-400",
-    plain: "AI that turns operational data into insights, recommendations, and automated actions. Not a chatbot — an analyst that lives inside your operation.",
+    plain: "CoAnalyst turns shared operational data into insights, recommendations, and automated actions. Not a chatbot — an analyst that lives inside your operation.",
     question: "Who in your team spends the most time pulling reports that should already exist?",
   },
   {
-    layer: "Layer 4 — Unified Mobile",
+    layer: "Unified Mobile",
     icon: Smartphone,
     accent: "text-amber-400",
     plain: "One app for the frontline. Content, training, safety reporting — same shell, same login. The crew uses it every shift.",
     question: "How many separate apps does your frontline juggle today?",
   },
   {
-    layer: "Layer 5 — DTOP",
+    layer: "DTOP",
     icon: Workflow,
     accent: "text-emerald-400",
-    plain: "Detect → Trigger → Orchestrate → Prove. The operating model that wraps everything. The way of working that makes the platform actually work.",
+    plain: "Detect → Trigger → Orchestrate → Prove. The operating model that wraps everything — the way of working that makes the platform actually work.",
     question: "When a safety signal lands today, how long until a procedure or training change reaches the crew — and how do you prove it worked?",
   },
 ];
@@ -48,8 +41,8 @@ const SELayerTalkTrack = ({ slideNumber, ...narrationProps }: Props) => (
   <PitchSlideContainer
     id="se-layer-talktrack"
     slideNumber={slideNumber}
-    title="How to talk about each layer"
-    subtitle="One plain-English line per layer + the one discovery question to ask."
+    title="Capability talk track"
+    subtitle="One plain-English line per capability + the one discovery question to ask."
     showHeader
     {...narrationProps}
   >
