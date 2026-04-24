@@ -1,42 +1,40 @@
 
 
-## Technical Deep Dive v4 — Final 4-layer cleanup
+## Tech Deep Dive v4 — Renumber Layers 3→2, 4→3, 5→4
 
-Three small fixes to make v4 visually consistent with the 4-layer story.
+The four CoAnalyst/Intelligence slides currently say "Layer 3", Mobile says "Layer 4", and DTOP says "Layer 5" — these were inherited from v3's 5-layer model. v4 has only 4 layers, so they need to read **Layer 2** (Intelligence), **Layer 3** (Mobile), **Layer 4** (DTOP) to match the v4 diagram and dividers.
 
-### Changes
+### Approach
 
-1. **Remove the "Layer 2 · Data Substrate" slide** from the v4 deck.
-   - File: `src/pages/TechnicalDeepDiveV4.tsx`
-   - Drop the `tech-slide-intelligence-substrate` entry from the `slides` array.
-   - Remove the corresponding "Data substrate (taxonomy · graph · LLMs)" item from the Intelligence divider's `upNext` list.
-   - Soften the Intelligence divider tagline to no longer promise a dedicated substrate slide: *"Insights, Recommendations and Automation — one layer that turns operational data into action."*
+Clone the 6 affected slides into `src/components/tech-slides/v4/` with renumbered titles only. v3 (`/pitch-technical`) stays fully untouched and continues to use the original Layer 3/4/5 labels.
 
-2. **Relabel Mobile and DTOP dividers** so Layer 3 reads correctly.
-   - Already done in v4 (`mobile.layerNumber = 3`, `dtop.layerNumber = 4`). Re-verify after the slide removal — no further change expected.
+### Files
 
-3. **Remove "Operational Data Foundation" from the technical diagram (v4 only).**
-   - Create a new component `src/components/platform-slides/PlatformArchitectureDiagramV4.tsx` — a copy of `PlatformArchitectureDiagram` with the cyan "Operational Data Foundation" band deleted. Remaining bands: DTOP (top) → Unified Mobile → Intelligence & Orchestration → Core Operational Apps.
-   - Update `src/components/tech-slides/v4/TechV4PlatformOverview.tsx` to import and render `PlatformArchitectureDiagramV4` instead of the 5-layer original.
-   - v3 (`/pitch-technical`) keeps the original 5-layer diagram — fully untouched.
+**NEW** (each is a near-identical copy of its v3 sibling, with only the `title` string changed):
 
-### Files touched
+| New v4 file | Source | Title change |
+|---|---|---|
+| `src/components/tech-slides/v4/TechV4Slide7CoAnalyst.tsx` | `TechSlide7CoAnalyst.tsx` | `Layer 3 · …` → `Layer 2 · Intelligence & Orchestration — Insights & Intelligence (CoAnalyst)` |
+| `src/components/tech-slides/v4/TechV4SlideInsights.tsx` | `TechSlideInsights.tsx` | `Layer 3 · …` → `Layer 2 · Intelligence & Orchestration — Recommendations & Prescriptive Actions` |
+| `src/components/tech-slides/v4/TechV4SlideAutomation.tsx` | `TechSlideAutomation.tsx` | `Layer 3 · …` → `Layer 2 · Intelligence & Orchestration — Automation` |
+| `src/components/tech-slides/v4/TechV4SlideTiersVsAI.tsx` | `TechSlideTiersVsAI.tsx` | `Layer 3 · …` → `Layer 2 · Intelligence & Orchestration — CoAnalyst Intelligence Tiers vs Generic AI` |
+| `src/components/tech-slides/v4/TechV4SlideMobile.tsx` | `TechSlideMobile.tsx` | `Layer 4 · Unified Mobile Experience` → `Layer 3 · Unified Mobile Experience` |
+| `src/components/tech-slides/v4/TechV4Slide5DTOP.tsx` | `TechSlide5DTOP.tsx` | `Layer 5 · DTOP — The System of Work` → `Layer 4 · DTOP — The System of Work` |
 
-**NEW**
-- `src/components/platform-slides/PlatformArchitectureDiagramV4.tsx`
+Slide IDs are preserved (e.g. `tech-slide-coanalyst`, `tech-slide-mobile`, `tech-slide-5`) so existing jump-target links from `TechV4PlatformOverview` continue to resolve.
 
 **EDITED**
-- `src/pages/TechnicalDeepDiveV4.tsx` — remove substrate slide entry; update Intelligence divider `upNext` and tagline.
-- `src/components/tech-slides/v4/TechV4PlatformOverview.tsx` — swap to `PlatformArchitectureDiagramV4`.
 
-**NOT TOUCHED**
-- `TechV4SlideIntelligenceSubstrate.tsx` — left in the codebase (orphaned), harmless. Can be deleted in a future pass.
-- v3 page, original diagram, all other slides.
+- `src/pages/TechnicalDeepDiveV4.tsx` — swap the 6 imports from the originals to the new `v4/` versions. No changes to slide order, ids, dividers, or `upNext` (already correct: Intelligence divider is `layerNumber: 2`, Mobile `3`, DTOP `4`).
+
+### Not touched
+
+- v3 page, v3 slides, `TechSlideLayerDivider` stack constants, `TechSlide4Platform` (v3 platform overview) — all unchanged.
+- `ArchitectureLayerBadge`, `PlatformArchitectureDiagramV4`, all other v4 components — already correct.
 
 ### QA
 
-- `/pitch-technical-v4`: confirm the substrate slide no longer appears between the Intelligence divider and the Insights slide.
-- Confirm the Platform Overview slide's diagram shows exactly 4 bands (DTOP, Mobile, Intelligence, Core) — no cyan Data Foundation band.
-- Confirm Mobile divider still reads "Layer 3" and DTOP still reads "Layer 4".
-- `/pitch-technical` (v3) unchanged — still shows 5 bands and the Data Foundation slide.
+- `/pitch-technical-v4`: confirm CoAnalyst, Insights, Automation, TiersVsAI all read **"Layer 2 · Intelligence & Orchestration — …"**; Mobile reads **"Layer 3 · Unified Mobile Experience"**; DTOP reads **"Layer 4 · DTOP — The System of Work"**.
+- Confirm sequence Layer 1 → 2 → 3 → 4 matches the 4-band v4 diagram.
+- `/pitch-technical` (v3): unchanged — still reads Layer 3/4/5.
 
