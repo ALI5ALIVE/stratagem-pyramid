@@ -1,6 +1,5 @@
 import { useState } from "react";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
-import ArchitectureLayerBadge from "@/components/tech-slides/ArchitectureLayerBadge";
 import { SlideNarrationProps } from "@/types/slideProps";
 import { Radar, Zap, GitBranch, BadgeCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -21,7 +20,6 @@ const TechV4Slide5DTOP = ({ slideNumber, ...narrationProps }: Props) => {
   return (
     <SalesSlideContainer id="tech-slide-5" title="The Platform · DTOP — The System of Work" subtitle="Detect → Trigger → Orchestrate → Prove — the closed-loop operating model" slideNumber={slideNumber} {...narrationProps}>
       <div className="flex-1 flex flex-col gap-4 min-h-0">
-        <ArchitectureLayerBadge active="dtop" />
         {/* Data sources */}
         <div className="flex items-center gap-2 flex-wrap shrink-0">
           <span className="text-xs text-muted-foreground uppercase tracking-wider mr-2 font-semibold">Data Sources</span>
