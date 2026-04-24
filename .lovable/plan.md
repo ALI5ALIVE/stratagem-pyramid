@@ -1,101 +1,83 @@
 
 
-## Customer 10-Slide Overview Deck — "From Where You Are Today to Measurable Outcomes"
+## Technical Deep Dive v4 — 4-layer mirror (Data Foundation folded into Intelligence)
 
-A short, customer-facing pitch built for a single 20-minute sales conversation. Goal: take a prospect from *"this is our reality today"* → *"here's the shift"* → *"here's what it looks like in practice"* → *"here's what we'd do first together"* — without overwhelming them with the full platform stack.
+A mirror of the Technical Deep Dive with the architecture compressed from **5 layers to 4**. Layer 2 (Operational Data Foundation) is removed as a standalone layer; its substance — unified taxonomy, knowledge graph, and aviation LLMs — is folded into the **Intelligence & Orchestration** layer as its data substrate.
 
-### Who it's for
-A customer/prospect (Head of Safety, Director of Ops, VP Compliance) sitting in a first or second meeting. They have ~20 minutes. They don't need every layer, every capability, or every persona — they need to **feel understood, see the shift, believe the outcome, and know the first step**.
-
-### Design principle: less is more
-- **No 5-layer architecture diagram.** Replaced by one simple "connected platform" visual.
-- **No DTOP acronym front-and-centre.** Embedded inside the use cases as a story, not a framework.
-- **No competitive matrix, no objection slides.** Those live in the sales enablement deck for rep prep — not in the customer room.
-- **One clear CTA at the end** — a discovery workshop, not "buy now."
-
-### The 10-slide arc
+### New layer model (4 layers)
 
 ```text
-ACT 1 — Where you are today (slides 1-3)
-ACT 2 — The shift we enable (slides 4-6)
-ACT 3 — What it looks like for you (slides 7-9)
-ACT 4 — Where we go next (slide 10)
+v3 (5 layers)                          v4 (4 layers)
+─────────────────────────              ─────────────────────────
+L1  Core Operational Apps              L1  Core Operational Apps
+L2  Operational Data Foundation        — (folded into L2)
+L3  Intelligence & Orchestration       L2  Intelligence & Orchestration
+                                            (incl. data substrate)
+L4  Unified Mobile Experience          L3  Unified Mobile Experience
+L5  DTOP — System of Work              L4  DTOP — System of Work
 ```
 
-| # | Slide | Component | Why it's here |
-|---|---|---|---|
-| **ACT 1 — Where you are today** ||||
-| 1 | Title — *"The Operational Performance Platform"* with subtitle *"From cost centre to performance engine"* | **NEW** `COSlide0Title` | Customer-styled hero, no agenda grid |
-| 2 | The reality today — fragmented systems, missed signals, rising cost | `TechSlide2IndustryChallenge` | reuse — pain landscape with industry-grounded numbers |
-| 3 | The strategic shift the industry is making | `TechSlide1StrategicShift` | reuse — "you're not alone, this is the direction" |
-| **ACT 2 — The shift we enable** ||||
-| 4 | What the platform is, in one sentence | `PFSlide2WhatIs` | reuse — plain-English definition |
-| 5 | The transformation — before vs. after | `Slide4Transformation` | reuse — visceral "today vs. tomorrow" |
-| 6 | The value you unlock — 5 shifts | `PFSlide9Value` | reuse — outcome-led, not feature-led |
-| **ACT 3 — What it looks like for you** ||||
-| 7 | Use cases in action — 3 concrete scenarios | `SlideUseCases` | reuse — DTOP shown as a *story*, not a framework |
-| 8 | Customer outcomes — proof from operators like you | `CustomerOutcomesSlide` | reuse — credibility anchor |
-| 9 | Your maturity roadmap — where you start, where you go | `Slide5MaturityCurve` | reuse — shows the journey is staged, not big-bang |
-| **ACT 4 — Where we go next** ||||
-| 10 | Your first 90 days with us — *"Let's start with one use case"* | **NEW** `COClosingFirst90Days` | Three concrete next steps + single CTA |
+### Slide order — `/pitch-technical-v4`
 
-Total: **10 slides**, ~20-minute conversation.
+Same arc as v3, with two changes:
+- Remove the **▸ Layer 2 · Data Foundation** divider
+- Remove the **L2 · Data Foundation** standalone slide (`TechSlideDataFoundation`)
+- Renumber every divider's `layerNumber` (Core stays 1; Intelligence becomes 2; Mobile becomes 3; DTOP becomes 4)
+- Update the Intelligence divider tagline to call out the data substrate it now owns
+- Update the Intelligence divider `upNext` to include "Data substrate (taxonomy · graph · LLMs)" as the first item
 
-### What's actually new
+Final v4 sequence:
+1. Hero · Strategic Shift · Industry Challenge · Why It Exists · Platform Snapshot
+2. Platform Overview (4-layer)
+3. ▸ L1 · Core Apps → SafetyManager365 · ContentManager365 · TrainingManager365
+4. ▸ L2 · Intelligence & Orchestration *(data substrate folded in)* → Insights · Recommendations · Automation · Tiers vs Generic AI
+5. ▸ L3 · Unified Mobile → Mobile slide
+6. ▸ L4 · DTOP → DTOP · Use Cases · Platform Integrations
+7. Regulation Management · Calculator · Maturity · 2026 Roadmap · Why Comply365 · Why Only Comply365 · CTA
 
-Two small components in a new folder `src/components/customer-overview-slides/`:
+### Key edits
 
-1. **`COSlide0Title.tsx`** — Customer-facing title. Headline + one-line value prop + small "prepared for [customer]" badge slot. No agenda chips (avoids the "this is going to be long" feeling).
-
-2. **`COClosingFirst90Days.tsx`** — Three numbered cards laid out left-to-right:
-   - **Days 1-30** — Discovery workshop: pick one use case, baseline today's cost
-   - **Days 31-60** — Pilot: deploy DTOP loop on that use case, measure
-   - **Days 61-90** — Prove & expand: present results, define rollout
-   
-   Bottom: single CTA — *"Book a 60-minute discovery workshop"*.
-
-### Page + routing
-
-- **NEW** `src/pages/CustomerOverview.tsx` — same scroll-snap scaffold as `ExecutivePitch3.tsx` (sidebar nav, keyboard arrows). No narration in v1 — this deck is always rep-led live.
-- **EDIT** `src/App.tsx` — add route `/customer-overview`.
-- **EDIT** `src/pages/HomePage.tsx` — add a card under the existing Pitch Decks section with title *"Customer Overview"*, badge *"10 slides · ~20 min"*, icon `Presentation`, and a clear "Customer-facing · Sales-led" tag.
-
-### Why this deck works (vs. the existing pitches)
-
-- **10 slides, not 20.** A 20-slide deck signals "we're going to talk at you." 10 signals "we want a conversation."
-- **No layer divider slides.** The 5-layer stack is *internal vocabulary*. Customers care about the outcome, not the architecture.
-- **DTOP shown as a story** (in the use cases slide), not as a framework slide. Customers don't need to learn the acronym — they need to recognise the pattern.
-- **Closing is a starting point, not a summary.** Ends on "here's what we'd do together in 90 days," which is the only thing the customer actually needs to decide on in the room.
-- **All reused slides are already battle-tested** in other decks — no risk of new content drifting from agreed messaging.
-
-### Files touched
-
-**NEW**
-- `src/pages/CustomerOverview.tsx`
-- `src/components/customer-overview-slides/COSlide0Title.tsx`
-- `src/components/customer-overview-slides/COClosingFirst90Days.tsx`
+**NEW files**
+- `src/pages/TechnicalDeepDiveV4.tsx` — clone of `TechnicalDeepDive.tsx` with:
+  - `DeckProvider deckId="tech-deep-dive-v4"`
+  - 4-layer `dividerProps` (no `data` entry; renumbered 1–4)
+  - Intelligence divider tagline: *"The data substrate — unified taxonomy, knowledge graph and aviation LLMs — plus Insights, Recommendations and Automation. One layer that turns operational data into action."*
+  - Intelligence divider `upNext`: `["Data substrate (taxonomy · graph · LLMs)", "Insights & Intelligence", "Recommendations & Prescriptive Actions", "Automation", "Tiers vs Generic AI"]`
+  - `slides` array drops `tech-divider-data` and `tech-slide-data-foundation`
+- `src/components/tech-slides/v4/TechV4Slide4PlatformDiagram.tsx` — a small wrapper that renders `TechSlide4Platform`'s content with a 4-layer label set, OR (simpler) reuse `TechSlide4Platform` as-is and rely on the in-slide jump targets that still resolve. **Decision: reuse `TechSlide4Platform` as-is** — it already lists 5 layers in its right-hand jump nav. To keep v4 honest visually, we instead create:
+- `src/components/tech-slides/v4/TechV4PlatformOverview.tsx` — a v4-specific platform overview slide that shows a 4-layer guide (Core · Intelligence (with data substrate sub-line) · Mobile · DTOP) on the right, and reuses `PlatformArchitectureDiagram compact` on the left. Each row jumps to the v4 divider id.
+- `src/components/tech-slides/v4/TechV4SlideIntelligenceSubstrate.tsx` — a single new slide inserted at the **top of the Intelligence layer (right after the Intelligence divider, before the Insights slide)** that condenses the Data Foundation story into one focused panel:
+  - 3 pillar cards: *Unified Aviation Taxonomy (4,000+ categories)*, *Operational Knowledge Graph (multi-hop reasoning)*, *Custom Aviation LLMs (90% vs 35%)*
+  - Bottom strip: *Customer-Owned · Real-Time · Open APIs*
+  - Tagline: *"The substrate every intelligence capability reasons over."*
+  - Reuses copy verbatim from `TechSlideDataFoundation` (just compressed and reframed as part of L2).
 
 **EDITED**
-- `src/App.tsx` — add route `/customer-overview`.
-- `src/pages/HomePage.tsx` — add card in Pitch Decks section.
+- `src/App.tsx` — add route `/pitch-technical-v4` → `TechnicalDeepDiveV4`.
+- `src/pages/HomePage.tsx` — add a card under the Pitch Decks section: title *"Technical Deep Dive v4"*, badge *"4-layer model · ~30 slides"*, subtle tag *"Compressed architecture · Data substrate folded in"*. Place it immediately after the existing Technical Deep Dive card.
 
-### Not touched
+### Slides intentionally **left untouched**
 
-- Any existing slide components, narration, or playbook data.
-- Existing pitch decks (Executive 1/2/3, Operational, Technical, CoAnalyst).
-- PPTX exporters.
+- `ArchitectureLayerBadge` — still supports a `data` Layer value; we simply never pass it in v4. Existing slides that hardcode `active="data"` (only `TechSlideDataFoundation`, which v4 doesn't include) are unaffected.
+- All other existing tech slides (`TechSlide7CoAnalyst`, `TechSlideInsights`, `TechSlideAutomation`, `TechSlideTiersVsAI`, `TechSlideMobile`, `TechSlide5DTOP`, etc.) — reused as-is. They already render correctly without the data divider preceding them.
+- `PlatformArchitectureDiagram` — kept as-is (it shows 5 layers with the data layer visible). v4's narration acknowledges the data substrate sits inside Intelligence; the diagram remains the canonical platform visual.
+  > *Trade-off: the diagram still shows 5 colored bands, but the v4 deck's story collapses two of them. If you'd prefer a true 4-layer diagram, say the word and we'll add a v4 variant of `PlatformArchitectureDiagram` that merges the Data + Intelligence bands into a single two-tier amber band. Default plan above keeps the diagram untouched to minimize risk.*
 
 ### Out of scope
 
-- Narration / audio.
-- PPTX export for this deck.
-- A customer-name personalisation flow on the title slide (placeholder slot only — fill manually for v1).
-- Industry-specific variants (Airlines / Defense / Rail) — can be a follow-up if the deck lands well.
+- PPTX exporter for v4.
+- Narration scripts for the new substrate slide (uses existing tech narration map; new slide will simply have no audio in v1).
+- Editing the shared `PlatformArchitectureDiagram` (see trade-off above).
+- Touching v3 (`/pitch-technical`) — fully unchanged.
 
 ### QA
 
-- Open `/customer-overview`, scroll all 10 slides, confirm the arc reads cleanly Today → Shift → Proof → Next Step.
-- Confirm no DTOP framework slide, no architecture diagram, no objection/competitive content appears.
-- Confirm Home Page lists the new card with the "Customer-facing · Sales-led" tag and a 10-slide / 20-min badge.
-- Sidebar slide navigator lists exactly 10 entries.
+- Open `/pitch-technical-v4`. Confirm:
+  - No "Data Foundation" divider appears.
+  - No standalone Data Foundation slide appears.
+  - The Intelligence divider reads **"Layer 2 · Intelligence & Orchestration"** with a tagline that names the data substrate.
+  - A new substrate summary slide appears immediately after the Intelligence divider, before the Insights slide.
+  - Mobile divider reads **"Layer 3"**, DTOP divider reads **"Layer 4"**.
+- Sidebar slide navigator lists the v4 entries in order; v3 sidebar (when on `/pitch-technical`) is unchanged.
+- Home Page shows the new v4 card alongside the existing Technical Deep Dive card.
 
