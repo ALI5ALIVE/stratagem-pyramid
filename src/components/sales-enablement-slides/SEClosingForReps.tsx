@@ -50,7 +50,7 @@ const blocks = [
 
 const checklist = [
   "I can give the one-sentence platform pitch",
-  "I can name the 5 layers and what each does in plain English",
+  "I can name the four capabilities (Core Apps, Intelligence & Orchestration, Mobile, DTOP) and what each does in plain English",
   "I can run the DTOP loop on a whiteboard",
   "I can handle the 'we already have X' objection",
   "I know which deck to send for which persona",
