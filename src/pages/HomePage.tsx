@@ -25,36 +25,12 @@ const pitchDecks: DeckCard[] = [
     accent: "from-primary to-comply-teal",
   },
   {
-    title: "Executive Pitch",
-    description: "Strategic Before & After narrative. From fragmentation to intelligent operations.",
-    href: "/pitch-executive-2",
-    icon: Rocket,
-    badge: "11 slides",
-    accent: "from-accent to-comply-plum",
-  },
-  {
     title: "Executive Pitch 3",
     description: "Executive narrative powered by the platform's strongest visuals — DTOP, 5-layer architecture, and intelligence depth.",
     href: "/pitch-executive-3",
     icon: Layers,
     badge: "20 slides",
     accent: "from-comply-teal to-accent",
-  },
-  {
-    title: "Operational Pitch",
-    description: "VP Ops & Safety workflow depth. Daily pain to 90-day pilot.",
-    href: "/pitch-operational",
-    icon: Briefcase,
-    badge: "12 slides",
-    accent: "from-accent to-comply-teal",
-  },
-  {
-    title: "Technical Deep-Dive",
-    description: "IT & Innovation architecture detail. Intelligence tiers to 2026 roadmap.",
-    href: "/pitch-technical",
-    icon: BookOpen,
-    badge: "20 slides",
-    accent: "from-comply-teal to-primary",
   },
   {
     title: "Technical Deep Dive v4",
@@ -167,19 +143,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Strategy */}
-        <section>
-          <SectionHeader 
-            title="Strategy & Positioning" 
-            subtitle="Internal playbooks and frameworks" 
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
-            {strategyDecks.map((card) => (
-              <DeckCardComponent key={card.href} card={card} />
-            ))}
-          </div>
-        </section>
-
         {/* Sales Enablement & Training */}
         <section>
           <SectionHeader 
@@ -201,8 +164,8 @@ export default function HomePage() {
         {/* Tools */}
         <section>
           <SectionHeader 
-            title="Tools & Reference" 
-            subtitle="Sales enablement resources and interactive tools" 
+            title="Capabilities" 
+            subtitle="Per-capability playbooks for the Operational Performance Platform" 
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <DeckCardComponent card={{
@@ -220,14 +183,6 @@ export default function HomePage() {
               icon: Brain,
               badge: "15 slides",
               accent: "from-comply-plum to-primary",
-            }} />
-            <DeckCardComponent card={{
-              title: "Persona Deep-Dive",
-              description: "Comprehensive buyer personas with messaging, objections, and discovery questions for every stakeholder.",
-              href: "/personas",
-              icon: Users,
-              badge: "5 personas",
-              accent: "from-violet-500 to-cyan-500",
             }} />
             <DeckCardComponent card={{
               title: "Regulation Management",
@@ -269,6 +224,37 @@ export default function HomePage() {
               badge: "11 slides",
               accent: "from-accent to-comply-teal",
             }} />
+          </div>
+        </section>
+
+        {/* Target Audience */}
+        <section>
+          <SectionHeader 
+            title="Target Audience" 
+            subtitle="Buyer personas, messaging and discovery questions" 
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <DeckCardComponent card={{
+              title: "Persona Deep-Dive",
+              description: "Comprehensive buyer personas with messaging, objections, and discovery questions for every stakeholder.",
+              href: "/personas",
+              icon: Users,
+              badge: "5 personas",
+              accent: "from-violet-500 to-cyan-500",
+            }} />
+          </div>
+        </section>
+
+        {/* Strategy */}
+        <section>
+          <SectionHeader 
+            title="Strategy & Positioning" 
+            subtitle="Internal playbooks and frameworks" 
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+            {strategyDecks.map((card) => (
+              <DeckCardComponent key={card.href} card={card} />
+            ))}
           </div>
         </section>
 

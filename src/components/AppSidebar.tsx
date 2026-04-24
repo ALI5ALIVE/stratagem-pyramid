@@ -1,7 +1,7 @@
 import {
   Presentation, Target, FileText, Brain,
   Rocket, Briefcase, BookOpen, Home, Globe, Users, ScrollText, Workflow, Sparkles, Zap, Smartphone, Layers,
-  MessageSquare, LogIn, LogOut
+  MessageSquare, LogIn, LogOut, GraduationCap
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
@@ -28,12 +28,16 @@ type NavItem = {
 };
 
 const pitchItems: NavItem[] = [
-  { title: "Executive Pitch", url: "/pitch-executive-2", icon: Rocket },
-  { title: "Operational Pitch", url: "/pitch-operational", icon: Briefcase },
-  { title: "Technical Deep-Dive", url: "/pitch-technical", icon: BookOpen },
+  { title: "Customer Overview", url: "/customer-overview", icon: Presentation },
+  { title: "Executive Pitch 3", url: "/pitch-executive-3", icon: Rocket },
+  { title: "Technical Deep Dive v4", url: "/pitch-technical-v4", icon: BookOpen },
 ];
 
-const platformItems: NavItem[] = [
+const salesEnablementItems: NavItem[] = [
+  { title: "Sales Enablement Training", url: "/sales-enablement", icon: GraduationCap },
+];
+
+const capabilityItems: NavItem[] = [
   { title: "Platform Playbook", url: "/platform-playbook", icon: Layers, badge: "Master" },
   { title: "CoAnalyst", url: "/coanalyst", icon: Brain },
   { title: "Insights & Recs", url: "/insights-playbook", icon: Sparkles },
@@ -43,13 +47,16 @@ const platformItems: NavItem[] = [
   { title: "Regulation Mgmt", url: "/regulation-management", icon: ScrollText },
 ];
 
+const targetAudienceItems: NavItem[] = [
+  { title: "Personas", url: "/personas", icon: Users },
+];
+
 const strategyItems: NavItem[] = [
   { title: "Strategy Deck", url: "/strategy", icon: Presentation },
   { title: "Content Strategy", url: "/content-strategy", icon: FileText },
 ];
 
 const referenceItems: NavItem[] = [
-  { title: "Personas", url: "/personas", icon: Users },
   { title: "Line of Sight", url: "/line-of-sight", icon: Target },
   { title: "Homepage Mockup", url: "/homepage-mockup", icon: Globe },
 ];
@@ -124,11 +131,15 @@ export function AppSidebar() {
         <SidebarSeparator />
         <NavGroup label="Pitch Decks" items={pitchItems} />
         <SidebarSeparator />
-        <NavGroup label="Platform & Capabilities" items={platformItems} />
+        <NavGroup label="Sales Enablement" items={salesEnablementItems} />
         <SidebarSeparator />
-        <NavGroup label="Strategy" items={strategyItems} />
+        <NavGroup label="Capabilities" items={capabilityItems} />
+        <SidebarSeparator />
+        <NavGroup label="Target Audience" items={targetAudienceItems} />
         <SidebarSeparator />
         <NavGroup label="Reference" items={referenceItems} />
+        <SidebarSeparator />
+        <NavGroup label="Strategy" items={strategyItems} />
         <SidebarSeparator />
         <NavGroup label="Collaboration" items={collaborationItems} />
 
