@@ -53,8 +53,9 @@ const dividerProps = {
   },
   intelligence: {
     layerNumber: 2, layerName: "Intelligence & Orchestration",
-    tagline: "Insights, Recommendations and Automation — one layer that turns operational data into action.",
+    tagline: "Part of the platform — Insights, Recommendations and Automation that turn operational data into action.",
     active: "intelligence" as const,
+    platformGroupLabel: "The Platform · Part of One Integrated Solution",
     upNext: [
       "Insights & Intelligence",
       "Recommendations & Prescriptive Actions",
@@ -64,14 +65,16 @@ const dividerProps = {
   },
   mobile: {
     layerNumber: 3, layerName: "Unified Mobile Experience",
-    tagline: "One trusted shell for the frontline — Procedures, Training and Safety in a single app.",
+    tagline: "Part of the platform — one trusted shell for the frontline: Procedures, Training and Safety in a single app.",
     active: "mobile" as const,
+    platformGroupLabel: "The Platform · Part of One Integrated Solution",
     upNext: ["Unified Mobile"],
   },
   dtop: {
     layerNumber: 4, layerName: "DTOP — The System of Work",
-    tagline: "Detect → Trigger → Orchestrate → Prove. The operating model that wraps the whole stack.",
+    tagline: "Part of the platform — Detect → Trigger → Orchestrate → Prove. The operating model that wraps the stack.",
     active: "dtop" as const,
+    platformGroupLabel: "The Platform · Part of One Integrated Solution",
     upNext: ["DTOP Operating Model"],
   },
 };
