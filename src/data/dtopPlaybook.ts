@@ -85,7 +85,7 @@ export const dtopSteps: DTOPStep[] = [
     label: "Detect",
     tagline: "From noise to signal",
     description: "Continuously monitor operational data streams to surface safety signals, regulatory changes, and performance anomalies before they become incidents.",
-    dataSources: ["Safety reports (ASR/ASAP)", "Flight data (FOQA/FDM)", "Audit findings", "Regulatory bulletins (EASA/FAA)", "Training assessment scores", "Crew feedback"],
+    dataSources: ["Crew safety reports", "Flight operational data", "Audit findings", "Regulatory bulletins (EASA/FAA)", "Training assessment scores", "Crew feedback"],
     actions: ["Pattern recognition across event types", "Threshold monitoring and anomaly detection", "Regulatory change impact scanning", "Cross-domain correlation"],
     outputs: ["Prioritised risk signals", "Regulatory change alerts", "Performance trend indicators"],
     color: "text-blue-400",
@@ -260,7 +260,7 @@ export const competitorGaps: CompetitorGap[] = [
   { competitor: "Traditional SMS (e.g., IQSMS, Intelex)", canDetect: true, canTrigger: false, canOrchestrate: false, canProve: false },
   { competitor: "Generic LMS (e.g., SAP SuccessFactors)", canDetect: false, canTrigger: false, canOrchestrate: false, canProve: false },
   { competitor: "Document Management (e.g., SharePoint)", canDetect: false, canTrigger: false, canOrchestrate: false, canProve: false },
-  { competitor: "Flight Data Analytics (e.g., GE FDM)", canDetect: true, canTrigger: false, canOrchestrate: false, canProve: false },
+  { competitor: "Flight data analytics tools", canDetect: true, canTrigger: false, canOrchestrate: false, canProve: false },
   { competitor: "Comply365 with DTOP", canDetect: true, canTrigger: true, canOrchestrate: true, canProve: true },
 ];
 

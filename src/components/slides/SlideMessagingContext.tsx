@@ -11,7 +11,7 @@ const domains = [
     metrics: [
       "Investigation closure time",
       "Repeat findings rate",
-      "ASAP submission rate",
+      "Crew safety report submission rate",
     ],
     color: "text-red-400",
     bgColor: "bg-red-500/10",
