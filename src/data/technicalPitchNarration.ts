@@ -197,6 +197,84 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     script:
       "Three phases. Technical discovery — one to two days mapping your data architecture and integration points. Ninety-day proof of value — deploying against your highest-impact use case with full platform activation. Measurable outcomes in the first quarter. Then enterprise rollout — full DTOP activation across all modules. Average time to full deployment: six to nine months. Your architecture is unique. Let's design the right approach together.",
   },
+  // ----- Additional v4 deck IDs (sales-coach speaker notes) -----
+  {
+    slideId: "tech-slide-opener",
+    title: "Hero — Operational Performance Platform",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "This is your cover. Set tone — calm, technical, evidence-led. The line you want to land in thirty seconds: this is the Operational Performance Platform — one connected system for content, training and safety, with the intelligence layer to turn signals into proven outcomes. Then move to the strategic shift slide.",
+  },
+  {
+    slideId: "tech-slide-why-exists",
+    title: "Why It Exists",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Anchor the why. Aviation runs on three operational disciplines — content, training and safety — and today they run as three disconnected silos. Data without intelligence. Insight without action. No proof of effect. The proof point to land: nobody owns the loop between detecting a problem and proving it was fixed. That's the gap this platform exists to close. Bridge: here's the platform in one screen.",
+  },
+  {
+    slideId: "tech-slide-3b-platform-snapshot",
+    title: "Platform Snapshot",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Use this slide to plant a mental map before the architecture deep-dive. One platform, four bands. Foundation — three core apps on one operational data foundation. Intelligence and orchestration — CoAnalyst, Insights, Automation. Mobile — one trusted shell. Operating model — DTOP. The proof point: one platform, one operating model, one mobile entry point. Bridge: now let me walk each layer in turn.",
+  },
+  {
+    slideId: "tech-slide-4",
+    title: "Platform Overview",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "This is the platform overview. Bottom-up. Foundation — ContentManager365, TrainingManager365, SafetyManager365 sharing one operational data foundation. Above — intelligence and orchestration. Above that — one trusted unified mobile shell. Wrapping the whole stack — DTOP. The proof point: this isn't integrations bolted together — it's one platform, one shared data layer. Bridge: let's start at the foundation. Next divider — Core Apps.",
+  },
+  {
+    slideId: "tech-slide-use-cases",
+    title: "Use Cases",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Three domains, same architecture. Safety — hard landing trends, crew injuries, regulatory exposure. Operations — AOG events, ground delays, fuel performance. Financial — insurance premiums, revenue protection. Each follows the same Detect, Trigger, Orchestrate, Prove pattern with costed outcomes. The proof point: different signal, different domain, exactly the same pattern. Use the tabs to walk through the cases most relevant to your customer's pain.",
+  },
+  {
+    slideId: "tech-slide-6",
+    title: "Platform Integrations",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "This is your integration credibility slide. The platform connects natively to the systems airlines already run — identity providers, Outlook, Teams, customer data sources, regulatory feeds and existing operational tooling. Native connectors, not bespoke integrations. The proof point: integrations land in days using configuration, not months of custom development. Bridge: let me show you the use case that earns the deck on its own — Regulation Management.",
+  },
+  {
+    slideId: "tech-slide-regulation",
+    title: "Regulation Management",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Regulation Management is the use case airlines almost always under-estimate. Today they manage well over a thousand regulations from EASA, FAA, ICAO and national authorities — in spreadsheets and tribal knowledge. With Regulation Management, every change is structured, tagged and ingested in near real time, then cascaded automatically into the procedures, training and risk assessments it touches. The proof point: from quarterly discovery to continuous visibility, with audit-ready evidence for every change. Bridge: now let me put numbers behind all of this — the Line of Sight calculator.",
+  },
+  {
+    slideId: "tech-slide-calculator",
+    title: "Line of Sight Calculator",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Use this calculator live, with their numbers if you can get them. The Line of Sight model connects tier-three operational events — go-arounds, AOG days, delays, mishandled bags, regulatory findings — through tier-two leading measures to tier-one executive lagging metrics. Each use case is sourced from EUROCONTROL, IATA, A4A, SITA, WTW and Flight Safety Foundation. The proof point: every dollar of cost avoidance is traceable back to the operational event and platform mechanism that prevented it. Bridge: so what does the journey ahead look like? Next divider.",
+  },
+  {
+    slideId: "tech-slide-why-comply",
+    title: "Why Comply365",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Three things set us apart. First — connected foundation. Not point solutions stitched together. One data model, three core apps, one intelligence layer. Five hundred and fifty plus airlines worldwide, around two and a half million users, six continents. Second — embedded intelligence. CoAnalyst built from the ground up on aviation data since twenty twenty-three — around ninety percent accuracy where generic AI plateaus at thirty-five. Third — proof by default. Every action logged automatically, every change traced, every decision auditable. The proof point: you don't prepare for regulators — you're always ready. Bridge: there's one final slide on why only Comply365 can deliver this end-to-end.",
+  },
+  {
+    slideId: "tech-slide-why-only-comply365",
+    title: "Why Only Comply365",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "This is your moat slide. No combination of point solutions delivers Detect, Trigger, Orchestrate, Prove because they don't share a common data model. Generic AI tools can summarise reports — they can't reason across operational domains because they don't sit on a connected data foundation. Bespoke per-product automation can't share workflows or governance. The proof point to land: only Comply365 owns all three core disciplines, the data foundation, the intelligence layer and the daily-use mobile shell — under one operating model. Bridge: so what's the next step? Final slide.",
+  },
+  {
+    slideId: "tech-slide-cta",
+    title: "CTA — Find Out More",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Close with the path, not the pitch. Three concrete next steps. One — half-day technical discovery to map their data architecture and integration points. Two — a ninety-day proof of value against their highest-impact use case with full platform activation, measurable outcomes in the first quarter. Three — enterprise rollout, full DTOP activation across all modules within six to nine months. Then ask for the discovery workshop. That's the deck.",
+  },
 ];
 
 export const getTechPitchNarration = (slideId: string): TechNarrationSlide | undefined => {
