@@ -1,6 +1,6 @@
 import PitchSlideContainer from "@/components/shared/PitchSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { GraduationCap, TrendingUp, Layers, Workflow, Trophy, Sparkles } from "lucide-react";
+import { GraduationCap, TrendingUp, Layers, Workflow, Trophy, Sparkles, Target } from "lucide-react";
 
 interface Props extends SlideNarrationProps {
   slideNumber?: number;
@@ -9,9 +9,10 @@ interface Props extends SlideNarrationProps {
 const modules = [
   { num: 1, title: "The Market Shift", desc: "Why this exists", icon: TrendingUp, accent: "text-sky-400 border-sky-500/40 bg-sky-500/10" },
   { num: 2, title: "What It Is", desc: "Plain-English pitch", icon: Sparkles, accent: "text-violet-400 border-violet-500/40 bg-violet-500/10" },
-  { num: 3, title: "The 5 Layers", desc: "How it fits together", icon: Layers, accent: "text-emerald-400 border-emerald-500/40 bg-emerald-500/10" },
+  { num: 3, title: "The Capabilities", desc: "How it fits together", icon: Layers, accent: "text-emerald-400 border-emerald-500/40 bg-emerald-500/10" },
   { num: 4, title: "How We Sell It", desc: "Discovery → demo → close", icon: Workflow, accent: "text-amber-400 border-amber-500/40 bg-amber-500/10" },
-  { num: 5, title: "Why We Win", desc: "Objections & next steps", icon: Trophy, accent: "text-rose-400 border-rose-500/40 bg-rose-500/10" },
+  { num: 5, title: "Use Cases & DTOP", desc: "Value through Detect→Prove", icon: Target, accent: "text-cyan-400 border-cyan-500/40 bg-cyan-500/10" },
+  { num: 6, title: "Why We Win", desc: "Objections & next steps", icon: Trophy, accent: "text-rose-400 border-rose-500/40 bg-rose-500/10" },
 ];
 
 const SESlide0Title = ({ slideNumber, ...narrationProps }: Props) => (
@@ -22,7 +23,7 @@ const SESlide0Title = ({ slideNumber, ...narrationProps }: Props) => (
           <GraduationCap className="h-3.5 w-3.5 text-primary" />
           <span className="text-[11px] font-medium uppercase tracking-wider text-primary">Sales Enablement Training</span>
         </div>
-        <span className="text-[11px] text-muted-foreground">24 slides · ~35 min</span>
+        <span className="text-[11px] text-muted-foreground">31 slides · ~50 min</span>
       </div>
 
       <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight leading-tight mb-3">
@@ -32,7 +33,7 @@ const SESlide0Title = ({ slideNumber, ...narrationProps }: Props) => (
         A guided walkthrough for new reps. By the end you'll be able to explain the platform on a discovery call — in plain English, without jargon.
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
         {modules.map((m) => {
           const Icon = m.icon;
           return (
