@@ -8,12 +8,13 @@ export type LayerKey = "dtop" | "mobile" | "intelligence" | "data" | "core";
 interface Props extends SlideNarrationProps {
   slideNumber?: number;
   id: string;
-  layerNumber: number;
+  layerNumber?: number;
   layerName: string;
   tagline: string;
   active: LayerKey;
   upNext: string[];
   platformGroupLabel?: string;
+  hideLayerNumber?: boolean;
 }
 
 // Top-down stack order (matches PlatformArchitectureDiagram)
@@ -42,6 +43,7 @@ const TechSlideLayerDivider = ({
   active,
   upNext,
   platformGroupLabel,
+  hideLayerNumber,
   ...narrationProps
 }: Props) => {
   const accentText = accentTextByKey[active];
@@ -63,9 +65,11 @@ const TechSlideLayerDivider = ({
               </span>
             </div>
           )}
-          <div className={cn("text-xs font-bold uppercase tracking-[0.25em]", accentText)}>
-            Layer {layerNumber} · Architecture
-          </div>
+          {!hideLayerNumber && layerNumber !== undefined && (
+            <div className={cn("text-xs font-bold uppercase tracking-[0.25em]", accentText)}>
+              Layer {layerNumber} · Architecture
+            </div>
+          )}
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold leading-tight text-foreground">
             {layerName}
           </h2>
