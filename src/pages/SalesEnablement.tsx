@@ -28,6 +28,9 @@ import SlideUseCases from "@/components/slides/SlideUseCases";
 import Slide5MaturityCurve from "@/components/slides/Slide5MaturityCurve";
 import CustomerOutcomesSlide from "@/components/shared/CustomerOutcomesSlide";
 import TechSlideWhyComply from "@/components/tech-slides/TechSlideWhyComply";
+import TechSlide10SafetyUseCases from "@/components/tech-slides/TechSlide10SafetyUseCases";
+import TechSlide11OpsUseCases from "@/components/tech-slides/TechSlide11OpsUseCases";
+import TechSlide12FinancialUseCases from "@/components/tech-slides/TechSlide12FinancialUseCases";
 
 const moduleProps = {
   m2: {
@@ -47,12 +50,19 @@ const moduleProps = {
   m4: {
     moduleNumber: 4,
     title: "How we sell it",
-    learningGoal: "By the end of this module you understand the discovery → demo → close motion, and which proof points land where.",
-    estimatedMinutes: 8,
-    upNext: ["Before vs After", "Use cases", "Regulation Management use case", "Maturity roadmap", "Customer outcomes"],
+    learningGoal: "By the end of this module you understand the discovery → demo → close motion and where the maturity roadmap fits the conversation.",
+    estimatedMinutes: 4,
+    upNext: ["Before vs After", "Maturity roadmap"],
   },
   m5: {
     moduleNumber: 5,
+    title: "Use cases & value through DTOP",
+    learningGoal: "By the end of this module you can pick the right use case for the prospect's pain and walk them through Detect → Trigger → Orchestrate → Prove with a defensible cost figure.",
+    estimatedMinutes: 12,
+    upNext: ["DTOP framework", "Safety use cases", "Operations use cases", "Financial use cases", "Regulation Management", "Customer outcomes"],
+  },
+  m6: {
+    moduleNumber: 6,
     title: "Why we win",
     learningGoal: "By the end of this module you can handle the top 5 objections and walk a prospect to a 90-day pilot.",
     estimatedMinutes: 6,
@@ -85,15 +95,20 @@ const slides = [
   // MODULE 4
   { id: "se-module-4", label: "▸ Module 4", component: SEModuleDivider, dividerProps: moduleProps.m4 },
   { id: "se-slide-transform", label: "M4 · Before vs After", component: Slide4Transformation },
-  { id: "se-slide-usecases", label: "M4 · Use Cases", component: SlideUseCases },
-  { id: "se-slide-regmgmt", label: "M4 · Use Case — Regulation Management", component: TechSlideRegulationSummary },
   { id: "se-slide-maturity", label: "M4 · Maturity Roadmap", component: Slide5MaturityCurve },
-  { id: "se-slide-outcomes", label: "M4 · Customer Outcomes", component: CustomerOutcomesSlide },
   // MODULE 5
   { id: "se-module-5", label: "▸ Module 5", component: SEModuleDivider, dividerProps: moduleProps.m5 },
-  { id: "se-slide-objections", label: "M5 · Objections", component: SEObjections },
-  { id: "se-slide-why", label: "M5 · Why Comply365", component: TechSlideWhyComply },
-  { id: "se-slide-closing", label: "M5 · Your First 7 Days", component: SEClosingForReps },
+  { id: "se-slide-usecases", label: "M5 · Use Case Framework (DTOP)", component: SlideUseCases },
+  { id: "se-slide-safety-uc", label: "M5 · Safety Use Cases", component: TechSlide10SafetyUseCases },
+  { id: "se-slide-ops-uc", label: "M5 · Operations Use Cases", component: TechSlide11OpsUseCases },
+  { id: "se-slide-financial-uc", label: "M5 · Financial Use Cases", component: TechSlide12FinancialUseCases },
+  { id: "se-slide-regmgmt", label: "M5 · Regulation Management Use Case", component: TechSlideRegulationSummary },
+  { id: "se-slide-outcomes", label: "M5 · Customer Outcomes", component: CustomerOutcomesSlide },
+  // MODULE 6
+  { id: "se-module-6", label: "▸ Module 6", component: SEModuleDivider, dividerProps: moduleProps.m6 },
+  { id: "se-slide-objections", label: "M6 · Objections", component: SEObjections },
+  { id: "se-slide-why", label: "M6 · Why Comply365", component: TechSlideWhyComply },
+  { id: "se-slide-closing", label: "M6 · Your First 7 Days", component: SEClosingForReps },
 ];
 
 const SalesEnablement = () => {
