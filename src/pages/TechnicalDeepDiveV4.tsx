@@ -11,19 +11,19 @@ import TechSlide2IndustryChallenge from "@/components/tech-slides/TechSlide2Indu
 import TechSlideWhyExists from "@/components/tech-slides/TechSlideWhyExists";
 import TechSlidePlatformSnapshot from "@/components/tech-slides/TechSlidePlatformSnapshot";
 
-// Architecture (4-layer)
+// Architecture
 import TechV4PlatformOverview from "@/components/tech-slides/v4/TechV4PlatformOverview";
-import TechSlide4aSafetyManager from "@/components/tech-slides/TechSlide4aSafetyManager";
-import TechSlide4bContentManager from "@/components/tech-slides/TechSlide4bContentManager";
-import TechSlide4cTrainingManager from "@/components/tech-slides/TechSlide4cTrainingManager";
+import TechSlide4aSafetyManager from "@/components/tech-slides/v4/TechV4Slide4aSafetyManager";
+import TechSlide4bContentManager from "@/components/tech-slides/v4/TechV4Slide4bContentManager";
+import TechSlide4cTrainingManager from "@/components/tech-slides/v4/TechV4Slide4cTrainingManager";
 
-// Intelligence & Orchestration (now includes data substrate) — v4 renumbered (Layer 2)
+// Intelligence & Orchestration (now includes data substrate)
 import TechSlide7CoAnalyst from "@/components/tech-slides/v4/TechV4Slide7CoAnalyst";
 import TechSlideInsights from "@/components/tech-slides/v4/TechV4SlideInsights";
 import TechSlideAutomation from "@/components/tech-slides/v4/TechV4SlideAutomation";
 import TechSlideTiersVsAI from "@/components/tech-slides/v4/TechV4SlideTiersVsAI";
 
-// Delivery & operating model — v4 renumbered (Layer 3, Layer 4)
+// Delivery & operating model
 import TechSlideMobile from "@/components/tech-slides/v4/TechV4SlideMobile";
 import TechSlide5DTOP from "@/components/tech-slides/v4/TechV4Slide5DTOP";
 import TechSlideUseCases from "@/components/tech-slides/TechSlideUseCases";
@@ -106,11 +106,11 @@ const slides = [
   { id: "tech-slide-why-exists", label: "Why It Exists", component: TechSlideWhyExists },
   { id: "tech-slide-3b-platform-snapshot", label: "Platform Snapshot", component: TechSlidePlatformSnapshot },
   // Architecture
-  { id: "tech-slide-4", label: "Platform Overview (4-layer)", component: TechV4PlatformOverview },
+  { id: "tech-slide-4", label: "Platform Overview", component: TechV4PlatformOverview },
   { id: "tech-divider-core", label: "▸ Core Apps (Foundation)", component: TechSlideLayerDivider, dividerProps: dividerProps.core },
-  { id: "tech-slide-4a", label: "L1 · SafetyManager365", component: TechSlide4aSafetyManager },
-  { id: "tech-slide-4b", label: "L1 · ContentManager365", component: TechSlide4bContentManager },
-  { id: "tech-slide-4c", label: "L1 · TrainingManager365", component: TechSlide4cTrainingManager },
+  { id: "tech-slide-4a", label: "SafetyManager365", component: TechSlide4aSafetyManager },
+  { id: "tech-slide-4b", label: "ContentManager365", component: TechSlide4bContentManager },
+  { id: "tech-slide-4c", label: "TrainingManager365", component: TechSlide4cTrainingManager },
   // Intelligence & Orchestration (data substrate folded in)
   { id: "tech-divider-intelligence", label: "▸ Intelligence & Orchestration", component: TechSlideLayerDivider, dividerProps: dividerProps.intelligence },
   { id: "tech-slide-coanalyst", label: "Insights & Intelligence", component: TechSlide7CoAnalyst },
