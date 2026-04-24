@@ -1,9 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
-import SpeakerNotesPanel from "@/components/shared/SpeakerNotesPanel";
 import { useSalesEnablementNarration } from "@/hooks/useSalesEnablementNarration";
-import { getSalesEnablementNarration } from "@/data/salesEnablementNarration";
 
 import SESlide0Title from "@/components/sales-enablement-slides/SESlide0Title";
 import SEModuleDivider from "@/components/sales-enablement-slides/SEModuleDivider";
@@ -206,12 +204,6 @@ const SalesEnablement = () => {
           );
         })}
       </div>
-      <SpeakerNotesPanel
-        title={slides[currentSlide]?.label ?? ""}
-        script={getSalesEnablementNarration(slides[currentSlide]?.id)?.script}
-        slideNumber={currentSlide}
-        totalSlides={slides.length}
-      />
     </div>
   );
 };
