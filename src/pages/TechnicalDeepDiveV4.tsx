@@ -17,15 +17,15 @@ import TechSlide4aSafetyManager from "@/components/tech-slides/TechSlide4aSafety
 import TechSlide4bContentManager from "@/components/tech-slides/TechSlide4bContentManager";
 import TechSlide4cTrainingManager from "@/components/tech-slides/TechSlide4cTrainingManager";
 
-// Intelligence & Orchestration (now includes data substrate)
-import TechSlide7CoAnalyst from "@/components/tech-slides/TechSlide7CoAnalyst";
-import TechSlideInsights from "@/components/tech-slides/TechSlideInsights";
-import TechSlideAutomation from "@/components/tech-slides/TechSlideAutomation";
-import TechSlideTiersVsAI from "@/components/tech-slides/TechSlideTiersVsAI";
+// Intelligence & Orchestration (now includes data substrate) — v4 renumbered (Layer 2)
+import TechSlide7CoAnalyst from "@/components/tech-slides/v4/TechV4Slide7CoAnalyst";
+import TechSlideInsights from "@/components/tech-slides/v4/TechV4SlideInsights";
+import TechSlideAutomation from "@/components/tech-slides/v4/TechV4SlideAutomation";
+import TechSlideTiersVsAI from "@/components/tech-slides/v4/TechV4SlideTiersVsAI";
 
-// Delivery & operating model
-import TechSlideMobile from "@/components/tech-slides/TechSlideMobile";
-import TechSlide5DTOP from "@/components/tech-slides/TechSlide5DTOP";
+// Delivery & operating model — v4 renumbered (Layer 3, Layer 4)
+import TechSlideMobile from "@/components/tech-slides/v4/TechV4SlideMobile";
+import TechSlide5DTOP from "@/components/tech-slides/v4/TechV4Slide5DTOP";
 import TechSlideUseCases from "@/components/tech-slides/TechSlideUseCases";
 import TechSlide6PlatformIntegrations from "@/components/tech-slides/TechSlide6PlatformIntegrations";
 
