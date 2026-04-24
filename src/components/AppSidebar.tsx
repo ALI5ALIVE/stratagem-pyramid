@@ -1,7 +1,7 @@
 import {
-  Presentation, Target, FileText, Brain,
-  Rocket, Briefcase, BookOpen, Home, Globe, Users, ScrollText, Workflow, Sparkles, Zap, Smartphone, Layers,
-  MessageSquare, LogIn, LogOut, GraduationCap
+  Presentation, Brain,
+  Rocket, BookOpen, Home, Users, ScrollText, Workflow, Sparkles, Zap, Smartphone, Layers,
+  LogIn, LogOut, GraduationCap
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
@@ -35,31 +35,22 @@ const pitchItems: NavItem[] = [
 ];
 
 const salesEnablementItems: NavItem[] = [
-  { title: "Academy (Modules + Quiz)", url: "/academy", icon: GraduationCap, badge: "New" },
+  { title: "Sales Enablement Academy", url: "/academy", icon: GraduationCap, badge: "New" },
   { title: "Sales Enablement Training", url: "/sales-enablement", icon: GraduationCap },
 ];
 
 const capabilityItems: NavItem[] = [
   { title: "Platform Playbook", url: "/platform-playbook", icon: Layers, badge: "Master" },
-  { title: "CoAnalyst", url: "/coanalyst", icon: Brain },
-  { title: "Insights & Recs", url: "/insights-playbook", icon: Sparkles },
-  { title: "Automation", url: "/automation-playbook", icon: Zap },
-  { title: "Unified Mobile", url: "/mobile-playbook", icon: Smartphone },
+  { title: "CoAnalyst Playbook", url: "/coanalyst", icon: Brain },
+  { title: "Regulation Management", url: "/regulation-management", icon: ScrollText },
   { title: "DTOP Operating Model", url: "/dtop-playbook", icon: Workflow },
-  { title: "Regulation Mgmt", url: "/regulation-management", icon: ScrollText },
+  { title: "Insights & Recommendations", url: "/insights-playbook", icon: Sparkles },
+  { title: "Automation", url: "/automation-playbook", icon: Zap },
+  { title: "Unified Mobile App", url: "/mobile-playbook", icon: Smartphone },
 ];
 
 const targetAudienceItems: NavItem[] = [
   { title: "Personas", url: "/personas", icon: Users },
-];
-
-const referenceItems: NavItem[] = [
-  { title: "Line of Sight", url: "/line-of-sight", icon: Target },
-  { title: "Homepage Mockup", url: "/homepage-mockup", icon: Globe },
-];
-
-const collaborationItems: NavItem[] = [
-  { title: "Reviews", url: "/review", icon: MessageSquare },
 ];
 
 function NavGroup({ label, items }: { label: string; items: NavItem[] }) {
@@ -133,10 +124,6 @@ export function AppSidebar() {
         <NavGroup label="Sales Enablement" items={salesEnablementItems} />
         <SidebarSeparator />
         <NavGroup label="Capabilities" items={capabilityItems} />
-        <SidebarSeparator />
-        <NavGroup label="Reference" items={referenceItems} />
-        <SidebarSeparator />
-        <NavGroup label="Collaboration" items={collaborationItems} />
 
         <SidebarSeparator />
         <SidebarGroup>
