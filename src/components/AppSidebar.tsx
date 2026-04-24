@@ -129,13 +129,13 @@ export function AppSidebar() {
         </SidebarGroup>
 
         <SidebarSeparator />
+        <NavGroup label="Target Audience" items={targetAudienceItems} />
+        <SidebarSeparator />
         <NavGroup label="Pitch Decks" items={pitchItems} />
         <SidebarSeparator />
         <NavGroup label="Sales Enablement" items={salesEnablementItems} />
         <SidebarSeparator />
         <NavGroup label="Capabilities" items={capabilityItems} />
-        <SidebarSeparator />
-        <NavGroup label="Target Audience" items={targetAudienceItems} />
         <SidebarSeparator />
         <NavGroup label="Reference" items={referenceItems} />
         <SidebarSeparator />
