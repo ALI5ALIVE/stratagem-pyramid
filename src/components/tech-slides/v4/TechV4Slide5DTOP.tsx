@@ -16,10 +16,10 @@ const steps = [
 
 const dataSources = ["Safety Reports", "Operational Data", "Maintenance", "Crew Logs", "Regulatory", "Audit"];
 
-const TechSlide5DTOP = ({ slideNumber, ...narrationProps }: Props) => {
+const TechV4Slide5DTOP = ({ slideNumber, ...narrationProps }: Props) => {
   const [active, setActive] = useState<number | null>(null);
   return (
-    <SalesSlideContainer id="tech-slide-5" title="Layer 5 · DTOP — The System of Work" subtitle="Detect → Trigger → Orchestrate → Prove — the closed-loop operating model" slideNumber={slideNumber} {...narrationProps}>
+    <SalesSlideContainer id="tech-slide-5" title="Layer 4 · DTOP — The System of Work" subtitle="Detect → Trigger → Orchestrate → Prove — the closed-loop operating model" slideNumber={slideNumber} {...narrationProps}>
       <div className="flex-1 flex flex-col gap-4 min-h-0">
         <ArchitectureLayerBadge active="dtop" />
         {/* Data sources */}
@@ -57,4 +57,4 @@ const TechSlide5DTOP = ({ slideNumber, ...narrationProps }: Props) => {
   );
 };
 
-export default TechSlide5DTOP;
+export default TechV4Slide5DTOP;

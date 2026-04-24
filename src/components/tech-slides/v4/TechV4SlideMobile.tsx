@@ -19,10 +19,10 @@ const pillars = [
   { icon: Layers, title: "Simpler Deployment, Drives IT Efficiency", desc: "One MDM (Mobile Device Management) footprint, one certification, one approval cycle through customer mobile estates — instead of three. Drives IT efficiency.", color: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/30" },
 ];
 
-const TechSlideMobile = ({ slideNumber, ...narrationProps }: Props) => (
+const TechV4SlideMobile = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer
     id="tech-slide-mobile"
-    title="Layer 4 · Unified Mobile Experience"
+    title="Layer 3 · Unified Mobile Experience"
     subtitle="One trusted entry point for the frontline — Content, Training and Safety in a single shell"
     slideNumber={slideNumber}
     {...narrationProps}
@@ -77,4 +77,4 @@ const TechSlideMobile = ({ slideNumber, ...narrationProps }: Props) => (
   </SalesSlideContainer>
 );
 
-export default TechSlideMobile;
+export default TechV4SlideMobile;

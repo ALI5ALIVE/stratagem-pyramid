@@ -29,10 +29,10 @@ const rows = [
   { cap: "Summarisation & basic Q&A", co: true, gen: true },
 ];
 
-const TechSlideTiersVsAI = ({ slideNumber, ...narrationProps }: Props) => (
+const TechV4SlideTiersVsAI = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer
     id="tech-slide-tiers-vs-ai"
-    title="Layer 3 · Intelligence & Orchestration — CoAnalyst Intelligence Tiers vs Generic AI"
+    title="Layer 2 · Intelligence & Orchestration — CoAnalyst Intelligence Tiers vs Generic AI"
     subtitle="Four tiers of operational intelligence — and the precision gap generic AI cannot close"
     slideNumber={slideNumber}
     {...narrationProps}
@@ -102,4 +102,4 @@ const TechSlideTiersVsAI = ({ slideNumber, ...narrationProps }: Props) => (
   </SalesSlideContainer>
 );
 
-export default TechSlideTiersVsAI;
+export default TechV4SlideTiersVsAI;

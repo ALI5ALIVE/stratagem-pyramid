@@ -13,10 +13,10 @@ const pipeline = [
   { icon: FileCheck2, label: "Audit Trail", desc: "Every execution logged: who, what, when, why. Audit-ready by default.", color: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/30" },
 ];
 
-const TechSlideAutomation = ({ slideNumber, ...narrationProps }: Props) => (
+const TechV4SlideAutomation = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer
     id="tech-slide-automation"
-    title="Layer 3 · Intelligence & Orchestration — Automation"
+    title="Layer 2 · Intelligence & Orchestration — Automation"
     subtitle="One automation layer across the platform — closing the loop on cross-product workflows"
     slideNumber={slideNumber}
     {...narrationProps}
@@ -85,4 +85,4 @@ const TechSlideAutomation = ({ slideNumber, ...narrationProps }: Props) => (
   </SalesSlideContainer>
 );
 
-export default TechSlideAutomation;
+export default TechV4SlideAutomation;

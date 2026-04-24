@@ -20,10 +20,10 @@ const archCards = [
   { title: "Continuous Learning · Tenant-Isolated", desc: "Models improve with every report processed. Airline-specific tuning — no data crosses tenant boundaries." },
 ];
 
-const TechSlide7CoAnalyst = ({ slideNumber, ...narrationProps }: Props) => (
+const TechV4Slide7CoAnalyst = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer
     id="tech-slide-coanalyst"
-    title="Layer 3 · Intelligence & Orchestration — Insights & Intelligence (CoAnalyst)"
+    title="Layer 2 · Intelligence & Orchestration — Insights & Intelligence (CoAnalyst)"
     subtitle="Conversational intelligence purpose-built for aviation operations"
     slideNumber={slideNumber}
     {...narrationProps}
@@ -86,4 +86,4 @@ const TechSlide7CoAnalyst = ({ slideNumber, ...narrationProps }: Props) => (
   </SalesSlideContainer>
 );
 
-export default TechSlide7CoAnalyst;
+export default TechV4Slide7CoAnalyst;

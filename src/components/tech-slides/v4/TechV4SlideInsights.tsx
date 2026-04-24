@@ -18,10 +18,10 @@ const workedSteps = [
   { icon: CheckCircle2, label: "Recommend", color: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/30", text: "Targeted retraining for 180 ground crew, expedite SOP republish, audit pack generated." },
 ];
 
-const TechSlideInsights = ({ slideNumber, ...narrationProps }: Props) => (
+const TechV4SlideInsights = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer
     id="tech-slide-insights"
-    title="Layer 3 · Intelligence & Orchestration — Recommendations & Prescriptive Actions"
+    title="Layer 2 · Intelligence & Orchestration — Recommendations & Prescriptive Actions"
     subtitle="From insight to prescriptive action — proactive signals across the platform"
     slideNumber={slideNumber}
     {...narrationProps}
@@ -67,4 +67,4 @@ const TechSlideInsights = ({ slideNumber, ...narrationProps }: Props) => (
   </SalesSlideContainer>
 );
 
-export default TechSlideInsights;
+export default TechV4SlideInsights;
