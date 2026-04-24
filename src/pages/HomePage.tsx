@@ -130,6 +130,24 @@ export default function HomePage() {
 
       {/* Content */}
       <div className="max-w-7xl mx-auto px-6 pb-16 space-y-12">
+        {/* Target Audience */}
+        <section>
+          <SectionHeader 
+            title="Target Audience" 
+            subtitle="Buyer personas, messaging and discovery questions" 
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <DeckCardComponent card={{
+              title: "Persona Deep-Dive",
+              description: "Comprehensive buyer personas with messaging, objections, and discovery questions for every stakeholder.",
+              href: "/personas",
+              icon: Users,
+              badge: "5 personas",
+              accent: "from-violet-500 to-cyan-500",
+            }} />
+          </div>
+        </section>
+
         {/* Pitch Decks */}
         <section>
           <SectionHeader 
@@ -223,24 +241,6 @@ export default function HomePage() {
               icon: Smartphone,
               badge: "11 slides",
               accent: "from-accent to-comply-teal",
-            }} />
-          </div>
-        </section>
-
-        {/* Target Audience */}
-        <section>
-          <SectionHeader 
-            title="Target Audience" 
-            subtitle="Buyer personas, messaging and discovery questions" 
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <DeckCardComponent card={{
-              title: "Persona Deep-Dive",
-              description: "Comprehensive buyer personas with messaging, objections, and discovery questions for every stakeholder.",
-              href: "/personas",
-              icon: Users,
-              badge: "5 personas",
-              accent: "from-violet-500 to-cyan-500",
             }} />
           </div>
         </section>
