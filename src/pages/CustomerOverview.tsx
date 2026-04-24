@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
+import { useCustomerOverviewNarration } from "@/hooks/useCustomerOverviewNarration";
 
 import COSlide0Title from "@/components/customer-overview-slides/COSlide0Title";
 import TechSlide2IndustryChallenge from "@/components/tech-slides/TechSlide2IndustryChallenge";
@@ -13,8 +14,6 @@ import TechSlideRegulationSummary from "@/components/tech-slides/TechSlideRegula
 import CustomerOutcomesSlide from "@/components/shared/CustomerOutcomesSlide";
 import Slide5MaturityCurve from "@/components/slides/Slide5MaturityCurve";
 import COClosingFirst90Days from "@/components/customer-overview-slides/COClosingFirst90Days";
-import SpeakerNotesPanel from "@/components/shared/SpeakerNotesPanel";
-import { getCustomerOverviewNarration } from "@/data/customerOverviewNarration";
 
 const slides = [
   { id: "co-slide-0", label: "Title", component: COSlide0Title },
@@ -35,13 +34,20 @@ const CustomerOverview = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { register, unregister } = useSlideNavigation();
   const { open, setOpen } = useSidebar();
+  const narration = useCustomerOverviewNarration();
 
   const navigateToSlide = useCallback((index: number) => {
     const slideElement = document.getElementById(slides[index].id);
     if (slideElement) {
+      narration.stop();
       slideElement.scrollIntoView({ behavior: "smooth" });
       setCurrentSlide(index);
     }
+  }, [narration.stop]);
+
+  // Stop narration when leaving the deck
+  useEffect(() => {
+    return () => narration.stop();
   }, []);
 
   useEffect(() => {
@@ -58,12 +64,13 @@ const CustomerOverview = () => {
       if (open) setOpen(false);
       const newSlide = Math.round(scrollTop / slideHeight);
       if (newSlide !== currentSlide && newSlide >= 0 && newSlide < slides.length) {
+        narration.stop();
         setCurrentSlide(newSlide);
       }
     };
     container.addEventListener("scroll", handleScroll);
     return () => container.removeEventListener("scroll", handleScroll);
-  }, [currentSlide, open, setOpen]);
+  }, [currentSlide, open, setOpen, narration.stop]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -106,23 +113,28 @@ const CustomerOverview = () => {
       >
         {slides.map((slide, index) => {
           const SlideComponent = slide.component as React.ComponentType<any>;
+          const isCurrentSlide = index === currentSlide;
+          const slideId = slide.id;
+          const narrationProps = {
+            isPlaying: isCurrentSlide && narration.currentSlide === slideId ? narration.isPlaying : false,
+            isLoading: isCurrentSlide && narration.currentSlide === slideId ? narration.isLoading : false,
+            progress: isCurrentSlide && narration.currentSlide === slideId ? narration.progress : 0,
+            hasCompleted: isCurrentSlide && narration.currentSlide === slideId ? narration.hasCompleted : false,
+            onPlay: () => narration.play(slideId),
+            onPause: narration.pause,
+            onNextSlide: handleNextSlide,
+            onPrevSlide: handlePrevSlide,
+          };
           return (
             <SlideComponent
               key={slide.id}
               slideNumber={index}
               id={slide.id}
-              onNextSlide={handleNextSlide}
-              onPrevSlide={handlePrevSlide}
+              {...narrationProps}
             />
           );
         })}
       </div>
-      <SpeakerNotesPanel
-        title={slides[currentSlide]?.label ?? ""}
-        script={getCustomerOverviewNarration(slides[currentSlide]?.id ?? "")?.script}
-        slideNumber={currentSlide}
-        totalSlides={slides.length}
-      />
     </div>
   );
 };
