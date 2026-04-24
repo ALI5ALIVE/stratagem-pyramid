@@ -1,60 +1,52 @@
 
 
-## Tech Deep Dive v4 — Remove all "Layer N" references
+## Tech Deep Dive v4 — Strip remaining "Layer" references from Core Apps + sidebar
 
-Strip the "Layer 1/2/3/4" numbering from the v4 deck so the architecture reads as one platform with named capabilities, not a numbered stack. v3 stays untouched.
+The previous pass missed the three Core Operational App slide titles (SafetyManager365, ContentManager365, TrainingManager365) and several v4 page sidebar labels, all of which still say "Layer 1" or "L1". Because those three slide files are also used by v3 (`/pitch-technical`), they must be cloned into `v4/` rather than edited in place.
 
 ### Changes
 
-**1. `PlatformArchitectureDiagramV4.tsx`** — remove "Layer N ·" prefixes from each band's label/eyebrow. Bands become simply:
-- DTOP — The System of Work
-- Unified Mobile Experience
-- Intelligence & Orchestration
-- Core Operational Apps (Foundation)
+**1. Clone the 3 core app slides into `src/components/tech-slides/v4/`** with title prefix removed:
 
-Keep the bracket wrapper and "THE OPERATIONAL PERFORMANCE PLATFORM · ONE INTEGRATED SOLUTION" eyebrow. Drop any "Layers 2–4 / Layer 1" wording — replace with "The Platform / The Foundation".
+| New v4 file | Source | Title change |
+|---|---|---|
+| `TechV4Slide4aSafetyManager.tsx` | `TechSlide4aSafetyManager.tsx` | `Layer 1 · Core Operational Apps — SafetyManager365` → `Core Operational Apps — SafetyManager365` |
+| `TechV4Slide4bContentManager.tsx` | `TechSlide4bContentManager.tsx` | `Layer 1 · Core Operational Apps — ContentManager365 + CoAuthor` → `Core Operational Apps — ContentManager365 + CoAuthor` |
+| `TechV4Slide4cTrainingManager.tsx` | `TechSlide4cTrainingManager.tsx` | `Layer 1 · Core Operational Apps — TrainingManager365 + CoTrainer` → `Core Operational Apps — TrainingManager365 + CoTrainer` |
 
-**2. `TechV4PlatformOverview.tsx`** — remove the "Layers 2–4 = The Platform · Layer 1 = The Foundation" header text; replace with "The Platform · The Foundation". Strip "Layer N ·" from each guide button label so they read as the capability name only.
+Slide IDs (`tech-slide-4a/4b/4c`) preserved so jump-links still resolve. ` ArchitectureLayerBadge` usage retained — already de-numbered in the previous pass.
 
-**3. `TechSlideLayerDivider.tsx`** — hide the "Layer N · Architecture" eyebrow when a new optional `hideLayerNumber` prop (or empty `layerNumber`) is passed. Keep `platformGroupLabel` rendering. v3 unaffected (omits the prop).
+**2. `src/pages/TechnicalDeepDiveV4.tsx`** — clean up sidebar labels and imports
+- Swap the 3 imports above to the new `v4/` versions.
+- Sidebar `label` strings: `L1 · SafetyManager365` → `SafetyManager365` (same for ContentManager365, TrainingManager365).
+- Sidebar label for Platform Overview: `Platform Overview (4-layer)` → `Platform Overview`.
+- Remove the `// (4-layer)` and `// — v4 renumbered (Layer 2)` / `(Layer 3, Layer 4)` comments in the import section.
 
-**4. `TechnicalDeepDiveV4.tsx` `dividerProps`** — set the new prop on all four dividers (intelligence, mobile, dtop, core) so no "Layer N" eyebrow renders. Rewrite taglines/up-next text to drop any "Layer N" phrasing.
-
-**5. Six v4 slide titles** — remove the "Layer N · " segment from each:
-- `TechV4Slide7CoAnalyst`: `The Platform · Intelligence & Orchestration — Insights & Intelligence (CoAnalyst)`
-- `TechV4SlideInsights`: `The Platform · Intelligence & Orchestration — Recommendations & Prescriptive Actions`
-- `TechV4SlideAutomation`: `The Platform · Intelligence & Orchestration — Automation`
-- `TechV4SlideTiersVsAI`: `The Platform · CoAnalyst Intelligence Tiers vs Generic AI`
-- `TechV4SlideMobile`: `The Platform · Unified Mobile Experience`
-- `TechV4Slide5DTOP`: `The Platform · DTOP — The System of Work`
-
-**6. `ArchitectureLayerBadge.tsx`** — change the "Architecture" prefix label so the row of pills no longer reads "Layer". Each pill keeps the layer name (DTOP, Mobile, Intelligence, Core) but drops any "Layer N" wording. Used by v4 content slides; v3 also uses it but never displayed "Layer N" on the pills, so v3 visual is unchanged.
+**3. Audit pass — search v4 surface for stragglers** and clean any remaining "Layer N" / "L1/L2/L3/L4" / "(4-layer)" text in:
+- `TechV4PlatformOverview.tsx` (any leftover button labels or copy)
+- `TechV4SlideIntelligenceSubstrate.tsx` — only if still imported anywhere on v4 (it should be unused; if so, leave the file alone).
+- `dividerProps` taglines/`upNext` strings in `TechnicalDeepDiveV4.tsx`.
 
 ### Files
 
+**NEW**
+- `src/components/tech-slides/v4/TechV4Slide4aSafetyManager.tsx`
+- `src/components/tech-slides/v4/TechV4Slide4bContentManager.tsx`
+- `src/components/tech-slides/v4/TechV4Slide4cTrainingManager.tsx`
+
 **EDITED**
-- `src/components/platform-slides/PlatformArchitectureDiagramV4.tsx`
-- `src/components/tech-slides/v4/TechV4PlatformOverview.tsx`
-- `src/components/tech-slides/TechSlideLayerDivider.tsx` (additive prop — v3 safe)
-- `src/pages/TechnicalDeepDiveV4.tsx` (set prop + tagline copy)
-- `src/components/tech-slides/v4/TechV4Slide7CoAnalyst.tsx`
-- `src/components/tech-slides/v4/TechV4SlideInsights.tsx`
-- `src/components/tech-slides/v4/TechV4SlideAutomation.tsx`
-- `src/components/tech-slides/v4/TechV4SlideTiersVsAI.tsx`
-- `src/components/tech-slides/v4/TechV4SlideMobile.tsx`
-- `src/components/tech-slides/v4/TechV4Slide5DTOP.tsx`
-- `src/components/tech-slides/ArchitectureLayerBadge.tsx` (label-only tweak — pills already named, no v3 visual regression)
+- `src/pages/TechnicalDeepDiveV4.tsx` (imports, sidebar labels, comments)
+- `src/components/tech-slides/v4/TechV4PlatformOverview.tsx` (only if any "Layer" text remains)
 
 ### Not touched
 
-- v3 deck, v3 diagram, v3 slides, v3 page.
-- Slide IDs, navigation order, narration, exports.
+- v3 page, v3 core app slide files, v3 sidebar labels — fully unchanged.
+- All other v4 slides already cleaned in the previous pass.
+- Slide IDs, navigation, narration, exports.
 
 ### QA
 
-- `/pitch-technical-v4`: diagram shows 4 named bands with no "Layer 1/2/3/4" text; bracket and platform eyebrow remain.
-- Platform Overview guide buttons read as capability names only.
-- All four dividers render without a "Layer N · Architecture" eyebrow; "The Platform" eyebrow still appears on intelligence/mobile/dtop.
-- All six content slide titles begin with "The Platform · " (no "Layer N").
-- `/pitch-technical` (v3) unchanged — still reads Layer 1–5.
+- `/pitch-technical-v4`: SafetyManager365, ContentManager365, TrainingManager365 slide titles no longer contain "Layer 1".
+- v4 sidebar contains zero "Layer N" / "L1/L2/L3/L4" / "(4-layer)" strings.
+- `/pitch-technical` (v3) Core App slides still read "Layer 1 · Core Operational Apps — …".
 
