@@ -3,13 +3,11 @@ import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useExec3PitchNarration } from "@/hooks/useExec3PitchNarration";
 
-import ExecSlide0Title from "@/components/exec-slides/ExecSlide0Title";
+import TechSlideOpener from "@/components/tech-slides/TechSlideOpener";
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
 import TechSlide2IndustryChallenge from "@/components/tech-slides/TechSlide2IndustryChallenge";
 import TechSlideLayerDivider from "@/components/tech-slides/TechSlideLayerDivider";
 import Slide4Transformation from "@/components/slides/Slide4Transformation";
-import SlideUseCases from "@/components/slides/SlideUseCases";
-import Slide5MaturityCurve from "@/components/slides/Slide5MaturityCurve";
 import CustomerOutcomesSlide from "@/components/shared/CustomerOutcomesSlide";
 import TechSlideWhyComply from "@/components/tech-slides/TechSlideWhyComply";
 import TechV4PlatformOverview from "@/components/tech-slides/v4/TechV4PlatformOverview";
@@ -22,6 +20,8 @@ import TechV4SlideAutomation from "@/components/tech-slides/v4/TechV4SlideAutoma
 import TechV4SlideTiersVsAI from "@/components/tech-slides/v4/TechV4SlideTiersVsAI";
 import TechV4SlideMobile from "@/components/tech-slides/v4/TechV4SlideMobile";
 import TechV4Slide5DTOP from "@/components/tech-slides/v4/TechV4Slide5DTOP";
+import TechSlideRegulationSummary from "@/components/tech-slides/TechSlideRegulationSummary";
+import TechSlide15Roadmap2026 from "@/components/tech-slides/TechSlide15Roadmap2026";
 
 const dividerProps = {
   core: {
@@ -63,7 +63,7 @@ const dividerProps = {
 };
 
 const slides = [
-  { id: "exec3-slide-0", label: "Title", component: ExecSlide0Title },
+  { id: "exec3-slide-0", label: "Title", component: TechSlideOpener },
   { id: "exec3-slide-1", label: "Strategic Shift", component: TechSlide1StrategicShift },
   { id: "exec3-slide-2", label: "Industry Challenge", component: TechSlide2IndustryChallenge },
   { id: "exec3-slide-platform", label: "The Platform", component: TechV4PlatformOverview },
@@ -80,9 +80,9 @@ const slides = [
   { id: "exec3-slide-mobile", label: "Unified Mobile", component: TechV4SlideMobile },
   { id: "exec3-divider-dtop", label: "▸ DTOP", component: TechSlideLayerDivider, dividerProps: dividerProps.dtop },
   { id: "exec3-slide-dtop", label: "DTOP — System of Work", component: TechV4Slide5DTOP },
+  { id: "exec3-slide-regulation", label: "Regulation Management", component: TechSlideRegulationSummary },
   { id: "exec3-slide-transformation", label: "The Transformation", component: Slide4Transformation },
-  { id: "exec3-slide-usecases", label: "Use Cases in Action", component: SlideUseCases },
-  { id: "exec3-slide-maturity", label: "Maturity Roadmap", component: Slide5MaturityCurve },
+  { id: "exec3-slide-roadmap-2026", label: "2026 Phased Roadmap", component: TechSlide15Roadmap2026 },
   { id: "exec3-slide-outcomes", label: "Customer Outcomes", component: CustomerOutcomesSlide },
   { id: "exec3-slide-why", label: "Why Comply365", component: TechSlideWhyComply },
 ];
