@@ -1,6 +1,6 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { RoadmapUseCase, phaseMeta, statusMeta } from "@/data/roadmapUseCases";
+import { RoadmapUseCase, phaseMeta, statusMeta, roadmapUseCases } from "@/data/roadmapUseCases";
 import { CheckCircle2, AlertTriangle, Wrench, Sparkles } from "lucide-react";
 
 interface Props extends SlideNarrationProps {
@@ -19,6 +19,7 @@ const dtopSteps = [
 const RDUseCaseSlide = ({ slideNumber, id, useCase, ...narrationProps }: Props) => {
   const phase = phaseMeta[useCase.phase];
   const status = statusMeta[useCase.status];
+  const useCaseNumber = roadmapUseCases.findIndex((u) => u.id === useCase.id) + 1;
 
   return (
     <SalesSlideContainer id={id} showHeader={false} slideNumber={slideNumber} {...narrationProps}>
@@ -36,7 +37,7 @@ const RDUseCaseSlide = ({ slideNumber, id, useCase, ...narrationProps }: Props) 
               {status.icon} {status.label}
             </span>
             <span className="text-muted-foreground/70">
-              Use case {useCase.slideNumber}
+              Use case {useCaseNumber} of {roadmapUseCases.length}
             </span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-bold leading-tight">

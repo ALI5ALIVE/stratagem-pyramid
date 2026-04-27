@@ -41,9 +41,10 @@ const buildSlides = (): SlideEntry[] => {
     });
     useCasesByPhase(phase).forEach((uc) => {
       const id = `rd-uc-${uc.id}`;
+      const ucNumber = roadmapUseCases.findIndex((u) => u.id === uc.id) + 1;
       list.push({
         id,
-        label: `${uc.slideNumber}. ${uc.title}`,
+        label: `${ucNumber}. ${uc.title}`,
         render: (p) => <RDUseCaseSlide id={id} useCase={uc} {...p} />,
       });
     });
