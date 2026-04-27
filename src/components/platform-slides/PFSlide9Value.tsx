@@ -5,13 +5,17 @@ import { Boxes, Brain, Smartphone, Repeat, Sparkles } from "lucide-react";
 
 const iconMap: Record<string, React.ElementType> = { Boxes, Brain, Smartphone, Repeat, Sparkles };
 
-const PFSlide9Value = (props: SlideNarrationProps) => {
+interface PFSlide9ValueProps extends SlideNarrationProps {
+  slideNumber?: number;
+}
+
+const PFSlide9Value = ({ slideNumber, ...props }: PFSlide9ValueProps) => {
   return (
     <SlideContainer
       id="pf-value"
       title="Value Unlocked"
       subtitle="Five shifts that only one connected platform can deliver."
-      slideNumber={9}
+      slideNumber={slideNumber ?? 9}
       {...props}
     >
       <div className="h-full grid grid-cols-1 md:grid-cols-5 gap-2">

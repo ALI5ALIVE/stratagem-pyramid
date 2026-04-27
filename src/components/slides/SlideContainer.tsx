@@ -83,7 +83,7 @@ const SlideContainer = ({
       </div>
 
       {/* Slide number - bottom right */}
-      {slideNumber && (
+      {slideNumber !== undefined && (
         <div className="absolute bottom-16 right-6 sm:bottom-20 sm:right-10">
           <span className={cn(
             "text-sm font-medium",
