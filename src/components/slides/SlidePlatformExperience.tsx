@@ -31,7 +31,7 @@ const pillars = [
   },
 ];
 
-const SlidePlatformExperience = () => {
+const SlidePlatformExperience = ({ slideNumber }: { slideNumber?: number } = {}) => {
   return (
     <SlideContainer 
       id="slide-15" 
