@@ -11,9 +11,6 @@ import Slide4Transformation from "@/components/slides/Slide4Transformation";
 import CustomerOutcomesSlide from "@/components/shared/CustomerOutcomesSlide";
 import TechSlideWhyComply from "@/components/tech-slides/TechSlideWhyComply";
 import TechV4PlatformOverview from "@/components/tech-slides/v4/TechV4PlatformOverview";
-import TechV4Slide4aSafetyManager from "@/components/tech-slides/v4/TechV4Slide4aSafetyManager";
-import TechV4Slide4bContentManager from "@/components/tech-slides/v4/TechV4Slide4bContentManager";
-import TechV4Slide4cTrainingManager from "@/components/tech-slides/v4/TechV4Slide4cTrainingManager";
 import TechV4Slide7CoAnalyst from "@/components/tech-slides/v4/TechV4Slide7CoAnalyst";
 import TechV4SlideInsights from "@/components/tech-slides/v4/TechV4SlideInsights";
 import TechV4SlideAutomation from "@/components/tech-slides/v4/TechV4SlideAutomation";
@@ -24,15 +21,6 @@ import TechSlideRegulationSummary from "@/components/tech-slides/TechSlideRegula
 import TechSlide15Roadmap2026 from "@/components/tech-slides/TechSlide15Roadmap2026";
 
 const dividerProps = {
-  core: {
-    layerName: "Core Apps",
-    tagline:
-      "The system of record. ContentManager365 · SafetyManager365 · TrainingManager365 — built right, so everything above can do something new.",
-    active: "core" as const,
-    hideLayerNumber: true,
-    platformGroupLabel: "The Platform · Part of One Integrated Solution",
-    upNext: ["SafetyManager365", "ContentManager365", "TrainingManager365"],
-  },
   intelligence: {
     layerName: "Intelligence & Orchestration",
     tagline:
@@ -67,10 +55,6 @@ const slides = [
   { id: "exec3-slide-1", label: "Strategic Shift", component: TechSlide1StrategicShift },
   { id: "exec3-slide-2", label: "Industry Challenge", component: TechSlide2IndustryChallenge },
   { id: "exec3-slide-platform", label: "The Platform", component: TechV4PlatformOverview },
-  { id: "exec3-divider-core", label: "▸ Core Apps", component: TechSlideLayerDivider, dividerProps: dividerProps.core },
-  { id: "exec3-slide-4a", label: "SafetyManager365", component: TechV4Slide4aSafetyManager },
-  { id: "exec3-slide-4b", label: "ContentManager365", component: TechV4Slide4bContentManager },
-  { id: "exec3-slide-4c", label: "TrainingManager365", component: TechV4Slide4cTrainingManager },
   { id: "exec3-divider-intelligence", label: "▸ Intelligence Layer", component: TechSlideLayerDivider, dividerProps: dividerProps.intelligence },
   { id: "exec3-slide-coanalyst", label: "CoAnalyst", component: TechV4Slide7CoAnalyst },
   { id: "exec3-slide-insights", label: "Insights & Recommendations", component: TechV4SlideInsights },
