@@ -106,6 +106,7 @@ const Slide5MaturityCurve = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideNarrationProps) => {
   const [activeStage, setActiveStage] = useState(1);
   const [isAnimated, setIsAnimated] = useState(false);
@@ -177,7 +178,7 @@ const Slide5MaturityCurve = ({
       id="slide-7"
       title="The Operational Performance Roadmap"
       subtitle="The measurable journey from reactive to predictive operations"
-      slideNumber={7}
+      slideNumber={slideNumber}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}

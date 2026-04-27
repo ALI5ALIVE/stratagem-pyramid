@@ -67,13 +67,14 @@ const Slide4Transformation = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideNarrationProps) => {
   return (
     <SlideContainer
       id="slide-5"
       title="The Transformation"
       subtitle="From cost center to competitive advantage"
-      slideNumber={5}
+      slideNumber={slideNumber}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}

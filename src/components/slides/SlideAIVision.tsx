@@ -72,6 +72,7 @@ const SlideAIVision = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideAIVisionProps) => {
   const getActiveStageIndex = () => {
     if (progress < 18) return -1;
@@ -85,11 +86,11 @@ const SlideAIVision = ({
 
   return (
     <SlideContainer
-      id="slide-10"
+      id="slide-8"
       title="Your Intelligence Journey"
       subtitle="How AI accelerates your path to operational excellence"
       variant="dark"
-      slideNumber={16}
+      slideNumber={slideNumber}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}

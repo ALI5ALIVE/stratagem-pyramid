@@ -152,6 +152,7 @@ const SlideMessagingHouse = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideNarrationProps) => {
   const [activePersona, setActivePersona] = useState(0);
   const [isNarrationControlled, setIsNarrationControlled] = useState(false);
@@ -183,11 +184,11 @@ const SlideMessagingHouse = ({
 
   return (
     <SlideContainer
-      id="slide-12"
+      id="slide-10"
       title="Messaging House"
       subtitle="Complete positioning architecture for Operational Performance"
       variant="dark"
-      slideNumber={12}
+      slideNumber={slideNumber}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}

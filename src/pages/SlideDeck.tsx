@@ -27,17 +27,17 @@ const slides = [
   { id: "slide-1", label: "Strategic Shift" },
   { id: "slide-2", label: "Before & After" },
   { id: "slide-3", label: "Operating Model" },
-  { id: "slide-5", label: "Use Cases" },
-  { id: "slide-6", label: "Transformation" },
-  { id: "slide-7", label: "Value Ladder" },
-  { id: "slide-8", label: "Maturity Roadmap" },
-  { id: "slide-9", label: "AI Journey" },
-  { id: "slide-10", label: "Customers" },
-  { id: "slide-11", label: "Messaging House" },
-  { id: "slide-12", label: "Campaign Ideas" },
-  { id: "slide-13", label: "Messaging in Context" },
-  { id: "slide-14", label: "Platform Experience" },
-  { id: "slide-15", label: "Next Steps" },
+  { id: "slide-4", label: "Use Cases" },
+  { id: "slide-5", label: "Transformation" },
+  { id: "slide-6", label: "Value Ladder" },
+  { id: "slide-7", label: "Maturity Roadmap" },
+  { id: "slide-8", label: "AI Journey" },
+  { id: "slide-9", label: "Customers" },
+  { id: "slide-10", label: "Messaging House" },
+  { id: "slide-11", label: "Campaign Ideas" },
+  { id: "slide-12", label: "Messaging in Context" },
+  { id: "slide-13", label: "Platform Experience" },
+  { id: "slide-14", label: "Next Steps" },
 ];
 
 const SlideDeck = () => {
@@ -187,21 +187,21 @@ const SlideDeck = () => {
         className="h-full w-full overflow-y-auto snap-y snap-mandatory scroll-smooth"
       >
         <Slide0Title onNavigateToSlide={scrollToSlide} {...getNarrationProps(0)} />
-        <Slide1StrategicShift {...getNarrationProps(1)} />
-        <Slide2BeforeAfter {...getNarrationProps(2)} />
-        <Slide3OperatingModel {...getNarrationProps(3)} />
+        <Slide1StrategicShift slideNumber={1} {...getNarrationProps(1)} />
+        <Slide2BeforeAfter slideNumber={2} {...getNarrationProps(2)} />
+        <Slide3OperatingModel slideNumber={3} {...getNarrationProps(3)} />
         {/* HIDDEN: <Slide4PlatformCapabilities {...getNarrationProps(4)} /> - consolidated into Operating Model */}
-        <SlideUseCases {...getNarrationProps(4)} />
-        <Slide5Transformation {...getNarrationProps(5)} />
-        <Slide6ValuePyramid {...getNarrationProps(6)} />
-        <Slide7MaturityCurve {...getNarrationProps(7)} />
-        <SlideAIVision {...getNarrationProps(8)} />
-        <Slide9Customers {...getNarrationProps(9)} />
-        <SlideMessagingHouse {...getNarrationProps(10)} />
-        <SlideCampaignIdeas {...getNarrationProps(11)} />
-        <SlideMessagingContext {...getNarrationProps(12)} />
-        <SlidePlatformExperience />
-        <SlideConclusion {...getNarrationProps(13)} />
+        <SlideUseCases slideNumber={4} {...getNarrationProps(4)} />
+        <Slide5Transformation slideNumber={5} {...getNarrationProps(5)} />
+        <Slide6ValuePyramid slideNumber={6} {...getNarrationProps(6)} />
+        <Slide7MaturityCurve slideNumber={7} {...getNarrationProps(7)} />
+        <SlideAIVision slideNumber={8} {...getNarrationProps(8)} />
+        <Slide9Customers slideNumber={9} {...getNarrationProps(9)} />
+        <SlideMessagingHouse slideNumber={10} {...getNarrationProps(10)} />
+        <SlideCampaignIdeas slideNumber={11} {...getNarrationProps(11)} />
+        <SlideMessagingContext slideNumber={12} {...getNarrationProps(12)} />
+        <SlidePlatformExperience slideNumber={13} />
+        <SlideConclusion slideNumber={14} {...getNarrationProps(13)} />
       </div>
     </div>
   );

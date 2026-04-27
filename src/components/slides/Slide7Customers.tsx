@@ -11,6 +11,7 @@ const Slide7Customers = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideNarrationProps) => {
   const valueOutcomes = [
     {
@@ -73,10 +74,10 @@ const Slide7Customers = ({
 
   return (
     <SlideContainer
-      id="slide-10"
+      id="slide-9"
       title="What This Means for Customers"
       subtitle="Connecting safety signals to measurable business outcomes"
-      slideNumber={10}
+      slideNumber={slideNumber}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}

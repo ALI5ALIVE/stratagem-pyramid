@@ -21,6 +21,7 @@ const Slide3OperatingModel = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideNarrationProps) => {
   const [activeStep, setActiveStep] = useState<number | null>(null);
   const [isNarrationControlled, setIsNarrationControlled] = useState(false);
@@ -114,7 +115,7 @@ const Slide3OperatingModel = ({
       id="slide-3"
       title="The Operational Intelligence Layer"
       subtitle="A connected, intelligent, and predictive platform turning signals into orchestrated change and measurable outcomes"
-      slideNumber={3}
+      slideNumber={slideNumber}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}

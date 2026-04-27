@@ -207,6 +207,7 @@ const Slide4ValuePyramid = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideNarrationProps) => {
   const [activeLayerId, setActiveLayerId] = useState("FRAGMENTED");
   const [highlightedModule, setHighlightedModule] = useState<string | null>(null);
@@ -292,7 +293,7 @@ const Slide4ValuePyramid = ({
       id="slide-6"
       title="Operational Performance Ladder"
       subtitle="The building blocks: from fragmented compliance to predictive performance"
-      slideNumber={6}
+      slideNumber={slideNumber}
       isPlaying={narrationPlaying}
       isLoading={narrationLoading}
       progress={narrationProgress}

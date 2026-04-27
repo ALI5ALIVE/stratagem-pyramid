@@ -66,6 +66,7 @@ const SlideConclusion = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideNarrationProps) => {
   // Animate elements based on narration progress
   const showTakeaways = progress >= 10 || !isPlaying;
@@ -76,10 +77,10 @@ const SlideConclusion = ({
 
   return (
     <SlideContainer
-      id="slide-conclusion"
+      id="slide-14"
       title="Transform Operational Performance Together"
       subtitle="Join the journey from fragmented tools to connected, intelligent operations"
-      slideNumber={15}
+      slideNumber={slideNumber}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}

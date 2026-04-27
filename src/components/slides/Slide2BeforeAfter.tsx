@@ -10,6 +10,7 @@ const Slide2BeforeAfter = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideNarrationProps) => {
   const beforeItems = [
     "Safety, content, training are disconnected",
@@ -43,7 +44,7 @@ const Slide2BeforeAfter = ({
       id="slide-2"
       title="Before & After"
       subtitle="The operational reality we're transforming"
-      slideNumber={2}
+      slideNumber={slideNumber}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}

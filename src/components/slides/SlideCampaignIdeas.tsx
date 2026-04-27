@@ -115,14 +115,15 @@ const SlideCampaignIdeas = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideNarrationProps) => {
   return (
     <SlideContainer
-      id="slide-14"
+      id="slide-11"
       title="Cementing the Category"
       subtitle="10 campaigns that define Operational Performance in the market"
       variant="dark"
-      slideNumber={14}
+      slideNumber={slideNumber}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}

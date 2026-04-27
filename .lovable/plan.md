@@ -1,38 +1,62 @@
-## Slide Numbering Audit — Findings
+## Slide Numbering Audit — All Decks
 
-I reviewed slide numbering across the decks, with focus on the recently added/edited ones (Roadmap deck and Technical deck).
+I audited every deck in the project. The summary:
 
-### Roadmap Deck (`/roadmap`) — issue found
+### Decks already numbered correctly (no changes needed)
 
-The deck renders 22 slides in this order, and the on-screen "slide N" badge (driven by `slideNumber={index}`) is correct everywhere because it is computed from position.
+These pages pass `slideNumber={index}` from the page level, so numbering is always accurate even if slides are reordered:
 
-However, the **use-case chip** on each use-case slide says "Use case 1"…"Use case 17" using a hardcoded `slideNumber` field on each entry in `roadmapUseCases.ts`. That count is right today (1 → 17 in delivery order), but it duplicates information and will silently drift if a use case is reordered, added, or removed.
+- Executive Pitch (`/pitch-executive`) — `ExecutivePitch.tsx`
+- Executive Pitch 2 (`/pitch-executive-2`) — `ExecutivePitch2.tsx`
+- Executive Pitch 3 (`/pitch-executive-3`) — `ExecutivePitch3.tsx`
+- Operational Pitch (`/pitch-operational`) — `OperationalPitch.tsx`
+- Technical Deep Dive (`/pitch-technical`) — `TechnicalDeepDive.tsx`
+- Technical Deep Dive V4 (`/pitch-technical-v4`) — `TechnicalDeepDiveV4.tsx`
+- Customer Overview (`/customer-overview`) — `CustomerOverview.tsx`
+- Sales Enablement (`/sales-enablement`) — `SalesEnablement.tsx`
+- Roadmap Deck (`/roadmap`) — `RoadmapDeck.tsx` (fixed last turn)
+- Content Strategy (`/content-strategy`) — hardcoded numbers happen to match positions
+- Value Deck — uses dynamic `index`
 
-Also worth tightening:
-- The H1 2026 phase divider precedes use cases 1–6, H2 2026 precedes 7–11, 2027+ precedes 12–17. ✅ correct against the data.
-- Title slide narration says "seventeen named use cases" — matches `roadmapUseCases.length` (17). ✅
-- Closing slide uses `roadmapUseCases.length` dynamically. ✅
-- Overview slide groups by phase dynamically. ✅
+### Playbook decks — currently accurate but fragile
 
-**Fix:** Make the per-use-case number derived, not hardcoded.
+DTOP, Insights, Mobile, Automation, Platform, Regulation Management, and CoAnalyst playbooks all hardcode `slideNumber={N}` inside each slide component. The numbers currently line up with the positional order (title slide unnumbered, then 1..N). They display correctly today. Recommendation: leave display unchanged — no user‑visible bug.
 
-1. Remove the `slideNumber` field from each `RoadmapUseCase` entry (and from the interface).
-2. In `RDUseCaseSlide.tsx`, replace the hardcoded `useCase.slideNumber` with the index computed from `roadmapUseCases.findIndex(u => u.id === useCase.id) + 1`, so the "Use case N" chip is always in sync with the delivery order in the data.
-3. In `RoadmapDeck.tsx`, the sidebar label currently uses `${uc.slideNumber}. ${uc.title}` — switch to the same derived index.
+### Real numbering bugs (the only thing that needs fixing)
 
-### Technical Deck (`/technical-v4` and `/technical`) — no fix needed
+**`src/pages/SlideDeck.tsx`** (the main strategy deck at `/`) has duplicated and skipped numbers because hidden slides were removed but the imported components still hardcode their original numbers:
 
-- Slide IDs like `tech-slide-15` are stable identifiers, not positional. The displayed slide number in the play bar is positional (`slideNumber={index}`) and stays correct regardless of insertions.
-- Recently edited "Slide 15 — 2026 Roadmap" still maps to id `tech-slide-15` and the narration entry `tech-slide-15` — consistent. ✅
+| Position | Component | Currently shows | Should show |
+|---|---|---|---|
+| 1 | `Slide0Title` | (none) | (none) |
+| 2 | `Slide1StrategicShift` | 01 | 01 ✓ |
+| 3 | `Slide2BeforeAfter` | 02 | 02 ✓ |
+| 4 | `Slide3OperatingModel` | 03 | 03 ✓ |
+| 5 | `SlideUseCases` | **05** | 04 |
+| 6 | `Slide5Transformation` (file `Slide4Transformation`) | 05 | 05 ✓ |
+| 7 | `Slide6ValuePyramid` (file `Slide4ValuePyramid`) | 06 | 06 ✓ |
+| 8 | `Slide7MaturityCurve` (file `Slide5MaturityCurve`) | 07 | 07 ✓ |
+| 9 | `SlideAIVision` | **16** | 08 |
+| 10 | `Slide9Customers` (file `Slide7Customers`) | 10 | 09 |
+| 11 | `SlideMessagingHouse` | **12** | 10 |
+| 12 | `SlideCampaignIdeas` | **14** | 11 |
+| 13 | `SlideMessagingContext` | **14** (duplicate) | 12 |
+| 14 | `SlidePlatformExperience` | **15** | 13 |
+| 15 | `SlideConclusion` | **15** (duplicate) | 14 |
 
-### Other decks (Executive, Operational, CoAnalyst, Sales Enablement, Insights, Automation, Mobile, DTOP, RegMgmt, Content Strategy)
+Sidebar `id` labels (`slide-5`, `slide-7`, `slide-15`, etc.) are also out of order with their actual position.
 
-Spot-checked: all use positional `slideNumber={index}` from the parent page, and on-slide chips reference IDs (not hardcoded ordinal numbers). No drift. ✅
+### Proposed fix
 
-## Files to change
+Convert SlideDeck to the same dynamic pattern used by the other large decks:
 
-- `src/data/roadmapUseCases.ts` — remove `slideNumber` field + interface property.
-- `src/components/roadmap-slides/RDUseCaseSlide.tsx` — derive the use-case number from array index.
-- `src/pages/RoadmapDeck.tsx` — derive the sidebar label number from array index.
+1. In each affected slide component under `src/components/slides/` that is used by `SlideDeck.tsx`, accept an optional `slideNumber?: number` prop and forward it to `SlideContainer`/`SalesSlideContainer` (replacing the hardcoded literal). Components: `SlideUseCases`, `Slide4Transformation`, `Slide4ValuePyramid`, `Slide5MaturityCurve`, `Slide7Customers`, `SlideAIVision`, `SlideMessagingHouse`, `SlideCampaignIdeas`, `SlideMessagingContext`, `SlidePlatformExperience`, `SlideConclusion`. (Plus `Slide1StrategicShift`, `Slide2BeforeAfter`, `Slide3OperatingModel` for consistency.)
+2. In `SlideDeck.tsx`, render slides with `slideNumber={index}` (title at index 0 stays unnumbered) so positional numbering is automatic and resilient to reorder/hide changes.
+3. Update the `slides` array in `SlideDeck.tsx` to use sequential ids (`slide-0`..`slide-14`) so the sidebar order matches.
 
-No changes to narration scripts or other decks are required — the audit confirms they're already accurate.
+### Out of scope (left as‑is)
+
+- Playbook decks (DTOP/IR/MO/AU/PF/RM/CoAnalyst): currently display correct numbers; no visible bug. Refactoring these would be a robustness‑only change and is not requested.
+- Roadmap deck: already fixed in the previous turn.
+
+After approval I will implement step 1–3 above and verify the slide numbers in the bottom‑right counter render 01..14 in order across `/`.

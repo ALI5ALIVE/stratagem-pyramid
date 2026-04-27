@@ -10,6 +10,7 @@ const Slide1StrategicShift = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideNarrationProps) => {
   const modernGaps = [
     "Signals scattered across siloed systems — no unified view of operational risk",
@@ -24,7 +25,7 @@ const Slide1StrategicShift = ({
       id="slide-1"
       title="The Strategic Shift"
       subtitle="From fragmented point tools to a connected, intelligent, and predictive platform"
-      slideNumber={1}
+      slideNumber={slideNumber}
       isPlaying={isPlaying}
       isLoading={isLoading}
       progress={progress}
