@@ -68,7 +68,6 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   // ──────────────── H1 2026 — Done ────────────────
   {
     id: "training-doc-linking",
-    slideNumber: 1,
     title: "Link Training Modules to Documents",
     oneLiner: "Every training module traceably tied to the source procedure or regulation.",
     status: "done",
@@ -96,7 +95,6 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "regdb-replatform-poc",
-    slideNumber: 2,
     title: "Regulation Database Replatforming — POC",
     oneLiner: "Modern regulation substrate proven and ready to scale.",
     status: "done",
@@ -124,7 +122,6 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "automation-poc",
-    slideNumber: 3,
     title: "Automation Engine — POC",
     oneLiner: "Proven that platform events can drive deterministic, auditable actions.",
     status: "done",
@@ -152,7 +149,6 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "insights-poc",
-    slideNumber: 4,
     title: "Platform-wide Insights & Recommendations — POC",
     oneLiner: "From dashboards to recommended next actions, grounded in operational data.",
     status: "done",
@@ -181,7 +177,6 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   // ──────────────── H1 2026 — In Progress ────────────────
   {
     id: "regdb-cm365-integration",
-    slideNumber: 5,
     title: "Regulation Database ↔ ContentManager365 Integration",
     oneLiner: "Live regulatory change flowing directly into the document estate.",
     status: "in-progress",
@@ -209,7 +204,6 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "training-mobile",
-    slideNumber: 6,
     title: "Training in the Comply iOS Mobile App",
     oneLiner: "Bringing TrainingManager365 into the unified mobile shell for the frontline.",
     status: "in-progress",
@@ -238,7 +232,6 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   // ──────────────── H2 2026 ────────────────
   {
     id: "ui-standardisation",
-    slideNumber: 7,
     title: "Standardise UI Fonts, Colors & Patterns",
     oneLiner: "One platform, one experience — across every module and surface.",
     status: "in-progress",
@@ -266,7 +259,6 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "regdb-replatform-rollout",
-    slideNumber: 8,
     title: "Regulation Database Replatforming — Rollout",
     oneLiner: "Production rollout of the modern regulation substrate.",
     status: "in-progress",
@@ -294,7 +286,6 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "safety-mobile",
-    slideNumber: 9,
     title: "Safety Reporting in the Comply iOS Mobile App",
     oneLiner: "Capture safety events in the moment, on the same device, in the same shell.",
     status: "in-progress",
@@ -322,7 +313,6 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "automation-platform-poc",
-    slideNumber: 10,
     title: "Platform-wide Automation — POC",
     oneLiner: "Extending the proven automation pattern across every module's events.",
     status: "planned",
@@ -350,7 +340,6 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "bi-platform-poc",
-    slideNumber: 11,
     title: "Platform-wide Business Intelligence — POC",
     oneLiner: "One trusted view of operational performance across the whole platform.",
     status: "planned",
@@ -379,7 +368,6 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   // ──────────────── 2027+ ────────────────
   {
     id: "regmgmt-next-phase",
-    slideNumber: 12,
     title: "Next-Phase Regulation Management Integration",
     oneLiner: "Compliance mappings, TM365 integration and automation triggers, end-to-end.",
     status: "planned",
@@ -407,7 +395,6 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "automation-platform-rollout",
-    slideNumber: 13,
     title: "Platform-wide Automation — Rollout",
     oneLiner: "Production rollout of cross-module automation at customer scale.",
     status: "planned",
@@ -435,7 +422,6 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "bi-platform-rollout",
-    slideNumber: 14,
     title: "Platform-wide Business Intelligence — Rollout",
     oneLiner: "BI as a native platform capability, not a downstream consumer.",
     status: "planned",
@@ -463,7 +449,6 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "mobile-unified",
-    slideNumber: 15,
     title: "Unification of the Mobile Experience",
     oneLiner: "One trusted shell on every device — procedures, training, safety and beyond.",
     status: "planned",
@@ -491,7 +476,6 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "contextual-doc-tm365",
-    slideNumber: 16,
     title: "Contextual Document Viewing from TrainingManager365",
     oneLiner: "The right procedure, surfaced in the moment of training.",
     status: "planned",
@@ -519,7 +503,6 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "insights-platform-rollout",
-    slideNumber: 17,
     title: "Platform-wide Insights & Recommendations — Rollout",
     oneLiner: "Recommendations as a platform capability, embedded everywhere decisions are made.",
     status: "planned",
