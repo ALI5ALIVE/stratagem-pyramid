@@ -88,7 +88,7 @@ const SlideMessagingContext = ({
       variant="dark"
       title="Operational Performance — In Context"
       subtitle="How the category applies across Safety, Training, and Content"
-      slideNumber={14}
+      slideNumber={slideNumber}
     >
       {/* Play button */}
       {onPlay && (
