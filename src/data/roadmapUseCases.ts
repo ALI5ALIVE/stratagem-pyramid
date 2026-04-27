@@ -11,7 +11,6 @@ export type PlatformLayer =
 
 export interface RoadmapUseCase {
   id: string;
-  slideNumber: number; // 1-based position within the use-case body of the deck
   title: string;
   oneLiner: string;
   status: RoadmapStatus;
