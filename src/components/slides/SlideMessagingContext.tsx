@@ -81,6 +81,7 @@ const SlideMessagingContext = ({
   onPause,
   onNextSlide,
   onPrevSlide,
+  slideNumber,
 }: SlideNarrationProps) => {
   return (
     <SlideContainer 

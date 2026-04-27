@@ -21,6 +21,7 @@ const Slide3OperatingModel = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideNarrationProps) => {
   const [activeStep, setActiveStep] = useState<number | null>(null);
   const [isNarrationControlled, setIsNarrationControlled] = useState(false);

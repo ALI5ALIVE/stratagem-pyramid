@@ -115,6 +115,7 @@ const SlideCampaignIdeas = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideNarrationProps) => {
   return (
     <SlideContainer

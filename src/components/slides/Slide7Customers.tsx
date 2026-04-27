@@ -11,6 +11,7 @@ const Slide7Customers = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideNarrationProps) => {
   const valueOutcomes = [
     {

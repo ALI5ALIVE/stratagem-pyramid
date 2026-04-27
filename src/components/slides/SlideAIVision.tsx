@@ -72,6 +72,7 @@ const SlideAIVision = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideAIVisionProps) => {
   const getActiveStageIndex = () => {
     if (progress < 18) return -1;

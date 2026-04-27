@@ -106,6 +106,7 @@ const Slide5MaturityCurve = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideNarrationProps) => {
   const [activeStage, setActiveStage] = useState(1);
   const [isAnimated, setIsAnimated] = useState(false);

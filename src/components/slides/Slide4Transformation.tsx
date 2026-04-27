@@ -67,6 +67,7 @@ const Slide4Transformation = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideNarrationProps) => {
   return (
     <SlideContainer

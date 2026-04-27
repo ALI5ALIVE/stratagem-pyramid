@@ -207,6 +207,7 @@ const Slide4ValuePyramid = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideNarrationProps) => {
   const [activeLayerId, setActiveLayerId] = useState("FRAGMENTED");
   const [highlightedModule, setHighlightedModule] = useState<string | null>(null);

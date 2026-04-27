@@ -10,6 +10,7 @@ const Slide2BeforeAfter = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideNarrationProps) => {
   const beforeItems = [
     "Safety, content, training are disconnected",

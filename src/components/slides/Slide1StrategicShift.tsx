@@ -10,6 +10,7 @@ const Slide1StrategicShift = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideNarrationProps) => {
   const modernGaps = [
     "Signals scattered across siloed systems — no unified view of operational risk",

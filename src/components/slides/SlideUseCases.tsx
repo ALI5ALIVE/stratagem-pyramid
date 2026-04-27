@@ -131,6 +131,7 @@ const SlideUseCases = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideNarrationProps) => {
   const [expandedCase, setExpandedCase] = useState<string | null>(null);
 

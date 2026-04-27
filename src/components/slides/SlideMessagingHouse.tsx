@@ -152,6 +152,7 @@ const SlideMessagingHouse = ({
   onPlay,
   onPause,
   onNextSlide,
+  slideNumber,
 }: SlideNarrationProps) => {
   const [activePersona, setActivePersona] = useState(0);
   const [isNarrationControlled, setIsNarrationControlled] = useState(false);
