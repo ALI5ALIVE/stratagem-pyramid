@@ -8,4 +8,5 @@ export interface SlideNarrationProps {
   onPause?: () => void;
   onNextSlide?: () => void;
   onPrevSlide?: () => void;
+  slideNumber?: number;
 }
