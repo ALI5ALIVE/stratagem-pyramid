@@ -41,10 +41,9 @@ const buildSlides = (): SlideEntry[] => {
     });
     useCasesByPhase(phase).forEach((uc) => {
       const id = `rd-uc-${uc.id}`;
-      const ucNumber = roadmapUseCases.findIndex((u) => u.id === uc.id) + 1;
       list.push({
         id,
-        label: `${ucNumber}. ${uc.title}`,
+        label: uc.title,
         render: (p) => <RDUseCaseSlide id={id} useCase={uc} {...p} />,
       });
     });
@@ -56,7 +55,11 @@ const buildSlides = (): SlideEntry[] => {
     render: (p) => <RDClosing {...p} />,
   });
 
-  return list;
+  // Prefix every sidebar label with its positional number so the list reads in order
+  return list.map((s, i) => ({
+    ...s,
+    label: `${String(i + 1).padStart(2, "0")} · ${s.label}`,
+  }));
 };
 
 const slides = buildSlides();
