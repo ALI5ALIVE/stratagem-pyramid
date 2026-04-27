@@ -34,7 +34,7 @@ const pillars = [
 const SlidePlatformExperience = ({ slideNumber }: { slideNumber?: number } = {}) => {
   return (
     <SlideContainer 
-      id="slide-15" 
+      id="slide-13" 
       variant="dark"
       title="The Homepage Experience"
       subtitle="See how messaging translates to the website"

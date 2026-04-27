@@ -149,7 +149,7 @@ const SlideUseCases = ({
 
   return (
     <SlideContainer
-      id="slide-use-cases"
+      id="slide-4"
       title="The Platform Use Cases in Action"
       subtitle="Real-world examples of the DTOP operating model delivering outcomes"
       slideNumber={slideNumber}

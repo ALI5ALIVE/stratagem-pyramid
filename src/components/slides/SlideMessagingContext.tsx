@@ -85,7 +85,7 @@ const SlideMessagingContext = ({
 }: SlideNarrationProps) => {
   return (
     <SlideContainer 
-      id="slide-14" 
+      id="slide-12" 
       variant="dark"
       title="Operational Performance — In Context"
       subtitle="How the category applies across Safety, Training, and Content"

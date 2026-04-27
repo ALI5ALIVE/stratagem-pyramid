@@ -86,7 +86,7 @@ const SlideAIVision = ({
 
   return (
     <SlideContainer
-      id="slide-10"
+      id="slide-8"
       title="Your Intelligence Journey"
       subtitle="How AI accelerates your path to operational excellence"
       variant="dark"
