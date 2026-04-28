@@ -174,7 +174,14 @@ const ExecutivePitch3 = () => {
               slideNumber={index}
               id={slide.id}
               {...((slide as any).dividerProps ?? {})}
-              {...(index === 0 ? { exportSlides: slides } : {})}
+              {...(index === 0
+                ? {
+                    exportSlides: slides,
+                    pptxDeckId: "executive-pitch-3" as const,
+                    pdfFilename: "Comply365-Executive-Pitch-Medium.pdf",
+                    deckLabel: "Executive Pitch · Medium",
+                  }
+                : {})}
               {...narrationProps}
             />
           );
