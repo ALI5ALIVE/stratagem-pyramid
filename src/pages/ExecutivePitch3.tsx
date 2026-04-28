@@ -182,6 +182,12 @@ const ExecutivePitch3 = () => {
                     },
                   }
                 : {})}
+              {...(slide.id === "exec3-slide-insights-summary"
+                ? {
+                    title: "The Platform · Insights & Intelligence",
+                    subtitle: "A platform-wide intelligence capability — just by asking",
+                  }
+                : {})}
               {...(index === 0
                 ? {
                     exportSlides: slides,
