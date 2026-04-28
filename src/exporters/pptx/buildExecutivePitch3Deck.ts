@@ -35,7 +35,7 @@ const DECK_LABEL = "Executive Pitch · Medium";
    ───────────────────────────────────────────────────────────────── */
 
 // ─── The Transformation (mirrors src/components/slides/Slide4Transformation.tsx)
-const transformationSpec: SlideSpec = {
+export const transformationSpec: SlideSpec = {
   label: "The Transformation",
   build: (slide, ctx) => {
     chrome(slide, ctx);
