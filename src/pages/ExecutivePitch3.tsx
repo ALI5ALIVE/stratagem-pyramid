@@ -6,7 +6,6 @@ import { useExec3PitchNarration } from "@/hooks/useExec3PitchNarration";
 import TechSlideOpener from "@/components/tech-slides/TechSlideOpener";
 import TechSlide2IndustryChallenge from "@/components/tech-slides/TechSlide2IndustryChallenge";
 import TechSlideLayerDivider from "@/components/tech-slides/TechSlideLayerDivider";
-import Slide4Transformation from "@/components/slides/Slide4Transformation";
 import CustomerOutcomesSlide from "@/components/shared/CustomerOutcomesSlide";
 import TechSlideWhyComply from "@/components/tech-slides/TechSlideWhyComply";
 import TechV4PlatformOverview from "@/components/tech-slides/v4/TechV4PlatformOverview";
@@ -63,7 +62,6 @@ const slides = [
   { id: "exec3-divider-dtop", label: "▸ DTOP", component: TechSlideLayerDivider, dividerProps: dividerProps.dtop },
   { id: "exec3-slide-dtop", label: "DTOP — System of Work", component: TechV4Slide5DTOP },
   { id: "exec3-slide-regulation", label: "Regulation Management", component: TechSlideRegulationSummary },
-  { id: "exec3-slide-transformation", label: "The Transformation", component: Slide4Transformation },
   { id: "exec3-slide-roadmap-2026", label: "2026 Phased Roadmap", component: TechSlide15Roadmap2026 },
   { id: "exec3-slide-outcomes", label: "Customer Outcomes", component: CustomerOutcomesSlide },
   { id: "exec3-slide-why", label: "Why Comply365", component: TechSlideWhyComply },
