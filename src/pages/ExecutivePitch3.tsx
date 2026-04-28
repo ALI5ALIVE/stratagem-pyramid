@@ -186,6 +186,7 @@ const ExecutivePitch3 = () => {
                 ? {
                     title: "The Platform · Insights & Intelligence",
                     subtitle: "A platform-wide intelligence capability — just by asking",
+                    showWorkflow: true,
                   }
                 : {})}
               {...(index === 0
