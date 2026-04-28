@@ -1129,7 +1129,7 @@ function buildModuleSlide(opts: {
 
 slideSpecs.push(
   // ─── 4. SAFETY MANAGER 365 ────────────────────────────────────
-  dividerSpec({
+  layerDividerSpec({
     label: "▸ Layer 1 · Core Operational Apps",
     layerNumber: 1,
     layerName: "Core Operational Apps",
@@ -1219,7 +1219,7 @@ slideSpecs.push(
   },
 
   // ─── 7. DATA FOUNDATION ───────────────────────────────────────
-  dividerSpec({
+  layerDividerSpec({
     label: "▸ Layer 2 · Operational Data Foundation",
     layerNumber: 2,
     layerName: "Operational Data Foundation",
@@ -1355,7 +1355,7 @@ slideSpecs.push(
   },
 
   // ─── 8. INSIGHTS & INTELLIGENCE ───────────────────────────────
-  dividerSpec({
+  layerDividerSpec({
     label: "▸ Layer 3 · Intelligence & Orchestration",
     layerNumber: 3,
     layerName: "Intelligence & Orchestration Layer",
@@ -1554,7 +1554,7 @@ slideSpecs.push(
   },
 
   // ─── 11. MOBILE ───────────────────────────────────────────────
-  dividerSpec({
+  layerDividerSpec({
     label: "▸ Layer 4 · Unified Mobile",
     layerNumber: 4,
     layerName: "Unified Mobile Experience",
@@ -1629,7 +1629,7 @@ slideSpecs.push(
   },
 
   // ─── 12. DTOP ─────────────────────────────────────────────────
-  dividerSpec({
+  layerDividerSpec({
     label: "▸ Layer 5 · DTOP",
     layerNumber: 5,
     layerName: "DTOP — The System of Work",
