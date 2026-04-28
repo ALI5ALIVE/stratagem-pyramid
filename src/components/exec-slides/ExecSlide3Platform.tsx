@@ -1,6 +1,6 @@
 import { Shield, FileText, GraduationCap, Brain } from "lucide-react";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
-import PlatformEcosystemDiagram from "@/components/PlatformEcosystemDiagram";
+import PlatformArchitectureDiagramV4 from "@/components/platform-slides/PlatformArchitectureDiagramV4";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 interface ExecSlide3PlatformProps extends SlideNarrationProps {
@@ -41,9 +41,11 @@ const ExecSlide3Platform = ({ slideNumber, ...narrationProps }: ExecSlide3Platfo
       {...narrationProps}
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-0">
-        {/* Left — Platform Ecosystem Image */}
-        <div className="flex items-center justify-center">
-          <PlatformEcosystemDiagram className="w-full" />
+        {/* Left — Canonical Platform Architecture Diagram */}
+        <div className="min-h-0 flex">
+          <div className="w-full">
+            <PlatformArchitectureDiagramV4 compact />
+          </div>
         </div>
 
         {/* Right — Product Module Cards */}
