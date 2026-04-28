@@ -1,96 +1,74 @@
-## Goal
+## Problem
 
-Every customer-facing pitch deck gets a "Download Editable PowerPoint" button on its title slide that produces a native, hand-built, branded PPTX — same quality bar as the existing Technical Deep Dive (`buildTechnicalDeck.ts`) and Executive Pitch (`buildExecutiveDeck.ts`).
+The "Operational Performance Platform" architecture is currently rendered three different ways across the app, so the same concept looks different depending on which deck you're viewing:
 
-## Scope — 5 decks
+1. **`PlatformArchitectureDiagramV4`** (new, updated) — `The Platform · One Integrated Solution` wrapper, DTOP at top, Intelligence layer with data substrate folded in, Core Apps as foundation. **Currently used only by Tech V4 / Exec Pitch 3.**
+2. **`PlatformArchitectureDiagram`** (older, 5-layer) — separate "Operational Data Foundation" layer, no Platform wrapper. Used by:
+   - `PFSlide3Architecture.tsx` (Platform Playbook)
+   - `TechSlide4Platform.tsx` (Tech V1 deep dive)
+3. **`PlatformEcosystemDiagram`** (static PNG) — used by:
+   - `ExecSlide3Platform.tsx` (Exec Pitch V1)
+   - `OpsSlide4Platform.tsx` (Operational Pitch)
+   - `Slide3OperatingModel.tsx` (legacy Slide Deck)
+   - `HomepageMockup.tsx` (homepage hero)
 
-The two decks already covered are kept as-is (verified against current on-screen content). New builders to add:
+Result: the diagram on Exec Pitch 3 / Tech V4 doesn't match what an exec sees on the Operational Pitch, Exec V1, or homepage.
 
-| Deck | Page | Slides | New builder |
-|---|---|---|---|
-| Technical Deep Dive **V4** | `/pitch-technical-v4` | 28 | `buildTechnicalV4Deck.ts` |
-| Executive Pitch **2** | `ExecutivePitch2.tsx` | 11 | `buildExecutivePitch2Deck.ts` |
-| Executive Pitch **3** (Medium) | `ExecutivePitch3.tsx` | 18 | `buildExecutivePitch3Deck.ts` |
-| Operational Pitch | `OperationalPitch.tsx` | 12 | `buildOperationalPitchDeck.ts` |
-| CoAnalyst Deck | `CoAnalystDeck.tsx` | 15 | `buildCoAnalystDeck.ts` |
+## Fix — single source of truth
 
-Plus refresh passes on the existing two:
+Promote `PlatformArchitectureDiagramV4` to be **the** canonical platform diagram, and route every other surface to it.
 
-| Deck | Existing builder | Refresh work |
+### Step 1 — Rename / consolidate (no behavior change)
+
+- Keep `PlatformArchitectureDiagramV4.tsx` as the source of truth.
+- Delete the older `PlatformArchitectureDiagram.tsx` (5-layer variant).
+- Re-export `PlatformArchitectureDiagramV4` as `PlatformArchitectureDiagram` from a single index for cleaner imports going forward (optional polish — not strictly required).
+
+### Step 2 — Switch all consumers to V4
+
+Update these slides to import and render `PlatformArchitectureDiagramV4` (with `compact` prop where space is tight):
+
+| File | Current | After |
 |---|---|---|
-| Technical Deep Dive (V1) | `buildTechnicalDeck.ts` | Audit against current on-screen slides; reconcile any drift (e.g. `TechSlideWhyComply`, Insights, Mobile recently edited). |
-| Executive Pitch (V1) | `buildExecutiveDeck.ts` | Same audit — confirm DTOP framing, CoAnalyst 90% vs 35% headline, roadmap dates and trust signals all match memory. |
+| `src/components/platform-slides/PFSlide3Architecture.tsx` | `PlatformArchitectureDiagram` | `PlatformArchitectureDiagramV4` |
+| `src/components/tech-slides/TechSlide4Platform.tsx` | `PlatformArchitectureDiagram` | `PlatformArchitectureDiagramV4 compact` |
+| `src/components/exec-slides/ExecSlide3Platform.tsx` | `PlatformEcosystemDiagram` (PNG) | `PlatformArchitectureDiagramV4` |
+| `src/components/ops-slides/OpsSlide4Platform.tsx` | `PlatformEcosystemDiagram` (PNG) | `PlatformArchitectureDiagramV4` |
+| `src/components/slides/Slide3OperatingModel.tsx` | `PlatformEcosystemDiagram` (PNG) | `PlatformArchitectureDiagramV4` |
 
-Out of scope (no PPTX): the internal playbooks — Platform Playbook, DTOP Playbook, Insights / Automation / Mobile Playbooks, Regulation Management Playbook, Roadmap Deck, Persona Deep Dive, Sales Enablement / Academy. (Per your selection of "customer-facing pitch decks only".)
+For each swap, lightly adjust the surrounding grid/padding so the taller V4 diagram fits without clipping (the slides currently constrain the PNG to ~500px width; V4 is a flex column that wants full available height).
 
-## Approach — pattern reused from Technical Deep Dive
+### Step 3 — Homepage decision
 
-Each new builder mirrors the proven structure in `buildTechnicalDeck.ts`:
+`HomepageMockup.tsx` uses the marketing PNG in a hero. Two options:
 
-- `pptxgenjs` 13.33×7.5" 16:9, branded master via `addBrandMaster` (dark / light variants, page numbers, deck label, footer).
-- Reusable helpers from `src/lib/pptxBrand.ts`: `addCard`, `addLabeledCard`, `addPillRow`, `addStatTile`, `addBrandStatBlock`, `addCalloutBanner`, `addGlowWash`, `addEyebrow`, `addSectionTitle`, `addDtopPills`, `addDivider`, `loadImageAsBase64`.
-- Section-divider slides for multi-act decks (Layer dividers in Tech V4, Journey dividers in Operational Pitch).
-- DTOP color tokens locked to memory (D blue · T amber · O violet · P emerald).
-- Trust signals, accuracy stats and roadmap dates pulled from the same `src/data/*` modules the React slides use, so PPTX and on-screen never drift.
-- Image assets (`platform-ecosystem.png`, logos) embedded as base64 via `loadImageAsBase64` — never path references.
+- **(A, recommended)** Leave the homepage PNG alone — it's a polished marketing asset, not a deck slide. Mark it explicitly as the "marketing" variant in a code comment so it's clear it's intentional.
+- **(B)** Also swap to the V4 React diagram for full consistency.
 
-Each builder is registered in `src/exporters/pptx/index.ts` under a new `DeckId`:
+Default to (A) unless you say otherwise.
 
-```text
-"tech-deep-dive-v4" | "executive-pitch-2" | "executive-pitch-3"
-| "operational-pitch" | "coanalyst"
-```
+### Step 4 — Update PPTX exporters to match
 
-The shared `<DeckPPTXExportButton deckId="…" />` component is dropped into each deck's title/opener slide, next to the existing `DeckPDFExportButton` (same pattern as `TechSlideOpener.tsx`).
+`src/exporters/pptx/buildTechnicalDeck.ts` already renders a hand-built platform slide tuned to the older 5-layer diagram. Update its layer specs so the exported PPTX matches V4:
 
-## File-level changes
+- DTOP at top (emerald)
+- Unified Mobile (violet)
+- Intelligence & Orchestration with substrate text + 3 capability tiles (Automation, Insights, Recommendations-as-Future-Vision)
+- Core Operational Apps as foundation (no separate Operational Data Foundation row)
+- Wrap L2–L4 in a "The Operational Performance Platform · One Integrated Solution" frame
 
-**New**
-- `src/exporters/pptx/buildTechnicalV4Deck.ts`
-- `src/exporters/pptx/buildExecutivePitch2Deck.ts`
-- `src/exporters/pptx/buildExecutivePitch3Deck.ts`
-- `src/exporters/pptx/buildOperationalPitchDeck.ts`
-- `src/exporters/pptx/buildCoAnalystDeck.ts`
+Apply the same shape to `buildExecutivePitch3Deck.ts` if/where it renders the platform slide (it currently reuses the tech registry, so a single fix in `buildTechnicalDeck.ts` covers both).
 
-**Edited**
-- `src/exporters/pptx/index.ts` — register the 5 new builders, expand the `DeckId` union.
-- `src/exporters/pptx/buildTechnicalDeck.ts` — content audit (no structural rewrite).
-- `src/exporters/pptx/buildExecutiveDeck.ts` — content audit.
-- Title slides for the new decks (one button per deck):
-  - `src/pages/TechnicalDeepDiveV4.tsx` — pass `deckId="tech-deep-dive-v4"` to the opener.
-  - `src/components/exec-slides/v2/Exec2Slide0Title.tsx` (or wherever its title is) — add button.
-  - `src/components/exec-slides/v3/...Title.tsx` — add button.
-  - `src/components/ops-slides/OpsSlide0Title.tsx` — add button.
-  - `src/components/coanalyst/CoAnalystTitleSlide.tsx` — add button.
+### Step 5 — QA
 
-## Testing & QA process per deck
+- Walk every affected deck (Platform Playbook, Tech V1, Tech V4, Exec V1, Exec Pitch 3, Operational Pitch, legacy SlideDeck) and confirm the platform slide renders the same V4 diagram with no clipping at 1148×781 and at 1920×1080.
+- Re-export the Tech V1 / Exec Pitch 3 PPTX and visually QA the platform slide page.
 
-Because two of these builders will end up multi-thousand-line files, I'll verify each one before moving on, not in a big-bang at the end. For every deck:
+## Open question
 
-1. Build the deck in-app, download the `.pptx`.
-2. Save to `/mnt/documents/`, then convert to PDF with LibreOffice and PDF→JPG with `pdftoppm` (per the pptx skill QA workflow).
-3. Read every slide image and check for: text overflow, overlapping shapes, missing logos/images, wrong DTOP colors, stale stats, broken layouts, missing page numbers.
-4. Cross-check headline numbers against memory (CoAnalyst 90% vs 35%, $25–35B exposure, roadmap dates, trust signals — no spaces in product names).
-5. Fix issues, re-export, re-verify until a clean pass.
-6. Report per-deck QA summary back to you (issues found + fixes applied).
+Confirm the homepage choice:
 
-A deck is not marked done until step 6 completes with zero open issues.
+- (A) Keep the marketing PNG on the homepage, swap everywhere else. *(recommended)*
+- (B) Swap the homepage too, retire the PNG entirely.
 
-## Effort & sequencing
-
-These are large, content-dense builders. I'll deliver them in this order so the highest-stakes ones land first and you can review incrementally:
-
-1. **Executive Pitch 3 (Medium)** — your current "send to a CXO" deck; reuses many V4 slide concepts so groundwork carries forward.
-2. **Technical Deep Dive V4** — biggest deck; benefits from groundwork laid by #1.
-3. **Operational Pitch** — middle-management narrative.
-4. **CoAnalyst Deck** — long but mostly text/messaging slides, fast to build once helpers are in place.
-5. **Executive Pitch 2** — older variant, smallest scope.
-6. **Audit pass on the existing Tech V1 + Exec V1 builders** to make sure they still match on-screen content.
-
-Each deck will land as its own change so you can review and download-test before I move on.
-
-## Notes / risks
-
-- These builders are static native PPTX. They mirror the on-screen design but won't reproduce live interactivity (e.g. the Line of Sight Calculator, Daily Reality email-client). Those slides will show the default/expanded state, same as the existing Tech deck handles them.
-- Builders pull copy from shared data modules (`lineOfSightData`, `platformPlaybook`, `coanalystData`, etc.) wherever those exist. Any slide whose copy is hardcoded in the React component will have its strings duplicated into the builder — those are the slides most likely to drift, and they're the ones I'll re-audit on every future content change.
-- No backend, schema, auth, or routing changes. Pure client-side export work.
+If you don't reply, I'll go with (A).
