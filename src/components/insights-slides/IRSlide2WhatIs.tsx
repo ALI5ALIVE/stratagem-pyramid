@@ -71,15 +71,30 @@ const workflow = [
 ];
 
 const IRSlide2WhatIs = ({ title, subtitle, showWorkflow, ...props }: IRSlide2WhatIsProps) => {
+  const resolvedTitle = title ?? "What It Is";
+  const resolvedSubtitle = subtitle ?? "A platform-wide intelligence capability — just by asking";
   return (
     <SlideContainer
       id="ir-what"
-      title={title ?? "What It Is"}
-      subtitle={subtitle ?? "A platform-wide intelligence capability — just by asking"}
+      title={showWorkflow ? "" : resolvedTitle}
+      subtitle={showWorkflow ? undefined : resolvedSubtitle}
       slideNumber={2}
       {...props}
     >
       <div className="h-full flex flex-col gap-3">
+        {showWorkflow && (
+          <div className="-mt-2 mb-1 shrink-0">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-tight text-foreground">
+              <span className="title-accent">{resolvedTitle}</span>
+            </h2>
+            {resolvedSubtitle && (
+              <p className="text-primary text-base sm:text-lg md:text-xl max-w-3xl mt-3">
+                {resolvedSubtitle}
+              </p>
+            )}
+          </div>
+        )}
+
         <div className="p-3 rounded-xl border border-primary/30 bg-primary/5 shrink-0">
           <p className="text-sm text-foreground leading-relaxed">{elevatorPitch.oneLiner}</p>
         </div>
@@ -132,15 +147,17 @@ const IRSlide2WhatIs = ({ title, subtitle, showWorkflow, ...props }: IRSlide2Wha
                 return (
                   <div
                     key={step.label}
-                    className={`relative rounded-lg border ${step.border} ${step.bg} p-2.5 flex flex-col`}
+                    className={`relative rounded-lg border ${step.border} ${step.bg} p-2.5 flex flex-col justify-between gap-2`}
                   >
-                    <div className="flex items-center justify-between mb-1.5">
-                      <Icon className={`h-4 w-4 ${step.color}`} />
-                      <span className="text-[9px] font-mono text-muted-foreground">0{i + 1}</span>
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <Icon className={`h-4 w-4 ${step.color}`} />
+                        <span className="text-[9px] font-mono text-muted-foreground">0{i + 1}</span>
+                      </div>
+                      <span className={`block text-[11px] font-bold ${step.color} leading-tight`}>
+                        {step.label}
+                      </span>
                     </div>
-                    <span className={`text-[11px] font-bold ${step.color} leading-tight mb-1`}>
-                      {step.label}
-                    </span>
                     <p className="text-[10px] text-muted-foreground leading-snug">{step.desc}</p>
                     {i < workflow.length - 1 && (
                       <ArrowRight className="hidden lg:block absolute -right-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/60" />
