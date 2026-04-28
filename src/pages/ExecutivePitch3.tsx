@@ -11,6 +11,7 @@ import TechSlideWhyComply from "@/components/tech-slides/TechSlideWhyComply";
 import TechV4PlatformOverview from "@/components/tech-slides/v4/TechV4PlatformOverview";
 import TechV4Slide7CoAnalyst from "@/components/tech-slides/v4/TechV4Slide7CoAnalyst";
 import TechV4SlideInsights from "@/components/tech-slides/v4/TechV4SlideInsights";
+import IRSlide2WhatIs from "@/components/insights-slides/IRSlide2WhatIs";
 import TechV4SlideAutomation from "@/components/tech-slides/v4/TechV4SlideAutomation";
 import TechV4SlideTiersVsAI from "@/components/tech-slides/v4/TechV4SlideTiersVsAI";
 import TechV4SlideMobile from "@/components/tech-slides/v4/TechV4SlideMobile";
@@ -59,6 +60,7 @@ const slides = [
   { id: "exec3-divider-intelligence", label: "▸ Intelligence Layer", component: TechSlideLayerDivider, dividerProps: dividerProps.intelligence },
   { id: "exec3-slide-automation", label: "Automation", component: TechV4SlideAutomation },
   { id: "exec3-slide-insights", label: "Insights & Recommendations", component: TechV4SlideInsights },
+  { id: "exec3-slide-insights-summary", label: "Insights — Just Ask", component: IRSlide2WhatIs },
   { id: "exec3-slide-coanalyst", label: "CoAnalyst", component: TechV4Slide7CoAnalyst },
   { id: "exec3-slide-tiers-vs-ai", label: "CoAnalyst vs Generic AI", component: TechV4SlideTiersVsAI },
   { id: "exec3-slide-regulation", label: "Regulation Management", component: TechSlideRegulationSummary },
