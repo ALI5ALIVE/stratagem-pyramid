@@ -642,6 +642,103 @@ const insightsJustAskSpec: SlideSpec = {
 };
 
 /* ─────────────────────────────────────────────────────────────────
+   CoAnalyst (mirrors TechV4Slide7CoAnalyst — apps × capabilities matrix).
+   ───────────────────────────────────────────────────────────────── */
+
+const coAnalystSpec: SlideSpec = {
+  label: "CoAnalyst",
+  build: (slide, ctx) => {
+    chrome(slide, ctx);
+    header(
+      slide,
+      "The Platform · CoAnalyst",
+      "Domain-trained intelligence — embedded in every application",
+      "Ask in plain English · cross-domain insight · recommended next actions.",
+    );
+
+    const apps = [
+      { name: "SafetyManager365", short: "Safety", color: C.danger, status: "Available" },
+      { name: "ContentManager365", short: "Content", color: C.cyan, status: "On roadmap" },
+      { name: "TrainingManager365", short: "Training", color: C.prove, status: "On roadmap" },
+    ];
+    const capabilities = [
+      {
+        name: "Ask in plain English",
+        blurb: "Natural-language questions answered with cited evidence from the application's own data.",
+      },
+      {
+        name: "Cross-domain insight & root cause",
+        blurb: "Connect signals already in-app to surface why something is happening — not just what.",
+      },
+      {
+        name: "Recommended next actions",
+        blurb: "Turn insight into prescriptive guidance the team can act on immediately, in-app.",
+      },
+    ];
+
+    const lx = 0.5;
+    const totalW = W - 1;
+    const labelColW = 3.2;
+    const appColW = (totalW - labelColW) / apps.length;
+    const top = CONTENT_TOP;
+    const headerH = 0.55;
+    const rowsH = CONTENT_BOTTOM - top - headerH - 0.1;
+    const rowH = rowsH / capabilities.length;
+
+    // App headers
+    apps.forEach((a, i) => {
+      const x = lx + labelColW + i * appColW;
+      addCard(slide, x + 0.05, top, appColW - 0.1, headerH, { fill: C.surfaceAlt, border: a.color });
+      slide.addText(a.name, {
+        x: x + 0.15, y: top + 0.05, w: appColW - 0.3, h: 0.28,
+        fontFace: PPTX_BRAND.font.display, fontSize: 11, bold: true, color: a.color, valign: "middle",
+      });
+      slide.addText(a.status, {
+        x: x + 0.15, y: top + 0.3, w: appColW - 0.3, h: 0.22,
+        fontFace: PPTX_BRAND.font.body, fontSize: 8, color: C.muted, italic: true,
+      });
+    });
+
+    // Capability rows
+    capabilities.forEach((cap, ri) => {
+      const ry = top + headerH + 0.1 + ri * rowH;
+      // Label cell
+      addCard(slide, lx, ry, labelColW - 0.1, rowH - 0.1, { fill: C.surface, border: C.primary });
+      slide.addText(cap.name, {
+        x: lx + 0.18, y: ry + 0.12, w: labelColW - 0.4, h: 0.4,
+        fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true, color: C.primary,
+      });
+      slide.addText(cap.blurb, {
+        x: lx + 0.18, y: ry + 0.55, w: labelColW - 0.4, h: rowH - 0.7,
+        fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, valign: "top",
+      });
+      // App cells
+      apps.forEach((a, ai) => {
+        const x = lx + labelColW + ai * appColW;
+        addCard(slide, x + 0.05, ry, appColW - 0.1, rowH - 0.1, { fill: C.surfaceAlt, border: C.hairline });
+        slide.addShape("ellipse", {
+          x: x + 0.18, y: ry + 0.18, w: 0.18, h: 0.18,
+          fill: { color: a.color }, line: { type: "none" },
+        });
+        slide.addText(`Embedded in ${a.short}`, {
+          x: x + 0.42, y: ry + 0.1, w: appColW - 0.55, h: 0.32,
+          fontFace: PPTX_BRAND.font.body, fontSize: 10, bold: true, color: C.ink, valign: "middle",
+        });
+        slide.addText(
+          ai === 0
+            ? "Live and in production with anchor customers."
+            : "Same engine, same UX — sequenced after Safety.",
+          {
+            x: x + 0.18, y: ry + 0.46, w: appColW - 0.3, h: rowH - 0.6,
+            fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, valign: "top",
+          },
+        );
+      });
+    });
+  },
+};
+
+/* ─────────────────────────────────────────────────────────────────
    Build the deck.
    ───────────────────────────────────────────────────────────────── */
 
