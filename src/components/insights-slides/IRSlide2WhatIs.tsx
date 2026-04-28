@@ -132,7 +132,7 @@ const IRSlide2WhatIs = ({ title, subtitle, showWorkflow, ...props }: IRSlide2Wha
         </div>
 
         {showWorkflow ? (
-          <div className="flex-1 min-h-0 flex flex-col gap-2">
+          <div className="shrink-0 flex flex-col gap-2">
             <div className="flex items-center justify-between shrink-0">
               <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground font-medium">
                 How it works · behind the answer
@@ -141,13 +141,13 @@ const IRSlide2WhatIs = ({ title, subtitle, showWorkflow, ...props }: IRSlide2Wha
                 6 stages · seconds end-to-end
               </span>
             </div>
-            <div className="flex-1 min-h-0 grid grid-cols-2 lg:grid-cols-6 gap-2">
+            <div className="grid grid-cols-2 lg:grid-cols-6 gap-2">
               {workflow.map((step, i) => {
                 const Icon = step.icon;
                 return (
                   <div
                     key={step.label}
-                    className={`relative rounded-lg border ${step.border} ${step.bg} p-2.5 flex flex-col justify-between gap-2`}
+                    className={`relative rounded-lg border ${step.border} ${step.bg} p-2.5 flex flex-col gap-1.5`}
                   >
                     <div>
                       <div className="flex items-center justify-between mb-1.5">
