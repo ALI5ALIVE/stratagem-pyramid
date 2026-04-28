@@ -6,9 +6,9 @@ import DeepDiveLink from "@/components/shared/DeepDiveLink";
 interface Props extends SlideNarrationProps { slideNumber?: number; }
 
 const miniApps = [
-  { icon: FileText, name: "Procedures", status: "Live · daily use", color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/30" },
-  { icon: GraduationCap, name: "Training", status: "Phase 1 · Q2 2026", color: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/30" },
-  { icon: ShieldCheck, name: "Safety", status: "Phase 2 · Q4 2026", color: "text-rose-400", bg: "bg-rose-500/10", border: "border-rose-500/30" },
+  { icon: FileText, name: "ContentManager365", status: "Live · daily use", color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/30" },
+  { icon: GraduationCap, name: "TrainingManager365", status: "Phase 1 · Q2 2026", color: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/30" },
+  { icon: ShieldCheck, name: "SafetyManager365", status: "Phase 2 · Q4 2026", color: "text-rose-400", bg: "bg-rose-500/10", border: "border-rose-500/30" },
 ];
 
 const pillars = [

@@ -54,6 +54,13 @@ const PlatformArchitectureDiagramV4 = ({ compact = false }: { compact?: boolean 
           Built on a unified data substrate · taxonomy · knowledge graph · aviation LLMs
         </div>
         <div className="grid grid-cols-3 gap-2">
+          <div className="rounded-md border border-violet-500/30 bg-background/40 p-1.5">
+            <div className="flex items-center gap-1.5 mb-0.5">
+              <Zap className="h-3 w-3 text-violet-400" />
+              <span className={`${labelSize} font-semibold text-violet-300`}>Automation</span>
+            </div>
+            <div className="text-[10px] text-muted-foreground leading-tight">Cross-product workflows</div>
+          </div>
           <div className="rounded-md border border-amber-500/30 bg-background/40 p-1.5">
             <div className="flex items-center gap-1.5 mb-0.5">
               <Brain className="h-3 w-3 text-amber-400" />
@@ -62,18 +69,12 @@ const PlatformArchitectureDiagramV4 = ({ compact = false }: { compact?: boolean 
             <div className="text-[10px] text-muted-foreground leading-tight">Ask anything in plain English</div>
           </div>
           <div className="rounded-md border border-cyan-500/30 bg-background/40 p-1.5">
+            <div className="text-[8px] font-bold uppercase tracking-wider text-cyan-300/80 mb-0.5">Future Vision</div>
             <div className="flex items-center gap-1.5 mb-0.5">
               <Sparkles className="h-3 w-3 text-cyan-400" />
               <span className="text-[10px] font-semibold text-cyan-300">Recommendations & Prescriptive Actions</span>
             </div>
             <div className="text-[10px] text-muted-foreground leading-tight">Patterns + prescriptive next steps</div>
-          </div>
-          <div className="rounded-md border border-violet-500/30 bg-background/40 p-1.5">
-            <div className="flex items-center gap-1.5 mb-0.5">
-              <Zap className="h-3 w-3 text-violet-400" />
-              <span className={`${labelSize} font-semibold text-violet-300`}>Automation</span>
-            </div>
-            <div className="text-[10px] text-muted-foreground leading-tight">Cross-product workflows</div>
           </div>
         </div>
           </div>
