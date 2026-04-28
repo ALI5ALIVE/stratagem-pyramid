@@ -1,41 +1,58 @@
-I reviewed the current `/customer-overview` deck and the shared numbering setup. The remaining issue is caused by reused slide components that still hardcode their original playbook number, so the deck-level `slideNumber={index}` does not always win. The clearest example in the current Customer Overview deck is `PFSlide9Value`, which always renders `09` even though it is slide 5 in this deck.
+## Changes from Kathrina's email — Medium Pitch (`/pitch-executive-3`)
 
-Plan to fix it:
+Slide numbering in our deck matches her numbering (footer 00–17). Slide 15 (Roadmap) is deferred — she'll send updates in the morning.
 
-1. Make reused slide components respect deck-level numbering
-   - Update `PFSlide9Value` so it accepts `slideNumber?: number` and passes that value into the slide container instead of hardcoding `9`.
-   - Preserve its existing standalone Platform Playbook behavior by defaulting to `9` only when no dynamic number is provided.
+### 1. Slide 03 — The Platform (Intelligence layer order)
 
-2. Harden the shared slide containers
-   - Update `SlideContainer` to render `00` correctly when `slideNumber={0}` is provided. It currently uses a truthy check, so title slides numbered `0` can disappear.
-   - Keep `PitchSlideContainer` behavior aligned, since it already supports `0` correctly.
+**File:** `src/components/platform-slides/PlatformArchitectureDiagramV4.tsx`
 
-3. Review the affected decks after the fix
-   - Verify `/customer-overview` renders footer numbers in exact order:
-     - 00 Title
-     - 01 The Reality Today
-     - 02 The Strategic Shift
-     - 03 The Platform
-     - 04 Before vs After
-     - 05 The Value You Unlock
-     - 06 Use Cases in Action
-     - 07 Regulation Management
-     - 08 Customer Outcomes
-     - 09 Your Maturity Roadmap
-     - 10 Your First 90 Days
-   - Re-check the recently edited `/pitch-executive-3` sequence to confirm no reused component overrides the dynamic number there.
-   - Re-check the main Strategy deck for the one remaining mismatch in narration props on the final slide while keeping visible numbering accurate.
+Reorder the three pillars inside the Intelligence & Orchestration block from:
+`Insights & Intelligence · Recommendations & Prescriptive Actions · Automation`
+to:
+`Automation · Insights & Intelligence · Recommendations & Prescriptive Actions`
 
-Technical changes:
+On the **Recommendations** card, prepend a small "Future Vision" tag above the title (amber/cyan badge styled like other meta labels) so it's clearly forward-looking.
 
-- `src/components/platform-slides/PFSlide9Value.tsx`
-  - Destructure `slideNumber` from props.
-  - Pass `slideNumber={slideNumber ?? 9}` to `SlideContainer`.
+### 2. Slide 06 — Insights & Recommendations
 
-- `src/components/slides/SlideContainer.tsx`
-  - Change the footer number guard from `slideNumber && ...` to `slideNumber !== undefined && ...`.
+**File:** `src/components/tech-slides/v4/TechV4SlideInsights.tsx`
 
-- Optional cleanup if confirmed during implementation:
-  - Correct any remaining sequencing mismatch in `src/pages/SlideDeck.tsx` where slide number and narration index are out of sync for the conclusion slide.
+The slide title is already "Recommendations & Prescriptive Actions". Add a clearly visible "Future Vision" badge in the header area (next to or under the title) so the audience understands this capability is roadmap, not GA. Keep the worked example intact.
 
-No backend/database changes are needed.
+### 3. Slide 10 — Unified Mobile (relabel mini-apps)
+
+**File:** `src/components/tech-slides/v4/TechV4SlideMobile.tsx`
+
+In the phone mock on the left, rename the three mini-app rows:
+- `Procedures` → `ContentManager365`
+- `Training` → `TrainingManager365`
+- `Safety` → `SafetyManager365`
+
+Status lines and colors unchanged. (The right-hand pillars already reference the full product names.)
+
+### 4. Slide 17 — Why Comply365 (strip stats + headings)
+
+**File:** `src/components/tech-slides/TechSlideWhyComply.tsx`
+
+- Change title from `Outcomes & Why Comply365` → `Why Comply365`
+- Remove the blue subtitle (`Measured outcomes from carriers running on the platform — and the three things that make them possible`) — pass empty subtitle or remove the prop
+- Remove the entire 4-stat outcomes strip (78% / 6 wks → 48 hrs / 5 days / 90% vs 35%) and its `outcomes` array + `StatSourceChip` import if no longer needed
+- Also remove the bottom italic disclaimer about outcome figures (no longer relevant once stats are gone)
+- **Keep:** the 3 differentiators (Connected Foundation / Domain-Trained Intelligence / Proof by Design) and the trust-signals row (550+ airlines · ~2.5M users · 6 continents)
+
+### Slide 15 — Roadmap
+
+No change today. Awaiting Kathrina's update in the morning.
+
+### Out of scope (mentioned but not actioned)
+
+Kathrina also notes the downloadable PPT currently exports the full Technical deck and needs to be amended to match this Medium pitch. Flagging only — we'll address after sign-off at her 4pm meeting.
+
+---
+
+### Files to edit
+
+- `src/components/platform-slides/PlatformArchitectureDiagramV4.tsx`
+- `src/components/tech-slides/v4/TechV4SlideInsights.tsx`
+- `src/components/tech-slides/v4/TechV4SlideMobile.tsx`
+- `src/components/tech-slides/TechSlideWhyComply.tsx`

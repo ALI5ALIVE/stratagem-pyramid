@@ -21,11 +21,16 @@ const TechV4SlideInsights = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer
     id="tech-slide-insights"
     title="The Platform · Recommendations & Prescriptive Actions"
-    subtitle="From insight to prescriptive action — proactive signals across the platform"
+    subtitle="Future Vision — From insight to prescriptive action — proactive signals across the platform"
     slideNumber={slideNumber}
     {...narrationProps}
   >
     <div className="flex-1 flex flex-col gap-4 min-h-0">
+      <div className="shrink-0 flex justify-start">
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-cyan-500/40 bg-cyan-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-300">
+          <Sparkles className="h-3 w-3" /> Future Vision · Roadmap Capability
+        </span>
+      </div>
       {/* 3 capability cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 auto-rows-fr shrink-0">
         {capabilities.map((c) => (
