@@ -72,6 +72,7 @@ const sectionDividerProps = {
 const slides = [
   { id: "exec3-slide-0", label: "Title", component: TechSlideOpener },
   { id: "exec3-slide-1", label: "Strategic Shift", component: TechSlide1StrategicShift },
+  { id: "exec3-slide-outcomes", label: "Customer Outcomes", component: CustomerOutcomesSlide },
   { id: "exec3-slide-platform", label: "The Platform", component: TechV4PlatformOverview },
   { id: "exec3-divider-dtop", label: "▸ DTOP", component: TechSlideLayerDivider, dividerProps: dividerProps.dtop },
   { id: "exec3-slide-dtop", label: "DTOP — System of Work", component: TechV4Slide5DTOP },
@@ -87,7 +88,6 @@ const slides = [
   { id: "exec3-slide-regulation", label: "Regulation Management", component: TechSlideRegulationSummary },
   { id: "exec3-divider-roadmap", label: "▸ 2026 Phased Roadmap", component: TechSlideSectionDivider, sectionProps: sectionDividerProps.roadmap },
   { id: "exec3-slide-roadmap-2026", label: "2026 Phased Roadmap", component: TechSlide15Roadmap2026 },
-  { id: "exec3-slide-outcomes", label: "Customer Outcomes", component: CustomerOutcomesSlide },
   { id: "exec3-slide-why", label: "Why Comply365", component: TechSlideWhyComply },
 ];
 
