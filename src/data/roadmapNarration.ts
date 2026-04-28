@@ -10,10 +10,10 @@ export interface RoadmapNarrationSlide {
 const VOICE_ID = "JBFqnCBsd6RMkjVDRZzb";
 
 const titleScript =
-  "This deck is a single story: every use case on the 2026 roadmap, in the order we will deliver it, with the customer outcome it unlocks. We will move through three phases — H1 2026 in production and quick wins, H2 2026 connected operations, and 2027 plus, intelligent operations. Each slide answers the same three questions: what is the problem today, what are we delivering, and what does the customer get.";
+  "This deck is a single story: every use case on the 2026 roadmap, in the order we will deliver it, with the customer outcome it unlocks. We will move through three phases — H1 2026 in production and quick wins, H2 2026 connected operations, and 2027 and beyond, intelligent operations. Each slide answers the same three questions: what is the problem today, what are we delivering, and what does the customer get.";
 
 const overviewScript =
-  "Here is the roadmap at a glance. Three phases, seventeen named use cases, every one mapped to a platform layer. Notice the shape: H1 is about removing the seams in the operational data foundation and proving the intelligence and orchestration patterns. H2 standardises the experience and rolls out the proven patterns at platform scale. 2027 plus is where the platform behaves as a single, intelligent system of work.";
+  "Here is the roadmap at a glance. Three phases, eighteen named use cases, every one mapped to a platform layer. Notice the shape: H1 is about removing the seams in the operational data foundation and proving the intelligence and orchestration patterns. H2 standardises the experience and rolls out the proven patterns at platform scale — automation, regulation management and the all-in-one mobile experience all step up in this window. 2027 and beyond is where the platform behaves as a single, intelligent system of work, with a standing pipeline of customer-shaped PoCs.";
 
 const phaseDividerScript = (phase: keyof typeof phaseMeta) => {
   const meta = phaseMeta[phase];
@@ -21,7 +21,7 @@ const phaseDividerScript = (phase: keyof typeof phaseMeta) => {
 };
 
 const closingScript =
-  "That is the full roadmap, end to end. Three phases, seventeen named use cases, one direction of travel: from a connected platform, to connected operations, to intelligent operations. Every step is sized to deliver value on its own and to compound the value of everything that comes after it. Where would you like to go deeper.";
+  "That is the full roadmap, end to end. Three phases, eighteen named use cases, one direction of travel: from a connected platform, to connected operations, to intelligent operations. Every step is sized to deliver value on its own and to compound the value of everything that comes after it. Where would you like to go deeper.";
 
 const useCaseScript = (uc: typeof roadmapUseCases[number]) => {
   const phaseLabel = phaseMeta[uc.phase].label;
