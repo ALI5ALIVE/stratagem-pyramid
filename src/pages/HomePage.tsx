@@ -25,20 +25,23 @@ const pitchDecks: DeckCard[] = [
     accent: "from-primary to-comply-teal",
   },
   {
-    title: "CEO Overview",
-    description: "Boardroom-grade narrative: the before/after of operational performance, DTOP operating model, and the path to maturity.",
-    href: "/pitch-executive-2",
-    icon: Rocket,
-    badge: "CEO · ~20–25 min · 11 slides",
-    accent: "from-accent to-primary",
-  },
-  {
     title: "Medium — Executive Pitch",
     description: "Executive narrative powered by the platform's strongest visuals — DTOP, 5-layer architecture, and intelligence depth.",
     href: "/pitch-executive-3",
     icon: Layers,
     badge: "Medium · ~30–35 min · 20 slides",
     accent: "from-comply-teal to-accent",
+  },
+];
+
+const additionalResources: DeckCard[] = [
+  {
+    title: "CEO Overview",
+    description: "Boardroom-grade narrative: the before/after of operational performance, DTOP operating model, and the path to maturity.",
+    href: "/pitch-executive-2",
+    icon: Rocket,
+    badge: "CEO · ~20–25 min · 11 slides",
+    accent: "from-accent to-primary",
   },
   {
     title: "Long — Technical Deep Dive",
@@ -240,6 +243,19 @@ export default function HomePage() {
               badge: "11 slides",
               accent: "from-accent to-comply-teal",
             }} />
+          </div>
+        </section>
+
+        {/* Additional Resources */}
+        <section>
+          <SectionHeader
+            title="Additional Resources"
+            subtitle="Extended decks for deeper boardroom and technical conversations"
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {additionalResources.map((card) => (
+              <DeckCardComponent key={card.href} card={card} />
+            ))}
           </div>
         </section>
 
