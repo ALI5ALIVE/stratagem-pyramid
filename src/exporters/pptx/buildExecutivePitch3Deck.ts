@@ -281,7 +281,7 @@ export const transformationSpec: SlideSpec = {
 };
 
 // ─── Customer Outcomes (mirrors src/components/shared/CustomerOutcomesSlide.tsx)
-const customerOutcomesSpec: SlideSpec = {
+export const customerOutcomesSpec: SlideSpec = {
   label: "Customer Outcomes",
   build: (slide, ctx) => {
     chrome(slide, ctx);
