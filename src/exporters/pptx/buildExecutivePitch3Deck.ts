@@ -773,7 +773,7 @@ export async function buildExecutivePitch3Deck(opts: BuildOpts = {}): Promise<Bl
     exec3IntelligenceDivider,                      // 9 · ▸ Intelligence Layer
     byLabel("Automation"),                         // 10
     insightsJustAskSpec,                           // 11 · Insights — Just Ask
-    byLabel("CoAnalyst"),                          // 12
+    coAnalystSpec,                                 // 12
     byLabel("Tiers vs Generic AI"),                // 13 · CoAnalyst vs Generic AI
     byLabel("Recommendations & Prescriptive Actions"), // 14
     exec3RegulationDivider,                        // 15
