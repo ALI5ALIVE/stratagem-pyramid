@@ -339,13 +339,13 @@ export const roadmapUseCases: RoadmapUseCase[] = [
     ],
     modules: ["SafetyManager365", "ContentManager365", "TrainingManager365"],
   },
-  // ──────────────── 2027+ ────────────────
+  // ──────────────── H2 2026 — Moved from 2027+ ────────────────
   {
     id: "regmgmt-next-phase",
     title: "Next-Phase Regulation Management Integration",
     oneLiner: "Compliance mappings, TM365 integration and automation triggers, end-to-end.",
     status: "planned",
-    phase: "2027-plus",
+    phase: "h2-2026",
     layer: "Operational Data Foundation",
     problemToday:
       "Regulation, content and training are linked but not yet orchestrated. Compliance change still requires human glue across systems.",
@@ -372,7 +372,7 @@ export const roadmapUseCases: RoadmapUseCase[] = [
     title: "Platform-wide Automation — Rollout",
     oneLiner: "Production rollout of cross-module automation at customer scale.",
     status: "planned",
-    phase: "2027-plus",
+    phase: "h2-2026",
     layer: "Intelligence & Orchestration Layer",
     problemToday:
       "Even with strong modules and good intent, work still drags because nothing moves it forward automatically once an event lands.",
@@ -394,6 +394,7 @@ export const roadmapUseCases: RoadmapUseCase[] = [
     ],
     modules: ["SafetyManager365", "ContentManager365", "TrainingManager365", "Regulation Management"],
   },
+  // ──────────────── 2027 and Beyond ────────────────
   {
     id: "bi-platform-rollout",
     title: "Platform-wide Business Intelligence — Rollout",
@@ -423,15 +424,15 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "mobile-unified",
-    title: "Unification of the Mobile Experience",
-    oneLiner: "One trusted shell on every device — procedures, training, safety and beyond.",
+    title: "All-in-One Mobile Experience — Phase 3: Unified Experience across OCM, Training & Safety",
+    oneLiner: "Phase 3 of the All-in-One Mobile Experience — one trusted shell across OCM, Training and Safety.",
     status: "planned",
     phase: "2027-plus",
     layer: "Unified Mobile Experience",
     problemToday:
       "The frontline still meets the platform through more than one app. Each one is a tax on adoption and a friction on signal capture.",
     whatWereDelivering: [
-      "A fully unified mobile shell consolidating all frontline experiences",
+      "A fully unified mobile shell consolidating OCM, Training and Safety experiences",
       "Consistent identity, navigation and offline behaviour across modules",
       "A single place to ship new frontline capability",
     ],
@@ -499,6 +500,60 @@ export const roadmapUseCases: RoadmapUseCase[] = [
       "Embeds intelligence in the workflow, not in a separate tool",
       "Compounds the value of every other capability on the roadmap",
       "Completes the move from system of record to system of intelligence",
+    ],
+    modules: ["SafetyManager365", "ContentManager365", "TrainingManager365"],
+  },
+  {
+    id: "automation-continued-rollout",
+    title: "Continued Roll-out of Platform-wide Automation",
+    oneLiner: "More connectors, more conditions, more actions — automation as a living capability.",
+    status: "planned",
+    phase: "2027-plus",
+    layer: "Intelligence & Orchestration Layer",
+    problemToday:
+      "Automation is in production, but the catalogue of connectors, conditions and actions is what determines how much manual work it actually removes.",
+    whatWereDelivering: [
+      "An expanding library of connectors into adjacent operational and enterprise systems",
+      "A richer condition language so customers can express the workflows they actually run",
+      "More native actions — and customer tooling to author and govern their own",
+    ],
+    dtop: {
+      detect: "New event sources continuously brought into the automation runtime",
+      trigger: "More expressive policies match a wider range of operational scenarios",
+      orchestrate: "Actions execute against a larger surface of connected systems",
+      prove: "Coverage, cycle-time and outcomes measured as the catalogue grows",
+    },
+    customerOutcomes: [
+      "Compounds the value of automation year over year",
+      "Removes the next layer of manual hand-offs as the catalogue expands",
+      "Keeps the platform aligned with how customers actually operate",
+    ],
+    modules: ["SafetyManager365", "ContentManager365", "TrainingManager365", "Regulation Management"],
+  },
+  {
+    id: "future-platform-pocs",
+    title: "Future Platform PoCs — Defined with Customer Input",
+    oneLiner: "The next round of platform capability, shaped by where customers want us to go next.",
+    status: "planned",
+    phase: "2027-plus",
+    layer: "Intelligence & Orchestration Layer",
+    problemToday:
+      "The 2027+ horizon is deliberately open — the highest-value next bets should be defined with customers, not assumed in isolation.",
+    whatWereDelivering: [
+      "A standing pipeline of platform PoCs prioritised with customer councils and design partners",
+      "Same DTOP discipline applied to every candidate — Detect, Trigger, Orchestrate, Prove",
+      "A clear path from validated PoC to production rollout on the platform",
+    ],
+    dtop: {
+      detect: "Customer signal: where the platform should expand next",
+      trigger: "Candidate use case scoped, evidenced and prioritised",
+      orchestrate: "PoC delivered with a small set of design-partner customers",
+      prove: "Outcome measured against the agreed success criteria before scale",
+    },
+    customerOutcomes: [
+      "Customers shape the platform's next horizon, not just consume it",
+      "Investment is concentrated on the highest-value bets",
+      "Keeps the platform a step ahead of where customer operations are going",
     ],
     modules: ["SafetyManager365", "ContentManager365", "TrainingManager365"],
   },
