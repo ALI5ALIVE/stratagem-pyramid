@@ -708,7 +708,7 @@ const maturityRoadmapSpecs = (): SlideSpec[] => [
   },
 ];
 
-const slideSpecs: SlideSpec[] = [
+export const slideSpecs: SlideSpec[] = [
   // ─── 0. TITLE ──────────────────────────────────────────────────
   {
     label: "Title",
