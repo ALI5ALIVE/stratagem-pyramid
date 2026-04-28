@@ -55,7 +55,7 @@ export interface BuildOpts {
   onProgress?: (current: number, total: number, label: string) => void;
 }
 
-interface SlideSpec {
+export interface SlideSpec {
   label: string;
   build: (slide: pptxgen.Slide, ctx: { logo: string; logoLight: string; index: number; total: number }) => Promise<void> | void;
 }
@@ -63,7 +63,7 @@ interface SlideSpec {
 const fmtMoney = (v: number) =>
   v >= 1_000_000 ? `$${(v / 1_000_000).toFixed(1)}M` : v >= 1_000 ? `$${(v / 1_000).toFixed(0)}K` : `$${v}`;
 
-function chrome(
+export function chrome(
   slide: pptxgen.Slide,
   ctx: { logo: string; logoLight: string; index: number; total: number },
   variant: "dark" | "light" = "dark",
@@ -79,7 +79,7 @@ function chrome(
   });
 }
 
-function header(
+export function header(
   slide: pptxgen.Slide,
   eyebrow: string,
   title: string,
@@ -98,8 +98,8 @@ function header(
   }
 }
 
-const CONTENT_TOP = 1.85;
-const CONTENT_BOTTOM = 6.85;
+export const CONTENT_TOP = 1.85;
+export const CONTENT_BOTTOM = 6.85;
 
 // Layer accent colours — match the React PlatformArchitectureDiagram tokens.
 const LAYER_ACCENT: Record<"core" | "data" | "intelligence" | "mobile" | "dtop", string> = {
@@ -192,7 +192,7 @@ function buildLayerDivider(
   });
 }
 
-const dividerSpec = (opts: {
+export const layerDividerSpec = (opts: {
   label: string;
   layerNumber: number;
   layerName: string;
@@ -283,7 +283,7 @@ function buildJourneyDivider(
   });
 }
 
-const journeyDividerSpec = (opts: {
+export const journeyDividerSpec = (opts: {
   label: string;
   title: string;
   tagline: string;
