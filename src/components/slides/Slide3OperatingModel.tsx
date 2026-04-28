@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import SlideContainer from "./SlideContainer";
 import { Radio, Bell, GitBranch, ShieldCheck, ArrowRight, Database, TrendingUp, Users, Clock, CheckCircle } from "lucide-react";
-import PlatformEcosystemDiagram from "../PlatformEcosystemDiagram";
+import PlatformArchitectureDiagramV4 from "@/components/platform-slides/PlatformArchitectureDiagramV4";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 // Timing markers for narration-synced step highlighting
@@ -124,11 +124,9 @@ const Slide3OperatingModel = ({
       onPause={onPause}
       onNextSlide={onNextSlide}
     >
-      {/* Platform Ecosystem Diagram */}
-      <div className="mb-2 flex justify-center">
-        <div className="w-64 h-64 lg:w-80 lg:h-80">
-          <PlatformEcosystemDiagram />
-        </div>
+      {/* Platform Architecture Diagram (canonical) */}
+      <div className="mb-2 mx-auto w-full max-w-3xl">
+        <PlatformArchitectureDiagramV4 compact />
       </div>
 
       {/* Data Sources Row */}
