@@ -17,6 +17,7 @@ const apps = [
   {
     name: "SafetyManager365",
     short: "Safety",
+    status: "available" as const,
     icon: ShieldCheck,
     color: "text-rose-300",
     border: "border-rose-500/30",
@@ -26,6 +27,7 @@ const apps = [
   {
     name: "ContentManager365",
     short: "Content",
+    status: "pending" as const,
     icon: FileText,
     color: "text-blue-300",
     border: "border-blue-500/30",
@@ -35,6 +37,7 @@ const apps = [
   {
     name: "TrainingManager365",
     short: "Training",
+    status: "pending" as const,
     icon: GraduationCap,
     color: "text-emerald-300",
     border: "border-emerald-500/30",
@@ -96,12 +99,23 @@ const TechV4Slide7CoAnalyst = ({ slideNumber, ...narrationProps }: Props) => (
               className={`rounded-lg border ${app.border} ${app.headerBg} px-3 py-2 flex items-center gap-2`}
             >
               <Icon className={`h-4 w-4 ${app.color} shrink-0`} />
-              <div className="flex flex-col leading-tight">
-                <span className={`text-xs font-bold ${app.color}`}>{app.name}</span>
+              <div className="flex flex-col leading-tight flex-1 min-w-0">
+                <span className={`text-xs font-bold ${app.color} truncate`}>{app.name}</span>
                 <span className="text-[9px] uppercase tracking-wider text-muted-foreground">
                   {app.short}
                 </span>
               </div>
+              {app.status === "available" ? (
+                <span className="shrink-0 inline-flex items-center gap-1 rounded-full border border-emerald-500/40 bg-emerald-500/15 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-emerald-300">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                  Available
+                </span>
+              ) : (
+                <span className="shrink-0 inline-flex items-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/15 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-amber-300">
+                  <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                  Coming Soon
+                </span>
+              )}
             </div>
           );
         })}
