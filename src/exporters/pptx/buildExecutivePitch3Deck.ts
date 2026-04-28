@@ -24,6 +24,7 @@ import {
   openerSpec,
   regulationSummarySpec,
 } from "./buildTechnicalDeck";
+import { elevatorPitch } from "@/data/insightsPlaybook";
 
 const C = PPTX_BRAND.color;
 const W = PPTX_BRAND.size.w;
@@ -465,7 +466,7 @@ const exec3MobileDivider: SlideSpec = layerDividerSpec({
 
 const exec3DtopDivider: SlideSpec = layerDividerSpec({
   label: "▸ DTOP",
-  layerNumber: 5,
+  layerNumber: 1,
   layerName: "DTOP — The System of Work",
   tagline:
     "Detect → Trigger → Orchestrate → Prove. The operating model that wraps the whole stack.",
