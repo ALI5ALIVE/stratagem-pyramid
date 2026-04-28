@@ -448,9 +448,9 @@ const exec3IntelligenceDivider: SlideSpec = layerDividerSpec({
   layerNumber: 3,
   layerName: "Intelligence & Orchestration",
   tagline:
-    "Insights & Intelligence (CoAnalyst) · Recommendations & Prescriptive Actions · Automation — turning operational data into action.",
+    "Automation · Insights & Intelligence · CoAnalyst (Recommendations & Prescriptive Actions) — turning operational data into action.",
   active: "intelligence",
-  upNext: ["CoAnalyst", "Insights & Recommendations", "Automation", "CoAnalyst vs Generic AI"],
+  upNext: ["Automation", "Insights & Recommendations", "CoAnalyst", "CoAnalyst vs Generic AI"],
 });
 
 const exec3MobileDivider: SlideSpec = layerDividerSpec({
@@ -502,9 +502,9 @@ export async function buildExecutivePitch3Deck(opts: BuildOpts = {}): Promise<Bl
     byLabel("Industry Challenge"),
     byLabel("Platform Overview"),
     exec3IntelligenceDivider,
+    byLabel("Automation"),
     byLabel("Insights & Intelligence"),
     byLabel("Recommendations & Prescriptive Actions"),
-    byLabel("Automation"),
     byLabel("Tiers vs Generic AI"),
     exec3MobileDivider,
     byLabel("Unified Mobile"),

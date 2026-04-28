@@ -24,11 +24,11 @@ const dividerProps = {
   intelligence: {
     layerName: "Intelligence & Orchestration",
     tagline:
-      "Insights & Intelligence (CoAnalyst) · Recommendations & Prescriptive Actions · Automation — turning operational data into action.",
+      "Automation · Insights & Intelligence · CoAnalyst (Recommendations & Prescriptive Actions) — turning operational data into action.",
     active: "intelligence" as const,
     hideLayerNumber: true,
     platformGroupLabel: "The Platform · Part of One Integrated Solution",
-    upNext: ["CoAnalyst", "Insights & Recommendations", "Automation", "CoAnalyst vs Generic AI"],
+    upNext: ["Automation", "Insights & Recommendations", "CoAnalyst", "CoAnalyst vs Generic AI"],
   },
   mobile: {
     layerName: "Unified Mobile",
@@ -56,9 +56,9 @@ const slides = [
   { id: "exec3-slide-2", label: "Industry Challenge", component: TechSlide2IndustryChallenge },
   { id: "exec3-slide-platform", label: "The Platform", component: TechV4PlatformOverview },
   { id: "exec3-divider-intelligence", label: "▸ Intelligence Layer", component: TechSlideLayerDivider, dividerProps: dividerProps.intelligence },
-  { id: "exec3-slide-coanalyst", label: "CoAnalyst", component: TechV4Slide7CoAnalyst },
-  { id: "exec3-slide-insights", label: "Insights & Recommendations", component: TechV4SlideInsights },
   { id: "exec3-slide-automation", label: "Automation", component: TechV4SlideAutomation },
+  { id: "exec3-slide-insights", label: "Insights & Recommendations", component: TechV4SlideInsights },
+  { id: "exec3-slide-coanalyst", label: "CoAnalyst", component: TechV4Slide7CoAnalyst },
   { id: "exec3-slide-tiers-vs-ai", label: "CoAnalyst vs Generic AI", component: TechV4SlideTiersVsAI },
   { id: "exec3-divider-mobile", label: "▸ Mobile", component: TechSlideLayerDivider, dividerProps: dividerProps.mobile },
   { id: "exec3-slide-mobile", label: "Unified Mobile", component: TechV4SlideMobile },
