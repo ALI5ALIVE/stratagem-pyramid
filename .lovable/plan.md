@@ -1,74 +1,65 @@
-## Problem
+## Problem found
 
-The "Operational Performance Platform" architecture is currently rendered three different ways across the app, so the same concept looks different depending on which deck you're viewing:
+The pages are blank because the new PPTX wiring imports the entire native PPTX exporter stack during normal app startup:
 
-1. **`PlatformArchitectureDiagramV4`** (new, updated) — `The Platform · One Integrated Solution` wrapper, DTOP at top, Intelligence layer with data substrate folded in, Core Apps as foundation. **Currently used only by Tech V4 / Exec Pitch 3.**
-2. **`PlatformArchitectureDiagram`** (older, 5-layer) — separate "Operational Data Foundation" layer, no Platform wrapper. Used by:
-   - `PFSlide3Architecture.tsx` (Platform Playbook)
-   - `TechSlide4Platform.tsx` (Tech V1 deep dive)
-3. **`PlatformEcosystemDiagram`** (static PNG) — used by:
-   - `ExecSlide3Platform.tsx` (Exec Pitch V1)
-   - `OpsSlide4Platform.tsx` (Operational Pitch)
-   - `Slide3OperatingModel.tsx` (legacy Slide Deck)
-   - `HomepageMockup.tsx` (homepage hero)
+```text
+App loads every route
+  → ExecutivePitch3 imports TechSlideOpener
+  → TechSlideOpener imports DeckPPTXExportButton
+  → DeckPPTXExportButton imports @/exporters/pptx
+  → @/exporters/pptx eagerly imports all PPTX builders + pptxgenjs
+```
 
-Result: the diagram on Exec Pitch 3 / Tech V4 doesn't match what an exec sees on the Operational Pitch, Exec V1, or homepage.
+That makes the preview request a large dependency graph before the page renders. In the browser/network trace, multiple startup module requests are being aborted, leaving `#root` empty and the app white-screened. This is consistent across routes because `App.tsx` imports all pages eagerly.
 
-## Fix — single source of truth
+## Fix plan
 
-Promote `PlatformArchitectureDiagramV4` to be **the** canonical platform diagram, and route every other surface to it.
+1. **Stop loading PPTX builders at startup**
+   - Refactor `src/exporters/pptx/index.ts` so it exports only lightweight deck metadata immediately.
+   - Replace top-level imports of `buildTechnicalDeck`, `buildExecutiveDeck`, and `buildExecutivePitch3Deck` with lazy dynamic imports inside each builder function.
 
-### Step 1 — Rename / consolidate (no behavior change)
+2. **Keep type imports type-only**
+   - Move shared `BuildOpts` typing into a lightweight local interface or type-only path so no PPTX builder code is pulled into the runtime bundle just for types.
+   - Ensure `DeckPPTXExportButton` and `TechSlideOpener` only load the heavy PPTX code after the user clicks “Download Editable PowerPoint”.
 
-- Keep `PlatformArchitectureDiagramV4.tsx` as the source of truth.
-- Delete the older `PlatformArchitectureDiagram.tsx` (5-layer variant).
-- Re-export `PlatformArchitectureDiagramV4` as `PlatformArchitectureDiagram` from a single index for cleaner imports going forward (optional polish — not strictly required).
+3. **Preserve current download behavior**
+   - Keep the same deck IDs and filenames:
+     - `tech-deep-dive`
+     - `executive-pitch`
+     - `executive-pitch-3`
+   - Keep the existing progress toasts and download button UI unchanged.
 
-### Step 2 — Switch all consumers to V4
+4. **Review routing load risk**
+   - Check whether any other heavy exporters or generated assets are imported by page modules at startup.
+   - If needed, apply the same lazy-loading pattern to prevent future blank-page regressions.
 
-Update these slides to import and render `PlatformArchitectureDiagramV4` (with `compact` prop where space is tight):
+5. **Verify after implementation**
+   - Confirm `/`, `/coanalyst`, `/pitch-executive-3`, `/pitch-technical-v4`, and `/platform-playbook` render again.
+   - Confirm the Executive Pitch 3 PPTX button still initiates generation when clicked.
+   - Then return to the V4 diagram/PPTX standardization work once the app is stable.
 
-| File | Current | After |
-|---|---|---|
-| `src/components/platform-slides/PFSlide3Architecture.tsx` | `PlatformArchitectureDiagram` | `PlatformArchitectureDiagramV4` |
-| `src/components/tech-slides/TechSlide4Platform.tsx` | `PlatformArchitectureDiagram` | `PlatformArchitectureDiagramV4 compact` |
-| `src/components/exec-slides/ExecSlide3Platform.tsx` | `PlatformEcosystemDiagram` (PNG) | `PlatformArchitectureDiagramV4` |
-| `src/components/ops-slides/OpsSlide4Platform.tsx` | `PlatformEcosystemDiagram` (PNG) | `PlatformArchitectureDiagramV4` |
-| `src/components/slides/Slide3OperatingModel.tsx` | `PlatformEcosystemDiagram` (PNG) | `PlatformArchitectureDiagramV4` |
+## Technical details
 
-For each swap, lightly adjust the surrounding grid/padding so the taller V4 diagram fits without clipping (the slides currently constrain the PNG to ~500px width; V4 is a flex column that wants full available height).
+Primary files to update:
 
-### Step 3 — Homepage decision
+```text
+src/exporters/pptx/index.ts
+src/components/DeckPPTXExportButton.tsx
+```
 
-`HomepageMockup.tsx` uses the marketing PNG in a hero. Two options:
+Likely shape of the new `index.ts` registry:
 
-- **(A, recommended)** Leave the homepage PNG alone — it's a polished marketing asset, not a deck slide. Mark it explicitly as the "marketing" variant in a code comment so it's clear it's intentional.
-- **(B)** Also swap to the V4 React diagram for full consistency.
+```ts
+export const DECK_BUILDERS = {
+  "executive-pitch-3": {
+    filename: "Comply365-Executive-Pitch-Medium.pptx",
+    label: "Executive Pitch · Medium",
+    build: async (opts) => {
+      const { buildExecutivePitch3Deck } = await import("./buildExecutivePitch3Deck");
+      return buildExecutivePitch3Deck(opts);
+    },
+  },
+};
+```
 
-Default to (A) unless you say otherwise.
-
-### Step 4 — Update PPTX exporters to match
-
-`src/exporters/pptx/buildTechnicalDeck.ts` already renders a hand-built platform slide tuned to the older 5-layer diagram. Update its layer specs so the exported PPTX matches V4:
-
-- DTOP at top (emerald)
-- Unified Mobile (violet)
-- Intelligence & Orchestration with substrate text + 3 capability tiles (Automation, Insights, Recommendations-as-Future-Vision)
-- Core Operational Apps as foundation (no separate Operational Data Foundation row)
-- Wrap L2–L4 in a "The Operational Performance Platform · One Integrated Solution" frame
-
-Apply the same shape to `buildExecutivePitch3Deck.ts` if/where it renders the platform slide (it currently reuses the tech registry, so a single fix in `buildTechnicalDeck.ts` covers both).
-
-### Step 5 — QA
-
-- Walk every affected deck (Platform Playbook, Tech V1, Tech V4, Exec V1, Exec Pitch 3, Operational Pitch, legacy SlideDeck) and confirm the platform slide renders the same V4 diagram with no clipping at 1148×781 and at 1920×1080.
-- Re-export the Tech V1 / Exec Pitch 3 PPTX and visually QA the platform slide page.
-
-## Open question
-
-Confirm the homepage choice:
-
-- (A) Keep the marketing PNG on the homepage, swap everywhere else. *(recommended)*
-- (B) Swap the homepage too, retire the PNG entirely.
-
-If you don't reply, I'll go with (A).
+This keeps all current functionality but removes the exporter dependency graph from normal page rendering.
