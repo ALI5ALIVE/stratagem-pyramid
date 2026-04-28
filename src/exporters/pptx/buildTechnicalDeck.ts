@@ -2369,7 +2369,7 @@ slideSpecs.push(
 // These are not pushed into slideSpecs; they are composed explicitly
 // inside buildTechnicalDeck() to control exact ordering.
 
-const openerSpec: SlideSpec = {
+export const openerSpec: SlideSpec = {
   label: "Hero — Operational Performance Platform",
   build: (slide, ctx) => {
     chrome(slide, ctx);
@@ -2418,7 +2418,7 @@ const openerSpec: SlideSpec = {
   },
 };
 
-const whyExistsSpec: SlideSpec = {
+export const whyExistsSpec: SlideSpec = {
   label: "Why It Exists",
   build: (slide, ctx) => {
     chrome(slide, ctx);
@@ -2456,7 +2456,7 @@ const whyExistsSpec: SlideSpec = {
   },
 };
 
-const platformSnapshotSpec: SlideSpec = {
+export const platformSnapshotSpec: SlideSpec = {
   label: "Platform Snapshot",
   build: (slide, ctx) => {
     chrome(slide, ctx);
@@ -2507,7 +2507,7 @@ const platformSnapshotSpec: SlideSpec = {
   },
 };
 
-const whyOnlyComply365Spec: SlideSpec = {
+export const whyOnlyComply365Spec: SlideSpec = {
   label: "Why Only Comply365",
   build: (slide, ctx) => {
     chrome(slide, ctx);
@@ -2571,7 +2571,7 @@ const whyOnlyComply365Spec: SlideSpec = {
   },
 };
 
-const ctaSpec: SlideSpec = {
+export const ctaSpec: SlideSpec = {
   label: "CTA — Find Out More",
   build: (slide, ctx) => {
     chrome(slide, ctx);
@@ -2638,7 +2638,7 @@ const ctaSpec: SlideSpec = {
 
 // ─── Regulation Solution — single summary slide (mirrors web Tech Deep Dive)
 
-const regulationSummarySpec: SlideSpec = {
+export const regulationSummarySpec: SlideSpec = {
   label: "Regulation Management",
   build: (slide, ctx) => {
     chrome(slide, ctx);
