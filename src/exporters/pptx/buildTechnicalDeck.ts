@@ -1033,7 +1033,7 @@ export const slideSpecs: SlideSpec[] = [
         x: innerX + 0.2, y: cy + 0.08, w: 5.5, h: 0.28,
         fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true, color: intAccent,
       });
-      addPill(slide, innerX + innerW - 1.4, cy + 0.12, 1.25, 0.28, "System of action", intAccent);
+      addPill(slide, innerX + innerW - 1.4, cy + 0.12, 1.4, 0.28, "System of intelligence", intAccent);
       slide.addText("Built on a unified data substrate · taxonomy · knowledge graph · aviation LLMs", {
         x: innerX + 0.2, y: cy + 0.36, w: innerW - 0.4, h: 0.26,
         fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, italic: true, valign: "top",
