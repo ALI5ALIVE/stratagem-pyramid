@@ -313,33 +313,6 @@ export const roadmapUseCases: RoadmapUseCase[] = [
     modules: ["SafetyManager365", "Unified Mobile"],
   },
   {
-    id: "automation-platform-poc",
-    title: "Platform-wide Automation — POC",
-    oneLiner: "Extending the proven automation pattern across every module's events.",
-    status: "planned",
-    phase: "h2-2026",
-    layer: "Intelligence & Orchestration Layer",
-    problemToday:
-      "Automation today is targeted. Many high-value cross-module workflows remain manual because no single owner can wire them up.",
-    whatWereDelivering: [
-      "An automation POC spanning Safety, Content, Training and Regulation events",
-      "Cross-module policies that orchestrate end-to-end workflows",
-      "Validation of governance, observability and rollback at platform scale",
-    ],
-    dtop: {
-      detect: "Events from any module observed by the platform automation runtime",
-      trigger: "Cross-module policies match and fire deterministically",
-      orchestrate: "Workflow executes across SafetyManager365, ContentManager365 and TrainingManager365",
-      prove: "Every action traceable, reversible and reportable",
-    },
-    customerOutcomes: [
-      "Removes manual hand-offs between modules",
-      "Proves the path to platform-wide rollout in 2027+",
-      "Creates the operational backbone for connected operations",
-    ],
-    modules: ["SafetyManager365", "ContentManager365", "TrainingManager365", "Regulation Management"],
-  },
-  {
     id: "bi-platform-poc",
     title: "Platform-wide Business Intelligence — POC",
     oneLiner: "One trusted view of operational performance across the whole platform.",
