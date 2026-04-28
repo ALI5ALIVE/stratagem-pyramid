@@ -1,6 +1,6 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { Search, Lightbulb, TrendingUp, Zap, CheckCircle2, ChevronRight } from "lucide-react";
+import { Search, Lightbulb, TrendingUp, Zap, CheckCircle2, ChevronRight, Sparkles } from "lucide-react";
 
 interface Props extends SlideNarrationProps { slideNumber?: number; }
 
