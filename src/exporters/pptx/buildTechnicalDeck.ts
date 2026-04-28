@@ -55,7 +55,7 @@ export interface BuildOpts {
   onProgress?: (current: number, total: number, label: string) => void;
 }
 
-interface SlideSpec {
+export interface SlideSpec {
   label: string;
   build: (slide: pptxgen.Slide, ctx: { logo: string; logoLight: string; index: number; total: number }) => Promise<void> | void;
 }
@@ -63,7 +63,7 @@ interface SlideSpec {
 const fmtMoney = (v: number) =>
   v >= 1_000_000 ? `$${(v / 1_000_000).toFixed(1)}M` : v >= 1_000 ? `$${(v / 1_000).toFixed(0)}K` : `$${v}`;
 
-function chrome(
+export function chrome(
   slide: pptxgen.Slide,
   ctx: { logo: string; logoLight: string; index: number; total: number },
   variant: "dark" | "light" = "dark",
@@ -79,7 +79,7 @@ function chrome(
   });
 }
 
-function header(
+export function header(
   slide: pptxgen.Slide,
   eyebrow: string,
   title: string,
@@ -98,8 +98,8 @@ function header(
   }
 }
 
-const CONTENT_TOP = 1.85;
-const CONTENT_BOTTOM = 6.85;
+export const CONTENT_TOP = 1.85;
+export const CONTENT_BOTTOM = 6.85;
 
 // Layer accent colours — match the React PlatformArchitectureDiagram tokens.
 const LAYER_ACCENT: Record<"core" | "data" | "intelligence" | "mobile" | "dtop", string> = {
@@ -192,7 +192,7 @@ function buildLayerDivider(
   });
 }
 
-const dividerSpec = (opts: {
+export const layerDividerSpec = (opts: {
   label: string;
   layerNumber: number;
   layerName: string;
@@ -283,7 +283,7 @@ function buildJourneyDivider(
   });
 }
 
-const journeyDividerSpec = (opts: {
+export const journeyDividerSpec = (opts: {
   label: string;
   title: string;
   tagline: string;
@@ -708,7 +708,7 @@ const maturityRoadmapSpecs = (): SlideSpec[] => [
   },
 ];
 
-const slideSpecs: SlideSpec[] = [
+export const slideSpecs: SlideSpec[] = [
   // ─── 0. TITLE ──────────────────────────────────────────────────
   {
     label: "Title",
@@ -1129,7 +1129,7 @@ function buildModuleSlide(opts: {
 
 slideSpecs.push(
   // ─── 4. SAFETY MANAGER 365 ────────────────────────────────────
-  dividerSpec({
+  layerDividerSpec({
     label: "▸ Layer 1 · Core Operational Apps",
     layerNumber: 1,
     layerName: "Core Operational Apps",
@@ -1219,7 +1219,7 @@ slideSpecs.push(
   },
 
   // ─── 7. DATA FOUNDATION ───────────────────────────────────────
-  dividerSpec({
+  layerDividerSpec({
     label: "▸ Layer 2 · Operational Data Foundation",
     layerNumber: 2,
     layerName: "Operational Data Foundation",
@@ -1355,7 +1355,7 @@ slideSpecs.push(
   },
 
   // ─── 8. INSIGHTS & INTELLIGENCE ───────────────────────────────
-  dividerSpec({
+  layerDividerSpec({
     label: "▸ Layer 3 · Intelligence & Orchestration",
     layerNumber: 3,
     layerName: "Intelligence & Orchestration Layer",
@@ -1554,7 +1554,7 @@ slideSpecs.push(
   },
 
   // ─── 11. MOBILE ───────────────────────────────────────────────
-  dividerSpec({
+  layerDividerSpec({
     label: "▸ Layer 4 · Unified Mobile",
     layerNumber: 4,
     layerName: "Unified Mobile Experience",
@@ -1629,7 +1629,7 @@ slideSpecs.push(
   },
 
   // ─── 12. DTOP ─────────────────────────────────────────────────
-  dividerSpec({
+  layerDividerSpec({
     label: "▸ Layer 5 · DTOP",
     layerNumber: 5,
     layerName: "DTOP — The System of Work",
@@ -2369,7 +2369,7 @@ slideSpecs.push(
 // These are not pushed into slideSpecs; they are composed explicitly
 // inside buildTechnicalDeck() to control exact ordering.
 
-const openerSpec: SlideSpec = {
+export const openerSpec: SlideSpec = {
   label: "Hero — Operational Performance Platform",
   build: (slide, ctx) => {
     chrome(slide, ctx);
@@ -2418,7 +2418,7 @@ const openerSpec: SlideSpec = {
   },
 };
 
-const whyExistsSpec: SlideSpec = {
+export const whyExistsSpec: SlideSpec = {
   label: "Why It Exists",
   build: (slide, ctx) => {
     chrome(slide, ctx);
@@ -2456,7 +2456,7 @@ const whyExistsSpec: SlideSpec = {
   },
 };
 
-const platformSnapshotSpec: SlideSpec = {
+export const platformSnapshotSpec: SlideSpec = {
   label: "Platform Snapshot",
   build: (slide, ctx) => {
     chrome(slide, ctx);
@@ -2507,7 +2507,7 @@ const platformSnapshotSpec: SlideSpec = {
   },
 };
 
-const whyOnlyComply365Spec: SlideSpec = {
+export const whyOnlyComply365Spec: SlideSpec = {
   label: "Why Only Comply365",
   build: (slide, ctx) => {
     chrome(slide, ctx);
@@ -2571,7 +2571,7 @@ const whyOnlyComply365Spec: SlideSpec = {
   },
 };
 
-const ctaSpec: SlideSpec = {
+export const ctaSpec: SlideSpec = {
   label: "CTA — Find Out More",
   build: (slide, ctx) => {
     chrome(slide, ctx);
@@ -2638,7 +2638,7 @@ const ctaSpec: SlideSpec = {
 
 // ─── Regulation Solution — single summary slide (mirrors web Tech Deep Dive)
 
-const regulationSummarySpec: SlideSpec = {
+export const regulationSummarySpec: SlideSpec = {
   label: "Regulation Management",
   build: (slide, ctx) => {
     chrome(slide, ctx);

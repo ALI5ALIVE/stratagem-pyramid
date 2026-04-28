@@ -4,6 +4,7 @@ import type { SlideNarrationProps } from "@/types/slideProps";
 import { heroEyebrow, heroTagline, heroSubtitle, statusLabel } from "@/data/platformPlaybook";
 import DeckPDFExportButton from "@/components/DeckPDFExportButton";
 import DeckPPTXExportButton from "@/components/DeckPPTXExportButton";
+import type { DeckId } from "@/exporters/pptx";
 
 interface ExportSlideDef {
   id: string;
@@ -14,13 +15,23 @@ interface ExportSlideDef {
 interface Props extends SlideNarrationProps {
   slideNumber?: number;
   exportSlides?: ExportSlideDef[];
+  pptxDeckId?: DeckId;
+  pdfFilename?: string;
+  deckLabel?: string;
 }
 
 /**
  * Tech-deck opener — platform-hero. Mirrors the Platform Playbook title slide
  * to frame the deck around "The Operational Performance Platform".
  */
-const TechSlideOpener = ({ slideNumber, exportSlides, ...narrationProps }: Props) => (
+const TechSlideOpener = ({
+  slideNumber,
+  exportSlides,
+  pptxDeckId = "tech-deep-dive",
+  pdfFilename = "Comply365-Technical-Deep-Dive.pdf",
+  deckLabel = "Technical Deep Dive",
+  ...narrationProps
+}: Props) => (
   <SalesSlideContainer
     id="tech-slide-opener"
     showHeader={false}
@@ -47,11 +58,11 @@ const TechSlideOpener = ({ slideNumber, exportSlides, ...narrationProps }: Props
     {exportSlides && exportSlides.length > 0 && (
       <div className="absolute bottom-24 right-8 z-40 flex flex-col items-end gap-1 text-right">
         <div className="flex items-center gap-2">
-          <DeckPPTXExportButton deckId="tech-deep-dive" />
+          <DeckPPTXExportButton deckId={pptxDeckId} />
           <DeckPDFExportButton
             slides={exportSlides}
-            filename="Comply365-Technical-Deep-Dive.pdf"
-            deckLabel="Technical Deep Dive"
+            filename={pdfFilename}
+            deckLabel={deckLabel}
           />
         </div>
         <span className="text-[10px] text-muted-foreground bg-background/70 backdrop-blur px-2 py-0.5 rounded max-w-[220px]">
