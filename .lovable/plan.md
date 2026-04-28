@@ -1,11 +1,33 @@
-## Remove "Strategic Shift" slide from Executive Pitch (Medium)
+## Reorder Platform Capability Layers in Executive Pitch (Medium)
 
-### Change
-In `src/pages/ExecutivePitch3.tsx`:
-- Remove the slide entry `{ id: "exec3-slide-1", label: "Strategic Shift", component: TechSlide1StrategicShift }` from the `slides` array.
-- Remove the now-unused import of `TechSlide1StrategicShift`.
+### New layer order
+After the "The Platform" overview slide, the capability layers will be presented in this order:
 
-### Notes
-- Component file `src/components/tech-slides/TechSlide1StrategicShift.tsx` will be left in place (not deleted) in case it is referenced by exports/PPTX builders or reused elsewhere.
-- The deck reorders automatically; subsequent slides shift up by one.
-- Narration hook `useExec3PitchNarration` keys by slide id, so removing the entry simply means that id is no longer played — no narration data needs to change.
+1. **DTOP — The System of Work** (was 3rd)
+2. **Unified Mobile** (was 2nd)
+3. **Intelligence & Orchestration** (Automation → Insights & Recommendations → CoAnalyst → CoAnalyst vs Generic AI) (was 1st)
+
+### Resulting deck flow
+```text
+Title
+Strategic Shift
+The Platform
+▸ DTOP                          (divider)
+DTOP — System of Work
+▸ Mobile                        (divider)
+Unified Mobile
+▸ Intelligence Layer            (divider)
+Automation
+Insights & Recommendations
+CoAnalyst
+CoAnalyst vs Generic AI
+Regulation Management
+2026 Phased Roadmap
+Customer Outcomes
+Why Comply365
+```
+
+### Technical changes
+- **`src/pages/ExecutivePitch3.tsx`**: reorder entries in the `slides` array so the DTOP divider + slide come first, Mobile divider + slide second, and the Intelligence divider + its 4 slides last (before Regulation Management). No id renames — slide ids stay stable so narration keys keep working.
+- **`jumpTargets` on the Platform overview slide**: keep mapping `dtop → exec3-divider-dtop`, `mobile → exec3-divider-mobile`, `intelligence → exec3-divider-intelligence`, `core → exec3-divider-dtop` (updated to first layer). This preserves jump-from-overview behaviour with the new ordering.
+- No changes to the slide components themselves, divider props, or narration data.
