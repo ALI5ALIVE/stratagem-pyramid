@@ -1,6 +1,7 @@
 import { SlideNarrationProps } from "@/types/slideProps";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { Plane, Globe, Users } from "lucide-react";
+import DeckPPTXExportButton from "@/components/DeckPPTXExportButton";
 
 interface COSlide0TitleProps extends SlideNarrationProps {
   slideNumber?: number;
@@ -74,6 +75,13 @@ const COSlide0Title = ({
             </div>
           ))}
         </div>
+      </div>
+
+      <div className="absolute bottom-24 right-8 z-40 flex flex-col items-end gap-1 text-right print:hidden">
+        <DeckPPTXExportButton deckId="customer-overview" />
+        <span className="text-[10px] text-muted-foreground bg-background/70 backdrop-blur px-2 py-0.5 rounded max-w-[220px]">
+          Interactive slides export in their default view.
+        </span>
       </div>
     </SalesSlideContainer>
   );

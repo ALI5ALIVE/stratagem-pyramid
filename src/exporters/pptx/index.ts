@@ -2,7 +2,11 @@ import type { BuildOpts } from "./types";
 
 export type { BuildOpts } from "./types";
 
-export type DeckId = "tech-deep-dive" | "executive-pitch" | "executive-pitch-3";
+export type DeckId =
+  | "tech-deep-dive"
+  | "executive-pitch"
+  | "executive-pitch-3"
+  | "customer-overview";
 
 export interface DeckBuilder {
   filename: string;
@@ -39,6 +43,14 @@ export const DECK_BUILDERS: Record<DeckId, DeckBuilder> = {
     build: async (opts) => {
       const { buildExecutivePitch3Deck } = await import("./buildExecutivePitch3Deck");
       return buildExecutivePitch3Deck(opts);
+    },
+  },
+  "customer-overview": {
+    filename: "Comply365-Customer-Overview.pptx",
+    label: "Customer Overview",
+    build: async (opts) => {
+      const { buildCustomerOverviewDeck } = await import("./buildCustomerOverviewDeck");
+      return buildCustomerOverviewDeck(opts);
     },
   },
 };
