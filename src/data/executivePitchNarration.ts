@@ -136,28 +136,28 @@ export const exec3PitchNarrations: ExecNarrationSlide[] = [
     title: "Layer divider — Intelligence & Orchestration",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Reset. We're now in the intelligence and orchestration layer. Three capabilities — CoAnalyst for natural-language questions, Insights and Recommendations for proactive direction, and Automation for cross-product workflows. Together they turn operational data into action. Bridge: let's start with CoAnalyst.",
-  },
-  {
-    slideId: "exec3-slide-coanalyst",
-    title: "CoAnalyst",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "CoAnalyst is the conversational intelligence layer of the Operational Performance Platform. Master message — from reports to intelligence, from events to control. It's a hybrid AI architecture — domain-trained models for the heavy lifting, an LLM augmentation layer for natural-language interaction, with continuous learning. Trained on millions of aviation reports since twenty twenty-three. The proof point: around ninety percent accuracy at deep classification — Level 4 to 5 — versus around thirty-five percent for generic AI. Bridge: insights answer questions — recommendations surface the questions you should be asking. Next slide.",
-  },
-  {
-    slideId: "exec3-slide-insights",
-    title: "Insights & Recommendations",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "Insights and Recommendations turns plain-English questions into evidence-backed action plans. Pattern detection across silos. Recommended Actions paired with traceable reasoning. Continuous, exploratory analysis. The worked example to land: a COO asks, are dangerous goods incidents linked to training gaps? Sixty seconds later: three hub stations correlate with overdue DG recurrent training. The proof point: question to action plan in under a minute. Bridge: insights surface what to do — automation actually does it. Next slide.",
+      "Reset. We're now in the intelligence and orchestration layer. Three capabilities — Automation for cross-product workflows, Insights and Recommendations for proactive direction, and CoAnalyst for natural-language deep dive with prescriptive next steps. Together they turn operational data into action. Bridge: let's start with Automation.",
   },
   {
     slideId: "exec3-slide-automation",
     title: "Automation",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Automation is one orchestration layer across the platform — not one per product. Triggers fire from native events, webhooks, schedules or third-party tools. Reusable, no-code workflows. Versioned, observable, with human-in-the-loop gates wherever you need them. The proof point: a procedure publishes in ContentManager365, the workflow auto-assigns training, opens a SafetyManager365 compliance checkpoint and notifies the team — zero manual handoffs. Bridge: that's why generic AI alone can't replace this — let me show you the precision gap. Next slide.",
+      "Automation is one orchestration layer across the platform — not one per product. Triggers fire from native events, webhooks, schedules or third-party tools. Reusable, no-code workflows. Versioned, observable, with human-in-the-loop gates wherever you need them. The proof point: a procedure publishes in ContentManager365, the workflow auto-assigns training, opens a SafetyManager365 compliance checkpoint and notifies the team — zero manual handoffs. Bridge: automation runs the plays — Insights surfaces which plays to run. Next slide.",
+  },
+  {
+    slideId: "exec3-slide-insights",
+    title: "Insights & Recommendations",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Insights and Recommendations turns plain-English questions into evidence-backed action plans. Pattern detection across silos. Recommended Actions paired with traceable reasoning. Continuous, exploratory analysis. The worked example to land: a COO asks, are dangerous goods incidents linked to training gaps? Sixty seconds later: three hub stations correlate with overdue DG recurrent training. The proof point: question to action plan in under a minute. Bridge: insights surface what to ask — CoAnalyst answers in plain English with prescriptive next steps. Next slide.",
+  },
+  {
+    slideId: "exec3-slide-coanalyst",
+    title: "CoAnalyst",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "CoAnalyst is the conversational intelligence layer of the Operational Performance Platform. Master message — from reports to intelligence, from events to control. It's a hybrid AI architecture — domain-trained models for the heavy lifting, an LLM augmentation layer for natural-language interaction, with continuous learning. Trained on millions of aviation reports since twenty twenty-three. The proof point: around ninety percent accuracy at deep classification — Level 4 to 5 — versus around thirty-five percent for generic AI. Bridge: this is why generic AI alone can't replace this — let me show you the precision gap. Next slide.",
   },
   {
     slideId: "exec3-slide-tiers-vs-ai",
