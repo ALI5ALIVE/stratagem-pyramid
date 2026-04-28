@@ -1,6 +1,5 @@
 import PitchSlideContainer from "@/components/shared/PitchSlideContainer";
-import { TrendingUp, Clock, DollarSign, Heart, ArrowRight, Activity, Calculator } from "lucide-react";
-import { Link } from "react-router-dom";
+import { TrendingUp, Clock, DollarSign, Heart, ArrowRight, Activity } from "lucide-react";
 import type { SlideNarrationProps } from "@/types/slideProps";
 
 interface CustomerOutcomesSlideProps extends SlideNarrationProps {
@@ -33,7 +32,7 @@ const valueOutcomes = [
     example: {
       signal: "Smoke & fumes cluster at regional hub",
       action: "De-icing procedure revised, ground crew retrained",
-      result: "92% fewer incidents, schedule maintained",
+      result: "Fewer incidents, schedule maintained",
     },
   },
   {
@@ -61,7 +60,7 @@ const valueOutcomes = [
     example: {
       signal: "Procedure confusion pattern detected",
       action: "SOP rewritten with clarity, crew retrained",
-      result: "Zero incidents, on-time performance maintained",
+      result: "Fewer incidents, improved on-time performance",
     },
   },
 ];
@@ -172,22 +171,13 @@ const CustomerOutcomesSlide = ({
         })}
       </div>
 
-      {/* Platform ROI CTA */}
+      {/* Generic closing line */}
       <div className="max-w-3xl mx-auto">
-        <Link to="/line-of-sight" className="block">
-          <div className="bg-gradient-to-r from-primary/20 to-primary/5 border border-primary/30 rounded-lg p-4 flex items-center gap-4 hover:from-primary/30 hover:to-primary/10 transition-all cursor-pointer group">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center shrink-0">
-              <Calculator className="w-5 h-5 text-primary-foreground" />
-            </div>
-            <div className="flex-1">
-              <p className="text-sm font-semibold text-foreground">Learn More about the Platform ROI</p>
-              <p className="text-[11px] text-muted-foreground mt-0.5">
-                Explore the Interactive Calculator to model cost avoidance with your airline's numbers
-              </p>
-            </div>
-            <ArrowRight className="w-5 h-5 text-primary shrink-0 group-hover:translate-x-1 transition-transform" />
-          </div>
-        </Link>
+        <div className="border border-primary/20 bg-primary/5 rounded-lg p-4 text-center">
+          <p className="text-sm text-foreground">
+            Connecting <span className="text-primary font-semibold">safety signals</span> to schedule, revenue, cost and loyalty outcomes.
+          </p>
+        </div>
       </div>
     </PitchSlideContainer>
   );

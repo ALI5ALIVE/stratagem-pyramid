@@ -24,12 +24,15 @@ const OpsSlide5Intelligence = ({ slideNumber, ...narrationProps }: OpsSlide5Prop
   return (
     <SalesSlideContainer
       id="ops-slide-5"
-      title="The Intelligence Layer — CoAnalyst"
-      subtitle="Aviation-specific AI that generative AI can't replicate."
+      title="CoAnalyst — Domain-Trained Intelligence"
+      subtitle="Domain-trained intelligence — purpose-built for aviation, where generic AI falls short."
       slideNumber={slideNumber}
       {...narrationProps}
     >
       <div className="flex-1 flex flex-col items-center justify-center gap-6 max-w-4xl mx-auto w-full">
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-primary/40 bg-primary/10 text-[11px] font-semibold uppercase tracking-wider text-primary">
+          Domain-Trained Intelligence
+        </span>
         {/* Hero stat */}
         <div className="flex items-center gap-12 justify-center">
           <div className="text-center">
@@ -104,7 +107,7 @@ const OpsSlide5Intelligence = ({ slideNumber, ...narrationProps }: OpsSlide5Prop
         </div>
 
         <p className="text-center text-xs text-muted-foreground italic">
-          A 7-figure R&D investment since 2023 — ML + LLMs trained on millions of historical aviation reports.
+          A multi-year R&D investment — ML + LLMs trained on millions of historical aviation reports.
         </p>
       </div>
     </SalesSlideContainer>
