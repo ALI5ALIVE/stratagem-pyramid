@@ -174,6 +174,16 @@ const ExecutivePitch3 = () => {
               slideNumber={index}
               id={slide.id}
               {...((slide as any).dividerProps ?? {})}
+              {...(slide.id === "exec3-slide-platform"
+                ? {
+                    jumpTargets: {
+                      dtop: "exec3-divider-dtop",
+                      mobile: "exec3-divider-mobile",
+                      intelligence: "exec3-divider-intelligence",
+                      core: "exec3-divider-intelligence",
+                    },
+                  }
+                : {})}
               {...(index === 0
                 ? {
                     exportSlides: slides,

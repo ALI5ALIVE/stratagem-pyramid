@@ -20,6 +20,7 @@ const TechSlideWhyComply = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer
     id="tech-slide-why-comply"
     title="Why Comply365"
+    subtitle="Point solutions manage silos. Generic AI creates noise. We close the loop with the Comply365 Operational Performance Platform."
     slideNumber={slideNumber}
     {...narrationProps}
   >
@@ -46,7 +47,7 @@ const TechSlideWhyComply = ({ slideNumber, ...narrationProps }: Props) => (
             </div>
           ))}
         </div>
-        <p className="text-[11px] text-muted-foreground italic">Point solutions manage silos. Generic AI creates noise. We close the loop.</p>
+        <p className="text-[11px] text-muted-foreground italic">Closed loop · Domain-trained · Proof by design.</p>
       </div>
     </div>
   </SalesSlideContainer>

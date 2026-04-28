@@ -9,11 +9,9 @@ import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1Strateg
 import TechV4PlatformOverview from "@/components/tech-slides/v4/TechV4PlatformOverview";
 import Slide4Transformation from "@/components/slides/Slide4Transformation";
 import PFSlide9Value from "@/components/platform-slides/PFSlide9Value";
-import SlideUseCases from "@/components/slides/SlideUseCases";
 import TechSlideRegulationSummary from "@/components/tech-slides/TechSlideRegulationSummary";
 import CustomerOutcomesSlide from "@/components/shared/CustomerOutcomesSlide";
 import Slide5MaturityCurve from "@/components/slides/Slide5MaturityCurve";
-import COClosingFirst90Days from "@/components/customer-overview-slides/COClosingFirst90Days";
 
 const slides = [
   { id: "co-slide-0", label: "Title", component: COSlide0Title },
@@ -22,11 +20,9 @@ const slides = [
   { id: "co-slide-3", label: "The Platform", component: TechV4PlatformOverview },
   { id: "co-slide-4", label: "Before vs After", component: Slide4Transformation },
   { id: "co-slide-5", label: "The Value You Unlock", component: PFSlide9Value },
-  { id: "co-slide-6", label: "Use Cases in Action", component: SlideUseCases },
   { id: "co-slide-regmgmt", label: "Use Case — Regulation Management", component: TechSlideRegulationSummary },
-  { id: "co-slide-7", label: "Customer Outcomes", component: CustomerOutcomesSlide },
   { id: "co-slide-8", label: "Your Maturity Roadmap", component: Slide5MaturityCurve },
-  { id: "co-slide-9", label: "Your First 90 Days", component: COClosingFirst90Days },
+  { id: "co-slide-7", label: "Customer Outcomes", component: CustomerOutcomesSlide },
 ];
 
 const CustomerOverview = () => {

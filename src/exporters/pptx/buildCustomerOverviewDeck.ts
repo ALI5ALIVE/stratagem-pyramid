@@ -353,11 +353,9 @@ export async function buildCustomerOverviewDeck(opts: BuildOpts = {}): Promise<B
     byLabel("Platform Overview"),                    // 3 · TechV4PlatformOverview
     transformationSpec,                              // 4 · Slide4Transformation
     valuePillarsSpec,                                // 5 · PFSlide9Value
-    byLabel("Use Cases"),                            // 6 · SlideUseCases
-    regulationSummarySpec,                           // 7 · TechSlideRegulationSummary
-    customerOutcomesSpec,                            // 8 · CustomerOutcomesSlide
-    byLabel("Maturity Roadmap · Curve & Behaviour"), // 9 · Slide5MaturityCurve
-    co90DaysSpec,                                    // 10 · COClosingFirst90Days
+    regulationSummarySpec,                           // 6 · TechSlideRegulationSummary
+    byLabel("Maturity Roadmap · Curve & Behaviour"), // 7 · Slide5MaturityCurve
+    customerOutcomesSpec,                            // 8 · CustomerOutcomesSlide (closer)
   ];
 
   const total = composed.length;
