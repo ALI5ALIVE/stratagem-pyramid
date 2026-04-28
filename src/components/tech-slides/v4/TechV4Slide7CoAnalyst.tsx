@@ -1,84 +1,150 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { Brain, Database, Sparkles, Search, Zap, Languages, Quote } from "lucide-react";
-import DeepDiveLink from "@/components/shared/DeepDiveLink";
+import {
+  ShieldCheck,
+  FileText,
+  GraduationCap,
+  MessageSquare,
+  Network,
+  Lightbulb,
+} from "lucide-react";
 
-interface Props extends SlideNarrationProps { slideNumber?: number; }
+interface Props extends SlideNarrationProps {
+  slideNumber?: number;
+}
 
-const pipeline = [
-  { icon: Database, label: "Ingest", desc: "Operational data from safety, content, training and ops sources", color: "text-sky-400", border: "border-sky-400/30", bg: "bg-sky-400/5" },
-  { icon: Sparkles, label: "Enrich", desc: "Classify across 4,000+ aviation categories at 5 levels", color: "text-amber-400", border: "border-amber-400/30", bg: "bg-amber-400/5" },
-  { icon: Search, label: "Reason", desc: "Cross-product correlation with cited, traceable evidence", color: "text-violet-400", border: "border-violet-400/30", bg: "bg-violet-400/5" },
-  { icon: Brain, label: "Answer", desc: "Plain-English answers in seconds — auditable end-to-end", color: "text-primary", border: "border-primary/30", bg: "bg-primary/5" },
-  { icon: Zap, label: "Activate", desc: "Trigger recommended actions across the platform", color: "text-emerald-400", border: "border-emerald-400/30", bg: "bg-emerald-400/5" },
-];
+const apps = [
+  {
+    name: "SafetyManager365",
+    short: "Safety",
+    icon: ShieldCheck,
+    color: "text-rose-300",
+    border: "border-rose-500/30",
+    bg: "bg-rose-500/5",
+    headerBg: "bg-rose-500/10",
+  },
+  {
+    name: "ContentManager365",
+    short: "Content",
+    icon: FileText,
+    color: "text-blue-300",
+    border: "border-blue-500/30",
+    bg: "bg-blue-500/5",
+    headerBg: "bg-blue-500/10",
+  },
+  {
+    name: "TrainingManager365",
+    short: "Training",
+    icon: GraduationCap,
+    color: "text-emerald-300",
+    border: "border-emerald-500/30",
+    bg: "bg-emerald-500/5",
+    headerBg: "bg-emerald-500/10",
+  },
+] as const;
 
-const archCards = [
-  { title: "Domain-Trained ML Models", desc: "Trained on millions of aviation reports since 2023. 90% accuracy at 4,000+ granular categories — no hallucination at micro-classification." },
-  { title: "LLM Augmentation Layer", desc: "Natural-language queries, summarisation, translation. Guardrailed by domain models to prevent aviation-critical hallucination." },
-  { title: "Continuous Learning · Tenant-Isolated", desc: "Models improve with every report processed. Airline-specific tuning — no data crosses tenant boundaries." },
+const capabilities = [
+  {
+    icon: MessageSquare,
+    name: "Ask in plain English",
+    blurb: "Natural-language questions answered with cited evidence from the application's own data.",
+    cells: [
+      "\"Which occurrence categories are trending up this quarter — and where?\"",
+      "\"Show me every procedure changed in the last 30 days that affects ground ops.\"",
+      "\"Which crew are out of recurrency for dangerous goods next month?\"",
+    ],
+  },
+  {
+    icon: Network,
+    name: "Cross-domain insight & root cause",
+    blurb: "Connect the signals already in the application to surface why something is happening — not just what.",
+    cells: [
+      "Cluster occurrences by causal factor and link them to the source procedure.",
+      "Trace where a manual revision needs to cascade into checklists and job aids.",
+      "Spot competency gaps that align with rising hazard reports across a fleet.",
+    ],
+  },
+  {
+    icon: Lightbulb,
+    name: "Recommended next actions",
+    blurb: "Turn insight into prescriptive guidance the team can act on immediately, in-app.",
+    cells: [
+      "Suggest an audit, risk re-score or corrective action with evidence attached.",
+      "Propose a procedure update or revision route with the right reviewers.",
+      "Auto-assign a refresher module or recurrency event to the right crew.",
+    ],
+  },
 ];
 
 const TechV4Slide7CoAnalyst = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer
     id="tech-slide-coanalyst"
     title="The Platform · Insights & Intelligence"
-    subtitle="Conversational intelligence purpose-built for aviation operations"
+    subtitle="The same intelligence layer — expressed inside every core application."
     slideNumber={slideNumber}
     {...narrationProps}
   >
-    <div className="flex-1 flex flex-col gap-4 min-h-0">
-      <div className="flex items-center justify-end gap-3">
-        <DeepDiveLink to="/coanalyst" label="CoAnalyst" returnTo="/pitch-technical" />
-      </div>
-      {/* Master message */}
-      <div className="rounded-xl border border-primary/30 bg-primary/10 p-4 flex items-center gap-3 shrink-0">
-        <Quote className="h-5 w-5 text-primary shrink-0" />
-        <p className="text-sm text-foreground italic leading-relaxed">
-          <span className="font-semibold text-primary">From Reports to Intelligence. From Events to Control.</span>
-          <span className="text-muted-foreground"> Ask any operational question in plain English — get an evidence-backed answer in seconds.</span>
-        </p>
-      </div>
-
-      {/* Pipeline — 5 equal cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 auto-rows-fr shrink-0">
-        {pipeline.map((s) => (
-          <div key={s.label} className={`rounded-xl border ${s.border} ${s.bg} p-3 flex flex-col h-full`}>
-            <s.icon className={`h-5 w-5 ${s.color} mb-2`} />
-            <h4 className={`text-sm font-bold ${s.color} mb-1`}>{s.label}</h4>
-            <p className="text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Bottom: architecture + headline stats */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0 items-stretch">
-        <div className="lg:col-span-2 rounded-xl border border-primary/20 bg-primary/5 p-4 flex flex-col h-full">
-          <h3 className="text-sm font-bold text-primary mb-3 shrink-0">Hybrid AI Architecture</h3>
-          <div className="grid grid-rows-3 gap-2 flex-1">
-            {archCards.map((a) => (
-              <div key={a.title} className="p-3 rounded-lg bg-muted/10 border border-muted/20 flex flex-col justify-center">
-                <span className="text-sm font-bold text-foreground">{a.title}</span>
-                <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{a.desc}</p>
+    <div className="flex-1 flex flex-col gap-3 min-h-0">
+      {/* Column header row */}
+      <div className="grid grid-cols-[180px_repeat(3,minmax(0,1fr))] gap-2 shrink-0">
+        <div /> {/* spacer for capability label column */}
+        {apps.map((app) => {
+          const Icon = app.icon;
+          return (
+            <div
+              key={app.name}
+              className={`rounded-lg border ${app.border} ${app.headerBg} px-3 py-2 flex items-center gap-2`}
+            >
+              <Icon className={`h-4 w-4 ${app.color} shrink-0`} />
+              <div className="flex flex-col leading-tight">
+                <span className={`text-xs font-bold ${app.color}`}>{app.name}</span>
+                <span className="text-[9px] uppercase tracking-wider text-muted-foreground">
+                  {app.short}
+                </span>
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid grid-rows-2 gap-3 h-full">
-          <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 flex flex-col justify-center h-full">
-            <div className="text-3xl font-bold text-emerald-400">90%</div>
-            <div className="text-sm text-foreground font-bold mt-1">Insights & Intelligence at Level 4–5</div>
-            <div className="text-xs text-muted-foreground">vs ~35% generic AI · cause / root cause</div>
-          </div>
-          <div className="rounded-xl border border-violet-500/30 bg-violet-500/10 p-4 flex items-center gap-3 h-full">
-            <Languages className="h-6 w-6 text-violet-400 shrink-0" />
-            <div>
-              <div className="text-sm font-bold text-violet-400">60+ Languages</div>
-              <div className="text-xs text-muted-foreground">Cited, auditable answers</div>
             </div>
-          </div>
-        </div>
+          );
+        })}
+      </div>
+
+      {/* Capability rows */}
+      <div className="flex-1 min-h-0 grid grid-rows-3 gap-2">
+        {capabilities.map((cap) => {
+          const Icon = cap.icon;
+          return (
+            <div
+              key={cap.name}
+              className="grid grid-cols-[180px_repeat(3,minmax(0,1fr))] gap-2"
+            >
+              <div className="rounded-lg border border-primary/30 bg-primary/5 p-3 flex flex-col justify-center">
+                <div className="flex items-center gap-2 mb-1">
+                  <Icon className="h-4 w-4 text-primary shrink-0" />
+                  <span className="text-xs font-bold text-primary leading-tight">{cap.name}</span>
+                </div>
+                <p className="text-[10px] text-muted-foreground leading-snug">{cap.blurb}</p>
+              </div>
+              {cap.cells.map((cell, i) => (
+                <div
+                  key={i}
+                  className={`rounded-lg border ${apps[i].border} ${apps[i].bg} p-3 flex items-center`}
+                >
+                  <p className="text-xs text-foreground leading-snug">{cell}</p>
+                </div>
+              ))}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Footer callout */}
+      <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 px-4 py-2 flex items-center gap-3 shrink-0">
+        <Network className="h-4 w-4 text-amber-300 shrink-0" />
+        <p className="text-xs text-foreground leading-snug">
+          <span className="font-semibold text-amber-300">Combined across all three applications</span>
+          <span className="text-muted-foreground">
+            {" "}→ the cross-product, plain-English intelligence shown on the previous slide.
+          </span>
+        </p>
       </div>
     </div>
   </SalesSlideContainer>
