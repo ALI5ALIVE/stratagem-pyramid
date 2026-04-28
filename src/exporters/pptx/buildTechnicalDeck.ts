@@ -2147,29 +2147,34 @@ slideSpecs.push(
         {
           phase: "H1 2026", label: "In Production & Quick Wins", color: C.sky,
           items: [
-            "✓ Regulation Database Integration with ContentManager365",
-            "✓ ContentManager365 ↔ TrainingManager365 Integration",
-            "Safety report auto-categorisation",
-            "Audit evidence package generation",
+            "✓ Link Training Modules to Documents",
+            "✓ Regulation Database Replatforming — POC",
+            "✓ Automation Engine — POC",
+            "✓ Platform-wide Insights & Recommendations — POC",
+            "Regulation Database ↔ ContentManager365 integration",
+            "All-in-One Mobile Experience — Phase 1 (Training)",
           ],
         },
         {
           phase: "H2 2026", label: "Connected Operations", color: C.violet,
           items: [
-            "Safety Report Submissions within ContentManager365",
-            "UI Unification across all solutions",
-            "Platform PoCs with early adopter airlines",
-            "Proactive pattern detection (smoke & fumes, fatigue)",
-            "Executive outcome dashboards",
+            "Standardise UI Fonts & Colors (Unified Web Experience)",
+            "Regulation Database Replatforming — Rollout",
+            "All-in-One Mobile Experience — Phase 2 (Safety Reporting)",
+            "Platform-wide Business Intelligence — POC",
+            "Next-Phase Regulation Management Integration",
+            "Platform-wide Automation — Rollout",
           ],
         },
         {
-          phase: "2027+", label: "Intelligent Operations", color: C.prove,
+          phase: "2027 and Beyond", label: "Intelligent Operations", color: C.prove,
           items: [
-            "Predictive risk modelling across fleet",
-            "Full platform use-case coverage",
-            "Insurance portfolio evidence automation",
-            "Industry benchmarking and peer comparison",
+            "Platform-wide Business Intelligence — Rollout",
+            "All-in-One Mobile Experience — Phase 3 (OCM + Training + Safety)",
+            "Contextual Document Viewing from TrainingManager365",
+            "Platform-wide Insights & Recommendations — Rollout (Future Vision)",
+            "Continued roll-out of Platform-wide Automation capability",
+            "Future Platform PoCs — defined with customer input",
           ],
         },
       ];
@@ -2182,7 +2187,7 @@ slideSpecs.push(
       });
       const tickPositions = [0.5, (W) / 2, W - 0.5];
       const tickColors = [C.sky, C.violet, C.prove];
-      const tickLabels = ["H1 2026", "H2 2026", "2027+"];
+      const tickLabels = ["H1 2026", "H2 2026", "2027 and Beyond"];
       tickPositions.forEach((tx, i) => {
         slide.addShape("ellipse", {
           x: tx - 0.1, y: rulerY + 0.1, w: 0.2, h: 0.2,
