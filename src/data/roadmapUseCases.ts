@@ -7,7 +7,8 @@ export type PlatformLayer =
   | "Operational Data Foundation"
   | "Intelligence & Orchestration Layer"
   | "Unified Mobile Experience"
-  | "Unified Experience";
+  | "Unified Experience"
+  | "Unified Web Experience";
 
 export interface RoadmapUseCase {
   id: string;
@@ -49,7 +50,7 @@ export const phaseMeta: Record<
     border: "border-purple-400/30",
   },
   "2027-plus": {
-    label: "2027+",
+    label: "2027 and Beyond",
     window: "2027 onwards",
     theme: "Intelligent Operations",
     color: "text-emerald-400",
@@ -204,8 +205,8 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "training-mobile",
-    title: "Training in the Comply iOS Mobile App",
-    oneLiner: "Bringing TrainingManager365 into the unified mobile shell for the frontline.",
+    title: "All-in-One Mobile Experience — Phase 1: Training in the Comply iOS Mobile App",
+    oneLiner: "Phase 1 of the All-in-One Mobile Experience — TrainingManager365 inside the Comply iOS shell.",
     status: "in-progress",
     phase: "h1-2026",
     layer: "Unified Mobile Experience",
@@ -236,7 +237,7 @@ export const roadmapUseCases: RoadmapUseCase[] = [
     oneLiner: "One platform, one experience — across every module and surface.",
     status: "in-progress",
     phase: "h2-2026",
-    layer: "Unified Experience",
+    layer: "Unified Web Experience",
     problemToday:
       "Each module evolved with its own visual language. Users feel the seams when they cross module boundaries, and training overhead grows.",
     whatWereDelivering: [
@@ -286,8 +287,8 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "safety-mobile",
-    title: "Safety Reporting in the Comply iOS Mobile App",
-    oneLiner: "Capture safety events in the moment, on the same device, in the same shell.",
+    title: "All-in-One Mobile Experience — Phase 2: Safety Reporting in the Comply iOS Mobile App",
+    oneLiner: "Phase 2 of the All-in-One Mobile Experience — capture safety events in the moment, in the same shell.",
     status: "in-progress",
     phase: "h2-2026",
     layer: "Unified Mobile Experience",
