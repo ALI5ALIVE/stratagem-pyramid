@@ -5,11 +5,11 @@ import { useOpsPitchNarration } from "@/hooks/useOpsPitchNarration";
 
 import OpsSlide0Title from "@/components/ops-slides/OpsSlide0Title";
 import OpsSlide1DailyReality from "@/components/ops-slides/OpsSlide1DailyReality";
-import OpsSlide2CostOfFragmentation from "@/components/ops-slides/OpsSlide2CostOfFragmentation";
 import OpsSlide3BeforeAfter from "@/components/ops-slides/OpsSlide3BeforeAfter";
 import OpsSlide4Platform from "@/components/ops-slides/OpsSlide4Platform";
 import OpsSlide4DTOP from "@/components/ops-slides/OpsSlide4DTOP";
 import OpsSlide5Intelligence from "@/components/ops-slides/OpsSlide5Intelligence";
+import OpsSlidePlatformInsights from "@/components/ops-slides/OpsSlidePlatformInsights";
 
 import OpsSlide7SteppingStones from "@/components/ops-slides/OpsSlide7SteppingStones";
 import OpsSlide8MaturityRoadmap from "@/components/ops-slides/OpsSlide8MaturityRoadmap";
@@ -21,15 +21,13 @@ import CustomerOutcomesSlide from "@/components/shared/CustomerOutcomesSlide";
 const slides = [
   { id: "ops-slide-0", label: "Title", component: OpsSlide0Title },
   { id: "ops-slide-1", label: "Your Daily Reality", component: OpsSlide1DailyReality },
-  { id: "ops-slide-2", label: "Cost of Fragmentation", component: OpsSlide2CostOfFragmentation },
   { id: "ops-slide-3", label: "Before & After", component: OpsSlide3BeforeAfter },
   { id: "ops-slide-3b", label: "The Platform", component: OpsSlide4Platform },
-  { id: "ops-slide-4", label: "DTOP + Platform", component: OpsSlide4DTOP },
-  { id: "ops-slide-5", label: "Intelligence Layer — CoAnalyst", component: OpsSlide5Intelligence },
-  
+  { id: "ops-slide-platform-insights", label: "Platform Insights & Intelligence", component: OpsSlidePlatformInsights },
+  { id: "ops-slide-5", label: "CoAnalyst vs Generic AI", component: OpsSlide5Intelligence },
+  { id: "ops-slide-4", label: "DTOP — System of Work", component: OpsSlide4DTOP },
   { id: "ops-slide-7", label: "Stepping Stones", component: OpsSlide7SteppingStones },
   { id: "ops-slide-8", label: "Maturity Roadmap", component: OpsSlide8MaturityRoadmap },
-  
   { id: "ops-slide-9b", label: "Customer Outcomes", component: CustomerOutcomesSlide },
   { id: "ops-slide-10", label: "Why Comply365", component: OpsSlide10WhyUs },
   { id: "ops-slide-11", label: "Getting Started", component: OpsSlide11GettingStarted },

@@ -74,9 +74,9 @@ const OpsSlide4Platform = ({ slideNumber, ...narrationProps }: OpsSlide4Platform
               <Brain className="w-6 h-6" />
             </div>
             <div className="flex-1">
-              <h3 className="text-base font-semibold text-primary">The Intelligence Layer — CoAnalyst — CoAuthor — CoTrainer</h3>
+              <h3 className="text-base font-semibold text-primary">The Intelligence & Orchestration Layer</h3>
               <p className="text-xs text-muted-foreground mt-1">
-                Embedding intelligence across the platform to move from reactive compliance to predictive insights, from managing documents and processes to anticipating issues before they escalate. Empowering better decision-making, strengthened operational resilience, and enhanced safety at scale.
+                Automation, insights and — over time — recommended actions running across the whole platform. A single intelligence layer connects safety, content and training so signals turn into action without leaving the system. Solution-agnostic by design; product-specific intelligence is delivered alongside it.
               </p>
             </div>
           </div>

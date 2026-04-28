@@ -73,9 +73,9 @@ const OpsSlide11GettingStarted = ({ slideNumber, ...narrationProps }: OpsSlide11
           <p className="text-sm text-muted-foreground max-w-lg mx-auto mb-4">
             Pick one use case — hard landing retraining, regulatory change cascade, or crew fatigue detection — and prove measurable outcomes in 90 days.
           </p>
-          <button className="px-6 py-3 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors">
-            Book a Discovery Workshop
-          </button>
+          <p className="text-sm text-foreground font-medium">
+            Contact your account director to learn more about the Comply365 platform.
+          </p>
         </div>
       </div>
     </SalesSlideContainer>
