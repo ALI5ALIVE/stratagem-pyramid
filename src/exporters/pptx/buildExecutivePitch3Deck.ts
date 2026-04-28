@@ -24,6 +24,7 @@ import {
   openerSpec,
   regulationSummarySpec,
 } from "./buildTechnicalDeck";
+import { elevatorPitch } from "@/data/insightsPlaybook";
 
 const C = PPTX_BRAND.color;
 const W = PPTX_BRAND.size.w;
@@ -455,7 +456,7 @@ const exec3IntelligenceDivider: SlideSpec = layerDividerSpec({
 
 const exec3MobileDivider: SlideSpec = layerDividerSpec({
   label: "▸ Mobile",
-  layerNumber: 4,
+  layerNumber: 2,
   layerName: "Unified Mobile",
   tagline:
     "One trusted shell for the frontline — Content, Training and Safety in a single app the crew already uses every shift.",
@@ -465,13 +466,277 @@ const exec3MobileDivider: SlideSpec = layerDividerSpec({
 
 const exec3DtopDivider: SlideSpec = layerDividerSpec({
   label: "▸ DTOP",
-  layerNumber: 5,
+  layerNumber: 1,
   layerName: "DTOP — The System of Work",
   tagline:
     "Detect → Trigger → Orchestrate → Prove. The operating model that wraps the whole stack.",
   active: "dtop",
   upNext: ["DTOP Operating Model"],
 });
+
+/* ─────────────────────────────────────────────────────────────────
+   Section dividers (Regulation, Roadmap) — mirror TechSlideSectionDivider.
+   ───────────────────────────────────────────────────────────────── */
+
+function buildSectionDivider(
+  slide: pptxgen.Slide,
+  ctx: { logo: string; logoLight: string; index: number; total: number },
+  opts: { eyebrow: string; title: string; tagline: string; upNext: string[]; accent: string },
+) {
+  chrome(slide, ctx);
+  const accent = opts.accent;
+  slide.addText(opts.eyebrow.toUpperCase(), {
+    x: 0.6, y: 1.7, w: 12, h: 0.4,
+    fontFace: PPTX_BRAND.font.body, fontSize: 12, bold: true, color: accent, charSpacing: 6,
+  });
+  slide.addText(opts.title, {
+    x: 0.6, y: 2.15, w: 12, h: 1.2,
+    fontFace: PPTX_BRAND.font.display, fontSize: 44, bold: true, color: C.ink,
+  });
+  slide.addText(opts.tagline, {
+    x: 0.6, y: 3.45, w: 12, h: 1.0,
+    fontFace: PPTX_BRAND.font.body, fontSize: 14, color: C.muted, italic: true,
+  });
+  slide.addText("UP NEXT IN THIS SECTION", {
+    x: 0.6, y: 4.7, w: 8, h: 0.3,
+    fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.muted, charSpacing: 4,
+  });
+  opts.upNext.forEach((item, i) => {
+    slide.addShape("rect", {
+      x: 0.6, y: 5.1 + i * 0.36, w: 0.04, h: 0.22,
+      fill: { color: accent }, line: { type: "none" },
+    });
+    slide.addText(item, {
+      x: 0.78, y: 5.03 + i * 0.36, w: 11, h: 0.32,
+      fontFace: PPTX_BRAND.font.body, fontSize: 13, color: C.ink,
+    });
+  });
+}
+
+const sectionDividerSpec = (opts: {
+  label: string;
+  eyebrow: string;
+  title: string;
+  tagline: string;
+  upNext: string[];
+  accent: string;
+}): SlideSpec => ({
+  label: opts.label,
+  build: (slide, ctx) => buildSectionDivider(slide, ctx, opts),
+});
+
+const exec3RegulationDivider = sectionDividerSpec({
+  label: "▸ Regulation Management",
+  eyebrow: "Section · Regulation in motion",
+  title: "Regulation Management",
+  tagline:
+    "Turning a constant stream of regulatory change into traceable, in-app updates — without slowing the operation.",
+  upNext: ["Regulation Management Capability Summary"],
+  accent: C.violet,
+});
+
+const exec3RoadmapDivider = sectionDividerSpec({
+  label: "▸ 2026 Phased Roadmap",
+  eyebrow: "Section · What's next",
+  title: "2026 Phased Roadmap",
+  tagline:
+    "How the platform extends across Insights, Automation and Mobile through 2026 — locked dates and committed phases.",
+  upNext: ["Insights · Automation · Mobile · Phase Plan"],
+  accent: C.amber,
+});
+
+/* ─────────────────────────────────────────────────────────────────
+   Insights — Just Ask (mirrors IRSlide2WhatIs with showWorkflow=true).
+   ───────────────────────────────────────────────────────────────── */
+
+const insightsJustAskSpec: SlideSpec = {
+  label: "Insights — Just Ask",
+  build: (slide, ctx) => {
+    chrome(slide, ctx);
+    header(
+      slide,
+      "The Platform · Insights & Intelligence",
+      "A platform-wide intelligence capability — just by asking",
+      "Ask in plain English · get cross-domain answers and recommended actions.",
+    );
+
+    const lx = 0.5;
+    const colW = W - 1;
+
+    // 1) One-liner pitch card
+    const pY = CONTENT_TOP;
+    const pH = 0.8;
+    addCard(slide, lx, pY, colW, pH, { fill: C.primarySoft, border: C.primary });
+    slide.addText(elevatorPitch.oneLiner, {
+      x: lx + 0.25, y: pY, w: colW - 0.5, h: pH,
+      fontFace: PPTX_BRAND.font.body, fontSize: 11, color: C.ink, valign: "middle",
+    });
+
+    // 2) Ask / Get back row
+    const aY = pY + pH + 0.2;
+    const aH = 1.2;
+    const gap = 0.2;
+    const halfW = (colW - gap) / 2;
+    addCard(slide, lx, aY, halfW, aH, { fill: C.surfaceAlt, border: C.amber });
+    slide.addText("ASK", {
+      x: lx + 0.2, y: aY + 0.12, w: halfW - 0.4, h: 0.25,
+      fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.amber, charSpacing: 3,
+    });
+    slide.addText(`"${elevatorPitch.exampleQuestion}"`, {
+      x: lx + 0.2, y: aY + 0.42, w: halfW - 0.4, h: aH - 0.5,
+      fontFace: PPTX_BRAND.font.display, fontSize: 14, color: C.ink, valign: "top",
+    });
+
+    const gx = lx + halfW + gap;
+    addCard(slide, gx, aY, halfW, aH, { fill: C.surfaceAlt, border: C.prove });
+    slide.addText("GET BACK", {
+      x: gx + 0.2, y: aY + 0.12, w: halfW - 0.4, h: 0.25,
+      fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.prove, charSpacing: 3,
+    });
+    slide.addText(elevatorPitch.exampleAnswer, {
+      x: gx + 0.2, y: aY + 0.42, w: halfW - 0.4, h: aH - 0.5,
+      fontFace: PPTX_BRAND.font.body, fontSize: 10.5, color: C.ink, valign: "top",
+    });
+
+    // 3) Workflow row · 6 stages
+    const wY = aY + aH + 0.3;
+    slide.addText("HOW IT WORKS · BEHIND THE ANSWER", {
+      x: lx, y: wY, w: colW * 0.7, h: 0.28,
+      fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.muted, charSpacing: 3,
+    });
+    slide.addText("6 STAGES · SECONDS END-TO-END", {
+      x: lx + colW * 0.7, y: wY, w: colW * 0.3, h: 0.28,
+      fontFace: PPTX_BRAND.font.body, fontSize: 9, bold: true, color: C.primary, charSpacing: 3,
+      align: "right",
+    });
+
+    const stages = [
+      { label: "Plain-English question", desc: "Captured in-app and parsed against the aviation taxonomy.", color: C.amber },
+      { label: "Connected operational data", desc: "Safety, content, training & ops pulled into a unified, tenant-isolated context.", color: C.cyan },
+      { label: "Domain knowledge graph", desc: "4,000+ aviation categories at 5 levels link entities, events and procedures.", color: C.violet },
+      { label: "Domain-trained reasoning", desc: "Aviation ML models guide the LLM — cited evidence, no hallucinated micro-classifications.", color: C.primary },
+      { label: "Guardrails & audit trail", desc: "Tenant isolation, source citations, full traceability for every answer.", color: C.prove },
+      { label: "Insight + Recommended Action", desc: "Plain-English answer plus the next best action, ready to trigger in-app.", color: C.danger },
+    ];
+    const sY = wY + 0.36;
+    const sH = CONTENT_BOTTOM - sY;
+    const sGap = 0.12;
+    const sW = (colW - sGap * (stages.length - 1)) / stages.length;
+    stages.forEach((s, i) => {
+      const x = lx + i * (sW + sGap);
+      addCard(slide, x, sY, sW, sH, { border: s.color, fill: C.surfaceAlt });
+      slide.addText(`0${i + 1}`, {
+        x: x + sW - 0.55, y: sY + 0.1, w: 0.45, h: 0.2,
+        fontFace: PPTX_BRAND.font.body, fontSize: 8, color: C.muted, align: "right",
+      });
+      slide.addText(s.label, {
+        x: x + 0.2, y: sY + 0.32, w: sW - 0.4, h: 0.6,
+        fontFace: PPTX_BRAND.font.display, fontSize: 11, bold: true, color: s.color, valign: "top",
+      });
+      slide.addText(s.desc, {
+        x: x + 0.2, y: sY + 1.0, w: sW - 0.4, h: sH - 1.1,
+        fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, valign: "top",
+      });
+    });
+  },
+};
+
+/* ─────────────────────────────────────────────────────────────────
+   CoAnalyst (mirrors TechV4Slide7CoAnalyst — apps × capabilities matrix).
+   ───────────────────────────────────────────────────────────────── */
+
+const coAnalystSpec: SlideSpec = {
+  label: "CoAnalyst",
+  build: (slide, ctx) => {
+    chrome(slide, ctx);
+    header(
+      slide,
+      "The Platform · CoAnalyst",
+      "Domain-trained intelligence — embedded in every application",
+      "Ask in plain English · cross-domain insight · recommended next actions.",
+    );
+
+    const apps = [
+      { name: "SafetyManager365", short: "Safety", color: C.danger, status: "Available" },
+      { name: "ContentManager365", short: "Content", color: C.cyan, status: "On roadmap" },
+      { name: "TrainingManager365", short: "Training", color: C.prove, status: "On roadmap" },
+    ];
+    const capabilities = [
+      {
+        name: "Ask in plain English",
+        blurb: "Natural-language questions answered with cited evidence from the application's own data.",
+      },
+      {
+        name: "Cross-domain insight & root cause",
+        blurb: "Connect signals already in-app to surface why something is happening — not just what.",
+      },
+      {
+        name: "Recommended next actions",
+        blurb: "Turn insight into prescriptive guidance the team can act on immediately, in-app.",
+      },
+    ];
+
+    const lx = 0.5;
+    const totalW = W - 1;
+    const labelColW = 3.2;
+    const appColW = (totalW - labelColW) / apps.length;
+    const top = CONTENT_TOP;
+    const headerH = 0.55;
+    const rowsH = CONTENT_BOTTOM - top - headerH - 0.1;
+    const rowH = rowsH / capabilities.length;
+
+    // App headers
+    apps.forEach((a, i) => {
+      const x = lx + labelColW + i * appColW;
+      addCard(slide, x + 0.05, top, appColW - 0.1, headerH, { fill: C.surfaceAlt, border: a.color });
+      slide.addText(a.name, {
+        x: x + 0.15, y: top + 0.05, w: appColW - 0.3, h: 0.28,
+        fontFace: PPTX_BRAND.font.display, fontSize: 11, bold: true, color: a.color, valign: "middle",
+      });
+      slide.addText(a.status, {
+        x: x + 0.15, y: top + 0.3, w: appColW - 0.3, h: 0.22,
+        fontFace: PPTX_BRAND.font.body, fontSize: 8, color: C.muted, italic: true,
+      });
+    });
+
+    // Capability rows
+    capabilities.forEach((cap, ri) => {
+      const ry = top + headerH + 0.1 + ri * rowH;
+      // Label cell
+      addCard(slide, lx, ry, labelColW - 0.1, rowH - 0.1, { fill: C.surface, border: C.primary });
+      slide.addText(cap.name, {
+        x: lx + 0.18, y: ry + 0.12, w: labelColW - 0.4, h: 0.4,
+        fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true, color: C.primary,
+      });
+      slide.addText(cap.blurb, {
+        x: lx + 0.18, y: ry + 0.55, w: labelColW - 0.4, h: rowH - 0.7,
+        fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, valign: "top",
+      });
+      // App cells
+      apps.forEach((a, ai) => {
+        const x = lx + labelColW + ai * appColW;
+        addCard(slide, x + 0.05, ry, appColW - 0.1, rowH - 0.1, { fill: C.surfaceAlt, border: C.hairline });
+        slide.addShape("ellipse", {
+          x: x + 0.18, y: ry + 0.18, w: 0.18, h: 0.18,
+          fill: { color: a.color }, line: { type: "none" },
+        });
+        slide.addText(`Embedded in ${a.short}`, {
+          x: x + 0.42, y: ry + 0.1, w: appColW - 0.55, h: 0.32,
+          fontFace: PPTX_BRAND.font.body, fontSize: 10, bold: true, color: C.ink, valign: "middle",
+        });
+        slide.addText(
+          ai === 0
+            ? "Live and in production with anchor customers."
+            : "Same engine, same UX — sequenced after Safety.",
+          {
+            x: x + 0.18, y: ry + 0.46, w: appColW - 0.3, h: rowH - 0.6,
+            fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, valign: "top",
+          },
+        );
+      });
+    });
+  },
+};
 
 /* ─────────────────────────────────────────────────────────────────
    Build the deck.
@@ -495,26 +760,27 @@ export async function buildExecutivePitch3Deck(opts: BuildOpts = {}): Promise<Bl
     return s;
   };
 
-  // Compose 18 slides in the exact order from src/pages/ExecutivePitch3.tsx.
+  // Compose slides in the exact order from src/pages/ExecutivePitch3.tsx.
   const composed: SlideSpec[] = [
-    openerSpec, // exec3-slide-0 · Title (TechSlideOpener)
-    byLabel("Strategic Shift"),
-    byLabel("Industry Challenge"),
-    byLabel("Platform Overview"),
-    exec3IntelligenceDivider,
-    byLabel("Automation"),
-    byLabel("Insights & Intelligence"),
-    byLabel("Recommendations & Prescriptive Actions"),
-    byLabel("Tiers vs Generic AI"),
-    exec3MobileDivider,
-    byLabel("Unified Mobile"),
-    exec3DtopDivider,
-    byLabel("DTOP Operating Model"),
-    regulationSummarySpec,
-    transformationSpec,
-    byLabel("2026 Roadmap"),
-    customerOutcomesSpec,
-    byLabel("Why Comply365"),
+    openerSpec,                                    // 1 · Title
+    byLabel("Strategic Shift"),                    // 2
+    customerOutcomesSpec,                          // 3 · What This Means for Customers
+    byLabel("Platform Overview"),                  // 4 · The Platform
+    exec3DtopDivider,                              // 5 · ▸ DTOP
+    byLabel("DTOP Operating Model"),               // 6
+    exec3MobileDivider,                            // 7 · ▸ Mobile
+    byLabel("Unified Mobile"),                     // 8
+    exec3IntelligenceDivider,                      // 9 · ▸ Intelligence Layer
+    byLabel("Automation"),                         // 10
+    insightsJustAskSpec,                           // 11 · Insights — Just Ask
+    coAnalystSpec,                                 // 12
+    byLabel("Tiers vs Generic AI"),                // 13 · CoAnalyst vs Generic AI
+    byLabel("Recommendations & Prescriptive Actions"), // 14
+    exec3RegulationDivider,                        // 15
+    regulationSummarySpec,                         // 16
+    exec3RoadmapDivider,                           // 17
+    byLabel("2026 Roadmap"),                       // 18
+    byLabel("Why Comply365"),                      // 19
   ];
 
   const total = composed.length;
