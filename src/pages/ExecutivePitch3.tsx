@@ -4,7 +4,7 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { useExec3PitchNarration } from "@/hooks/useExec3PitchNarration";
 
 import TechSlideOpener from "@/components/tech-slides/TechSlideOpener";
-import TechSlide2IndustryChallenge from "@/components/tech-slides/TechSlide2IndustryChallenge";
+import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
 import TechSlideLayerDivider from "@/components/tech-slides/TechSlideLayerDivider";
 import CustomerOutcomesSlide from "@/components/shared/CustomerOutcomesSlide";
 import TechSlideWhyComply from "@/components/tech-slides/TechSlideWhyComply";
@@ -50,7 +50,7 @@ const dividerProps = {
 
 const slides = [
   { id: "exec3-slide-0", label: "Title", component: TechSlideOpener },
-  { id: "exec3-slide-2", label: "Industry Challenge", component: TechSlide2IndustryChallenge },
+  { id: "exec3-slide-1", label: "Strategic Shift", component: TechSlide1StrategicShift },
   { id: "exec3-slide-platform", label: "The Platform", component: TechV4PlatformOverview },
   { id: "exec3-divider-intelligence", label: "▸ Intelligence Layer", component: TechSlideLayerDivider, dividerProps: dividerProps.intelligence },
   { id: "exec3-slide-automation", label: "Automation", component: TechV4SlideAutomation },
