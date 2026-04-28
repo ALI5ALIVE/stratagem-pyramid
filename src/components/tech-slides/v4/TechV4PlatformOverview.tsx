@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import PlatformArchitectureDiagramV4 from "@/components/platform-slides/PlatformArchitectureDiagramV4";
 import { ChevronRight } from "lucide-react";
@@ -134,8 +134,5 @@ const TechV4PlatformOverview = ({ slideNumber, jumpTargets, ...narrationProps }:
     </SalesSlideContainer>
   );
 };
-
-// Suppress unused-import warning for refs left in case future versions need them
-void useRef;
 
 export default TechV4PlatformOverview;
