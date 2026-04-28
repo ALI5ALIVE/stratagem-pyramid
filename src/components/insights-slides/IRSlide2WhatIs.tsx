@@ -3,12 +3,17 @@ import { SlideNarrationProps } from "@/types/slideProps";
 import { elevatorPitch } from "@/data/insightsPlaybook";
 import { ArrowRight, MessageSquareQuote, Sparkles } from "lucide-react";
 
-const IRSlide2WhatIs = (props: SlideNarrationProps) => {
+interface IRSlide2WhatIsProps extends SlideNarrationProps {
+  title?: string;
+  subtitle?: string;
+}
+
+const IRSlide2WhatIs = ({ title, subtitle, ...props }: IRSlide2WhatIsProps) => {
   return (
     <SlideContainer
       id="ir-what"
-      title="What It Is"
-      subtitle="A platform-wide intelligence capability — just by asking"
+      title={title ?? "What It Is"}
+      subtitle={subtitle ?? "A platform-wide intelligence capability — just by asking"}
       slideNumber={2}
       {...props}
     >
