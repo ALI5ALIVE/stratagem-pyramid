@@ -1,20 +1,20 @@
 import SlideContainer from "@/components/slides/SlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import PlatformArchitectureDiagram from "./PlatformArchitectureDiagram";
+import PlatformArchitectureDiagramV4 from "./PlatformArchitectureDiagramV4";
 
 const PFSlide3Architecture = (props: SlideNarrationProps) => {
   return (
     <SlideContainer
       id="pf-architecture"
       title="The Architecture"
-      subtitle="Five layers. One platform. Wired together by DTOP."
+      subtitle="One integrated platform. Wired together by DTOP."
       slideNumber={3}
       {...props}
     >
       <div className="h-full grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Diagram — 2/3 width */}
         <div className="lg:col-span-2 min-h-0">
-          <PlatformArchitectureDiagram />
+          <PlatformArchitectureDiagramV4 />
         </div>
 
         {/* Reading guide — 1/3 width */}
