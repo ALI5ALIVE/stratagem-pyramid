@@ -946,9 +946,9 @@ export const slideSpecs: SlideSpec[] = [
     build: (slide, ctx) => {
       chrome(slide, ctx);
       header(slide, "Architecture", "The Operational Performance Platform",
-        "Five layers. One platform. Wired together by DTOP.");
+        "One integrated platform. Wired together by DTOP.");
 
-      // Two-column layout: architecture stack diagram (left) + layer guide (right)
+      // Two-column layout: 4-layer V4 stack (left) + condensed guide (right)
       const leftX = 0.5;
       const leftW = 8.2;
       const rightX = leftX + leftW + 0.3;
@@ -956,102 +956,180 @@ export const slideSpecs: SlideSpec[] = [
       const top = CONTENT_TOP;
       const totalH = CONTENT_BOTTOM - top;
 
-      // ── LEFT: 5-layer stack diagram ─────────────────────────────
-      // Heights: DTOP (slim), Mobile (slim), Intelligence (tall, 3 caps), Data (slim), Core (tall, 3 apps)
-      const slim = 0.62;
-      const tall = (totalH - slim * 3 - 0.3) / 2; // 3 slim rows + 2 tall rows + gaps
-      const gap = 0.075;
-      let cy = top;
+      // ── Layer accents (V4 mapping) ──────────────────────────────
+      const dtopAccent = LAYER_ACCENT.dtop;          // emerald
+      const mobAccent  = LAYER_ACCENT.mobile;        // violet
+      const intAccent  = LAYER_ACCENT.intelligence;  // amber
+      const coreAccent = LAYER_ACCENT.core;          // blue
 
-      // Layer 5 — DTOP (top)
-      const dtopAccent = LAYER_ACCENT.dtop;
-      addCard(slide, leftX, cy, leftW, slim, { border: dtopAccent });
-      slide.addShape("rect", { x: leftX, y: cy, w: 0.08, h: slim, fill: { color: dtopAccent }, line: { type: "none" } });
-      slide.addText("LAYER 5", { x: leftX + 0.2, y: cy + 0.06, w: 0.9, h: 0.22, fontFace: PPTX_BRAND.font.body, fontSize: 8, bold: true, color: dtopAccent, charSpacing: 3 });
-      slide.addText("DTOP — The System of Work", { x: leftX + 0.2, y: cy + 0.26, w: 4.5, h: 0.3, fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true, color: C.ink });
-      slide.addText("Detect → Trigger → Orchestrate → Prove · wraps the whole stack", { x: leftX + 4.7, y: cy + 0.18, w: leftW - 6.0, h: 0.32, fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, valign: "middle" });
-      addPill(slide, leftX + leftW - 1.25, cy + 0.18, 1.1, 0.28, "System of work", dtopAccent);
-      cy += slim + gap;
+      // ── Sizing ─────────────────────────────────────────────────
+      // Group wraps L4–L2 (DTOP / Mobile / Intelligence). Foundation L1 sits
+      // beneath with a small eyebrow. Reserve ~28% of vertical space for the
+      // foundation block + eyebrow; the rest belongs to the platform group.
+      const eyebrowH = 0.22;
+      const groupGap = 0.18;
+      const foundationH = (totalH - eyebrowH - groupGap) * 0.30;
+      const groupH = totalH - eyebrowH - groupGap - foundationH;
 
-      // Layer 4 — Unified Mobile
-      const mobAccent = LAYER_ACCENT.mobile;
-      addCard(slide, leftX, cy, leftW, slim, { border: mobAccent });
-      slide.addShape("rect", { x: leftX, y: cy, w: 0.08, h: slim, fill: { color: mobAccent }, line: { type: "none" } });
-      slide.addText("LAYER 4", { x: leftX + 0.2, y: cy + 0.06, w: 0.9, h: 0.22, fontFace: PPTX_BRAND.font.body, fontSize: 8, bold: true, color: mobAccent, charSpacing: 3 });
-      slide.addText("Unified Mobile Experience", { x: leftX + 0.2, y: cy + 0.26, w: 4.5, h: 0.3, fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true, color: C.ink });
-      slide.addText("One trusted shell · SSO · Procedures · Training · Safety", { x: leftX + 4.7, y: cy + 0.18, w: leftW - 6.0, h: 0.32, fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, valign: "middle" });
-      addPill(slide, leftX + leftW - 1.25, cy + 0.18, 1.1, 0.28, "Delivery", mobAccent);
-      cy += slim + gap;
-
-      // Layer 3 — Intelligence & Orchestration (3 sub-capabilities)
-      const intAccent = LAYER_ACCENT.intelligence;
-      addCard(slide, leftX, cy, leftW, tall, { border: intAccent });
-      slide.addShape("rect", { x: leftX, y: cy, w: 0.08, h: tall, fill: { color: intAccent }, line: { type: "none" } });
-      slide.addText("LAYER 3", { x: leftX + 0.2, y: cy + 0.08, w: 0.9, h: 0.22, fontFace: PPTX_BRAND.font.body, fontSize: 8, bold: true, color: intAccent, charSpacing: 3 });
-      slide.addText("Intelligence & Orchestration", { x: leftX + 0.95, y: cy + 0.08, w: 4.5, h: 0.3, fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true, color: C.ink });
-      addPill(slide, leftX + leftW - 1.25, cy + 0.1, 1.1, 0.28, "System of action", intAccent);
-      // 3 sub-cards
-      const subCaps = [
-        { title: "Insights & Intelligence", body: "Ask anything in plain English", accent: intAccent },
-        { title: "Recommendations & Prescriptive Actions", body: "Patterns + prescriptive next steps", accent: LAYER_ACCENT.data },
-        { title: "Automation", body: "Cross-product workflows", accent: LAYER_ACCENT.mobile },
-      ];
-      const subY = cy + 0.46;
-      const subH = tall - 0.55;
-      const subGap = 0.12;
-      const subW = (leftW - 0.4 - subGap * 2) / 3;
-      subCaps.forEach((s, i) => {
-        const sx = leftX + 0.2 + i * (subW + subGap);
-        addLabeledCard(slide, sx, subY, subW, subH, { title: s.title, body: s.body, accent: s.accent, titleSize: 9.5, bodySize: 8.5 });
+      // ── Platform group (rounded outer shell) ────────────────────
+      const groupY = top;
+      slide.addShape("roundRect", {
+        x: leftX, y: groupY, w: leftW, h: groupH,
+        fill: { color: C.surfaceAlt },
+        line: { color: C.primary, width: 1.5 },
+        rectRadius: 0.12,
       });
-      cy += tall + gap;
+      // Eyebrow chip on top edge
+      slide.addShape("rect", {
+        x: leftX + 0.25, y: groupY - 0.11, w: 4.6, h: 0.22,
+        fill: { color: C.bg }, line: { type: "none" },
+      });
+      slide.addText("THE OPERATIONAL PERFORMANCE PLATFORM · ONE INTEGRATED SOLUTION", {
+        x: leftX + 0.25, y: groupY - 0.11, w: 4.6, h: 0.22,
+        fontFace: PPTX_BRAND.font.body, fontSize: 7.5, bold: true,
+        color: C.primary, charSpacing: 3, valign: "middle",
+      });
 
-      // Layer 2 — Operational Data Foundation
-      const datAccent = LAYER_ACCENT.data;
-      addCard(slide, leftX, cy, leftW, slim, { border: datAccent });
-      slide.addShape("rect", { x: leftX, y: cy, w: 0.08, h: slim, fill: { color: datAccent }, line: { type: "none" } });
-      slide.addText("LAYER 2", { x: leftX + 0.2, y: cy + 0.06, w: 0.9, h: 0.22, fontFace: PPTX_BRAND.font.body, fontSize: 8, bold: true, color: datAccent, charSpacing: 3 });
-      slide.addText("Operational Data Foundation", { x: leftX + 0.2, y: cy + 0.26, w: 4.5, h: 0.3, fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true, color: C.ink });
-      slide.addText("One unified data lake · cross-product schema · customer-owned", { x: leftX + 4.7, y: cy + 0.18, w: leftW - 6.0, h: 0.32, fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, valign: "middle" });
-      addPill(slide, leftX + leftW - 1.25, cy + 0.18, 1.1, 0.28, "Substrate", datAccent);
-      cy += slim + gap;
+      // ── Inner stack: DTOP (slim) · Mobile (slim) · Intelligence (tall) ──
+      const innerPad = 0.18;
+      const innerX = leftX + innerPad;
+      const innerW = leftW - innerPad * 2;
+      const rowGap = 0.12;
+      const innerTop = groupY + 0.32;
+      const innerH = groupH - 0.32 - innerPad;
+      const slim = 0.7;
+      const tallInt = innerH - slim * 2 - rowGap * 2;
 
-      // Layer 1 — Core Operational Apps (3 sub-modules)
-      const coreAccent = LAYER_ACCENT.core;
-      addCard(slide, leftX, cy, leftW, tall, { border: coreAccent });
-      slide.addShape("rect", { x: leftX, y: cy, w: 0.08, h: tall, fill: { color: coreAccent }, line: { type: "none" } });
-      slide.addText("LAYER 1", { x: leftX + 0.2, y: cy + 0.08, w: 0.9, h: 0.22, fontFace: PPTX_BRAND.font.body, fontSize: 8, bold: true, color: coreAccent, charSpacing: 3 });
-      slide.addText("Core Operational Apps", { x: leftX + 0.95, y: cy + 0.08, w: 4.5, h: 0.3, fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true, color: C.ink });
-      addPill(slide, leftX + leftW - 1.25, cy + 0.1, 1.1, 0.28, "System of record", coreAccent);
+      // L4 — DTOP strip (System of work)
+      let cy = innerTop;
+      addCard(slide, innerX, cy, innerW, slim, { fill: C.surface, border: dtopAccent });
+      slide.addText("DTOP — The System of Work", {
+        x: innerX + 0.2, y: cy + 0.08, w: 4.6, h: 0.28,
+        fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true, color: dtopAccent,
+      });
+      slide.addText("Detect → Trigger → Orchestrate → Prove · wraps the whole stack", {
+        x: innerX + 0.2, y: cy + 0.36, w: innerW - 1.6, h: 0.28,
+        fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, valign: "top",
+      });
+      addPill(slide, innerX + innerW - 1.4, cy + (slim - 0.28) / 2, 1.25, 0.28, "System of work", dtopAccent);
+      cy += slim + rowGap;
+
+      // L3 — Unified Mobile strip (Delivery)
+      addCard(slide, innerX, cy, innerW, slim, { fill: C.surface, border: mobAccent });
+      slide.addText("Unified Mobile Experience", {
+        x: innerX + 0.2, y: cy + 0.08, w: 4.6, h: 0.28,
+        fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true, color: mobAccent,
+      });
+      slide.addText("One trusted shell · SSO · Procedures · Training · Safety", {
+        x: innerX + 0.2, y: cy + 0.36, w: innerW - 1.6, h: 0.28,
+        fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, valign: "top",
+      });
+      addPill(slide, innerX + innerW - 1.4, cy + (slim - 0.28) / 2, 1.25, 0.28, "Delivery", mobAccent);
+      cy += slim + rowGap;
+
+      // L2 — Intelligence & Orchestration (tall, with substrate caption + 3 sub-tiles)
+      addCard(slide, innerX, cy, innerW, tallInt, { fill: C.surface, border: intAccent });
+      slide.addText("Intelligence & Orchestration Layer", {
+        x: innerX + 0.2, y: cy + 0.08, w: 5.5, h: 0.28,
+        fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true, color: intAccent,
+      });
+      addPill(slide, innerX + innerW - 1.4, cy + 0.12, 1.25, 0.28, "System of action", intAccent);
+      slide.addText("Built on a unified data substrate · taxonomy · knowledge graph · aviation LLMs", {
+        x: innerX + 0.2, y: cy + 0.36, w: innerW - 0.4, h: 0.26,
+        fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, italic: true, valign: "top",
+      });
+      // 3 sub-tiles — Automation · Insights · Recommendations (Future Vision)
+      const subTop = cy + 0.7;
+      const subH = tallInt - 0.7 - 0.15;
+      const subGap = 0.14;
+      const subW = (innerW - 0.3 - subGap * 2) / 3;
+      const subCaps = [
+        { title: "Automation", body: "Cross-product workflows", accent: mobAccent, future: false },
+        { title: "Insights & Intelligence", body: "Ask anything in plain English", accent: intAccent, future: false },
+        { title: "Recommendations & Prescriptive Actions", body: "Patterns + prescriptive next steps", accent: C.cyan, future: true },
+      ];
+      subCaps.forEach((s, i) => {
+        const sx = innerX + 0.15 + i * (subW + subGap);
+        addCard(slide, sx, subTop, subW, subH, { fill: C.surfaceAlt, border: s.accent });
+        let titleY = subTop + 0.12;
+        if (s.future) {
+          slide.addText("FUTURE VISION", {
+            x: sx + 0.14, y: subTop + 0.1, w: subW - 0.28, h: 0.2,
+            fontFace: PPTX_BRAND.font.body, fontSize: 7, bold: true, color: s.accent, charSpacing: 3,
+          });
+          titleY = subTop + 0.3;
+        }
+        slide.addText(s.title, {
+          x: sx + 0.14, y: titleY, w: subW - 0.28, h: 0.6,
+          fontFace: PPTX_BRAND.font.display, fontSize: 10.5, bold: true, color: s.accent, valign: "top",
+        });
+        slide.addText(s.body, {
+          x: sx + 0.14, y: subTop + subH - 0.5, w: subW - 0.28, h: 0.4,
+          fontFace: PPTX_BRAND.font.body, fontSize: 8.5, color: C.muted, valign: "bottom",
+        });
+      });
+
+      // ── Foundation eyebrow + Core Apps card (L1) ───────────────
+      const foundationY = groupY + groupH + groupGap;
+      slide.addText("FOUNDATION · SYSTEMS OF RECORD", {
+        x: leftX + 0.1, y: foundationY, w: leftW - 0.2, h: eyebrowH,
+        fontFace: PPTX_BRAND.font.body, fontSize: 7.5, bold: true,
+        color: C.subtle, charSpacing: 3, valign: "middle",
+      });
+      const coreY = foundationY + eyebrowH;
+      addCard(slide, leftX, coreY, leftW, foundationH, { fill: C.surface, border: coreAccent });
+      slide.addText("Core Operational Apps", {
+        x: leftX + 0.2, y: coreY + 0.08, w: 4.6, h: 0.26,
+        fontFace: PPTX_BRAND.font.display, fontSize: 11, bold: true, color: coreAccent,
+      });
+      addPill(slide, leftX + leftW - 1.4, coreY + 0.1, 1.25, 0.28, "System of record", coreAccent);
       const apps = [
         { title: "ContentManager365", body: "Procedures · Manuals", accent: coreAccent },
-        { title: "TrainingManager365", body: "Competence · Recurrency", accent: LAYER_ACCENT.dtop },
+        { title: "TrainingManager365", body: "Competence · Recurrency", accent: dtopAccent },
         { title: "SafetyManager365", body: "Occurrences · Audits · Risk", accent: "FB7185" },
       ];
-      const appY = cy + 0.46;
-      const appH = tall - 0.55;
+      const appsTop = coreY + 0.42;
+      const appsH = foundationH - 0.5;
+      const appGap = 0.14;
+      const appW = (leftW - 0.3 - appGap * 2) / 3;
       apps.forEach((a, i) => {
-        const ax = leftX + 0.2 + i * (subW + subGap);
-        addLabeledCard(slide, ax, appY, subW, appH, { title: a.title, body: a.body, accent: a.accent, titleSize: 9.5, bodySize: 8.5 });
+        const ax = leftX + 0.15 + i * (appW + appGap);
+        addCard(slide, ax, appsTop, appW, appsH, { fill: C.surfaceAlt, border: a.accent });
+        slide.addText(a.title, {
+          x: ax + 0.14, y: appsTop + 0.08, w: appW - 0.28, h: 0.28,
+          fontFace: PPTX_BRAND.font.display, fontSize: 10, bold: true, color: a.accent, valign: "top",
+        });
+        slide.addText(a.body, {
+          x: ax + 0.14, y: appsTop + 0.36, w: appW - 0.28, h: appsH - 0.42,
+          fontFace: PPTX_BRAND.font.body, fontSize: 8.5, color: C.muted, valign: "top",
+        });
       });
 
-      // ── RIGHT: layer guide ─────────────────────────────────────
+      // ── RIGHT: condensed 4-row guide ───────────────────────────
       const guide = [
-        { tag: "LAYER 5", title: "DTOP", desc: "Detect → Trigger → Orchestrate → Prove.", color: dtopAccent },
-        { tag: "LAYER 4", title: "Unified Mobile", desc: "One frontline shell — Content, Training, Safety.", color: mobAccent },
-        { tag: "LAYER 3", title: "Intelligence & Orchestration", desc: "Insights · Recommendations · Automation.", color: intAccent },
-        { tag: "LAYER 2", title: "Operational Data Foundation", desc: "Unified lake — substrate every layer reasons over.", color: datAccent },
-        { tag: "LAYER 1", title: "Core Operational Apps", desc: "ContentManager365 · TrainingManager365 · SafetyManager365.", color: coreAccent },
+        { tag: "PLATFORM", title: "DTOP — The Way of Working",      desc: "Detect, Trigger, Orchestrate, Prove — wraps the whole stack.",                       color: dtopAccent },
+        { tag: "PLATFORM", title: "Unified Mobile",                  desc: "One trusted shell for the frontline — Content, Training, Safety.",                  color: mobAccent  },
+        { tag: "PLATFORM", title: "Intelligence & Orchestration",    desc: "Data substrate (taxonomy · graph · LLMs) + Insights · Recommendations · Automation.", color: intAccent  },
+        { tag: "FOUNDATION", title: "Core Operational Apps",         desc: "ContentManager365 · TrainingManager365 · SafetyManager365.",                        color: coreAccent },
       ];
-      const gh = (totalH - 0.4) / 5;
+      const gh = (totalH - 0.3) / 4;
       const ggap = 0.1;
       guide.forEach((g, i) => {
-        const gy = top + i * (gh);
-        addCard(slide, rightX, gy, rightW, gh - ggap, { border: g.color });
+        const gy = top + i * gh;
+        addCard(slide, rightX, gy, rightW, gh - ggap, { fill: C.surface, border: g.color });
         slide.addShape("rect", { x: rightX, y: gy, w: 0.06, h: gh - ggap, fill: { color: g.color }, line: { type: "none" } });
-        slide.addText(g.tag, { x: rightX + 0.18, y: gy + 0.08, w: rightW - 0.3, h: 0.22, fontFace: PPTX_BRAND.font.body, fontSize: 8, bold: true, color: g.color, charSpacing: 3 });
-        slide.addText(g.title, { x: rightX + 0.18, y: gy + 0.28, w: rightW - 0.3, h: 0.3, fontFace: PPTX_BRAND.font.display, fontSize: 11, bold: true, color: C.ink });
-        slide.addText(g.desc, { x: rightX + 0.18, y: gy + 0.58, w: rightW - 0.3, h: gh - 0.7, fontFace: PPTX_BRAND.font.body, fontSize: 8.5, color: C.muted, valign: "top" });
+        slide.addText(g.tag, {
+          x: rightX + 0.18, y: gy + 0.08, w: rightW - 0.3, h: 0.22,
+          fontFace: PPTX_BRAND.font.body, fontSize: 7.5, bold: true, color: g.color, charSpacing: 3,
+        });
+        slide.addText(g.title, {
+          x: rightX + 0.18, y: gy + 0.28, w: rightW - 0.3, h: 0.3,
+          fontFace: PPTX_BRAND.font.display, fontSize: 11, bold: true, color: C.ink,
+        });
+        slide.addText(g.desc, {
+          x: rightX + 0.18, y: gy + 0.6, w: rightW - 0.3, h: gh - 0.72,
+          fontFace: PPTX_BRAND.font.body, fontSize: 8.5, color: C.muted, valign: "top",
+        });
       });
     },
   },
