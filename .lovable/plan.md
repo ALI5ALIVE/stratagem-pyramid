@@ -1,58 +1,40 @@
-## Changes from Kathrina's email — Medium Pitch (`/pitch-executive-3`)
+# Fix: preview is blank on /pitch-technical-v4
 
-Slide numbering in our deck matches her numbering (footer 00–17). Slide 15 (Roadmap) is deferred — she'll send updates in the morning.
+## What's actually wrong
 
-### 1. Slide 03 — The Platform (Intelligence layer order)
+Your code is fine. I verified:
 
-**File:** `src/components/platform-slides/PlatformArchitectureDiagramV4.tsx`
+- Dev server is running cleanly. The log only shows successful HMR updates for the four files we last edited — no syntax errors, no Vite "transform failed", no exceptions.
+- Every file the browser is asking for actually exists on disk: `src/index.css`, `src/App.tsx`, `src/components/ui/tooltip.tsx`, `src/components/AppLayout.tsx`, `src/pages/ExecutivePitch2.tsx`, `src/pages/InsightsPlaybook.tsx`.
+- The recently edited slides (`PlatformArchitectureDiagramV4`, `TechV4SlideInsights`, `TechV4SlideMobile`, `TechSlideWhyComply`) all parse — JSX is balanced and imports resolve.
 
-Reorder the three pillars inside the Intelligence & Orchestration block from:
-`Insights & Intelligence · Recommendations & Prescriptive Actions · Automation`
-to:
-`Automation · Insights & Intelligence · Recommendations & Prescriptive Actions`
+When I loaded `/pitch-technical-v4` in the preview, the browser console shows a cluster of 404s like:
 
-On the **Recommendations** card, prepend a small "Future Vision" tag above the title (amber/cyan badge styled like other meta labels) so it's clearly forward-looking.
+```
+GET /src/index.css?t=1777366101393              404
+GET /src/components/ui/tooltip.tsx              404
+GET /node_modules/.bun/vite@5.4.19+.../env.mjs  404
+GET /src/components/AppLayout.tsx               404
+GET /src/pages/ExecutivePitch2.tsx              404
+GET /src/pages/InsightsPlaybook.tsx             404
+```
 
-### 2. Slide 06 — Insights & Recommendations
+That `?t=1777366101393` query string is the giveaway: the iframe is still running an old `main.tsx` bundle from a previous Vite session and re-requesting modules with a timestamp the *current* Vite no longer recognises. The new dev server has a different bun-pinned path for `vite/dist/client/env.mjs`, so the import map mismatches and the entire module graph fails to load → blank screen.
 
-**File:** `src/components/tech-slides/v4/TechV4SlideInsights.tsx`
+This is an **environment / iframe-cache** issue, not a code bug. There is nothing to revert in the slide changes.
 
-The slide title is already "Recommendations & Prescriptive Actions". Add a clearly visible "Future Vision" badge in the header area (next to or under the title) so the audience understands this capability is roadmap, not GA. Keep the worked example intact.
+## Fix (no code changes needed)
 
-### 3. Slide 10 — Unified Mobile (relabel mini-apps)
+1. **Hard-refresh the preview iframe.** In the preview pane click the refresh icon while holding Shift, or open the preview in a new tab and reload. That will pull the new `main.tsx` with the current timestamp and the 404s will go away.
+2. If the preview is still blank after a hard refresh, click any chat input (even just "ok") so Lovable bumps the sandbox — that forces a fresh Vite restart with a coherent module graph.
+3. If you want, you can also try the **published** URL (`https://stratagem-pyramid.lovable.app/pitch-technical-v4`) — that one is served by the static build, not the live dev server, so it bypasses the stale-module problem entirely. (Note: visiting it through the Lovable login screen is a separate auth gate and not related to this bug.)
 
-**File:** `src/components/tech-slides/v4/TechV4SlideMobile.tsx`
+## Why I'm confident
 
-In the phone mock on the left, rename the three mini-app rows:
-- `Procedures` → `ContentManager365`
-- `Training` → `TrainingManager365`
-- `Safety` → `SafetyManager365`
+- No errors in the dev-server log since the last edits — only "hmr update" lines.
+- Every 404'd path resolves to a real file on disk with valid contents.
+- The error pattern (timestamp-tagged URLs + a bun-hashed Vite path) is the exact signature of an iframe holding a pre-restart module graph.
 
-Status lines and colors unchanged. (The right-hand pillars already reference the full product names.)
+## What I'll do next (after the refresh)
 
-### 4. Slide 17 — Why Comply365 (strip stats + headings)
-
-**File:** `src/components/tech-slides/TechSlideWhyComply.tsx`
-
-- Change title from `Outcomes & Why Comply365` → `Why Comply365`
-- Remove the blue subtitle (`Measured outcomes from carriers running on the platform — and the three things that make them possible`) — pass empty subtitle or remove the prop
-- Remove the entire 4-stat outcomes strip (78% / 6 wks → 48 hrs / 5 days / 90% vs 35%) and its `outcomes` array + `StatSourceChip` import if no longer needed
-- Also remove the bottom italic disclaimer about outcome figures (no longer relevant once stats are gone)
-- **Keep:** the 3 differentiators (Connected Foundation / Domain-Trained Intelligence / Proof by Design) and the trust-signals row (550+ airlines · ~2.5M users · 6 continents)
-
-### Slide 15 — Roadmap
-
-No change today. Awaiting Kathrina's update in the morning.
-
-### Out of scope (mentioned but not actioned)
-
-Kathrina also notes the downloadable PPT currently exports the full Technical deck and needs to be amended to match this Medium pitch. Flagging only — we'll address after sign-off at her 4pm meeting.
-
----
-
-### Files to edit
-
-- `src/components/platform-slides/PlatformArchitectureDiagramV4.tsx`
-- `src/components/tech-slides/v4/TechV4SlideInsights.tsx`
-- `src/components/tech-slides/v4/TechV4SlideMobile.tsx`
-- `src/components/tech-slides/TechSlideWhyComply.tsx`
+If the hard refresh does **not** clear the blank screen, send me a fresh console log and I'll dig further — at that point we'd be looking at a sandbox issue rather than the slide code.
