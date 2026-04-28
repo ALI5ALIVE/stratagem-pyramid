@@ -29,10 +29,13 @@ type NavItem = {
 
 const pitchItems: NavItem[] = [
   { title: "Short — Customer Overview", url: "/customer-overview", icon: Presentation },
-  { title: "CEO Overview", url: "/pitch-executive-2", icon: Rocket },
   { title: "Medium — Executive Pitch", url: "/pitch-executive-3", icon: Rocket },
-  { title: "Long — Technical Deep Dive", url: "/pitch-technical-v4", icon: BookOpen },
   { title: "Use Cases & Roadmap", url: "/roadmap", icon: Map, badge: "New" },
+];
+
+const additionalResourceItems: NavItem[] = [
+  { title: "CEO Overview", url: "/pitch-executive-2", icon: Rocket },
+  { title: "Long — Technical Deep Dive", url: "/pitch-technical-v4", icon: BookOpen },
 ];
 
 const salesEnablementItems: NavItem[] = [
@@ -125,6 +128,8 @@ export function AppSidebar() {
         <NavGroup label="Sales Enablement" items={salesEnablementItems} />
         <SidebarSeparator />
         <NavGroup label="Capabilities" items={capabilityItems} />
+        <SidebarSeparator />
+        <NavGroup label="Additional Resources" items={additionalResourceItems} />
 
         <SidebarSeparator />
         <SidebarGroup>
