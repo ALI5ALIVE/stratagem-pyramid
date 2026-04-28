@@ -456,7 +456,7 @@ const exec3IntelligenceDivider: SlideSpec = layerDividerSpec({
 
 const exec3MobileDivider: SlideSpec = layerDividerSpec({
   label: "▸ Mobile",
-  layerNumber: 4,
+  layerNumber: 2,
   layerName: "Unified Mobile",
   tagline:
     "One trusted shell for the frontline — Content, Training and Safety in a single app the crew already uses every shift.",
