@@ -1,65 +1,84 @@
-## Problem found
+# Roadmap Amends — Apply KG/PS v2 Across All References
 
-The pages are blank because the new PPTX wiring imports the entire native PPTX exporter stack during normal app startup:
+## What changed in the uploaded doc
 
-```text
-App loads every route
-  → ExecutivePitch3 imports TechSlideOpener
-  → TechSlideOpener imports DeckPPTXExportButton
-  → DeckPPTXExportButton imports @/exporters/pptx
-  → @/exporters/pptx eagerly imports all PPTX builders + pptxgenjs
-```
+The amends, reconciled against today's roadmap:
 
-That makes the preview request a large dependency graph before the page renders. In the browser/network trace, multiple startup module requests are being aborted, leaving `#root` empty and the app white-screened. This is consistent across routes because `App.tsx` imports all pages eagerly.
+**H1 2026** (no structural change, naming refinements)
+- Rename in-flight mobile item to: **"All-in-One Mobile Experience — Phase 1: Training screens in the Comply iOS Mobile app"**
 
-## Fix plan
+**H2 2026** (largest set of changes)
+- Rename safety mobile item to: **"All-in-One Mobile Experience — Phase 2: Safety Reporting in the Comply iOS Mobile app"**
+- UI Standardisation layer becomes **"Unified Web Experience"** (was "Unified Experience")
+- **Remove** "Platform-wide Automation — POC" (struck through in the source)
+- Keep "Platform-wide Business Intelligence — POC"
+- **Move into H2**: "Next-Phase Regulation Management Integration" (was 2027+)
+- **Move into H2**: "Platform-wide Automation — Rollout" (was 2027+)
 
-1. **Stop loading PPTX builders at startup**
-   - Refactor `src/exporters/pptx/index.ts` so it exports only lightweight deck metadata immediately.
-   - Replace top-level imports of `buildTechnicalDeck`, `buildExecutiveDeck`, and `buildExecutivePitch3Deck` with lazy dynamic imports inside each builder function.
+**2027 and Beyond** (rename + content shuffle)
+- Phase label becomes **"2027 and Beyond"** (was "2027+")
+- Keep: Platform-wide BI Rollout, Contextual Document Viewing from TM365, Platform-wide Insights & Recommendations Rollout (tagged as "Future Vision")
+- Rename Mobile Unification → **"All-in-One Mobile Experience — Phase 3: Unified User Experience across OCM, Training & Safety"**
+- **Add** new item: **"Continued roll-out of Platform-wide Automation capability (more connectors, more conditions, more actions)"**
+- **Add** new item: **"Future Platform PoCs — to be determined with customer input"**
 
-2. **Keep type imports type-only**
-   - Move shared `BuildOpts` typing into a lightweight local interface or type-only path so no PPTX builder code is pulled into the runtime bundle just for types.
-   - Ensure `DeckPPTXExportButton` and `TechSlideOpener` only load the heavy PPTX code after the user clicks “Download Editable PowerPoint”.
+## Files to update
 
-3. **Preserve current download behavior**
-   - Keep the same deck IDs and filenames:
-     - `tech-deep-dive`
-     - `executive-pitch`
-     - `executive-pitch-3`
-   - Keep the existing progress toasts and download button UI unchanged.
+### 1. `src/data/roadmapUseCases.ts` — single source of truth
+- Add a new `PlatformLayer` value `"Unified Web Experience"` alongside existing layers.
+- Rename `phaseMeta["2027-plus"].label` from `"2027+"` to `"2027 and Beyond"` (keep key `2027-plus` so URLs/IDs don't break; window stays "2027 onwards").
+- **H1 2026 — `training-mobile`**: rename title to `"All-in-One Mobile Experience — Phase 1: Training in the Comply iOS Mobile App"`.
+- **H2 2026 — `ui-standardisation`**: change `layer` to `"Unified Web Experience"`.
+- **H2 2026 — `safety-mobile`**: rename title to `"All-in-One Mobile Experience — Phase 2: Safety Reporting in the Comply iOS Mobile App"`.
+- **Remove `automation-platform-poc`** (the H2 POC entry) entirely.
+- **Move `regmgmt-next-phase`** from `2027-plus` → `h2-2026`; keep id stable.
+- **Move `automation-platform-rollout`** from `2027-plus` → `h2-2026`; keep id stable.
+- **Rename `mobile-unified`** title to `"All-in-One Mobile Experience — Phase 3: Unified Experience across OCM, Training & Safety"`; refresh `oneLiner` and `whatWereDelivering` to match.
+- **Add new use case** `automation-continued-rollout` (phase `2027-plus`, layer `Intelligence & Orchestration Layer`, status `planned`): "Continued roll-out of Platform-wide Automation capability — more connectors, more conditions, more actions". Include realistic problemToday/whatWereDelivering/dtop/customerOutcomes fields consistent with the existing tone.
+- **Add new use case** `future-platform-pocs` (phase `2027-plus`, layer `Intelligence & Orchestration Layer`, status `planned`): "Future Platform PoCs — defined with customer input". Same shape.
 
-4. **Review routing load risk**
-   - Check whether any other heavy exporters or generated assets are imported by page modules at startup.
-   - If needed, apply the same lazy-loading pattern to prevent future blank-page regressions.
+### 2. `src/data/roadmapNarration.ts`
+- Update use-case count in `overviewScript` and `closingScript` (currently "seventeen named use cases" → recompute: 11 existing remain + 2 new − 1 removed → **18**; actually verify after edits and use the resulting integer). Update phrasing of 2027 phase to "twenty twenty-seven and beyond".
+- Update `titleScript` "2027 plus, intelligent operations" → "2027 and beyond, intelligent operations".
 
-5. **Verify after implementation**
-   - Confirm `/`, `/coanalyst`, `/pitch-executive-3`, `/pitch-technical-v4`, and `/platform-playbook` render again.
-   - Confirm the Executive Pitch 3 PPTX button still initiates generation when clicked.
-   - Then return to the V4 diagram/PPTX standardization work once the app is stable.
+### 3. `src/components/tech-slides/TechSlide15Roadmap2026.tsx` (on-screen Tech Deck slide 15)
+- Replace hard-coded H2 items list to drop the Platform-wide Automation POC line and add:
+  - "🔄 Next-Phase Regulation Management Integration (Operational Data Foundation)" — moved into H2
+  - "📋 Platform-wide Automation — Rollout (Intelligence & Orchestration Layer)" — moved into H2
+- Update H1 mobile line wording to "All-in-One Mobile Experience — Phase 1…".
+- Update H2 mobile line wording to "All-in-One Mobile Experience — Phase 2…".
+- Update H2 UI line layer label to "Unified Web Experience".
+- Update 2027+ block:
+  - Change `phase` label to **"2027 and Beyond"**.
+  - Remove the Next-Phase Regulation item (now in H2).
+  - Remove the Platform-wide Automation Rollout item (now in H2).
+  - Rename mobile unification line to "All-in-One Mobile Experience — Phase 3…".
+  - Add "Continued roll-out of Platform-wide Automation capability (more connectors, conditions, actions)".
+  - Add "Future Platform PoCs — defined with customer input".
+  - Tag Insights line with "(Future Vision)" suffix to mirror the source.
 
-## Technical details
+### 4. `src/exporters/pptx/buildTechnicalDeck.ts` (lines ~2140–2210)
+- Mirror the same list/label changes in the native PPTX 2026 Roadmap slide.
+- Update tick label `"2027+"` → `"2027 and Beyond"` (and widen the tick text frame slightly so it doesn't clip).
+- Trim H2 list to ~5–6 items max to keep the card readable; prioritise the new H2 entries.
 
-Primary files to update:
+### 5. `mem://product/roadmap-dates`
+- Add a clarifying line: "Platform-wide Automation moves from POC to **rollout in H2 2026** (POC step is collapsed)."
+- Add: "Phase 3 mobile label = 'All-in-One Mobile Experience — Phase 3: Unified Experience across OCM, Training & Safety' (2027+)."
+- Rename phase 3 reference to **"2027 and Beyond"**.
+- Append the new 2027+ items: continued automation roll-out and Future Platform PoCs.
+- Refresh `mem://index.md` description for this entry if needed (no new file required).
 
-```text
-src/exporters/pptx/index.ts
-src/components/DeckPPTXExportButton.tsx
-```
+### 6. Verify (no changes expected)
+- `RDSlide1Overview`, `RDPhaseDivider`, `RDUseCaseSlide` — these read from the data layer, so they auto-update once `roadmapUseCases.ts` changes. Visually confirm the H2 column doesn't overflow with the two added cards (h2 grows from 5 → 7 use cases). If overflow, reduce gap or allow vertical scroll inside the divider's downstream slides (each use case is its own slide, so this is fine — the divider just lists them).
+- `RoadmapDeck` page builder — auto-derives slides from data; new use cases appear automatically; removed `automation-platform-poc` slide drops out cleanly. Sidebar numbering re-sequences automatically.
 
-Likely shape of the new `index.ts` registry:
+## Out of scope
+- The maturity/value pyramid roadmap copy in other slides (Slide5MaturityCurve, etc.) — unrelated narrative arc, not part of the H1/H2/2027 use case roadmap.
+- `buildExecutiveDeck.ts` "Maturity Roadmap" — different concept, not the use-case roadmap.
 
-```ts
-export const DECK_BUILDERS = {
-  "executive-pitch-3": {
-    filename: "Comply365-Executive-Pitch-Medium.pptx",
-    label: "Executive Pitch · Medium",
-    build: async (opts) => {
-      const { buildExecutivePitch3Deck } = await import("./buildExecutivePitch3Deck");
-      return buildExecutivePitch3Deck(opts);
-    },
-  },
-};
-```
-
-This keeps all current functionality but removes the exporter dependency graph from normal page rendering.
+## Acceptance check
+- `/roadmap` deck renders with H2 showing 7 cards (UI Std, RegDB Rollout, Mobile Phase 2, BI POC, Next-Phase RegMgmt, Automation Rollout) and 2027 and Beyond shows 5 cards (BI Rollout, Mobile Phase 3, Contextual Doc, Insights Rollout (Future Vision), Continued Automation, Future PoCs — recount: 6).
+- `/pitch-technical-v4` slide 15 mirrors the same lists with correct emojis and the "2027 and Beyond" header.
+- PPTX export of the technical deck slide 15 reflects the same content; tick label reads "2027 and Beyond".
+- Narration counts and phrasing match the new totals.
