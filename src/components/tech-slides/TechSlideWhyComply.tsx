@@ -1,12 +1,13 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { Link2, Brain, ShieldCheck, Plane, Globe, Users } from "lucide-react";
+import { Link2, Brain, ShieldCheck, Plane, Globe, Users, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface Props extends SlideNarrationProps { slideNumber?: number; }
 
 const diffs = [
-  { icon: Link2, title: "Connected Foundation", desc: "One data model, three core apps, one intelligence layer. Content, training and safety reason together — not in parallel.", color: "text-sky-400", bg: "bg-sky-400/10", border: "border-sky-400/30" },
-  { icon: Brain, title: "Domain-Trained Intelligence", desc: "Insights & Intelligence built on aviation data since 2023. Not a generic AI with an aviation wrapper — purpose-built for the operational corpus.", color: "text-primary", bg: "bg-primary/10", border: "border-primary/30" },
+  { icon: Link2, title: "Connected Foundation", desc: "One data model, three core apps, one intelligence layer for Content, training and safety.", color: "text-sky-400", bg: "bg-sky-400/10", border: "border-sky-400/30" },
+  { icon: Brain, title: "Domain-Trained Intelligence", desc: "Insights & Intelligence built on aviation data. Not a generic AI with an aviation wrapper — purpose-built for the operational corpus.", color: "text-primary", bg: "bg-primary/10", border: "border-primary/30" },
   { icon: ShieldCheck, title: "Proof by Design", desc: "Every action logged automatically. The audit trail is a byproduct, not a report. Closed loop — Detect, Trigger, Orchestrate, Prove.", color: "text-emerald-400", bg: "bg-emerald-400/10", border: "border-emerald-400/30" },
 ];
 
@@ -47,7 +48,13 @@ const TechSlideWhyComply = ({ slideNumber, ...narrationProps }: Props) => (
             </div>
           ))}
         </div>
-        <p className="text-[11px] text-muted-foreground italic">Closed loop · Domain-trained · Proof by design.</p>
+        <Link
+          to="/pitch-technical-v4"
+          className="inline-flex items-center gap-2 rounded-lg border border-primary/40 bg-primary/10 hover:bg-primary/20 transition-colors px-3 py-1.5 text-xs font-semibold text-primary"
+        >
+          Deep dive · Platform &amp; Use Cases
+          <ArrowRight className="h-3.5 w-3.5" />
+        </Link>
       </div>
     </div>
   </SalesSlideContainer>

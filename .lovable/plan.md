@@ -1,48 +1,27 @@
-## Alignment check — `exec3-slide-coanalyst` ("The Platform · Insights & Intelligence")
+## Changes to `TechSlideWhyComply.tsx`
 
-The slide the user is reviewing is `TechV4Slide7CoAnalyst`. It sits between:
+This slide is the closing "Why Comply365" slide on the Medium / Executive Pitch 3 deck.
 
-- `exec3-slide-insights-summary` — *Insights & Intelligence (reactive: you ask, the platform answers)*
-- `exec3-slide-insights` — *Recommendations & Prescriptive Actions (Future Vision · Roadmap Capability)*
+### 1. Connected Foundation — shorten copy
+- **From:** "One data model, three core apps, one intelligence layer. Content, training and safety reason together — not in parallel."
+- **To:** "One data model, three core apps, one intelligence layer for Content, training and safety."
 
-**What's aligned:** title, subtitle, the three product cards (SafetyManager365 Available · Content/Training Coming Soon), rows 1–2 (Ask in plain English, Cross-domain insight & root cause), and the footer that ties it back to the cross-product story.
+### 2. Domain-Trained Intelligence — remove date reference
+- **From:** "Insights & Intelligence built on aviation data since 2023. Not a generic AI with an aviation wrapper — purpose-built for the operational corpus."
+- **To:** "Insights & Intelligence built on aviation data. Not a generic AI with an aviation wrapper — purpose-built for the operational corpus."
 
-**What's misaligned:** Row 3 — *"Recommended next actions"* — uses language that belongs to the 2026 prescriptive vision we just separated out:
+### 3. Add CTA — Deep dive on the platform and use cases
+Add a CTA button below the trust-signals row (still inside the slide, no layout breakage) that links to the Technical Deep Dive (V4) page, which is the canonical platform + use-cases deep dive in this project.
 
-- "Suggest an audit, risk re-score or corrective action with evidence attached."
-- "Propose a procedure update or revision route with the right reviewers."
-- "Auto-assign a refresher module or recurrency event to the right crew."
+- Label: "Deep dive · Platform & Use Cases"
+- Target route: `/pitch-technical-v4` (the route mounted by `TechnicalDeepDiveV4.tsx`)
+- Style: subtle outlined button using existing `DeepDiveLink` component pattern (already used elsewhere, e.g. CoAnalyst slide), so it matches the deck's visual language and doesn't disturb the closing-slide composition.
+- Placement: right side of the trust-signals row replacing or supplementing the small italic "Closed loop · Domain-trained · Proof by design." line — the CTA replaces that tagline so the row stays balanced and h-screen fits without clipping.
 
-That reads as autonomous, prescriptive, multi-step orchestration — exactly what the next slide explicitly badges as *Future Vision · Roadmap Capability*. The exec audience will hear "this is shipping inside every app today" and then feel whiplash on the next slide.
+### Verification before finalising
+- Confirm `/pitch-technical-v4` is the correct deep-dive target by checking `src/App.tsx` route registration. If the user prefers a different destination (e.g. `/pitch-technical`, `/platform-playbook`, or one of the use-case pages), I'll switch the target — otherwise V4 is the most current platform deep-dive deck.
 
-## Proposed change (minimal — content only, no structural edit)
+### Files touched
+- `src/components/tech-slides/TechSlideWhyComply.tsx` — copy edits + CTA button.
 
-Rename row 3 and rewrite its three cells so it stays in the *answer-plus-next-best-step* lane established on the previous slide.
-
-**File:** `src/components/tech-slides/v4/TechV4Slide7CoAnalyst.tsx`
-
-**Row 3 — rename:**
-- `name`: "Recommended next actions" → **"Cited answer + the single next step"**
-- `blurb`: "Turn insight into prescriptive guidance the team can act on immediately, in-app." → **"Every answer comes with sources and one suggested next step the user can take inside the app — not an autonomous workflow."**
-
-**Row 3 — rewrite the three product cells to be reactive, single-step, in-app suggestions tied to the answer:**
-
-- SafetyManager365 cell:
-  *"Answer cites the source occurrences and offers one next step — open the cluster, log a finding, or flag for review."*
-- ContentManager365 cell:
-  *"Answer cites the affected procedures and offers one next step — open the revision, route to the right reviewer, or compare versions."*
-- TrainingManager365 cell:
-  *"Answer cites the at-risk crew and offers one next step — open the recurrency list or draft a refresher assignment for a coordinator to confirm."*
-
-This keeps the row's icon (`Lightbulb`), its position in the matrix, and the visual rhythm of the slide. It just removes any wording that implies autonomous prescription, auto-assignment, or multi-step action plans — which now lives cleanly on `TechV4SlideInsights` (the next slide) as the 2026 roadmap capability.
-
-## Optional companion tweak
-
-Update the narration line for `exec3-slide-coanalyst` in `src/data/executivePitchNarration.ts` if it currently echoes "auto-assign" / "prescriptive" / "corrective action" language, so the spoken story matches the on-screen wording. I'll inspect and adjust only if the script reinforces the misalignment.
-
-## Files to edit
-
-- `src/components/tech-slides/v4/TechV4Slide7CoAnalyst.tsx` — rename row 3 and rewrite its three cells.
-- `src/data/executivePitchNarration.ts` — light edit to the `exec3-slide-coanalyst` script only if needed to keep narration consistent.
-
-No changes to layout, structure, ordering, or to the Insights summary / Recommendations slides — those are already aligned.
+No narration changes required — the existing script already speaks to "domain-trained intelligence" and "connected foundation" without referencing the year 2023.
