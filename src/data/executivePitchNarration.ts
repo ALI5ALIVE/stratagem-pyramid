@@ -80,154 +80,133 @@ export const exec3PitchNarrations: ExecNarrationSlide[] = [
     title: "Title",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "This is the cover. Set tone — confident, executive, performance-focused. The line you want to land in thirty seconds: in the next thirty minutes I'll show you the architecture leading carriers are using to turn operational signals into measurable performance — DTOP, the four-layer platform, and the intelligence layer that makes it real. Then move to the strategic shift slide.",
+      "Every airline I talk to is sitting on a quiet, expensive problem. Your operation generates thousands of signals every single day — a hard landing, a deferred defect, a procedure update, a near-miss in a station you've never heard of. Most of them never reach the right person in time to change the next flight. That gap — between detection and action — is the silent tax on your operation. It shows up as repeat events, as on-time performance drag, as audit findings you should have closed weeks earlier. In the next twenty minutes I'm going to show you how leading carriers are closing that gap, and what closing it is worth to your bottom line.",
   },
   {
     slideId: "exec3-slide-1",
     title: "Strategic Shift",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Frame the why-now. The industry is shifting from prescriptive compliance to performance-based oversight. Regulators no longer just want completed checklists — they want proof that when a signal was detected, the right action followed and the outcome improved. The proof point: the carriers building the loop now will set the standard everyone else gets measured against. Bridge: so what does today actually look like inside an airline? Next slide.",
-  },
-  {
-    slideId: "exec3-slide-2",
-    title: "Industry Challenge",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "This is your reality check. Twelve thousand operational signals a month. Eight thousand orphaned — captured but never connected to a procedural or training response. Three-week investigations. Same events recurring because nobody closed the loop. The proof point to land: this isn't a people problem, it's an architecture problem. Bridge: let me show you the platform that closes that loop.",
-  },
-  {
-    slideId: "exec3-slide-platform",
-    title: "The Platform",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "One screen, bottom-up. Foundation — three core apps, ContentManager365, TrainingManager365, SafetyManager365, sharing one operational data foundation. Above — intelligence and orchestration. Above that — one trusted unified mobile shell. Wrapping the whole stack — DTOP. The proof point: one platform, one operating model, one mobile entry point. Bridge: let's start at the foundation and work up. Next divider — Core Apps.",
-  },
-  {
-    slideId: "exec3-divider-core",
-    title: "Layer divider — Core Apps",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "Quick reset. We're now in the foundation layer — the three core apps. These are the systems of record that emit every operational event the rest of the platform reasons over. ContentManager365 for procedures and manuals. TrainingManager365 for competency. SafetyManager365 for occurrences and audits. The proof point: these aren't integrated — they're one platform, one shared data layer. Bridge: let's start with safety.",
-  },
-  {
-    slideId: "exec3-slide-4a",
-    title: "SafetyManager365",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "SafetyManager365 is the investigation and assurance engine. From initial report to corrective action and closure. It ingests flight operational data, crew safety reports and audit findings. With the intelligence layer activated, your analysts stop manually reviewing hundreds of reports — patterns are surfaced in real time, cross-referenced with weather, crew rosters and procedure versions. The proof point: weeks of manual correlation compressed to hours, at around ninety percent accuracy on domain-specific patterns versus around thirty-five percent for generic AI. Bridge: signals are nothing without the procedures they update — next, ContentManager365.",
-  },
-  {
-    slideId: "exec3-slide-4b",
-    title: "ContentManager365",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "ContentManager365 is the procedural backbone — authoring, distribution, version control and electronic acknowledgement across every operational document. With the intelligence layer, regulatory change management transforms. A new directive arrives. The platform maps it against your procedure library, identifies every affected document, queues updates for the right SME, then tracks the cascade — every affected crew member receives the updated version and acknowledges it. The proof point: four to six weeks of manual effort compressed to days. Bridge: a procedure isn't real until the right people are trained on it — next, TrainingManager365.",
-  },
-  {
-    slideId: "exec3-slide-4c",
-    title: "TrainingManager365",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "TrainingManager365 handles the competency lifecycle — qualification, recurrent training, checking events and revalidation. The activation here is powerful. Instead of generic recurrent cycles, it analyses individual operational data — exposure, route, safety report history — and recommends targeted interventions specific to each crew member. The proof point: when a hard landing cluster is detected, the platform identifies the affected pilots and assigns approach-specific simulator scenarios within forty-eight hours. Targeted, not generic. Bridge: that's the foundation. Now the layer that makes it intelligent. Next divider — Intelligence and Orchestration.",
-  },
-  {
-    slideId: "exec3-divider-intelligence",
-    title: "Layer divider — Intelligence & Orchestration",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "Reset. We're now in the intelligence and orchestration layer. Three capabilities — Automation for cross-product workflows, Insights and Recommendations for proactive direction, and CoAnalyst for natural-language deep dive with prescriptive next steps. Together they turn operational data into action. Bridge: let's start with Automation.",
-  },
-  {
-    slideId: "exec3-slide-automation",
-    title: "Automation",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "Automation is one orchestration layer across the platform — not one per product. Triggers fire from native events, webhooks, schedules or third-party tools. Reusable, no-code workflows. Versioned, observable, with human-in-the-loop gates wherever you need them. The proof point: a procedure publishes in ContentManager365, the workflow auto-assigns training, opens a SafetyManager365 compliance checkpoint and notifies the team — zero manual handoffs. Bridge: automation runs the plays — Insights surfaces which plays to run. Next slide.",
-  },
-  {
-    slideId: "exec3-slide-insights",
-    title: "Insights & Recommendations",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "Insights and Recommendations turns plain-English questions into evidence-backed action plans. Pattern detection across silos. Recommended Actions paired with traceable reasoning. Continuous, exploratory analysis. The worked example to land: a COO asks, are dangerous goods incidents linked to training gaps? Sixty seconds later: three hub stations correlate with overdue DG recurrent training. The proof point: question to action plan in under a minute. Bridge: insights surface what to ask — CoAnalyst answers in plain English with prescriptive next steps. Next slide.",
-  },
-  {
-    slideId: "exec3-slide-coanalyst",
-    title: "CoAnalyst",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "CoAnalyst is the conversational intelligence layer of the Operational Performance Platform. Master message — from reports to intelligence, from events to control. It's a hybrid AI architecture — domain-trained models for the heavy lifting, an LLM augmentation layer for natural-language interaction, with continuous learning. Trained on millions of aviation reports since twenty twenty-three. The proof point: around ninety percent accuracy at deep classification — Level 4 to 5 — versus around thirty-five percent for generic AI. Bridge: this is why generic AI alone can't replace this — let me show you the precision gap. Next slide.",
-  },
-  {
-    slideId: "exec3-slide-tiers-vs-ai",
-    title: "CoAnalyst vs Generic AI",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "This is the slide that ends the build-or-buy debate. At Level 1 — fifty occurrence types — generic AI is roughly comparable. At Level 2 to 3, hundreds of categories, generic AI drops to around sixty percent. At Level 4 to 5 — the cause and root cause — generic AI collapses to thirty to forty percent. CoAnalyst holds around ninety. The proof point: generic AI calls a repeated bird strike a one-off — missing the cluster pattern that signals a runway hazard trend. Bridge: the platform reaches the frontline through one trusted shell. Next divider — Mobile.",
-  },
-  {
-    slideId: "exec3-divider-mobile",
-    title: "Layer divider — Unified Mobile",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "Quick reset. We're now in the unified mobile layer — one trusted shell for the frontline. Procedures, training and safety inside the app crews already use every shift. Bridge: here's how it lands.",
-  },
-  {
-    slideId: "exec3-slide-mobile",
-    title: "Unified Mobile",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "Three apps a shift becomes one app every shift. The Comply365 mobile app — already in daily frontline use through ContentManager365 — becomes the single shell for the platform. Procedures live there today. TrainingManager365 arrives in Q2 2026. SafetyManager365 reporting in Q4 2026. Single sign-on. Unified notifications. One MDM footprint, one approval cycle through customer mobile estates. The proof point: the infrequent tools — training and safety — stop being unfamiliar detours and become tabs inside the app crews already trust. Bridge: foundation, intelligence, mobile — they all need an operating model that closes the loop. Next divider — DTOP.",
-  },
-  {
-    slideId: "exec3-divider-dtop",
-    title: "Layer divider — DTOP",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "Final layer reset. DTOP is the operating model that wraps everything we've shown — Detect, Trigger, Orchestrate, Prove. Bridge: here's how it works.",
-  },
-  {
-    slideId: "exec3-slide-dtop",
-    title: "DTOP — System of Work",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "DTOP is the operating model. Detect — operational signals ingested in real time across content, training, safety and external sources. Trigger — when criteria are met, the right workflow fires automatically. Orchestrate — safety investigation, procedure update and training assignment move in parallel, not in sequence. Prove — every action logged automatically, audit-ready by default. The proof point: intelligence without workflow is just dashboards. DTOP turns intelligence into operational outcomes you can measure and prove. Bridge: that's the model — let me show you the before-and-after of working this way.",
-  },
-  {
-    slideId: "exec3-slide-transformation",
-    title: "The Transformation",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "Walk the before column slowly — six weeks from signal to action, manual handoffs, days reconstructing the audit thread. Then the after — same teams, same data, signal to closed loop in hours. The proof point to land: same teams, same data, completely different outcome. It's a wiring change, not a people change. Bridge: this isn't theory — let me show you the use cases firing today.",
-  },
-  {
-    slideId: "exec3-slide-usecases",
-    title: "Use Cases in Action",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "Three domains, same architecture. Safety — hard landing trends, crew injuries, regulatory exposure. Operations — AOG events, ground delays, fuel performance. Financial — insurance premiums, revenue protection. Each follows the same Detect, Trigger, Orchestrate, Prove pattern with costed outcomes. Pick the case that matches what they cared most about earlier in the conversation. The proof point to land: different signal, different domain, exactly the same pattern. Bridge: so where does this journey lead — that's the maturity roadmap.",
-  },
-  {
-    slideId: "exec3-slide-maturity",
-    title: "Maturity Roadmap",
-    voiceId: DEFAULT_VOICE_ID,
-    script:
-      "Five stages. Fragmented — disconnected systems, reactive. Connected — data flows, workflows still manual. Automated — trigger-based workflows cut response from weeks to days. Proactive — pattern detection identifies risks before events. Predictive — forward-looking models orchestrate preemptive responses. The proof point: the traditional path takes five to seven years. With this platform, customers reach stage four in twelve to eighteen months. Bridge: those are the stages — let me show you the outcomes that come with them.",
+      "Here's what's changed, and why this conversation matters now. Your regulators have stopped asking, did you complete the checklist. They're asking, when you saw the signal, did you act, and did the outcome actually improve. Your board is asking the same question in a different language — they want predictable performance, not heroic recovery. The carriers who build that closed loop first don't just get safer. They get more predictable, more profitable, and they set the benchmark everyone else gets measured against. The ones who wait spend the next three years catching up. Let's start with the outcomes that loop produces — the numbers your board actually cares about.",
   },
   {
     slideId: "exec3-slide-outcomes",
     title: "Customer Outcomes",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "These are the four outcome buckets your board cares about. Schedule protection. Revenue protection. Cost reduction. Customer trust. Frame each as the spread observed across customer deployments — not as a guarantee. The proof point: every signal acted on, every outcome measured, every decision auditable. Bridge: so why are we the right partner to deliver this? Final slide.",
+      "These are the four outcomes that show up in every board pack — schedule protection, revenue protection, controllable cost reduction, and customer trust. Today, every one of these is being eroded by the same root cause: signals that arrive too late, or never reach the team that could act on them. A go-around trend that wasn't caught until the third event. A procedure update that took six weeks to reach the line. An audit finding that cost you a slot. The ranges you see here are what we observe across customer deployments — not guarantees, but the operational lift that becomes possible when the loop actually closes. Now let me show you the architecture that delivers them.",
+  },
+  {
+    slideId: "exec3-slide-platform",
+    title: "The Platform",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "This is the architecture in one picture, and it's deliberately simple. At the foundation, three core applications sharing one operational data model — SafetyManager365 for occurrences and assurance, ContentManager365 for procedures and manuals, TrainingManager365 for competency and recurrent training. Above them, the intelligence and orchestration layer — automation, insights, and CoAnalyst — turning that shared data into action. Above that, one unified mobile shell so the frontline only ever opens one app. And wrapping the whole stack, DTOP — the operating model that makes it all move together. Most of your current vendors sell you one of these boxes. We give you all four, on one platform, one data foundation, one place to prove it worked. Let's walk through how it actually works in your operation, starting with that operating model.",
+  },
+  {
+    slideId: "exec3-divider-dtop",
+    title: "Layer divider — DTOP",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Before we go inside any individual product, let me show you the operating model that makes the whole thing work. We call it DTOP — Detect, Trigger, Orchestrate, Prove. It's the loop your operation is trying to run today, but doing it manually, in email, across four different vendors. Here's what it looks like when the platform runs it for you.",
+  },
+  {
+    slideId: "exec3-slide-dtop",
+    title: "DTOP — System of Work",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Four steps. Detect — operational data flows in continuously across safety, content, training and your external feeds. Trigger — when a pattern crosses the threshold you set, the right workflow fires automatically, no email chain, no chase list. Orchestrate — the safety investigation, the procedure update, the targeted training assignment all move in parallel rather than waiting in sequence. Prove — every action is logged and traced, audit-ready by default. The example we see again and again: a hard-landing trend detected on Tuesday, the affected crews retrained by Thursday, repeat events down dramatically across the next quarter. Same teams, same data, completely different outcome — because the wiring changed, not the people. Now let's look at how that loop reaches the people who actually fly the aircraft.",
+  },
+  {
+    slideId: "exec3-divider-mobile",
+    title: "Layer divider — Unified Mobile",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "None of this matters if it doesn't reach the frontline in the app they already trust. So before we go up into the intelligence layer, let me show you how the platform lands on the iPad in the cockpit and the phone on the ramp.",
+  },
+  {
+    slideId: "exec3-slide-mobile",
+    title: "Unified Mobile",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Today your crews juggle three different apps a shift — one for procedures, one for training, a third to file a safety report. Two of those three only get opened when something goes wrong, which is exactly when you can't afford an unfamiliar interface. We collapse that into one. The Comply365 mobile app — already in daily frontline use through ContentManager365, with millions of crew sessions behind it — becomes the single shell. Procedures live there today. TrainingManager365 arrives in the app in mid-2026. SafetyManager365 reporting in late-2026. Single sign-on, unified notifications, one device-management footprint for your IT team. Three apps a shift becomes one app every shift, in the tool your crews already trust. Now let's go into the layer that makes all of this actually intelligent.",
+  },
+  {
+    slideId: "exec3-divider-intelligence",
+    title: "Layer divider — Intelligence & Orchestration",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "This is the layer that separates a connected platform from a smart one. Three capabilities sit here — automation that runs the workflows, insights that tell you what to look at, and CoAnalyst that lets your team ask anything in plain English and get a defensible answer. Together, this is what turns your operational data into action — and into the outcomes we showed you up front. Let's start with automation.",
+  },
+  {
+    slideId: "exec3-slide-automation",
+    title: "Automation",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Think about how many handoffs in your operation today happen in someone's inbox. A procedure gets published — somebody emails training to assign a recurrent module. Training updates a syllabus — somebody emails safety to flag the new compliance checkpoint. Each of those handoffs is a place where things slow down, get missed, or fall on the floor. Automation replaces those email chains with one orchestration layer that spans every product on the platform. Triggers fire from native events, webhooks, schedules, or your third-party systems. Workflows are reusable, no-code, versioned, observable, and you keep human-in-the-loop gates wherever you need them. A procedure publishes in ContentManager365, training is auto-assigned, the SafetyManager365 compliance checkpoint opens, the team is notified — zero manual handoffs. Now let's look at how your team finds the right thing to act on in the first place.",
+  },
+  {
+    slideId: "exec3-slide-insights-summary",
+    title: "Insights & Intelligence",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Most of the value buried in your operational data never gets surfaced because the only people who can ask the right question are the analysts, and they're already swamped. So your COO asks a question on Monday and gets an answer in three weeks, by which point the operation has moved on. We change that. Anyone in your business — a duty manager, a safety lead, a chief pilot — types a question in plain English and gets an evidence-backed answer in under a minute, with the source data and the reasoning attached. Pattern detection runs continuously across all the silos, so the platform tells you what to look at before you even know to ask. CoAnalyst is the engine behind it, and it lives across the platform — already live in SafetyManager365, with content and training following. Let me show you exactly what that engine is.",
+  },
+  {
+    slideId: "exec3-slide-coanalyst",
+    title: "CoAnalyst",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "CoAnalyst is the intelligence layer of the platform — and the master message I want you to leave the room with is this: from events to control. We've taken millions of aviation reports going back to twenty-twenty-three and trained a hybrid architecture — domain models doing the heavy classification work, with a generative AI layer on top for natural-language interaction, and continuous learning so it gets sharper every quarter. The reason this matters commercially is precision. At deep classification — the level of cause and root cause — CoAnalyst delivers around ninety percent accuracy, where generic AI plateaus around thirty-five percent. That precision is the difference between an analyst trusting the recommendation and an analyst re-doing the work by hand. Let me put a sharper number on that.",
+  },
+  {
+    slideId: "exec3-slide-tiers-vs-ai",
+    title: "CoAnalyst vs Generic AI",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "This is the chart that ends the build-or-buy debate inside your IT team. At the surface level — broad occurrence categories — generic AI is roughly comparable, and that's where most demos stop. Go one level deeper, into the hundreds of subcategories your safety team actually uses, and generic AI drops to around sixty percent. Go to the level that matters operationally — cause and root cause — and generic AI collapses into the thirty to forty percent range. CoAnalyst holds around ninety. In practical terms, generic AI will call a repeated bird strike a one-off and miss the cluster that signals a runway hazard trend. That's the precision gap, and it's why our customers stopped trying to wrap a chatbot around their safety database. Now let's look at what the platform does with that intelligence — turning patterns into prescriptive next steps.",
+  },
+  {
+    slideId: "exec3-slide-insights",
+    title: "Recommendations & Prescriptive Actions",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "A pattern by itself is a chart. What your operation needs is the next move. This is where the platform delivers Recommended Actions — paired with the traceable reasoning a regulator or an internal auditor can follow. The worked example I love: a COO asks, are dangerous-goods incidents linked to training gaps. Sixty seconds later the platform comes back — three hub stations correlate with overdue dangerous-goods recurrent training, here are the affected employees, here is the recommended remediation, here is the audit trail. Question to action plan in under a minute. That's not a dashboard — that's a control surface for your operation. Now, one place this pays back almost immediately is regulatory change.",
+  },
+  {
+    slideId: "exec3-divider-regulation",
+    title: "Section divider — Regulation Management",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Regulation is the use case where everything we've shown you compounds — the data foundation, the intelligence layer, the automation, the mobile shell — all working on the single hardest, most repetitive problem your compliance team faces. Let me show you the difference it makes.",
+  },
+  {
+    slideId: "exec3-slide-regulation",
+    title: "Regulation Management",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Today, when a new directive lands, your team starts a four-to-six-week scramble — read the directive, find every affected manual, draft the changes, route to SMEs, push to the fleet, chase acknowledgements, then prepare the audit thread. Most of that time is plumbing, not judgement. With this platform, the directive arrives, CoAnalyst maps it against your procedure library and identifies every affected document. Updates are queued for the right SME, automation tracks the cascade, every affected crew member receives the updated version and acknowledges it on the same mobile shell they already use, and the audit trail builds itself. Weeks of work compressed to days, and your compliance team gets to focus on judgement instead of chasing inboxes. Now — what's locked and committed for next year.",
+  },
+  {
+    slideId: "exec3-divider-roadmap",
+    title: "Section divider — 2026 Roadmap",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "One question I always get from a buying committee: what am I actually buying today, and what am I being asked to wait for. Here is exactly what's locked and what's coming, with committed dates — no roadmap theatre.",
+  },
+  {
+    slideId: "exec3-slide-roadmap-2026",
+    title: "2026 Phased Roadmap",
+    voiceId: DEFAULT_VOICE_ID,
+    script:
+      "Three commitments, three dates. Insights and Recommendations — the natural-language layer across the platform — proof of concept early twenty twenty-six. Cross-product Automation — the orchestration layer we just walked through — mid twenty twenty-six. Unified Mobile — TrainingManager365 in the shell mid twenty twenty-six, SafetyManager365 reporting late twenty twenty-six. Everything underneath is live today and in daily use across our customer base. So you're not buying a roadmap — you're buying a platform that already runs your operation, with three additions arriving on dates we'll commit to in the contract. Now — why us to deliver it.",
   },
   {
     slideId: "exec3-slide-why",
     title: "Why Comply365",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Three things set us apart. First — connected foundation. Not point solutions stitched together. One data model, three core apps, one intelligence layer. Five hundred and fifty plus airlines worldwide, around two and a half million users, six continents. Second — embedded intelligence. CoAnalyst built from the ground up on aviation data since twenty twenty-three — around ninety percent accuracy where generic AI plateaus at thirty-five. Third — proof by default. Every action logged, every change traced, every decision auditable. The proof point to land: you don't prepare for regulators — you're always ready. Then ask for the next meeting — a half-day discovery workshop with their safety, training and operations leads.",
+      "Three reasons leading carriers trust Comply365 with their operation, and they're the three reasons you should consider us too. First — a connected foundation. We don't stitch point solutions together. Safety, content, and training share one data model, one version of truth. Five hundred and fifty plus airlines, around two and a half million users, across six continents already operate on it. Second — embedded intelligence. CoAnalyst was built from the ground up on aviation operational data since twenty twenty-three — around ninety percent accuracy at the depth that matters, where generic AI plateaus at thirty-five. That precision is what makes the recommendations defensible. Third — proof by default. Every action logged, every change traced, every decision auditable. You don't prepare for regulators anymore — you're always ready. The ask is simple: give us a half-day with your safety, training, and operations leads. We'll map your top three operational signals to measurable outcomes and put your numbers on the cost-avoidance model. That's how we'll know — together — whether this is real for you.",
   },
 ];
 
