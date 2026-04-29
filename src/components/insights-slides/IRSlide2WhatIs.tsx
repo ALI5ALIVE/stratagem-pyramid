@@ -62,8 +62,8 @@ const workflow = [
   },
   {
     icon: Lightbulb,
-    label: "Insight + Recommended Action",
-    desc: "Plain-English answer plus the next best action, ready to trigger in-app.",
+    label: "Cited answer + next best step",
+    desc: "Plain-English answer with sources, plus the single next step tied to this question. Live on SafetyManager365 today.",
     color: "text-rose-300",
     border: "border-rose-500/30",
     bg: "bg-rose-500/5",
@@ -135,7 +135,7 @@ const IRSlide2WhatIs = ({ title, subtitle, showWorkflow, ...props }: IRSlide2Wha
           <div className="shrink-0 flex flex-col gap-2">
             <div className="flex items-center justify-between shrink-0">
               <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground font-medium">
-                How it works · behind the answer
+                How it works · behind the answer · <span className="text-foreground/80 normal-case tracking-normal italic">reactive — you ask, the platform answers</span>
               </span>
               <span className="text-[10px] uppercase tracking-[0.18em] text-primary font-medium">
                 6 stages · seconds end-to-end
