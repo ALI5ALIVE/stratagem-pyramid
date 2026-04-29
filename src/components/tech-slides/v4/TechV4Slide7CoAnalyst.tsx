@@ -82,7 +82,7 @@ const capabilities = [
 const TechV4Slide7CoAnalyst = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer
     id="tech-slide-coanalyst"
-    title="The Platform · Insights & Intelligence"
+    title="In-Product · Insights & Intelligence"
     subtitle="The same intelligence layer — expressed inside every core application."
     slideNumber={slideNumber}
     {...narrationProps}
