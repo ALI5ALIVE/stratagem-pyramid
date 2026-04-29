@@ -69,12 +69,12 @@ const capabilities = [
   },
   {
     icon: Lightbulb,
-    name: "Recommended next actions",
-    blurb: "Turn insight into prescriptive guidance the team can act on immediately, in-app.",
+    name: "Cited answer + the single next step",
+    blurb: "Every answer comes with sources and one suggested next step the user can take inside the app — not an autonomous workflow.",
     cells: [
-      "Suggest an audit, risk re-score or corrective action with evidence attached.",
-      "Propose a procedure update or revision route with the right reviewers.",
-      "Auto-assign a refresher module or recurrency event to the right crew.",
+      "Answer cites the source occurrences and offers one next step — open the cluster, log a finding, or flag for review.",
+      "Answer cites the affected procedures and offers one next step — open the revision, route to the right reviewer, or compare versions.",
+      "Answer cites the at-risk crew and offers one next step — open the recurrency list or draft a refresher assignment for a coordinator to confirm.",
     ],
   },
 ];
