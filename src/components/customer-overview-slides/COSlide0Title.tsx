@@ -2,9 +2,19 @@ import { SlideNarrationProps } from "@/types/slideProps";
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { Plane, Globe, Users } from "lucide-react";
 import DeckPPTXExportButton from "@/components/DeckPPTXExportButton";
+import DeckPDFExportButton from "@/components/DeckPDFExportButton";
+
+interface ExportSlideDef {
+  id: string;
+  label: string;
+  component: React.ComponentType<any>;
+}
 
 interface COSlide0TitleProps extends SlideNarrationProps {
   slideNumber?: number;
+  exportSlides?: ExportSlideDef[];
+  pdfFilename?: string;
+  deckLabel?: string;
 }
 
 const trustStats = [
@@ -15,6 +25,9 @@ const trustStats = [
 
 const COSlide0Title = ({
   slideNumber,
+  exportSlides,
+  pdfFilename = "Comply365-Customer-Overview.pdf",
+  deckLabel = "Customer Overview",
   isPlaying,
   isLoading,
   progress,
@@ -78,7 +91,16 @@ const COSlide0Title = ({
       </div>
 
       <div className="absolute bottom-24 right-8 z-40 flex flex-col items-end gap-1 text-right print:hidden">
-        <DeckPPTXExportButton deckId="customer-overview" />
+        <div className="flex items-center gap-2">
+          <DeckPPTXExportButton deckId="customer-overview" />
+          {exportSlides && exportSlides.length > 0 && (
+            <DeckPDFExportButton
+              slides={exportSlides}
+              filename={pdfFilename}
+              deckLabel={deckLabel}
+            />
+          )}
+        </div>
         <span className="text-[10px] text-muted-foreground bg-background/70 backdrop-blur px-2 py-0.5 rounded max-w-[220px]">
           Interactive slides export in their default view.
         </span>

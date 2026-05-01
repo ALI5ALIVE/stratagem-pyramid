@@ -126,6 +126,13 @@ const CustomerOverview = () => {
               key={slide.id}
               slideNumber={index}
               id={slide.id}
+              {...(index === 0
+                ? {
+                    exportSlides: slides,
+                    pdfFilename: "Comply365-Customer-Overview.pdf",
+                    deckLabel: "Customer Overview",
+                  }
+                : {})}
               {...narrationProps}
             />
           );
