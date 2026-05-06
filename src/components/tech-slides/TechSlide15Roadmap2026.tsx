@@ -10,8 +10,8 @@ const phases = [
     items: [
       "✅ Link Training Modules to Documents (Operational Data Foundation)",
       "✅ Regulation Database Replatforming POC (Operational Data Foundation)",
-      "✅ Automation POC (Intelligence & Orchestration Layer)",
-      "✅ Platform-wide Insights & Recommendations POC (Intelligence & Orchestration Layer)",
+      "✅ Platform Proof of Concept — Automation (Intelligence & Orchestration Layer)",
+      "✅ Platform Proof of Concept for Future Vision — Platform-wide Insights & Recommendations (Intelligence & Orchestration Layer)",
       "🔄 Regulation Database integration with ContentManager365 (Operational Data Foundation)",
       "🔄 All-in-One Mobile Experience — Phase 1: Training screens in the Comply iOS Mobile app (Unified Mobile Experience)",
     ],
