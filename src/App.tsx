@@ -35,6 +35,7 @@ import RoadmapDeck from "./pages/RoadmapDeck";
 import AuthPage from "./pages/Auth";
 import ReviewDashboard from "./pages/ReviewDashboard";
 import CustomerOverview from "./pages/CustomerOverview";
+import PlatformOverview from "./pages/PlatformOverview";
 import { AuthProvider } from "./contexts/AuthContext";
 import RequireAuth from "./components/academy/RequireAuth";
 import AcademyHome from "./pages/academy/AcademyHome";
@@ -87,6 +88,7 @@ const App = () => (
             <Route path="/roadmap" element={<RoadmapDeck />} />
             <Route path="/review" element={<ReviewDashboard />} />
             <Route path="/customer-overview" element={<CustomerOverview />} />
+            <Route path="/platform" element={<PlatformOverview />} />
             <Route path="/academy" element={<RequireAuth><AcademyHome /></RequireAuth>} />
             <Route path="/academy/admin" element={<RequireAuth><AdminDashboard /></RequireAuth>} />
             <Route path="/academy/certificate" element={<RequireAuth><Certificate /></RequireAuth>} />

@@ -11,12 +11,9 @@ import {
   Workflow,
   Sparkles,
   Smartphone,
-  Database,
   Zap,
   CheckCircle2,
-  Radar,
   Network,
-  FileCheck,
   AlertTriangle,
   TrendingUp,
 } from "lucide-react";

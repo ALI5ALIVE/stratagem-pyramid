@@ -148,6 +148,14 @@ export default function HomePage() {
             subtitle="Audience-tailored presentations for external delivery" 
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <DeckCardComponent card={{
+              title: "Platform Overview — Industry Agnostic",
+              description: "A clean, industry-agnostic walkthrough of the Operational Performance Platform — capabilities, DTOP, intelligence, and value. Self-serve marketing page.",
+              href: "/platform",
+              icon: Sparkles,
+              badge: "Marketing page · self-serve",
+              accent: "from-primary to-cyan-500",
+            }} />
             {pitchDecks.map((card) => (
               <DeckCardComponent key={card.href} card={card} />
             ))}
