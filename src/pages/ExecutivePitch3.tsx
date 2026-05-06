@@ -218,6 +218,7 @@ const ExecutivePitch3 = () => {
                     pptxDeckId: "executive-pitch-3" as const,
                     pdfFilename: "Comply365-Executive-Pitch-Medium.pdf",
                     deckLabel: "Executive Pitch · Medium",
+                    hidePdfExport: true,
                   }
                 : {})}
               {...narrationProps}

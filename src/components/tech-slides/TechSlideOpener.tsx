@@ -18,6 +18,7 @@ interface Props extends SlideNarrationProps {
   pptxDeckId?: DeckId;
   pdfFilename?: string;
   deckLabel?: string;
+  hidePdfExport?: boolean;
 }
 
 /**
@@ -30,6 +31,7 @@ const TechSlideOpener = ({
   pptxDeckId = "tech-deep-dive",
   pdfFilename = "Comply365-Technical-Deep-Dive.pdf",
   deckLabel = "Technical Deep Dive",
+  hidePdfExport = false,
   ...narrationProps
 }: Props) => (
   <SalesSlideContainer
@@ -59,11 +61,13 @@ const TechSlideOpener = ({
       <div className="absolute bottom-24 right-8 z-40 flex flex-col items-end gap-1 text-right">
         <div className="flex items-center gap-2">
           <DeckPPTXExportButton deckId={pptxDeckId} />
-          <DeckPDFExportButton
-            slides={exportSlides}
-            filename={pdfFilename}
-            deckLabel={deckLabel}
-          />
+          {!hidePdfExport && (
+            <DeckPDFExportButton
+              slides={exportSlides}
+              filename={pdfFilename}
+              deckLabel={deckLabel}
+            />
+          )}
         </div>
         <span className="text-[10px] text-muted-foreground bg-background/70 backdrop-blur px-2 py-0.5 rounded max-w-[220px]">
           Interactive slides export in their default view.

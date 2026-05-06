@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 interface Props extends SlideNarrationProps { slideNumber?: number; }
 
 const diffs = [
-  { icon: Link2, title: "Connected Foundation", desc: "One data model, three core apps, one intelligence layer for Content, training and safety.", color: "text-sky-400", bg: "bg-sky-400/10", border: "border-sky-400/30" },
+  { icon: Link2, title: "Connected Foundation", desc: "One Connected Data Model, three core apps, one intelligence layer for Content, training and safety.", color: "text-sky-400", bg: "bg-sky-400/10", border: "border-sky-400/30" },
   { icon: Brain, title: "Domain-Trained Intelligence", desc: "Insights & Intelligence built on aviation data. Not a generic AI with an aviation wrapper — purpose-built for the operational corpus.", color: "text-primary", bg: "bg-primary/10", border: "border-primary/30" },
   { icon: ShieldCheck, title: "Proof by Design", desc: "Every action logged automatically. The audit trail is a byproduct, not a report. Closed loop — Detect, Trigger, Orchestrate, Prove.", color: "text-emerald-400", bg: "bg-emerald-400/10", border: "border-emerald-400/30" },
 ];
