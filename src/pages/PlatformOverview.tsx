@@ -17,7 +17,7 @@ import {
   AlertTriangle,
   TrendingUp,
 } from "lucide-react";
-import platformEcosystem from "@/assets/comply365-platform-ecosystem.png";
+import PlatformArchitectureDiagramV4 from "@/components/platform-slides/PlatformArchitectureDiagramV4";
 import logo from "@/assets/comply365-logo-white.png";
 
 // ----------------------------------------------------------------------------
@@ -317,13 +317,9 @@ const PlatformModules = () => (
         </p>
       </div>
 
-      <div className="mt-10 grid lg:grid-cols-12 gap-8 items-center">
-        <div className="lg:col-span-5 flex items-center justify-center">
-          <img
-            src={platformEcosystem}
-            alt="Comply365 Operational Performance Platform ecosystem"
-            className="w-full max-w-md object-contain"
-          />
+      <div className="mt-10 grid lg:grid-cols-12 gap-8 items-stretch">
+        <div className="lg:col-span-5 flex items-stretch min-h-[420px]">
+          <PlatformArchitectureDiagramV4 compact />
         </div>
         <div className="lg:col-span-7 grid sm:grid-cols-2 gap-3">
           {modules.map((m) => (
