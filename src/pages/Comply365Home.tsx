@@ -150,7 +150,49 @@ const Stakes = () => (
 );
 
 // ----------------------------------------------------------------------------
-// 3. Today vs Tomorrow
+// 3. Who this is for — Personas
+// ----------------------------------------------------------------------------
+const Personas = () => (
+  <section id="personas" className="border-b border-border/60">
+    <div className="max-w-7xl mx-auto px-6 py-20">
+      <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-primary">
+        <Users className="h-3.5 w-3.5" /> Who this is for
+      </div>
+      <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold tracking-tight max-w-3xl">
+        One platform. Four people who feel the difference first.
+      </h2>
+      <p className="mt-4 text-muted-foreground max-w-2xl">
+        Pick the lens that matches your accountability — the platform reframes around what you own.
+      </p>
+
+      <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {PERSONAS.map((p) => {
+          const Icon = p.icon;
+          return (
+            <Link
+              key={p.id}
+              to={`/platform?role=${p.id}#outcomes`}
+              className={`group relative flex flex-col rounded-2xl border ${p.border} ${p.bg} p-6 hover:-translate-y-0.5 transition-all`}
+            >
+              <div className={`h-10 w-10 rounded-lg border ${p.border} bg-background/40 flex items-center justify-center`}>
+                <Icon className={`h-5 w-5 ${p.color}`} />
+              </div>
+              <div className={`mt-5 text-[10px] uppercase tracking-[0.22em] ${p.color}`}>{p.role}</div>
+              <h3 className="mt-1 font-display text-lg font-bold text-foreground leading-tight">{p.homeHook}</h3>
+              <p className="mt-3 text-xs text-muted-foreground leading-relaxed flex-1">{p.promise}</p>
+              <div className={`mt-5 inline-flex items-center text-[11px] font-semibold ${p.color} opacity-80 group-hover:opacity-100`}>
+                See your view <ArrowRight className="h-3 w-3 ml-1" />
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+);
+
+// ----------------------------------------------------------------------------
+// 4. Today vs Tomorrow
 // ----------------------------------------------------------------------------
 const todayWords = ["Siloed", "Reactive", "Manual", "Unverified", "Document-bound"];
 const tomorrowWords = ["Connected", "Predictive", "Automated", "Provable", "Action-bound"];
