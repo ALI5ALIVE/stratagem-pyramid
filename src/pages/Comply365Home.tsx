@@ -106,6 +106,45 @@ const Hero = () => (
 // ----------------------------------------------------------------------------
 // 2. Stakes
 // ----------------------------------------------------------------------------
+const signalExamples = [
+  { color: "blue", dot: "bg-blue-500", border: "border-blue-500/30", bg: "bg-blue-500/5", tag: "Operational signal", line: "A KPI drifts off-target." },
+  { color: "amber", dot: "bg-amber-500", border: "border-amber-500/30", bg: "bg-amber-500/5", tag: "Content signal", line: "A manual revision is published." },
+  { color: "violet", dot: "bg-violet-500", border: "border-violet-500/30", bg: "bg-violet-500/5", tag: "Training signal", line: "A competency gap appears on a roster." },
+  { color: "emerald", dot: "bg-emerald-500", border: "border-emerald-500/30", bg: "bg-emerald-500/5", tag: "Safety signal", line: "A safety observation is filed." },
+];
+
+const Signals = () => (
+  <section id="signals" className="border-b border-border/60">
+    <div className="max-w-7xl mx-auto px-6 py-20">
+      <div className="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">Definition · The signal</div>
+      <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold tracking-tight max-w-4xl">
+        A signal is anything your operation is trying to tell you — before it becomes an incident.
+      </h2>
+      <p className="mt-4 text-muted-foreground max-w-2xl">
+        They live in your manuals, your safety reports, your training records and your operational data.
+        Most never make it into a decision.
+      </p>
+
+      <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-3">
+        {signalExamples.map((s) => (
+          <div key={s.tag} className={`rounded-2xl border ${s.border} ${s.bg} p-5`}>
+            <div className="flex items-center gap-2">
+              <span className={`h-2 w-2 rounded-full ${s.dot}`} />
+              <span className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{s.tag}</span>
+            </div>
+            <p className="mt-4 text-sm md:text-base text-foreground leading-snug">{s.line}</p>
+          </div>
+        ))}
+      </div>
+
+      <p className="mt-8 text-sm text-muted-foreground max-w-3xl">
+        Today, most of these signals die in a silo. The next sections show what that costs —
+        and how DTOP turns them into action.
+      </p>
+    </div>
+  </section>
+);
+
 const stakes = [
   {
     value: "$25–35B",
@@ -499,6 +538,7 @@ export default function Comply365Home() {
     <div className="min-h-screen bg-background text-foreground">
       <TopBar />
       <Hero />
+      <Signals />
       <Stakes />
       <Personas />
       <Shift />
