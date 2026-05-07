@@ -6,14 +6,13 @@ import {
   Workflow,
   Brain,
   ShieldCheck,
-  BookOpen,
-  GraduationCap,
   CheckCircle2,
-  Zap,
   Network,
   TrendingUp,
+  Users,
 } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
+import { PERSONAS } from "@/components/personas/personaConfig";
 
 // ----------------------------------------------------------------------------
 // Top bar
@@ -69,6 +68,9 @@ const Hero = () => (
         Comply365 turns operational signals into prescriptive action — across Content, Safety and Training.
         One connected data model. One operating rhythm. One source of truth.
       </p>
+      <p className="mt-3 text-sm text-muted-foreground/80 max-w-2xl">
+        Built for the COO and the heads of Safety, Content and Training — the people accountable when operations slip.
+      </p>
       <div className="mt-10 flex flex-wrap items-center gap-3">
         <Link
           to="/platform"
@@ -84,12 +86,16 @@ const Hero = () => (
         </a>
       </div>
 
-      {/* DTOP color marker row */}
-      <div className="mt-16 flex items-center gap-6 text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+      {/* DTOP one-line strap */}
+      <div className="mt-16 flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
         <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-blue-500" /> Detect</span>
+        <ArrowRight className="h-3 w-3 opacity-40" />
         <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-amber-500" /> Trigger</span>
+        <ArrowRight className="h-3 w-3 opacity-40" />
         <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-violet-500" /> Orchestrate</span>
+        <ArrowRight className="h-3 w-3 opacity-40" />
         <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-emerald-500" /> Prove</span>
+        <span className="ml-2 text-muted-foreground/70 normal-case tracking-normal">— the operating model that turns signals into outcomes</span>
       </div>
     </div>
   </section>
