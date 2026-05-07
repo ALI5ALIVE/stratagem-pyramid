@@ -1,105 +1,117 @@
-# Operational Performance Platform — Industry-Agnostic Page
-
 ## Goal
-Take the strongest beats of the Medium Pitch (Executive Pitch 3) and reframe them as a single-scroll marketing-style **Platform page** — not a deck. Industry-agnostic language (no aviation, no FOQA/ASAP), focused on capability + value. Then surface it as a card on the Home Page so prospects/partners can self-serve a clean overview before a sales conversation.
 
-## UX framing — the narrative arc
+Reimagine **comply365.com's public homepage** as a bolder, more provocative front door that funnels visitors into the existing `/platform` page (which already plays the Medium Pitch story — DTOP, Intelligence, Mobile, Why It Works).
 
-The Medium pitch tells a 5-beat story. The new page mirrors that arc, but as scrollable web sections (large hero, alternating layouts, sticky in-page nav), not 16:9 slides:
+Today's comply365.com is a polished but conventional product-marketing page: AI-powered hero → "One Platform, One Vision" paragraph → three module logos → six generic differentiator cards → customer logos → blog tiles → CTA. It tells you *what* Comply365 is, not *why now*.
+
+The redesign leads with **tension and proof**, not a tagline.
+
+---
+
+## Narrative Arc (8 sections)
 
 ```text
-1. Hero            — "Turn operational data into operational performance."
-2. The Shift       — Today (fragmented, reactive) → Tomorrow (connected, prescriptive)
-3. Outcomes        — 3 outcome pillars with proof metrics (industry-agnostic)
-4. The Platform    — One canvas: Core Apps · DTOP · Intelligence · Mobile
-5. DTOP            — Detect → Trigger → Orchestrate → Prove (the operating model)
-6. Intelligence    — Automation · Insights · CoAnalyst (Recommendations)
-7. Mobile          — One trusted shell for the frontline
-8. Why It Works    — 3 differentiators + trust band
-9. CTA             — Talk to us / view tailored deep dives by industry
+1. Provocative Hero        →  the operational gap
+2. The Stakes              →  what fragmentation costs
+3. From Reaction → Control →  Today vs Tomorrow split
+4. The Platform (modules)  →  ContentManager365 · SafetyManager365 · TrainingManager365
+5. The Intelligence Edge   →  ~90% domain accuracy vs ~35% generic AI
+6. DTOP in 60 seconds      →  Detect → Trigger → Orchestrate → Prove ribbon
+7. Proof & Trust           →  customer logos + headline metrics
+8. CTA                     →  Book a walkthrough · Explore the Platform
 ```
 
-Sections 5–7 follow the same **module pattern**: eyebrow tag · headline · 1-line promise · 3 capability bullets · 1 outcome stat. This gives a strong rhythm and lets a visitor scan in 60 seconds or read in 5 minutes.
+Each section ends with a clear hand-off into `/platform` (or its anchors).
 
-## Page design (industry-agnostic)
+---
 
-### Hero
-- H1: **The Operational Performance Platform**
-- Sub: "Detect signals, trigger the right work, orchestrate across teams, prove every outcome — on one connected platform."
-- Today vs Tomorrow split graphic (reuse pattern from `TechSlide1StrategicShift`, but with neutral language: "fragmented systems, reactive teams, manual proof" → "connected data, prescriptive actions, automatic proof").
-- Primary CTA: *Book a walkthrough*  ·  Secondary: *See it in the Medium Pitch*.
+## Section-by-section blueprint
 
-### The Shift (industry-agnostic Before/After)
-Two columns, `Today` (muted) vs `Tomorrow` (primary). Bullets phrased for any regulated, operationally complex industry (aviation, rail, defense, energy, healthcare ops):
-- Disconnected content / training / safety silos → One connected operational data model
-- Lagging KPIs after the fact → Weak signals detected early
-- Manual investigations → Recommended actions with evidence
-- Audit prep as a project → Proof produced as a byproduct
+**1. Hero — "Operations runs on signals nobody acts on."**
+- Eyebrow: *The Operational Performance Platform*
+- H1 (two-line, Space Grotesk, oversized): *"Operations runs on signals — nobody acts on."* with the strikethrough revealing the second line.
+- Sub: One sentence — *"Comply365 turns operational signals into prescriptive action across Content, Safety, and Training."*
+- Two CTAs: **Explore the Platform** (`/platform`) · **Book a walkthrough**
+- Background: subtle animated grid + DTOP color particles (D blue · T amber · O violet · P emerald) — replaces the generic looping video.
+- No nav-style module name reveal in the H1 (current site cycles ContentManager365/SafetyManager365/TrainingManager365 — we move that to section 4 where it earns its place).
 
-### Outcomes (3 pillars, industry-agnostic stats)
-| Pillar | Promise | Proof |
-|---|---|---|
-| Revenue & Risk Protection | Fewer disruptions, less exposure | Up to **40% fewer recurrent issues** |
-| Operational Efficiency | Faster change, less rework | **70% faster** time-to-change |
-| Workforce Performance | Right info, right person, right moment | **~90%** domain accuracy on operational queries (vs ~35% generic AI) |
+**2. The Stakes — "The cost of disconnected operations"**
+- 3 stat cards in a row, each citing a defensible metric we already use:
+  - **$25–35B** systemic industry exposure from disconnected ops (sourced via `mem://content/dtop/industry-exposure-figure`)
+  - **~65%** of operational signals never trigger an action
+  - **Days → minutes** typical detection-to-action gap
+- Below: a single line — *"This is what happens when Content, Safety and Training don't talk to each other."*
+- Visual: faint horizontal flow lines that fragment mid-screen.
 
-Each pillar links down to the platform module that delivers it.
+**3. From Reaction → Control — Today vs Tomorrow**
+- Split-screen layout (already a memorized pattern: `mem://ui/sales-deck-title-visual-strategy`).
+- Left ("Today"): muted greys, words like *Siloed · Reactive · Manual · Unverified*.
+- Right ("Tomorrow"): full color, *Connected · Predictive · Automated · Provable*.
+- Single sentence under: *"The shift isn't more software. It's a connected operating model."*
 
-### The Platform — modules grid
-Centered ecosystem visual on the left (reuse `PlatformEcosystemDiagram` / `PlatformArchitectureDiagramV4 compact`), capability cards on the right. Four cards using the canonical DTOP color tokens:
+**4. The Platform — three modules, one model**
+- Echoes comply365.com's strongest move (the three product names) but reframes them as **one connected data model**, not three logos.
+- 3 cards in a row, each in module color:
+  - **ContentManager365** — operational content as living, queryable knowledge.
+  - **SafetyManager365** — safety, quality, risk in one prescriptive layer.
+  - **TrainingManager365** — competency tied to operational reality.
+- Beneath: a thin connector graphic with the label *"One connected data model"* — leads the eye into section 5.
+- Each card links to its `/platform` anchor.
 
-1. **Core Operational Apps** (blue) — ContentManager365 · TrainingManager365 · SafetyManager365. *One Connected Data Model across content, training, and safety.*
-2. **DTOP Operating Model** (emerald) — Detect → Trigger → Orchestrate → Prove. *The way of working that wraps the stack.*
-3. **Intelligence & Orchestration** (amber) — Automation · Insights · CoAnalyst. *Turns operational data into recommended actions.*
-4. **Unified Mobile** (violet) — One frontline shell for content, training and safety.
+**5. The Intelligence Edge — CoAnalyst**
+- Single hero stat, treated like a billboard:
+  - **~90%** domain accuracy at L4–5 vs **~35%** generic AI (per `mem://content/coanalyst/accuracy-headline`).
+- Sub: *"CoAnalyst is the only operational AI that understands your manuals, your safety reports, and your training records — together."*
+- 3 inline chips: *Generative AI · Recommended Actions · Operational Data* (locked terminology per `mem://content/terminology-rules`).
+- CTA: *"See how CoAnalyst works →"* deep-links to `/platform#intelligence`.
 
-Each card is clickable and scrolls to its dedicated section below (mirrors the "jump-to" interaction the Medium pitch already has on `TechV4PlatformOverview`).
+**6. DTOP in 60 seconds**
+- The 4-step ribbon (Detect blue · Trigger amber · Orchestrate violet · Prove emerald) reused from `ExecSlide3DTOP` styling.
+- One short scenario line per step (industry-agnostic).
+- CTA: *"See the full operating model →"* → `/platform#dtop`.
 
-### DTOP section
-Horizontal 4-step ribbon (D · T · O · P) with one-line scenario in plain ops language: *"A weak signal appears → the platform triggers a workflow → the right teams orchestrate the response → the audit trail is produced automatically."* Industry-agnostic example (e.g., a high-risk operational anomaly), not aviation-specific.
+**7. Proof & Trust**
+- Headline: *"Trusted to run mission-critical operations."*
+- Customer logo strip (Qantas, RAF, MoD, BA, Delta — same set comply365.com uses today).
+- 3 trust metrics from `mem://brand/trust-signals` (550+ customers · ~2.5M users · 6 continents).
 
-### Intelligence section
-Three sub-tiles: **Automation** · **Insights & Intelligence** · **CoAnalyst (Recommendations)**.
-Headline: *"Generative AI built on your operational corpus — not a generic model with a wrapper."*
-Anchor stat: **~90% domain accuracy at L4–5 vs ~35% generic AI.** With the disclaimer chip we already use (`StatSourceChip`).
+**8. CTA — "What would you do with control?"**
+- Big two-up: **Book a walkthrough** (primary) · **Explore the Platform** (secondary → `/platform`).
+- Footer-light: tertiary links to industry pages (Airlines / Defense / Rail / MRO) and Resources.
 
-### Mobile section
-Phone mock + 3 bullets: one app for the frontline · works offline · contextual to role and shift.
+---
 
-### Why It Works (3 differentiators + trust)
-Reuse the structure of `TechSlideWhyComply` but **strip aviation framing**:
-- Connected Foundation
-- Domain-Trained Intelligence
-- Proof by Design
+## Why this is bolder than comply365.com today
 
-Trust band: 550+ customers · ~2.5M users · 6 continents (kept — already industry-agnostic and on-brand).
+| comply365.com today | Redesign |
+|---|---|
+| Hero leads with a brand claim ("Industry's First AI-Powered Platform") | Hero leads with a tension ("signals nobody acts on") |
+| Six generic differentiator cards (Enterprise-Wide, Configurability, Data Empowered…) | One sharp proof point: 90% vs 35% |
+| Modules shown as logos | Modules shown as one connected data model |
+| DTOP not visible | DTOP gets its own 60-second section |
+| Resources/blog tiles in the middle | Resources demoted; CTA earns the closing |
+| No measurable claim above the fold | Stakes section quantifies the problem |
 
-### CTA footer
-- *Book a walkthrough* (primary)
-- *See the Medium Pitch* → `/pitch-executive-3`
-- *Industry deep dives* → links to `/solutions/airlines`, `/solutions/rail`, `/solutions/defense`
+---
 
-## Home page integration
+## Technical notes (for the build phase, not this plan)
 
-Add a new card to the existing `pitchDecks` row (or a new "Platform" mini-section above it) on `src/pages/HomePage.tsx`:
+- New page at a non-destructive route (e.g. `/comply365-home`) so we can A/B against current Command Centre at `/`.
+- Reuse: `tailwind.config.ts` tokens, DTOP color mapping, `ExecSlide3DTOP` ribbon styling, `IndustryHero` patterns, `StickyNav` (optional), customer logos from `IndustryTrustBar`.
+- All copy follows `mem://content/terminology-rules` and `mem://content/platform-terminology-standards`.
+- No backend, no narration, no PPTX/PDF export — pure marketing page.
+- Dark theme, Space Grotesk headings, Inter body — consistent with the rest of Stratagem.
 
-- Title: **Platform Overview — Industry Agnostic**
-- Description: "A clean, industry-agnostic walkthrough of the Operational Performance Platform — capabilities, DTOP, intelligence, and value."
-- Badge: "Marketing page · self-serve"
-- Icon: `Layers` (or `Sparkles`)
-- Route: `/platform`
-
-## Technical notes
-
-- New route: `/platform` → `src/pages/PlatformOverview.tsx` (a normal scroll page, **not** a `SlideNavigationContext` deck).
-- New folder `src/components/platform-page/` for sections: `PlatformHero`, `PlatformShift`, `PlatformOutcomes`, `PlatformModulesGrid`, `PlatformDTOP`, `PlatformIntelligence`, `PlatformMobile`, `PlatformWhy`, `PlatformCTA`.
-- Reuse existing assets: `PlatformEcosystemDiagram`, `PlatformArchitectureDiagramV4` (compact), DTOP color mapping memory, trust signals memory.
-- Sticky in-page nav (anchor links: Shift · Platform · DTOP · Intelligence · Mobile · Why) following the Medium pitch reading order.
-- Add route in `src/App.tsx`. Add card in `src/pages/HomePage.tsx`.
-- All text must follow `mem://content/terminology-rules` and `mem://content/platform-terminology-standards` (Generative AI, Recommended Actions, Operational Data — no FOQA/FDM/ASAP).
-- No backend, no narration, no PPTX/PDF export — this is a marketing-style landing page.
+---
 
 ## Out of scope
-- Editing the Medium pitch deck itself.
-- Industry-specific content (the existing `/solutions/*` pages already do this).
-- New brand/visual identity — reuse existing tokens and components.
+
+- Editing `/platform` itself (it stays as the deeper story).
+- Touching the internal Command Centre at `/` until we approve replacement.
+- Industry sub-pages, Resources index, Contact form wiring.
+
+---
+
+## Deliverable
+
+This plan only. Once approved, the build phase will scaffold the 8 sections as components under `src/components/comply365-home/` and mount them at `/comply365-home`.

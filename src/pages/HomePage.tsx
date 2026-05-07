@@ -156,6 +156,14 @@ export default function HomePage() {
               badge: "Marketing page · self-serve",
               accent: "from-primary to-cyan-500",
             }} />
+            <DeckCardComponent card={{
+              title: "Comply365.com Homepage — Redesign",
+              description: "Bolder reimagining of the comply365.com public homepage. Leads with tension, the 90% vs 35% proof point, and DTOP — funnels into /platform.",
+              href: "/comply365-home",
+              icon: Rocket,
+              badge: "Marketing homepage · concept",
+              accent: "from-amber-500 to-primary",
+            }} />
             {pitchDecks.map((card) => (
               <DeckCardComponent key={card.href} card={card} />
             ))}

@@ -36,6 +36,7 @@ import AuthPage from "./pages/Auth";
 import ReviewDashboard from "./pages/ReviewDashboard";
 import CustomerOverview from "./pages/CustomerOverview";
 import PlatformOverview from "./pages/PlatformOverview";
+import Comply365Home from "./pages/Comply365Home";
 import { AuthProvider } from "./contexts/AuthContext";
 import RequireAuth from "./components/academy/RequireAuth";
 import AcademyHome from "./pages/academy/AcademyHome";
@@ -89,6 +90,7 @@ const App = () => (
             <Route path="/review" element={<ReviewDashboard />} />
             <Route path="/customer-overview" element={<CustomerOverview />} />
             <Route path="/platform" element={<PlatformOverview />} />
+            <Route path="/comply365-home" element={<Comply365Home />} />
             <Route path="/academy" element={<RequireAuth><AcademyHome /></RequireAuth>} />
             <Route path="/academy/admin" element={<RequireAuth><AdminDashboard /></RequireAuth>} />
             <Route path="/academy/certificate" element={<RequireAuth><Certificate /></RequireAuth>} />
