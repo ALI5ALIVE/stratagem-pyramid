@@ -22,6 +22,8 @@ import {
   Cable,
   ShieldAlert,
   FileCheck2,
+  BookOpen,
+  GraduationCap,
 } from "lucide-react";
 import PlatformArchitectureDiagramV4 from "@/components/platform-slides/PlatformArchitectureDiagramV4";
 import logo from "@/assets/comply365-logo-white.png";
@@ -34,6 +36,7 @@ import { PERSONAS, getPersona } from "@/components/personas/personaConfig";
 const navItems = [
   { id: "outcomes", label: "Outcomes" },
   { id: "platform", label: "Platform" },
+  { id: "foundation", label: "Foundation" },
   { id: "dtop", label: "DTOP" },
   { id: "intelligence", label: "Intelligence" },
   { id: "mobile", label: "Mobile" },
@@ -168,7 +171,7 @@ const modules = [
     id: "core",
     tag: "Foundation",
     title: "Core Operational Apps",
-    desc: "ContentManager365 · TrainingManager365 · SafetyManager365. One Connected Data Model across content, training, and safety.",
+    desc: "Three systems of record on one Connected Data Model — see the Foundation section below.",
     icon: Layers,
     color: "text-blue-400",
     bg: "bg-blue-400/10",
@@ -254,6 +257,117 @@ const PlatformModules = () => (
 // ----------------------------------------------------------------------------
 // Section: DTOP
 // ----------------------------------------------------------------------------
+const foundationSystems = [
+  {
+    name: "ContentManager365",
+    owner: "Head of Content / Tech Pubs",
+    tagline: "Operational content as living, queryable knowledge.",
+    icon: BookOpen,
+    color: "text-amber-400",
+    bg: "bg-amber-400/10",
+    border: "border-amber-400/30",
+    bullets: [
+      "Authoring & revision control",
+      "Distribution & acknowledgements",
+      "Structured for AI & search",
+    ],
+  },
+  {
+    name: "SafetyManager365",
+    owner: "Head of Safety",
+    tagline: "From events to control — closed-loop safety.",
+    icon: ShieldCheck,
+    color: "text-emerald-400",
+    bg: "bg-emerald-400/10",
+    border: "border-emerald-400/30",
+    bullets: [
+      "Reports, observations & investigations",
+      "Risk register & CAPA",
+      "Audit-ready evidence by default",
+    ],
+  },
+  {
+    name: "TrainingManager365",
+    owner: "Head of Training",
+    tagline: "Competence wired to operational reality.",
+    icon: GraduationCap,
+    color: "text-violet-400",
+    bg: "bg-violet-400/10",
+    border: "border-violet-400/30",
+    bullets: [
+      "Curricula, assignments & assessments",
+      "Competency & readiness state",
+      "Triggered by content & safety events",
+    ],
+  },
+];
+
+const Foundation = () => (
+  <section id="foundation" className="border-b border-border/60 bg-card/10">
+    <div className="max-w-7xl mx-auto px-6 py-20">
+      <div className="max-w-3xl">
+        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
+          Foundation · Systems of Record
+        </span>
+        <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+          Three systems of record. One connected data model.
+        </h2>
+        <p className="mt-3 text-muted-foreground">
+          Industry-grade systems for the work that has to be right — content authored once,
+          safety closed-loop, training tied to operational reality. The substrate every
+          other layer of the platform sits on.
+        </p>
+      </div>
+
+      <div className="mt-10 grid md:grid-cols-3 gap-4">
+        {foundationSystems.map((s) => (
+          <div
+            key={s.name}
+            className={`flex flex-col rounded-xl border ${s.border} ${s.bg} p-6`}
+          >
+            <div className="flex items-center justify-between">
+              <s.icon className={`h-6 w-6 ${s.color}`} />
+              <span className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                Owner: {s.owner}
+              </span>
+            </div>
+            <h3 className="mt-4 text-xl font-bold text-foreground">{s.name}</h3>
+            <p className="mt-1.5 text-sm text-muted-foreground italic">{s.tagline}</p>
+            <ul className="mt-5 space-y-2 flex-1">
+              {s.bullets.map((b) => (
+                <li key={b} className="flex items-start gap-2 text-sm text-foreground/90">
+                  <CheckCircle2 className={`h-4 w-4 mt-0.5 shrink-0 ${s.color}`} />
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+            <div className={`mt-6 inline-flex self-start items-center gap-1.5 rounded-full border ${s.border} px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] ${s.color}`}>
+              <Database className="h-3 w-3" />
+              System of record
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-6 rounded-xl border border-primary/30 bg-primary/5 p-5">
+        <div className="flex items-start gap-3">
+          <Network className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+          <div>
+            <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary">
+              One Connected Data Model
+            </div>
+            <p className="mt-1 text-sm text-foreground/90">
+              The same record powers a manual revision, a safety event and a training
+              assignment. Single taxonomy · single identity · single audit trail —
+              no point integrations between them, they share a substrate.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
 const dtopSteps = [
   { letter: "D", name: "Detect", color: "text-blue-400", border: "border-blue-400/40", bg: "bg-blue-400/10", desc: "A weak signal appears in operational data — performance, content, training or safety." },
   { letter: "T", name: "Trigger", color: "text-amber-400", border: "border-amber-400/40", bg: "bg-amber-400/10", desc: "The platform initiates the right workflow — a content update, a training campaign, a safety investigation." },
@@ -645,6 +759,7 @@ export default function PlatformOverview() {
       <Hero />
       <Outcomes />
       <PlatformModules />
+      <Foundation />
       <DTOPSection />
       <Intelligence />
       <Mobile />
