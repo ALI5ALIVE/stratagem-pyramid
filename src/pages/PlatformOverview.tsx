@@ -572,12 +572,13 @@ export default function PlatformOverview() {
     <div className="min-h-screen bg-background">
       <StickyNav />
       <Hero />
-      <Shift />
       <Outcomes />
       <PlatformModules />
       <DTOPSection />
       <Intelligence />
       <Mobile />
+      <Integrations />
+      <Security />
       <Why />
       <CTA />
     </div>
