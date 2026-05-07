@@ -82,8 +82,7 @@ const Hero = () => (
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_hsl(217_91%_60%/0.10),transparent_55%)]" />
     </div>
     <div className="max-w-7xl mx-auto px-6 pt-20 pb-16">
-      <div className="grid lg:grid-cols-12 gap-10 items-center">
-        <div className="lg:col-span-7">
+      <div className="max-w-4xl">
           <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-primary">
             <Sparkles className="h-3 w-3" /> The Operational Performance Platform
           </span>
@@ -117,17 +116,6 @@ const Hero = () => (
           <div className="mt-3">
             <PersonaTabs />
           </div>
-        </div>
-
-        {/* Architecture preview */}
-        <div className="lg:col-span-5">
-          <div className="rounded-2xl border border-border bg-card/40 backdrop-blur p-4 min-h-[420px] flex">
-            <PlatformArchitectureDiagramV4 compact />
-          </div>
-          <div className="mt-3 text-center text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70">
-            DTOP wraps the stack · Mobile · Intelligence · Core Apps
-          </div>
-        </div>
       </div>
     </div>
   </section>
