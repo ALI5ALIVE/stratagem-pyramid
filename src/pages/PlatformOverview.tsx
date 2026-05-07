@@ -476,6 +476,70 @@ const Mobile = () => (
 // ----------------------------------------------------------------------------
 // Section: Why It Works
 // ----------------------------------------------------------------------------
+const integrations = [
+  { icon: Database, title: "One Connected Data Model", desc: "A shared substrate across content, safety and training — not point integrations." },
+  { icon: Cable, title: "Standard Adaptors", desc: "REST API, document ingestion, OneRoster, SCORM, evidence export." },
+  { icon: Network, title: "Source Systems", desc: "Plug into operational data — performance, scheduling, ops, ERP, IAM." },
+  { icon: FileCheck2, title: "Evidence Out", desc: "Audit-ready exports for regulators and internal assurance — by design." },
+];
+
+const Integrations = () => (
+  <section id="integrations" className="border-b border-border/60">
+    <div className="max-w-7xl mx-auto px-6 py-20">
+      <div className="max-w-3xl">
+        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-cyan-400">Integrations &amp; Data Model</span>
+        <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+          Built to plug into the operation, not replace it.
+        </h2>
+        <p className="mt-3 text-muted-foreground">
+          The platform shares one data model across modules, and connects out through standard adaptors and APIs.
+        </p>
+      </div>
+      <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {integrations.map((i) => (
+          <div key={i.title} className="rounded-2xl border border-border bg-card/40 p-5">
+            <i.icon className="h-6 w-6 text-cyan-400 mb-3" />
+            <h3 className="text-sm font-bold text-foreground">{i.title}</h3>
+            <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{i.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+const securityPillars = [
+  { icon: Lock, title: "Identity &amp; Access", desc: "SSO, SAML, OIDC, RBAC down to record level. Your IAM, not ours." },
+  { icon: ShieldAlert, title: "Operational Security", desc: "Encryption in transit and at rest. Region-pinned data residency. Tenant isolation." },
+  { icon: ServerCog, title: "Deployment", desc: "Cloud, sovereign cloud and regulated tenancy options for defense and aviation." },
+  { icon: FileCheck2, title: "Compliance Posture", desc: "Built for regulated, mission-critical industries — auditable by design." },
+];
+
+const Security = () => (
+  <section id="security" className="border-b border-border/60 bg-card/20">
+    <div className="max-w-7xl mx-auto px-6 py-20">
+      <div className="max-w-3xl">
+        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Security, Compliance &amp; Deployment</span>
+        <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+          The posture regulated operators expect.
+        </h2>
+        <p className="mt-3 text-muted-foreground">
+          Designed for the COO, CIO and CISO buying together — without slowing the operation down.
+        </p>
+      </div>
+      <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {securityPillars.map((s) => (
+          <div key={s.title} className="rounded-2xl border border-primary/20 bg-card/40 p-5">
+            <s.icon className="h-6 w-6 text-primary mb-3" />
+            <h3 className="text-sm font-bold text-foreground" dangerouslySetInnerHTML={{ __html: s.title }} />
+            <p className="mt-2 text-xs text-muted-foreground leading-relaxed" dangerouslySetInnerHTML={{ __html: s.desc }} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
 const diffs = [
   {
     icon: Link2,
