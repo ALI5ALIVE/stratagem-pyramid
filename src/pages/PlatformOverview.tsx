@@ -36,10 +36,10 @@ import { PERSONAS, getPersona } from "@/components/personas/personaConfig";
 const navItems = [
   { id: "outcomes", label: "Outcomes" },
   { id: "platform", label: "Platform" },
-  { id: "foundation", label: "Foundation" },
   { id: "dtop", label: "DTOP" },
-  { id: "intelligence", label: "Intelligence" },
   { id: "mobile", label: "Mobile" },
+  { id: "intelligence", label: "Intelligence" },
+  { id: "foundation", label: "Foundation" },
   { id: "integrations", label: "Integrations" },
   { id: "security", label: "Security" },
   { id: "why", label: "Why It Works" },
@@ -171,7 +171,7 @@ const modules = [
     id: "core",
     tag: "Foundation",
     title: "Core Operational Apps",
-    desc: "Three systems of record on one Connected Data Model — see the Foundation section below.",
+    desc: "Three systems of record on one Connected Data Model — covered in the Foundation section.",
     icon: Layers,
     color: "text-blue-400",
     bg: "bg-blue-400/10",
@@ -307,7 +307,7 @@ const Foundation = () => (
     <div className="max-w-7xl mx-auto px-6 py-20">
       <div className="max-w-3xl">
         <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
-          Foundation · Systems of Record
+          Foundation · Layer 1 · Systems of Record
         </span>
         <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
           Three systems of record. One connected data model.
@@ -382,7 +382,7 @@ const DTOPSection = () => {
     <div className="max-w-7xl mx-auto px-6 py-20">
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 max-w-5xl">
         <div>
-          <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-400">DTOP · Operating Model</span>
+        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-400">DTOP · Layer 4 · Wraps the stack</span>
           <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
             Detect → Trigger → Orchestrate → Prove.
           </h2>
@@ -470,7 +470,7 @@ const Intelligence = () => (
   <section id="intelligence" className="border-b border-border/60">
     <div className="max-w-7xl mx-auto px-6 py-20">
       <div className="max-w-3xl">
-        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-amber-400">Intelligence & Orchestration</span>
+        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-amber-400">Layer 2 · Intelligence & Orchestration</span>
         <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
           Generative AI built on your operational corpus.
         </h2>
@@ -545,7 +545,7 @@ const Mobile = () => (
           </div>
         </div>
         <div className="lg:col-span-7 order-1 lg:order-2">
-          <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-violet-400">Unified Mobile</span>
+        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-violet-400">Layer 3 · Unified Mobile</span>
           <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
             One trusted shell for the frontline.
           </h2>
@@ -759,10 +759,10 @@ export default function PlatformOverview() {
       <Hero />
       <Outcomes />
       <PlatformModules />
-      <Foundation />
       <DTOPSection />
-      <Intelligence />
       <Mobile />
+      <Intelligence />
+      <Foundation />
       <Integrations />
       <Security />
       <Why />
