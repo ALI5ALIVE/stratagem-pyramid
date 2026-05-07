@@ -1,76 +1,92 @@
-# Event 1-Pager: "From Signals to Control"
+# Event Positioning & Messaging 1-Pager
 
-A new standalone web page positioning **Signals** as the anchoring theme for an event around the Operational Performance Platform category. Built as a single scrollable route in the existing dark Comply365 theme.
+A second, tighter web 1-pager focused purely on the **positioning and messaging brief** for the "From Signals to Control" event — the kind of page you'd send to marketing, sponsors, or internal stakeholders to align everyone on the story. Tracks are reframed by **department** (Operations, Content, Safety, Training) instead of by DTOP step.
 
 ## Route
 
-- New route: `/events/from-signals-to-control`
-- New page file: `src/pages/events/SignalsEvent.tsx`
+- New route: `/events/from-signals-to-control/brief`
+- New page file: `src/pages/events/SignalsEventBrief.tsx`
 - Registered in `src/App.tsx`
-- Not added to main nav (event page = direct-link/share asset)
+- Sibling to the existing `SignalsEvent.tsx` (the public-facing 1-pager)
+- Cross-link: small "View public page" link in header; existing public page gets no change
 
-## Page Sections (top → bottom)
+## Page sections (top → bottom, single scroll)
 
-**1. Hero**
-- Eyebrow: "The Operational Performance Event"
+**1. Header strip**
+- Eyebrow: "Event Positioning & Messaging Brief"
 - H1: **From Signals to Control**
-- Sub: "Aviation generates 12,000+ operational signals every month. Most go unheard. The leaders of the next decade will be the operators who can detect, act on, and prove control over every one that matters."
-- Primary CTA: "Reserve your seat" · Secondary: "Request the agenda"
-- Visual: animated signal-wave / pulse motif using primary blue + DTOP color accents
+- One-line standfirst: "The positioning, narrative, and messaging architecture for the Operational Performance Platform event."
+- Small meta row: Audience · Format · Status (placeholder tokens)
 
-**2. The Premise — 3 stat cards**
-- ~12K monthly signals per mid-size carrier — most orphaned
-- ~35% accuracy from generic AI on aviation categorisation
-- ~90% accuracy with purpose-built domain AI (CoAnalyst)
-- Pulled from existing trust-signals + CoAnalyst accuracy headline memory
+**2. The Big Idea (hero message block)**
+- Headline: "Aviation isn't short on data. It's short on signals it can act on."
+- 2–3 sentence narrative paragraph anchoring the event theme.
+- Pull-quote tile: **"From Signals to Control."**
 
-**3. The Shift (Today → Tomorrow strip)**
-- Today: Event management — reactive, fragmented, unread signals
-- Tomorrow: Signal management → Control management — proactive, unified, provable
-- Mirrors the existing Today/Tomorrow visual pattern from sales decks
+**3. Category Positioning**
+Compact 2-column block:
+- **Category:** The Operational Performance Platform
+- **Position:** The system of record + system of intelligence that turns operational signals into measurable control across safety, content, and training.
+- **Wedge vs. competitors:** purpose-built domain AI (~90% accuracy vs ~35% generic), unified across the three Systems of Record, DTOP operating model.
 
-**4. Category frame: The Operational Performance Platform**
-- One platform · Three Systems of Record · One operating model
-- Three module chips: ContentManager365 · SafetyManager365 · TrainingManager365
-- Unified by CoAnalyst intelligence + DTOP operating model
-- Small DTOP pipeline strip (D/T/O/P) using canonical color tokens
+**4. Messaging architecture (table)**
+6-row table — reuses the architecture already approved in the brief:
+| Layer | Message |
+|---|---|
+| Category | Built for the signal age of aviation |
+| Problem | Operators are drowning in unacted signals |
+| Shift | Event management → signal management → control management |
+| Solution | Three Systems of Record + CoAnalyst + DTOP |
+| Proof | ~90% domain AI accuracy vs ~35% generic · continuous audit evidence |
+| Outcome | Fewer surprises, faster response, provable control |
 
-**5. Four Event Tracks (signal-themed)**
-Grid of 4 cards, each color-coded to a DTOP step:
-- **Detect** (blue) — the signals others miss · CoAnalyst, Insights
-- **Trigger** (amber) — the right action automatically · Automation, DTOP
-- **Orchestrate** (violet) — safety, content, training as one system · Platform Foundation
-- **Prove** (emerald) — continuous control to regulators and the board · Audit, Line of Sight
+**5. Taglines & hooks**
+Small grid of 4 cards, each a candidate line with a 1-line use:
+- "From Signals to Control" — master theme
+- "Every Signal Counts" — emotional / safety-anchored
+- "The Signals Are There. Are You Listening?" — keynote provocation
+- "Operate at the Speed of Signals" — performance / ops angle
 
-**6. Who Should Attend**
-Horizontal row of role chips: Heads of Safety · Flight Ops · Compliance · Training · Digital/Data leaders
+**6. Audience & departmental tracks (REVISED)**
+Headline: "Four departments. One signal, end to end."
+Grid of 4 track cards — color-coded but mapped to **departments**, not DTOP letters:
 
-**7. Closing promise + CTA band**
-- "Walk in with a backlog of unread signals. Walk out with a model for turning every one of them into measurable control."
-- Buttons: Reserve your seat · Request the agenda
-- Placeholder fields for date/location/venue (TBD — left as `{Event Date}` / `{Venue}` tokens so easy to fill later)
+- **Operations** (blue) — Turn daily ops signals into faster, safer decisions. Audience: Heads of Flight Ops, Ops Control, Crew Ops.
+- **Content** (violet) — Make manuals, procedures, and tech pubs respond to live operational signals. Audience: Tech Pubs, Content Ops, Documentation leads.
+- **Safety** (emerald) — Detect weak signals before they become events; prove control to regulators. Audience: Heads of Safety, SMS, Compliance.
+- **Training** (amber) — Translate operational signals into targeted competency and recurrent training. Audience: Heads of Training, Standards, Check & Training.
 
-**8. Footer**
-- Lightweight: Comply365 wordmark + small print
+Each card: department name, 1-line promise, "Who it's for" line, 1 sample session title placeholder.
 
-## Design / Implementation notes (technical)
+**7. Narrative arc for the event (3-step strip)**
+- **Open** — The signal problem (industry frame)
+- **Middle** — The platform answer (category + DTOP + CoAnalyst, told through the 4 departments)
+- **Close** — The control outcome (provable, continuous, board-ready)
 
-- Reuse existing dark theme tokens from `index.css` and `tailwind.config.ts` — no new colors
-- Use Space Grotesk for headings, Inter for body (already configured)
-- DTOP color mapping per memory: D=blue, T=amber, O=violet, P=emerald
-- Build presentational only — no backend, no forms wired up yet (CTAs are anchor links / mailto placeholders we can swap later)
-- Single-file page composition with small inline section components, mirroring `PlatformOverview.tsx` pattern
-- SEO: page-level `<title>` ~"From Signals to Control — The Operational Performance Event", meta description, single H1, semantic sections
+**8. Tone & language guardrails**
+Two-column do / don't list:
+- **Use:** signals, control, operational performance, Systems of Record, CoAnalyst, DTOP, Generative AI, Recommended Actions, Operational Data
+- **Avoid:** FOQA, FDM, ASAP, "AI copilot", "single pane of glass", over-claiming ROI without disclaimers
 
-## Out of scope (this round)
+**9. Footer**
+Comply365 wordmark + small print + link back to the public event page.
 
-- No event date/venue locked in (left as placeholders)
-- No registration backend, form, or email capture
-- No PDF/PPTX export of the 1-pager (can be added later)
-- No changes to home/nav or existing pages
+## Design / implementation notes
 
-## Open items the user can answer later (not blocking)
+- Reuse existing dark theme tokens — no new colors
+- Department colors: Operations=blue (sky), Content=violet, Safety=emerald, Training=amber (kept consistent with DTOP color palette already in memory so visuals stay on-system, but labels are department-led, not DTOP-letter-led)
+- Single-file page mirroring `SignalsEvent.tsx` structure; smaller hero, more dense layout — this is a brief, not a marketing page
+- SEO: `<title>` "From Signals to Control — Event Positioning Brief", meta description, single H1
+- Presentational only; no backend, no forms, no PDF export this round
 
-- Event date, location, venue
-- Whether to wire CTAs to a real registration link or a mailto
-- Whether to add the page to the main nav or keep as direct-share only
+## Out of scope
+
+- No edits to the existing `/events/from-signals-to-control` public page
+- No PDF/PPTX export (can be added later)
+- No nav/home changes
+- No event date/venue locked in (placeholder tokens)
+
+## Open items (non-blocking)
+
+- Confirm department list (Ops / Content / Safety / Training) — assumed from your message; happy to add a 5th (e.g. Digital/Data) if useful
+- Whether to surface 1–2 sample session titles per department now, or leave as placeholders
