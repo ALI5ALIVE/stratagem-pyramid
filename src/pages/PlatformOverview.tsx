@@ -509,7 +509,7 @@ const Integrations = () => (
 );
 
 const securityPillars = [
-  { icon: Lock, title: "Identity &amp; Access", desc: "SSO, SAML, OIDC, RBAC down to record level. Your IAM, not ours." },
+  { icon: Lock, title: "Identity & Access", desc: "SSO, SAML, OIDC, RBAC down to record level. Your IAM, not ours." },
   { icon: ShieldAlert, title: "Operational Security", desc: "Encryption in transit and at rest. Region-pinned data residency. Tenant isolation." },
   { icon: ServerCog, title: "Deployment", desc: "Cloud, sovereign cloud and regulated tenancy options for defense and aviation." },
   { icon: FileCheck2, title: "Compliance Posture", desc: "Built for regulated, mission-critical industries — auditable by design." },
@@ -531,8 +531,8 @@ const Security = () => (
         {securityPillars.map((s) => (
           <div key={s.title} className="rounded-2xl border border-primary/20 bg-card/40 p-5">
             <s.icon className="h-6 w-6 text-primary mb-3" />
-            <h3 className="text-sm font-bold text-foreground" dangerouslySetInnerHTML={{ __html: s.title }} />
-            <p className="mt-2 text-xs text-muted-foreground leading-relaxed" dangerouslySetInnerHTML={{ __html: s.desc }} />
+            <h3 className="text-sm font-bold text-foreground">{s.title}</h3>
+            <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
           </div>
         ))}
       </div>
