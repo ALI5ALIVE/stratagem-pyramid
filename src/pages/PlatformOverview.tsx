@@ -88,16 +88,14 @@ const Hero = () => (
             <Sparkles className="h-3 w-3" /> The Operational Performance Platform
           </span>
           <h1 className="mt-5 text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground leading-[1.05]">
-            Turn operational data into{" "}
+            One connected platform for{" "}
             <span className="bg-gradient-to-r from-primary via-cyan-400 to-emerald-400 bg-clip-text text-transparent">
-              operational performance.
+              content, safety and training.
             </span>
           </h1>
           <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl">
-            Detect signals, trigger the right work, orchestrate across teams, and
-            prove every outcome — on one connected platform. Industry-grade
-            content, training and safety, fused with a domain-trained
-            intelligence layer.
+            One connected data model. One operating model (DTOP). One intelligence layer (CoAnalyst).
+            Built for regulated, operationally complex industries — and for the COO and the heads of Safety, Content and Training who run them.
           </p>
           <div className="mt-7 flex flex-wrap items-center gap-3">
             <a
@@ -113,38 +111,21 @@ const Hero = () => (
               See it in the Medium Pitch
             </Link>
           </div>
+          <div className="mt-6 text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+            Jump to your view
+          </div>
+          <div className="mt-3">
+            <PersonaTabs />
+          </div>
         </div>
 
-        {/* Today vs Tomorrow split graphic */}
+        {/* Architecture preview */}
         <div className="lg:col-span-5">
-          <div className="rounded-2xl border border-border bg-card/40 backdrop-blur p-4">
-            <div className="grid grid-cols-2 gap-3">
-              <div className="rounded-xl border border-muted/30 bg-muted/10 p-4">
-                <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-3">
-                  Today
-                </div>
-                <ul className="space-y-2.5 text-xs text-muted-foreground">
-                  <li className="flex gap-2"><AlertTriangle className="h-3.5 w-3.5 mt-0.5 text-muted-foreground/70 flex-shrink-0" />Fragmented systems</li>
-                  <li className="flex gap-2"><AlertTriangle className="h-3.5 w-3.5 mt-0.5 text-muted-foreground/70 flex-shrink-0" />Reactive teams</li>
-                  <li className="flex gap-2"><AlertTriangle className="h-3.5 w-3.5 mt-0.5 text-muted-foreground/70 flex-shrink-0" />Manual proof &amp; audit</li>
-                  <li className="flex gap-2"><AlertTriangle className="h-3.5 w-3.5 mt-0.5 text-muted-foreground/70 flex-shrink-0" />Generic AI guesses</li>
-                </ul>
-              </div>
-              <div className="rounded-xl border border-primary/30 bg-primary/5 p-4">
-                <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary mb-3">
-                  Tomorrow
-                </div>
-                <ul className="space-y-2.5 text-xs text-foreground">
-                  <li className="flex gap-2"><CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-primary flex-shrink-0" />One connected data model</li>
-                  <li className="flex gap-2"><CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-primary flex-shrink-0" />Weak signals detected early</li>
-                  <li className="flex gap-2"><CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-primary flex-shrink-0" />Proof produced automatically</li>
-                  <li className="flex gap-2"><CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-primary flex-shrink-0" />Domain-trained intelligence</li>
-                </ul>
-              </div>
-            </div>
-            <div className="mt-3 text-center text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70">
-              From reactive operations → to prescriptive performance
-            </div>
+          <div className="rounded-2xl border border-border bg-card/40 backdrop-blur p-4 min-h-[420px] flex">
+            <PlatformArchitectureDiagramV4 compact />
+          </div>
+          <div className="mt-3 text-center text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70">
+            DTOP wraps the stack · Mobile · Intelligence · Core Apps
           </div>
         </div>
       </div>
