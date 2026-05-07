@@ -500,6 +500,7 @@ export default function Comply365Home() {
       <TopBar />
       <Hero />
       <Stakes />
+      <Personas />
       <Shift />
       <Platform />
       <Intelligence />
