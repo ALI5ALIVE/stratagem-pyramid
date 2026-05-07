@@ -36,10 +36,10 @@ import { PERSONAS, getPersona } from "@/components/personas/personaConfig";
 const navItems = [
   { id: "outcomes", label: "Outcomes" },
   { id: "platform", label: "Platform" },
-  { id: "foundation", label: "Foundation" },
   { id: "dtop", label: "DTOP" },
-  { id: "intelligence", label: "Intelligence" },
   { id: "mobile", label: "Mobile" },
+  { id: "intelligence", label: "Intelligence" },
+  { id: "foundation", label: "Foundation" },
   { id: "integrations", label: "Integrations" },
   { id: "security", label: "Security" },
   { id: "why", label: "Why It Works" },
@@ -171,7 +171,7 @@ const modules = [
     id: "core",
     tag: "Foundation",
     title: "Core Operational Apps",
-    desc: "Three systems of record on one Connected Data Model — see the Foundation section below.",
+    desc: "Three systems of record on one Connected Data Model — covered in the Foundation section.",
     icon: Layers,
     color: "text-blue-400",
     bg: "bg-blue-400/10",
@@ -759,10 +759,10 @@ export default function PlatformOverview() {
       <Hero />
       <Outcomes />
       <PlatformModules />
-      <Foundation />
       <DTOPSection />
-      <Intelligence />
       <Mobile />
+      <Intelligence />
+      <Foundation />
       <Integrations />
       <Security />
       <Why />
