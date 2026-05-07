@@ -134,115 +134,43 @@ const Hero = () => (
 );
 
 // ----------------------------------------------------------------------------
-// Section: The Shift
-// ----------------------------------------------------------------------------
-const shiftRows = [
-  { today: "Disconnected content, training and safety silos", tomorrow: "One connected operational data model" },
-  { today: "Lagging KPIs surfaced after the fact", tomorrow: "Weak signals detected early and triaged" },
-  { today: "Manual investigations and root-cause toil", tomorrow: "Recommended actions with linked evidence" },
-  { today: "Audit prep as a project", tomorrow: "Proof produced automatically as a byproduct" },
-  { today: "Generic AI with a domain wrapper", tomorrow: "Generative AI built on your operational corpus" },
-];
-
-const Shift = () => (
-  <section id="shift" className="border-b border-border/60">
-    <div className="max-w-7xl mx-auto px-6 py-20">
-      <div className="max-w-3xl">
-        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">The Shift</span>
-        <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
-          From reactive operations to a prescriptive operating model.
-        </h2>
-        <p className="mt-3 text-muted-foreground">
-          The same shift every regulated, operationally complex industry is making — aviation, rail, defense, energy, healthcare ops.
-        </p>
-      </div>
-
-      <div className="mt-10 rounded-2xl border border-border overflow-hidden">
-        <div className="grid grid-cols-2 bg-card/40">
-          <div className="px-5 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground border-r border-border">Today</div>
-          <div className="px-5 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-primary">Tomorrow</div>
-        </div>
-        {shiftRows.map((r, i) => (
-          <div key={i} className={`grid grid-cols-2 ${i !== shiftRows.length - 1 ? "border-b border-border" : ""}`}>
-            <div className="px-5 py-4 text-sm text-muted-foreground border-r border-border flex items-start gap-2">
-              <AlertTriangle className="h-4 w-4 mt-0.5 text-muted-foreground/60 flex-shrink-0" />
-              {r.today}
-            </div>
-            <div className="px-5 py-4 text-sm text-foreground bg-primary/[0.03] flex items-start gap-2">
-              <CheckCircle2 className="h-4 w-4 mt-0.5 text-primary flex-shrink-0" />
-              {r.tomorrow}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-);
-
-// ----------------------------------------------------------------------------
 // Section: Outcomes
 // ----------------------------------------------------------------------------
-const outcomes = [
-  {
-    icon: ShieldCheck,
-    pillar: "Revenue & Risk Protection",
-    promise: "Fewer disruptions, less exposure, faster recovery.",
-    metric: "40%",
-    metricLabel: "fewer recurrent issues",
-    color: "text-emerald-400",
-    bg: "bg-emerald-400/10",
-    border: "border-emerald-400/30",
-  },
-  {
-    icon: TrendingUp,
-    pillar: "Operational Efficiency",
-    promise: "Faster change, less rework, lower controllable cost.",
-    metric: "70%",
-    metricLabel: "faster time-to-change",
-    color: "text-amber-400",
-    bg: "bg-amber-400/10",
-    border: "border-amber-400/30",
-  },
-  {
-    icon: Brain,
-    pillar: "Workforce Performance",
-    promise: "Right info, right person, right moment.",
-    metric: "~90%",
-    metricLabel: "domain accuracy vs ~35% generic AI",
-    color: "text-primary",
-    bg: "bg-primary/10",
-    border: "border-primary/30",
-  },
-];
-
-const Outcomes = () => (
-  <section id="outcomes" className="border-b border-border/60 bg-card/20">
-    <div className="max-w-7xl mx-auto px-6 py-20">
-      <div className="max-w-3xl">
-        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Outcomes</span>
-        <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
-          Three outcomes the platform is built to deliver.
-        </h2>
-      </div>
-      <div className="mt-10 grid md:grid-cols-3 gap-4">
-        {outcomes.map((o) => (
-          <div key={o.pillar} className={`rounded-2xl border ${o.border} ${o.bg} p-6 flex flex-col`}>
-            <o.icon className={`h-7 w-7 ${o.color} mb-4`} />
-            <h3 className="text-lg font-bold text-foreground">{o.pillar}</h3>
-            <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">{o.promise}</p>
-            <div className="mt-5 pt-5 border-t border-border/60">
-              <div className={`text-3xl font-bold ${o.color}`}>{o.metric}</div>
-              <div className="text-[11px] uppercase tracking-wider text-muted-foreground mt-0.5">{o.metricLabel}</div>
-            </div>
+const Outcomes = () => {
+  const { persona } = usePersonaState();
+  return (
+    <section id="outcomes" className="border-b border-border/60 bg-card/20">
+      <div className="max-w-7xl mx-auto px-6 py-20">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 max-w-5xl">
+          <div>
+            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Outcomes by role</span>
+            <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+              What changes for the {persona.role}.
+            </h2>
+            <p className="mt-3 text-muted-foreground max-w-2xl">{persona.promise}</p>
           </div>
-        ))}
+          <PersonaTabs />
+        </div>
+
+        <div className="mt-10 grid md:grid-cols-3 gap-4">
+          {persona.outcomes.map((o) => (
+            <div key={o.pillar} className={`rounded-2xl border ${persona.border} ${persona.bg} p-6 flex flex-col`}>
+              <div className={`text-[10px] uppercase tracking-[0.22em] ${persona.color}`}>{o.pillar}</div>
+              <p className="mt-2 text-sm text-foreground leading-relaxed flex-1">{o.promise}</p>
+              <div className="mt-5 pt-5 border-t border-border/60">
+                <div className={`text-3xl font-bold ${persona.color}`}>{o.metric}</div>
+                <div className="text-[11px] uppercase tracking-wider text-muted-foreground mt-0.5">{o.metricLabel}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="mt-6 text-[11px] text-muted-foreground/70 italic">
+          Indicative ranges from customer programs and industry benchmarks. ROI modeled per customer engagement.
+        </p>
       </div>
-      <p className="mt-6 text-[11px] text-muted-foreground/70 italic">
-        Indicative ranges from customer programs and industry benchmarks. ROI modeled per customer engagement.
-      </p>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 // ----------------------------------------------------------------------------
 // Section: Platform modules grid
