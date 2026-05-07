@@ -9,11 +9,12 @@ import {
   BookOpen,
   GraduationCap,
   CheckCircle2,
-  Zap,
   Network,
   TrendingUp,
+  Users,
 } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
+import { PERSONAS } from "@/components/personas/personaConfig";
 
 // ----------------------------------------------------------------------------
 // Top bar
@@ -69,6 +70,9 @@ const Hero = () => (
         Comply365 turns operational signals into prescriptive action — across Content, Safety and Training.
         One connected data model. One operating rhythm. One source of truth.
       </p>
+      <p className="mt-3 text-sm text-muted-foreground/80 max-w-2xl">
+        Built for the COO and the heads of Safety, Content and Training — the people accountable when operations slip.
+      </p>
       <div className="mt-10 flex flex-wrap items-center gap-3">
         <Link
           to="/platform"
@@ -84,12 +88,16 @@ const Hero = () => (
         </a>
       </div>
 
-      {/* DTOP color marker row */}
-      <div className="mt-16 flex items-center gap-6 text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+      {/* DTOP one-line strap */}
+      <div className="mt-16 flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
         <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-blue-500" /> Detect</span>
+        <ArrowRight className="h-3 w-3 opacity-40" />
         <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-amber-500" /> Trigger</span>
+        <ArrowRight className="h-3 w-3 opacity-40" />
         <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-violet-500" /> Orchestrate</span>
+        <ArrowRight className="h-3 w-3 opacity-40" />
         <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-emerald-500" /> Prove</span>
+        <span className="ml-2 text-muted-foreground/70 normal-case tracking-normal">— the operating model that turns signals into outcomes</span>
       </div>
     </div>
   </section>
@@ -110,9 +118,9 @@ const stakes = [
     note: "Operational signals that never trigger an action.",
   },
   {
-    value: "Days → minutes",
-    label: "Detection to action",
-    note: "Where the gap shrinks once Content, Safety and Training connect.",
+    value: "70%",
+    label: "Controllable cost reclaimed",
+    note: "Faster time-to-change, less rework, fewer recurrent disruptions.",
   },
 ];
 
@@ -142,7 +150,49 @@ const Stakes = () => (
 );
 
 // ----------------------------------------------------------------------------
-// 3. Today vs Tomorrow
+// 3. Who this is for — Personas
+// ----------------------------------------------------------------------------
+const Personas = () => (
+  <section id="personas" className="border-b border-border/60">
+    <div className="max-w-7xl mx-auto px-6 py-20">
+      <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-primary">
+        <Users className="h-3.5 w-3.5" /> Who this is for
+      </div>
+      <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold tracking-tight max-w-3xl">
+        One platform. Four people who feel the difference first.
+      </h2>
+      <p className="mt-4 text-muted-foreground max-w-2xl">
+        Pick the lens that matches your accountability — the platform reframes around what you own.
+      </p>
+
+      <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {PERSONAS.map((p) => {
+          const Icon = p.icon;
+          return (
+            <Link
+              key={p.id}
+              to={`/platform?role=${p.id}#outcomes`}
+              className={`group relative flex flex-col rounded-2xl border ${p.border} ${p.bg} p-6 hover:-translate-y-0.5 transition-all`}
+            >
+              <div className={`h-10 w-10 rounded-lg border ${p.border} bg-background/40 flex items-center justify-center`}>
+                <Icon className={`h-5 w-5 ${p.color}`} />
+              </div>
+              <div className={`mt-5 text-[10px] uppercase tracking-[0.22em] ${p.color}`}>{p.role}</div>
+              <h3 className="mt-1 font-display text-lg font-bold text-foreground leading-tight">{p.homeHook}</h3>
+              <p className="mt-3 text-xs text-muted-foreground leading-relaxed flex-1">{p.promise}</p>
+              <div className={`mt-5 inline-flex items-center text-[11px] font-semibold ${p.color} opacity-80 group-hover:opacity-100`}>
+                See your view <ArrowRight className="h-3 w-3 ml-1" />
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+);
+
+// ----------------------------------------------------------------------------
+// 4. Today vs Tomorrow
 // ----------------------------------------------------------------------------
 const todayWords = ["Siloed", "Reactive", "Manual", "Unverified", "Document-bound"];
 const tomorrowWords = ["Connected", "Predictive", "Automated", "Provable", "Action-bound"];
@@ -221,30 +271,30 @@ const Platform = () => (
         The same record powers a manual revision, a safety event and a training assignment — because they share a substrate, not just an integration.
       </p>
 
-      <div className="mt-12 grid md:grid-cols-3 gap-5">
+      <div className="mt-10 grid md:grid-cols-3 gap-3">
         {modules.map((m) => (
           <Link
             key={m.name}
             to={m.href}
-            className="group relative flex flex-col rounded-2xl border border-border bg-card p-7 hover:border-primary/40 hover:-translate-y-0.5 transition-all"
+            className="group flex items-center gap-3 rounded-xl border border-border bg-card/60 px-4 py-3 hover:border-primary/40 transition-all"
           >
-            <div className={`absolute inset-x-0 top-0 h-[2px] rounded-t-2xl bg-gradient-to-r ${m.accent}`} />
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-lg bg-secondary flex items-center justify-center">
-                <m.icon className="h-5 w-5 text-primary" />
-              </div>
-              <div className="font-display font-semibold text-foreground">{m.name}</div>
+            <div className={`h-8 w-8 rounded-md bg-secondary flex items-center justify-center shrink-0`}>
+              <m.icon className="h-4 w-4 text-primary" />
             </div>
-            <p className="mt-5 text-sm text-muted-foreground leading-relaxed flex-1">{m.blurb}</p>
-            <div className="mt-6 inline-flex items-center text-xs font-semibold text-primary opacity-80 group-hover:opacity-100">
-              Explore <ArrowRight className="h-3 w-3 ml-1" />
+            <div className="min-w-0 flex-1">
+              <div className="font-display text-sm font-semibold text-foreground truncate">{m.name}</div>
+              <div className="text-[11px] text-muted-foreground truncate">{m.blurb}</div>
             </div>
+            <ArrowRight className="h-3.5 w-3.5 text-muted-foreground/60 group-hover:text-primary shrink-0" />
           </Link>
         ))}
       </div>
 
-      <div className="mt-10 flex items-center justify-center gap-3 text-xs uppercase tracking-[0.22em] text-muted-foreground">
-        <Network className="h-4 w-4 text-primary" /> One connected data model
+      <div className="mt-8 flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-muted-foreground">
+        <Network className="h-4 w-4 text-primary" /> One Connected Data Model
+        <Link to="/platform#platform" className="ml-auto text-primary normal-case tracking-normal hover:underline">
+          See the full platform →
+        </Link>
       </div>
     </div>
   </section>
@@ -317,17 +367,19 @@ const DTOP = () => (
         The operating model that turns events into control.
       </h2>
 
-      <div className="mt-12 grid md:grid-cols-4 gap-4">
+      <div className="mt-12 grid md:grid-cols-4 gap-2 items-stretch">
         {dtopSteps.map((s, i) => (
-          <div key={s.letter} className={`relative rounded-2xl border ${dtopColor(s.color)} p-6`}>
-            <div className="flex items-center gap-3">
-              <div className={`h-10 w-10 rounded-lg flex items-center justify-center font-display text-lg font-bold border ${dtopColor(s.color)}`}>
-                {s.letter}
-              </div>
-              <div className="font-display font-semibold text-foreground">{s.name}</div>
+          <div key={s.letter} className={`relative rounded-xl border ${dtopColor(s.color)} px-4 py-4 flex items-center gap-3`}>
+            <div className={`h-8 w-8 rounded-md flex items-center justify-center font-display text-sm font-bold border ${dtopColor(s.color)} shrink-0`}>
+              {s.letter}
             </div>
-            <p className="mt-4 text-sm text-muted-foreground leading-relaxed">{s.line}</p>
-            <div className="absolute top-4 right-4 text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60">0{i + 1}</div>
+            <div className="min-w-0">
+              <div className="font-display text-sm font-semibold text-foreground">{s.name}</div>
+              <div className="text-[11px] text-muted-foreground leading-snug mt-0.5">{s.line}</div>
+            </div>
+            {i < dtopSteps.length - 1 && (
+              <ArrowRight className="hidden md:block absolute -right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/40 z-10" />
+            )}
           </div>
         ))}
       </div>
@@ -409,6 +461,23 @@ const CTA = () => (
         </Link>
       </div>
 
+      <div className="mt-10">
+        <div className="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+          Talk to a specialist for your role
+        </div>
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+          {PERSONAS.map((p) => (
+            <a
+              key={p.id}
+              href={`mailto:hello@comply365.com?subject=${encodeURIComponent(`Walkthrough · ${p.role}`)}`}
+              className={`inline-flex items-center gap-2 rounded-full border ${p.border} ${p.bg} px-3 py-1.5 text-xs font-semibold ${p.color} hover:bg-background/40 transition-colors`}
+            >
+              <p.icon className="h-3.5 w-3.5" /> {p.shortRole}
+            </a>
+          ))}
+        </div>
+      </div>
+
       <div className="mt-16 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
         <Link to="/solutions/airlines" className="hover:text-foreground">Airlines</Link>
         <span className="opacity-30">·</span>
@@ -431,6 +500,7 @@ export default function Comply365Home() {
       <TopBar />
       <Hero />
       <Stakes />
+      <Personas />
       <Shift />
       <Platform />
       <Intelligence />

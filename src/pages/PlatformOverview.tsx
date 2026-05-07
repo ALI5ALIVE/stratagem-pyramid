@@ -16,20 +16,29 @@ import {
   Network,
   AlertTriangle,
   TrendingUp,
+  Lock,
+  ServerCog,
+  Database,
+  Cable,
+  ShieldAlert,
+  FileCheck2,
 } from "lucide-react";
 import PlatformArchitectureDiagramV4 from "@/components/platform-slides/PlatformArchitectureDiagramV4";
 import logo from "@/assets/comply365-logo-white.png";
+import PersonaTabs, { usePersonaState } from "@/components/personas/PersonaTabs";
+import { PERSONAS, getPersona } from "@/components/personas/personaConfig";
 
 // ----------------------------------------------------------------------------
 // Sticky in-page nav
 // ----------------------------------------------------------------------------
 const navItems = [
-  { id: "shift", label: "The Shift" },
   { id: "outcomes", label: "Outcomes" },
   { id: "platform", label: "Platform" },
   { id: "dtop", label: "DTOP" },
   { id: "intelligence", label: "Intelligence" },
   { id: "mobile", label: "Mobile" },
+  { id: "integrations", label: "Integrations" },
+  { id: "security", label: "Security" },
   { id: "why", label: "Why It Works" },
 ];
 
@@ -79,16 +88,14 @@ const Hero = () => (
             <Sparkles className="h-3 w-3" /> The Operational Performance Platform
           </span>
           <h1 className="mt-5 text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground leading-[1.05]">
-            Turn operational data into{" "}
+            One connected platform for{" "}
             <span className="bg-gradient-to-r from-primary via-cyan-400 to-emerald-400 bg-clip-text text-transparent">
-              operational performance.
+              content, safety and training.
             </span>
           </h1>
           <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl">
-            Detect signals, trigger the right work, orchestrate across teams, and
-            prove every outcome — on one connected platform. Industry-grade
-            content, training and safety, fused with a domain-trained
-            intelligence layer.
+            One connected data model. One operating model (DTOP). One intelligence layer (CoAnalyst).
+            Built for regulated, operationally complex industries — and for the COO and the heads of Safety, Content and Training who run them.
           </p>
           <div className="mt-7 flex flex-wrap items-center gap-3">
             <a
@@ -104,86 +111,23 @@ const Hero = () => (
               See it in the Medium Pitch
             </Link>
           </div>
+          <div className="mt-6 text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+            Jump to your view
+          </div>
+          <div className="mt-3">
+            <PersonaTabs />
+          </div>
         </div>
 
-        {/* Today vs Tomorrow split graphic */}
+        {/* Architecture preview */}
         <div className="lg:col-span-5">
-          <div className="rounded-2xl border border-border bg-card/40 backdrop-blur p-4">
-            <div className="grid grid-cols-2 gap-3">
-              <div className="rounded-xl border border-muted/30 bg-muted/10 p-4">
-                <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-3">
-                  Today
-                </div>
-                <ul className="space-y-2.5 text-xs text-muted-foreground">
-                  <li className="flex gap-2"><AlertTriangle className="h-3.5 w-3.5 mt-0.5 text-muted-foreground/70 flex-shrink-0" />Fragmented systems</li>
-                  <li className="flex gap-2"><AlertTriangle className="h-3.5 w-3.5 mt-0.5 text-muted-foreground/70 flex-shrink-0" />Reactive teams</li>
-                  <li className="flex gap-2"><AlertTriangle className="h-3.5 w-3.5 mt-0.5 text-muted-foreground/70 flex-shrink-0" />Manual proof &amp; audit</li>
-                  <li className="flex gap-2"><AlertTriangle className="h-3.5 w-3.5 mt-0.5 text-muted-foreground/70 flex-shrink-0" />Generic AI guesses</li>
-                </ul>
-              </div>
-              <div className="rounded-xl border border-primary/30 bg-primary/5 p-4">
-                <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary mb-3">
-                  Tomorrow
-                </div>
-                <ul className="space-y-2.5 text-xs text-foreground">
-                  <li className="flex gap-2"><CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-primary flex-shrink-0" />One connected data model</li>
-                  <li className="flex gap-2"><CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-primary flex-shrink-0" />Weak signals detected early</li>
-                  <li className="flex gap-2"><CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-primary flex-shrink-0" />Proof produced automatically</li>
-                  <li className="flex gap-2"><CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-primary flex-shrink-0" />Domain-trained intelligence</li>
-                </ul>
-              </div>
-            </div>
-            <div className="mt-3 text-center text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70">
-              From reactive operations → to prescriptive performance
-            </div>
+          <div className="rounded-2xl border border-border bg-card/40 backdrop-blur p-4 min-h-[420px] flex">
+            <PlatformArchitectureDiagramV4 compact />
+          </div>
+          <div className="mt-3 text-center text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70">
+            DTOP wraps the stack · Mobile · Intelligence · Core Apps
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-);
-
-// ----------------------------------------------------------------------------
-// Section: The Shift
-// ----------------------------------------------------------------------------
-const shiftRows = [
-  { today: "Disconnected content, training and safety silos", tomorrow: "One connected operational data model" },
-  { today: "Lagging KPIs surfaced after the fact", tomorrow: "Weak signals detected early and triaged" },
-  { today: "Manual investigations and root-cause toil", tomorrow: "Recommended actions with linked evidence" },
-  { today: "Audit prep as a project", tomorrow: "Proof produced automatically as a byproduct" },
-  { today: "Generic AI with a domain wrapper", tomorrow: "Generative AI built on your operational corpus" },
-];
-
-const Shift = () => (
-  <section id="shift" className="border-b border-border/60">
-    <div className="max-w-7xl mx-auto px-6 py-20">
-      <div className="max-w-3xl">
-        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">The Shift</span>
-        <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
-          From reactive operations to a prescriptive operating model.
-        </h2>
-        <p className="mt-3 text-muted-foreground">
-          The same shift every regulated, operationally complex industry is making — aviation, rail, defense, energy, healthcare ops.
-        </p>
-      </div>
-
-      <div className="mt-10 rounded-2xl border border-border overflow-hidden">
-        <div className="grid grid-cols-2 bg-card/40">
-          <div className="px-5 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground border-r border-border">Today</div>
-          <div className="px-5 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-primary">Tomorrow</div>
-        </div>
-        {shiftRows.map((r, i) => (
-          <div key={i} className={`grid grid-cols-2 ${i !== shiftRows.length - 1 ? "border-b border-border" : ""}`}>
-            <div className="px-5 py-4 text-sm text-muted-foreground border-r border-border flex items-start gap-2">
-              <AlertTriangle className="h-4 w-4 mt-0.5 text-muted-foreground/60 flex-shrink-0" />
-              {r.today}
-            </div>
-            <div className="px-5 py-4 text-sm text-foreground bg-primary/[0.03] flex items-start gap-2">
-              <CheckCircle2 className="h-4 w-4 mt-0.5 text-primary flex-shrink-0" />
-              {r.tomorrow}
-            </div>
-          </div>
-        ))}
       </div>
     </div>
   </section>
@@ -192,67 +136,41 @@ const Shift = () => (
 // ----------------------------------------------------------------------------
 // Section: Outcomes
 // ----------------------------------------------------------------------------
-const outcomes = [
-  {
-    icon: ShieldCheck,
-    pillar: "Revenue & Risk Protection",
-    promise: "Fewer disruptions, less exposure, faster recovery.",
-    metric: "40%",
-    metricLabel: "fewer recurrent issues",
-    color: "text-emerald-400",
-    bg: "bg-emerald-400/10",
-    border: "border-emerald-400/30",
-  },
-  {
-    icon: TrendingUp,
-    pillar: "Operational Efficiency",
-    promise: "Faster change, less rework, lower controllable cost.",
-    metric: "70%",
-    metricLabel: "faster time-to-change",
-    color: "text-amber-400",
-    bg: "bg-amber-400/10",
-    border: "border-amber-400/30",
-  },
-  {
-    icon: Brain,
-    pillar: "Workforce Performance",
-    promise: "Right info, right person, right moment.",
-    metric: "~90%",
-    metricLabel: "domain accuracy vs ~35% generic AI",
-    color: "text-primary",
-    bg: "bg-primary/10",
-    border: "border-primary/30",
-  },
-];
-
-const Outcomes = () => (
-  <section id="outcomes" className="border-b border-border/60 bg-card/20">
-    <div className="max-w-7xl mx-auto px-6 py-20">
-      <div className="max-w-3xl">
-        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Outcomes</span>
-        <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
-          Three outcomes the platform is built to deliver.
-        </h2>
-      </div>
-      <div className="mt-10 grid md:grid-cols-3 gap-4">
-        {outcomes.map((o) => (
-          <div key={o.pillar} className={`rounded-2xl border ${o.border} ${o.bg} p-6 flex flex-col`}>
-            <o.icon className={`h-7 w-7 ${o.color} mb-4`} />
-            <h3 className="text-lg font-bold text-foreground">{o.pillar}</h3>
-            <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">{o.promise}</p>
-            <div className="mt-5 pt-5 border-t border-border/60">
-              <div className={`text-3xl font-bold ${o.color}`}>{o.metric}</div>
-              <div className="text-[11px] uppercase tracking-wider text-muted-foreground mt-0.5">{o.metricLabel}</div>
-            </div>
+const Outcomes = () => {
+  const { persona } = usePersonaState();
+  return (
+    <section id="outcomes" className="border-b border-border/60 bg-card/20">
+      <div className="max-w-7xl mx-auto px-6 py-20">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 max-w-5xl">
+          <div>
+            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Outcomes by role</span>
+            <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+              What changes for the {persona.role}.
+            </h2>
+            <p className="mt-3 text-muted-foreground max-w-2xl">{persona.promise}</p>
           </div>
-        ))}
+          <PersonaTabs />
+        </div>
+
+        <div className="mt-10 grid md:grid-cols-3 gap-4">
+          {persona.outcomes.map((o) => (
+            <div key={o.pillar} className={`rounded-2xl border ${persona.border} ${persona.bg} p-6 flex flex-col`}>
+              <div className={`text-[10px] uppercase tracking-[0.22em] ${persona.color}`}>{o.pillar}</div>
+              <p className="mt-2 text-sm text-foreground leading-relaxed flex-1">{o.promise}</p>
+              <div className="mt-5 pt-5 border-t border-border/60">
+                <div className={`text-3xl font-bold ${persona.color}`}>{o.metric}</div>
+                <div className="text-[11px] uppercase tracking-wider text-muted-foreground mt-0.5">{o.metricLabel}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="mt-6 text-[11px] text-muted-foreground/70 italic">
+          Indicative ranges from customer programs and industry benchmarks. ROI modeled per customer engagement.
+        </p>
       </div>
-      <p className="mt-6 text-[11px] text-muted-foreground/70 italic">
-        Indicative ranges from customer programs and industry benchmarks. ROI modeled per customer engagement.
-      </p>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 // ----------------------------------------------------------------------------
 // Section: Platform modules grid
@@ -355,30 +273,48 @@ const dtopSteps = [
   { letter: "P", name: "Prove", color: "text-emerald-400", border: "border-emerald-400/40", bg: "bg-emerald-400/10", desc: "Every step is logged, linked and traceable. The audit trail is a byproduct, not a project." },
 ];
 
-const DTOPSection = () => (
+const DTOPSection = () => {
+  const { persona } = usePersonaState();
+  return (
   <section id="dtop" className="border-b border-border/60 bg-card/20">
     <div className="max-w-7xl mx-auto px-6 py-20">
-      <div className="max-w-3xl">
-        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-400">DTOP · Operating Model</span>
-        <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
-          Detect → Trigger → Orchestrate → Prove.
-        </h2>
-        <p className="mt-3 text-muted-foreground">
-          The closed-loop way of working that turns scattered events into measured performance.
-        </p>
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 max-w-5xl">
+        <div>
+          <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-400">DTOP · Operating Model</span>
+          <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+            Detect → Trigger → Orchestrate → Prove.
+          </h2>
+          <p className="mt-3 text-muted-foreground">
+            The closed-loop way of working that turns scattered events into measured performance.
+          </p>
+        </div>
+        <div className="flex flex-col items-start md:items-end gap-2">
+          <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Show me as</div>
+          <PersonaTabs />
+        </div>
       </div>
 
       <div className="mt-10 grid md:grid-cols-4 gap-3">
-        {dtopSteps.map((s, i) => (
-          <div key={s.letter} className={`relative rounded-xl border ${s.border} ${s.bg} p-5`}>
+        {dtopSteps.map((s, i) => {
+          const focused = persona.dtopFocus === s.letter;
+          return (
+          <div key={s.letter} className={`relative rounded-xl border ${s.border} ${s.bg} p-5 transition-all ${focused ? "ring-2 ring-offset-2 ring-offset-background ring-foreground/30 scale-[1.02]" : "opacity-90"}`}>
             <div className={`text-5xl font-bold ${s.color} leading-none`}>{s.letter}</div>
             <div className="mt-2 text-base font-bold text-foreground">{s.name}</div>
             <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
+            {focused && (
+              <div className={`mt-3 text-[10px] uppercase tracking-[0.18em] ${persona.color}`}>Your focus · {persona.shortRole}</div>
+            )}
             {i < dtopSteps.length - 1 && (
               <ArrowRight className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground/40 z-10" />
             )}
           </div>
-        ))}
+        );})}
+      </div>
+
+      <div className={`mt-6 rounded-xl border ${persona.border} ${persona.bg} p-4 text-sm`}>
+        <span className={`text-[10px] uppercase tracking-[0.18em] ${persona.color} mr-2`}>{persona.shortRole} lens</span>
+        <span className="text-foreground">{persona.dtopFocusReason}</span>
       </div>
 
       <div className="mt-8 rounded-xl border border-emerald-400/20 bg-emerald-400/5 p-5">
@@ -393,6 +329,7 @@ const DTOPSection = () => (
     </div>
   </section>
 );
+};
 
 // ----------------------------------------------------------------------------
 // Section: Intelligence
@@ -539,6 +476,70 @@ const Mobile = () => (
 // ----------------------------------------------------------------------------
 // Section: Why It Works
 // ----------------------------------------------------------------------------
+const integrations = [
+  { icon: Database, title: "One Connected Data Model", desc: "A shared substrate across content, safety and training — not point integrations." },
+  { icon: Cable, title: "Standard Adaptors", desc: "REST API, document ingestion, OneRoster, SCORM, evidence export." },
+  { icon: Network, title: "Source Systems", desc: "Plug into operational data — performance, scheduling, ops, ERP, IAM." },
+  { icon: FileCheck2, title: "Evidence Out", desc: "Audit-ready exports for regulators and internal assurance — by design." },
+];
+
+const Integrations = () => (
+  <section id="integrations" className="border-b border-border/60">
+    <div className="max-w-7xl mx-auto px-6 py-20">
+      <div className="max-w-3xl">
+        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-cyan-400">Integrations &amp; Data Model</span>
+        <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+          Built to plug into the operation, not replace it.
+        </h2>
+        <p className="mt-3 text-muted-foreground">
+          The platform shares one data model across modules, and connects out through standard adaptors and APIs.
+        </p>
+      </div>
+      <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {integrations.map((i) => (
+          <div key={i.title} className="rounded-2xl border border-border bg-card/40 p-5">
+            <i.icon className="h-6 w-6 text-cyan-400 mb-3" />
+            <h3 className="text-sm font-bold text-foreground">{i.title}</h3>
+            <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{i.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+const securityPillars = [
+  { icon: Lock, title: "Identity & Access", desc: "SSO, SAML, OIDC, RBAC down to record level. Your IAM, not ours." },
+  { icon: ShieldAlert, title: "Operational Security", desc: "Encryption in transit and at rest. Region-pinned data residency. Tenant isolation." },
+  { icon: ServerCog, title: "Deployment", desc: "Cloud, sovereign cloud and regulated tenancy options for defense and aviation." },
+  { icon: FileCheck2, title: "Compliance Posture", desc: "Built for regulated, mission-critical industries — auditable by design." },
+];
+
+const Security = () => (
+  <section id="security" className="border-b border-border/60 bg-card/20">
+    <div className="max-w-7xl mx-auto px-6 py-20">
+      <div className="max-w-3xl">
+        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Security, Compliance &amp; Deployment</span>
+        <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+          The posture regulated operators expect.
+        </h2>
+        <p className="mt-3 text-muted-foreground">
+          Designed for the COO, CIO and CISO buying together — without slowing the operation down.
+        </p>
+      </div>
+      <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {securityPillars.map((s) => (
+          <div key={s.title} className="rounded-2xl border border-primary/20 bg-card/40 p-5">
+            <s.icon className="h-6 w-6 text-primary mb-3" />
+            <h3 className="text-sm font-bold text-foreground">{s.title}</h3>
+            <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
 const diffs = [
   {
     icon: Link2,
@@ -654,12 +655,13 @@ export default function PlatformOverview() {
     <div className="min-h-screen bg-background">
       <StickyNav />
       <Hero />
-      <Shift />
       <Outcomes />
       <PlatformModules />
       <DTOPSection />
       <Intelligence />
       <Mobile />
+      <Integrations />
+      <Security />
       <Why />
       <CTA />
     </div>
