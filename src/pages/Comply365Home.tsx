@@ -118,9 +118,9 @@ const stakes = [
     note: "Operational signals that never trigger an action.",
   },
   {
-    value: "Days → minutes",
-    label: "Detection to action",
-    note: "Where the gap shrinks once Content, Safety and Training connect.",
+    value: "70%",
+    label: "Controllable cost reclaimed",
+    note: "Faster time-to-change, less rework, fewer recurrent disruptions.",
   },
 ];
 
@@ -229,30 +229,30 @@ const Platform = () => (
         The same record powers a manual revision, a safety event and a training assignment — because they share a substrate, not just an integration.
       </p>
 
-      <div className="mt-12 grid md:grid-cols-3 gap-5">
+      <div className="mt-10 grid md:grid-cols-3 gap-3">
         {modules.map((m) => (
           <Link
             key={m.name}
             to={m.href}
-            className="group relative flex flex-col rounded-2xl border border-border bg-card p-7 hover:border-primary/40 hover:-translate-y-0.5 transition-all"
+            className="group flex items-center gap-3 rounded-xl border border-border bg-card/60 px-4 py-3 hover:border-primary/40 transition-all"
           >
-            <div className={`absolute inset-x-0 top-0 h-[2px] rounded-t-2xl bg-gradient-to-r ${m.accent}`} />
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-lg bg-secondary flex items-center justify-center">
-                <m.icon className="h-5 w-5 text-primary" />
-              </div>
-              <div className="font-display font-semibold text-foreground">{m.name}</div>
+            <div className={`h-8 w-8 rounded-md bg-secondary flex items-center justify-center shrink-0`}>
+              <m.icon className="h-4 w-4 text-primary" />
             </div>
-            <p className="mt-5 text-sm text-muted-foreground leading-relaxed flex-1">{m.blurb}</p>
-            <div className="mt-6 inline-flex items-center text-xs font-semibold text-primary opacity-80 group-hover:opacity-100">
-              Explore <ArrowRight className="h-3 w-3 ml-1" />
+            <div className="min-w-0 flex-1">
+              <div className="font-display text-sm font-semibold text-foreground truncate">{m.name}</div>
+              <div className="text-[11px] text-muted-foreground truncate">{m.blurb}</div>
             </div>
+            <ArrowRight className="h-3.5 w-3.5 text-muted-foreground/60 group-hover:text-primary shrink-0" />
           </Link>
         ))}
       </div>
 
-      <div className="mt-10 flex items-center justify-center gap-3 text-xs uppercase tracking-[0.22em] text-muted-foreground">
-        <Network className="h-4 w-4 text-primary" /> One connected data model
+      <div className="mt-8 flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-muted-foreground">
+        <Network className="h-4 w-4 text-primary" /> One Connected Data Model
+        <Link to="/platform#platform" className="ml-auto text-primary normal-case tracking-normal hover:underline">
+          See the full platform →
+        </Link>
       </div>
     </div>
   </section>
@@ -325,17 +325,19 @@ const DTOP = () => (
         The operating model that turns events into control.
       </h2>
 
-      <div className="mt-12 grid md:grid-cols-4 gap-4">
+      <div className="mt-12 grid md:grid-cols-4 gap-2 items-stretch">
         {dtopSteps.map((s, i) => (
-          <div key={s.letter} className={`relative rounded-2xl border ${dtopColor(s.color)} p-6`}>
-            <div className="flex items-center gap-3">
-              <div className={`h-10 w-10 rounded-lg flex items-center justify-center font-display text-lg font-bold border ${dtopColor(s.color)}`}>
-                {s.letter}
-              </div>
-              <div className="font-display font-semibold text-foreground">{s.name}</div>
+          <div key={s.letter} className={`relative rounded-xl border ${dtopColor(s.color)} px-4 py-4 flex items-center gap-3`}>
+            <div className={`h-8 w-8 rounded-md flex items-center justify-center font-display text-sm font-bold border ${dtopColor(s.color)} shrink-0`}>
+              {s.letter}
             </div>
-            <p className="mt-4 text-sm text-muted-foreground leading-relaxed">{s.line}</p>
-            <div className="absolute top-4 right-4 text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60">0{i + 1}</div>
+            <div className="min-w-0">
+              <div className="font-display text-sm font-semibold text-foreground">{s.name}</div>
+              <div className="text-[11px] text-muted-foreground leading-snug mt-0.5">{s.line}</div>
+            </div>
+            {i < dtopSteps.length - 1 && (
+              <ArrowRight className="hidden md:block absolute -right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/40 z-10" />
+            )}
           </div>
         ))}
       </div>
