@@ -16,20 +16,29 @@ import {
   Network,
   AlertTriangle,
   TrendingUp,
+  Lock,
+  ServerCog,
+  Database,
+  Cable,
+  ShieldAlert,
+  FileCheck2,
 } from "lucide-react";
 import PlatformArchitectureDiagramV4 from "@/components/platform-slides/PlatformArchitectureDiagramV4";
 import logo from "@/assets/comply365-logo-white.png";
+import PersonaTabs, { usePersonaState } from "@/components/personas/PersonaTabs";
+import { PERSONAS, getPersona } from "@/components/personas/personaConfig";
 
 // ----------------------------------------------------------------------------
 // Sticky in-page nav
 // ----------------------------------------------------------------------------
 const navItems = [
-  { id: "shift", label: "The Shift" },
   { id: "outcomes", label: "Outcomes" },
   { id: "platform", label: "Platform" },
   { id: "dtop", label: "DTOP" },
   { id: "intelligence", label: "Intelligence" },
   { id: "mobile", label: "Mobile" },
+  { id: "integrations", label: "Integrations" },
+  { id: "security", label: "Security" },
   { id: "why", label: "Why It Works" },
 ];
 
