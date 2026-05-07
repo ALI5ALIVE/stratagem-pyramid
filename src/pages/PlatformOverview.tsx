@@ -273,30 +273,48 @@ const dtopSteps = [
   { letter: "P", name: "Prove", color: "text-emerald-400", border: "border-emerald-400/40", bg: "bg-emerald-400/10", desc: "Every step is logged, linked and traceable. The audit trail is a byproduct, not a project." },
 ];
 
-const DTOPSection = () => (
+const DTOPSection = () => {
+  const { persona } = usePersonaState();
+  return (
   <section id="dtop" className="border-b border-border/60 bg-card/20">
     <div className="max-w-7xl mx-auto px-6 py-20">
-      <div className="max-w-3xl">
-        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-400">DTOP · Operating Model</span>
-        <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
-          Detect → Trigger → Orchestrate → Prove.
-        </h2>
-        <p className="mt-3 text-muted-foreground">
-          The closed-loop way of working that turns scattered events into measured performance.
-        </p>
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 max-w-5xl">
+        <div>
+          <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-400">DTOP · Operating Model</span>
+          <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+            Detect → Trigger → Orchestrate → Prove.
+          </h2>
+          <p className="mt-3 text-muted-foreground">
+            The closed-loop way of working that turns scattered events into measured performance.
+          </p>
+        </div>
+        <div className="flex flex-col items-start md:items-end gap-2">
+          <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Show me as</div>
+          <PersonaTabs />
+        </div>
       </div>
 
       <div className="mt-10 grid md:grid-cols-4 gap-3">
-        {dtopSteps.map((s, i) => (
-          <div key={s.letter} className={`relative rounded-xl border ${s.border} ${s.bg} p-5`}>
+        {dtopSteps.map((s, i) => {
+          const focused = persona.dtopFocus === s.letter;
+          return (
+          <div key={s.letter} className={`relative rounded-xl border ${s.border} ${s.bg} p-5 transition-all ${focused ? "ring-2 ring-offset-2 ring-offset-background ring-foreground/30 scale-[1.02]" : "opacity-90"}`}>
             <div className={`text-5xl font-bold ${s.color} leading-none`}>{s.letter}</div>
             <div className="mt-2 text-base font-bold text-foreground">{s.name}</div>
             <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
+            {focused && (
+              <div className={`mt-3 text-[10px] uppercase tracking-[0.18em] ${persona.color}`}>Your focus · {persona.shortRole}</div>
+            )}
             {i < dtopSteps.length - 1 && (
               <ArrowRight className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground/40 z-10" />
             )}
           </div>
-        ))}
+        );})}
+      </div>
+
+      <div className={`mt-6 rounded-xl border ${persona.border} ${persona.bg} p-4 text-sm`}>
+        <span className={`text-[10px] uppercase tracking-[0.18em] ${persona.color} mr-2`}>{persona.shortRole} lens</span>
+        <span className="text-foreground">{persona.dtopFocusReason}</span>
       </div>
 
       <div className="mt-8 rounded-xl border border-emerald-400/20 bg-emerald-400/5 p-5">
@@ -311,6 +329,7 @@ const DTOPSection = () => (
     </div>
   </section>
 );
+};
 
 // ----------------------------------------------------------------------------
 // Section: Intelligence
