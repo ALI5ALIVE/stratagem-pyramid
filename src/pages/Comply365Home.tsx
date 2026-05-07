@@ -461,6 +461,23 @@ const CTA = () => (
         </Link>
       </div>
 
+      <div className="mt-10">
+        <div className="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+          Talk to a specialist for your role
+        </div>
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+          {PERSONAS.map((p) => (
+            <a
+              key={p.id}
+              href={`mailto:hello@comply365.com?subject=${encodeURIComponent(`Walkthrough · ${p.role}`)}`}
+              className={`inline-flex items-center gap-2 rounded-full border ${p.border} ${p.bg} px-3 py-1.5 text-xs font-semibold ${p.color} hover:bg-background/40 transition-colors`}
+            >
+              <p.icon className="h-3.5 w-3.5" /> {p.shortRole}
+            </a>
+          ))}
+        </div>
+      </div>
+
       <div className="mt-16 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
         <Link to="/solutions/airlines" className="hover:text-foreground">Airlines</Link>
         <span className="opacity-30">·</span>
