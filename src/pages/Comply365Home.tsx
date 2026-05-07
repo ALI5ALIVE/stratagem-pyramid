@@ -6,6 +6,8 @@ import {
   Workflow,
   Brain,
   ShieldCheck,
+  BookOpen,
+  GraduationCap,
   CheckCircle2,
   Network,
   TrendingUp,
