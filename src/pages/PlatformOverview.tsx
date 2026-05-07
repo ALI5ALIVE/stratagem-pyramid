@@ -307,7 +307,7 @@ const Foundation = () => (
     <div className="max-w-7xl mx-auto px-6 py-20">
       <div className="max-w-3xl">
         <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
-          Foundation · Systems of Record
+          Foundation · Layer 1 · Systems of Record
         </span>
         <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
           Three systems of record. One connected data model.
