@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { 
   Rocket, Briefcase, BookOpen, 
   Presentation, Brain, 
-  ArrowRight, Users, ScrollText, Workflow, Layers, Sparkles, Zap, Smartphone, GraduationCap
+  ArrowRight, Users, ScrollText, Workflow, Layers, Sparkles, Zap, Smartphone, GraduationCap, Radio
 } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
 
@@ -194,6 +194,14 @@ export default function HomePage() {
               icon: Layers,
               badge: "13 slides",
               accent: "from-primary to-comply-teal",
+            }} />
+            <DeckCardComponent card={{
+              title: "Signals 101",
+              description: "Foundational playbook for new reps — what signals are, why they matter, and how Comply365 turns them into operational control.",
+              href: "/signals-playbook",
+              icon: Radio,
+              badge: "11 slides · Foundational",
+              accent: "from-blue-500 to-emerald-500",
             }} />
             <DeckCardComponent card={{
               title: "CoAnalyst Playbook",
