@@ -4,7 +4,6 @@ import {
   LogIn, LogOut, GraduationCap, Map
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
-import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "react-router-dom";
@@ -93,7 +92,6 @@ function NavGroup({ label, items }: { label: string; items: NavItem[] }) {
 }
 
 export function AppSidebar() {
-  const { slides, activeIndex, onNavigate } = useSlideNavigation();
   const { open } = useSidebar();
   const { user, profile, signOut } = useAuth();
 
@@ -158,40 +156,6 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-
-        {/* Slide sub-navigation - only when expanded and slides registered */}
-        {open && slides.length > 0 && (
-          <>
-            <SidebarSeparator />
-            <SidebarGroup>
-              <SidebarGroupLabel className="text-[10px] uppercase tracking-wider text-sidebar-foreground/40">
-                Slides
-              </SidebarGroupLabel>
-              <SidebarGroupContent>
-                <div className="flex flex-col gap-0.5 px-2">
-                  {slides.map((slide, index) => (
-                    <button
-                      key={slide.id}
-                      onClick={() => onNavigate(index)}
-                      className={`flex items-center gap-2 px-2 py-1 rounded text-xs transition-colors ${
-                        index === activeIndex
-                          ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
-                          : "text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent/50"
-                      }`}
-                    >
-                      <span
-                        className={`w-1.5 h-1.5 rounded-full shrink-0 ${
-                          index === activeIndex ? "bg-primary" : "bg-sidebar-foreground/30"
-                        }`}
-                      />
-                      <span className="truncate">{slide.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          </>
-        )}
       </SidebarContent>
     </Sidebar>
   );
