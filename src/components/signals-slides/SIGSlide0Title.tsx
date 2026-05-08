@@ -33,6 +33,7 @@ const SIGSlide0Title = (_props: SlideNarrationProps) => {
             <span className="px-3 py-1 rounded-full border border-border text-muted-foreground">For new reps</span>
             <span className="px-3 py-1 rounded-full border border-border text-muted-foreground">11 slides · ~15 min</span>
             <span className="px-3 py-1 rounded-full border border-primary/30 bg-primary/5 text-primary">Foundational</span>
+            <span className="px-3 py-1 rounded-full border border-border/60 text-muted-foreground/70 font-mono text-xs">/signals-playbook</span>
           </div>
         </div>
       </div>
