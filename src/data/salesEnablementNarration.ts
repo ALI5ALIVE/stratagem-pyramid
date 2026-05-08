@@ -29,11 +29,11 @@ export const salesEnablementNarrations: SESlideNarration[] = [
       "This slide matters because it tells you why prospects are willing to take this meeting at all. The core message: regulators have shifted from prescriptive compliance — did you tick the box — to performance-based oversight — can you prove the loop closed. The pain you're addressing: their leadership is being asked for outcome evidence they don't have, because their tools were built for records, not for closing loops. The value lever: we are the only platform built for the new model. When you deliver this, slow down. Don't list regulators. Say one sentence: the question used to be did you do the training, the question now is did the behaviour change — then pause. Don't say AI. Don't say transformation. The next slide quantifies what it costs them to live in the old model.",
   },
   {
-    slideId: "se-slide-challenge",
-    title: "M1 · The Industry Challenge",
+    slideId: "se-plain-english-shift",
+    title: "M1 · Why This Matters (Plain English)",
     voiceId: VOICE,
     script:
-      "This is your cost-of-inaction slide. The core message: the industry leaks twenty-five to thirty-five billion dollars a year because operational signals never make it into procedure changes or targeted training. The pain you're naming: their five-to-seven disconnected tools generate signals that die in inboxes. The value lever: every percentage point of leakage you recover funds the platform many times over. Deliver it as math, not drama — point to the figure, give the source stack in one breath — EUROCONTROL, IATA, SITA, A4A — and ask one discovery question: of those buckets, where do you think you leak the most? Their answer is your demo path. Never paraphrase the figure. Always say twenty-five to thirty-five billion. Then transition into Module 2, where we make the platform itself plain English.",
+      "This slide replaces the dollar-figure cost-of-inaction with three plain-English lines you can say to any prospect, in any room. The core message: aviation isn't short on data — it's short on signals it can act on, and proof that the action worked. The pain you're naming: operators run safety, content, and training in three disconnected stacks; we unify them with domain-trained intelligence on top. The value lever: a measurable shift from reactive to controlled — Detect, Trigger, Orchestrate, Prove. Deliver each line slowly and pause for the discovery question — those questions are what stop you pitching and start them describing their own problem. Avoid the ROI numbers we have not signed off; this slide is messaging, not modelling. Then transition into Module 2, where we make the platform itself plain English.",
   },
   {
     slideId: "se-module-2",
@@ -145,56 +145,28 @@ export const salesEnablementNarrations: SESlideNarration[] = [
     title: "M4 · Module Intro",
     voiceId: VOICE,
     script:
-      "Module 4 is short and high-leverage. By the end of it you understand the discovery, demo, and close motion, and where the maturity roadmap fits the conversation. The two slides are Before versus After — your value framing — and the maturity roadmap — your pacing tool. Together they answer the customer's two unspoken questions: what changes for me, and how fast can it realistically happen. Let's begin.",
+      "Module 4 is short and high-leverage. By the end of it you can run the discovery, demo, and close motion in plain English and ask one good question per stage. One slide does the work — the cheat sheet — and your job is to learn the three lines and the three questions cold.",
   },
   {
-    slideId: "se-slide-transform",
-    title: "M4 · Before vs After",
+    slideId: "se-discovery-to-close",
+    title: "M4 · Discovery → Demo → Close",
     voiceId: VOICE,
     script:
-      "Before versus After is your value-framing slide. The core message: today is fragmented, manual, and reactive — tomorrow is connected, automated, and proactive. The pain it addresses: customers can describe today vividly but they struggle to picture tomorrow concretely. The value lever: this slide gives them concrete language for tomorrow so they can sell it internally after you leave the room. Delivery tip — never read both columns. Read the after line and ask, how would your week change if that were true? Then shut up and listen. Their answer becomes the proof story you bring to the next meeting. Next: the maturity roadmap.",
-  },
-  {
-    slideId: "se-slide-maturity",
-    title: "M4 · Maturity Roadmap",
-    voiceId: VOICE,
-    script:
-      "The maturity roadmap is your pacing tool — and your insurance against the customer biting off more than they can absorb. The core message: there is a defined path from connected foundation, to insights, to automation, to a fully closed loop — and the customer can start anywhere and step through deliberately. The pain it addresses: leadership has been burned by big-bang transformation programmes that overran. The value lever: deliberate stepping stones with a measurable outcome at each stage. Delivery tip — always anchor the first stage in their current pain, not in our roadmap. Use the locked phase dates: Insights early-2026, Automation mid-2026, Unified Mobile late-2026. Do not slip those dates in conversation — they are the same in every deck. Next module: use cases.",
+      "This is the motion in plain English. The core message: discovery finds the disconnected loop, demo shows the loop close, close scopes a ninety-day pilot around their highest-cost use case. The pain you're addressing: most reps over-pitch because they're guessing what matters; the three discovery questions stop the guessing. The value lever: outcome-based pilots beat feature checklists every time. Delivery tip — say the three lines, ask the three questions, write down their answers verbatim. Their words become your demo script and your pilot scope. Next module: use cases.",
   },
   {
     slideId: "se-module-5",
     title: "M5 · Module Intro",
     voiceId: VOICE,
     script:
-      "Module 5 is where messaging becomes value. By the end of it you can pick the right use case for the prospect's stated pain and walk them through Detect, Trigger, Orchestrate, Prove with a defensible cost figure attached. We move through the DTOP framework, then safety use cases, operations use cases, financial use cases, the Regulation Management use case, and finally customer outcomes. Pick the use case that matches the room — never run all of them.",
+      "Module 5 is where messaging becomes value. By the end of it you can pick the right plain-English use case for the prospect's pain and walk them through Detect, Trigger, Orchestrate, Prove. We move through the use case cheat sheet, the Regulation Management use case, and customer outcomes. Pick the use case that matches the room — never run all of them.",
   },
   {
-    slideId: "se-slide-usecases",
-    title: "M5 · Use Case Framework (DTOP)",
+    slideId: "se-usecase-cheatsheet",
+    title: "M5 · Use Case Cheat Sheet",
     voiceId: VOICE,
     script:
-      "This slide gives you the lens for every use case in the deck. The core message: every use case follows the same DTOP shape — Detect the signal, Trigger the response, Orchestrate the change across procedures and training, Prove the outcome. The pain it addresses: customers see use cases as disconnected demos; this lens makes them feel like one operating model. The value lever: when every use case is the same shape, the platform feels inevitable. Delivery tip — always introduce the use case in DTOP terms before showing the screen. Then walk the screen in the same four beats. Repetition is the point — by the third use case the customer is finishing the sentence with you.",
-  },
-  {
-    slideId: "se-slide-safety-uc",
-    title: "M5 · Safety Use Cases",
-    voiceId: VOICE,
-    script:
-      "Safety use cases are your highest-conviction opener for safety-led prospects. The core message: signals from flight data and crew reports become procedural and training changes within days, not months — with auditable proof for the regulator. The pain it addresses: their safety team's recommendations sit unimplemented because no one owns the orchestration. The value lever: compounded reduction in repeat events because retraining is targeted to the actual at-risk cohort. Delivery tip — never use the raw acronyms; say flight data signals and crew-reported events. Pick one use case from the slide and tell it as a story end-to-end — never list all three. Next: operations use cases.",
-  },
-  {
-    slideId: "se-slide-ops-uc",
-    title: "M5 · Operations Use Cases",
-    voiceId: VOICE,
-    script:
-      "Operations use cases land best with the COO, the Head of Operations, or the Director of Flight Ops. The core message: when operational signals — disruption, weather, crew availability, fleet status — feed the same intelligence layer as safety and content, the response is faster and the procedure changes are propagated automatically. The pain it addresses: every operational disruption today triggers a manual scramble across teams that don't share data. The value lever: faster recovery, lower disruption cost, fewer downstream knock-ons. Delivery tip — use their last public disruption as the anchor, never a hypothetical. Next: financial use cases.",
-  },
-  {
-    slideId: "se-slide-financial-uc",
-    title: "M5 · Financial Use Cases",
-    voiceId: VOICE,
-    script:
-      "Financial use cases are the slide you bring when finance is in the room — and they always end up in the room before contract. The core message: the platform replaces five to seven point tools, recovers operational leakage, and turns audit prep from weeks of manual evidence-gathering into minutes of automated assembly. The pain it addresses: finance has stopped believing point-tool ROI because every tool claims its own savings. The value lever: platform value is consolidation savings plus operational recovery plus audit cost reduction — three sources, one platform. Delivery tip — always present a range, not a single number, and always cite the source stack: EUROCONTROL, IATA, SITA, A4A. The disclaimer matters here — call out that the use cases shown are a sample of the highest-cost categories, not an exhaustive model. Credibility scales with caveats. Next: Regulation Management.",
+      "This is the page you study before every customer call. The core message: five plain-English use cases — safety signal to procedure update, regulation change to targeted training, fatigue trend to roster intervention, ops disruption to crew comms, audit prep to continuous proof. Each one carries the discovery question that surfaces it. The pain you're addressing: reps over-rotate on a single use case and miss the buyer's actual pain. The value lever: pattern-match the prospect's words to the cheat sheet, then run that use case as a DTOP story. Delivery tip — never run all five in one meeting. Pick one, tell it end-to-end in Detect, Trigger, Orchestrate, Prove order, and ask the discovery question on the others to qualify the next conversation. Avoid the dollar figures we have not signed off; this slide is messaging, not modelling. Next: the Regulation Management use case.",
   },
   {
     slideId: "se-slide-regmgmt",
