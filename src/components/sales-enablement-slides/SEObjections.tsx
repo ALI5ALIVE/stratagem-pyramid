@@ -25,18 +25,18 @@ const bridges = [
 ];
 
 const SEObjections = ({ slideNumber, ...narrationProps }: Props) => {
-  const top5 = objections.slice(0, 5);
+  const top3 = objections.slice(0, 3);
   return (
     <PitchSlideContainer
       id="se-objections"
       slideNumber={slideNumber}
       title="Objections cheat sheet"
-      subtitle="Top 5 pushbacks · 3-part response: Acknowledge → Reframe → Bridge."
+      subtitle="Top 3 pushbacks · Acknowledge → Reframe → Bridge. Final wording pending review."
       showHeader
       {...narrationProps}
     >
       <div className="h-full flex flex-col gap-2 max-w-7xl mx-auto px-4 pt-3">
-        {top5.map((o, i) => (
+        {top3.map((o, i) => (
           <div key={i} className="p-3 rounded-lg border border-border bg-card">
             <div className="flex items-start gap-2 mb-2">
               <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/30 shrink-0">
@@ -66,6 +66,9 @@ const SEObjections = ({ slideNumber, ...narrationProps }: Props) => {
             </div>
           </div>
         ))}
+        <div className="text-[11px] text-muted-foreground italic text-center pt-2">
+          Additional objections + final paring pending Marketing review.
+        </div>
       </div>
     </PitchSlideContainer>
   );
