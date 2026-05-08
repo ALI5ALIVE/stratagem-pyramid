@@ -36,22 +36,6 @@ const pitchDecks: DeckCard[] = [
 
 const additionalResources: DeckCard[] = [
   {
-    title: "Platform Overview — Industry Agnostic",
-    description: "A clean, industry-agnostic walkthrough of the Operational Performance Platform — capabilities, DTOP, intelligence, and value. Self-serve marketing page.",
-    href: "/platform",
-    icon: Sparkles,
-    badge: "Marketing page · 🔒 gated",
-    accent: "from-primary to-cyan-500",
-  },
-  {
-    title: "Comply365.com Homepage — Redesign",
-    description: "Bolder reimagining of the comply365.com public homepage. Leads with tension, the 90% vs 35% proof point, and DTOP — funnels into /platform.",
-    href: "/comply365-home",
-    icon: Rocket,
-    badge: "Marketing homepage · 🔒 gated",
-    accent: "from-amber-500 to-primary",
-  },
-  {
     title: "CEO Overview",
     description: "Boardroom-grade narrative: the before/after of operational performance, DTOP operating model, and the path to maturity.",
     href: "/pitch-executive-2",
