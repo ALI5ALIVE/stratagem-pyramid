@@ -187,7 +187,7 @@ export const salesEnablementNarrations: SESlideNarration[] = [
     title: "M6 · Module Intro",
     voiceId: VOICE,
     script:
-      "Module 6 is the closing module. By the end of it you handle the top five objections and walk a prospect to a ninety-day pilot. Three slides: the objections cheat sheet, why Comply365 wins, and your first seven days as a rep. This is the module to revisit before every customer call for the first month — these are the moments that decide deals.",
+      "Module 6 is the closing module. By the end of it you handle the top three objections and walk a prospect to a ninety-day pilot. Three slides: the objections cheat sheet, why Comply365 wins, and your first seven days as a rep. The objections list is intentionally short for now — final wording is being reviewed by Marketing.",
   },
   {
     slideId: "se-slide-objections",
