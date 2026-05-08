@@ -1,6 +1,6 @@
 import {
   Presentation, Brain,
-  Rocket, BookOpen, Home, Users, ScrollText, Workflow, Sparkles, Zap, Smartphone, Layers,
+  Rocket, BookOpen, Home, Users, ScrollText, Workflow, Sparkles, Zap, Smartphone, Layers, Radio,
   LogIn, LogOut, GraduationCap, Map
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
@@ -45,6 +45,7 @@ const salesEnablementItems: NavItem[] = [
 
 const capabilityItems: NavItem[] = [
   { title: "Platform Playbook", url: "/platform-playbook", icon: Layers, badge: "Master" },
+  { title: "Signals 101", url: "/signals-playbook", icon: Radio, badge: "New" },
   { title: "CoAnalyst Playbook", url: "/coanalyst", icon: Brain },
   { title: "Regulation Management", url: "/regulation-management", icon: ScrollText },
   { title: "DTOP Operating Model", url: "/dtop-playbook", icon: Workflow },
