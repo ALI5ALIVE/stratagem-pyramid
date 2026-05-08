@@ -1,62 +1,42 @@
-## Add a "Signals 101" Playbook
+## What I found in the code
 
-A new sales-enablement playbook that teaches the team **what signals are and why they matter** — using the same slide-deck pattern as the existing DTOP, Insights, Automation, and Mobile playbooks.
+The two pages are already on separate routes:
 
-### Route & entry points
-- New route: `/signals-playbook`
-- Add a card to **HomePage › Capabilities** section (alongside DTOP, Insights, Automation, Mobile playbooks)
-- Add to `AppSidebar` capability nav
+- **Signals 101 playbook** → `/signals-playbook` → `src/pages/SignalsPlaybook.tsx` (the 11-slide deck I built)
+- **Event Positioning Brief** → `/events/from-signals-to-control/brief` → `src/pages/events/SignalsEventBrief.tsx` (the long-scroll messaging brief)
 
-### Deck structure (10 slides)
+Both the homepage "Signals 101" card and the sidebar "Signals 101" item correctly point to `/signals-playbook`. There is no code that redirects one to the other.
 
-```
-0. Title — "Signals 101: From Noise to Action"
-1. Why this matters — the signal age of aviation; ops have data, not signals
-2. What is a signal? — plain-English definition, signal vs event vs alert vs metric
-3. Where signals come from — the four operational domains (Ops, Content, Safety, Training)
-4. The signal lifecycle — raw data → signal → trigger → action → proof (maps to DTOP)
-5. Strong vs weak signals — examples; why weak signals matter most (precursors)
-6. Use case 1 — Safety: the 12,000 unread signals
-7. Use case 2 — Operations: OCC noise → next-best-action
-8. Use case 3 — Content: when a signal changes the manual
-9. Why Comply365 — Systems of Record + CoAnalyst (~90% vs ~35%) + DTOP
-10. Talk track & objections — "isn't this just alerts?", "we already have dashboards"
-```
+You're currently sitting on `/events/from-signals-to-control/brief`, which is the Event Brief — not the playbook. So I suspect what's actually happening is one of:
 
-Source material reused from `src/pages/events/SignalsEventBrief.tsx` (master theme, taglines, departments, terms to use/avoid) and existing DTOP/CoAnalyst memory.
+1. Browser cache / stale tab — the click is going to `/signals-playbook` but the preview is showing a cached brief render.
+2. The two pages look thematically similar (both dark, both about "signals"), so the brief is being mistaken for the playbook.
+3. A link somewhere outside the homepage/sidebar is pointing at the brief by mistake.
 
-### Files to create
+## Plan
 
-- `src/data/signalsPlaybook.ts` — data structures (definition, signal types, lifecycle steps, use cases, objections, terminology guardrails)
-- `src/components/signals-slides/` — 11 slide components following the DTOP slide pattern:
-  - `SIGSlide0Title.tsx`
-  - `SIGSlide1WhyMatters.tsx`
-  - `SIGSlide2WhatIsSignal.tsx`
-  - `SIGSlide3SignalSources.tsx`
-  - `SIGSlide4Lifecycle.tsx` (Detect → Trigger → Orchestrate → Prove color coding)
-  - `SIGSlide5StrongVsWeak.tsx`
-  - `SIGSlide6UseCaseSafety.tsx`
-  - `SIGSlide7UseCaseOps.tsx`
-  - `SIGSlide8UseCaseContent.tsx`
-  - `SIGSlide9WhyComply365.tsx`
-  - `SIGSlide10Closing.tsx`
-- `src/pages/SignalsPlaybook.tsx` — deck shell mirroring `DTOPPlaybook.tsx` (scroll-snap, slide registration, progress bar)
+### 1. Confirm the routing live
+- Hard-refresh `/signals-playbook` in the preview and confirm the deck (slide "Signals 101 — From Noise to Action") renders, not the brief.
+- If it does render correctly, the bug is purely visual confusion → go to step 2.
+- If it does NOT, audit every `Link`/`href` to `/signals-playbook` and `/events/from-signals-to-control/brief` and fix the offender.
 
-### Files to edit
+### 2. Make the two pages visually unmistakable
+On `SignalsEventBrief.tsx`:
+- Keep the existing "Event Positioning & Messaging Brief" chip but make it bigger and pin a sticky "Internal Event Brief — not the Signals 101 playbook" sub-label under the H1.
+- Add a prominent CTA card near the top: "Looking for the sales playbook? → Open Signals 101" linking to `/signals-playbook`.
 
-- `src/App.tsx` — register `/signals-playbook` route
-- `src/pages/HomePage.tsx` — add Signals Playbook card to Capabilities grid (icon: `Radio` or `Activity`, badge: `11 slides`)
-- `src/components/AppSidebar.tsx` — add to `capabilityItems`
+On `SignalsPlaybook.tsx` title slide (`SIGSlide0Title.tsx`):
+- Already says "Signals 101 / From Noise to Action" + "Sales Enablement Playbook" pill — leave as-is.
+- Add a small footer chip "Playbook · /signals-playbook" so the route is visible.
 
-### Design conventions (per memory)
-- Dark theme, h-screen slide containers, asymmetrical padding
-- DTOP color coding on lifecycle slide (D blue · T amber · O violet · P emerald)
-- Approved terms only: "signals", "Generative AI", "Recommended Actions", "Operational Data". Avoid FOQA/FDM/ASAP, "AI copilot", "single pane of glass"
-- Reuse `PitchSlideContainer` / existing slide layout primitives
-- CoAnalyst headline framing: ~90% domain accuracy vs ~35% generic AI
+### 3. Tighten the entry points
+- Homepage: keep the Signals 101 card under Capabilities (already correct: `/signals-playbook`).
+- Sidebar: keep "Signals 101" under Capabilities (already correct).
+- Add the Event Brief as its own labelled entry **only** if you want it discoverable (currently it's only reachable by direct URL). If yes, I'll add a separate "Event Positioning Brief" card under Additional Resources so they sit side-by-side and clearly read as two different items.
 
-### Out of scope (this iteration)
-- Narration/voiceover (can be added later via `src/data/...Narration.ts` + `useSimpleNarration`)
-- Quiz / Academy module integration
-- PPTX export
-- New backend tables
+### Out of scope
+- No content rewrites of either page.
+- No route renames (would break existing links).
+
+### Question before I implement
+Do you want me to **(a)** keep the Event Brief hidden from nav and just add the visual differentiation + cross-link, or **(b)** also surface the Event Brief as its own card on the homepage / in the sidebar so the two are visibly distinct entries? I'll default to (a) unless you say otherwise.

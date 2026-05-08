@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Activity, ArrowRight, Plane, FileText, ShieldCheck, GraduationCap, Quote } from "lucide-react";
+import { Activity, ArrowRight, Plane, FileText, ShieldCheck, GraduationCap, Quote, Radio } from "lucide-react";
 
 const messagingArchitecture = [
   { layer: "Category", message: "Built for the signal age of aviation." },
@@ -110,6 +110,9 @@ const SignalsEventBrief = () => {
           <h1 className="font-display text-5xl md:text-6xl font-bold leading-[1.05] tracking-tight max-w-4xl">
             From Signals <span className="text-primary">to Control.</span>
           </h1>
+          <p className="mt-3 text-xs font-semibold uppercase tracking-[0.18em] text-amber-400/90">
+            Internal event brief — not the Signals 101 sales playbook
+          </p>
           <p className="mt-5 text-lg text-muted-foreground max-w-3xl leading-relaxed">
             The positioning, narrative, and messaging architecture for the Operational Performance
             Platform event. Use this as the single source of truth for keynote, marketing, sponsor,
@@ -120,6 +123,19 @@ const SignalsEventBrief = () => {
             <span><span className="text-foreground/60">Format:</span> {"{1-day summit}"}</span>
             <span><span className="text-foreground/60">Status:</span> {"{Draft}"}</span>
           </div>
+          <Link
+            to="/signals-playbook"
+            className="mt-8 group inline-flex items-center gap-3 rounded-xl border border-border bg-card/60 hover:border-primary/40 hover:bg-card transition-all px-4 py-3"
+          >
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <Radio className="h-4 w-4" />
+            </span>
+            <span className="flex flex-col text-left">
+              <span className="text-[11px] uppercase tracking-wider text-muted-foreground">Looking for the sales playbook?</span>
+              <span className="text-sm font-semibold text-foreground">Open Signals 101 — From Noise to Action</span>
+            </span>
+            <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all" />
+          </Link>
         </div>
       </header>
 
