@@ -9,9 +9,11 @@ import SERecapSlide from "@/components/sales-enablement-slides/SERecapSlide";
 import SELayerTalkTrack from "@/components/sales-enablement-slides/SELayerTalkTrack";
 import SEObjections from "@/components/sales-enablement-slides/SEObjections";
 import SEClosingForReps from "@/components/sales-enablement-slides/SEClosingForReps";
+import SEPlainEnglishShift from "@/components/sales-enablement-slides/SEPlainEnglishShift";
+import SEDiscoveryToClose from "@/components/sales-enablement-slides/SEDiscoveryToClose";
+import SEUseCaseCheatSheet from "@/components/sales-enablement-slides/SEUseCaseCheatSheet";
 
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
-import TechSlide2IndustryChallenge from "@/components/tech-slides/TechSlide2IndustryChallenge";
 import PFSlide9Value from "@/components/platform-slides/PFSlide9Value";
 import TechV4PlatformOverview from "@/components/tech-slides/v4/TechV4PlatformOverview";
 import TechV4Slide4aSafetyManager from "@/components/tech-slides/v4/TechV4Slide4aSafetyManager";
@@ -24,14 +26,8 @@ import TechV4SlideTiersVsAI from "@/components/tech-slides/v4/TechV4SlideTiersVs
 import TechV4SlideMobile from "@/components/tech-slides/v4/TechV4SlideMobile";
 import TechV4Slide5DTOP from "@/components/tech-slides/v4/TechV4Slide5DTOP";
 import TechSlideRegulationSummary from "@/components/tech-slides/TechSlideRegulationSummary";
-import Slide4Transformation from "@/components/slides/Slide4Transformation";
-import SlideUseCases from "@/components/slides/SlideUseCases";
-import Slide5MaturityCurve from "@/components/slides/Slide5MaturityCurve";
 import CustomerOutcomesSlide from "@/components/shared/CustomerOutcomesSlide";
 import TechSlideWhyComply from "@/components/tech-slides/TechSlideWhyComply";
-import TechSlide10SafetyUseCases from "@/components/tech-slides/TechSlide10SafetyUseCases";
-import TechSlide11OpsUseCases from "@/components/tech-slides/TechSlide11OpsUseCases";
-import TechSlide12FinancialUseCases from "@/components/tech-slides/TechSlide12FinancialUseCases";
 
 const moduleProps = {
   m2: {
