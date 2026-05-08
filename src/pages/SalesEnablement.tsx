@@ -47,16 +47,16 @@ const moduleProps = {
   m4: {
     moduleNumber: 4,
     title: "How we sell it",
-    learningGoal: "By the end of this module you understand the discovery → demo → close motion and where the maturity roadmap fits the conversation.",
+    learningGoal: "By the end of this module you can run the discovery → demo → close motion in plain English and ask one good question per stage.",
     estimatedMinutes: 4,
-    upNext: ["Before vs After", "Maturity roadmap"],
+    upNext: ["Discovery → Demo → Close cheat sheet"],
   },
   m5: {
     moduleNumber: 5,
     title: "Use cases & value through DTOP",
-    learningGoal: "By the end of this module you can pick the right use case for the prospect's pain and walk them through Detect → Trigger → Orchestrate → Prove with a defensible cost figure.",
-    estimatedMinutes: 12,
-    upNext: ["DTOP framework", "Safety use cases", "Operations use cases", "Financial use cases", "Regulation Management", "Customer outcomes"],
+    learningGoal: "By the end of this module you can pick the right plain-English use case for the prospect's pain and walk them through Detect → Trigger → Orchestrate → Prove.",
+    estimatedMinutes: 6,
+    upNext: ["Use case cheat sheet", "Regulation Management", "Customer outcomes"],
   },
   m6: {
     moduleNumber: 6,
@@ -71,7 +71,7 @@ const slides = [
   // MODULE 1
   { id: "se-slide-0", label: "Title", component: SESlide0Title },
   { id: "se-slide-shift", label: "M1 · Strategic Shift", component: TechSlide1StrategicShift },
-  { id: "se-slide-challenge", label: "M1 · Industry Challenge", component: TechSlide2IndustryChallenge },
+  { id: "se-plain-english-shift", label: "M1 · Why This Matters (Plain English)", component: SEPlainEnglishShift },
   // MODULE 2
   { id: "se-module-2", label: "▸ Module 2", component: SEModuleDivider, dividerProps: moduleProps.m2 },
   { id: "se-slide-whatis", label: "M2 · The Platform", component: TechV4PlatformOverview },
@@ -91,14 +91,10 @@ const slides = [
   { id: "se-slide-talktrack", label: "M3 · Capability Talk Track", component: SELayerTalkTrack },
   // MODULE 4
   { id: "se-module-4", label: "▸ Module 4", component: SEModuleDivider, dividerProps: moduleProps.m4 },
-  { id: "se-slide-transform", label: "M4 · Before vs After", component: Slide4Transformation },
-  { id: "se-slide-maturity", label: "M4 · Maturity Roadmap", component: Slide5MaturityCurve },
+  { id: "se-discovery-to-close", label: "M4 · Discovery → Demo → Close", component: SEDiscoveryToClose },
   // MODULE 5
   { id: "se-module-5", label: "▸ Module 5", component: SEModuleDivider, dividerProps: moduleProps.m5 },
-  { id: "se-slide-usecases", label: "M5 · Use Case Framework (DTOP)", component: SlideUseCases },
-  { id: "se-slide-safety-uc", label: "M5 · Safety Use Cases", component: TechSlide10SafetyUseCases },
-  { id: "se-slide-ops-uc", label: "M5 · Operations Use Cases", component: TechSlide11OpsUseCases },
-  { id: "se-slide-financial-uc", label: "M5 · Financial Use Cases", component: TechSlide12FinancialUseCases },
+  { id: "se-usecase-cheatsheet", label: "M5 · Use Case Cheat Sheet", component: SEUseCaseCheatSheet },
   { id: "se-slide-regmgmt", label: "M5 · Regulation Management Use Case", component: TechSlideRegulationSummary },
   { id: "se-slide-outcomes", label: "M5 · Customer Outcomes", component: CustomerOutcomesSlide },
   // MODULE 6
