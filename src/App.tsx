@@ -39,6 +39,7 @@ import PlatformOverview from "./pages/PlatformOverview";
 import Comply365Home from "./pages/Comply365Home";
 import SignalsEvent from "./pages/events/SignalsEvent";
 import SignalsEventBrief from "./pages/events/SignalsEventBrief";
+import PasswordGate from "./components/shared/PasswordGate";
 import { AuthProvider } from "./contexts/AuthContext";
 import RequireAuth from "./components/academy/RequireAuth";
 import AcademyHome from "./pages/academy/AcademyHome";
@@ -91,8 +92,8 @@ const App = () => (
             <Route path="/roadmap" element={<RoadmapDeck />} />
             <Route path="/review" element={<ReviewDashboard />} />
             <Route path="/customer-overview" element={<CustomerOverview />} />
-            <Route path="/platform" element={<PlatformOverview />} />
-            <Route path="/comply365-home" element={<Comply365Home />} />
+            <Route path="/platform" element={<PasswordGate><PlatformOverview /></PasswordGate>} />
+            <Route path="/comply365-home" element={<PasswordGate><Comply365Home /></PasswordGate>} />
             <Route path="/events/from-signals-to-control" element={<SignalsEvent />} />
             <Route path="/events/from-signals-to-control/brief" element={<SignalsEventBrief />} />
             <Route path="/academy" element={<RequireAuth><AcademyHome /></RequireAuth>} />
