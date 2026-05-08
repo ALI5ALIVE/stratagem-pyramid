@@ -1,7 +1,7 @@
 import {
   Presentation, Brain,
   Rocket, BookOpen, Home, Users, ScrollText, Workflow, Sparkles, Zap, Smartphone, Layers, Radio,
-  LogIn, LogOut, GraduationCap, Map
+  LogIn, LogOut, GraduationCap
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useSidebar } from "@/components/ui/sidebar";
@@ -29,7 +29,6 @@ type NavItem = {
 const pitchItems: NavItem[] = [
   { title: "Short — Customer Overview", url: "/customer-overview", icon: Presentation },
   { title: "Medium — Executive Pitch", url: "/pitch-executive-3", icon: Rocket },
-  { title: "Use Cases & Roadmap", url: "/roadmap", icon: Map, badge: "New" },
 ];
 
 const additionalResourceItems: NavItem[] = [
@@ -38,13 +37,13 @@ const additionalResourceItems: NavItem[] = [
 ];
 
 const salesEnablementItems: NavItem[] = [
-  { title: "Sales Enablement Academy", url: "/academy", icon: GraduationCap, badge: "New" },
+  { title: "Sales Enablement Academy", url: "/academy", icon: GraduationCap },
   { title: "Sales Enablement Training", url: "/sales-enablement", icon: GraduationCap },
 ];
 
 const capabilityItems: NavItem[] = [
   { title: "Platform Playbook", url: "/platform-playbook", icon: Layers, badge: "Master" },
-  { title: "Signals 101", url: "/signals-playbook", icon: Radio, badge: "New" },
+  { title: "Signals 101", url: "/signals-playbook", icon: Radio },
   { title: "CoAnalyst Playbook", url: "/coanalyst", icon: Brain },
   { title: "Regulation Management", url: "/regulation-management", icon: ScrollText },
   { title: "DTOP Operating Model", url: "/dtop-playbook", icon: Workflow },
