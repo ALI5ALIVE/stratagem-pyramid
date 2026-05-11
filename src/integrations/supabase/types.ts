@@ -63,9 +63,11 @@ export type Database = {
       }
       academy_modules: {
         Row: {
+          accent_color: string | null
           created_at: string
           estimated_minutes: number
           id: string
+          kicker: string | null
           learning_goal: string
           module_number: number
           order_index: number
@@ -73,11 +75,14 @@ export type Database = {
           slide_ids: string[]
           title: string
           updated_at: string
+          week_number: number | null
         }
         Insert: {
+          accent_color?: string | null
           created_at?: string
           estimated_minutes?: number
           id: string
+          kicker?: string | null
           learning_goal: string
           module_number: number
           order_index: number
@@ -85,11 +90,14 @@ export type Database = {
           slide_ids?: string[]
           title: string
           updated_at?: string
+          week_number?: number | null
         }
         Update: {
+          accent_color?: string | null
           created_at?: string
           estimated_minutes?: number
           id?: string
+          kicker?: string | null
           learning_goal?: string
           module_number?: number
           order_index?: number
@@ -97,6 +105,7 @@ export type Database = {
           slide_ids?: string[]
           title?: string
           updated_at?: string
+          week_number?: number | null
         }
         Relationships: []
       }
