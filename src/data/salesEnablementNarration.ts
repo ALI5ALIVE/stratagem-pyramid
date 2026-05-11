@@ -36,11 +36,11 @@ export const salesEnablementNarrations: SESlideNarration[] = [
       "This slide replaces the dollar-figure cost-of-inaction with three plain-English lines you can say to any prospect, in any room. The core message: aviation isn't short on data — it's short on signals it can act on, and proof that the action worked. The pain you're naming: operators run safety, content, and training in three disconnected stacks; we unify them with domain-trained intelligence on top. The value lever: a measurable shift from reactive to controlled — Detect, Trigger, Orchestrate, Prove. Deliver each line slowly and pause for the discovery question — those questions are what stop you pitching and start them describing their own problem. Avoid the ROI numbers we have not signed off; this slide is messaging, not modelling. Then transition into Module 2, where we make the platform itself plain English.",
   },
   {
-    slideId: "se-module-2",
-    title: "M2 · Module Intro",
+    slideId: "se-week-1",
+    title: "Week 1 · Foundation",
     voiceId: VOICE,
     script:
-      "Module 2 exists for one reason: most reps over-explain the platform because they're nervous. By the end of this module you will give the one-sentence pitch and name the four capability bands without reading them off a slide. The four bands, in order: Core Apps, Intelligence and Orchestration, Unified Mobile, and DTOP. If you can say that sequence cleanly under pressure, you're already ahead of most of the field. We move next into the platform diagram itself.",
+      "Week 1 is the foundation. The job this week is simple: set the scene, and put the platform in plain English. By the end of Week 1 you can explain why the market is shifting and give the one-sentence platform pitch — without jargon, without reading off a slide. The four capability bands you must name from memory, in order: Core Apps, Intelligence and Orchestration, Unified Mobile, and DTOP. Slow down on the recap slide at the end of the week — that's the rehearsal, not a content slide. Once Week 1 sounds natural, move into Week 2 — the capabilities.",
   },
   {
     slideId: "se-slide-whatis",
@@ -64,11 +64,11 @@ export const salesEnablementNarrations: SESlideNarration[] = [
       "This is a rehearsal slide, not a content slide. The core message: there are three questions every prospect asks, and you need a clean one-sentence answer for each. What is it — the first connected operating platform for safety, content, and training. How is it different — one foundation instead of five to seven disconnected tools. What's the one thing to remember — point solutions can detect, only we can Detect, Trigger, Orchestrate, and Prove. Read each one out loud right now. If you stumble, replay this slide. Don't move on until all three feel natural. Module 3 goes capability by capability.",
   },
   {
-    slideId: "se-module-3",
-    title: "M3 · Module Intro",
+    slideId: "se-week-2",
+    title: "Week 2 · Capabilities",
     voiceId: VOICE,
     script:
-      "Module 3 is the longest module because the capabilities are where the demo lives. By the end of it you should be able to give a sixty-second walk-through of each capability and ask one good discovery question per capability. We go in this order: Core Apps — SafetyManager365, ContentManager365, TrainingManager365 — then the Intelligence layer with CoAnalyst, Insights and Recommendations, and Automation, then how CoAnalyst differs from generic AI, then the Unified Mobile App, then DTOP itself, and we close with a capability cheat sheet. Take it slowly. This is the module reps under-prepare for and lose deals over.",
+      "Week 2 is the longest week because the capabilities are where the demo lives. By the end of it you should be able to give a sixty-second walk-through of each capability and ask one good discovery question per capability. We go in this order: Core Apps — SafetyManager365, ContentManager365, TrainingManager365 — then the Intelligence layer with CoAnalyst, Insights and Recommendations, and Automation, then how CoAnalyst differs from generic AI, then the Unified Mobile App, then DTOP itself, and we close with a capability cheat sheet. Take it slowly. This is the week reps under-prepare for and lose deals over.",
   },
   {
     slideId: "se-slide-4a",
