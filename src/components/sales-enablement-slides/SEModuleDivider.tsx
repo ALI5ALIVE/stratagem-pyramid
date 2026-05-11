@@ -9,6 +9,8 @@ interface Props extends SlideNarrationProps {
   learningGoal?: string;
   estimatedMinutes?: number;
   upNext?: string[];
+  weekNumber?: number;
+  kicker?: string;
 }
 
 const SEModuleDivider = ({
@@ -18,14 +20,19 @@ const SEModuleDivider = ({
   learningGoal = "",
   estimatedMinutes,
   upNext = [],
+  weekNumber,
+  kicker,
   ...narrationProps
 }: Props) => (
   <PitchSlideContainer id={`se-module-${moduleNumber}`} slideNumber={slideNumber} {...narrationProps}>
     <div className="h-full flex flex-col justify-center max-w-5xl mx-auto px-4">
       <div className="flex items-center gap-3 mb-6">
         <div className="px-3 py-1 rounded-full border border-primary/40 bg-primary/10 text-[11px] font-mono uppercase tracking-wider text-primary">
-          Module {moduleNumber}
+          {weekNumber ? `Week ${weekNumber}` : `Module ${moduleNumber}`}
         </div>
+        {kicker && (
+          <div className="text-[11px] text-muted-foreground uppercase tracking-wider">{kicker}</div>
+        )}
         {estimatedMinutes && (
           <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
             <Clock className="h-3 w-3" />
