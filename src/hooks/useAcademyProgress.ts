@@ -11,6 +11,9 @@ export interface AcademyModule {
   slide_ids: string[];
   order_index: number;
   pass_threshold: number;
+  week_number?: number;
+  accent_color?: string;
+  kicker?: string;
 }
 
 export interface ProgressRow {

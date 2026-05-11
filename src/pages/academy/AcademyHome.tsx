@@ -29,7 +29,7 @@ export default function AcademyHome() {
             <div className="text-[11px] uppercase tracking-wider text-primary font-mono mb-1">Academy</div>
             <h1 className="text-2xl font-bold tracking-tight">Sales Enablement Academy</h1>
             <p className="text-sm text-muted-foreground mt-1">
-              Six 5-minute modules. Watch, then pass the quiz to mark each module complete.
+              Three week-long modules — Foundation, Capabilities, Sell & Win. Watch each, then pass the quiz to complete the week.
             </p>
           </div>
           <div className="flex items-center gap-3">
@@ -59,7 +59,7 @@ export default function AcademyHome() {
             />
           </div>
           <div className="text-sm font-medium text-foreground">
-            {passedCount} / {modules.length} passed
+            {passedCount} / {modules.length} weeks passed
           </div>
         </div>
 
@@ -76,8 +76,12 @@ export default function AcademyHome() {
                 <Card key={m.id} className={`p-5 ${!unlocked ? "opacity-60" : ""}`}>
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider border border-primary/40 bg-primary/10 text-primary">
-                        Module {m.module_number}
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider border ${
+                        m.accent_color === 'violet' ? 'border-violet-500/40 bg-violet-500/10 text-violet-300'
+                        : m.accent_color === 'emerald' ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300'
+                        : 'border-primary/40 bg-primary/10 text-primary'
+                      }`}>
+                        Week {m.week_number ?? m.module_number} · {m.kicker ?? ''}
                       </span>
                       <span className="flex items-center gap-1 text-[11px] text-muted-foreground">
                         <Clock className="h-3 w-3" />~{m.estimated_minutes} min
