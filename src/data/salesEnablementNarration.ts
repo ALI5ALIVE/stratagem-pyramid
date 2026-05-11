@@ -141,11 +141,11 @@ export const salesEnablementNarrations: SESlideNarration[] = [
       "This is the cheat-sheet rehearsal slide. The core message: every capability has one plain-English line and one discovery question. Read each row out loud now and practise the discovery question — those questions are how you stop pitching and start listening. Delivery tip — in a real meeting you will not deliver this slide; you will deliver the four lines from memory. Treat this slide as the page you study before every call for the first month. Next we move into Module 4: how we sell it.",
   },
   {
-    slideId: "se-module-4",
-    title: "M4 · Module Intro",
+    slideId: "se-week-3",
+    title: "Week 3 · Sell & Win",
     voiceId: VOICE,
     script:
-      "Module 4 is short and high-leverage. By the end of it you can run the discovery, demo, and close motion in plain English and ask one good question per stage. One slide does the work — the cheat sheet — and your job is to learn the three lines and the three questions cold.",
+      "Week 3 is sell and win. By the end of this week you can run the discovery, demo, and close motion in plain English, pick the right use case for the room, and handle the top objections — every time ending with a clear next step. We move through the discovery to close cheat sheet, the use case cheat sheet, the Regulation Management use case, customer outcomes, objections, why Comply365, and your enablement plan as a rep. This is the week where messaging becomes value — slow down on the cheat sheets and learn the three lines and three questions cold.",
   },
   {
     slideId: "se-discovery-to-close",
