@@ -19,7 +19,7 @@ export const salesEnablementNarrations: SESlideNarration[] = [
     title: "Welcome",
     voiceId: VOICE,
     script:
-      "Welcome to the Sales Enablement Academy. Before we touch a single deck, let's set expectations. Your job is not to sell software — it is to sell the first connected operating model in aviation. The platform is the proof, the operating model is the story, and DTOP — Detect, Trigger, Orchestrate, Prove — is the loop that makes it real for the customer. Across the next six modules you will internalise the platform in plain English, the four capability bands, the value math against customer pain, and the objection handling that gets you to a ninety-day pilot. Take notes, repeat the core lines out loud, and treat every recap slide as a real rehearsal. Let's begin with the strategic shift the industry is going through right now.",
+      "Welcome to the Sales Enablement Academy. Before we touch a single deck, let's set expectations. Your job is not to sell software — it is to sell the first connected operating model in aviation. The platform is the proof, the operating model is the story, and DTOP — Detect, Trigger, Orchestrate, Prove — is the loop that makes it real for the customer. The academy is structured as three weeks of study. Week one is the foundation — the market shift and the platform in plain English. Week two is the capabilities — how the four bands fit together. Week three is sell and win — discovery, demo, close, use cases, and objections, ending with a clear next step in the conversation. Take notes, repeat the core lines out loud, and treat every recap slide as a real rehearsal. Let's begin with the strategic shift the industry is going through right now.",
   },
   {
     slideId: "se-slide-shift",
@@ -36,11 +36,11 @@ export const salesEnablementNarrations: SESlideNarration[] = [
       "This slide replaces the dollar-figure cost-of-inaction with three plain-English lines you can say to any prospect, in any room. The core message: aviation isn't short on data — it's short on signals it can act on, and proof that the action worked. The pain you're naming: operators run safety, content, and training in three disconnected stacks; we unify them with domain-trained intelligence on top. The value lever: a measurable shift from reactive to controlled — Detect, Trigger, Orchestrate, Prove. Deliver each line slowly and pause for the discovery question — those questions are what stop you pitching and start them describing their own problem. Avoid the ROI numbers we have not signed off; this slide is messaging, not modelling. Then transition into Module 2, where we make the platform itself plain English.",
   },
   {
-    slideId: "se-module-2",
-    title: "M2 · Module Intro",
+    slideId: "se-week-1",
+    title: "Week 1 · Foundation",
     voiceId: VOICE,
     script:
-      "Module 2 exists for one reason: most reps over-explain the platform because they're nervous. By the end of this module you will give the one-sentence pitch and name the four capability bands without reading them off a slide. The four bands, in order: Core Apps, Intelligence and Orchestration, Unified Mobile, and DTOP. If you can say that sequence cleanly under pressure, you're already ahead of most of the field. We move next into the platform diagram itself.",
+      "Week 1 is the foundation. The job this week is simple: set the scene, and put the platform in plain English. By the end of Week 1 you can explain why the market is shifting and give the one-sentence platform pitch — without jargon, without reading off a slide. The four capability bands you must name from memory, in order: Core Apps, Intelligence and Orchestration, Unified Mobile, and DTOP. Slow down on the recap slide at the end of the week — that's the rehearsal, not a content slide. Once Week 1 sounds natural, move into Week 2 — the capabilities.",
   },
   {
     slideId: "se-slide-whatis",
@@ -64,11 +64,11 @@ export const salesEnablementNarrations: SESlideNarration[] = [
       "This is a rehearsal slide, not a content slide. The core message: there are three questions every prospect asks, and you need a clean one-sentence answer for each. What is it — the first connected operating platform for safety, content, and training. How is it different — one foundation instead of five to seven disconnected tools. What's the one thing to remember — point solutions can detect, only we can Detect, Trigger, Orchestrate, and Prove. Read each one out loud right now. If you stumble, replay this slide. Don't move on until all three feel natural. Module 3 goes capability by capability.",
   },
   {
-    slideId: "se-module-3",
-    title: "M3 · Module Intro",
+    slideId: "se-week-2",
+    title: "Week 2 · Capabilities",
     voiceId: VOICE,
     script:
-      "Module 3 is the longest module because the capabilities are where the demo lives. By the end of it you should be able to give a sixty-second walk-through of each capability and ask one good discovery question per capability. We go in this order: Core Apps — SafetyManager365, ContentManager365, TrainingManager365 — then the Intelligence layer with CoAnalyst, Insights and Recommendations, and Automation, then how CoAnalyst differs from generic AI, then the Unified Mobile App, then DTOP itself, and we close with a capability cheat sheet. Take it slowly. This is the module reps under-prepare for and lose deals over.",
+      "Week 2 is the longest week because the capabilities are where the demo lives. By the end of it you should be able to give a sixty-second walk-through of each capability and ask one good discovery question per capability. We go in this order: Core Apps — SafetyManager365, ContentManager365, TrainingManager365 — then the Intelligence layer with CoAnalyst, Insights and Recommendations, and Automation, then how CoAnalyst differs from generic AI, then the Unified Mobile App, then DTOP itself, and we close with a capability cheat sheet. Take it slowly. This is the week reps under-prepare for and lose deals over.",
   },
   {
     slideId: "se-slide-4a",
@@ -141,18 +141,18 @@ export const salesEnablementNarrations: SESlideNarration[] = [
       "This is the cheat-sheet rehearsal slide. The core message: every capability has one plain-English line and one discovery question. Read each row out loud now and practise the discovery question — those questions are how you stop pitching and start listening. Delivery tip — in a real meeting you will not deliver this slide; you will deliver the four lines from memory. Treat this slide as the page you study before every call for the first month. Next we move into Module 4: how we sell it.",
   },
   {
-    slideId: "se-module-4",
-    title: "M4 · Module Intro",
+    slideId: "se-week-3",
+    title: "Week 3 · Sell & Win",
     voiceId: VOICE,
     script:
-      "Module 4 is short and high-leverage. By the end of it you can run the discovery, demo, and close motion in plain English and ask one good question per stage. One slide does the work — the cheat sheet — and your job is to learn the three lines and the three questions cold.",
+      "Week 3 is sell and win. By the end of this week you can run the discovery, demo, and close motion in plain English, pick the right use case for the room, and handle the top objections — every time ending with a clear next step. We move through the discovery to close cheat sheet, the use case cheat sheet, the Regulation Management use case, customer outcomes, objections, why Comply365, and your enablement plan as a rep. This is the week where messaging becomes value — slow down on the cheat sheets and learn the three lines and three questions cold.",
   },
   {
     slideId: "se-discovery-to-close",
     title: "M4 · Discovery → Demo → Close",
     voiceId: VOICE,
     script:
-      "This is the motion in plain English. The core message: discovery finds the disconnected loop, demo shows the loop close, close scopes a ninety-day pilot around their highest-cost use case. The pain you're addressing: most reps over-pitch because they're guessing what matters; the three discovery questions stop the guessing. The value lever: outcome-based pilots beat feature checklists every time. Delivery tip — say the three lines, ask the three questions, write down their answers verbatim. Their words become your demo script and your pilot scope. Next module: use cases.",
+      "This is the motion in plain English. The core message: discovery finds the disconnected loop, demo shows the loop close, close scopes the next focused conversation around their highest-cost use case. The pain you're addressing: most reps over-pitch because they're guessing what matters; the three discovery questions stop the guessing. The value lever: outcome-based conversations beat feature checklists every time. Delivery tip — say the three lines, ask the three questions, write down their answers verbatim. Their words become your demo script and the scope of the next session. Next: use cases.",
   },
   {
     slideId: "se-module-5",
@@ -187,28 +187,28 @@ export const salesEnablementNarrations: SESlideNarration[] = [
     title: "M6 · Module Intro",
     voiceId: VOICE,
     script:
-      "Module 6 is the closing module. By the end of it you handle the top three objections and walk a prospect to a ninety-day pilot. Three slides: the objections cheat sheet, why Comply365 wins, and your first seven days as a rep. The objections list is intentionally short for now — final wording is being reviewed by Marketing.",
+      "This is the closing arc of Week 3. By the end of it you handle the top three objections and walk a prospect to a clear next step. Three slides: the objections cheat sheet, why Comply365 wins, and your enablement plan as a rep. The objections list is intentionally short for now — final wording is being reviewed by Marketing.",
   },
   {
     slideId: "se-slide-objections",
     title: "M6 · Objections Cheat Sheet",
     voiceId: VOICE,
     script:
-      "Objections cheat sheet — read this slide aloud, every line, and practise the responses until they sound like yours, not ours. The core message: every objection follows the same three-step pattern — Acknowledge, Reframe, Bridge. Acknowledge what they said without defending. Reframe to the part of their pain the objection actually exposes. Bridge to a concrete next step — usually a twenty-minute DTOP walkthrough or a focused use-case session. The pain you're addressing in this slide: most reps argue with objections instead of using them as discovery. The value lever: a well-handled objection is a faster path to the pilot than no objection at all. Delivery tip — never escalate. The customer's objection is information, not opposition. Next: why we win.",
+      "Objections cheat sheet — read this slide aloud, every line, and practise the responses until they sound like yours, not ours. The core message: every objection follows the same three-step pattern — Acknowledge, Reframe, Bridge. Acknowledge what they said without defending. Reframe to the part of their pain the objection actually exposes. Bridge to a concrete next step — usually a twenty-minute DTOP walkthrough or a focused use-case session. The pain you're addressing in this slide: most reps argue with objections instead of using them as discovery. The value lever: a well-handled objection is a faster path to the next conversation than no objection at all. Delivery tip — never escalate. The customer's objection is information, not opposition. Next: why we win.",
   },
   {
     slideId: "se-slide-why",
     title: "M6 · Why Comply365",
     voiceId: VOICE,
     script:
-      "Why Comply365 is your closing argument. The core message — three differentiators, in this order: connected foundation, the intelligence layer with approximately ninety percent domain accuracy, and proven scale at five hundred and fifty plus airlines and around two and a half million users across six continents. The pain it addresses: at the close, the customer is choosing between feeling safe and feeling visionary — this slide lets them feel both. The value lever: foundation gives them the safe choice, intelligence gives them the visionary choice, scale removes the career risk. Delivery tip — pick the one differentiator that matches the room and lead with it — don't read all three with equal weight. Then ask the close: can we put a focused ninety-day pilot together for your highest-cost use case? Silence after that question is your friend. Next: your first seven days.",
+      "Why Comply365 is your closing argument. The core message — three differentiators, in this order: connected foundation, the intelligence layer with approximately ninety percent domain accuracy, and proven scale at five hundred and fifty plus airlines and around two and a half million users across six continents. The pain it addresses: at the close, the customer is choosing between feeling safe and feeling visionary — this slide lets them feel both. The value lever: foundation gives them the safe choice, intelligence gives them the visionary choice, scale removes the career risk. Delivery tip — pick the one differentiator that matches the room and lead with it — don't read all three with equal weight. Then ask the close: can we set up a focused walkthrough on your highest-cost use case? Silence after that question is your friend. Next: your enablement plan.",
   },
   {
     slideId: "se-slide-closing",
     title: "M6 · Your First 7 Days",
     voiceId: VOICE,
     script:
-      "This slide is the rep's commitment, not the customer's. The core message: in your first seven days you will watch three demos — Executive Pitch 3, the DTOP Playbook, and the CoAnalyst Playbook — shadow two live calls, run one role-play on the we already have an SMS objection, and bookmark the Command Centre as your single source of truth for collateral. The pain this addresses: most new reps wait to be pulled into deals; the ones who win are the ones who ramp themselves. The value lever: the day-seven readiness checklist on this slide is your bar — when you can tick all five honestly, you're ready for a real discovery call. Final delivery tip — the closing line of this academy is the same line you should carry into every customer meeting: you're not selling software, you're selling the first connected operating model in aviation. Now go practise.",
+      "This slide is the rep's commitment, not the customer's. The order matters. Step one — read the Enablement deck end to end, Week 1 first. Step two — only then read the Medium Pitch, Executive Pitch 3, because every Enablement slide is teaching you a slide in that deck. Step three — practise the we already have an SMS role-play using Acknowledge, Reframe, Bridge, and end by booking a twenty-minute DTOP walkthrough. Step four — bookmark the Command Centre as your single source of truth, and use the Persona Deep-Dive and Signals 101 Playbook as your reference shelves. The pain this addresses: most new reps wait to be pulled into deals; the ones who win are the ones who ramp themselves. The value lever: when you can tick every line of the readiness checklist honestly, you're ready for the next conversation. Final delivery tip — the closing line of this academy is the same line you should carry into every customer meeting: you're not selling software, you're selling the first connected operating model in aviation. Now go practise.",
   },
 ];
 

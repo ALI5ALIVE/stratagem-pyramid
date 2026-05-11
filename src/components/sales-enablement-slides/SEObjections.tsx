@@ -21,7 +21,7 @@ const bridges = [
   "Can I show you how the LMS gets smarter when it's wired to live safety data?",
   "Want to see content that reacts to operational events?",
   "Want to see DTOP working with rules-only — no AI required?",
-  "Want to see a 90-day pilot scoped to your highest-cost use case?",
+  "Want a focused walkthrough on your highest-cost use case?",
 ];
 
 const SEObjections = ({ slideNumber, ...narrationProps }: Props) => {

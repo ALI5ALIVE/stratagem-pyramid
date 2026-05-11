@@ -1,21 +1,40 @@
 import PitchSlideContainer from "@/components/shared/PitchSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { GraduationCap, TrendingUp, Layers, Workflow, Trophy, Sparkles, Target } from "lucide-react";
+import { GraduationCap, TrendingUp, Layers, Workflow } from "lucide-react";
 
 interface Props extends SlideNarrationProps {
   slideNumber?: number;
+  slideCount?: number;
 }
 
-const modules = [
-  { num: 1, title: "The Market Shift", desc: "Why this exists", icon: TrendingUp, accent: "text-sky-400 border-sky-500/40 bg-sky-500/10" },
-  { num: 2, title: "What It Is", desc: "Plain-English pitch", icon: Sparkles, accent: "text-violet-400 border-violet-500/40 bg-violet-500/10" },
-  { num: 3, title: "The Capabilities", desc: "How it fits together", icon: Layers, accent: "text-emerald-400 border-emerald-500/40 bg-emerald-500/10" },
-  { num: 4, title: "How We Sell It", desc: "Discovery → demo → close", icon: Workflow, accent: "text-amber-400 border-amber-500/40 bg-amber-500/10" },
-  { num: 5, title: "Use Cases & DTOP", desc: "Value through Detect→Prove", icon: Target, accent: "text-cyan-400 border-cyan-500/40 bg-cyan-500/10" },
-  { num: 6, title: "Why We Win", desc: "Objections & next steps", icon: Trophy, accent: "text-rose-400 border-rose-500/40 bg-rose-500/10" },
+const weeks = [
+  {
+    num: 1,
+    title: "Foundation",
+    desc: "The market shift & plain-English pitch",
+    covers: "Modules 1–2",
+    icon: TrendingUp,
+    accent: "text-sky-400 border-sky-500/40 bg-sky-500/10",
+  },
+  {
+    num: 2,
+    title: "Capabilities",
+    desc: "How the platform fits together",
+    covers: "Module 3",
+    icon: Layers,
+    accent: "text-violet-400 border-violet-500/40 bg-violet-500/10",
+  },
+  {
+    num: 3,
+    title: "Sell & Win",
+    desc: "Discovery → demo → close, use cases, objections",
+    covers: "Modules 4–6",
+    icon: Workflow,
+    accent: "text-amber-400 border-amber-500/40 bg-amber-500/10",
+  },
 ];
 
-const SESlide0Title = ({ slideNumber, ...narrationProps }: Props) => (
+const SESlide0Title = ({ slideNumber, slideCount, ...narrationProps }: Props) => (
   <PitchSlideContainer id="se-title" slideNumber={slideNumber} {...narrationProps}>
     <div className="h-full flex flex-col justify-center max-w-6xl mx-auto px-4">
       <div className="flex items-center gap-2 mb-4">
@@ -23,27 +42,30 @@ const SESlide0Title = ({ slideNumber, ...narrationProps }: Props) => (
           <GraduationCap className="h-3.5 w-3.5 text-primary" />
           <span className="text-[11px] font-medium uppercase tracking-wider text-primary">Sales Enablement Training</span>
         </div>
-        <span className="text-[11px] text-muted-foreground">31 slides · ~50 min</span>
+        <span className="text-[11px] text-muted-foreground">
+          {slideCount ? `${slideCount} slides · ` : ""}3 weeks · ~50 min
+        </span>
       </div>
 
       <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight leading-tight mb-3">
         Selling the Operational <br />Performance Platform
       </h1>
       <p className="text-base text-muted-foreground max-w-2xl mb-8">
-        A guided walkthrough for new reps. By the end you'll be able to explain the platform on a discovery call — in plain English, without jargon.
+        A guided walkthrough for new reps, structured as three weeks of study. By the end you'll be able to explain the platform on a discovery call — in plain English, without jargon.
       </p>
 
-      <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
-        {modules.map((m) => {
-          const Icon = m.icon;
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {weeks.map((w) => {
+          const Icon = w.icon;
           return (
-            <div key={m.num} className={`p-3 rounded-lg border ${m.accent} flex flex-col gap-1.5`}>
+            <div key={w.num} className={`p-4 rounded-lg border ${w.accent} flex flex-col gap-2`}>
               <div className="flex items-center justify-between">
-                <Icon className="h-4 w-4" />
-                <span className="text-[10px] font-mono opacity-70">M{m.num}</span>
+                <Icon className="h-5 w-5" />
+                <span className="text-[10px] font-mono opacity-70">WEEK {w.num}</span>
               </div>
-              <div className="text-xs font-semibold text-foreground">{m.title}</div>
-              <div className="text-[10px] text-muted-foreground leading-snug">{m.desc}</div>
+              <div className="text-base font-semibold text-foreground">{w.title}</div>
+              <div className="text-xs text-muted-foreground leading-snug">{w.desc}</div>
+              <div className="text-[10px] text-foreground/60 mt-auto pt-2 border-t border-border/40">{w.covers}</div>
             </div>
           );
         })}

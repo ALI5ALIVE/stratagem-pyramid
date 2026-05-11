@@ -1,6 +1,6 @@
 import PitchSlideContainer from "@/components/shared/PitchSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { Play, Users, Mic, FolderOpen, CheckCircle2 } from "lucide-react";
+import { BookOpen, Presentation, Mic, FolderOpen, CheckCircle2 } from "lucide-react";
 
 interface Props extends SlideNarrationProps {
   slideNumber?: number;
@@ -8,28 +8,29 @@ interface Props extends SlideNarrationProps {
 
 const blocks = [
   {
-    icon: Play,
+    icon: BookOpen,
     accent: "text-sky-400 border-sky-500/40 bg-sky-500/10",
-    title: "3 demos to watch",
+    title: "1. Read first — Enablement deck",
     items: [
-      "Executive Pitch 3 — full platform narrative",
-      "DTOP Playbook — operating-model deep-dive",
-      "CoAnalyst Playbook — intelligence layer",
+      "M1 · The Strategic Shift + Plain-English Shift",
+      "M2 · What It Is + Value Unlocked",
+      "Re-listen to each narration once before moving on",
     ],
   },
   {
-    icon: Users,
+    icon: Presentation,
     accent: "text-violet-400 border-violet-500/40 bg-violet-500/10",
-    title: "2 calls to shadow",
+    title: "2. Then read the Medium Pitch",
     items: [
-      "A discovery call with a Head of Safety",
-      "A technical deep-dive with a CTO / IT Director",
+      "Executive Pitch 3 — the customer-facing narrative",
+      "Each Enablement slide teaches an Exec Pitch slide",
+      "Watch the through-line: Shift → Platform → DTOP → Why Us",
     ],
   },
   {
     icon: Mic,
     accent: "text-emerald-400 border-emerald-500/40 bg-emerald-500/10",
-    title: "1 practice scenario",
+    title: "3. Practice",
     items: [
       "Role-play: prospect says 'we already have an SMS'",
       "Use the Acknowledge → Reframe → Bridge pattern",
@@ -39,11 +40,11 @@ const blocks = [
   {
     icon: FolderOpen,
     accent: "text-amber-400 border-amber-500/40 bg-amber-500/10",
-    title: "Where to find collateral",
+    title: "4. Where to find collateral",
     items: [
       "Command Centre (home page) — every deck and playbook",
       "Persona Deep-Dive — messaging by stakeholder",
-      "Line of Sight — interactive ROI calculator",
+      "Signals 101 Playbook — the operational signal story",
     ],
   },
 ];
@@ -53,15 +54,15 @@ const checklist = [
   "I can name the four capabilities (Core Apps, Intelligence & Orchestration, Mobile, DTOP) and what each does in plain English",
   "I can run the DTOP loop on a whiteboard",
   "I can handle the 'we already have X' objection",
-  "I know which deck to send for which persona",
+  "I can map each Enablement teaching slide to its Exec Pitch 3 slide",
 ];
 
 const SEClosingForReps = ({ slideNumber, ...narrationProps }: Props) => (
   <PitchSlideContainer
     id="se-closing"
     slideNumber={slideNumber}
-    title="Your first 7 days"
-    subtitle="A simple plan to go from 'just trained' to 'ready for a discovery call'."
+    title="Your enablement plan"
+    subtitle="The order matters: Enablement deck first, then the Medium Pitch, then practice."
     showHeader
     {...narrationProps}
   >
