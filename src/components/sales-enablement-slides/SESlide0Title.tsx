@@ -27,7 +27,7 @@ const weeks = [
   {
     num: 3,
     title: "Sell & Win",
-    desc: "Discovery → demo → close, use cases, objections",
+    desc: "Discovery → walkthrough → close, use cases, objections",
     covers: "Modules 4–6",
     icon: Workflow,
     accent: "text-amber-400 border-amber-500/40 bg-amber-500/10",
