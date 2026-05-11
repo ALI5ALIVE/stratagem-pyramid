@@ -32,7 +32,7 @@ export default function ModuleLesson() {
           <Link to="/academy"><ArrowLeft className="h-3.5 w-3.5 mr-1" />Academy</Link>
         </Button>
         <div className="text-[11px] font-mono uppercase tracking-wider text-primary">
-          Module {module.module_number} of 6
+          Week {module.week_number ?? module.module_number} of 3{module.kicker ? ` · ${module.kicker}` : ''}
         </div>
         <div className="flex items-center gap-1 text-[11px] text-muted-foreground">
           <Clock className="h-3 w-3" />~{module.estimated_minutes} min

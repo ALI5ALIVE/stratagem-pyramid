@@ -18,4 +18,6 @@ All scripts must respect locked memory rules: BrandNumber product naming, no FOQ
 
 **Module structure (May 2026):** Sales Enablement is taught as **three weeks**, not six modules. Week 1 = Foundation (M1+M2), Week 2 = Capabilities (M3), Week 3 = Sell & Win (M4+M5+M6). The deck still contains module-tagged slides (M1, M2 …) but the dividers are week-banners.
 
+**Academy DB structure (May 2026):** The `academy_modules` table also holds exactly three rows — `m-w1` (Foundation), `m-w2` (Capabilities), `m-w3` (Sell & Win) — each carrying `week_number`, `accent_color` (blue/violet/emerald), and `kicker`. Quiz questions and attempts for the legacy m1..m6 modules were re-pointed onto these three rows. Don't reintroduce per-module rows.
+
 Data file: src/data/salesEnablementNarration.ts. Hook: src/hooks/useSalesEnablementNarration.ts. Wired into src/pages/SalesEnablement.tsx via SpeakerNotesPanel + per-slide narration props.

@@ -13,7 +13,7 @@ export default function Certificate() {
   if (!allDone) {
     return (
       <div className="min-h-screen flex items-center justify-center text-sm text-muted-foreground">
-        Complete all 6 modules to earn your certificate.
+        Complete all 3 weeks to earn your certificate.
         <Link to="/academy" className="text-primary ml-2">Back</Link>
       </div>
     );
@@ -31,11 +31,11 @@ export default function Certificate() {
           <div className="text-[11px] uppercase font-mono tracking-widest text-primary mb-2">Certificate of Completion</div>
           <div className="text-sm text-muted-foreground mb-6">Comply365 Sales Enablement Academy</div>
           <div className="text-3xl font-bold text-foreground mb-2">{profile?.display_name ?? user?.email}</div>
-          <div className="text-sm text-muted-foreground mb-8">has successfully completed all six modules of the Sales Enablement Academy and demonstrated competency on the Operational Performance Platform.</div>
+          <div className="text-sm text-muted-foreground mb-8">has successfully completed all three weeks of the Sales Enablement Academy and demonstrated competency on the Operational Performance Platform.</div>
           <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto mb-8">
             {modules.map((m) => (
               <div key={m.id} className="text-[11px] p-2 rounded border border-border">
-                <div className="font-mono uppercase text-primary text-[10px]">M{m.module_number}</div>
+                <div className="font-mono uppercase text-primary text-[10px]">Wk {m.week_number ?? m.module_number}{m.kicker ? ` · ${m.kicker}` : ''}</div>
                 <div className="text-foreground">{progress[m.id]?.best_score}%</div>
               </div>
             ))}
