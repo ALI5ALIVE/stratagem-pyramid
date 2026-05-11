@@ -14,4 +14,8 @@ Module dividers (M2–M6) follow a slightly tighter "coach intro" form: learning
 
 All scripts must respect locked memory rules: BrandNumber product naming, no FOQA/FDM/ASAP raw acronyms, canonical DTOP color story, ~90% domain accuracy vs ~35% generic AI headline, locked roadmap dates (Insights early-2026, Automation mid-2026, Unified Mobile late-2026), trust signals (550+ airlines, ~2.5M users, 6 continents).
 
+**Pilot wording embargo (May 2026):** Do NOT use "90-day pilot" or any "pilot" framing in Sales Enablement narration or slide copy. We are not promoting pilots yet. Approved substitutes: "next focused conversation", "20-min DTOP walkthrough", "focused use-case session", "focused walkthrough on your highest-cost use case".
+
+**Module structure (May 2026):** Sales Enablement is taught as **three weeks**, not six modules. Week 1 = Foundation (M1+M2), Week 2 = Capabilities (M3), Week 3 = Sell & Win (M4+M5+M6). The deck still contains module-tagged slides (M1, M2 …) but the dividers are week-banners.
+
 Data file: src/data/salesEnablementNarration.ts. Hook: src/hooks/useSalesEnablementNarration.ts. Wired into src/pages/SalesEnablement.tsx via SpeakerNotesPanel + per-slide narration props.
