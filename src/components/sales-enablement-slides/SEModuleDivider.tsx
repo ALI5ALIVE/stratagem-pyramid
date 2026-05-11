@@ -24,7 +24,7 @@ const SEModuleDivider = ({
   kicker,
   ...narrationProps
 }: Props) => (
-  <PitchSlideContainer id={`se-module-${moduleNumber}`} slideNumber={slideNumber} {...narrationProps}>
+  <PitchSlideContainer id={weekNumber ? `se-week-${weekNumber}` : `se-module-${moduleNumber}`} slideNumber={slideNumber} {...narrationProps}>
     <div className="h-full flex flex-col justify-center max-w-5xl mx-auto px-4">
       <div className="flex items-center gap-3 mb-6">
         <div className="px-3 py-1 rounded-full border border-primary/40 bg-primary/10 text-[11px] font-mono uppercase tracking-wider text-primary">
