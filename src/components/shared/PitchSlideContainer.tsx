@@ -51,7 +51,7 @@ const PitchSlideContainer = ({
     <section
       id={id}
       className={cn(
-        "h-screen w-full flex flex-col px-6 sm:px-10 lg:px-16 pt-10 sm:pt-14 pb-16 sm:pb-20 snap-start relative overflow-hidden",
+        "h-screen w-full flex flex-col px-6 sm:px-10 lg:px-16 pt-8 sm:pt-10 pb-10 sm:pb-12 snap-start relative overflow-hidden",
         variant === "light" ? "slide-light bg-white text-foreground" : "bg-background",
         className
       )}
@@ -84,7 +84,7 @@ const PitchSlideContainer = ({
 
       {/* Slide number - bottom right */}
       {slideNumber !== undefined && (
-        <div className="absolute bottom-16 right-6 sm:bottom-20 sm:right-10">
+        <div className="absolute bottom-4 right-6 sm:bottom-6 sm:right-10">
           <span className={cn(
             "text-sm font-medium",
             variant === "light" ? "text-muted-foreground" : "text-muted-foreground"
