@@ -18,10 +18,10 @@ const stages = [
   {
     icon: MonitorPlay,
     accent: "text-violet-400 border-violet-500/40 bg-violet-500/10",
-    stage: "Demo",
+    stage: "Walkthrough",
     plain:
-      "Show the loop close. One signal → procedure update → training assignment → proof — in under 10 minutes, on their data shape.",
-    question: "If we showed you that loop closing in your operation, what would unblock?",
+      "Walk them through how the loop would close on their data shape — one signal → procedure update → training assignment → proof. Not a polished demo yet; a focused walkthrough of the highest-cost use case.",
+    question: "If we walked you through that loop closing in your operation, what would unblock?",
   },
   {
     icon: HandshakeIcon,
@@ -37,7 +37,7 @@ const SEDiscoveryToClose = ({ slideNumber, ...narrationProps }: Props) => (
   <PitchSlideContainer
     id="se-discovery-to-close"
     slideNumber={slideNumber}
-    title="Discovery → Demo → Close"
+    title="Discovery → Walkthrough → Close"
     subtitle="The three-stage motion in plain English. One thing to say. One thing to ask. Per stage."
     showHeader
     {...narrationProps}
