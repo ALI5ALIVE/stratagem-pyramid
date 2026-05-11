@@ -29,42 +29,49 @@ import TechSlideRegulationSummary from "@/components/tech-slides/TechSlideRegula
 import CustomerOutcomesSlide from "@/components/shared/CustomerOutcomesSlide";
 import TechSlideWhyComply from "@/components/tech-slides/TechSlideWhyComply";
 
-const moduleProps = {
-  m2: {
+const weekProps = {
+  w1: {
     moduleNumber: 2,
-    title: "What the platform is, in plain English",
-    learningGoal: "By the end of this module you can give the one-sentence pitch and name the four capability bands without reading them off a slide.",
-    estimatedMinutes: 6,
+    weekNumber: 1,
+    kicker: "Foundation",
+    title: "Set the scene — and put the platform in plain English",
+    learningGoal:
+      "By the end of Week 1 you can explain why the market is shifting and give the one-sentence platform pitch — without jargon, without reading off a slide.",
+    estimatedMinutes: 10,
     upNext: ["Plain-English definition", "The platform at a glance", "Value unlocked", "Recap talk track"],
   },
-  m3: {
+  w2: {
     moduleNumber: 3,
+    weekNumber: 2,
+    kicker: "Capabilities",
     title: "How the capabilities fit together",
-    learningGoal: "By the end of this module you can describe each capability in 60 seconds and ask one good discovery question per capability.",
-    estimatedMinutes: 12,
+    learningGoal:
+      "By the end of Week 2 you can describe each capability in 60 seconds, ask one good discovery question per capability, and walk DTOP on a whiteboard.",
+    estimatedMinutes: 18,
     upNext: ["Core Apps", "Intelligence & Orchestration", "Mobile", "DTOP", "Capability cheat sheet"],
   },
-  m4: {
+  w3: {
     moduleNumber: 4,
-    title: "How we sell it",
-    learningGoal: "By the end of this module you can run the discovery → demo → close motion in plain English and ask one good question per stage.",
-    estimatedMinutes: 4,
-    upNext: ["Discovery → Demo → Close cheat sheet"],
+    weekNumber: 3,
+    kicker: "Sell & Win",
+    title: "Sell it, prove it, win it",
+    learningGoal:
+      "By the end of Week 3 you can run the discovery → demo → close motion, pick the right use case for the room, and handle the top objections — ending with a clear next step.",
+    estimatedMinutes: 14,
+    upNext: ["Discovery → demo → close", "Use case cheat sheet", "Regulation Management", "Customer outcomes", "Objections", "Why Comply365", "Your enablement plan"],
   },
-  m5: {
-    moduleNumber: 5,
-    title: "Use cases & value through DTOP",
-    learningGoal: "By the end of this module you can pick the right plain-English use case for the prospect's pain and walk them through Detect → Trigger → Orchestrate → Prove.",
-    estimatedMinutes: 6,
-    upNext: ["Use case cheat sheet", "Regulation Management", "Customer outcomes"],
-  },
-  m6: {
-    moduleNumber: 6,
-    title: "Why we win",
-    learningGoal: "By the end of this module you can handle the top 5 objections and walk a prospect to a 90-day pilot.",
-    estimatedMinutes: 6,
-    upNext: ["Objections cheat sheet", "Why Comply365", "Your first 7 days"],
-  },
+};
+
+// Maps Enablement slide IDs → corresponding Executive Pitch 3 slide name
+const execPitchMapping: Record<string, string> = {
+  "se-slide-shift": "The Shift",
+  "se-plain-english-shift": "What This Means for Customers",
+  "se-slide-whatis": "The Platform",
+  "se-slide-value": "What This Means for Customers",
+  "se-slide-dtop": "DTOP / Operating Model",
+  "se-slide-coanalyst": "Intelligence Layer",
+  "se-slide-outcomes": "Proof & Outcomes",
+  "se-slide-why": "Why Comply365",
 };
 
 const slides = [
@@ -72,13 +79,12 @@ const slides = [
   { id: "se-slide-0", label: "Title", component: SESlide0Title },
   { id: "se-slide-shift", label: "M1 · Strategic Shift", component: TechSlide1StrategicShift },
   { id: "se-plain-english-shift", label: "M1 · Why This Matters (Plain English)", component: SEPlainEnglishShift },
-  // MODULE 2
-  { id: "se-module-2", label: "▸ Module 2", component: SEModuleDivider, dividerProps: moduleProps.m2 },
+  // WEEK 1 continues — Module 2 content (no extra divider; Week 1 banner covers it)
   { id: "se-slide-whatis", label: "M2 · The Platform", component: TechV4PlatformOverview },
   { id: "se-slide-value", label: "M2 · Value Unlocked", component: PFSlide9Value },
   { id: "se-slide-recap-m2", label: "M2 · Recap", component: SERecapSlide },
-  // MODULE 3
-  { id: "se-module-3", label: "▸ Module 3", component: SEModuleDivider, dividerProps: moduleProps.m3 },
+  // WEEK 2
+  { id: "se-week-2", label: "▸ Week 2 · Capabilities", component: SEModuleDivider, dividerProps: weekProps.w2 },
   { id: "se-slide-4a", label: "M3 · Core Apps — SafetyManager365", component: TechV4Slide4aSafetyManager },
   { id: "se-slide-4b", label: "M3 · Core Apps — ContentManager365", component: TechV4Slide4bContentManager },
   { id: "se-slide-4c", label: "M3 · Core Apps — TrainingManager365", component: TechV4Slide4cTrainingManager },
@@ -89,20 +95,24 @@ const slides = [
   { id: "se-slide-mobile", label: "M3 · Mobile", component: TechV4SlideMobile },
   { id: "se-slide-dtop", label: "M3 · DTOP", component: TechV4Slide5DTOP },
   { id: "se-slide-talktrack", label: "M3 · Capability Talk Track", component: SELayerTalkTrack },
-  // MODULE 4
-  { id: "se-module-4", label: "▸ Module 4", component: SEModuleDivider, dividerProps: moduleProps.m4 },
+  // WEEK 3
+  { id: "se-week-3", label: "▸ Week 3 · Sell & Win", component: SEModuleDivider, dividerProps: weekProps.w3 },
   { id: "se-discovery-to-close", label: "M4 · Discovery → Demo → Close", component: SEDiscoveryToClose },
-  // MODULE 5
-  { id: "se-module-5", label: "▸ Module 5", component: SEModuleDivider, dividerProps: moduleProps.m5 },
   { id: "se-usecase-cheatsheet", label: "M5 · Use Case Cheat Sheet", component: SEUseCaseCheatSheet },
   { id: "se-slide-regmgmt", label: "M5 · Regulation Management Use Case", component: TechSlideRegulationSummary },
   { id: "se-slide-outcomes", label: "M5 · Customer Outcomes", component: CustomerOutcomesSlide },
-  // MODULE 6
-  { id: "se-module-6", label: "▸ Module 6", component: SEModuleDivider, dividerProps: moduleProps.m6 },
   { id: "se-slide-objections", label: "M6 · Objections", component: SEObjections },
   { id: "se-slide-why", label: "M6 · Why Comply365", component: TechSlideWhyComply },
-  { id: "se-slide-closing", label: "M6 · Your First 7 Days", component: SEClosingForReps },
+  { id: "se-slide-closing", label: "M6 · Your enablement plan", component: SEClosingForReps },
 ];
+
+// Inject Week 1 divider right after the title slide.
+slides.splice(1, 0, {
+  id: "se-week-1",
+  label: "▸ Week 1 · Foundation",
+  component: SEModuleDivider,
+  dividerProps: weekProps.w1,
+} as any);
 
 const SalesEnablement = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -167,6 +177,14 @@ const SalesEnablement = () => {
 
   return (
     <div className="relative min-h-screen bg-background">
+      {/* Maps-to-Exec-Pitch-3 pill for the currently active slide */}
+      {execPitchMapping[slides[currentSlide]?.id] && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-30 pointer-events-none">
+          <div className="px-3 py-1 rounded-full border border-primary/40 bg-background/80 backdrop-blur text-[10px] uppercase tracking-wider text-muted-foreground">
+            Maps to <span className="text-primary font-semibold">Exec Pitch 3</span> · {execPitchMapping[slides[currentSlide].id]}
+          </div>
+        </div>
+      )}
       <div
         ref={containerRef}
         className="h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth"
@@ -185,6 +203,7 @@ const SalesEnablement = () => {
                 onPlay: () => narration.play(slide.id),
                 onPause: () => narration.pause(),
               };
+          const extraProps = slide.id === "se-slide-0" ? { slideCount: slides.length } : {};
           return (
             <SlideComponent
               key={slide.id}
@@ -192,6 +211,7 @@ const SalesEnablement = () => {
               id={slide.id}
               {...((slide as any).dividerProps ?? {})}
               {...slideNarrationProps}
+              {...extraProps}
             />
           );
         })}
