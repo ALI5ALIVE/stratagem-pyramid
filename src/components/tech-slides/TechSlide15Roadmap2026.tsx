@@ -11,7 +11,7 @@ const phases = [
       "✅ Link Training Modules to Documents (Operational Data Foundation)",
       "✅ Regulation Database Replatforming POC (Operational Data Foundation)",
       "✅ Platform Proof of Concept — Automation (Intelligence & Orchestration Layer)",
-      "✅ Platform Proof of Concept for Future Vision — Platform-wide Insights & Recommendations (Intelligence & Orchestration Layer)",
+      "✅ Platform Proof of Concept — Platform-wide Insights (Intelligence & Orchestration Layer) — POC only, not yet customer-deliverable",
       "🔄 Regulation Database integration with ContentManager365 (Operational Data Foundation)",
       "🔄 All-in-One Mobile Experience — Phase 1: Training screens in the Comply iOS Mobile app (Unified Mobile Experience)",
     ],
@@ -22,7 +22,7 @@ const phases = [
       "🔄 Standardise UI Fonts & Colors (Unified Web Experience)",
       "🔄 Regulation Database Replatforming (Operational Data Foundation)",
       "🔄 All-in-One Mobile Experience — Phase 2: Safety Reporting in the Comply iOS Mobile app (Unified Mobile Experience)",
-      "📋 Platform-wide Business Intelligence POC (Intelligence & Orchestration Layer)",
+      "📋 Platform-wide Insights — production rollout (Intelligence & Orchestration Layer)",
       "📋 Next-Phase Regulation Management Integration — sync compliance mappings, TM365 integration, automation triggers (Operational Data Foundation)",
       "📋 Roll-out of Platform-wide Automation engine (Intelligence & Orchestration Layer)",
     ],
@@ -30,10 +30,10 @@ const phases = [
   {
     icon: Eye, phase: "2027 and Beyond", label: "Intelligent Operations", color: "text-emerald-400", bg: "bg-emerald-400/10", border: "border-emerald-400/30",
     items: [
-      "Roll out of Platform-wide Business Intelligence (Intelligence & Orchestration Layer)",
+      "Recommendations & Prescriptive Actions — Future Vision (Intelligence & Orchestration Layer)",
       "All-in-One Mobile Experience — Phase 3: Unified Experience across OCM, Training & Safety",
       "Contextual Document Viewing from TrainingManager365 (Operational Data Foundation)",
-      "Roll out of Platform-wide Insights & Recommendations (Intelligence & Orchestration Layer) — Future Vision",
+      "Continued roll-out of Platform-wide Insights (Intelligence & Orchestration Layer)",
       "Continued roll-out of Platform-wide Automation capability (more connectors, more conditions, more actions)",
       "Future Platform PoCs — to be defined with customer input",
     ],
@@ -82,7 +82,7 @@ const TechSlide15Roadmap2026 = ({ slideNumber, ...narrationProps }: Props) => (
         <span className="text-xs text-muted-foreground flex items-center gap-1.5"><span className="text-base leading-none">✅</span> Done</span>
         <span className="text-xs text-muted-foreground flex items-center gap-1.5"><span className="text-base leading-none">🔄</span> In Progress</span>
         <span className="text-xs text-muted-foreground flex items-center gap-1.5"><span className="text-base leading-none">📋</span> Planned</span>
-        <span className="text-xs text-muted-foreground/70">· Specific deliverables refined during discovery</span>
+        <span className="text-xs text-muted-foreground/70">· POC = internal prototype, not customer-deliverable · Specific deliverables refined during discovery</span>
       </div>
     </div>
   </SalesSlideContainer>
