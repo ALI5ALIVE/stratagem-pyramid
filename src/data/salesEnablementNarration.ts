@@ -131,7 +131,7 @@ export const salesEnablementNarrations: SESlideNarration[] = [
     title: "M3 · DTOP",
     voiceId: VOICE,
     script:
-      "DTOP is not a feature, it is the operating model that makes everything else worth buying. The core message: Detect, Trigger, Orchestrate, Prove — the closed loop from operational signal to verified outcome. Use the canonical colour cues when whiteboarding it: Detect, Trigger, Orchestrate, Prove — keep them in that order, every time. The pain it addresses: today their loop is broken between any two of those four steps — usually between Trigger and Orchestrate. The value lever: point solutions cover one or two steps; only this platform closes the full loop with auditable proof. Delivery tip — draw it on a whiteboard if you can, even on a Zoom call. Drawing it earns the right to ask: which step breaks first for you today? Their answer is your demo. Next: the capability cheat sheet.",
+      "DTOP is not a feature, it is the operating model that makes everything else worth buying. The core message: Detect, Trigger, Orchestrate, Prove — the closed loop from operational signal to verified outcome. Use the canonical colour cues when whiteboarding it: Detect, Trigger, Orchestrate, Prove — keep them in that order, every time. The pain it addresses: today their loop is broken between any two of those four steps — usually between Trigger and Orchestrate. The value lever: point solutions cover one or two steps; only this platform closes the full loop with auditable proof. Delivery tip — draw it on a whiteboard if you can, even on a Zoom call. Drawing it earns the right to ask: which step breaks first for you today? Their answer is your walkthrough. Next: the capability cheat sheet.",
   },
   {
     slideId: "se-slide-talktrack",
@@ -149,7 +149,7 @@ export const salesEnablementNarrations: SESlideNarration[] = [
   },
   {
     slideId: "se-discovery-to-close",
-    title: "M4 · Discovery → Demo → Close",
+    title: "M4 · Discovery → Walkthrough → Close",
     voiceId: VOICE,
     script:
       "This is the motion in plain English. The core message: discovery finds the disconnected loop, the walkthrough shows the loop close on their data shape, close scopes the next focused conversation around their highest-cost use case. A deliberate language choice — we say walkthrough, not demo. We are not running a polished customer demo today; we are walking a prospect through how DTOP would close their loop. The pain you're addressing: most reps over-pitch because they're guessing what matters; the three discovery questions stop the guessing. The value lever: outcome-based conversations beat feature checklists every time. Delivery tip — say the three lines, ask the three questions, write down their answers verbatim. Their words become your walkthrough script and the scope of the next session. Next: use cases.",
