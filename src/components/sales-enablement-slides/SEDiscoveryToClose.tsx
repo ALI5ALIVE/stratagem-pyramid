@@ -28,8 +28,8 @@ const stages = [
     accent: "text-emerald-400 border-emerald-500/40 bg-emerald-500/10",
     stage: "Close",
     plain:
-      "Scope a 90-day pilot around their highest-cost use case. Outcome-based, with a defined Prove milestone — not a feature checklist.",
-    question: "What outcome would make a 90-day pilot a clear yes for your board?",
+      "Scope the next focused conversation around their highest-cost use case. Outcome-based, with a defined Prove milestone — not a feature checklist.",
+    question: "What outcome would make this a clear yes for your board?",
   },
 ];
 
