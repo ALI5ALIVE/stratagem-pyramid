@@ -36,9 +36,9 @@ const weekProps = {
     kicker: "Foundation",
     title: "Set the scene — and put the platform in plain English",
     learningGoal:
-      "By the end of Week 1 you can explain why the market is shifting and give the one-sentence platform pitch — without jargon, without reading off a slide.",
-    estimatedMinutes: 10,
-    upNext: ["Plain-English definition", "The platform at a glance", "Value unlocked", "Recap talk track"],
+      "By the end of Week 1 you can explain why the market is shifting, give the one-sentence platform pitch, and walk the DTOP loop (Detect → Trigger → Orchestrate → Prove) on a whiteboard — without jargon, without reading off a slide.",
+    estimatedMinutes: 14,
+    upNext: ["Plain-English definition", "The platform at a glance", "DTOP — the operating loop", "Value unlocked", "Recap talk track"],
   },
   w2: {
     moduleNumber: 3,
@@ -46,9 +46,9 @@ const weekProps = {
     kicker: "Capabilities",
     title: "How the capabilities fit together",
     learningGoal:
-      "By the end of Week 2 you can describe each capability in 60 seconds, ask one good discovery question per capability, and walk DTOP on a whiteboard.",
-    estimatedMinutes: 18,
-    upNext: ["Core Apps", "Intelligence & Orchestration", "Mobile", "DTOP", "Capability cheat sheet"],
+      "By the end of Week 2 you can describe each capability in 60 seconds, ask one good discovery question per capability, and pick the right capability to lead with for the room you're in.",
+    estimatedMinutes: 16,
+    upNext: ["Core Apps", "Intelligence & Orchestration", "Mobile", "Capability cheat sheet"],
   },
   w3: {
     moduleNumber: 4,
@@ -81,6 +81,7 @@ const slides = [
   { id: "se-plain-english-shift", label: "M1 · Why This Matters (Plain English)", component: SEPlainEnglishShift },
   // WEEK 1 continues — Module 2 content (no extra divider; Week 1 banner covers it)
   { id: "se-slide-whatis", label: "M2 · The Platform", component: TechV4PlatformOverview },
+  { id: "se-slide-dtop", label: "M2 · DTOP", component: TechV4Slide5DTOP },
   { id: "se-slide-value", label: "M2 · Value Unlocked", component: PFSlide9Value },
   { id: "se-slide-recap-m2", label: "M2 · Recap", component: SERecapSlide },
   // WEEK 2
@@ -93,7 +94,6 @@ const slides = [
   { id: "se-slide-automation", label: "M3 · Intelligence — Automation", component: TechV4SlideAutomation },
   { id: "se-slide-tiers-vs-ai", label: "M3 · CoAnalyst vs Generic AI", component: TechV4SlideTiersVsAI },
   { id: "se-slide-mobile", label: "M3 · Mobile", component: TechV4SlideMobile },
-  { id: "se-slide-dtop", label: "M3 · DTOP", component: TechV4Slide5DTOP },
   { id: "se-slide-talktrack", label: "M3 · Capability Talk Track", component: SELayerTalkTrack },
   // WEEK 3
   { id: "se-week-3", label: "▸ Week 3 · Sell & Win", component: SEModuleDivider, dividerProps: weekProps.w3 },
