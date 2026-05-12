@@ -15,6 +15,8 @@ import DTOPSlide8Personas from "@/components/dtop-slides/DTOPSlide8Personas";
 import DTOPSlide9Competitive from "@/components/dtop-slides/DTOPSlide9Competitive";
 import DTOPSlide10Objections from "@/components/dtop-slides/DTOPSlide10Objections";
 import DTOPSlide11Closing from "@/components/dtop-slides/DTOPSlide11Closing";
+import PlaybookNarrationBar from "@/components/PlaybookNarrationBar";
+import { usePlaybookNarration } from "@/hooks/usePlaybookNarration";
 
 const slides = [
   { id: "dtop-title", label: "Title" },
@@ -37,6 +39,7 @@ const DTOPPlaybook = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { register, unregister } = useSlideNavigation();
   const { open, setOpen } = useSidebar();
+  const narration = usePlaybookNarration();
 
   const scrollToSlide = useCallback((index: number) => {
     if (!containerRef.current) return;
@@ -128,6 +131,12 @@ const DTOPPlaybook = () => {
         <DTOPSlide10Objections />
         <DTOPSlide11Closing />
       </div>
+      <PlaybookNarrationBar
+        narration={narration}
+        activeSlideId={slides[activeSlide].id}
+        onNextSlide={() => scrollToSlide(Math.min(activeSlide + 1, slides.length - 1))}
+        onPrevSlide={activeSlide > 0 ? () => scrollToSlide(activeSlide - 1) : undefined}
+      />
     </div>
     </DeckProvider>
   );

@@ -15,6 +15,8 @@ import MOSlide7Value from "@/components/mobile-slides/MOSlide7Value";
 import MOSlide8Personas from "@/components/mobile-slides/MOSlide8Personas";
 import MOSlide9Competitive from "@/components/mobile-slides/MOSlide9Competitive";
 import MOSlide10Closing from "@/components/mobile-slides/MOSlide10Closing";
+import PlaybookNarrationBar from "@/components/PlaybookNarrationBar";
+import { usePlaybookNarration } from "@/hooks/usePlaybookNarration";
 
 const slides = [
   { id: "mo-title", label: "Title" },
@@ -36,6 +38,7 @@ const MobilePlaybook = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { register, unregister } = useSlideNavigation();
   const { open, setOpen } = useSidebar();
+  const narration = usePlaybookNarration();
 
   const scrollToSlide = useCallback((index: number) => {
     if (!containerRef.current) return;
@@ -127,6 +130,12 @@ const MobilePlaybook = () => {
         <MOSlide9Competitive />
         <MOSlide10Closing />
       </div>
+      <PlaybookNarrationBar
+        narration={narration}
+        activeSlideId={slides[activeSlide].id}
+        onNextSlide={() => scrollToSlide(Math.min(activeSlide + 1, slides.length - 1))}
+        onPrevSlide={activeSlide > 0 ? () => scrollToSlide(activeSlide - 1) : undefined}
+      />
     </div>
     </DeckProvider>
   );
