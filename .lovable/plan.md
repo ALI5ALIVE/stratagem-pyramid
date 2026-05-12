@@ -1,79 +1,121 @@
-## Move DTOP into Foundation (Week 1)
+## Add Playbooks to the Sales Enablement Academy as Specialist Tracks
 
-DTOP is the operating model — conceptually it belongs alongside "The Platform" in Foundation, not buried at the end of Capabilities. This plan moves the slide, updates the week banners, re-points the Academy DB, and rewrites the affected coach narration so transitions stay clean.
+Extend the Academy from 3 weekly modules to a two-tier curriculum: a **Core track** (today's 3 weeks) and a new **Specialist track** of 7 self-paced playbooks, each with its own quiz and certificate. A **Master Certification** is awarded once everything is passed.
 
-Signals is **not** moved (you didn't request it, and Signals is a specific capability lens rather than a foundational frame). Happy to revisit separately.
-
-### 1. Slide order in `src/pages/SalesEnablement.tsx`
-
-New Week 1 order (Foundation):
+### Curriculum shape
 
 ```text
-Title
-▸ Week 1 · Foundation (banner)
-M1 · Strategic Shift
-M1 · Why This Matters (Plain English)
-M2 · The Platform
-M2 · DTOP                  ← moved here
-M2 · Value Unlocked
-M2 · Recap Talk Track
+Sales Enablement Academy
+├── Core curriculum (existing — gated, linear)
+│   ├── Week 1 · Foundation         → Foundation cert
+│   ├── Week 2 · Capabilities       → Capabilities cert
+│   └── Week 3 · Sell & Win         → Core Sales Enablement Certificate
+│
+└── Specialist Playbooks (NEW — open from day one, any order)
+    ├── Signals 101                 → Signals Specialist cert
+    ├── DTOP Operating Model        → DTOP Specialist cert
+    ├── Insights & Recommendations  → Insights Specialist cert
+    ├── Automation                  → Automation Specialist cert
+    ├── Unified Mobile App          → Mobile Specialist cert
+    ├── The Platform                → Platform Specialist cert
+    └── Regulation Management       → RegMgmt Specialist cert
+
+→ Pass all 10 (3 core + 7 playbooks) = Master Sales Enablement Certification
 ```
 
-Week 2 (Capabilities) — DTOP removed:
+### 1. Database changes (one migration)
 
-```text
-▸ Week 2 · Capabilities
-M3 · SafetyManager365
-M3 · ContentManager365
-M3 · TrainingManager365
-M3 · CoAnalyst
-M3 · Insights
-M3 · Automation
-M3 · CoAnalyst vs Generic AI
-M3 · Unified Mobile
-M3 · Capability Talk Track   ← now closes Week 2
-```
+**`academy_modules` — two new columns:**
 
-Relabel the DTOP slide from `M3 · DTOP` → `M2 · DTOP`.
+- `track text NOT NULL DEFAULT 'core'` — `'core'` or `'specialist'`
+- `specialty text NULL` — short slug used by certificate route (`signals`, `dtop`, `insights`, `automation`, `mobile`, `platform`, `regmgmt`)
 
-### 2. Week banner metadata (`weekProps` in same file)
+Existing 3 rows stay `track = 'core'`, `specialty = NULL`.
 
-- **w1.upNext**: add `"DTOP — the operating loop"` between "The platform at a glance" and "Value unlocked".
-- **w1.learningGoal**: extend to "…and walk the DTOP loop (Detect → Trigger → Orchestrate → Prove) on a whiteboard."
-- **w1.estimatedMinutes**: 10 → 14.
-- **w2.upNext**: remove "DTOP" entry.
-- **w2.learningGoal**: drop the "…and walk DTOP on a whiteboard" clause (now a Week 1 outcome). Replace with "…and pick the right capability to lead with for the room you're in."
-- **w2.estimatedMinutes**: 18 → 16.
+**Seed 7 new specialist rows** with:
 
-### 3. Academy DB — `academy_modules.slide_ids`
+| id | specialty | title | slide_ids (already exist in playbook pages) | accent_color | pass_threshold |
+|---|---|---|---|---|---|
+| `m-signals` | signals | Signals 101 — what they are, how they fire | sig-title…sig-closing (11 slides) | amber | 80 |
+| `m-dtop` | dtop | DTOP — Detect, Trigger, Orchestrate, Prove | dtop-title…dtop-closing | blue | 80 |
+| `m-insights` | insights | Insights & Recommendations | ins-title…ins-closing | violet | 80 |
+| `m-automation` | automation | Automation — closing the loop | au-title…au-closing | emerald | 80 |
+| `m-mobile` | mobile | Unified Mobile App | mob-title…mob-closing | rose | 80 |
+| `m-platform` | platform | The Platform deep dive | pf-title…pf-closing | primary | 80 |
+| `m-regmgmt` | regmgmt | Regulation Management use case | rm-title…rm-closing | sky | 80 |
 
-A new migration updates the two affected rows:
+`order_index` 4–10. `week_number = NULL` (specialists aren't weeks). `kicker = 'Playbook'`.
 
-- `m-w1.slide_ids` → add `se-slide-dtop` after `se-slide-whatis`.
-- `m-w2.slide_ids` → remove `se-slide-dtop`.
+**Seed `academy_questions` — 6 questions per playbook (42 total).** Each question targets the slide's coach point (definition, why-it-matters, key differentiator, objection handling, one-line message, discovery question). Owner can edit later via Admin dashboard. Authored to match the locked terminology rules already in memory.
 
-No schema changes, no quiz changes (DTOP quiz questions, if any, can stay on their current module — confirm in a follow-up if you want them re-pointed to Week 1).
+### 2. Unlock logic (`useAcademyProgress.ts`)
 
-### 4. Narration rewrites in `src/data/salesEnablementNarration.ts`
+`isModuleUnlocked` becomes track-aware:
 
-- **`se-week-1` (Week 1 banner)** — add DTOP to the closing line: "…The four capability bands you must name from memory, in order: Core Apps, Intelligence & Orchestration, Unified Mobile, and DTOP — and by the end of this week you can walk the DTOP loop on a whiteboard."
-- **`se-slide-whatis` (The Platform)** — change closing transition to "Next we go straight into DTOP — the loop that makes the platform worth buying."
-- **`se-slide-dtop`** — retitle to `M2 · DTOP`; rewrite the closing transition from "Next: the capability cheat sheet." to "Next: the value this loop unlocks." Keep the body (Detect/Trigger/Orchestrate/Prove colour cues, whiteboard-it instruction, discovery pivot) intact.
-- **`se-slide-value` (Value Unlocked)** — adjust opening so it follows DTOP, not the platform diagram: "Now that the loop is on the whiteboard, this slide turns it into money and time…"
-- **`se-week-2` (Week 2 banner)** — remove "…then DTOP itself…" from the capability-order sentence; close on "…then the Unified Mobile App, and we close with the capability cheat sheet."
-- **`se-slide-mobile`** — change closing transition from "Next: DTOP itself." to "Next: the capability cheat sheet — your study page before every call."
+- **Core modules** — keep current linear chain (Week 2 needs Week 1 passed, Week 3 needs Week 2 passed).
+- **Specialist modules** — always unlocked. No gating.
 
-All rewrites stay inside the 5-part coach format (Why this matters → Core message → Pain→Value pivot → How to deliver → Transition).
+Add helpers:
 
-### 5. Memory update
+- `getCoreModules(modules)` / `getSpecialistModules(modules)`
+- `hasMasterCert(modules, progress)` — true when every core + every specialist module is passed.
+- `getEarnedCerts(modules, progress)` — list of `{ specialty, title, passed_at }` plus the implicit Core cert.
 
-Append to `mem://content/sales-enablement/coach-script-standard`: "DTOP lives in Week 1 (Foundation), not Week 2. The four capability bands taught from memory in Week 1 are Core Apps, Intelligence & Orchestration, Unified Mobile, DTOP. Week 2 covers product capabilities only; the DTOP whiteboard is a Week 1 outcome."
+### 3. AcademyHome split
+
+Top section unchanged: progress bar + 3 core week cards.
+
+New section **"Specialist Playbooks"** below it:
+
+- 7 cards in a 3-column grid using accent colors.
+- Each card: Playbook badge (with accent), estimated minutes, learning goal, Passed / Not started / Best % chip.
+- Buttons: **Start lesson** → `/academy/m-signals`, **Take quiz** → `/academy/m-signals/quiz`.
+- A "Master Certification" banner above specialists shows progress (e.g. `3 / 7 playbooks passed`) and becomes a CTA once all 10 are complete.
+
+### 4. Lesson rendering — slideRegistry expansion
+
+`ModuleLesson.tsx` already renders any module by walking `slide_ids` through `SLIDE_REGISTRY`. We extend `SLIDE_REGISTRY` to include every playbook slide component (signals-slides, dtop-slides, insights-slides, automation-slides, mobile-slides, platform-slides, regulation-management-slides — all already exist). No new slide authoring required; we re-use the playbook decks.
+
+Where the playbook pages today use anonymous slide IDs internally, we mirror those IDs into the registry. A short audit per playbook will lock in the canonical id list, then those arrays are seeded into `academy_modules.slide_ids`.
+
+### 5. Quiz flow — already works, no changes
+
+`ModuleQuiz.tsx` calls `get_module_quiz(_module_id)`. `submit_quiz_attempt(_module_id, _answers)` writes to `academy_attempts`. Both are module-agnostic — passing `m-signals` etc. just works once questions are seeded.
+
+### 6. Certificates
+
+`Certificate.tsx` becomes a hub:
+
+- **Specialist certs** route: `/academy/certificate/:specialty` — same template, accent-coloured, names the playbook (e.g. *"Signals Specialist — Comply365 Sales Enablement Academy"*).
+- **Core cert** route: `/academy/certificate/core` — current 3-week cert, retitled "Sales Enablement Certificate".
+- **Master cert** route: `/academy/certificate/master` — premium variant (gold accent, seal mark), lists every track earned. Only renders if `hasMasterCert` is true; otherwise shows progress and what's left.
+- `/academy/certificate` (current) becomes an index showing all earned certs as printable cards.
+
+### 7. Admin dashboard
+
+`AdminDashboard.tsx` already CRUDs modules and questions. We just add a track filter (Core / Specialist) and surface the new `specialty` field so quiz authors can edit playbook question banks.
+
+### 8. Memory update
+
+Append to `mem://content/sales-enablement/coach-script-standard`:
+
+> **Specialist tracks (May 2026):** Academy is two-tier — Core (m-w1, m-w2, m-w3, linear) + Specialist Playbooks (m-signals, m-dtop, m-insights, m-automation, m-mobile, m-platform, m-regmgmt, open in any order). Master Certification awarded when all 10 are passed. Specialists re-use the existing playbook slide decks; no new lesson authoring — only quiz banks.
 
 ### Files touched
 
-- `supabase/migrations/<new>.sql` (slide_ids update for `m-w1` and `m-w2`)
-- `src/pages/SalesEnablement.tsx` (slide order, weekProps)
-- `src/data/salesEnablementNarration.ts` (six narration entries)
-- `mem/content/sales-enablement/coach-script-standard.md`
+- `supabase/migrations/<new>.sql` — add columns, seed 7 specialist modules + 42 quiz questions.
+- `src/hooks/useAcademyProgress.ts` — track-aware unlock + helper selectors.
+- `src/components/academy/slideRegistry.ts` — register all playbook slide components.
+- `src/pages/academy/AcademyHome.tsx` — two-section layout + master cert banner.
+- `src/pages/academy/Certificate.tsx` — split into index / core / `:specialty` / master.
+- `src/pages/academy/AdminDashboard.tsx` — track filter, specialty field.
+- `src/App.tsx` — new certificate routes.
+- `mem/content/sales-enablement/coach-script-standard.md` — append the rule above.
 
-No component code changes — `TechV4Slide5DTOP` renders unchanged in its new position.
+### Out of scope for this pass (call-outs)
+
+- **Coach narration for playbook slides** — Academy will render the visual decks; written coach scripts in `salesEnablementNarration.ts` for each playbook slide are a follow-up. The framework supports it once authored.
+- **Per-playbook recap/cheat-sheet slides** — not added; the existing playbook closing slides cover the talk track.
+- **Importing existing reviewer comments onto specialist slides** — already works automatically because `slide_comments` is keyed by `slide_id`.
+
+Roughly 3–4 hours of build work; the heaviest part is authoring 42 quiz questions to the locked terminology standard.
