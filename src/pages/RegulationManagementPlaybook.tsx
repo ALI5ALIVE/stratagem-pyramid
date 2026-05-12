@@ -16,6 +16,8 @@ import RMSlide7Personas from "@/components/regmgmt-slides/RMSlide7Personas";
 import RMSlide8Commercial from "@/components/regmgmt-slides/RMSlide8Commercial";
 import RMSlide9Objections from "@/components/regmgmt-slides/RMSlide9Objections";
 import RMSlide10Roadmap from "@/components/regmgmt-slides/RMSlide10Roadmap";
+import PlaybookNarrationBar from "@/components/PlaybookNarrationBar";
+import { usePlaybookNarration } from "@/hooks/usePlaybookNarration";
 
 const slides = [
   { id: "rm-title", label: "Title" },
@@ -38,6 +40,7 @@ const RegulationManagementPlaybook = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { register, unregister } = useSlideNavigation();
   const { open, setOpen } = useSidebar();
+  const narration = usePlaybookNarration();
 
   const scrollToSlide = useCallback((index: number) => {
     if (!containerRef.current) return;
@@ -130,6 +133,12 @@ const RegulationManagementPlaybook = () => {
         <RMSlide9Objections />
         <RMSlide10Roadmap />
       </div>
+      <PlaybookNarrationBar
+        narration={narration}
+        activeSlideId={slides[activeSlide].id}
+        onNextSlide={() => scrollToSlide(Math.min(activeSlide + 1, slides.length - 1))}
+        onPrevSlide={activeSlide > 0 ? () => scrollToSlide(activeSlide - 1) : undefined}
+      />
     </div>
     </DeckProvider>
   );

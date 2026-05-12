@@ -17,6 +17,8 @@ import PFSlide11Competitive from "@/components/platform-slides/PFSlide11Competit
 import PFSlide12Closing from "@/components/platform-slides/PFSlide12Closing";
 import { DeckProvider } from "@/contexts/DeckContext";
 import BackToDeckButton from "@/components/shared/BackToDeckButton";
+import PlaybookNarrationBar from "@/components/PlaybookNarrationBar";
+import { usePlaybookNarration } from "@/hooks/usePlaybookNarration";
 
 const slides = [
   { id: "pf-title", label: "Title" },
@@ -40,6 +42,7 @@ const PlatformPlaybook = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { register, unregister } = useSlideNavigation();
   const { open, setOpen } = useSidebar();
+  const narration = usePlaybookNarration();
 
   const scrollToSlide = useCallback((index: number) => {
     if (!containerRef.current) return;
@@ -133,6 +136,12 @@ const PlatformPlaybook = () => {
         <PFSlide11Competitive />
         <PFSlide12Closing />
       </div>
+      <PlaybookNarrationBar
+        narration={narration}
+        activeSlideId={slides[activeSlide].id}
+        onNextSlide={() => scrollToSlide(Math.min(activeSlide + 1, slides.length - 1))}
+        onPrevSlide={activeSlide > 0 ? () => scrollToSlide(activeSlide - 1) : undefined}
+      />
     </div>
     </DeckProvider>
   );

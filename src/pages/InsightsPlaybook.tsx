@@ -14,6 +14,8 @@ import IRSlide7Value from "@/components/insights-slides/IRSlide7Value";
 import IRSlide8Personas from "@/components/insights-slides/IRSlide8Personas";
 import IRSlide9Competitive from "@/components/insights-slides/IRSlide9Competitive";
 import IRSlide10Closing from "@/components/insights-slides/IRSlide10Closing";
+import PlaybookNarrationBar from "@/components/PlaybookNarrationBar";
+import { usePlaybookNarration } from "@/hooks/usePlaybookNarration";
 
 const slides = [
   { id: "ir-title", label: "Title" },
@@ -35,6 +37,7 @@ const InsightsPlaybook = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { register, unregister } = useSlideNavigation();
   const { open, setOpen } = useSidebar();
+  const narration = usePlaybookNarration();
 
   const scrollToSlide = useCallback((index: number) => {
     if (!containerRef.current) return;
@@ -125,6 +128,12 @@ const InsightsPlaybook = () => {
         <IRSlide9Competitive />
         <IRSlide10Closing />
       </div>
+      <PlaybookNarrationBar
+        narration={narration}
+        activeSlideId={slides[activeSlide].id}
+        onNextSlide={() => scrollToSlide(Math.min(activeSlide + 1, slides.length - 1))}
+        onPrevSlide={activeSlide > 0 ? () => scrollToSlide(activeSlide - 1) : undefined}
+      />
     </div>
     </DeckProvider>
   );

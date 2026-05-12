@@ -14,6 +14,8 @@ import SIGSlide7UseCaseOps from "@/components/signals-slides/SIGSlide7UseCaseOps
 import SIGSlide8UseCaseContent from "@/components/signals-slides/SIGSlide8UseCaseContent";
 import SIGSlide9WhyComply365 from "@/components/signals-slides/SIGSlide9WhyComply365";
 import SIGSlide10Closing from "@/components/signals-slides/SIGSlide10Closing";
+import PlaybookNarrationBar from "@/components/PlaybookNarrationBar";
+import { usePlaybookNarration } from "@/hooks/usePlaybookNarration";
 
 const slides = [
   { id: "sig-title", label: "Title" },
@@ -35,6 +37,7 @@ const SignalsPlaybook = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { register, unregister } = useSlideNavigation();
   const { open, setOpen } = useSidebar();
+  const narration = usePlaybookNarration();
 
   const scrollToSlide = useCallback((index: number) => {
     if (!containerRef.current) return;
@@ -125,6 +128,12 @@ const SignalsPlaybook = () => {
           <SIGSlide9WhyComply365 />
           <SIGSlide10Closing />
         </div>
+      <PlaybookNarrationBar
+        narration={narration}
+        activeSlideId={slides[activeSlide].id}
+        onNextSlide={() => scrollToSlide(Math.min(activeSlide + 1, slides.length - 1))}
+        onPrevSlide={activeSlide > 0 ? () => scrollToSlide(activeSlide - 1) : undefined}
+      />
       </div>
     </DeckProvider>
   );

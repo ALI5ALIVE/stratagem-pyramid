@@ -15,6 +15,8 @@ import AUSlide7Value from "@/components/automation-slides/AUSlide7Value";
 import AUSlide8Personas from "@/components/automation-slides/AUSlide8Personas";
 import AUSlide9Competitive from "@/components/automation-slides/AUSlide9Competitive";
 import AUSlide10Closing from "@/components/automation-slides/AUSlide10Closing";
+import PlaybookNarrationBar from "@/components/PlaybookNarrationBar";
+import { usePlaybookNarration } from "@/hooks/usePlaybookNarration";
 
 const slides = [
   { id: "au-title", label: "Title" },
@@ -36,6 +38,7 @@ const AutomationPlaybook = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { register, unregister } = useSlideNavigation();
   const { open, setOpen } = useSidebar();
+  const narration = usePlaybookNarration();
 
   const scrollToSlide = useCallback((index: number) => {
     if (!containerRef.current) return;
@@ -127,6 +130,12 @@ const AutomationPlaybook = () => {
         <AUSlide9Competitive />
         <AUSlide10Closing />
       </div>
+      <PlaybookNarrationBar
+        narration={narration}
+        activeSlideId={slides[activeSlide].id}
+        onNextSlide={() => scrollToSlide(Math.min(activeSlide + 1, slides.length - 1))}
+        onPrevSlide={activeSlide > 0 ? () => scrollToSlide(activeSlide - 1) : undefined}
+      />
     </div>
     </DeckProvider>
   );
