@@ -66,7 +66,7 @@ export const customerOverviewNarrations: COSlideNarration[] = [
     title: "Use Case — Regulation Management",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Regulation Management is the use case that earns the deck on its own. Today airlines manage well over a thousand regulations from EASA, FAA, ICAO and national authorities — in spreadsheets and tribal knowledge. With Regulation Management, every change is structured, tagged and ingested in near real time, then cascaded automatically into the procedures, training and risk assessments it touches. The proof point: from quarterly discovery to continuous visibility, with audit-ready evidence for every change. Bridge: those are the patterns — what's the actual outcome our customers see? Next slide.",
+      "Regulation Management is the use case that earns the deck on its own. Today airlines manage well over a thousand regulations from EASA, FAA, ICAO and national authorities — in spreadsheets and tribal knowledge. With Regulation Management, every change is structured, tagged and ingested in near real time, then cascaded automatically into the procedures, training and risk control it touches. The proof point: from quarterly discovery to continuous visibility, with audit-ready evidence for every change. Bridge: those are the patterns — what's the actual outcome our customers see? Next slide.",
   },
   {
     slideId: "co-slide-7",
