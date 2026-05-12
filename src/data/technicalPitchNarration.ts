@@ -245,7 +245,7 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "Regulation Management",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Regulation Management is the use case airlines almost always under-estimate. Today they manage well over a thousand regulations from EASA, FAA, ICAO and national authorities — in spreadsheets and tribal knowledge. With Regulation Management, every change is structured, tagged and ingested in near real time, then cascaded automatically into the procedures, training and risk assessments it touches. The proof point: from quarterly discovery to continuous visibility, with audit-ready evidence for every change. Bridge: now let me put numbers behind all of this — the Line of Sight calculator.",
+      "Regulation Management is the use case airlines almost always under-estimate. Today they manage well over a thousand regulations from EASA, FAA, ICAO and national authorities — in spreadsheets and tribal knowledge. With Regulation Management, every change is structured, tagged and ingested in near real time, then cascaded automatically into the procedures, training and risk control it touches. The proof point: from quarterly discovery to continuous visibility, with audit-ready evidence for every change. Bridge: now let me put numbers behind all of this — the Line of Sight calculator.",
   },
   {
     slideId: "tech-slide-calculator",
