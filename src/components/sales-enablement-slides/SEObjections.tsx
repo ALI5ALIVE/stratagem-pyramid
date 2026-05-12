@@ -18,7 +18,7 @@ const acknowledgements = [
 
 const bridges = [
   "Want a 20-minute walkthrough of what 'beyond detect' looks like on your data?",
-  "Can I walk you through how the LMS gets smarter when it's wired to live safety data?",
+  "Can I walk you through how the TMS gets smarter when it's wired to live safety data?",
   "Want a walkthrough of content that reacts to operational events?",
   "Want a walkthrough of DTOP working with rules-only — no AI required?",
   "Want a focused walkthrough on your highest-cost use case?",
