@@ -17,19 +17,31 @@ serve(async (req) => {
     if (!ELEVENLABS_API_KEY) throw new Error("ELEVENLABS_API_KEY is not configured");
     if (!agentId || typeof agentId !== "string") throw new Error("Missing agentId");
 
-    const res = await fetch(
-      `https://api.elevenlabs.io/v1/convai/conversation/token?agent_id=${encodeURIComponent(agentId)}`,
-      { headers: { "xi-api-key": ELEVENLABS_API_KEY } },
-    );
+    // Fetch both a WebRTC conversation token and a WebSocket signed URL.
+    // WebRTC path on ElevenLabs has been intermittently failing with
+    // "v1 RTC path not found"; we let the client fall back to WebSocket.
+    const [tokenRes, urlRes] = await Promise.all([
+      fetch(
+        `https://api.elevenlabs.io/v1/convai/conversation/token?agent_id=${encodeURIComponent(agentId)}`,
+        { headers: { "xi-api-key": ELEVENLABS_API_KEY } },
+      ),
+      fetch(
+        `https://api.elevenlabs.io/v1/convai/conversation/get-signed-url?agent_id=${encodeURIComponent(agentId)}`,
+        { headers: { "xi-api-key": ELEVENLABS_API_KEY } },
+      ),
+    ]);
 
-    if (!res.ok) {
-      const err = await res.text();
-      throw new Error(`ElevenLabs token error ${res.status}: ${err}`);
+    if (!urlRes.ok) {
+      const err = await urlRes.text();
+      throw new Error(`ElevenLabs signed-url error ${urlRes.status}: ${err}`);
+    }
+    const { signed_url } = await urlRes.json();
+    let token: string | undefined;
+    if (tokenRes.ok) {
+      token = (await tokenRes.json())?.token;
     }
 
-    const { token } = await res.json();
-
-    return new Response(JSON.stringify({ token }), {
+    return new Response(JSON.stringify({ token, signedUrl: signed_url }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {
