@@ -201,7 +201,7 @@ export const valuePillars: ValuePillar[] = [
   {
     title: "Connected Cross-System Intelligence",
     description:
-      "Regulation changes automatically surface in the systems where they matter — procedures in ContentManager365, training syllabi in TrainingManager365, risk assessments in SafetyManager365.",
+      "Regulation changes automatically surface in the systems where they matter — procedures in ContentManager365, training syllabi in TrainingManager365, risk control in SafetyManager365.",
     icon: "Network",
     metrics: "One change → automatic cross-platform impact awareness",
   },
@@ -252,7 +252,7 @@ export const howItWorksLayers: HowItWorksLayer[] = [
     details: [
       "ContentManager365: Regulations linked to procedures, manuals, and operational documents",
       "TrainingManager365: Regulatory requirements mapped to training syllabi and qualification records",
-      "SafetyManager365: Regulations connected to risk assessments, audit findings, and corrective actions",
+      "SafetyManager365: Regulations connected to risk control, audit findings, and corrective actions",
       "API access for integration with third-party systems",
     ],
     color: "hsl(var(--accent))",
