@@ -4,6 +4,7 @@ import { useSidebar } from "@/components/ui/sidebar";
 interface Props {
   slideIds: string[];
   children: ReactNode;
+  onActiveIndexChange?: (index: number) => void;
 }
 
 /**
@@ -11,7 +12,7 @@ interface Props {
  * and per-module lesson views in the Academy.
  * The container expects each direct child to be a full-viewport section.
  */
-export default function LessonScroller({ slideIds, children }: Props) {
+export default function LessonScroller({ slideIds, children, onActiveIndexChange }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { open, setOpen } = useSidebar();
   const [, setCurrent] = useState(0);
@@ -22,7 +23,9 @@ export default function LessonScroller({ slideIds, children }: Props) {
     const handleScroll = () => {
       const slideHeight = container.clientHeight;
       if (open) setOpen(false);
-      setCurrent(Math.round(container.scrollTop / slideHeight));
+      const idx = Math.round(container.scrollTop / slideHeight);
+      setCurrent(idx);
+      onActiveIndexChange?.(idx);
     };
     container.addEventListener("scroll", handleScroll);
     return () => container.removeEventListener("scroll", handleScroll);
