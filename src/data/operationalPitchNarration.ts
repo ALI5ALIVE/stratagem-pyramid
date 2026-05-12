@@ -48,7 +48,7 @@ export const operationalPitchNarrations: OpsNarrationSlide[] = [
     title: "Intelligence Engine",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Sitting above those three modules is CoAnalyst — the intelligence layer. It's not a chatbot. It's not a dashboard. It's the engine that transforms your raw operational data into four levels of intelligence. Historical: what happened and why. Reactive: what's happening right now that needs attention. Proactive: what patterns should we be watching before they become events. And predictive: what's likely to happen next based on everything we've seen before. CoAnalyst has been trained on millions of aviation operational reports since twenty twenty-three. It delivers over ninety percent accuracy on domain-specific queries — compared to roughly thirty-five percent from generic AI tools. That precision gap is the difference between intelligence you can trust and noise that wastes your time.",
+      "Sitting above those three modules is CoAnalyst — the intelligence layer. It's not a chatbot. It's not a dashboard. It's the engine that transforms your raw operational data into four levels of intelligence. Historical: what happened and why. Reactive: what's happening right now that needs attention. Proactive: what patterns should we be watching before they become events. And predictive: what's likely to happen next based on everything we've seen before. CoAnalyst has been trained on millions of aviation operational reports. It delivers over ninety percent accuracy on domain-specific queries — compared to roughly thirty-five percent from generic AI tools. That precision gap is the difference between intelligence you can trust and noise that wastes your time.",
   },
   {
     slideId: "ops-slide-6",
