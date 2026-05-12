@@ -22,4 +22,6 @@ All scripts must respect locked memory rules: BrandNumber product naming, no FOQ
 
 **DTOP placement (May 2026):** DTOP lives in **Week 1 (Foundation)**, not Week 2. Slide order in Foundation: Strategic Shift → Why This Matters → The Platform → **DTOP** → Value Unlocked → Recap. Week 2 (Capabilities) covers product capabilities only — SafetyManager365, ContentManager365, TrainingManager365, CoAnalyst, Insights, Automation, CoAnalyst-vs-Generic-AI, Unified Mobile, Capability Cheat Sheet. Walking the DTOP loop on a whiteboard is a Week 1 learning outcome; Week 2 reps practise mapping each capability onto the loop they already know.
 
+**Specialist tracks (May 2026):** Academy is two-tier — Core (m-w1, m-w2, m-w3, linear) plus Specialist Playbooks (m-signals, m-dtop, m-insights, m-automation, m-mobile, m-platform, m-regmgmt — open in any order, no gating). Each playbook awards its own Specialist certificate; pass all 10 modules to earn the Master Sales Enablement Certification. Specialists re-use the existing playbook slide decks via SLIDE_REGISTRY — no new lesson authoring, only quiz banks in academy_questions.
+
 Data file: src/data/salesEnablementNarration.ts. Hook: src/hooks/useSalesEnablementNarration.ts. Wired into src/pages/SalesEnablement.tsx via SpeakerNotesPanel + per-slide narration props.
