@@ -1,102 +1,79 @@
+## Move DTOP into Foundation (Week 1)
 
-## Sales Enablement Academy — feedback fixes
+DTOP is the operating model — conceptually it belongs alongside "The Platform" in Foundation, not buried at the end of Capabilities. This plan moves the slide, updates the week banners, re-points the Academy DB, and rewrites the affected coach narration so transitions stay clean.
 
-Scope is the Sales Enablement Academy training narrations + a couple of slide visuals. The Exec Pitch 3 deck and the Roadmap 2026 slide itself are mostly already correct (✅/🔄/📋 statuses, no fake "production" claims for POCs), but two cosmetic/wording items there are also addressed below.
+Signals is **not** moved (you didn't request it, and Signals is a specific capability lens rather than a foundational frame). Happy to revisit separately.
 
-Slide numbers referenced are the 1-indexed in-deck positions on `/sales-enablement` after the Week 1 divider splice.
+### 1. Slide order in `src/pages/SalesEnablement.tsx`
 
----
+New Week 1 order (Foundation):
 
-### 1. Slide 12 (Insights & Recommendations) — roadmap dates wrong
+```text
+Title
+▸ Week 1 · Foundation (banner)
+M1 · Strategic Shift
+M1 · Why This Matters (Plain English)
+M2 · The Platform
+M2 · DTOP                  ← moved here
+M2 · Value Unlocked
+M2 · Recap Talk Track
+```
 
-Current narration (`se-slide-insights` in `src/data/salesEnablementNarration.ts`) says:
-> "Roadmap-wise, this lands in the **early-2026** phase — keep that date locked, do not slip it."
+Week 2 (Capabilities) — DTOP removed:
 
-That conflicts with what Paul/Barak pushed back on. Per locked roadmap (mem `roadmap-dates` + `TechSlide15Roadmap2026`):
+```text
+▸ Week 2 · Capabilities
+M3 · SafetyManager365
+M3 · ContentManager365
+M3 · TrainingManager365
+M3 · CoAnalyst
+M3 · Insights
+M3 · Automation
+M3 · CoAnalyst vs Generic AI
+M3 · Unified Mobile
+M3 · Capability Talk Track   ← now closes Week 2
+```
 
-- **Insights POC** — H1 2026 (already shipped as a *proof of concept*, not production)
-- **Insights rollout** — H2 2026
-- **Recommendations & Prescriptive Actions** — 2027+
+Relabel the DTOP slide from `M3 · DTOP` → `M2 · DTOP`.
 
-Rewrite the `se-slide-insights` narration to:
-- Split Insights vs Recommendations explicitly.
-- Frame H1 2026 as a **POC** (internal prototype, not a customer-usable feature) — H2 2026 as the production rollout for Insights — Recommendations as 2027+ vision.
-- Drop the "keep that date locked, do not slip it" line.
+### 2. Week banner metadata (`weekProps` in same file)
 
-### 2. POC vs production language — distinction Paul wanted
+- **w1.upNext**: add `"DTOP — the operating loop"` between "The platform at a glance" and "Value unlocked".
+- **w1.learningGoal**: extend to "…and walk the DTOP loop (Detect → Trigger → Orchestrate → Prove) on a whiteboard."
+- **w1.estimatedMinutes**: 10 → 14.
+- **w2.upNext**: remove "DTOP" entry.
+- **w2.learningGoal**: drop the "…and walk DTOP on a whiteboard" clause (now a Week 1 outcome). Replace with "…and pick the right capability to lead with for the room you're in."
+- **w2.estimatedMinutes**: 18 → 16.
 
-Add a one-line clarification to:
+### 3. Academy DB — `academy_modules.slide_ids`
 
-- `se-slide-insights` narration (above).
-- `se-slide-automation` narration — currently says "Automation is the **mid-2026 phase**". Update to: POC complete H1 2026; production rollout H2 2026. Keep the human-in-the-loop framing.
-- `se-slide-mobile` narration — currently says "late-2026 phase". Replace with the actual locked phases: Phase 1 (Training in iOS) H1 2026; Phase 2 (Safety Reporting) H2 2026; Phase 3 (full unified shell) 2027+.
+A new migration updates the two affected rows:
 
-Memory update: extend `mem://product/roadmap-dates` with the POC-vs-production distinction so future narrations don't blur the two again.
+- `m-w1.slide_ids` → add `se-slide-dtop` after `se-slide-whatis`.
+- `m-w2.slide_ids` → remove `se-slide-dtop`.
 
-No change needed to `TechSlide15Roadmap2026` itself — it already uses ✅/🔄/📋 status icons and labels POCs explicitly. The legend already says "Done / In Progress / Planned" — we'll add a one-line footnote: *"POC = internal prototype validating an approach, not a customer-deliverable feature."*
+No schema changes, no quiz changes (DTOP quiz questions, if any, can stay on their current module — confirm in a follow-up if you want them re-pointed to Week 1).
 
-### 3. Slide 19 says "demo" — not ready yet
+### 4. Narration rewrites in `src/data/salesEnablementNarration.ts`
 
-Slide 19 (1-indexed) is `se-discovery-to-close` (the Discovery → Demo → Close cheat sheet). Component: `src/components/sales-enablement-slides/SEDiscoveryToClose.tsx`.
+- **`se-week-1` (Week 1 banner)** — add DTOP to the closing line: "…The four capability bands you must name from memory, in order: Core Apps, Intelligence & Orchestration, Unified Mobile, and DTOP — and by the end of this week you can walk the DTOP loop on a whiteboard."
+- **`se-slide-whatis` (The Platform)** — change closing transition to "Next we go straight into DTOP — the loop that makes the platform worth buying."
+- **`se-slide-dtop`** — retitle to `M2 · DTOP`; rewrite the closing transition from "Next: the capability cheat sheet." to "Next: the value this loop unlocks." Keep the body (Detect/Trigger/Orchestrate/Prove colour cues, whiteboard-it instruction, discovery pivot) intact.
+- **`se-slide-value` (Value Unlocked)** — adjust opening so it follows DTOP, not the platform diagram: "Now that the loop is on the whiteboard, this slide turns it into money and time…"
+- **`se-week-2` (Week 2 banner)** — remove "…then DTOP itself…" from the capability-order sentence; close on "…then the Unified Mobile App, and we close with the capability cheat sheet."
+- **`se-slide-mobile`** — change closing transition from "Next: DTOP itself." to "Next: the capability cheat sheet — your study page before every call."
 
-Rename the middle stage from **Demo** to **Walkthrough** (and update icon label, the "Say this" copy, and the discovery question wording). Update the slide title from "Discovery → Demo → Close" to **"Discovery → Walkthrough → Close"**. Also update:
-- `SESlide0Title.tsx` line "Discovery → demo → close, use cases, objections" → "Discovery → walkthrough → close, …".
-- The narrations for `se-slide-0`, `se-week-3`, `se-discovery-to-close`, and `se-slide-closing` (all currently say "demo") — swap to "walkthrough" or "focused walkthrough".
-- The objections "Bridge to demo" column header in `SEObjections.tsx` → "Bridge to next step", and the bridge copy that currently says "20-minute demo" → "20-minute walkthrough".
+All rewrites stay inside the 5-part coach format (Why this matters → Core message → Pain→Value pivot → How to deliver → Transition).
 
-### 4. Slide 24 says "top 5 objections" but slide 25 shows 3
+### 5. Memory update
 
-Two things:
+Append to `mem://content/sales-enablement/coach-script-standard`: "DTOP lives in Week 1 (Foundation), not Week 2. The four capability bands taught from memory in Week 1 are Core Apps, Intelligence & Orchestration, Unified Mobile, DTOP. Week 2 covers product capabilities only; the DTOP whiteboard is a Week 1 outcome."
 
-a. **Wording.** The Week 3 / closing narrations say "the top objections" and "top three objections"; nothing in code literally says "top 5", but the user clearly saw a "top 5" cue somewhere. Audit and standardize to **"top 3 objections"** everywhere:
-   - `se-module-6`/closing-arc narration (already says "top three" — keep).
-   - `SEObjections.tsx` subtitle currently: *"Top 3 pushbacks · Acknowledge → Reframe → Bridge."* — keep.
-   - `dtopPlaybook.ts` `objections` array has 5 entries; we keep all 5 in the data but the Academy slide already slices to 3. We'll add a code comment so this doesn't drift again.
-   - If any "top 5" appears in a recently rebuilt narration audio cache, the script change here will regenerate it on next play.
+### Files touched
 
-b. **3rd objection cut off + general bottom-cutoff at 100% zoom.** Root cause is `PitchSlideContainer`:
-   - `pt-10 sm:pt-14 pb-16 sm:pb-20` is aggressive vertical padding, and
-   - the content area uses `flex-1 overflow-hidden`, so anything over the budget is clipped (no scroll fallback).
+- `supabase/migrations/<new>.sql` (slide_ids update for `m-w1` and `m-w2`)
+- `src/pages/SalesEnablement.tsx` (slide order, weekProps)
+- `src/data/salesEnablementNarration.ts` (six narration entries)
+- `mem/content/sales-enablement/coach-script-standard.md`
 
-   Fixes:
-   - Reduce default padding to `pt-8 sm:pt-10 pb-10 sm:pb-12` (still leaves room for the bottom slide number).
-   - Move the slide-number marker up from `bottom-16/20` to `bottom-4/6` so the reduced padding still clears it.
-   - On `SEObjections.tsx` specifically, tighten each row: drop `pt-3` on the outer wrapper, change row padding from `p-3` to `p-2.5`, and gap from `gap-2` to `gap-1.5`. This gives the 3rd row enough room at 1080×720 / 100% zoom.
-
-   These container-padding changes are global. I'll spot-check the densest slides (`TechSlide15Roadmap2026`, `TechV4PlatformOverview`, `IRSlide2WhatIs`) in the preview after the change to make sure nothing else clips or shifts.
-
-### 5. Exec Pitch 3 slide #17 (Roadmap 2026) — Insights+Recommendations in H1
-
-Looking at `TechSlide15Roadmap2026.tsx`, H1 2026 currently lists:
-> "✅ Platform Proof of Concept for Future Vision — Platform-wide Insights & Recommendations (Intelligence & Orchestration Layer)"
-
-That single bullet conflates Insights (which IS in H1 as a POC) with Recommendations (which is **2027+**, per Paul/Barak). Fix:
-
-- H1 2026: keep "✅ Platform Proof of Concept — **Insights**" (POC only, no Recommendations).
-- H2 2026: already has "📋 Platform-wide Business Intelligence POC" — relabel to "📋 **Platform-wide Insights rollout (production)**" for clarity.
-- 2027+: already says "Roll out of Platform-wide Insights & Recommendations — Future Vision" — keep, but add explicit "Recommendations & Prescriptive Actions (2027+)" so the split with Insights is unambiguous.
-
-Add the POC-clarification footnote (item 2) under the roadmap status legend.
-
----
-
-## Files to change
-
-- `src/data/salesEnablementNarration.ts` — rewrite Insights, Automation, Mobile narrations; swap "demo" → "walkthrough" in Title/Week-3/Discovery/Closing scripts.
-- `src/components/sales-enablement-slides/SEDiscoveryToClose.tsx` — Demo → Walkthrough (stage, copy, title).
-- `src/components/sales-enablement-slides/SESlide0Title.tsx` — copy line.
-- `src/components/sales-enablement-slides/SEObjections.tsx` — tighten layout, rename "Bridge to demo" → "Bridge to next step", update bridge copy.
-- `src/components/shared/PitchSlideContainer.tsx` — reduce vertical padding, move slide-number marker.
-- `src/components/tech-slides/TechSlide15Roadmap2026.tsx` — split Insights vs Recommendations across phases; POC footnote.
-- `mem/product/roadmap-dates.md` — add POC-vs-production rule.
-
-## Out of scope
-
-- No DB / migration changes.
-- No changes to Exec Pitch 3 ordering or other slides.
-- Quiz question content stays as-is.
-
-## Risks
-
-- Reducing `PitchSlideContainer` padding affects every deck that uses it. I'll spot-check 3–4 of the densest slides post-change.
-- "Walkthrough" replaces "demo" everywhere in Sales Enablement only — other decks keep their existing wording.
+No component code changes — `TechV4Slide5DTOP` renders unchanged in its new position.

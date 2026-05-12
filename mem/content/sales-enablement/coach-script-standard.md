@@ -20,4 +20,6 @@ All scripts must respect locked memory rules: BrandNumber product naming, no FOQ
 
 **Academy DB structure (May 2026):** The `academy_modules` table also holds exactly three rows — `m-w1` (Foundation), `m-w2` (Capabilities), `m-w3` (Sell & Win) — each carrying `week_number`, `accent_color` (blue/violet/emerald), and `kicker`. Quiz questions and attempts for the legacy m1..m6 modules were re-pointed onto these three rows. Don't reintroduce per-module rows.
 
+**DTOP placement (May 2026):** DTOP lives in **Week 1 (Foundation)**, not Week 2. Slide order in Foundation: Strategic Shift → Why This Matters → The Platform → **DTOP** → Value Unlocked → Recap. Week 2 (Capabilities) covers product capabilities only — SafetyManager365, ContentManager365, TrainingManager365, CoAnalyst, Insights, Automation, CoAnalyst-vs-Generic-AI, Unified Mobile, Capability Cheat Sheet. Walking the DTOP loop on a whiteboard is a Week 1 learning outcome; Week 2 reps practise mapping each capability onto the loop they already know.
+
 Data file: src/data/salesEnablementNarration.ts. Hook: src/hooks/useSalesEnablementNarration.ts. Wired into src/pages/SalesEnablement.tsx via SpeakerNotesPanel + per-slide narration props.
