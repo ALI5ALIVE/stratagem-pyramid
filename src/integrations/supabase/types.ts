@@ -73,7 +73,9 @@ export type Database = {
           order_index: number
           pass_threshold: number
           slide_ids: string[]
+          specialty: string | null
           title: string
+          track: string
           updated_at: string
           week_number: number | null
         }
@@ -88,7 +90,9 @@ export type Database = {
           order_index: number
           pass_threshold?: number
           slide_ids?: string[]
+          specialty?: string | null
           title: string
+          track?: string
           updated_at?: string
           week_number?: number | null
         }
@@ -103,7 +107,9 @@ export type Database = {
           order_index?: number
           pass_threshold?: number
           slide_ids?: string[]
+          specialty?: string | null
           title?: string
+          track?: string
           updated_at?: string
           week_number?: number | null
         }
