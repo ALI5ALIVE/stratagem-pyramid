@@ -1,7 +1,7 @@
 import {
   Presentation, Brain,
   Rocket, BookOpen, Home, Users, ScrollText, Workflow, Sparkles, Zap, Smartphone, Layers, Radio,
-  LogIn, LogOut, GraduationCap
+  LogIn, LogOut, GraduationCap, Mic
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useSidebar } from "@/components/ui/sidebar";
@@ -39,6 +39,7 @@ const additionalResourceItems: NavItem[] = [
 const salesEnablementItems: NavItem[] = [
   { title: "Sales Enablement Academy", url: "/academy", icon: GraduationCap },
   { title: "Sales Enablement Training", url: "/sales-enablement", icon: GraduationCap },
+  { title: "Practice Center", url: "/practice-center", icon: Mic, badge: "New" },
 ];
 
 const capabilityItems: NavItem[] = [
