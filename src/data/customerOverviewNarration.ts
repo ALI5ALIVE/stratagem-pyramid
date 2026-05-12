@@ -66,7 +66,7 @@ export const customerOverviewNarrations: COSlideNarration[] = [
     title: "Use Case — Regulation Management",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Regulation Management is the use case that earns the deck on its own. Today airlines manage well over a thousand regulations from EASA, FAA, ICAO and national authorities — in spreadsheets and tribal knowledge. With Regulation Management, every change is structured, tagged and ingested in near real time, then cascaded automatically into the procedures, training and risk assessments it touches. The proof point: from quarterly discovery to continuous visibility, with audit-ready evidence for every change. Bridge: those are the patterns — what's the actual outcome our customers see? Next slide.",
+      "Regulation Management is the use case that earns the deck on its own. Today airlines manage well over a thousand regulations from EASA, FAA, ICAO and national authorities — in spreadsheets and tribal knowledge. With Regulation Management, every change is structured, tagged and ingested in near real time, then cascaded automatically into the procedures, training and risk control it touches. The proof point: from quarterly discovery to continuous visibility, with audit-ready evidence for every change. Bridge: those are the patterns — what's the actual outcome our customers see? Next slide.",
   },
   {
     slideId: "co-slide-7",
@@ -87,7 +87,7 @@ export const customerOverviewNarrations: COSlideNarration[] = [
     title: "Your First 90 Days",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Close with the path, not the pitch. Three concrete steps. One — half-day discovery workshop with safety, training and operations leads to map their current signal flow. Two — pick the highest-impact use case and build a custom cost-avoidance model with their fleet numbers. Three — a ninety-day pilot proving measurable value before scaling. The proof point to land: no eighteen-month implementation, no big-bang transformation — just proof, then progress. Then ask for the next meeting. That's the deck.",
+      "Close with the path, not the pitch. Two concrete steps. One — pick the highest-impact use case and build a custom cost-avoidance model with their fleet numbers. Two — a ninety-day pilot proving measurable value before scaling. The proof point to land: no eighteen-month implementation, no big-bang transformation — just proof, then progress. To learn more about the power of the Comply365 Operational Performance Platform for your organisation, contact us today. That's the deck.",
   },
 ];
 

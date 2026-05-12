@@ -111,14 +111,14 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "Operational Data Foundation",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "This is the architectural keystone — and the slide most platforms can't draw. ContentManager365, TrainingManager365 and SafetyManager365 each emit structured events into a single operational data foundation. Three capabilities make that foundation intelligent. First — a unified aviation taxonomy. Four thousand categories across five levels, aligned to ICAO and IATA, applied consistently in every product. Second — an operational knowledge graph. Procedures, training records, safety events, people and aircraft modelled as connected entities. A safety event traces to the procedure version, the affected crew and their training record in a single hop. Third — custom aviation LLM models. Domain-trained, not domain-prompted. Fine-tuned on millions of aviation reports since twenty twenty-three, with specialist models for classification, extraction and summarisation — ninety percent accuracy at level four to five, where generic AI sits at thirty-five. All of it customer-owned, tenant-isolated, with real-time event propagation and open APIs. Taxonomy gives shared language. The graph gives shared context. Custom LLMs give shared understanding. Without this foundation, intelligence has nothing to reason over. Every other layer in the platform depends on this one.",
+      "This is the architectural keystone — and the slide most platforms can't draw. ContentManager365, TrainingManager365 and SafetyManager365 each emit structured events into a single operational data foundation. Three capabilities make that foundation intelligent. First — a unified aviation taxonomy. Four thousand categories across five levels, aligned to ICAO and IATA, applied consistently in every product. Second — an operational knowledge graph. Procedures, training records, safety events, people and aircraft modelled as connected entities. A safety event traces to the procedure version, the affected crew and their training record in a single hop. Third — custom aviation LLM models. Domain-trained, not domain-prompted. Fine-tuned on millions of aviation reports, with specialist models for classification, extraction and summarisation — ninety percent accuracy at level four to five, where generic AI sits at thirty-five. All of it customer-owned, tenant-isolated, with real-time event propagation and open APIs. Taxonomy gives shared language. The graph gives shared context. Custom LLMs give shared understanding. Without this foundation, intelligence has nothing to reason over. Every other layer in the platform depends on this one.",
   },
   {
     slideId: "tech-slide-coanalyst",
     title: "Insights & Intelligence",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Insights and Intelligence is the conversational intelligence layer of the Operational Performance Platform. Master message: from reports to intelligence, from events to control. It's a hybrid AI architecture — domain-trained ML models for the heavy lifting, an LLM augmentation layer for natural-language interaction, and continuous learning that keeps both improving. Domain models are trained on millions of aviation reports since twenty twenty-three, delivering ninety percent accuracy at four thousand categories — where generic AI collapses to thirty-five. The LLM layer handles plain-English questions, summarisation and sixty-plus languages, but it's guardrailed by the domain models so you don't get aviation-critical hallucination. And it's tenant-isolated — your data never crosses customer boundaries.",
+      "Insights and Intelligence is the conversational intelligence layer of the Operational Performance Platform. Master message: from reports to intelligence, from events to control. It's a hybrid AI architecture — domain-trained ML models for the heavy lifting, an LLM augmentation layer for natural-language interaction, and continuous learning that keeps both improving. Domain models are trained on millions of aviation reports, delivering ninety percent accuracy at four thousand categories — where generic AI collapses to thirty-five. The LLM layer handles plain-English questions, summarisation and sixty-plus languages, but it's guardrailed by the domain models so you don't get aviation-critical hallucination. And it's tenant-isolated — your data never crosses customer boundaries.",
   },
   {
     slideId: "tech-slide-insights",
@@ -188,7 +188,7 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "Outcomes & Why Comply365",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Measured outcomes from carriers running on the platform today. Seventy-eight percent reduction in repeat events. Signal-to-coordinated-response compressed from six weeks to forty-eight hours. Directive to crew acknowledgement in five days. Ninety percent domain accuracy where generic AI sits at thirty-five. Three things make those outcomes possible. Connected foundation — one data model, three core apps, one intelligence layer. Domain-trained intelligence — Insights and Intelligence built on aviation data since twenty twenty-three, not a generic AI with an aviation wrapper. Proof by design — every action logged automatically, the audit trail is a byproduct, not a report. Point solutions manage silos. Generic AI creates noise. We close the loop.",
+      "Measured outcomes from carriers running on the platform today. Seventy-eight percent reduction in repeat events. Signal-to-coordinated-response compressed from six weeks to forty-eight hours. Directive to crew acknowledgement in five days. Ninety percent domain accuracy where generic AI sits at thirty-five. Three things make those outcomes possible. Connected foundation — one data model, three core apps, one intelligence layer. Domain-trained intelligence — Insights and Intelligence built on aviation operational data, not a generic AI with an aviation wrapper. Proof by design — every action logged automatically, the audit trail is a byproduct, not a report. Point solutions manage silos. Generic AI creates noise. We close the loop.",
   },
   {
     slideId: "tech-slide-18",
@@ -245,7 +245,7 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "Regulation Management",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Regulation Management is the use case airlines almost always under-estimate. Today they manage well over a thousand regulations from EASA, FAA, ICAO and national authorities — in spreadsheets and tribal knowledge. With Regulation Management, every change is structured, tagged and ingested in near real time, then cascaded automatically into the procedures, training and risk assessments it touches. The proof point: from quarterly discovery to continuous visibility, with audit-ready evidence for every change. Bridge: now let me put numbers behind all of this — the Line of Sight calculator.",
+      "Regulation Management is the use case airlines almost always under-estimate. Today they manage well over a thousand regulations from EASA, FAA, ICAO and national authorities — in spreadsheets and tribal knowledge. With Regulation Management, every change is structured, tagged and ingested in near real time, then cascaded automatically into the procedures, training and risk control it touches. The proof point: from quarterly discovery to continuous visibility, with audit-ready evidence for every change. Bridge: now let me put numbers behind all of this — the Line of Sight calculator.",
   },
   {
     slideId: "tech-slide-calculator",
@@ -259,7 +259,7 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "Why Comply365",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Three things set us apart. First — connected foundation. Not point solutions stitched together. One data model, three core apps, one intelligence layer. Five hundred and fifty plus airlines worldwide, around two and a half million users, six continents. Second — embedded intelligence. CoAnalyst built from the ground up on aviation data since twenty twenty-three — around ninety percent accuracy where generic AI plateaus at thirty-five. Third — proof by default. Every action logged automatically, every change traced, every decision auditable. The proof point: you don't prepare for regulators — you're always ready. Bridge: there's one final slide on why only Comply365 can deliver this end-to-end.",
+      "Three things set us apart. First — connected foundation. Not point solutions stitched together. One data model, three core apps, one intelligence layer. Five hundred and fifty plus airlines worldwide, around two and a half million users, six continents. Second — embedded intelligence. CoAnalyst built from the ground up on aviation operational data — around ninety percent accuracy where generic AI plateaus at thirty-five. Third — proof by default. Every action logged automatically, every change traced, every decision auditable. The proof point: you don't prepare for regulators — you're always ready. Bridge: there's one final slide on why only Comply365 can deliver this end-to-end.",
   },
   {
     slideId: "tech-slide-why-only-comply365",
@@ -273,7 +273,7 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "CTA — Find Out More",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Close with the path, not the pitch. Three concrete next steps. One — half-day technical discovery to map their data architecture and integration points. Two — a ninety-day proof of value against their highest-impact use case with full platform activation, measurable outcomes in the first quarter. Three — enterprise rollout, full DTOP activation across all modules within six to nine months. Then ask for the discovery workshop. That's the deck.",
+      "Close with the path, not the pitch. Two concrete next steps. One — a ninety-day proof of value against their highest-impact use case with full platform activation, measurable outcomes in the first quarter. Two — enterprise rollout, full DTOP activation across all modules within six to nine months. To learn more about the power of the Comply365 Operational Performance Platform for your organisation, contact us today. That's the deck.",
   },
 ];
 

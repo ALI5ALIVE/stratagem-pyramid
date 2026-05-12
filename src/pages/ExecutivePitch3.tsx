@@ -24,11 +24,11 @@ const dividerProps = {
   intelligence: {
     layerName: "Intelligence & Orchestration",
     tagline:
-      "Automation · Insights & Intelligence · CoAnalyst (Recommendations & Prescriptive Actions) — turning operational data into action.",
+      "Automation · Insights & Intelligence — turning operational data into action.",
     active: "intelligence" as const,
     hideLayerNumber: true,
     platformGroupLabel: "The Platform · Part of One Integrated Solution",
-    upNext: ["Automation", "Insights & Recommendations", "CoAnalyst", "CoAnalyst vs Generic AI"],
+    upNext: ["Automation", "Insights & Recommendations", "Domain Intelligence vs Generic AI"],
   },
   mobile: {
     layerName: "Unified Mobile",

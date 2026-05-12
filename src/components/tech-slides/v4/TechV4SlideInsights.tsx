@@ -69,6 +69,9 @@ const TechV4SlideInsights = ({ slideNumber, ...narrationProps }: Props) => (
             </div>
           ))}
         </div>
+        <div className="flex justify-end shrink-0 mt-2">
+          <span className="text-[10px] text-muted-foreground/80 px-2 py-0.5 rounded-full border border-muted/30 bg-muted/10">DG = Dangerous Goods</span>
+        </div>
       </div>
     </div>
   </SalesSlideContainer>

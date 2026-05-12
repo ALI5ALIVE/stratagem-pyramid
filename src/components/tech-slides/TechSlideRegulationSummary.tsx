@@ -30,8 +30,19 @@ const pillarIcons = [Eye, Network, Shield];
  * to the full Regulation Management Playbook via DeepDiveLink.
  */
 const TechSlideRegulationSummary = ({ slideNumber, ...narrationProps }: Props) => {
-  const problems = painPoints.slice(0, 2);
-  const pillars = valuePillars.slice(0, 2);
+  // Per Paul's review: drop "Reactive-Only Compliance" pain point and rewrite the
+  // first pillar's description on this summary slide to remove the "no more
+  // quarterly audits discovering gaps" line. Source playbook stays intact.
+  const problems = [painPoints[0], painPoints[2]];
+  const pillars = valuePillars.slice(0, 2).map((p, i) =>
+    i === 0
+      ? {
+          ...p,
+          description:
+            "Always-current view of regulatory status across every authority, every regulation, every operational area.",
+        }
+      : p,
+  );
 
   return (
     <SalesSlideContainer
@@ -109,7 +120,7 @@ const TechSlideRegulationSummary = ({ slideNumber, ...narrationProps }: Props) =
           {/* Value Pillars */}
           <div className="flex flex-col gap-2 min-h-0">
             <h3 className="text-xs font-bold text-primary uppercase tracking-wider">
-              The Three Value Pillars
+              The Two Value Pillars
             </h3>
             <div className="flex flex-col gap-2 flex-1">
               {pillars.map((p, i) => {
