@@ -4,7 +4,7 @@ import { operationalPitchNarrations } from "@/data/operationalPitchNarration";
 import { technicalPitchNarrations } from "@/data/technicalPitchNarration";
 import { coanalystNarrations } from "@/data/coanalystNarration";
 import { customerOverviewNarrations } from "@/data/customerOverviewNarration";
-import { playbookNarrations } from "@/data/playbookNarrations";
+import { PLAYBOOK_NARRATIONS } from "@/data/playbookNarrations";
 import type { PracticeScenario, Difficulty } from "@/data/practiceScenarios";
 
 function getDeckScript(scenario: PracticeScenario): string {
@@ -18,8 +18,11 @@ function getDeckScript(scenario: PracticeScenario): string {
     case "coanalyst": return join(coanalystNarrations as any);
     case "customerOverview": return join(customerOverviewNarrations as any);
     case "playbook": {
-      const pb = (playbookNarrations as any)[scenario.playbookId ?? ""] ?? [];
-      return join(pb);
+      const prefix = scenario.playbookId ?? "";
+      const slides = Object.entries(PLAYBOOK_NARRATIONS)
+        .filter(([key]) => key.startsWith(prefix))
+        .map(([key, n]) => ({ title: key, script: n.script }));
+      return join(slides);
     }
     default:
       return "";

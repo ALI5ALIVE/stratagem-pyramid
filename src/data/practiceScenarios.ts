@@ -151,7 +151,7 @@ export const practiceScenarios: PracticeScenario[] = [
     voiceId: VOICE.sarah,
     setup: "Teach the DTOP loop and tie each step to a controllable cost.",
     narrationKey: "playbook",
-    playbookId: "dtop",
+    playbookId: "dtop-",
     keyMessages: [
       "D blue · T amber · O violet · P emerald",
       "Detect signals continuously",
@@ -167,7 +167,7 @@ export const practiceScenarios: PracticeScenario[] = [
     voiceId: VOICE.laura,
     setup: "Position Regulation Management as Risk Control, not reactive compliance.",
     narrationKey: "playbook",
-    playbookId: "regulation",
+    playbookId: "rm-",
     keyMessages: [
       "Risk Control over Risk Assessments",
       "Continuous evidence vs quarterly scramble",
