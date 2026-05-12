@@ -6,12 +6,17 @@ import { ArrowLeft, ClipboardCheck, Clock } from "lucide-react";
 import LessonScroller from "@/components/academy/LessonScroller";
 import { SLIDE_REGISTRY } from "@/components/academy/slideRegistry";
 import type { AcademyModule } from "@/hooks/useAcademyProgress";
+import PlaybookNarrationBar from "@/components/PlaybookNarrationBar";
+import { usePlaybookNarration } from "@/hooks/usePlaybookNarration";
+import { PLAYBOOK_NARRATIONS } from "@/data/playbookNarrations";
 
 export default function ModuleLesson() {
   const { moduleId } = useParams();
   const nav = useNavigate();
   const [module, setModule] = useState<AcademyModule | null>(null);
   const [loading, setLoading] = useState(true);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const narration = usePlaybookNarration();
 
   useEffect(() => {
     if (!moduleId) return;
@@ -23,6 +28,14 @@ export default function ModuleLesson() {
   if (!module) return <div className="min-h-screen flex items-center justify-center text-sm text-muted-foreground">Module not found. <Link className="ml-2 text-primary" to="/academy">Back</Link></div>;
 
   const slideIds = module.slide_ids;
+  const activeSlideId = slideIds[Math.min(activeIdx, slideIds.length - 1)];
+  const hasNarration = !!PLAYBOOK_NARRATIONS[activeSlideId];
+
+  const scrollToIdx = (idx: number) => {
+    const target = slideIds[idx];
+    if (!target) return;
+    document.getElementById(target)?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <div className="relative">
@@ -44,13 +57,21 @@ export default function ModuleLesson() {
         </Button>
       </div>
 
-      <LessonScroller slideIds={slideIds}>
+      <LessonScroller slideIds={slideIds} onActiveIndexChange={setActiveIdx}>
         {slideIds.map((sid, idx) => {
           const Comp = SLIDE_REGISTRY[sid];
           if (!Comp) return null;
           return <Comp key={sid} id={sid} slideNumber={idx} />;
         })}
       </LessonScroller>
+      {hasNarration && (
+        <PlaybookNarrationBar
+          narration={narration}
+          activeSlideId={activeSlideId}
+          onNextSlide={activeIdx < slideIds.length - 1 ? () => scrollToIdx(activeIdx + 1) : undefined}
+          onPrevSlide={activeIdx > 0 ? () => scrollToIdx(activeIdx - 1) : undefined}
+        />
+      )}
     </div>
   );
 }
