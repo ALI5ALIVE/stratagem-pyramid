@@ -66,6 +66,9 @@ export function useRoleplaySession(): UseRoleplaySession {
   const normalizeError = (err: unknown) => {
     if (err instanceof Error) return err.message;
     if (typeof err === "string") return err;
+    if (err && typeof err === "object" && "message" in err && typeof (err as { message?: unknown }).message === "string") {
+      return (err as { message: string }).message;
+    }
     return "Failed to start session";
   };
 
@@ -83,9 +86,9 @@ export function useRoleplaySession(): UseRoleplaySession {
       setStatus("connecting");
       let permissionStream: MediaStream | null = null;
       try {
-        permissionStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        permissionStream.getTracks().forEach((track) => track.stop());
-        permissionStream = null;
+        if (!navigator.mediaDevices?.getUserMedia) {
+          throw new Error("Microphone access is not available in this browser.");
+        }
 
         const { data, error: fnError } = await supabase.functions.invoke(
           "elevenlabs-roleplay-token",
@@ -114,17 +117,23 @@ export function useRoleplaySession(): UseRoleplaySession {
             setError(null);
             setStatus("connected");
           },
-          onDisconnect: () => {
+          onDisconnect: (details) => {
             conversationRef.current = null;
             setIsSpeaking(false);
             setStatus("disconnected");
+            if (details?.reason === "error") {
+              setError(details.message || "The voice session disconnected before it could start.");
+            }
           },
           onStatusChange: ({ status: nextStatus }) => {
             setStatus(nextStatus === "connected" ? "connected" : nextStatus === "connecting" ? "connecting" : "disconnected");
           },
           onModeChange: ({ mode }) => setIsSpeaking(mode === "speaking"),
           onMessage: appendMessage,
-          onError: (err) => setError(normalizeError(err)),
+          onError: (message, context) => {
+            setError(normalizeError(message));
+            if (context) console.error("ElevenLabs roleplay error", context);
+          },
         });
         conversationRef.current = conversation;
         setStatus("connected");
