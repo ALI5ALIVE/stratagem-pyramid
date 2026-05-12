@@ -33,6 +33,7 @@ import PlatformPlaybook from "./pages/PlatformPlaybook";
 import SignalsPlaybook from "./pages/SignalsPlaybook";
 import SalesEnablement from "./pages/SalesEnablement";
 import RoadmapDeck from "./pages/RoadmapDeck";
+import PracticeCenter from "./pages/PracticeCenter";
 import AuthPage from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
 import ReviewDashboard from "./pages/ReviewDashboard";
@@ -93,6 +94,7 @@ const App = () => (
             <Route path="/platform-playbook" element={<PlatformPlaybook />} />
             <Route path="/signals-playbook" element={<SignalsPlaybook />} />
             <Route path="/sales-enablement" element={<SalesEnablement />} />
+            <Route path="/practice-center" element={<PracticeCenter />} />
             <Route path="/roadmap" element={<RoadmapDeck />} />
             <Route path="/review" element={<ReviewDashboard />} />
             <Route path="/customer-overview" element={<CustomerOverview />} />
