@@ -49,10 +49,11 @@ export function useRoleplaySession(): UseRoleplaySession {
   const conversationRef = useRef<ElevenLabsConversation | null>(null);
   const startingRef = useRef(false);
 
-  const appendMessage = useCallback((message: any) => {
+  const appendMessage = useCallback((message: unknown) => {
     // ElevenLabs sends a normalized shape with `source` + `message`.
-    const source: string | undefined = message?.source;
-    const text: string | undefined = message?.message;
+    const payload = message && typeof message === "object" ? message as { source?: unknown; message?: unknown } : {};
+    const source = typeof payload.source === "string" ? payload.source : undefined;
+    const text = typeof payload.message === "string" ? payload.message : undefined;
     if (!text) return;
     if (source === "user") {
       setTranscript((t) => [...t, { role: "rep", text, ts: Date.now() }]);
@@ -180,8 +181,9 @@ export function useRoleplaySession(): UseRoleplaySession {
         },
       );
       if (fnError) throw new Error(fnError.message);
-      if ((data as any)?.error) throw new Error((data as any).error);
-      setScorecard(data as Scorecard);
+      const scoreResponse = data as (Scorecard & { error?: string });
+      if (scoreResponse.error) throw new Error(scoreResponse.error);
+      setScorecard(scoreResponse);
     } catch (e) {
       setScoreError(e instanceof Error ? e.message : "Scoring failed");
     } finally {
