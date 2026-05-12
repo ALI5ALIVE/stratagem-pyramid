@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Conversation } from "@elevenlabs/react";
 import type { Conversation as ElevenLabsConversation } from "@elevenlabs/react";
 import { supabase } from "@/integrations/supabase/client";
