@@ -1,5 +1,6 @@
-import { useCallback, useMemo, useRef, useState } from "react";
-import { useConversation } from "@elevenlabs/react";
+import { useCallback, useRef, useState } from "react";
+import { Conversation } from "@elevenlabs/react";
+import type { Conversation as ElevenLabsConversation } from "@elevenlabs/react";
 import { supabase } from "@/integrations/supabase/client";
 import type { PracticeScenario, Difficulty } from "@/data/practiceScenarios";
 import { buildSystemPrompt, buildFirstMessage } from "@/lib/practice/buildAgentPrompt";
@@ -40,33 +41,37 @@ export function useRoleplaySession(): UseRoleplaySession {
   const [scoring, setScoring] = useState(false);
   const [scorecard, setScorecard] = useState<Scorecard | null>(null);
   const [scoreError, setScoreError] = useState<string | null>(null);
-  const [connecting, setConnecting] = useState(false);
+  const [status, setStatus] = useState<"disconnected" | "connecting" | "connected">("disconnected");
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
   const scenarioRef = useRef<PracticeScenario | null>(null);
   const difficultyRef = useRef<Difficulty | null>(null);
+  const conversationRef = useRef<ElevenLabsConversation | null>(null);
+  const startingRef = useRef(false);
 
-  const conversation = useConversation({
-    onConnect: () => setError(null),
-    onError: (err: unknown) => {
-      const msg = err instanceof Error ? err.message : String(err);
-      setError(msg);
-    },
-    onMessage: (message: any) => {
-      // ElevenLabs sends a normalized shape with `source` + `message`
-      const source: string | undefined = message?.source;
-      const text: string | undefined = message?.message;
-      if (!text) return;
-      if (source === "user") {
-        setTranscript((t) => [...t, { role: "rep", text, ts: Date.now() }]);
-        setPartialUserText("");
-      } else if (source === "ai") {
-        setTranscript((t) => [...t, { role: "buyer", text, ts: Date.now() }]);
-      }
-    },
-  });
+  const appendMessage = useCallback((message: unknown) => {
+    // ElevenLabs sends a normalized shape with `source` + `message`.
+    const payload = message && typeof message === "object" ? message as { source?: unknown; message?: unknown } : {};
+    const source = typeof payload.source === "string" ? payload.source : undefined;
+    const text = typeof payload.message === "string" ? payload.message : undefined;
+    if (!text) return;
+    if (source === "user") {
+      setTranscript((t) => [...t, { role: "rep", text, ts: Date.now() }]);
+      setPartialUserText("");
+    } else if (source === "ai") {
+      setTranscript((t) => [...t, { role: "buyer", text, ts: Date.now() }]);
+    }
+  }, []);
+
+  const normalizeError = (err: unknown) => {
+    if (err instanceof Error) return err.message;
+    if (typeof err === "string") return err;
+    return "Failed to start session";
+  };
 
   const start = useCallback(
     async (scenario: PracticeScenario, difficulty: Difficulty, agentId: string) => {
+      if (startingRef.current || conversationRef.current) return;
       setError(null);
       setScorecard(null);
       setScoreError(null);
@@ -74,27 +79,30 @@ export function useRoleplaySession(): UseRoleplaySession {
       setPartialUserText("");
       scenarioRef.current = scenario;
       difficultyRef.current = difficulty;
-      setConnecting(true);
+      startingRef.current = true;
+      setStatus("connecting");
+      let permissionStream: MediaStream | null = null;
       try {
-        await navigator.mediaDevices.getUserMedia({ audio: true });
+        permissionStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        permissionStream.getTracks().forEach((track) => track.stop());
+        permissionStream = null;
 
         const { data, error: fnError } = await supabase.functions.invoke(
           "elevenlabs-roleplay-token",
           { body: { agentId } },
         );
         if (fnError) throw new Error(fnError.message);
-        if (!data?.signedUrl && !data?.token) {
-          throw new Error("No conversation credentials returned");
+        const signedUrl = typeof data?.signedUrl === "string" ? data.signedUrl : null;
+        if (!signedUrl) {
+          throw new Error("No ElevenLabs signed URL returned");
         }
 
         const prompt = buildSystemPrompt(scenario, difficulty);
         const firstMessage = buildFirstMessage(scenario, difficulty);
 
-        // Prefer WebSocket (signed URL) — ElevenLabs WebRTC path has been
-        // returning "v1 RTC path not found" / negotiation timeouts.
-        const sessionOpts: any = {
+        const conversation = await Conversation.startSession({
           connectionType: "websocket",
-          signedUrl: data.signedUrl,
+          signedUrl,
           overrides: {
             agent: {
               prompt: { prompt },
@@ -102,26 +110,49 @@ export function useRoleplaySession(): UseRoleplaySession {
             },
             tts: { voiceId: scenario.voiceId },
           },
-        };
-        await conversation.startSession(sessionOpts);
+          onConnect: () => {
+            setError(null);
+            setStatus("connected");
+          },
+          onDisconnect: () => {
+            conversationRef.current = null;
+            setIsSpeaking(false);
+            setStatus("disconnected");
+          },
+          onStatusChange: ({ status: nextStatus }) => {
+            setStatus(nextStatus === "connected" ? "connected" : nextStatus === "connecting" ? "connecting" : "disconnected");
+          },
+          onModeChange: ({ mode }) => setIsSpeaking(mode === "speaking"),
+          onMessage: appendMessage,
+          onError: (err) => setError(normalizeError(err)),
+        });
+        conversationRef.current = conversation;
+        setStatus("connected");
       } catch (e) {
         const msg = e instanceof Error ? e.message : "Failed to start session";
         setError(msg);
+        setIsSpeaking(false);
+        setStatus("disconnected");
         throw e;
       } finally {
-        setConnecting(false);
+        permissionStream?.getTracks().forEach((track) => track.stop());
+        startingRef.current = false;
       }
     },
-    [conversation],
+    [appendMessage],
   );
 
   const end = useCallback(async () => {
+    const conversation = conversationRef.current;
+    conversationRef.current = null;
+    setIsSpeaking(false);
+    setStatus("disconnected");
     try {
-      await conversation.endSession();
+      await conversation?.endSession();
     } catch (e) {
       // ignore
     }
-  }, [conversation]);
+  }, []);
 
   const scoreSession = useCallback(async () => {
     const scenario = scenarioRef.current;
@@ -150,8 +181,9 @@ export function useRoleplaySession(): UseRoleplaySession {
         },
       );
       if (fnError) throw new Error(fnError.message);
-      if ((data as any)?.error) throw new Error((data as any).error);
-      setScorecard(data as Scorecard);
+      const scoreResponse = data as (Scorecard & { error?: string });
+      if (scoreResponse.error) throw new Error(scoreResponse.error);
+      setScorecard(scoreResponse);
     } catch (e) {
       setScoreError(e instanceof Error ? e.message : "Scoring failed");
     } finally {
@@ -167,14 +199,9 @@ export function useRoleplaySession(): UseRoleplaySession {
     setError(null);
   }, []);
 
-  const status = useMemo<"disconnected" | "connecting" | "connected">(() => {
-    if (connecting) return "connecting";
-    return conversation.status === "connected" ? "connected" : "disconnected";
-  }, [conversation.status, connecting]);
-
   return {
     status,
-    isSpeaking: conversation.isSpeaking,
+    isSpeaking,
     transcript,
     partialUserText,
     start,

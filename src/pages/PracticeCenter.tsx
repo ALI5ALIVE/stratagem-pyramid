@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Mic, MicOff, Play, Square, Loader2, AlertCircle, Settings, ExternalLink, Sparkles } from "lucide-react";
-import { ConversationProvider } from "@elevenlabs/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,14 +12,6 @@ import { useRoleplaySession } from "@/hooks/useRoleplaySession";
 const AGENT_ID_STORAGE_KEY = "elevenlabs.practiceAgentId";
 
 export default function PracticeCenter() {
-  return (
-    <ConversationProvider>
-      <PracticeCenterInner />
-    </ConversationProvider>
-  );
-}
-
-function PracticeCenterInner() {
   const [scenarioId, setScenarioId] = useState<string>(practiceScenarios[0].id);
   const [difficulty, setDifficulty] = useState<Difficulty>("skeptical");
   const [agentId, setAgentId] = useState<string>(() =>
