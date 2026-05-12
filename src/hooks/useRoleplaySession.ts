@@ -111,7 +111,6 @@ export function useRoleplaySession(): UseRoleplaySession {
               prompt: { prompt },
               firstMessage,
             },
-            tts: { voiceId: scenario.voiceId },
           },
           onConnect: () => {
             setError(null);
