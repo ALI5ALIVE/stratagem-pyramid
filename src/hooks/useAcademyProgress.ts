@@ -14,6 +14,8 @@ export interface AcademyModule {
   week_number?: number;
   accent_color?: string;
   kicker?: string;
+  track?: "core" | "specialist";
+  specialty?: string | null;
 }
 
 export interface ProgressRow {
@@ -66,8 +68,29 @@ export function isModuleUnlocked(
   modules: AcademyModule[],
   progress: Record<string, ProgressRow>
 ) {
-  if (module.order_index === 1) return true;
-  const prev = modules.find((m) => m.order_index === module.order_index - 1);
-  if (!prev) return true;
+  // Specialist Playbooks are open from day one — no gating.
+  if (module.track === "specialist") return true;
+  // Core curriculum keeps its linear chain by order_index amongst core modules.
+  const coreModules = modules.filter((m) => (m.track ?? "core") === "core").sort((a, b) => a.order_index - b.order_index);
+  const idx = coreModules.findIndex((m) => m.id === module.id);
+  if (idx <= 0) return true;
+  const prev = coreModules[idx - 1];
   return !!progress[prev.id]?.passed;
+}
+
+export function getCoreModules(modules: AcademyModule[]) {
+  return modules.filter((m) => (m.track ?? "core") === "core").sort((a, b) => a.order_index - b.order_index);
+}
+
+export function getSpecialistModules(modules: AcademyModule[]) {
+  return modules.filter((m) => m.track === "specialist").sort((a, b) => a.order_index - b.order_index);
+}
+
+export function hasCoreCert(modules: AcademyModule[], progress: Record<string, ProgressRow>) {
+  const core = getCoreModules(modules);
+  return core.length > 0 && core.every((m) => !!progress[m.id]?.passed);
+}
+
+export function hasMasterCert(modules: AcademyModule[], progress: Record<string, ProgressRow>) {
+  return modules.length > 0 && modules.every((m) => !!progress[m.id]?.passed);
 }
