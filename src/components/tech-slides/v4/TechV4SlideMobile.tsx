@@ -1,6 +1,6 @@
 import SalesSlideContainer from "@/components/sales-slides/SalesSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { Smartphone, FileText, GraduationCap, ShieldCheck, KeyRound, Bell, Layers } from "lucide-react";
+import { Smartphone, FileText, GraduationCap, ShieldCheck, KeyRound, Bell, Layers, ExternalLink } from "lucide-react";
 import DeepDiveLink from "@/components/shared/DeepDiveLink";
 
 interface Props extends SlideNarrationProps { slideNumber?: number; }
@@ -28,6 +28,15 @@ const TechV4SlideMobile = ({ slideNumber, ...narrationProps }: Props) => (
   >
     <div className="flex-1 flex flex-col gap-4 min-h-0">
       <div className="flex items-center justify-end gap-3">
+        <a
+          href="https://mobile-app-mockup.lovable.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 rounded-md border border-primary/40 bg-primary/10 hover:bg-primary/20 transition-colors px-2.5 py-1 text-[11px] font-semibold text-primary"
+        >
+          <ExternalLink className="h-3 w-3" />
+          View interactive mock-up
+        </a>
         <DeepDiveLink to="/mobile-playbook" label="Unified Mobile" returnTo="/pitch-technical" />
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 flex-1 min-h-0 items-stretch">
