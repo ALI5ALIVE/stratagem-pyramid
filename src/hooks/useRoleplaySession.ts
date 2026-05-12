@@ -83,14 +83,18 @@ export function useRoleplaySession(): UseRoleplaySession {
           { body: { agentId } },
         );
         if (fnError) throw new Error(fnError.message);
-        if (!data?.token) throw new Error("No conversation token returned");
+        if (!data?.signedUrl && !data?.token) {
+          throw new Error("No conversation credentials returned");
+        }
 
         const prompt = buildSystemPrompt(scenario, difficulty);
         const firstMessage = buildFirstMessage(scenario, difficulty);
 
-        await conversation.startSession({
-          conversationToken: data.token,
-          connectionType: "webrtc",
+        // Prefer WebSocket (signed URL) — ElevenLabs WebRTC path has been
+        // returning "v1 RTC path not found" / negotiation timeouts.
+        const sessionOpts: any = {
+          connectionType: "websocket",
+          signedUrl: data.signedUrl,
           overrides: {
             agent: {
               prompt: { prompt },
@@ -98,7 +102,8 @@ export function useRoleplaySession(): UseRoleplaySession {
             },
             tts: { voiceId: scenario.voiceId },
           },
-        } as any);
+        };
+        await conversation.startSession(sessionOpts);
       } catch (e) {
         const msg = e instanceof Error ? e.message : "Failed to start session";
         setError(msg);
