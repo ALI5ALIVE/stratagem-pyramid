@@ -87,7 +87,7 @@ export const customerOverviewNarrations: COSlideNarration[] = [
     title: "Your First 90 Days",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Close with the path, not the pitch. Three concrete steps. One — half-day discovery workshop with safety, training and operations leads to map their current signal flow. Two — pick the highest-impact use case and build a custom cost-avoidance model with their fleet numbers. Three — a ninety-day pilot proving measurable value before scaling. The proof point to land: no eighteen-month implementation, no big-bang transformation — just proof, then progress. Then ask for the next meeting. That's the deck.",
+      "Close with the path, not the pitch. Two concrete steps. One — pick the highest-impact use case and build a custom cost-avoidance model with their fleet numbers. Two — a ninety-day pilot proving measurable value before scaling. The proof point to land: no eighteen-month implementation, no big-bang transformation — just proof, then progress. To learn more about the power of the Comply365 Operational Performance Platform for your organisation, contact us today. That's the deck.",
   },
 ];
 
