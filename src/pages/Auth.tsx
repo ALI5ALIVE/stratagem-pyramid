@@ -18,7 +18,7 @@ const schema = z.object({
 export default function AuthPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [mode, setMode] = useState<"signin" | "signup" | "forgot">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
@@ -30,6 +30,17 @@ export default function AuthPage() {
     e.preventDefault();
     setLoading(true);
     try {
+      if (mode === "forgot") {
+        const parsedEmail = schema.shape.email.parse(email);
+        const { error } = await supabase.auth.resetPasswordForEmail(parsedEmail, {
+          redirectTo: `${window.location.origin}/reset-password`,
+        });
+        if (error) throw error;
+        toast({ title: "Check your email", description: "If an account exists, a reset link has been sent." });
+        setMode("signin");
+        setLoading(false);
+        return;
+      }
       const parsed = schema.parse({ email, password, displayName: mode === "signup" ? displayName : undefined });
       if (mode === "signup") {
         const { error } = await supabase.auth.signUp({
@@ -56,8 +67,14 @@ export default function AuthPage() {
     <div className="min-h-screen flex items-center justify-center px-4 bg-background">
       <Card className="w-full max-w-md p-8 space-y-6">
         <div className="space-y-1 text-center">
-          <h1 className="text-2xl font-display font-bold">{mode === "signin" ? "Sign in" : "Create account"}</h1>
-          <p className="text-sm text-muted-foreground">Reviewer access to comment and approve slides.</p>
+          <h1 className="text-2xl font-display font-bold">
+            {mode === "signin" ? "Sign in" : mode === "signup" ? "Create account" : "Reset password"}
+          </h1>
+          <p className="text-sm text-muted-foreground">
+            {mode === "forgot"
+              ? "Enter your email and we'll send you a reset link."
+              : "Reviewer access to comment and approve slides."}
+          </p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           {mode === "signup" && (
@@ -70,18 +87,44 @@ export default function AuthPage() {
             <Label htmlFor="email">Email</Label>
             <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required maxLength={255} />
           </div>
-          <div className="space-y-1.5">
-            <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8} maxLength={72} />
-          </div>
+          {mode !== "forgot" && (
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password">Password</Label>
+                {mode === "signin" && (
+                  <button
+                    type="button"
+                    onClick={() => setMode("forgot")}
+                    className="text-xs text-muted-foreground hover:text-foreground"
+                  >
+                    Forgot password?
+                  </button>
+                )}
+              </div>
+              <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8} maxLength={72} />
+            </div>
+          )}
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Working…" : mode === "signin" ? "Sign in" : "Create account"}
+            {loading
+              ? "Working…"
+              : mode === "signin"
+                ? "Sign in"
+                : mode === "signup"
+                  ? "Create account"
+                  : "Send reset link"}
           </Button>
         </form>
-        <button type="button" onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-          className="w-full text-xs text-muted-foreground hover:text-foreground">
-          {mode === "signin" ? "Need an account? Sign up" : "Already have an account? Sign in"}
-        </button>
+        {mode === "forgot" ? (
+          <button type="button" onClick={() => setMode("signin")}
+            className="w-full text-xs text-muted-foreground hover:text-foreground">
+            ← Back to sign in
+          </button>
+        ) : (
+          <button type="button" onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
+            className="w-full text-xs text-muted-foreground hover:text-foreground">
+            {mode === "signin" ? "Need an account? Sign up" : "Already have an account? Sign in"}
+          </button>
+        )}
         <Link to="/" className="block text-center text-xs text-muted-foreground hover:text-foreground">← Back to home</Link>
       </Card>
     </div>

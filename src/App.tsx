@@ -34,6 +34,7 @@ import SignalsPlaybook from "./pages/SignalsPlaybook";
 import SalesEnablement from "./pages/SalesEnablement";
 import RoadmapDeck from "./pages/RoadmapDeck";
 import AuthPage from "./pages/Auth";
+import ResetPassword from "./pages/ResetPassword";
 import ReviewDashboard from "./pages/ReviewDashboard";
 import CustomerOverview from "./pages/CustomerOverview";
 import PlatformOverview from "./pages/PlatformOverview";
@@ -62,6 +63,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/auth" element={<AuthPage />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route element={<AppLayout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/strategy" element={<SlideDeck />} />
