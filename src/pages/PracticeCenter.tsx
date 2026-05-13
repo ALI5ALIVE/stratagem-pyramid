@@ -89,6 +89,7 @@ export default function PracticeCenter() {
     if (lastNotifiedSlideRef.current === currentSlide) return;
     lastNotifiedSlideRef.current = currentSlide;
     const flavor = getPersonaSlideFlavor(scenario.personaId);
+    session.trackSlide(slide.label);
     session.sendContext(
       `The rep just moved to slide ${currentSlide + 1} of ${total}: "${slide.label}". ` +
       `Ask ONE short buyer-style question that probes THIS slide's topic specifically. ${flavor} Stay in character.`,
