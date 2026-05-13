@@ -61,7 +61,7 @@ export const salesEnablementNarrations: SESlideNarration[] = [
     title: "M2 · Recap Talk Track",
     voiceId: VOICE,
     script:
-      "This is a rehearsal slide, not a content slide. The core message: there are three questions every prospect asks, and you need a clean one-sentence answer for each. What is it — the first connected operating platform for safety, content, and training. How is it different — one foundation instead of five to seven disconnected tools. What's the one thing to remember — point solutions can detect, only we can Detect, Trigger, Orchestrate, and Prove. Read each one out loud right now. If you stumble, replay this slide. Don't move on until all three feel natural. Module 3 goes capability by capability.",
+      "This is a rehearsal slide, not a content slide. The core message: there are three questions every prospect asks, and you need a clean one-sentence answer for each. What is it — the first connected operating platform for safety, content, and training. How is it different — one foundation instead of five to seven disconnected tools. What's the one thing to remember — point solutions can detect, only we can Detect, Trigger, Orchestrate, and Prove. Read each one out loud right now. If you stumble, replay this slide. Don't move on until all three feel natural. One more rep before you leave Week 1: you can also name the six signal sources Detect listens to — Safety Reports, Operational Data, Maintenance, Crew Logs, Regulatory, Audit. That is the answer to 'what data do you actually use?' on every discovery call. If you want to specialise in that layer, the Signals Specialist Playbook is your next step. Otherwise, Module 3 goes capability by capability.",
   },
   {
     slideId: "se-week-2",
