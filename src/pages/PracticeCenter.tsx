@@ -387,9 +387,20 @@ export default function PracticeCenter() {
 
               <ScrollArea className="flex-1 px-5 py-4">
                 {session.transcript.length === 0 && session.status === "disconnected" && (
-                  <div className="flex h-full min-h-[300px] flex-col items-center justify-center gap-3 text-center text-sm text-muted-foreground">
-                    <Mic className="h-8 w-8 opacity-40" />
-                    <div>Press Start. Allow your microphone. The buyer will open the call.</div>
+                  <div className="flex h-full min-h-[300px] flex-col gap-4 text-sm">
+                    <div className="rounded-lg border border-border/50 bg-background/40 p-4">
+                      <div className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-primary">How this works</div>
+                      <ol className="space-y-2 text-xs text-muted-foreground">
+                        <li className="flex gap-2"><span className="font-semibold text-foreground">1.</span> Pick a buyer above — each one reacts through a different lens.</li>
+                        <li className="flex gap-2"><span className="font-semibold text-foreground">2.</span> Press <span className="rounded bg-muted/60 px-1 text-foreground">Start</span> and allow your microphone. The buyer opens the call.</li>
+                        <li className="flex gap-2"><span className="font-semibold text-foreground">3.</span> Deliver each slide. Use <span className="rounded bg-muted/60 px-1 text-foreground">→</span> / <span className="rounded bg-muted/60 px-1 text-foreground">←</span> or the rail to advance — the buyer follows.</li>
+                        <li className="flex gap-2"><span className="font-semibold text-foreground">4.</span> Hit <span className="rounded bg-muted/60 px-1 text-foreground">End</span> then <span className="rounded bg-muted/60 px-1 text-foreground">Score session</span> for an AI scorecard.</li>
+                      </ol>
+                    </div>
+                    <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+                      <Mic className="h-4 w-4 opacity-40" />
+                      <span>Currently practicing as <span className="text-foreground">{scenario.buyerLabel}</span> · {scenario.lens}</span>
+                    </div>
                   </div>
                 )}
                 <div className="space-y-3">
