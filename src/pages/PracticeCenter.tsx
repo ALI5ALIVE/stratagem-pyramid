@@ -153,26 +153,29 @@ export default function PracticeCenter() {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleSyncKnowledge}
-              disabled={syncing}
-              title="Push all deck narrations, playbooks and personas to the AI agent's knowledge base"
-            >
-              {syncing ? (
-                <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Syncing…</>
-              ) : syncResult ? (
-                <><Check className="mr-2 h-4 w-4" /> Synced</>
-              ) : (
-                <><BookOpen className="mr-2 h-4 w-4" /> Sync knowledge base</>
-              )}
-            </Button>
-            <Button variant="outline" size="sm" asChild>
-              <a href={DECK_ROUTE} target="_blank" rel="noreferrer">
-                <Maximize2 className="mr-2 h-4 w-4" /> Open deck full screen
-              </a>
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <Settings className="mr-2 h-4 w-4" /> Tools
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-64">
+                <DropdownMenuItem onSelect={(e) => { e.preventDefault(); handleSyncKnowledge(); }} disabled={syncing}>
+                  {syncing ? (
+                    <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Syncing knowledge…</>
+                  ) : syncResult ? (
+                    <><Check className="mr-2 h-4 w-4" /> Re-sync knowledge base</>
+                  ) : (
+                    <><BookOpen className="mr-2 h-4 w-4" /> Sync knowledge base</>
+                  )}
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <a href={DECK_ROUTE} target="_blank" rel="noreferrer" className="flex items-center">
+                    <Maximize2 className="mr-2 h-4 w-4" /> Open deck full screen
+                  </a>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
 
@@ -188,32 +191,44 @@ export default function PracticeCenter() {
           </div>
         )}
 
-        {/* Compact scenario + difficulty bar */}
-        <Card className="mb-4 flex flex-col gap-3 bg-card/60 p-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Buyer</span>
+        {/* Buyer persona cards */}
+        <div className="mb-3">
+          <div className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+            Choose your buyer
+          </div>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
             {practiceScenarios.map((s) => {
               const active = s.id === scenarioId;
+              const p = personaProfiles.find((pp) => pp.id === s.personaId);
+              const Icon = (p && PERSONA_ICONS[p.iconName]) ?? Briefcase;
+              const disabled = session.status !== "disconnected";
               return (
                 <button
                   key={s.id}
                   type="button"
-                  onClick={() => session.status === "disconnected" && setScenarioId(s.id)}
-                  disabled={session.status !== "disconnected"}
-                  className={`rounded-md border px-3 py-1.5 text-xs transition ${
+                  onClick={() => !disabled && setScenarioId(s.id)}
+                  disabled={disabled}
+                  className={`group flex flex-col gap-1 rounded-lg border p-3 text-left transition ${
                     active
-                      ? "border-primary/60 bg-primary/10 text-foreground"
-                      : "border-border/60 bg-card text-muted-foreground hover:border-primary/30"
+                      ? "border-primary/60 bg-primary/10"
+                      : "border-border/60 bg-card/60 hover:border-primary/40"
                   } disabled:cursor-not-allowed disabled:opacity-50`}
                 >
-                  {s.buyerLabel}
+                  <div className="flex items-center gap-2">
+                    <Icon className={`h-4 w-4 ${p?.color ?? "text-foreground"}`} />
+                    <span className="text-xs font-semibold text-foreground">{s.buyerLabel}</span>
+                  </div>
+                  <div className="text-[11px] leading-snug text-muted-foreground">{s.lens}</div>
                 </button>
               );
             })}
           </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Difficulty</span>
-            {difficulties.map((d) => {
+        </div>
+
+        {/* Difficulty bar */}
+        <Card className="mb-4 flex flex-wrap items-center gap-2 bg-card/60 p-3">
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Difficulty</span>
+          {difficulties.map((d) => {
               const active = d.id === difficulty;
               return (
                 <button
