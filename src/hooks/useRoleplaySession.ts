@@ -4,6 +4,8 @@ import type { Conversation as ElevenLabsConversation } from "@elevenlabs/react";
 import { supabase } from "@/integrations/supabase/client";
 import type { PracticeScenario, Difficulty } from "@/data/practiceScenarios";
 import { buildSystemPrompt } from "@/lib/practice/buildAgentPrompt";
+import { personaProfiles } from "@/data/personaProfiles";
+import { execPitch3Slides } from "@/data/execPitch3Slides";
 
 export interface TranscriptTurn {
   role: "rep" | "buyer";
@@ -13,10 +15,13 @@ export interface TranscriptTurn {
 
 export interface Scorecard {
   overall: number;
-  rubric: Record<string, { score: number; feedback: string }>;
+  rubric: Record<string, { score: number; feedback: string; quote?: string }>;
+  keyMessageStatus?: Array<{ message: string; landed: boolean; evidence?: string }>;
+  objectionsAnswered?: Array<{ objection: string; addressed: boolean; quality: number; comment: string }>;
   strengths: string[];
   improvements: string[];
   missedKeyMessages: string[];
+  coachingScript?: string[];
 }
 
 export interface UseRoleplaySession {
@@ -33,6 +38,7 @@ export interface UseRoleplaySession {
   reset: () => void;
   error: string | null;
   sendContext: (text: string) => void;
+  trackSlide: (slideLabel: string) => void;
 }
 
 export function useRoleplaySession(): UseRoleplaySession {
@@ -51,6 +57,7 @@ export function useRoleplaySession(): UseRoleplaySession {
   const startingRef = useRef(false);
   const micStreamRef = useRef<MediaStream | null>(null);
   const contextSentRef = useRef(false);
+  const slidesShownRef = useRef<string[]>([]);
 
   const appendMessage = useCallback((message: unknown) => {
     // ElevenLabs sends a normalized shape with `source` + `message`.
@@ -105,6 +112,7 @@ export function useRoleplaySession(): UseRoleplaySession {
       difficultyRef.current = difficulty;
       startingRef.current = true;
       contextSentRef.current = false;
+      slidesShownRef.current = [];
       setStatus("connecting");
       try {
         if (!navigator.mediaDevices?.getUserMedia) {
@@ -200,6 +208,7 @@ export function useRoleplaySession(): UseRoleplaySession {
     setScoring(true);
     setScoreError(null);
     try {
+      const persona = personaProfiles.find((p) => p.id === scenario.personaId);
       const { data, error: fnError } = await supabase.functions.invoke(
         "elevenlabs-roleplay-score",
         {
@@ -209,6 +218,11 @@ export function useRoleplaySession(): UseRoleplaySession {
             difficulty,
             transcript: transcript.map((t) => ({ role: t.role, text: t.text })),
             keyMessages: scenario.keyMessages,
+            personaLens: scenario.lens,
+            decisionCriteria: persona?.decisionCriteria?.slice(0, 6) ?? [],
+            objections: persona?.objections?.slice(0, 4).map((o) => o.objection) ?? [],
+            slides: execPitch3Slides.map((s) => s.label),
+            slidesShown: slidesShownRef.current,
           },
         },
       );
@@ -239,6 +253,12 @@ export function useRoleplaySession(): UseRoleplaySession {
     }
   }, []);
 
+  const trackSlide = useCallback((slideLabel: string) => {
+    if (slidesShownRef.current[slidesShownRef.current.length - 1] !== slideLabel) {
+      slidesShownRef.current.push(slideLabel);
+    }
+  }, []);
+
   return {
     status,
     isSpeaking,
@@ -253,5 +273,6 @@ export function useRoleplaySession(): UseRoleplaySession {
     reset,
     error,
     sendContext,
+    trackSlide,
   };
 }

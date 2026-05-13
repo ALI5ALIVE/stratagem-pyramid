@@ -89,6 +89,7 @@ export default function PracticeCenter() {
     if (lastNotifiedSlideRef.current === currentSlide) return;
     lastNotifiedSlideRef.current = currentSlide;
     const flavor = getPersonaSlideFlavor(scenario.personaId);
+    session.trackSlide(slide.label);
     session.sendContext(
       `The rep just moved to slide ${currentSlide + 1} of ${total}: "${slide.label}". ` +
       `Ask ONE short buyer-style question that probes THIS slide's topic specifically. ${flavor} Stay in character.`,
@@ -435,89 +436,128 @@ export default function PracticeCenter() {
               )}
             </Card>
 
-            <Card className="bg-card/60 p-4">
-              <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Setup</div>
-              <div className="mt-1 text-sm">{scenario.setup}</div>
-              <div className="mt-3 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Key messages to land</div>
-              <ul className="mt-1 space-y-1 text-xs text-muted-foreground">
-                {scenario.keyMessages.map((m) => (
-                  <li key={m} className="flex gap-2">
-                    <span className="text-primary">•</span>
-                    <span>{m}</span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
-
-            {/* Score panel */}
-            <Card className="bg-card/60 p-5">
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="text-sm font-semibold">AI Scorecard</div>
-                  <div className="text-xs text-muted-foreground">
-                    Run after a completed session. Grades discovery, objection handling, message accuracy, terminology, and next-step ask.
+            {/* Prep checklist — visible before the call, hidden during, returns post-score with ✓/✗ */}
+            {(session.status === "disconnected" || session.scorecard) && (
+              <Card className="bg-card/60 p-4">
+                <div className="flex items-center justify-between">
+                  <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    {session.scorecard ? "Key messages — result" : "Prep checklist — messages to land"}
                   </div>
+                </div>
+                <ul className="mt-2 space-y-1.5 text-xs">
+                  {scenario.keyMessages.map((m) => {
+                    const status = session.scorecard?.keyMessageStatus?.find((s) => s.message === m);
+                    const landed = status?.landed;
+                    const showResult = !!session.scorecard && status !== undefined;
+                    return (
+                      <li key={m} className="flex items-start gap-2">
+                        <span className={
+                          showResult
+                            ? landed ? "text-emerald-400" : "text-rose-400"
+                            : "text-primary"
+                        }>
+                          {showResult ? (landed ? "✓" : "○") : "•"}
+                        </span>
+                        <span className={showResult && !landed ? "text-muted-foreground line-through" : "text-foreground/90"}>
+                          {m}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </Card>
+            )}
+
+            {/* Score CTA — only after the call ends */}
+            {session.status === "disconnected" && session.transcript.length > 0 && !session.scorecard && (
+              <Card className="flex items-center justify-between bg-card/60 p-4">
+                <div>
+                  <div className="text-sm font-semibold">Get your AI scorecard</div>
+                  <div className="text-xs text-muted-foreground">Persona-aware grading, per-objection feedback, coaching drills.</div>
                 </div>
                 <Button
                   size="sm"
-                  variant="outline"
-                  disabled={session.scoring || session.transcript.length === 0}
+                  disabled={session.scoring}
                   onClick={() => session.scoreSession()}
                 >
                   {session.scoring ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Scoring…</> : "Score session"}
                 </Button>
-              </div>
+              </Card>
+            )}
 
-              {session.scoreError && (
-                <div className="mt-3 text-xs text-destructive">{session.scoreError}</div>
-              )}
+            {session.scoreError && (
+              <Card className="bg-destructive/10 p-3 text-xs text-destructive">{session.scoreError}</Card>
+            )}
 
-              {session.scorecard && (
-                <div className="mt-4 space-y-3">
-                  <div className="flex items-baseline gap-3">
-                    <div className="font-display text-3xl font-semibold text-primary">
-                      {session.scorecard.overall}
-                    </div>
-                    <div className="text-xs uppercase tracking-wider text-muted-foreground">Overall / 100</div>
-                  </div>
-                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                    {Object.entries(session.scorecard.rubric ?? {}).map(([k, v]) => (
-                      <div key={k} className="rounded-md border border-border/40 bg-background/40 p-2">
-                        <div className="flex items-center justify-between text-xs">
-                          <span className="font-medium capitalize">{k.replace(/([A-Z])/g, " $1")}</span>
-                          <span className="text-primary">{v.score}/5</span>
-                        </div>
-                        <div className="mt-1 text-[11px] leading-snug text-muted-foreground">{v.feedback}</div>
-                      </div>
-                    ))}
-                  </div>
-                  {session.scorecard.strengths?.length > 0 && (
-                    <div className="text-xs">
-                      <div className="font-semibold text-emerald-400">Strengths</div>
-                      <ul className="mt-1 space-y-0.5 text-muted-foreground">
-                        {session.scorecard.strengths.map((s) => <li key={s}>• {s}</li>)}
-                      </ul>
-                    </div>
-                  )}
-                  {session.scorecard.improvements?.length > 0 && (
-                    <div className="text-xs">
-                      <div className="font-semibold text-amber-400">Improve</div>
-                      <ul className="mt-1 space-y-0.5 text-muted-foreground">
-                        {session.scorecard.improvements.map((s) => <li key={s}>• {s}</li>)}
-                      </ul>
-                    </div>
-                  )}
-                  {session.scorecard.missedKeyMessages?.length > 0 && (
-                    <div className="text-xs">
-                      <div className="font-semibold text-rose-400">Missed key messages</div>
-                      <ul className="mt-1 space-y-0.5 text-muted-foreground">
-                        {session.scorecard.missedKeyMessages.map((s) => <li key={s}>• {s}</li>)}
-                      </ul>
-                    </div>
-                  )}
+            {session.scorecard && (
+              <Card className="space-y-4 bg-card/60 p-5">
+                <div className="flex items-baseline gap-3">
+                  <div className="font-display text-4xl font-semibold text-primary">{session.scorecard.overall}</div>
+                  <div className="text-xs uppercase tracking-wider text-muted-foreground">Overall / 100</div>
                 </div>
-              )}
-            </Card>
+
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                  {Object.entries(session.scorecard.rubric ?? {}).map(([k, v]) => (
+                    <div key={k} className="rounded-md border border-border/40 bg-background/40 p-2">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-medium capitalize">{k.replace(/([A-Z])/g, " $1")}</span>
+                        <span className="text-primary">{v.score}/5</span>
+                      </div>
+                      <div className="mt-1 text-[11px] leading-snug text-muted-foreground">{v.feedback}</div>
+                      {v.quote && (
+                        <div className="mt-1 text-[10px] italic text-muted-foreground/80">"{v.quote}"</div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                {session.scorecard.objectionsAnswered && session.scorecard.objectionsAnswered.length > 0 && (
+                  <div>
+                    <div className="mb-1.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Objections handled</div>
+                    <ul className="space-y-1.5 text-xs">
+                      {session.scorecard.objectionsAnswered.map((o) => (
+                        <li key={o.objection} className="rounded-md border border-border/30 bg-background/30 p-2">
+                          <div className="flex items-start justify-between gap-2">
+                            <span className="text-foreground/90">"{o.objection}"</span>
+                            <span className={o.addressed ? "text-emerald-400" : "text-rose-400"}>
+                              {o.addressed ? `${o.quality}/5` : "missed"}
+                            </span>
+                          </div>
+                          {o.comment && <div className="mt-1 text-[11px] text-muted-foreground">{o.comment}</div>}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {session.scorecard.strengths?.length > 0 && (
+                  <div className="text-xs">
+                    <div className="font-semibold text-emerald-400">Strengths</div>
+                    <ul className="mt-1 space-y-0.5 text-muted-foreground">
+                      {session.scorecard.strengths.map((s) => <li key={s}>• {s}</li>)}
+                    </ul>
+                  </div>
+                )}
+                {session.scorecard.improvements?.length > 0 && (
+                  <div className="text-xs">
+                    <div className="font-semibold text-amber-400">Improve</div>
+                    <ul className="mt-1 space-y-0.5 text-muted-foreground">
+                      {session.scorecard.improvements.map((s) => <li key={s}>• {s}</li>)}
+                    </ul>
+                  </div>
+                )}
+                {session.scorecard.coachingScript && session.scorecard.coachingScript.length > 0 && (
+                  <div className="rounded-md border border-primary/30 bg-primary/5 p-3 text-xs">
+                    <div className="mb-1 font-semibold text-primary">Drill next time</div>
+                    <ul className="space-y-1 text-foreground/90">
+                      {session.scorecard.coachingScript.map((s, i) => (
+                        <li key={i} className="flex gap-2"><span className="text-primary">{i + 1}.</span><span>{s}</span></li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </Card>
+            )}
           </div>
         </div>
       </div>
