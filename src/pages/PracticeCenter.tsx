@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Mic, Play, Square, Loader2, AlertCircle, Sparkles, Maximize2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Mic, Play, Square, Loader2, AlertCircle, Sparkles, Maximize2, ChevronLeft, ChevronRight, BookOpen, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { practiceScenarios, difficulties, type Difficulty, type PracticeScenario } from "@/data/practiceScenarios";
 import { useRoleplaySession } from "@/hooks/useRoleplaySession";
 import { execPitch3Slides } from "@/data/execPitch3Slides";
+import { buildKnowledgeDocs, KB_NAME_PREFIX } from "@/lib/practice/buildKnowledgeDocs";
+import { supabase } from "@/integrations/supabase/client";
 
 const AGENT_ID = "agent_5601krecj299fy28nwehe96cejrm";
 const DECK_ROUTE = "/pitch-executive-3";
@@ -14,6 +16,9 @@ export default function PracticeCenter() {
   const [scenarioId, setScenarioId] = useState<string>(practiceScenarios[0].id);
   const [difficulty, setDifficulty] = useState<Difficulty>("skeptical");
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [syncing, setSyncing] = useState(false);
+  const [syncResult, setSyncResult] = useState<string | null>(null);
+  const [syncError, setSyncError] = useState<string | null>(null);
 
   const session = useRoleplaySession();
   const transcriptEndRef = useRef<HTMLDivElement>(null);
@@ -86,6 +91,25 @@ export default function PracticeCenter() {
     await session.end();
   };
 
+  const handleSyncKnowledge = async () => {
+    setSyncing(true);
+    setSyncError(null);
+    setSyncResult(null);
+    try {
+      const documents = await buildKnowledgeDocs();
+      const { data, error } = await supabase.functions.invoke("elevenlabs-kb-sync", {
+        body: { agentId: AGENT_ID, namePrefix: KB_NAME_PREFIX, documents },
+      });
+      if (error) throw new Error(error.message);
+      if (!data?.ok) throw new Error(data?.error ?? "Sync failed");
+      setSyncResult(`Synced ${data.created?.length ?? documents.length} documents to the agent's knowledge base.`);
+    } catch (e) {
+      setSyncError(e instanceof Error ? e.message : "Sync failed");
+    } finally {
+      setSyncing(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-[1600px] px-6 py-8 lg:px-10">
@@ -103,12 +127,41 @@ export default function PracticeCenter() {
               Deliver each slide yourself — the buyer will react and ask questions tied to whatever slide you're showing. Use the Prev / Next buttons or arrow keys to advance.
             </p>
           </div>
-          <Button variant="outline" size="sm" asChild>
-            <a href={DECK_ROUTE} target="_blank" rel="noreferrer">
-              <Maximize2 className="mr-2 h-4 w-4" /> Open deck full screen
-            </a>
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleSyncKnowledge}
+              disabled={syncing}
+              title="Push all deck narrations, playbooks and personas to the AI agent's knowledge base"
+            >
+              {syncing ? (
+                <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Syncing…</>
+              ) : syncResult ? (
+                <><Check className="mr-2 h-4 w-4" /> Synced</>
+              ) : (
+                <><BookOpen className="mr-2 h-4 w-4" /> Sync knowledge base</>
+              )}
+            </Button>
+            <Button variant="outline" size="sm" asChild>
+              <a href={DECK_ROUTE} target="_blank" rel="noreferrer">
+                <Maximize2 className="mr-2 h-4 w-4" /> Open deck full screen
+              </a>
+            </Button>
+          </div>
         </div>
+
+        {(syncResult || syncError) && (
+          <div
+            className={`mb-4 rounded-md border px-3 py-2 text-xs ${
+              syncError
+                ? "border-destructive/40 bg-destructive/10 text-destructive"
+                : "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
+            }`}
+          >
+            {syncError ?? syncResult}
+          </div>
+        )}
 
         {/* Compact scenario + difficulty bar */}
         <Card className="mb-4 flex flex-col gap-3 bg-card/60 p-4 lg:flex-row lg:items-center lg:justify-between">
