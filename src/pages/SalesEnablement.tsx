@@ -36,7 +36,7 @@ const weekProps = {
     kicker: "Foundation",
     title: "Set the scene — and put the platform in plain English",
     learningGoal:
-      "By the end of Week 1 you can explain why the market is shifting, give the one-sentence platform pitch, and walk the DTOP loop (Detect → Trigger → Orchestrate → Prove) on a whiteboard — without jargon, without reading off a slide.",
+      "By the end of Week 1 you can explain why the market is shifting, give the one-sentence platform pitch, walk the DTOP loop (Detect → Trigger → Orchestrate → Prove) on a whiteboard, and name the six signal sources behind Detect — without jargon, without reading off a slide.",
     estimatedMinutes: 14,
     upNext: ["Plain-English definition", "The platform at a glance", "DTOP — the operating loop", "Value unlocked", "Recap talk track"],
   },
