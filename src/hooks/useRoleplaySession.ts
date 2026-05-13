@@ -100,7 +100,7 @@ export function useRoleplaySession(): UseRoleplaySession {
           throw new Error("No ElevenLabs signed URL returned");
         }
 
-        const prompt = buildSystemPrompt(scenario, difficulty);
+        const prompt = await buildSystemPrompt(scenario, difficulty);
         const firstMessage = buildFirstMessage(scenario, difficulty);
 
         const conversation = await Conversation.startSession({
