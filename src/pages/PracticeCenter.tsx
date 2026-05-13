@@ -249,10 +249,10 @@ export default function PracticeCenter() {
             })}
         </Card>
 
-        <div className="grid gap-4 lg:grid-cols-[1.6fr,1fr]">
+        <div className="grid gap-4 lg:h-[calc(100vh-260px)] lg:min-h-[640px] lg:grid-cols-[1.6fr,1fr]">
           {/* Left: embedded slide */}
-          <Card className="overflow-hidden bg-black/40 p-0">
-            <div className="relative w-full overflow-hidden bg-background" style={{ aspectRatio: "16 / 9" }}>
+          <Card className="flex h-full flex-col overflow-hidden bg-black/40 p-0">
+            <div className="relative w-full flex-1 min-h-0 overflow-hidden bg-background">
               {/* Scale a 1280x720 stage to fit the column */}
               <div className="absolute inset-0">
                 <div
@@ -307,7 +307,7 @@ export default function PracticeCenter() {
                 </div>
               </div>
             </div>
-            <div className="flex items-center justify-between gap-3 border-t border-border/40 px-4 py-2">
+            <div className="flex shrink-0 items-center justify-between gap-3 border-t border-border/40 px-4 py-2">
               <Button size="sm" variant="ghost" onClick={goPrev} disabled={currentSlide === 0}>
                 <ChevronLeft className="mr-1 h-4 w-4" /> Prev
               </Button>
@@ -319,7 +319,7 @@ export default function PracticeCenter() {
               </Button>
             </div>
             {/* Slide chip rail — jump anywhere */}
-            <div className="flex gap-1 overflow-x-auto border-t border-border/40 px-3 py-2">
+            <div className="flex shrink-0 gap-1 overflow-x-auto border-t border-border/40 px-3 py-2">
               {execPitch3Slides.map((s, i) => {
                 const active = i === currentSlide;
                 return (
@@ -342,8 +342,8 @@ export default function PracticeCenter() {
           </Card>
 
           {/* Right: session panel */}
-          <div className="space-y-4">
-            <Card className="flex h-[560px] flex-col bg-card/60">
+          <div className="flex h-full min-h-0 flex-col gap-4 overflow-hidden">
+            <Card className="flex min-h-[320px] flex-[2] flex-col bg-card/60">
               <div className="flex items-center justify-between border-b border-border/40 px-5 py-3">
                 <div className="flex items-center gap-3">
                   <div className={`flex h-7 w-7 items-center justify-center rounded-full border ${persona?.borderColor ?? "border-border"} ${persona?.bgColor ?? ""}`}>
@@ -388,10 +388,10 @@ export default function PracticeCenter() {
 
               <ScrollArea className="flex-1 px-5 py-4">
                 {session.transcript.length === 0 && session.status === "disconnected" && (
-                  <div className="flex h-full min-h-[300px] flex-col gap-4 text-sm">
-                    <div className="rounded-lg border border-border/50 bg-background/40 p-4">
+                  <div className="flex h-full min-h-[260px] flex-col gap-3 text-sm">
+                    <div className="rounded-lg border border-border/50 bg-background/40 p-3">
                       <div className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-primary">How this works</div>
-                      <ol className="space-y-2 text-xs text-muted-foreground">
+                      <ol className="space-y-1.5 text-xs text-muted-foreground">
                         <li className="flex gap-2"><span className="font-semibold text-foreground">1.</span> Pick a buyer above — each one reacts through a different lens.</li>
                         <li className="flex gap-2"><span className="font-semibold text-foreground">2.</span> Press <span className="rounded bg-muted/60 px-1 text-foreground">Start</span> and allow your microphone. The buyer opens the call.</li>
                         <li className="flex gap-2"><span className="font-semibold text-foreground">3.</span> Deliver each slide. Use <span className="rounded bg-muted/60 px-1 text-foreground">→</span> / <span className="rounded bg-muted/60 px-1 text-foreground">←</span> or the rail to advance — the buyer follows.</li>
@@ -436,15 +436,17 @@ export default function PracticeCenter() {
               )}
             </Card>
 
+            {/* Scrollable side stack — checklist, score CTA, scorecard */}
+            <div className="flex flex-1 min-h-0 flex-col gap-3 overflow-y-auto pr-1">
             {/* Prep checklist — visible before the call, hidden during, returns post-score with ✓/✗ */}
             {(session.status === "disconnected" || session.scorecard) && (
-              <Card className="bg-card/60 p-4">
+              <Card className="bg-card/60 p-3">
                 <div className="flex items-center justify-between">
                   <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                     {session.scorecard ? "Key messages — result" : "Prep checklist — messages to land"}
                   </div>
                 </div>
-                <ul className="mt-2 space-y-1.5 text-xs">
+                <ul className="mt-2 space-y-1 text-xs">
                   {scenario.keyMessages.map((m) => {
                     const status = session.scorecard?.keyMessageStatus?.find((s) => s.message === m);
                     const landed = status?.landed;
@@ -470,7 +472,7 @@ export default function PracticeCenter() {
 
             {/* Score CTA — only after the call ends */}
             {session.status === "disconnected" && session.transcript.length > 0 && !session.scorecard && (
-              <Card className="flex items-center justify-between bg-card/60 p-4">
+              <Card className="flex items-center justify-between bg-card/60 p-3">
                 <div>
                   <div className="text-sm font-semibold">Get your AI scorecard</div>
                   <div className="text-xs text-muted-foreground">Persona-aware grading, per-objection feedback, coaching drills.</div>
@@ -558,6 +560,7 @@ export default function PracticeCenter() {
                 )}
               </Card>
             )}
+            </div>
           </div>
         </div>
       </div>

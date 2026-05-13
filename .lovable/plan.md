@@ -1,56 +1,30 @@
-# Practice Center — declutter pre-call panels + richer scoring
+## Goal
+Make the slide preview stretch to the full height of the right column so the workspace feels balanced — no more squat slide card with a tall stack of cards beside it.
 
-## Part 1 — Trim the right column
+## Changes (UI only, `src/pages/PracticeCenter.tsx`)
 
-Today the right column shows three permanent cards: Setup, Key messages, Scorecard. Concerns:
+1. **Lock the workspace to the viewport.**
+   Wrap the two-column grid in a `flex flex-col` shell sized to the remaining viewport height (e.g. `h-[calc(100vh-220px)] min-h-[640px]`). The grid becomes `h-full` so both columns share the exact same height.
 
-- **Setup** (one-line description) is redundant — the buyer card you just clicked already conveys the same intent ("CEO/COO · Strategic, revenue & systemic risk").
-- **Key messages to land** is genuinely useful as a *prep* aid but if shown during the call it becomes a teleprompter — defeating the practice goal of recalling the messaging under pressure.
-- **AI Scorecard** placeholder is just dead space until a session ends.
+2. **Slide card fills its column.**
+   - Drop the fixed `aspectRatio: 16/9` on the stage wrapper.
+   - Card becomes `flex h-full flex-col`; the stage div becomes `flex-1` (fills remaining space above the Prev/Next bar and chip rail).
+   - The existing 1280×720 scaler already uses `Math.min(w/1280, h/720)` so it will letterbox correctly into whatever height it's given — no logic change needed.
+   - Chip rail stays at the bottom but caps at `max-h-16` with `flex-wrap` removed (keeps horizontal scroll) so it can't push the slide upward.
 
-Change:
-- **Remove Setup card entirely** — fold its sentence (if any value remains) into a `title` tooltip on the buyer chip.
-- **Convert Key messages into a collapsible "Prep checklist"** that is:
-  - Open by default *before* the session starts, so the rep can read the 4–5 messages they need to land.
-  - Auto-collapses when the session connects, with a small "Reveal" link if they get stuck. This trains recall without being punitive.
-  - After the session ends and the scorecard is generated, it re-opens with a green ✓ next to messages the AI judged "landed" and a red ○ next to ones in `missedKeyMessages`.
-- **Hide the Scorecard card until** the session has ended (transcript exists + status is `disconnected`). Replace its placeholder slot with a single "Score session" button inline at the top of the transcript card once the call ends.
+3. **Right column matches height and scrolls internally.**
+   - Right column wrapper: `flex h-full flex-col gap-4 overflow-hidden`.
+   - Transcript card: replace fixed `h-[560px]` with `flex-1 min-h-0` so it grows/shrinks with the column.
+   - Prep checklist + Score CTA + Scorecard wrap in an `overflow-y-auto` region below the transcript so they never blow out the column. (Pre-call: checklist visible, scorecard hidden — fits easily. Post-call: scorecard scrolls within the column.)
 
-Net: right column shows 1 card during the call (transcript), 2 cards before/after (transcript + prep checklist + scorecard).
+4. **Tighten the side cards' visual weight** (proportion fix):
+   - Prep checklist: reduce padding `p-4` → `p-3`, list `space-y-1.5` → `space-y-1`.
+   - "How this works" block inside the empty transcript: `p-4` → `p-3`, items `space-y-2` → `space-y-1.5`, font `text-xs` retained.
+   - Score CTA card padding `p-4` → `p-3`.
 
-## Part 2 — Make scoring genuinely useful
+## Out of scope
+- No changes to scoring logic, persona data, or the embedded slide components.
+- No responsive rework below `lg`; on small screens the columns still stack as today (height cap only applies at `lg` and up via `lg:h-[calc(...)]`).
 
-The edge function `elevenlabs-roleplay-score` already grades 5 rubrics + strengths/improvements/missed messages via Gemini 2.5 Flash. It works but can be richer. Improvements, all backend-only:
-
-1. **Persona-aware grading.** Pass the persona's `objections` and `decisionCriteria` into the system prompt so the model rewards persona-fit responses (e.g. CIO scenario should grade integration/security answers higher; Training scenario should grade adoption/competency answers higher).
-2. **Slide coverage.** Pass the list of slide labels in the deck plus the slides the rep actually presented (we already know `currentSlide` over time — capture a `slidesShown: string[]` and forward it). New rubric line: `slideCoverage` (did they cover the right slides for this persona?).
-3. **Per-objection grading.** Add a `objectionsAnswered: Array<{ objection, addressed: boolean, quality: 0-5, comment }>` block so the rep sees which specific pushbacks they handled well or fumbled. Drives the most actionable feedback.
-4. **Quote-based evidence.** Ask the model to attach a short rep-quote to each rubric score (`"You said: 'we replace your safety system' — that's wrong, we integrate"`). Concrete > abstract.
-5. **Coaching micro-script.** A new `coachingScript: string[]` array — 3 one-line drills the rep should rehearse next time. Practical homework, not just grades.
-6. **Persistent history (optional, asks first).** Add a `practice_sessions` table (`user_id`, `scenario_id`, `persona_id`, `difficulty`, `transcript jsonb`, `scorecard jsonb`, `created_at`) so reps can see trend over time. Deferred — call out as a follow-up the user can opt into.
-
-UI surface for the new fields:
-- Existing rubric grid extends to include `slideCoverage`.
-- New "Objections handled" sub-section under the rubric, one row per persona objection with ✓ / ◐ / ✗ + the model's quality score and one-line comment.
-- New "Drill next time" section at the bottom of the scorecard with the 3-line coaching script.
-- Each rubric row gets a small italic quote line under the feedback when present.
-
-## Part 3 — Track which slides were shown
-
-Tiny addition: `useRoleplaySession` keeps an internal `slidesShown` array, populated whenever `sendContext` fires from a slide change. Forward it to the scorer. No persistence yet.
-
-## Files to touch
-- `src/pages/PracticeCenter.tsx` — remove Setup card, collapsible Prep card with post-score check marks, gate Scorecard rendering, render new objection rows + drill section + quote lines.
-- `src/hooks/useRoleplaySession.ts` — track `slidesShown`, forward to score endpoint, expose `slidesShown` in scorecard request.
-- `supabase/functions/elevenlabs-roleplay-score/index.ts` — accept `persona`, `objections`, `slides`, `slidesShown`; add `slideCoverage`, `objectionsAnswered`, `coachingScript`, per-rubric `quote`; tighten system prompt for persona-fit.
-- `src/lib/practice/buildAgentPrompt.ts` — export a small helper to expose the persona's `objections` to the score caller (or the page imports `personaProfiles` directly).
-
-## Out of scope (call out, do not build)
-- Persisting practice sessions in Supabase (Part 2.6) — only build if the user confirms they want history/trending.
-- Audio-quality / pacing / filler-word analysis — would need ElevenLabs raw audio, separate scope.
-- Leaderboards or team-level rollups.
-
-## Answer to "is this necessary in the UI?"
-- **Setup card**: no — remove.
-- **Key messages**: yes, but only as a *pre-call* checklist that hides during the call and returns post-score with pass/miss marks.
-- **Scorecard placeholder**: no — only show after the call ends.
+## Files touched
+- `src/pages/PracticeCenter.tsx` (single file)
