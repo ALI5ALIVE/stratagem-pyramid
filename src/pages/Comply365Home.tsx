@@ -388,10 +388,10 @@ export default function Comply365Home() {
       <TopBar />
       <Hero />
       <TrustLogos />
+      <AnimatedDTOP />
       <ProductShowcase />
       <WhyNow />
       <Platform />
-      <AnimatedDTOP />
       <CoAnalystComparison />
       <CustomerQuotes />
       <Personas />
