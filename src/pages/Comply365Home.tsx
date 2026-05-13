@@ -5,7 +5,7 @@ import { PERSONAS } from "@/components/personas/personaConfig";
 import StatSourceChip from "@/components/shared/StatSourceChip";
 import SeoHead from "@/components/home/SeoHead";
 import TrustLogos from "@/components/home/TrustLogos";
-import ProductShowcase from "@/components/home/ProductShowcase";
+import CustomerBenefits from "@/components/home/CustomerBenefits";
 import AnimatedDTOP from "@/components/home/AnimatedDTOP";
 import CoAnalystComparison from "@/components/home/CoAnalystComparison";
 import CustomerQuotes from "@/components/home/CustomerQuotes";
@@ -389,7 +389,7 @@ export default function Comply365Home() {
       <Hero />
       <TrustLogos />
       <AnimatedDTOP />
-      <ProductShowcase />
+      <CustomerBenefits />
       <WhyNow />
       <Platform />
       <CoAnalystComparison />
