@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Sparkles, AlertTriangle, BookOpen, ShieldCheck, GraduationCap, Network, Users, TrendingUp } from "lucide-react";
+import { ArrowRight, Sparkles, AlertTriangle, BookOpen, ShieldCheck, GraduationCap, Network, TrendingUp } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
-import { PERSONAS } from "@/components/personas/personaConfig";
 import StatSourceChip from "@/components/shared/StatSourceChip";
 import SeoHead from "@/components/home/SeoHead";
 import TrustLogos from "@/components/home/TrustLogos";
-import CustomerBenefits from "@/components/home/CustomerBenefits";
 import AnimatedDTOP from "@/components/home/AnimatedDTOP";
 import CoAnalystComparison from "@/components/home/CoAnalystComparison";
 import CustomerQuotes from "@/components/home/CustomerQuotes";
 import HomeFooter from "@/components/home/HomeFooter";
 import BookWalkthroughDialog from "@/components/home/BookWalkthroughDialog";
+import UnifiedPlatformDiagram from "@/components/home/UnifiedPlatformDiagram";
+import IndustryTiles from "@/components/home/IndustryTiles";
 
 // ----------------------------------------------------------------------------
 // Top bar
@@ -308,45 +308,6 @@ const Platform = () => (
   </section>
 );
 
-// ----------------------------------------------------------------------------
-// Personas — condensed
-// ----------------------------------------------------------------------------
-const Personas = () => (
-  <section className="border-b border-border/60 bg-card/20">
-    <div className="max-w-7xl mx-auto px-6 py-20">
-      <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-primary">
-        <Users className="h-3.5 w-3.5" /> Built for the people accountable
-      </div>
-      <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold tracking-tight max-w-3xl">
-        Pick the lens that matches your role.
-      </h2>
-
-      <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 gap-3">
-        {PERSONAS.map((p) => {
-          const Icon = p.icon;
-          return (
-            <Link
-              key={p.id}
-              to={`/platform?role=${p.id}#outcomes`}
-              className={`group flex flex-col rounded-xl border ${p.border} ${p.bg} p-5 hover:-translate-y-0.5 transition-all`}
-            >
-              <div className={`h-9 w-9 rounded-lg border ${p.border} bg-background/40 flex items-center justify-center`}>
-                <Icon className={`h-4 w-4 ${p.color}`} />
-              </div>
-              <div className={`mt-4 text-[10px] uppercase tracking-[0.22em] ${p.color}`}>{p.role}</div>
-              <h3 className="mt-1 font-display text-base font-bold text-foreground leading-tight">{p.homeHook}</h3>
-              <div className={`mt-4 inline-flex items-center text-[11px] font-semibold ${p.color} opacity-80 group-hover:opacity-100`}>
-                See your view <ArrowRight className="h-3 w-3 ml-1" />
-              </div>
-            </Link>
-          );
-        })}
-      </div>
-    </div>
-  </section>
-);
-
-// ----------------------------------------------------------------------------
 // Final CTA
 // ----------------------------------------------------------------------------
 const CTA = () => (
@@ -388,13 +349,13 @@ export default function Comply365Home() {
       <TopBar />
       <Hero />
       <TrustLogos />
-      <AnimatedDTOP />
-      <CustomerBenefits />
       <WhyNow />
+      <UnifiedPlatformDiagram />
       <Platform />
       <CoAnalystComparison />
+      <AnimatedDTOP />
       <CustomerQuotes />
-      <Personas />
+      <IndustryTiles />
       <CTA />
       <HomeFooter />
     </div>
