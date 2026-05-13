@@ -29,20 +29,22 @@ import PlatformArchitectureDiagramV4 from "@/components/platform-slides/Platform
 import logo from "@/assets/comply365-logo-white.png";
 import PersonaTabs, { usePersonaState } from "@/components/personas/PersonaTabs";
 import { PERSONAS, getPersona } from "@/components/personas/personaConfig";
+import TrustLogos from "@/components/home/TrustLogos";
+import CustomerQuotes from "@/components/home/CustomerQuotes";
+import StatSourceChip from "@/components/shared/StatSourceChip";
 
 // ----------------------------------------------------------------------------
 // Sticky in-page nav
 // ----------------------------------------------------------------------------
 const navItems = [
-  { id: "outcomes", label: "Outcomes" },
   { id: "platform", label: "Platform" },
-  { id: "dtop", label: "DTOP" },
-  { id: "mobile", label: "Mobile" },
-  { id: "intelligence", label: "Intelligence" },
   { id: "foundation", label: "Foundation" },
+  { id: "dtop", label: "DTOP" },
+  { id: "intelligence", label: "Intelligence" },
+  { id: "mobile", label: "Mobile" },
   { id: "integrations", label: "Integrations" },
   { id: "security", label: "Security" },
-  { id: "why", label: "Why It Works" },
+  { id: "customers", label: "Customers" },
 ];
 
 const StickyNav = () => (
@@ -96,8 +98,8 @@ const Hero = () => (
             </span>
           </h1>
           <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl">
-            One connected data model. One operating model (DTOP). One intelligence layer (CoAnalyst).
-            Built for regulated, operationally complex industries — and for the COO and the heads of Safety, Content and Training who run them.
+            One connected data model. One operating model. One intelligence layer.
+            Built for regulated, operationally complex industries.
           </p>
           <div className="mt-7 flex flex-wrap items-center gap-3">
             <a
@@ -113,55 +115,17 @@ const Hero = () => (
               See it in the Medium Pitch
             </Link>
           </div>
-          <div className="mt-6 text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
-            Jump to your view
-          </div>
-          <div className="mt-3">
-            <PersonaTabs />
+          <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+            <span className="flex items-center gap-2"><Plane className="h-3 w-3 text-primary" /> 550+ customers</span>
+            <span className="opacity-30">·</span>
+            <span className="flex items-center gap-2"><Users className="h-3 w-3 text-primary" /> ~2.5M users</span>
+            <span className="opacity-30">·</span>
+            <span className="flex items-center gap-2"><Globe className="h-3 w-3 text-primary" /> 6 continents</span>
           </div>
       </div>
     </div>
   </section>
 );
-
-// ----------------------------------------------------------------------------
-// Section: Outcomes
-// ----------------------------------------------------------------------------
-const Outcomes = () => {
-  const { persona } = usePersonaState();
-  return (
-    <section id="outcomes" className="border-b border-border/60 bg-card/20">
-      <div className="max-w-7xl mx-auto px-6 py-20">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 max-w-5xl">
-          <div>
-            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Outcomes by role</span>
-            <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
-              What changes for the {persona.role}.
-            </h2>
-            <p className="mt-3 text-muted-foreground max-w-2xl">{persona.promise}</p>
-          </div>
-          <PersonaTabs />
-        </div>
-
-        <div className="mt-10 grid md:grid-cols-3 gap-4">
-          {persona.outcomes.map((o) => (
-            <div key={o.pillar} className={`rounded-2xl border ${persona.border} ${persona.bg} p-6 flex flex-col`}>
-              <div className={`text-[10px] uppercase tracking-[0.22em] ${persona.color}`}>{o.pillar}</div>
-              <p className="mt-2 text-sm text-foreground leading-relaxed flex-1">{o.promise}</p>
-              <div className="mt-5 pt-5 border-t border-border/60">
-                <div className={`text-3xl font-bold ${persona.color}`}>{o.metric}</div>
-                <div className="text-[11px] uppercase tracking-wider text-muted-foreground mt-0.5">{o.metricLabel}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-        <p className="mt-6 text-[11px] text-muted-foreground/70 italic">
-          Indicative ranges from customer programs and industry benchmarks. ROI modeled per customer engagement.
-        </p>
-      </div>
-    </section>
-  );
-};
 
 // ----------------------------------------------------------------------------
 // Section: Platform modules grid
@@ -307,7 +271,7 @@ const Foundation = () => (
     <div className="max-w-7xl mx-auto px-6 py-20">
       <div className="max-w-3xl">
         <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
-          Foundation · Layer 1 · Systems of Record
+          The Foundation · Systems of Record
         </span>
         <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
           Three systems of record. One connected data model.
@@ -382,7 +346,7 @@ const DTOPSection = () => {
     <div className="max-w-7xl mx-auto px-6 py-20">
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 max-w-5xl">
         <div>
-        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-400">DTOP · Layer 4 · Wraps the stack</span>
+        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-400">The Operating Model · Wraps the stack</span>
           <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
             Detect → Trigger → Orchestrate → Prove.
           </h2>
@@ -457,7 +421,7 @@ const intelligenceTiles = [
   },
   {
     icon: Brain,
-    title: "CoAnalyst — Recommended Actions",
+    title: "Intelligence Layer — Recommended Actions",
     promise: "Generative AI built on your operational corpus, not a wrapper around a generic model.",
     bullets: ["Recommended actions, not just alerts", "Domain-trained at L4–L5", "Exception-led human oversight"],
     color: "text-primary",
@@ -470,7 +434,7 @@ const Intelligence = () => (
   <section id="intelligence" className="border-b border-border/60">
     <div className="max-w-7xl mx-auto px-6 py-20">
       <div className="max-w-3xl">
-        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-amber-400">Layer 2 · Intelligence & Orchestration</span>
+        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-amber-400">The Intelligence Layer</span>
         <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
           Generative AI built on your operational corpus.
         </h2>
@@ -499,14 +463,14 @@ const Intelligence = () => (
 
       <div className="mt-8 rounded-2xl border border-primary/30 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent p-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <div>
-          <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary">CoAnalyst · Anchor metric</div>
+          <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-primary">
+            Intelligence Layer · Anchor metric
+            <StatSourceChip source="Internal benchmarks on the operational corpus, validated per customer engagement. Generic AI baseline measured against same operational queries." />
+          </div>
           <div className="mt-1 text-2xl md:text-3xl font-bold text-foreground">
             ~90% domain accuracy at L4–L5 <span className="text-muted-foreground font-normal text-lg">vs ~35% generic AI</span>
           </div>
         </div>
-        <span className="text-[11px] text-muted-foreground/80 italic max-w-xs">
-          Internal benchmarks on the operational corpus. Validated per customer engagement.
-        </span>
       </div>
     </div>
   </section>
@@ -545,7 +509,7 @@ const Mobile = () => (
           </div>
         </div>
         <div className="lg:col-span-7 order-1 lg:order-2">
-        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-violet-400">Layer 3 · Unified Mobile</span>
+        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-violet-400">The Frontline · Unified Mobile</span>
           <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
             One trusted shell for the frontline.
           </h2>
@@ -676,7 +640,7 @@ const trust = [
 ];
 
 const Why = () => (
-  <section id="why" className="border-b border-border/60">
+  <section id="why" className="border-b border-border/60 bg-card/10">
     <div className="max-w-7xl mx-auto px-6 py-20">
       <div className="max-w-3xl">
         <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Why It Works</span>
@@ -691,16 +655,6 @@ const Why = () => (
             <d.icon className={`h-7 w-7 ${d.color} mb-3`} />
             <h3 className={`text-lg font-bold ${d.color}`}>{d.title}</h3>
             <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{d.desc}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-8 rounded-2xl border border-primary/20 bg-card/40 p-5 flex flex-col sm:flex-row items-center justify-center gap-8">
-        {trust.map((t) => (
-          <div key={t.label} className="flex items-center gap-3">
-            <t.icon className="h-5 w-5 text-primary" />
-            <span className="text-2xl font-bold text-foreground">{t.value}</span>
-            <span className="text-xs text-muted-foreground">{t.label}</span>
           </div>
         ))}
       </div>
@@ -757,14 +711,17 @@ export default function PlatformOverview() {
     <div className="min-h-screen bg-background">
       <StickyNav />
       <Hero />
-      <Outcomes />
+      <TrustLogos />
       <PlatformModules />
-      <DTOPSection />
-      <Mobile />
-      <Intelligence />
       <Foundation />
+      <DTOPSection />
+      <Intelligence />
+      <Mobile />
       <Integrations />
       <Security />
+      <div id="customers">
+        <CustomerQuotes />
+      </div>
       <Why />
       <CTA />
     </div>
