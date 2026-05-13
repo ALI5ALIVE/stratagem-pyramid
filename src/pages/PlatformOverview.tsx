@@ -630,12 +630,6 @@ const diffs = [
   },
 ];
 
-const trust = [
-  { icon: Plane, value: "550+", label: "Customers worldwide" },
-  { icon: Users, value: "~2.5M", label: "Users" },
-  { icon: Globe, value: "6", label: "Continents" },
-];
-
 const Why = () => (
   <section id="why" className="border-b border-border/60 bg-card/10">
     <div className="max-w-7xl mx-auto px-6 py-20">
