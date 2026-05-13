@@ -36,9 +36,9 @@ import StatSourceChip from "@/components/shared/StatSourceChip";
 const navItems = [
   { id: "platform", label: "Platform" },
   { id: "foundation", label: "Foundation" },
-  { id: "dtop", label: "DTOP" },
   { id: "intelligence", label: "Intelligence" },
   { id: "mobile", label: "Mobile" },
+  { id: "dtop", label: "DTOP" },
   { id: "integrations", label: "Integrations" },
   { id: "security", label: "Security" },
   { id: "customers", label: "Customers" },
@@ -705,9 +705,9 @@ export default function PlatformOverview() {
       <TrustLogos />
       <PlatformModules />
       <Foundation />
-      <DTOPSection />
       <Intelligence />
       <Mobile />
+      <DTOPSection />
       <Integrations />
       <Security />
       <div id="customers">
