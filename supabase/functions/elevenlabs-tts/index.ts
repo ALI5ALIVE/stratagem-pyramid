@@ -23,7 +23,10 @@ serve(async (req) => {
       throw new Error("Missing required parameters: text and voiceId");
     }
 
-    console.log(`Generating TTS for text length: ${text.length}, voice: ${voiceId}`);
+    // Pronounce brand acronym letter-by-letter (e.g. "DTOP" -> "D-T-O-P")
+    const processedText = text.replace(/\bDTOP\b/g, "D-T-O-P");
+
+    console.log(`Generating TTS for text length: ${processedText.length}, voice: ${voiceId}`);
 
     const response = await fetch(
       `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=mp3_44100_128`,
@@ -34,7 +37,7 @@ serve(async (req) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          text,
+          text: processedText,
           model_id: "eleven_turbo_v2_5",
           voice_settings: {
             stability: 0.6,
