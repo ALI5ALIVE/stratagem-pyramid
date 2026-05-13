@@ -51,8 +51,14 @@ import QuizResult from "./pages/academy/QuizResult";
 import Certificate from "./pages/academy/Certificate";
 import AdminDashboard from "./pages/academy/AdminDashboard";
 
+const TechnicalDeepDiveV4 = lazy(() => import("./pages/TechnicalDeepDiveV4"));
+const PracticeCenter = lazy(() => import("./pages/PracticeCenter"));
 
 const queryClient = new QueryClient();
+
+const PageLoader = () => (
+  <div className="min-h-screen bg-background text-foreground" />
+);
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -76,7 +82,7 @@ const App = () => (
             <Route path="/pitch-executive-3" element={<ExecutivePitch3 />} />
             <Route path="/pitch-operational" element={<OperationalPitch />} />
             <Route path="/pitch-technical" element={<TechnicalDeepDive />} />
-            <Route path="/pitch-technical-v4" element={<TechnicalDeepDiveV4 />} />
+            <Route path="/pitch-technical-v4" element={<Suspense fallback={<PageLoader />}><TechnicalDeepDiveV4 /></Suspense>} />
             <Route path="/coanalyst-preview" element={<CoAnalystPreview />} />
             
             <Route path="/homepage-mockup" element={<HomepageMockup />} />
@@ -93,7 +99,7 @@ const App = () => (
             <Route path="/platform-playbook" element={<PlatformPlaybook />} />
             <Route path="/signals-playbook" element={<SignalsPlaybook />} />
             <Route path="/sales-enablement" element={<SalesEnablement />} />
-            <Route path="/practice-center" element={<PracticeCenter />} />
+            <Route path="/practice-center" element={<Suspense fallback={<PageLoader />}><PracticeCenter /></Suspense>} />
             <Route path="/roadmap" element={<RoadmapDeck />} />
             <Route path="/review" element={<ReviewDashboard />} />
             <Route path="/customer-overview" element={<CustomerOverview />} />
