@@ -82,8 +82,8 @@ export default function PracticeCenter() {
           <Card className="mb-8 border-primary/30 bg-card/80 p-6">
             <Label className="text-sm font-medium">ElevenLabs Agent ID</Label>
             <p className="mt-1 mb-3 text-xs text-muted-foreground">
-              Create a Conversational Agent in the ElevenLabs dashboard, enable <code className="rounded bg-muted px-1">overrides</code>{" "}
-              for prompt, firstMessage and tts.voiceId, then paste the agent ID here.
+              Create a Conversational Agent in the ElevenLabs dashboard, enable the <code className="rounded bg-muted px-1">prompt</code> override,
+              then paste the agent ID here.
               <a
                 href="https://elevenlabs.io/app/conversational-ai/agents"
                 target="_blank"
