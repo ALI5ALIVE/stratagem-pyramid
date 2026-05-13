@@ -12,14 +12,15 @@ interface IncomingDoc {
 const EL_BASE = "https://api.elevenlabs.io/v1/convai";
 
 async function el(path: string, init: RequestInit, apiKey: string) {
-  const res = await fetch(`${EL_BASE}${path}`, {
-    ...init,
-    headers: {
-      "xi-api-key": apiKey,
-      "Content-Type": "application/json",
-      ...(init.headers ?? {}),
-    },
-  });
+  const headers: Record<string, string> = {
+    "xi-api-key": apiKey,
+    ...(init.headers as Record<string, string> ?? {}),
+  };
+  // Only set JSON content-type when caller didn't supply a body that sets it (e.g. FormData)
+  if (init.body && typeof init.body === "string" && !headers["Content-Type"]) {
+    headers["Content-Type"] = "application/json";
+  }
+  const res = await fetch(`${EL_BASE}${path}`, { ...init, headers });
   const text = await res.text();
   let json: any = null;
   try { json = text ? JSON.parse(text) : null; } catch { /* keep raw */ }
@@ -27,6 +28,16 @@ async function el(path: string, init: RequestInit, apiKey: string) {
     throw new Error(`ElevenLabs ${init.method ?? "GET"} ${path} → ${res.status}: ${text.slice(0, 400)}`);
   }
   return json;
+}
+
+// Upload a text document to the KB via multipart/form-data — more
+// reliable than the JSON /knowledge-base/text endpoint for long content.
+async function uploadTextDoc(name: string, text: string, apiKey: string) {
+  const form = new FormData();
+  const blob = new Blob([text], { type: "text/markdown" });
+  form.append("file", blob, `${name.replace(/[^a-z0-9._-]+/gi, "_")}.md`);
+  form.append("name", name);
+  return await el(`/knowledge-base/file`, { method: "POST", body: form }, apiKey);
 }
 
 Deno.serve(async (req) => {
@@ -59,17 +70,38 @@ Deno.serve(async (req) => {
       }
     }
 
-    // 2. Create fresh text documents.
+    // 2. Create fresh documents. Try the JSON /text endpoint first; if
+    // ElevenLabs 500s on it (which it intermittently does for longer
+    // markdown), fall back to a multipart file upload.
     const created: Array<{ id: string; name: string }> = [];
+    const failures: Array<{ name: string; error: string }> = [];
     for (const d of docs) {
-      const res = await el(`/knowledge-base/text`, {
-        method: "POST",
-        body: JSON.stringify({ name: d.name, text: d.text }),
-      }, apiKey);
-      const id = res?.id ?? res?.document_id;
-      const name = res?.name ?? d.name;
-      if (!id) throw new Error(`KB create returned no id for ${d.name}`);
-      created.push({ id, name });
+      try {
+        let res: any;
+        try {
+          res = await el(`/knowledge-base/text`, {
+            method: "POST",
+            body: JSON.stringify({ name: d.name, text: d.text }),
+          }, apiKey);
+        } catch (jsonErr) {
+          console.warn(`text endpoint failed for ${d.name}, retrying as file upload:`, jsonErr);
+          res = await uploadTextDoc(d.name, d.text, apiKey);
+        }
+        const id = res?.id ?? res?.document_id;
+        const name = res?.name ?? d.name;
+        if (!id) throw new Error(`KB create returned no id`);
+        created.push({ id, name });
+      } catch (e) {
+        const msg = e instanceof Error ? e.message : String(e);
+        console.error(`KB upload failed for ${d.name}:`, msg);
+        failures.push({ name: d.name, error: msg });
+      }
+    }
+
+    if (created.length === 0) {
+      throw new Error(
+        `All ${docs.length} KB uploads failed. First error: ${failures[0]?.error ?? "unknown"}`,
+      );
     }
 
     // 3. Patch the agent so its prompt.knowledge_base includes our docs.
@@ -98,6 +130,7 @@ Deno.serve(async (req) => {
         agentId,
         deleted,
         created: created.map((c) => c.name),
+        failed: failures,
         totalKb: newKb.length,
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } },
