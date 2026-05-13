@@ -318,27 +318,6 @@ export default function PracticeCenter() {
                 Next <ChevronRight className="ml-1 h-4 w-4" />
               </Button>
             </div>
-            {/* Slide chip rail — jump anywhere */}
-            <div className="flex shrink-0 gap-1 overflow-x-auto border-t border-border/40 px-3 py-2">
-              {execPitch3Slides.map((s, i) => {
-                const active = i === currentSlide;
-                return (
-                  <button
-                    key={s.id}
-                    type="button"
-                    onClick={() => setCurrentSlide(i)}
-                    className={`shrink-0 rounded px-2 py-1 text-[10px] transition ${
-                      active
-                        ? "bg-primary/20 text-foreground ring-1 ring-primary/50"
-                        : "text-muted-foreground hover:bg-muted/40 hover:text-foreground"
-                    }`}
-                    title={s.label}
-                  >
-                    {i + 1}. {s.label}
-                  </button>
-                );
-              })}
-            </div>
           </Card>
 
           {/* Right: session panel */}
