@@ -44,6 +44,18 @@ export interface UseRoleplaySession {
 }
 
 const SCORECARD_KEY = "practiceCenter:lastScorecard";
+const VOICE_OVERRIDE_KEY = "elevenlabs.allowVoiceOverride";
+
+function voiceOverrideAllowed(): boolean {
+  try { return localStorage.getItem(VOICE_OVERRIDE_KEY) === "true"; } catch { return false; }
+}
+
+function isOverrideBlockedError(msg: string): boolean {
+  return /Override for field/i.test(msg) || /not allowed by config/i.test(msg);
+}
+
+const OVERRIDE_BLOCKED_MSG =
+  "This ElevenLabs agent does not allow voice overrides. Ask an admin to enable Security → Overrides → TTS → Voice ID on the agent, then set localStorage 'elevenlabs.allowVoiceOverride' to 'true'. Otherwise the buyer will use the agent's default voice.";
 
 export function useRoleplaySession(): UseRoleplaySession {
   const [transcript, setTranscript] = useState<TranscriptTurn[]>([]);
@@ -183,9 +195,9 @@ export function useRoleplaySession(): UseRoleplaySession {
         const conversation = await Conversation.startSession({
           connectionType: "websocket",
           signedUrl,
-          overrides: {
-            tts: { voiceId: scenario.voiceId },
-          },
+          ...(voiceOverrideAllowed()
+            ? { overrides: { tts: { voiceId: scenario.voiceId } } }
+            : {}),
           onConnect: () => {
             setError(null);
             setStatus("connected");
@@ -197,7 +209,13 @@ export function useRoleplaySession(): UseRoleplaySession {
             micStreamRef.current?.getTracks().forEach((t) => t.stop());
             micStreamRef.current = null;
             if (details?.reason === "error") {
-              setError(details.message || "The voice session disconnected before it could start.");
+              const m = details.message || "The voice session disconnected before it could start.";
+              if (isOverrideBlockedError(m)) {
+                setErrorCode("OVERRIDE_BLOCKED");
+                setError(OVERRIDE_BLOCKED_MSG);
+              } else {
+                setError(m);
+              }
             }
           },
           onStatusChange: ({ status: nextStatus }) => {
@@ -206,7 +224,13 @@ export function useRoleplaySession(): UseRoleplaySession {
           onModeChange: ({ mode }) => setIsSpeaking(mode === "speaking"),
           onMessage: appendMessage,
           onError: (message, context) => {
-            setError(normalizeError(message));
+            const m = normalizeError(message);
+            if (isOverrideBlockedError(m)) {
+              setErrorCode("OVERRIDE_BLOCKED");
+              setError(OVERRIDE_BLOCKED_MSG);
+            } else {
+              setError(m);
+            }
             if (context) console.error("ElevenLabs roleplay error", context);
           },
         });
@@ -216,7 +240,12 @@ export function useRoleplaySession(): UseRoleplaySession {
         micStreamRef.current?.getTracks().forEach((t) => t.stop());
         micStreamRef.current = null;
         const msg = e instanceof Error ? e.message : "Failed to start session";
-        setError(msg);
+        if (isOverrideBlockedError(msg)) {
+          setErrorCode("OVERRIDE_BLOCKED");
+          setError(OVERRIDE_BLOCKED_MSG);
+        } else {
+          setError(msg);
+        }
         setIsSpeaking(false);
         setStatus("disconnected");
         throw e;
