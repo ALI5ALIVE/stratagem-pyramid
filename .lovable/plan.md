@@ -1,40 +1,58 @@
 ## Goal
-Replace the "Tuesday morning, before coffee" `ProductShowcase` section on the home page (`/`) with a customer-benefits section modeled on the "What This Means for Customers" slide from Executive Pitch 3 (`CustomerOutcomesSlide`).
+Bring `/platform` (`src/pages/PlatformOverview.tsx`) up to world-class B2B platform-page standard. Remove the premature "Outcomes by role" section, fix terminology, simplify, and reorder around the proven pattern: **Hero → Trust → What it is → How it works → Proof → Security → CTA**.
 
 ## Scope
-- Frontend only. Public homepage `src/pages/Comply365Home.tsx`.
-- No changes to the executive pitch deck or its slide.
+- `src/pages/PlatformOverview.tsx` — restructure, rewrite section copy, remove sections.
+- Reuse existing components: `TrustLogos`, `CustomerQuotes`, `StatSourceChip`, `BookWalkthroughDialog`, `PlatformArchitectureDiagramV4`, `PersonaTabs`.
+- No backend, routing, or data-model changes.
 
-## Changes
+## Change list
 
-### 1. New component: `src/components/home/CustomerBenefits.tsx`
-Web-native adaptation of `CustomerOutcomesSlide` (not a slide container — fits the homepage rhythm of `WhyNow`, `Platform`, etc.).
+### A. Remove / replace
+1. **Delete the `Outcomes` section entirely.** It's premature personalization with generic, sourceless metrics. The work it tries to do (role-based promises) is better handled by the homepage Personas section and by the Persona lens inside DTOP. Net result: shorter, sharper page.
+2. **Remove `PersonaTabs` from the Hero.** Single CTA focus.
+3. **Strip "Layer 1 / 2 / 3 / 4" eyebrow labels** from Foundation, Intelligence, Mobile, DTOP. Keep clean role-oriented eyebrows ("The Foundation", "The Intelligence Layer", "The Frontline", "The Operating Model").
+4. **Rename "CoAnalyst — Recommended Actions"** in the Intelligence tile to **"Intelligence Layer — Recommended Actions"** to match the public-site terminology lock. Hero copy: replace "One intelligence layer (CoAnalyst)" with "One intelligence layer."
 
-Structure:
-- **Eyebrow**: "What this means for customers" (uppercase tracking style, matches other sections)
-- **H2**: "Connecting operational signals to measurable business outcomes."
-- **Lead paragraph**: One sentence — "Schedule protected. Revenue protected. Costs lower. Customers loyal."
-- **Cost Center → Operational Performance → Revenue Driver** transformation strip (reused from the slide, restyled with homepage tokens — `border-border`, `bg-card`, no fixed slide sizing).
-- **4-card grid** (md:grid-cols-2, lg:grid-cols-4) — Schedule Protection, Revenue Protection, Cost Savings, Customer Loyalty. Each card shows icon + title + subtitle + Signal → Action → Result mini-flow. Uses semantic tokens; accent colors match DTOP palette (primary, emerald, amber, violet).
-- **Closing band**: "Operational signals → business outcomes." with a `Book a walkthrough` link via `BookWalkthroughDialog`.
+### B. Reorder sections
+Current: Hero → Outcomes → Modules → DTOP → Mobile → Intelligence → Foundation → Integrations → Security → Why → CTA
+**New:** Hero → **TrustLogos** → PlatformModules (overview) → **Foundation** → **DTOP** (with persona lens, the only place PersonaTabs lives) → Intelligence → Mobile → Integrations → Security → **CustomerQuotes** → Why It Works → CTA
 
-Terminology: per memory, replace "safety signals" with "operational signals" on the public site.
+Rationale: Anchor the *what you buy* (Foundation) before *how it acts* (DTOP / Intelligence / Mobile). Trust strip immediately under hero. Customer voice before the closing argument.
 
-### 2. Update `src/pages/Comply365Home.tsx`
-- Remove `import ProductShowcase from "@/components/home/ProductShowcase"`.
-- Add `import CustomerBenefits from "@/components/home/CustomerBenefits"`.
-- In the page composition, swap `<ProductShowcase />` for `<CustomerBenefits />` (same slot — between DTOP and WhyNow).
+### C. Hero polish
+- Tighten subheading: "One connected data model. One operating model. One intelligence layer. Built for regulated, operationally complex industries."
+- Add inline trust micro-stat strip under CTAs: "550+ customers · ~2.5M users · 6 continents" (small, muted, single line).
+- Keep both CTA buttons; keep "See it in the Medium Pitch" as secondary.
 
-### 3. Cleanup
-- Delete `src/components/home/ProductShowcase.tsx` (no other importers — confirmed by codebase listing showing it only on the home page).
+### D. Sticky nav update
+Replace nav items to match new section order and labels:
+`Platform · Foundation · DTOP · Intelligence · Mobile · Integrations · Security · Customers`
+Drop `Outcomes` and `Why` from nav (Why becomes the closing argument, not a destination).
 
-## Out of scope
-- DTOP, Hero, Trust, Why Now, Intelligence Layer, Personas, CTA, Footer — unchanged.
-- Exec Pitch 3 deck and `CustomerOutcomesSlide` — unchanged.
-- No copy changes outside the new section.
+### E. Trust + proof additions
+1. Insert `<TrustLogos />` directly under Hero (already exists, used on home).
+2. Insert `<CustomerQuotes />` between Security and Why (already exists, used on home).
+3. Add `StatSourceChip` to the CoAnalyst anchor metric ("~90% domain accuracy at L4–L5 vs ~35% generic AI") — it currently has italic text underneath, replace with chip for consistency with the home page treatment.
 
-## Acceptance
-- Home page renders Hero → Trust → DTOP → **Customer Benefits** → Why Now → Intelligence Layer → Proof → Personas → CTA → Footer.
-- No "Tuesday morning" vignette UI remains on `/`.
-- 4 outcome cards display Signal/Action/Result with semantic tokens, responsive at 375px and 1415px.
-- No references to "CoAnalyst" introduced; uses "operational signals" wording.
+### F. CTA — add secondary path
+Keep "Book a walkthrough" primary; add "See the Medium Pitch" (already there) and a third tertiary link "Download platform overview (PDF)" pointing to the existing executive pitch PDF export route, or hide if no asset is wired (verify before wiring).
+
+### G. Out of scope
+- New imagery, screenshots, or interactive demos (would need design + assets — flag as future work).
+- Persona content rewrites in `personaConfig.ts`.
+- Changes to home page, industry pages, or pitch decks.
+- New routing, auth, or backend.
+
+## Acceptance criteria
+- `/platform` renders new order; no `Outcomes` section; no "Layer N" labels; no "CoAnalyst" string in Hero.
+- TrustLogos visible immediately under hero; CustomerQuotes visible before Why.
+- PersonaTabs appears exactly once on the page (inside DTOP).
+- Sticky nav anchors all resolve to existing section ids.
+- CoAnalyst metric card uses `StatSourceChip`.
+- No TS or runtime errors; layout intact at 1415px (current viewport) and 375px.
+
+## Future work (flagged, not in this plan)
+- Real product screenshot in hero (replace gradient).
+- Short looping demo video for DTOP scenario.
+- Per-section "see it in the deck" deep-link CTAs.
