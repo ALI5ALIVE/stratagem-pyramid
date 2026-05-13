@@ -1,56 +1,53 @@
-# Practice Center — Medium Pitch Focus + Live Slides + Mic Fix
+# Practice Center — embedded slides + slide-aware AI buyer
 
-## Goal
+Everything lives in `/practice-center`. We stop reusing `/pitch-executive-3` via iframe and instead mount the Medium pitch slides directly inside the Practice Center page, with our own minimal navigation. Nothing changes on the standalone `/pitch-executive-3` route.
 
-Make the Practice Center a single, working role-play around the **Medium — Executive Pitch** deck:
-- Only Medium scenarios are listed
-- The Medium pitch slides display live next to the transcript so the rep can present while talking
-- The voice agent reliably hears the rep's replies (currently only the agent talks; rep audio doesn't get picked up)
+## 1. Extract the slide list to a shared module
 
-## Scope
+Move the `slides[]` array (and its `dividerProps` / `sectionDividerProps`) out of `src/pages/ExecutivePitch3.tsx` into a new file:
 
-### 1. Trim scenarios to Medium only
-In `src/data/practiceScenarios.ts`, keep only the two Medium Executive Pitch scenarios (`exec-medium-cfo` and `exec-medium-ceo`) and remove the Operational, Technical, CoAnalyst, Customer Overview, and Playbook entries. Default selection becomes `exec-medium-cfo`.
+- `src/data/execPitch3Slides.ts` — exports `execPitch3Slides`, `dividerProps`, `sectionDividerProps`.
 
-If you'd rather see a single scenario in the list, we can collapse to just CFO — call it out and I'll cut to one.
+`ExecutivePitch3.tsx` keeps working by importing from there. No behaviour change on that route.
 
-### 2. Embed the Medium pitch slides in Practice Center
-Restructure `src/pages/PracticeCenter.tsx` into a 3-column layout on large screens:
+## 2. Mount the slides inside Practice Center
 
-```text
-┌──────────────┬──────────────────────────┬──────────────┐
-│  Scenario +  │   Live Pitch Slides      │  Transcript  │
-│  Difficulty  │   (Medium Exec Pitch)    │  + Controls  │
-│  + Setup     │   prev / next / counter  │  + Score     │
-└──────────────┴──────────────────────────┴──────────────┘
-```
+Rewrite the left panel of `src/pages/PracticeCenter.tsx`:
 
-- Reuse the existing slide components from `src/pages/ExecutivePitch3.tsx` (same `slides[]` array). Extract that array into a small shared module (e.g. `src/data/execPitch3Slides.ts`) so both the full deck page and the Practice Center render the same slides — no duplication.
-- Practice Center mounts one slide at a time inside a fixed-aspect container (16:9) with simple ◀ / ▶ controls and a `Slide X / N` counter. No sidebar, no narration bar — just the visual.
-- On medium screens, slides stack above the transcript; on mobile, slides hide behind a "Show slides" toggle.
+- Remove the iframe entirely.
+- Add local state `currentSlide` (number) and render only `execPitch3Slides[currentSlide]` into a 16:9 container (`aspect-ratio: 16/9`, `overflow-hidden`, scaled to fit the column).
+- Render the slide component WITHOUT narration props (no `onPlay`, `onPause`, `progress`, etc.) so the floating play / progress bar never appears. The salesperson delivers the slide themselves — no narrative audio, no auto-play.
+- Do NOT pass the slide-0 `exportSlides` / `pptxDeckId` / `deckLabel` props, so the title slide's PDF/PPTX/back-to-deck chrome does not render in Practice Center.
+- Add a single, minimal nav row directly under the slide:
+  - `Prev` button, `Slide X / N — {label}` indicator, `Next` button.
+  - This is the ONLY navigation in the practice view — no duplicate play buttons, no scroll-snap deck, no in-slide chrome.
+- Bind `←` / `→` keys (when focus is inside the slide column and not in a text input) to prev/next.
+- Keep the existing `Open deck full screen` link in the page header pointing at `/pitch-executive-3` for reference.
 
-### 3. Fix the agent not hearing the rep
-Two suspected causes, both addressed:
+## 3. Make the AI buyer's questions follow the current slide
 
-a. **Mic not pre-warmed.** The current `start()` hands straight to `Conversation.startSession` without calling `navigator.mediaDevices.getUserMedia({ audio: true })` first. On some browsers the SDK's internal mic acquisition silently fails or attaches to the wrong stream. Re-add the explicit `getUserMedia` call before `startSession` and keep the stream alive for the duration of the session (stop tracks only in `end()`).
+Expose a `sendContext` from the session hook and call it on every slide change.
 
-b. **Contextual update colliding with first turn.** Right now we fire `sendContextualUpdate(prompt)` inside `onConnect`, which on some agent configs suppresses the first user turn detection. Move the contextual update to fire **after** the agent's first message arrives (detect via `onMessage` with `source === "ai"`, send once, then no more). This keeps the persona context but doesn't interfere with VAD / turn-taking on connect.
-
-If the agent still doesn't hear the rep after both fixes, the next step is to switch `connectionType` from `"websocket"` to `"webrtc"` (lower-latency path with native mic handling) — leaving that as a fallback toggle, not the default.
-
-### 4. UI cleanup
-- Remove the "Add agent ID" empty-state and the Agent Setup panel from the default view (the agent ID is hardcoded now). Move it behind a small "Advanced" link in case we need to override later.
-- Update the page subtitle to: "Present the Medium Executive Pitch live to an AI buyer. Slides on the left, transcript on the right."
+- `src/hooks/useRoleplaySession.ts`: add `sendContext: (text: string) => void` to the returned API. Implementation calls `conversationRef.current?.sendContextualUpdate(text)` when status is `connected`, otherwise no-ops. The existing initial persona prompt path (`contextSentRef`) is unchanged.
+- `src/pages/PracticeCenter.tsx`: in a `useEffect` that depends on `currentSlide` and `session.status`, when connected, call:
+  ```
+  session.sendContext(
+    `The rep just moved to slide ${currentSlide + 1} of ${total}: "${slide.label}". ` +
+    `Ask ONE short buyer-style question that probes THIS slide's topic specifically. Stay in character.`
+  );
+  ```
+- One-line addition to `HOUSE_RULES` in `src/lib/practice/buildAgentPrompt.ts`:
+  > "When you receive a system note that the rep moved to a new slide, anchor your next question to that slide's topic."
 
 ## Acceptance criteria
 
-- `/practice-center` lists only Medium Executive Pitch scenarios.
-- The Medium pitch slides render inside Practice Center with prev/next controls and stay in sync regardless of role-play state.
-- Pressing Start opens the call; the rep speaks and **the agent responds to what was said** (transcript shows both `You` and `Buyer` turns).
-- Ending the session and pressing Score still produces a scorecard.
+- `/practice-center` shows the Medium pitch slides directly, one at a time, with a single Prev / Next / counter row — no floating play buttons, no progress bars, no audio narration, no duplicate navigation.
+- Arrow keys and the Prev/Next buttons move between slides; the counter and label update.
+- After each slide change, within ~1–2s the AI buyer asks a question tied to that slide (e.g. on the DTOP slide it asks about Detect/Trigger/Orchestrate/Prove; on CoAnalyst it asks about the 90% vs 35% accuracy claim).
+- `/pitch-executive-3` standalone route is unchanged — narration bar, play buttons, scroll-snap deck and export chrome all still work.
+- Scoring flow is unchanged.
 
 ## Out of scope
 
-- Auto-advancing slides based on transcript content
-- Changes to the actual slide components themselves
-- Other pitch decks (Operational, Technical, etc.) — they stay in the codebase, just not surfaced in Practice Center
+- No changes to other decks (Operational, Technical, etc.) or to the scoring edge function.
+- No auto-advancing slides based on transcript content — the rep drives slide changes manually.
