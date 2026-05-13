@@ -157,7 +157,7 @@ const modules = [
     id: "intelligence",
     tag: "Intelligence",
     title: "Intelligence & Orchestration",
-    desc: "Automation · Insights · CoAnalyst (Recommended Actions). Turns operational data into action.",
+    desc: "Automation · Insights · Recommended Actions. Turns operational data into action.",
     icon: Sparkles,
     color: "text-amber-400",
     bg: "bg-amber-400/10",
