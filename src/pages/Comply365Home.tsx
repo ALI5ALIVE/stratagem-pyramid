@@ -1,20 +1,16 @@
 import { Link } from "react-router-dom";
-import {
-  ArrowRight,
-  Sparkles,
-  AlertTriangle,
-  Workflow,
-  Brain,
-  ShieldCheck,
-  BookOpen,
-  GraduationCap,
-  CheckCircle2,
-  Network,
-  TrendingUp,
-  Users,
-} from "lucide-react";
+import { ArrowRight, Sparkles, AlertTriangle, BookOpen, ShieldCheck, GraduationCap, Network, Users, TrendingUp } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
 import { PERSONAS } from "@/components/personas/personaConfig";
+import StatSourceChip from "@/components/shared/StatSourceChip";
+import SeoHead from "@/components/home/SeoHead";
+import TrustLogos from "@/components/home/TrustLogos";
+import ProductShowcase from "@/components/home/ProductShowcase";
+import AnimatedDTOP from "@/components/home/AnimatedDTOP";
+import CoAnalystComparison from "@/components/home/CoAnalystComparison";
+import CustomerQuotes from "@/components/home/CustomerQuotes";
+import HomeFooter from "@/components/home/HomeFooter";
+import BookWalkthroughDialog from "@/components/home/BookWalkthroughDialog";
 
 // ----------------------------------------------------------------------------
 // Top bar
@@ -34,15 +30,19 @@ const TopBar = () => (
         <Link to="/solutions/defense" className="hover:text-foreground transition-colors">Defense</Link>
         <Link to="/solutions/rail" className="hover:text-foreground transition-colors">Rail</Link>
       </nav>
-      <a href="#cta" className="text-xs font-semibold rounded-full bg-primary text-primary-foreground px-3 py-1.5 hover:bg-primary/90 transition-colors">
-        Book a walkthrough
-      </a>
+      <BookWalkthroughDialog
+        trigger={
+          <button className="text-xs font-semibold rounded-full bg-primary text-primary-foreground px-3 py-1.5 hover:bg-primary/90 transition-colors">
+            Book a walkthrough
+          </button>
+        }
+      />
     </div>
   </header>
 );
 
 // ----------------------------------------------------------------------------
-// 1. Hero
+// 1. Hero (with inline product peek)
 // ----------------------------------------------------------------------------
 const Hero = () => (
   <section className="relative overflow-hidden border-b border-border/60">
@@ -58,168 +58,284 @@ const Hero = () => (
         }}
       />
     </div>
-    <div className="max-w-7xl mx-auto px-6 pt-24 pb-24 md:pt-32 md:pb-28">
-      <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">
-        <Sparkles className="h-3 w-3" /> The Operational Performance Platform
-      </span>
-      <h1 className="mt-6 font-display text-5xl md:text-7xl font-bold tracking-tight leading-[1.02] text-foreground max-w-5xl">
-        Operations runs on signals.{" "}
-        <span className="text-muted-foreground/70">Nobody acts on them.</span>
-      </h1>
-      <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-        Comply365 turns operational signals into prescriptive action — across Content, Safety and Training.
-        One connected data model. One operating rhythm. One source of truth.
-      </p>
-      <p className="mt-3 text-sm text-muted-foreground/80 max-w-2xl">
-        Built for the COO and the heads of Safety, Content and Training — the people accountable when operations slip.
-      </p>
-      <div className="mt-10 flex flex-wrap items-center gap-3">
-        <Link
-          to="/platform"
-          className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-5 py-2.5 text-sm font-semibold hover:bg-primary/90 transition-colors"
-        >
-          Explore the Platform <ArrowRight className="h-4 w-4" />
-        </Link>
-        <a
-          href="#cta"
-          className="inline-flex items-center gap-2 rounded-full border border-border bg-card/40 px-5 py-2.5 text-sm font-semibold text-foreground hover:bg-card/80 transition-colors"
-        >
-          Book a walkthrough
-        </a>
+    <div className="max-w-7xl mx-auto px-6 pt-20 pb-20 md:pt-28 md:pb-24 grid lg:grid-cols-12 gap-10 items-center">
+      <div className="lg:col-span-7">
+        <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">
+          <Sparkles className="h-3 w-3" /> The Operational Performance Platform
+        </span>
+        <h1 className="mt-6 font-display text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.04] text-foreground">
+          Operations runs on signals.{" "}
+          <span className="text-muted-foreground/70">Nobody acts on them.</span>
+        </h1>
+        <p className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">
+          Comply365 turns operational signals into prescriptive action — across Content, Safety and Training. One connected data model. One operating rhythm.
+        </p>
+        <div className="mt-8 flex flex-wrap items-center gap-4">
+          <BookWalkthroughDialog
+            trigger={
+              <button className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary/90 transition-colors">
+                Book a walkthrough <ArrowRight className="h-4 w-4" />
+              </button>
+            }
+          />
+          <Link to="/platform" className="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground hover:text-primary transition-colors">
+            See the platform <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+
+        <div className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+          <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-blue-500" /> Detect</span>
+          <ArrowRight className="h-3 w-3 opacity-40" />
+          <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-amber-500" /> Trigger</span>
+          <ArrowRight className="h-3 w-3 opacity-40" />
+          <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-violet-500" /> Orchestrate</span>
+          <ArrowRight className="h-3 w-3 opacity-40" />
+          <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-emerald-500" /> Prove</span>
+        </div>
       </div>
 
-      {/* DTOP one-line strap */}
-      <div className="mt-16 flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
-        <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-blue-500" /> Detect</span>
-        <ArrowRight className="h-3 w-3 opacity-40" />
-        <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-amber-500" /> Trigger</span>
-        <ArrowRight className="h-3 w-3 opacity-40" />
-        <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-violet-500" /> Orchestrate</span>
-        <ArrowRight className="h-3 w-3 opacity-40" />
-        <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-emerald-500" /> Prove</span>
-        <span className="ml-2 text-muted-foreground/70 normal-case tracking-normal">— the operating model that turns signals into outcomes</span>
+      {/* Product peek */}
+      <div className="lg:col-span-5 hidden lg:block">
+        <div className="relative">
+          <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-transparent to-emerald-500/10 blur-2xl" />
+          <div className="relative rounded-2xl border border-border bg-card shadow-2xl overflow-hidden">
+            <div className="bg-muted/30 px-4 py-2 flex items-center gap-2 border-b border-border">
+              <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
+              <span className="h-2.5 w-2.5 rounded-full bg-amber-500/80" />
+              <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/80" />
+              <span className="ml-3 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">CoAnalyst</span>
+            </div>
+            <div className="p-5 space-y-4">
+              <div className="rounded-lg bg-muted/40 px-3 py-2 text-sm">
+                What revisions affect crews not yet recurrent?
+              </div>
+              <div className="rounded-lg border border-primary/30 bg-primary/5 p-4">
+                <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.18em] text-primary">
+                  <Sparkles className="h-3 w-3" /> Recommended Action
+                </div>
+                <p className="mt-2 text-sm text-foreground leading-relaxed">
+                  <span className="font-semibold">QRH 7.12 r.14</span> — step 3 changed. <span className="font-semibold">42 crews</span> need recurrent.
+                </p>
+                <div className="mt-3 flex flex-wrap gap-1.5 text-[10px]">
+                  <span className="rounded-full border border-border bg-background px-2 py-0.5 text-muted-foreground">QRH r.14</span>
+                  <span className="rounded-full border border-border bg-background px-2 py-0.5 text-muted-foreground">Training</span>
+                  <span className="rounded-full border border-border bg-background px-2 py-0.5 text-muted-foreground">SMS #4421</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 );
 
 // ----------------------------------------------------------------------------
-// 2. Stakes
+// Why now — merged Signals + Stakes
 // ----------------------------------------------------------------------------
-const signalExamples = [
-  { color: "blue", dot: "bg-blue-500", border: "border-blue-500/30", bg: "bg-blue-500/5", tag: "Operational signal", line: "A KPI drifts off-target." },
-  { color: "amber", dot: "bg-amber-500", border: "border-amber-500/30", bg: "bg-amber-500/5", tag: "Content signal", line: "A manual revision is published." },
-  { color: "violet", dot: "bg-violet-500", border: "border-violet-500/30", bg: "bg-violet-500/5", tag: "Training signal", line: "A competency gap appears on a roster." },
-  { color: "emerald", dot: "bg-emerald-500", border: "border-emerald-500/30", bg: "bg-emerald-500/5", tag: "Safety signal", line: "A safety observation is filed." },
+const SIGNAL_TYPES = [
+  { dot: "bg-blue-500", tag: "Operational", line: "A KPI drifts off-target." },
+  { dot: "bg-amber-500", tag: "Content", line: "A manual revision is published." },
+  { dot: "bg-violet-500", tag: "Training", line: "A competency gap appears." },
+  { dot: "bg-emerald-500", tag: "Safety", line: "An observation is filed." },
 ];
 
-const Signals = () => (
-  <section id="signals" className="border-b border-border/60">
-    <div className="max-w-7xl mx-auto px-6 py-20">
-      <div className="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">Definition · The signal</div>
-      <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold tracking-tight max-w-4xl">
-        A signal is anything your operation is trying to tell you — before it becomes an incident.
-      </h2>
-      <p className="mt-4 text-muted-foreground max-w-2xl">
-        They live in your manuals, your safety reports, your training records and your operational data.
-        Most never make it into a decision.
-      </p>
-
-      <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-3">
-        {signalExamples.map((s) => (
-          <div key={s.tag} className={`rounded-2xl border ${s.border} ${s.bg} p-5`}>
-            <div className="flex items-center gap-2">
-              <span className={`h-2 w-2 rounded-full ${s.dot}`} />
-              <span className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{s.tag}</span>
-            </div>
-            <p className="mt-4 text-sm md:text-base text-foreground leading-snug">{s.line}</p>
-          </div>
-        ))}
-      </div>
-
-      <p className="mt-8 text-sm text-muted-foreground max-w-3xl">
-        Today, most of these signals die in a silo. The next sections show what that costs —
-        and how DTOP turns them into action.
-      </p>
-    </div>
-  </section>
-);
-
-const stakes = [
+const STAKES = [
   {
     value: "$25–35B",
     label: "Systemic exposure",
     note: "Annual industry cost of disconnected operations.",
+    source: "Composite of Eurocontrol delay-cost models (2023), IATA disruption studies, SITA baggage IT insights, and Allianz aviation risk barometer. See DTOP industry exposure citation stack.",
   },
   {
     value: "~65%",
     label: "Signals lost",
     note: "Operational signals that never trigger an action.",
+    source: "Internal benchmark across deployed Comply365 customers comparing reported events vs closed-loop actions taken (2022–2024).",
   },
   {
     value: "70%",
     label: "Controllable cost reclaimed",
     note: "Faster time-to-change, less rework, fewer recurrent disruptions.",
+    methodology: "Modeled outcome based on customer pilot data and Line of Sight ROI calculator. Individual results vary by baseline maturity.",
+    source: "Comply365 Line of Sight benchmarks; ROI modeling caveats apply.",
   },
 ];
 
-const Stakes = () => (
+const WhyNow = () => (
   <section className="border-b border-border/60 bg-card/20">
     <div className="max-w-7xl mx-auto px-6 py-20">
       <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-amber-400/90">
-        <AlertTriangle className="h-3.5 w-3.5" /> The cost of disconnected operations
+        <AlertTriangle className="h-3.5 w-3.5" /> Why now
       </div>
-      <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold tracking-tight max-w-3xl">
+      <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold tracking-tight max-w-4xl">
         Every silo is a signal that didn't make it home.
       </h2>
-      <div className="mt-12 grid md:grid-cols-3 gap-5">
-        {stakes.map((s) => (
-          <div key={s.label} className="rounded-2xl border border-border bg-card p-7">
-            <div className="font-display text-4xl md:text-5xl font-bold tracking-tight text-foreground">{s.value}</div>
-            <div className="mt-2 text-xs uppercase tracking-[0.18em] text-muted-foreground">{s.label}</div>
-            <p className="mt-4 text-sm text-muted-foreground leading-relaxed">{s.note}</p>
+
+      <div className="mt-12 grid lg:grid-cols-2 gap-10 lg:gap-16">
+        {/* Left: signal definition */}
+        <div>
+          <div className="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">A signal is…</div>
+          <p className="mt-3 text-lg text-foreground leading-relaxed">
+            Anything your operation is trying to tell you — before it becomes an incident.
+          </p>
+          <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+            They live in your manuals, your safety reports, your training records, your operational data. Most never make it into a decision.
+          </p>
+          <div className="mt-6 grid grid-cols-2 gap-2">
+            {SIGNAL_TYPES.map((s) => (
+              <div key={s.tag} className="rounded-lg border border-border bg-card/60 px-3 py-2.5 flex items-center gap-2.5">
+                <span className={`h-2 w-2 rounded-full ${s.dot}`} />
+                <div className="min-w-0">
+                  <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{s.tag}</div>
+                  <div className="text-xs text-foreground truncate">{s.line}</div>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+
+        {/* Right: stakes */}
+        <div className="space-y-3">
+          {STAKES.map((s) => (
+            <div key={s.label} className="rounded-2xl border border-border bg-card p-6 flex items-center gap-6">
+              <div className="font-display text-3xl md:text-4xl font-bold tracking-tight text-foreground shrink-0 min-w-[110px]">
+                {s.value}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+                  {s.label}
+                  <StatSourceChip source={s.source} methodology={s.methodology} />
+                </div>
+                <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">{s.note}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-      <p className="mt-10 text-sm text-muted-foreground max-w-2xl">
-        This is what happens when Content, Safety and Training don't talk to each other.
-      </p>
+
+      {/* From → To strip */}
+      <div className="mt-12 rounded-2xl border border-border bg-card/40 p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div className="flex items-center gap-3 flex-wrap text-sm">
+          <span className="text-muted-foreground/70">From</span>
+          {["Siloed", "Reactive", "Manual", "Document-bound"].map((w) => (
+            <span key={w} className="text-muted-foreground/80">{w}</span>
+          ))}
+        </div>
+        <ArrowRight className="h-4 w-4 text-primary shrink-0" />
+        <div className="flex items-center gap-3 flex-wrap text-sm">
+          <span className="text-primary uppercase tracking-[0.18em] text-xs">To</span>
+          {["Connected", "Predictive", "Automated", "Action-bound"].map((w) => (
+            <span key={w} className="text-foreground font-semibold">{w}</span>
+          ))}
+        </div>
+      </div>
     </div>
   </section>
 );
 
 // ----------------------------------------------------------------------------
-// 3. Who this is for — Personas
+// Three modules — denser
 // ----------------------------------------------------------------------------
-const Personas = () => (
-  <section id="personas" className="border-b border-border/60">
+const MODULES = [
+  {
+    name: "ContentManager365",
+    icon: BookOpen,
+    blurb: "Operational content as living, queryable knowledge.",
+    outcome: "Audit-ready in days, not weeks.",
+  },
+  {
+    name: "SafetyManager365",
+    icon: ShieldCheck,
+    blurb: "Safety, quality and risk in one prescriptive layer.",
+    outcome: "Every event closes with evidence.",
+  },
+  {
+    name: "TrainingManager365",
+    icon: GraduationCap,
+    blurb: "Competency tied to operational reality.",
+    outcome: "Readiness, not records.",
+  },
+];
+
+const Platform = () => (
+  <section className="border-b border-border/60">
     <div className="max-w-7xl mx-auto px-6 py-20">
-      <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-primary">
-        <Users className="h-3.5 w-3.5" /> Who this is for
-      </div>
+      <div className="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">The platform</div>
       <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold tracking-tight max-w-3xl">
-        One platform. Four people who feel the difference first.
+        Three modules. One connected data model.
       </h2>
       <p className="mt-4 text-muted-foreground max-w-2xl">
-        Pick the lens that matches your accountability — the platform reframes around what you own.
+        The same record powers a manual revision, a safety event and a training assignment — because they share a substrate, not just an integration.
       </p>
 
-      <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="mt-10 grid md:grid-cols-3 gap-4">
+        {MODULES.map((m) => (
+          <Link
+            key={m.name}
+            to="/platform#platform"
+            className="group rounded-2xl border border-border bg-card p-6 hover:border-primary/40 hover:-translate-y-0.5 transition-all"
+          >
+            <div className="h-10 w-10 rounded-lg bg-secondary flex items-center justify-center">
+              <m.icon className="h-5 w-5 text-primary" />
+            </div>
+            <div className="mt-4 font-display text-base font-semibold text-foreground">{m.name}</div>
+            <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{m.blurb}</p>
+            <div className="mt-4 pt-4 border-t border-border/60 text-sm font-semibold text-primary">
+              {m.outcome}
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      {/* Connected model diagram */}
+      <div className="mt-10 rounded-2xl border border-border bg-card/40 p-8">
+        <div className="flex items-center justify-between flex-wrap gap-6">
+          <div className="flex items-center gap-6 flex-wrap">
+            {MODULES.map((m) => (
+              <div key={m.name} className="flex items-center gap-2 text-sm text-foreground">
+                <m.icon className="h-4 w-4 text-primary" /> {m.name}
+              </div>
+            ))}
+          </div>
+          <ArrowRight className="h-5 w-5 text-primary" />
+          <div className="flex items-center gap-2.5 text-sm font-semibold text-primary uppercase tracking-[0.18em]">
+            <Network className="h-4 w-4" /> One Connected Data Model
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+// ----------------------------------------------------------------------------
+// Personas — condensed
+// ----------------------------------------------------------------------------
+const Personas = () => (
+  <section className="border-b border-border/60 bg-card/20">
+    <div className="max-w-7xl mx-auto px-6 py-20">
+      <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-primary">
+        <Users className="h-3.5 w-3.5" /> Built for the people accountable
+      </div>
+      <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold tracking-tight max-w-3xl">
+        Pick the lens that matches your role.
+      </h2>
+
+      <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 gap-3">
         {PERSONAS.map((p) => {
           const Icon = p.icon;
           return (
             <Link
               key={p.id}
               to={`/platform?role=${p.id}#outcomes`}
-              className={`group relative flex flex-col rounded-2xl border ${p.border} ${p.bg} p-6 hover:-translate-y-0.5 transition-all`}
+              className={`group flex flex-col rounded-xl border ${p.border} ${p.bg} p-5 hover:-translate-y-0.5 transition-all`}
             >
-              <div className={`h-10 w-10 rounded-lg border ${p.border} bg-background/40 flex items-center justify-center`}>
-                <Icon className={`h-5 w-5 ${p.color}`} />
+              <div className={`h-9 w-9 rounded-lg border ${p.border} bg-background/40 flex items-center justify-center`}>
+                <Icon className={`h-4 w-4 ${p.color}`} />
               </div>
-              <div className={`mt-5 text-[10px] uppercase tracking-[0.22em] ${p.color}`}>{p.role}</div>
-              <h3 className="mt-1 font-display text-lg font-bold text-foreground leading-tight">{p.homeHook}</h3>
-              <p className="mt-3 text-xs text-muted-foreground leading-relaxed flex-1">{p.promise}</p>
-              <div className={`mt-5 inline-flex items-center text-[11px] font-semibold ${p.color} opacity-80 group-hover:opacity-100`}>
+              <div className={`mt-4 text-[10px] uppercase tracking-[0.22em] ${p.color}`}>{p.role}</div>
+              <h3 className="mt-1 font-display text-base font-bold text-foreground leading-tight">{p.homeHook}</h3>
+              <div className={`mt-4 inline-flex items-center text-[11px] font-semibold ${p.color} opacity-80 group-hover:opacity-100`}>
                 See your view <ArrowRight className="h-3 w-3 ml-1" />
               </div>
             </Link>
@@ -231,251 +347,12 @@ const Personas = () => (
 );
 
 // ----------------------------------------------------------------------------
-// 4. Today vs Tomorrow
-// ----------------------------------------------------------------------------
-const todayWords = ["Siloed", "Reactive", "Manual", "Unverified", "Document-bound"];
-const tomorrowWords = ["Connected", "Predictive", "Automated", "Provable", "Action-bound"];
-
-const Shift = () => (
-  <section className="border-b border-border/60">
-    <div className="max-w-7xl mx-auto px-6 py-20">
-      <div className="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">From reaction to control</div>
-      <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold tracking-tight max-w-3xl">
-        The shift isn't more software. It's a connected operating model.
-      </h2>
-
-      <div className="mt-12 grid md:grid-cols-2 gap-px bg-border rounded-2xl overflow-hidden">
-        <div className="bg-card/30 p-10">
-          <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground/80">Today</div>
-          <div className="mt-3 font-display text-2xl font-semibold text-muted-foreground">Operations as exhaust</div>
-          <ul className="mt-8 space-y-3">
-            {todayWords.map((w) => (
-              <li key={w} className="text-lg text-muted-foreground/70 line-through decoration-muted-foreground/40">
-                {w}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="bg-gradient-to-br from-primary/10 via-card/40 to-card/10 p-10">
-          <div className="text-xs uppercase tracking-[0.22em] text-primary">Tomorrow</div>
-          <div className="mt-3 font-display text-2xl font-semibold text-foreground">Operations as control surface</div>
-          <ul className="mt-8 space-y-3">
-            {tomorrowWords.map((w) => (
-              <li key={w} className="text-lg text-foreground flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-primary" /> {w}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-);
-
-// ----------------------------------------------------------------------------
-// 4. The Platform — three modules, one model
-// ----------------------------------------------------------------------------
-const modules = [
-  {
-    name: "ContentManager365",
-    icon: BookOpen,
-    blurb: "Operational content as living, queryable knowledge — not static manuals.",
-    accent: "from-primary to-cyan-500",
-    href: "/platform#platform",
-  },
-  {
-    name: "SafetyManager365",
-    icon: ShieldCheck,
-    blurb: "Safety, quality and risk in one prescriptive layer — events to control.",
-    accent: "from-emerald-500 to-primary",
-    href: "/platform#platform",
-  },
-  {
-    name: "TrainingManager365",
-    icon: GraduationCap,
-    blurb: "Competency tied to operational reality — readiness, not records.",
-    accent: "from-violet-500 to-fuchsia-500",
-    href: "/platform#platform",
-  },
-];
-
-const Platform = () => (
-  <section className="border-b border-border/60 bg-card/20">
-    <div className="max-w-7xl mx-auto px-6 py-20">
-      <div className="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">The platform</div>
-      <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold tracking-tight max-w-3xl">
-        Three modules. One connected data model.
-      </h2>
-      <p className="mt-4 text-muted-foreground max-w-2xl">
-        The same record powers a manual revision, a safety event and a training assignment — because they share a substrate, not just an integration.
-      </p>
-
-      <div className="mt-10 grid md:grid-cols-3 gap-3">
-        {modules.map((m) => (
-          <Link
-            key={m.name}
-            to={m.href}
-            className="group flex items-center gap-3 rounded-xl border border-border bg-card/60 px-4 py-3 hover:border-primary/40 transition-all"
-          >
-            <div className={`h-8 w-8 rounded-md bg-secondary flex items-center justify-center shrink-0`}>
-              <m.icon className="h-4 w-4 text-primary" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="font-display text-sm font-semibold text-foreground truncate">{m.name}</div>
-              <div className="text-[11px] text-muted-foreground truncate">{m.blurb}</div>
-            </div>
-            <ArrowRight className="h-3.5 w-3.5 text-muted-foreground/60 group-hover:text-primary shrink-0" />
-          </Link>
-        ))}
-      </div>
-
-      <div className="mt-8 flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-muted-foreground">
-        <Network className="h-4 w-4 text-primary" /> One Connected Data Model
-        <Link to="/platform#platform" className="ml-auto text-primary normal-case tracking-normal hover:underline">
-          See the full platform →
-        </Link>
-      </div>
-    </div>
-  </section>
-);
-
-// ----------------------------------------------------------------------------
-// 5. Intelligence Edge
-// ----------------------------------------------------------------------------
-const Intelligence = () => (
-  <section className="border-b border-border/60 relative overflow-hidden">
-    <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,_hsl(var(--primary)/0.12),transparent_60%)]" />
-    <div className="max-w-7xl mx-auto px-6 py-24 text-center">
-      <div className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-primary">
-        <Brain className="h-3.5 w-3.5" /> The intelligence edge — CoAnalyst
-      </div>
-      <div className="mt-8 flex items-end justify-center gap-6 md:gap-12 flex-wrap">
-        <div>
-          <div className="font-display text-7xl md:text-9xl font-bold tracking-tight text-foreground leading-none">~90%</div>
-          <div className="mt-2 text-xs uppercase tracking-[0.22em] text-primary">Domain accuracy at L4–5</div>
-        </div>
-        <div className="text-3xl md:text-5xl font-display font-light text-muted-foreground/60 pb-2">vs</div>
-        <div>
-          <div className="font-display text-5xl md:text-7xl font-semibold tracking-tight text-muted-foreground/70 leading-none">~35%</div>
-          <div className="mt-2 text-xs uppercase tracking-[0.22em] text-muted-foreground">Generic AI</div>
-        </div>
-      </div>
-      <p className="mt-10 text-lg md:text-xl text-foreground max-w-3xl mx-auto leading-relaxed">
-        CoAnalyst is the only operational AI that understands your manuals, your safety reports
-        and your training records — together.
-      </p>
-      <div className="mt-8 flex items-center justify-center flex-wrap gap-2">
-        {["Generative AI", "Recommended Actions", "Operational Data"].map((c) => (
-          <span key={c} className="text-[11px] uppercase tracking-[0.18em] rounded-full border border-border bg-card/60 px-3 py-1 text-muted-foreground">
-            {c}
-          </span>
-        ))}
-      </div>
-      <Link to="/platform#intelligence" className="mt-10 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline">
-        See how CoAnalyst works <ArrowRight className="h-4 w-4" />
-      </Link>
-    </div>
-  </section>
-);
-
-// ----------------------------------------------------------------------------
-// 6. DTOP in 60 seconds
-// ----------------------------------------------------------------------------
-const dtopSteps = [
-  { letter: "D", name: "Detect", color: "blue", line: "Surface the signal in operational data." },
-  { letter: "T", name: "Trigger", color: "amber", line: "Decide it matters. Route it to the right owner." },
-  { letter: "O", name: "Orchestrate", color: "violet", line: "Coordinate the response across teams and systems." },
-  { letter: "P", name: "Prove", color: "emerald", line: "Close the loop with evidence and outcome." },
-];
-
-const dtopColor = (c: string) =>
-  ({
-    blue: "border-blue-500/40 bg-blue-500/10 text-blue-300",
-    amber: "border-amber-500/40 bg-amber-500/10 text-amber-300",
-    violet: "border-violet-500/40 bg-violet-500/10 text-violet-300",
-    emerald: "border-emerald-500/40 bg-emerald-500/10 text-emerald-300",
-  }[c] || "");
-
-const DTOP = () => (
-  <section className="border-b border-border/60 bg-card/20">
-    <div className="max-w-7xl mx-auto px-6 py-20">
-      <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
-        <Workflow className="h-3.5 w-3.5" /> DTOP in 60 seconds
-      </div>
-      <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold tracking-tight max-w-3xl">
-        The operating model that turns events into control.
-      </h2>
-
-      <div className="mt-12 grid md:grid-cols-4 gap-2 items-stretch">
-        {dtopSteps.map((s, i) => (
-          <div key={s.letter} className={`relative rounded-xl border ${dtopColor(s.color)} px-4 py-4 flex items-center gap-3`}>
-            <div className={`h-8 w-8 rounded-md flex items-center justify-center font-display text-sm font-bold border ${dtopColor(s.color)} shrink-0`}>
-              {s.letter}
-            </div>
-            <div className="min-w-0">
-              <div className="font-display text-sm font-semibold text-foreground">{s.name}</div>
-              <div className="text-[11px] text-muted-foreground leading-snug mt-0.5">{s.line}</div>
-            </div>
-            {i < dtopSteps.length - 1 && (
-              <ArrowRight className="hidden md:block absolute -right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/40 z-10" />
-            )}
-          </div>
-        ))}
-      </div>
-
-      <Link to="/platform#dtop" className="mt-10 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline">
-        See the full operating model <ArrowRight className="h-4 w-4" />
-      </Link>
-    </div>
-  </section>
-);
-
-// ----------------------------------------------------------------------------
-// 7. Proof & Trust
-// ----------------------------------------------------------------------------
-const customerLogos = ["Qantas", "Royal Air Force", "Ministry of Defence", "British Airways", "Delta"];
-
-const Trust = () => (
-  <section className="border-b border-border/60">
-    <div className="max-w-7xl mx-auto px-6 py-20">
-      <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-emerald-400/90">
-        <ShieldCheck className="h-3.5 w-3.5" /> Proof
-      </div>
-      <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold tracking-tight max-w-3xl">
-        Trusted to run mission-critical operations.
-      </h2>
-
-      <div className="mt-10 grid md:grid-cols-3 gap-5">
-        {[
-          { value: "550+", label: "Customers" },
-          { value: "~2.5M", label: "Users worldwide" },
-          { value: "6", label: "Continents" },
-        ].map((m) => (
-          <div key={m.label} className="rounded-2xl border border-border bg-card p-7">
-            <div className="font-display text-4xl font-bold text-foreground">{m.value}</div>
-            <div className="mt-2 text-xs uppercase tracking-[0.22em] text-muted-foreground">{m.label}</div>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-        {customerLogos.map((c) => (
-          <div key={c} className="h-16 rounded-xl border border-border bg-card/40 flex items-center justify-center text-xs uppercase tracking-[0.2em] text-muted-foreground">
-            {c}
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-);
-
-// ----------------------------------------------------------------------------
-// 8. CTA
+// Final CTA
 // ----------------------------------------------------------------------------
 const CTA = () => (
   <section id="cta" className="relative overflow-hidden">
     <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,_hsl(var(--primary)/0.18),transparent_65%)]" />
-    <div className="max-w-7xl mx-auto px-6 py-28 text-center">
+    <div className="max-w-7xl mx-auto px-6 py-24 text-center">
       <div className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-primary">
         <TrendingUp className="h-3.5 w-3.5" /> Your move
       </div>
@@ -485,46 +362,17 @@ const CTA = () => (
       <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
         See the platform that connects Content, Safety and Training — and turns operational signals into action.
       </p>
-      <div className="mt-10 flex items-center justify-center gap-3 flex-wrap">
-        <a
-          href="mailto:hello@comply365.com?subject=Walkthrough%20request"
-          className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary/90 transition-colors"
-        >
-          Book a walkthrough <ArrowRight className="h-4 w-4" />
-        </a>
-        <Link
-          to="/platform"
-          className="inline-flex items-center gap-2 rounded-full border border-border bg-card/40 px-6 py-3 text-sm font-semibold text-foreground hover:bg-card/80 transition-colors"
-        >
-          Explore the Platform
+      <div className="mt-10 flex items-center justify-center gap-4 flex-wrap">
+        <BookWalkthroughDialog
+          trigger={
+            <button className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-7 py-3.5 text-sm font-semibold hover:bg-primary/90 transition-colors">
+              Book a walkthrough <ArrowRight className="h-4 w-4" />
+            </button>
+          }
+        />
+        <Link to="/platform" className="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground hover:text-primary transition-colors">
+          Explore the platform <ArrowRight className="h-3.5 w-3.5" />
         </Link>
-      </div>
-
-      <div className="mt-10">
-        <div className="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
-          Talk to a specialist for your role
-        </div>
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-          {PERSONAS.map((p) => (
-            <a
-              key={p.id}
-              href={`mailto:hello@comply365.com?subject=${encodeURIComponent(`Walkthrough · ${p.role}`)}`}
-              className={`inline-flex items-center gap-2 rounded-full border ${p.border} ${p.bg} px-3 py-1.5 text-xs font-semibold ${p.color} hover:bg-background/40 transition-colors`}
-            >
-              <p.icon className="h-3.5 w-3.5" /> {p.shortRole}
-            </a>
-          ))}
-        </div>
-      </div>
-
-      <div className="mt-16 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
-        <Link to="/solutions/airlines" className="hover:text-foreground">Airlines</Link>
-        <span className="opacity-30">·</span>
-        <Link to="/solutions/defense" className="hover:text-foreground">Defense</Link>
-        <span className="opacity-30">·</span>
-        <Link to="/solutions/rail" className="hover:text-foreground">Rail</Link>
-        <span className="opacity-30">·</span>
-        <Link to="/platform" className="hover:text-foreground">Platform</Link>
       </div>
     </div>
   </section>
@@ -536,17 +384,19 @@ const CTA = () => (
 export default function Comply365Home() {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SeoHead />
       <TopBar />
       <Hero />
-      <Signals />
-      <Stakes />
-      <Personas />
-      <Shift />
+      <TrustLogos />
+      <ProductShowcase />
+      <WhyNow />
       <Platform />
-      <Intelligence />
-      <DTOP />
-      <Trust />
+      <AnimatedDTOP />
+      <CoAnalystComparison />
+      <CustomerQuotes />
+      <Personas />
       <CTA />
+      <HomeFooter />
     </div>
   );
 }
