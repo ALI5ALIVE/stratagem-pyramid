@@ -105,14 +105,16 @@ export function useRoleplaySession(): UseRoleplaySession {
         const conversation = await Conversation.startSession({
           connectionType: "websocket",
           signedUrl,
-          overrides: {
-            agent: {
-              prompt: { prompt },
-            },
-          },
           onConnect: () => {
             setError(null);
             setStatus("connected");
+            // Prompt overrides are disabled on this agent; inject scenario
+            // context via a non-interrupting contextual update instead.
+            try {
+              conversationRef.current?.sendContextualUpdate(prompt);
+            } catch (err) {
+              console.warn("Failed to send contextual update", err);
+            }
           },
           onDisconnect: (details) => {
             conversationRef.current = null;
