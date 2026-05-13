@@ -10,15 +10,18 @@ import { practiceScenarios, difficulties, type Difficulty, type PracticeScenario
 import { useRoleplaySession } from "@/hooks/useRoleplaySession";
 
 const AGENT_ID_STORAGE_KEY = "elevenlabs.practiceAgentId";
+const DEFAULT_AGENT_ID = "agent_5601krecj299fy28nwehe96cejrm";
 
 export default function PracticeCenter() {
   const [scenarioId, setScenarioId] = useState<string>(practiceScenarios[0].id);
   const [difficulty, setDifficulty] = useState<Difficulty>("skeptical");
   const [agentId, setAgentId] = useState<string>(() =>
-    typeof window === "undefined" ? "" : localStorage.getItem(AGENT_ID_STORAGE_KEY) ?? "",
+    typeof window === "undefined"
+      ? DEFAULT_AGENT_ID
+      : localStorage.getItem(AGENT_ID_STORAGE_KEY) ?? DEFAULT_AGENT_ID,
   );
   const [agentDraft, setAgentDraft] = useState(agentId);
-  const [showSettings, setShowSettings] = useState(!agentId);
+  const [showSettings, setShowSettings] = useState(false);
 
   const session = useRoleplaySession();
   const transcriptEndRef = useRef<HTMLDivElement>(null);
