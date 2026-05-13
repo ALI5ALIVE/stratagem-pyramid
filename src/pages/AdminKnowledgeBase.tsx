@@ -23,7 +23,7 @@ export default function AdminKnowledgeBase() {
         .from("user_roles")
         .select("role")
         .eq("user_id", user.id)
-        .in("role", ["owner", "admin"]);
+        .in("role", ["owner", "reviewer"]);
       setIsOwner((data ?? []).length > 0);
     })();
   }, [user]);
