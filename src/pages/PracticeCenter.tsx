@@ -1,27 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Mic, MicOff, Play, Square, Loader2, AlertCircle, Settings, ExternalLink, Sparkles } from "lucide-react";
+import { Mic, Play, Square, Loader2, AlertCircle, Sparkles, Maximize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { practiceScenarios, difficulties, type Difficulty, type PracticeScenario } from "@/data/practiceScenarios";
 import { useRoleplaySession } from "@/hooks/useRoleplaySession";
 
-const AGENT_ID_STORAGE_KEY = "elevenlabs.practiceAgentId";
-const DEFAULT_AGENT_ID = "agent_5601krecj299fy28nwehe96cejrm";
+const AGENT_ID = "agent_5601krecj299fy28nwehe96cejrm";
+const DECK_ROUTE = "/pitch-executive-3";
 
 export default function PracticeCenter() {
   const [scenarioId, setScenarioId] = useState<string>(practiceScenarios[0].id);
   const [difficulty, setDifficulty] = useState<Difficulty>("skeptical");
-  const [agentId, setAgentId] = useState<string>(() =>
-    typeof window === "undefined"
-      ? DEFAULT_AGENT_ID
-      : localStorage.getItem(AGENT_ID_STORAGE_KEY) ?? DEFAULT_AGENT_ID,
-  );
-  const [agentDraft, setAgentDraft] = useState(agentId);
-  const [showSettings, setShowSettings] = useState(false);
 
   const session = useRoleplaySession();
   const transcriptEndRef = useRef<HTMLDivElement>(null);
@@ -35,19 +25,11 @@ export default function PracticeCenter() {
     transcriptEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [session.transcript.length]);
 
-  const saveAgent = () => {
-    const trimmed = agentDraft.trim();
-    setAgentId(trimmed);
-    if (trimmed) localStorage.setItem(AGENT_ID_STORAGE_KEY, trimmed);
-    else localStorage.removeItem(AGENT_ID_STORAGE_KEY);
-    setShowSettings(false);
-  };
-
-  const canStart = !!agentId && session.status === "disconnected";
+  const canStart = session.status === "disconnected";
 
   const handleStart = async () => {
     try {
-      await session.start(scenario, difficulty, agentId);
+      await session.start(scenario, difficulty, AGENT_ID);
     } catch {
       /* error surfaced via session.error */
     }
@@ -59,124 +41,90 @@ export default function PracticeCenter() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto max-w-7xl px-6 py-10 lg:px-12">
+      <div className="mx-auto max-w-[1600px] px-6 py-8 lg:px-10">
         {/* Header */}
-        <div className="mb-8 flex items-start justify-between gap-6">
+        <div className="mb-6 flex items-start justify-between gap-6">
           <div>
             <div className="mb-2 flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-primary">
               <Sparkles className="h-3.5 w-3.5" />
               Practice Center
             </div>
-            <h1 className="font-display text-4xl font-semibold leading-tight tracking-tight">
-              Role-play any pitch with a live AI buyer
+            <h1 className="font-display text-3xl font-semibold leading-tight tracking-tight">
+              Practice the Medium Executive Pitch with a live AI buyer
             </h1>
-            <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
-              Pick a deck, pick a stakeholder, pick a difficulty. Talk to an ElevenLabs voice agent grounded in this app's narrative,
-              then end the session for an AI scorecard.
+            <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+              Slides on the left, transcript on the right. Pick the buyer persona and difficulty, then press Start and walk the deck.
             </p>
           </div>
-          <Button variant="outline" size="sm" onClick={() => setShowSettings((v) => !v)}>
-            <Settings className="mr-2 h-4 w-4" /> Agent setup
+          <Button variant="outline" size="sm" asChild>
+            <a href={DECK_ROUTE} target="_blank" rel="noreferrer">
+              <Maximize2 className="mr-2 h-4 w-4" /> Open deck full screen
+            </a>
           </Button>
         </div>
 
-        {/* Settings panel */}
-        {showSettings && (
-          <Card className="mb-8 border-primary/30 bg-card/80 p-6">
-            <Label className="text-sm font-medium">ElevenLabs Agent ID</Label>
-            <p className="mt-1 mb-3 text-xs text-muted-foreground">
-              Create a Conversational Agent in the ElevenLabs dashboard, enable the <code className="rounded bg-muted px-1">prompt</code> override,
-              then paste the agent ID here.
-              <a
-                href="https://elevenlabs.io/app/conversational-ai/agents"
-                target="_blank"
-                rel="noreferrer"
-                className="ml-2 inline-flex items-center gap-1 text-primary hover:underline"
-              >
-                Open ElevenLabs <ExternalLink className="h-3 w-3" />
-              </a>
-            </p>
-            <div className="flex gap-2">
-              <Input
-                placeholder="agent_xxxxxxxxxxxxxxxxxx"
-                value={agentDraft}
-                onChange={(e) => setAgentDraft(e.target.value)}
+        {/* Compact scenario + difficulty bar */}
+        <Card className="mb-4 flex flex-col gap-3 bg-card/60 p-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Buyer</span>
+            {practiceScenarios.map((s) => {
+              const active = s.id === scenarioId;
+              return (
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={() => session.status === "disconnected" && setScenarioId(s.id)}
+                  disabled={session.status !== "disconnected"}
+                  className={`rounded-md border px-3 py-1.5 text-xs transition ${
+                    active
+                      ? "border-primary/60 bg-primary/10 text-foreground"
+                      : "border-border/60 bg-card text-muted-foreground hover:border-primary/30"
+                  } disabled:cursor-not-allowed disabled:opacity-50`}
+                >
+                  {s.buyerLabel}
+                </button>
+              );
+            })}
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Difficulty</span>
+            {difficulties.map((d) => {
+              const active = d.id === difficulty;
+              return (
+                <button
+                  key={d.id}
+                  type="button"
+                  onClick={() => session.status === "disconnected" && setDifficulty(d.id)}
+                  disabled={session.status !== "disconnected"}
+                  className={`rounded-md border px-3 py-1.5 text-xs transition ${
+                    active
+                      ? "border-primary/60 bg-primary/10 text-foreground"
+                      : "border-border/60 bg-card text-muted-foreground hover:border-primary/30"
+                  } disabled:cursor-not-allowed disabled:opacity-50`}
+                >
+                  {d.label}
+                </button>
+              );
+            })}
+          </div>
+        </Card>
+
+        <div className="grid gap-4 lg:grid-cols-[1.6fr,1fr]">
+          {/* Left: live slide deck */}
+          <Card className="overflow-hidden bg-black/40 p-0">
+            <div className="relative w-full" style={{ aspectRatio: "16 / 9" }}>
+              <iframe
+                key={scenarioId}
+                src={DECK_ROUTE}
+                title="Medium Executive Pitch"
+                className="absolute inset-0 h-full w-full border-0"
+                allow="autoplay; clipboard-write; microphone"
               />
-              <Button onClick={saveAgent}>Save</Button>
+            </div>
+            <div className="flex items-center justify-between border-t border-border/40 px-4 py-2 text-xs text-muted-foreground">
+              <span>Use ↑ ↓ ← → inside the slide area to navigate. Press Start above to begin the call.</span>
             </div>
           </Card>
-        )}
-
-        <div className="grid gap-6 lg:grid-cols-[1fr,1.4fr]">
-          {/* Left: scenario picker */}
-          <div className="space-y-6">
-            <section>
-              <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Scenario</h2>
-              <div className="space-y-2">
-                {practiceScenarios.map((s) => {
-                  const active = s.id === scenarioId;
-                  return (
-                    <button
-                      key={s.id}
-                      type="button"
-                      onClick={() => session.status === "disconnected" && setScenarioId(s.id)}
-                      disabled={session.status !== "disconnected"}
-                      className={`block w-full rounded-lg border p-3 text-left transition ${
-                        active
-                          ? "border-primary/60 bg-primary/5"
-                          : "border-border/60 bg-card hover:border-primary/30"
-                      } disabled:cursor-not-allowed disabled:opacity-50`}
-                    >
-                      <div className="flex items-center justify-between gap-2">
-                        <div className="text-sm font-medium">{s.deckTitle}</div>
-                        {active && <Badge variant="secondary" className="text-[10px]">Selected</Badge>}
-                      </div>
-                      <div className="mt-1 text-xs text-muted-foreground">{s.buyerLabel}</div>
-                    </button>
-                  );
-                })}
-              </div>
-            </section>
-
-            <section>
-              <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Difficulty</h2>
-              <div className="grid grid-cols-3 gap-2">
-                {difficulties.map((d) => {
-                  const active = d.id === difficulty;
-                  return (
-                    <button
-                      key={d.id}
-                      type="button"
-                      onClick={() => session.status === "disconnected" && setDifficulty(d.id)}
-                      disabled={session.status !== "disconnected"}
-                      className={`rounded-lg border p-3 text-left transition ${
-                        active
-                          ? "border-primary/60 bg-primary/5"
-                          : "border-border/60 bg-card hover:border-primary/30"
-                      } disabled:cursor-not-allowed disabled:opacity-50`}
-                    >
-                      <div className="text-sm font-medium">{d.label}</div>
-                      <div className="mt-1 text-[11px] leading-snug text-muted-foreground">{d.description}</div>
-                    </button>
-                  );
-                })}
-              </div>
-            </section>
-
-            <Card className="bg-card/60 p-4">
-              <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Setup</div>
-              <div className="mt-2 text-sm">{scenario.setup}</div>
-              <div className="mt-3 text-xs text-muted-foreground">Key messages to land:</div>
-              <ul className="mt-1 space-y-1 text-xs text-muted-foreground">
-                {scenario.keyMessages.map((m) => (
-                  <li key={m} className="flex gap-2">
-                    <span className="text-primary">•</span>
-                    <span>{m}</span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
-          </div>
 
           {/* Right: session panel */}
           <div className="space-y-4">
@@ -207,7 +155,7 @@ export default function PracticeCenter() {
                 <div className="flex items-center gap-2">
                   {session.status === "disconnected" ? (
                     <Button onClick={handleStart} disabled={!canStart} size="sm">
-                      {!agentId ? <><MicOff className="mr-2 h-4 w-4" /> Add agent ID</> : <><Play className="mr-2 h-4 w-4" /> Start</>}
+                      <Play className="mr-2 h-4 w-4" /> Start
                     </Button>
                   ) : (
                     <Button onClick={handleEnd} variant="destructive" size="sm">
@@ -254,6 +202,20 @@ export default function PracticeCenter() {
                   <span>{session.error}</span>
                 </div>
               )}
+            </Card>
+
+            <Card className="bg-card/60 p-4">
+              <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Setup</div>
+              <div className="mt-1 text-sm">{scenario.setup}</div>
+              <div className="mt-3 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Key messages to land</div>
+              <ul className="mt-1 space-y-1 text-xs text-muted-foreground">
+                {scenario.keyMessages.map((m) => (
+                  <li key={m} className="flex gap-2">
+                    <span className="text-primary">•</span>
+                    <span>{m}</span>
+                  </li>
+                ))}
+              </ul>
             </Card>
 
             {/* Score panel */}

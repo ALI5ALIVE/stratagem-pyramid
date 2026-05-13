@@ -48,6 +48,8 @@ export function useRoleplaySession(): UseRoleplaySession {
   const difficultyRef = useRef<Difficulty | null>(null);
   const conversationRef = useRef<ElevenLabsConversation | null>(null);
   const startingRef = useRef(false);
+  const micStreamRef = useRef<MediaStream | null>(null);
+  const contextSentRef = useRef(false);
 
   const appendMessage = useCallback((message: unknown) => {
     // ElevenLabs sends a normalized shape with `source` + `message`.
@@ -60,6 +62,24 @@ export function useRoleplaySession(): UseRoleplaySession {
       setPartialUserText("");
     } else if (source === "ai") {
       setTranscript((t) => [...t, { role: "buyer", text, ts: Date.now() }]);
+      // Send the scenario/persona context once, immediately AFTER the agent's
+      // opening line. Sending earlier (in onConnect) interferes with VAD
+      // turn-taking on this agent config and stops the agent from hearing
+      // the rep's first reply.
+      if (!contextSentRef.current && scenarioRef.current && difficultyRef.current) {
+        contextSentRef.current = true;
+        const sc = scenarioRef.current;
+        const diff = difficultyRef.current;
+        buildSystemPrompt(sc, diff)
+          .then((prompt) => {
+            try {
+              conversationRef.current?.sendContextualUpdate(prompt);
+            } catch (err) {
+              console.warn("Contextual update failed", err);
+            }
+          })
+          .catch((err) => console.warn("buildSystemPrompt failed", err));
+      }
     }
   }, []);
 
@@ -83,12 +103,16 @@ export function useRoleplaySession(): UseRoleplaySession {
       scenarioRef.current = scenario;
       difficultyRef.current = difficulty;
       startingRef.current = true;
+      contextSentRef.current = false;
       setStatus("connecting");
-      let permissionStream: MediaStream | null = null;
       try {
         if (!navigator.mediaDevices?.getUserMedia) {
           throw new Error("Microphone access is not available in this browser.");
         }
+        // Pre-acquire the mic and KEEP the stream alive for the whole
+        // session. Without this, some browsers hand the SDK a stream that
+        // is never actually opened, so the agent can hear nothing.
+        micStreamRef.current = await navigator.mediaDevices.getUserMedia({ audio: true });
 
         const { data, error: fnError } = await supabase.functions.invoke(
           "elevenlabs-roleplay-token",
@@ -100,26 +124,19 @@ export function useRoleplaySession(): UseRoleplaySession {
           throw new Error("No ElevenLabs signed URL returned");
         }
 
-        const prompt = await buildSystemPrompt(scenario, difficulty);
-
         const conversation = await Conversation.startSession({
           connectionType: "websocket",
           signedUrl,
           onConnect: () => {
             setError(null);
             setStatus("connected");
-            // Prompt overrides are disabled on this agent; inject scenario
-            // context via a non-interrupting contextual update instead.
-            try {
-              conversationRef.current?.sendContextualUpdate(prompt);
-            } catch (err) {
-              console.warn("Failed to send contextual update", err);
-            }
           },
           onDisconnect: (details) => {
             conversationRef.current = null;
             setIsSpeaking(false);
             setStatus("disconnected");
+            micStreamRef.current?.getTracks().forEach((t) => t.stop());
+            micStreamRef.current = null;
             if (details?.reason === "error") {
               setError(details.message || "The voice session disconnected before it could start.");
             }
@@ -137,13 +154,14 @@ export function useRoleplaySession(): UseRoleplaySession {
         conversationRef.current = conversation;
         setStatus("connected");
       } catch (e) {
+        micStreamRef.current?.getTracks().forEach((t) => t.stop());
+        micStreamRef.current = null;
         const msg = e instanceof Error ? e.message : "Failed to start session";
         setError(msg);
         setIsSpeaking(false);
         setStatus("disconnected");
         throw e;
       } finally {
-        permissionStream?.getTracks().forEach((track) => track.stop());
         startingRef.current = false;
       }
     },
@@ -160,6 +178,8 @@ export function useRoleplaySession(): UseRoleplaySession {
     } catch (e) {
       // ignore
     }
+    micStreamRef.current?.getTracks().forEach((t) => t.stop());
+    micStreamRef.current = null;
   }, []);
 
   const scoreSession = useCallback(async () => {
