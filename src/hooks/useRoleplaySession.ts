@@ -32,6 +32,7 @@ export interface UseRoleplaySession {
   scoreSession: () => Promise<void>;
   reset: () => void;
   error: string | null;
+  sendContext: (text: string) => void;
 }
 
 export function useRoleplaySession(): UseRoleplaySession {
@@ -227,6 +228,14 @@ export function useRoleplaySession(): UseRoleplaySession {
     setError(null);
   }, []);
 
+  const sendContext = useCallback((text: string) => {
+    try {
+      conversationRef.current?.sendContextualUpdate(text);
+    } catch (err) {
+      console.warn("sendContext failed", err);
+    }
+  }, []);
+
   return {
     status,
     isSpeaking,
@@ -240,5 +249,6 @@ export function useRoleplaySession(): UseRoleplaySession {
     scoreSession,
     reset,
     error,
+    sendContext,
   };
 }
