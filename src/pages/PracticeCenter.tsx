@@ -19,6 +19,7 @@ const PERSONA_ICONS: Record<string, React.ComponentType<{ className?: string }>>
 
 const AGENT_ID = "agent_5601krecj299fy28nwehe96cejrm";
 const DECK_ROUTE = "/pitch-executive-3";
+const REP_SILENCE_MS = 8000;
 
 export default function PracticeCenter() {
   const [scenarioId, setScenarioId] = useState<string>(practiceScenarios[0].id);
@@ -80,7 +81,8 @@ export default function PracticeCenter() {
     return () => window.removeEventListener("keydown", onKey);
   }, [total]);
 
-  // Notify the AI buyer of the current slide so its questions follow along.
+  // Notify the AI buyer of the current slide. Buyer listens first; only if
+  // the rep stays silent for REP_SILENCE_MS does the buyer ask a question.
   useEffect(() => {
     if (session.status !== "connected") return;
     if (lastNotifiedSlideRef.current === currentSlide) return;
@@ -89,8 +91,21 @@ export default function PracticeCenter() {
     session.trackSlide(slide.label);
     session.sendContext(
       `The rep just moved to slide ${currentSlide + 1} of ${total}: "${slide.label}". ` +
-      `Ask ONE short buyer-style question that probes THIS slide's topic specifically. ${flavor} Stay in character.`,
+      `Stay silent and let the rep walk you through this slide. Only respond when they speak. If they ask you something, react in character.`,
     );
+    const baselineLen = session.transcript.length;
+    const slideAtSchedule = currentSlide;
+    const timer = window.setTimeout(() => {
+      if (session.status !== "connected") return;
+      if (slideAtSchedule !== lastNotifiedSlideRef.current) return;
+      if (session.transcript.length !== baselineLen) return;
+      if (session.isSpeaking) return;
+      session.sendContext(
+        `The rep has not spoken since moving to slide "${slide.label}". ` +
+        `Ask ONE short buyer-style question that probes THIS slide's topic specifically. ${flavor} Stay in character.`,
+      );
+    }, REP_SILENCE_MS);
+    return () => window.clearTimeout(timer);
   }, [currentSlide, session.status, slide.label, total, session, scenario.personaId]);
 
   // Reset slide-notification tracker when session ends/restarts

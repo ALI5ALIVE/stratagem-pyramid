@@ -1,36 +1,43 @@
-## Problem
+# Slide-change behavior: rep speaks first, buyer waits
 
-ElevenLabs rejects the session with `Override for field 'voice_id' is not allowed by config.` because `useRoleplaySession.start()` passes `overrides: { tts: { voiceId: scenario.voiceId } }` but the configured ConvAI agent does not have the **TTS → Voice ID** override enabled. ElevenLabs requires every overridden field to be explicitly whitelisted in the agent's "Security / Overrides" settings, otherwise the whole session is refused.
+## Today
+On every slide change, `PracticeCenter.tsx` immediately tells the buyer agent: "Ask ONE short buyer-style question about this slide." The buyer talks first, every slide. That's not how a real meeting works — the rep should introduce the slide; the buyer reacts.
 
-We have two ways to make practice work again:
+## Goal
+When the rep advances a slide:
+1. Tell the buyer the new slide context, but instruct it to **stay silent and listen** for the rep's pitch on this slide.
+2. If the rep speaks within a short window, the buyer just reacts naturally (existing behavior — no extra prompt needed).
+3. If the rep stays silent for ~8 seconds after advancing, prompt the buyer to ask one short question about the slide.
 
-1. **Code-side fix (immediate, no dashboard change):** stop sending the `tts.voiceId` override. Every persona then speaks with the agent's default voice configured in ElevenLabs. We lose per-persona voices until the dashboard toggle is flipped.
-2. **Dashboard fix (preserves per-persona voices):** in ElevenLabs → Agents → *(your agent)* → Security → Overrides, enable **TTS → Voice ID**. No code change needed.
+Applies to every slide change while the session is connected.
 
-Plan does both: ship the resilient code path now, document the dashboard toggle so per-persona voices come back as soon as it's enabled.
+## Changes (frontend only)
 
-## Changes
+**`src/pages/PracticeCenter.tsx`** — replace the current slide-change `useEffect` (lines ~83–94):
 
-### 1. `src/hooks/useRoleplaySession.ts`
-- Read an opt-in flag from `localStorage` (`elevenlabs.allowVoiceOverride`, default `false`).
-- Only include `overrides.tts.voiceId` when the flag is `true`. Otherwise call `Conversation.startSession({ connectionType, signedUrl, ... })` with **no `overrides` block** so ElevenLabs cannot reject it.
-- When the SDK still surfaces an "Override for field … not allowed" error in `onError` / catch, set `errorCode = "OVERRIDE_BLOCKED"` and a friendly message: *"This ElevenLabs agent does not allow voice overrides. Ask an admin to enable TTS → Voice ID in the agent's Security settings, or continue with the default voice."*
+- On slide change while connected:
+  - `session.trackSlide(slide.label)` (unchanged).
+  - `session.sendContext(...)` with a **listen-first** instruction, e.g.:
+    > "The rep just moved to slide N of M: '<label>'. Stay silent and let the rep walk you through this slide. Only respond when they speak. If they ask you something, react in character."
+  - Capture `transcript.length` at that moment as `baselineLen`.
+  - Start an 8-second `setTimeout`. When it fires, check:
+    - session still connected, still on the same slide, and
+    - `session.transcript.length === baselineLen` (rep hasn't spoken — no new turns at all), and
+    - not currently speaking (`!session.isSpeaking`).
+  - If all true, `session.sendContext(...)` with the existing "Ask ONE short buyer-style question that probes THIS slide's topic. <flavor> Stay in character." prompt.
+  - Cleanup: clear the timeout on slide change, disconnect, or unmount.
 
-### 2. `src/pages/PracticeCenter.tsx` (Settings panel)
-- Add a small checkbox under the existing Agent ID input: **"Use per-persona voices (requires Voice ID override enabled in ElevenLabs)"**, bound to the same `localStorage` key.
-- When `errorCode === "OVERRIDE_BLOCKED"`, render an inline alert in the live-session panel with a one-line instruction and a link-style hint to the ElevenLabs Security settings.
+- Keep the existing `lastNotifiedSlideRef` reset effect.
 
-### 3. `mem/features/practice-center.md`
-- Add a one-liner under the agent setup notes: *"To get per-persona voices, enable Security → Overrides → TTS → Voice ID on the agent. Otherwise leave 'Use per-persona voices' unchecked."*
+Silence threshold: **8 seconds** (tunable constant `REP_SILENCE_MS = 8000` at top of file).
 
 ## Out of scope
+- No edge-function changes.
+- No changes to `useRoleplaySession` API — uses existing `sendContext`, `trackSlide`, `transcript`, `status`, `isSpeaking`.
+- No new persona/voice configuration.
 
-- No edge-function changes — the rejection happens client-side during the SDK handshake.
-- No change to the persona/voice catalog itself.
-- No automatic detection of which overrides the agent permits (ElevenLabs has no public endpoint for this today).
-
-## How to verify
-
-1. Reload `/practice-center` with the checkbox **off** → start a session → call connects, agent speaks with its default voice.
-2. Enable **TTS → Voice ID** in the ElevenLabs agent dashboard, tick the checkbox, restart the session → buyer speaks in the per-persona voice.
-3. Disable the dashboard toggle while the checkbox is still on → friendly `OVERRIDE_BLOCKED` alert appears instead of the raw SDK error.
+## Verification
+1. Start a session, advance a slide, stay silent → buyer asks a question after ~8s.
+2. Advance a slide and immediately start pitching → buyer listens, reacts naturally, no canned question fires.
+3. Advance two slides quickly → only the latest slide's silence timer is active; earlier timer is cancelled.
+4. End session → no pending timers fire.
