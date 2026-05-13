@@ -246,7 +246,6 @@ export default function PracticeCenter() {
                 </button>
               );
             })}
-          </div>
         </Card>
 
         <div className="grid gap-4 lg:grid-cols-[1.6fr,1fr]">
