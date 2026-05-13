@@ -356,9 +356,16 @@ export default function PracticeCenter() {
               </ScrollArea>
 
               {session.error && (
-                <div className="flex items-start gap-2 border-t border-destructive/30 bg-destructive/10 px-5 py-3 text-xs text-destructive">
-                  <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
-                  <span>{session.error}</span>
+                <div className="flex items-start justify-between gap-3 border-t border-destructive/30 bg-destructive/10 px-5 py-3 text-xs text-destructive">
+                  <div className="flex items-start gap-2">
+                    <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+                    <span>{session.error}</span>
+                  </div>
+                  {session.status === "disconnected" && session.errorCode !== "MIC_NOT_FOUND" && (
+                    <Button size="sm" variant="outline" className="h-7 shrink-0" onClick={handleStart}>
+                      <RefreshCw className="mr-1.5 h-3 w-3" /> Retry
+                    </Button>
+                  )}
                 </div>
               )}
             </Card>
