@@ -3,7 +3,7 @@ import { Conversation } from "@elevenlabs/react";
 import type { Conversation as ElevenLabsConversation } from "@elevenlabs/react";
 import { supabase } from "@/integrations/supabase/client";
 import type { PracticeScenario, Difficulty } from "@/data/practiceScenarios";
-import { buildSystemPrompt, buildFirstMessage } from "@/lib/practice/buildAgentPrompt";
+import { buildSystemPrompt } from "@/lib/practice/buildAgentPrompt";
 
 export interface TranscriptTurn {
   role: "rep" | "buyer";
@@ -101,7 +101,6 @@ export function useRoleplaySession(): UseRoleplaySession {
         }
 
         const prompt = await buildSystemPrompt(scenario, difficulty);
-        const firstMessage = buildFirstMessage(scenario, difficulty);
 
         const conversation = await Conversation.startSession({
           connectionType: "websocket",
@@ -109,7 +108,6 @@ export function useRoleplaySession(): UseRoleplaySession {
           overrides: {
             agent: {
               prompt: { prompt },
-              firstMessage,
             },
           },
           onConnect: () => {
