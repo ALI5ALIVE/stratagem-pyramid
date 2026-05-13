@@ -1,5 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Mic, Play, Square, Loader2, AlertCircle, Sparkles, Maximize2, ChevronLeft, ChevronRight, BookOpen, Check } from "lucide-react";
+import {
+  Mic, Play, Square, Loader2, AlertCircle, Sparkles, Maximize2,
+  ChevronLeft, ChevronRight, BookOpen, Check,
+  Briefcase, Shield, Plane, GraduationCap, Monitor, Settings,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -8,6 +12,15 @@ import { useRoleplaySession } from "@/hooks/useRoleplaySession";
 import { execPitch3Slides } from "@/data/execPitch3Slides";
 import { buildKnowledgeDocs, KB_NAME_PREFIX } from "@/lib/practice/buildKnowledgeDocs";
 import { supabase } from "@/integrations/supabase/client";
+import { personaProfiles } from "@/data/personaProfiles";
+import { getPersonaSlideFlavor } from "@/lib/practice/buildAgentPrompt";
+import {
+  DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+
+const PERSONA_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  Briefcase, Shield, Plane, GraduationCap, Monitor,
+};
 
 const AGENT_ID = "agent_5601krecj299fy28nwehe96cejrm";
 const DECK_ROUTE = "/pitch-executive-3";
@@ -28,6 +41,17 @@ export default function PracticeCenter() {
     () => practiceScenarios.find((s) => s.id === scenarioId) ?? practiceScenarios[0],
     [scenarioId],
   );
+
+  const persona = useMemo(
+    () => personaProfiles.find((p) => p.id === scenario.personaId),
+    [scenario.personaId],
+  );
+  const PersonaIcon = (persona && PERSONA_ICONS[persona.iconName]) ?? Briefcase;
+
+  // When scenario changes, snap difficulty to its suggested default
+  useEffect(() => {
+    if (scenario.defaultDifficulty) setDifficulty(scenario.defaultDifficulty);
+  }, [scenario.id, scenario.defaultDifficulty]);
 
   useEffect(() => {
     transcriptEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -64,11 +88,12 @@ export default function PracticeCenter() {
     if (session.status !== "connected") return;
     if (lastNotifiedSlideRef.current === currentSlide) return;
     lastNotifiedSlideRef.current = currentSlide;
+    const flavor = getPersonaSlideFlavor(scenario.personaId);
     session.sendContext(
       `The rep just moved to slide ${currentSlide + 1} of ${total}: "${slide.label}". ` +
-      `Ask ONE short buyer-style question that probes THIS slide's topic specifically. Stay in character.`,
+      `Ask ONE short buyer-style question that probes THIS slide's topic specifically. ${flavor} Stay in character.`,
     );
-  }, [currentSlide, session.status, slide.label, total, session]);
+  }, [currentSlide, session.status, slide.label, total, session, scenario.personaId]);
 
   // Reset slide-notification tracker when session ends/restarts
   useEffect(() => {
@@ -128,26 +153,29 @@ export default function PracticeCenter() {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleSyncKnowledge}
-              disabled={syncing}
-              title="Push all deck narrations, playbooks and personas to the AI agent's knowledge base"
-            >
-              {syncing ? (
-                <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Syncing…</>
-              ) : syncResult ? (
-                <><Check className="mr-2 h-4 w-4" /> Synced</>
-              ) : (
-                <><BookOpen className="mr-2 h-4 w-4" /> Sync knowledge base</>
-              )}
-            </Button>
-            <Button variant="outline" size="sm" asChild>
-              <a href={DECK_ROUTE} target="_blank" rel="noreferrer">
-                <Maximize2 className="mr-2 h-4 w-4" /> Open deck full screen
-              </a>
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <Settings className="mr-2 h-4 w-4" /> Tools
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-64">
+                <DropdownMenuItem onSelect={(e) => { e.preventDefault(); handleSyncKnowledge(); }} disabled={syncing}>
+                  {syncing ? (
+                    <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Syncing knowledge…</>
+                  ) : syncResult ? (
+                    <><Check className="mr-2 h-4 w-4" /> Re-sync knowledge base</>
+                  ) : (
+                    <><BookOpen className="mr-2 h-4 w-4" /> Sync knowledge base</>
+                  )}
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <a href={DECK_ROUTE} target="_blank" rel="noreferrer" className="flex items-center">
+                    <Maximize2 className="mr-2 h-4 w-4" /> Open deck full screen
+                  </a>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
 
@@ -163,32 +191,44 @@ export default function PracticeCenter() {
           </div>
         )}
 
-        {/* Compact scenario + difficulty bar */}
-        <Card className="mb-4 flex flex-col gap-3 bg-card/60 p-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Buyer</span>
+        {/* Buyer persona cards */}
+        <div className="mb-3">
+          <div className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+            Choose your buyer
+          </div>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
             {practiceScenarios.map((s) => {
               const active = s.id === scenarioId;
+              const p = personaProfiles.find((pp) => pp.id === s.personaId);
+              const Icon = (p && PERSONA_ICONS[p.iconName]) ?? Briefcase;
+              const disabled = session.status !== "disconnected";
               return (
                 <button
                   key={s.id}
                   type="button"
-                  onClick={() => session.status === "disconnected" && setScenarioId(s.id)}
-                  disabled={session.status !== "disconnected"}
-                  className={`rounded-md border px-3 py-1.5 text-xs transition ${
+                  onClick={() => !disabled && setScenarioId(s.id)}
+                  disabled={disabled}
+                  className={`group flex flex-col gap-1 rounded-lg border p-3 text-left transition ${
                     active
-                      ? "border-primary/60 bg-primary/10 text-foreground"
-                      : "border-border/60 bg-card text-muted-foreground hover:border-primary/30"
+                      ? "border-primary/60 bg-primary/10"
+                      : "border-border/60 bg-card/60 hover:border-primary/40"
                   } disabled:cursor-not-allowed disabled:opacity-50`}
                 >
-                  {s.buyerLabel}
+                  <div className="flex items-center gap-2">
+                    <Icon className={`h-4 w-4 ${p?.color ?? "text-foreground"}`} />
+                    <span className="text-xs font-semibold text-foreground">{s.buyerLabel}</span>
+                  </div>
+                  <div className="text-[11px] leading-snug text-muted-foreground">{s.lens}</div>
                 </button>
               );
             })}
           </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Difficulty</span>
-            {difficulties.map((d) => {
+        </div>
+
+        {/* Difficulty bar */}
+        <Card className="mb-4 flex flex-wrap items-center gap-2 bg-card/60 p-3">
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Difficulty</span>
+          {difficulties.map((d) => {
               const active = d.id === difficulty;
               return (
                 <button
@@ -206,7 +246,6 @@ export default function PracticeCenter() {
                 </button>
               );
             })}
-          </div>
         </Card>
 
         <div className="grid gap-4 lg:grid-cols-[1.6fr,1fr]">
@@ -278,6 +317,27 @@ export default function PracticeCenter() {
                 Next <ChevronRight className="ml-1 h-4 w-4" />
               </Button>
             </div>
+            {/* Slide chip rail — jump anywhere */}
+            <div className="flex gap-1 overflow-x-auto border-t border-border/40 px-3 py-2">
+              {execPitch3Slides.map((s, i) => {
+                const active = i === currentSlide;
+                return (
+                  <button
+                    key={s.id}
+                    type="button"
+                    onClick={() => setCurrentSlide(i)}
+                    className={`shrink-0 rounded px-2 py-1 text-[10px] transition ${
+                      active
+                        ? "bg-primary/20 text-foreground ring-1 ring-primary/50"
+                        : "text-muted-foreground hover:bg-muted/40 hover:text-foreground"
+                    }`}
+                    title={s.label}
+                  >
+                    {i + 1}. {s.label}
+                  </button>
+                );
+              })}
+            </div>
           </Card>
 
           {/* Right: session panel */}
@@ -285,6 +345,9 @@ export default function PracticeCenter() {
             <Card className="flex h-[560px] flex-col bg-card/60">
               <div className="flex items-center justify-between border-b border-border/40 px-5 py-3">
                 <div className="flex items-center gap-3">
+                  <div className={`flex h-7 w-7 items-center justify-center rounded-full border ${persona?.borderColor ?? "border-border"} ${persona?.bgColor ?? ""}`}>
+                    <PersonaIcon className={`h-3.5 w-3.5 ${persona?.color ?? "text-foreground"}`} />
+                  </div>
                   <div
                     className={`h-2 w-2 rounded-full ${
                       session.status === "connected"
@@ -296,14 +359,17 @@ export default function PracticeCenter() {
                         : "bg-muted-foreground/40"
                     }`}
                   />
-                  <div className="text-sm font-medium">
-                    {session.status === "connected"
-                      ? session.isSpeaking
-                        ? "Buyer speaking…"
-                        : "Listening — your turn"
-                      : session.status === "connecting"
-                      ? "Connecting…"
-                      : "Idle"}
+                  <div>
+                    <div className="text-sm font-medium leading-tight">{scenario.buyerLabel}</div>
+                    <div className="text-[11px] text-muted-foreground">
+                      {session.status === "connected"
+                        ? session.isSpeaking
+                          ? "Buyer speaking…"
+                          : "Listening — your turn"
+                        : session.status === "connecting"
+                        ? "Connecting…"
+                        : `Ready · ${difficulty}`}
+                    </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -321,9 +387,20 @@ export default function PracticeCenter() {
 
               <ScrollArea className="flex-1 px-5 py-4">
                 {session.transcript.length === 0 && session.status === "disconnected" && (
-                  <div className="flex h-full min-h-[300px] flex-col items-center justify-center gap-3 text-center text-sm text-muted-foreground">
-                    <Mic className="h-8 w-8 opacity-40" />
-                    <div>Press Start. Allow your microphone. The buyer will open the call.</div>
+                  <div className="flex h-full min-h-[300px] flex-col gap-4 text-sm">
+                    <div className="rounded-lg border border-border/50 bg-background/40 p-4">
+                      <div className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-primary">How this works</div>
+                      <ol className="space-y-2 text-xs text-muted-foreground">
+                        <li className="flex gap-2"><span className="font-semibold text-foreground">1.</span> Pick a buyer above — each one reacts through a different lens.</li>
+                        <li className="flex gap-2"><span className="font-semibold text-foreground">2.</span> Press <span className="rounded bg-muted/60 px-1 text-foreground">Start</span> and allow your microphone. The buyer opens the call.</li>
+                        <li className="flex gap-2"><span className="font-semibold text-foreground">3.</span> Deliver each slide. Use <span className="rounded bg-muted/60 px-1 text-foreground">→</span> / <span className="rounded bg-muted/60 px-1 text-foreground">←</span> or the rail to advance — the buyer follows.</li>
+                        <li className="flex gap-2"><span className="font-semibold text-foreground">4.</span> Hit <span className="rounded bg-muted/60 px-1 text-foreground">End</span> then <span className="rounded bg-muted/60 px-1 text-foreground">Score session</span> for an AI scorecard.</li>
+                      </ol>
+                    </div>
+                    <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+                      <Mic className="h-4 w-4 opacity-40" />
+                      <span>Currently practicing as <span className="text-foreground">{scenario.buyerLabel}</span> · {scenario.lens}</span>
+                    </div>
                   </div>
                 )}
                 <div className="space-y-3">

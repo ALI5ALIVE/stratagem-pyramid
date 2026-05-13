@@ -128,6 +128,9 @@ export function useRoleplaySession(): UseRoleplaySession {
         const conversation = await Conversation.startSession({
           connectionType: "websocket",
           signedUrl,
+          overrides: {
+            tts: { voiceId: scenario.voiceId },
+          },
           onConnect: () => {
             setError(null);
             setStatus("connected");
