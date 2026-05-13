@@ -77,16 +77,9 @@ Deno.serve(async (req) => {
     const failures: Array<{ name: string; error: string }> = [];
     for (const d of docs) {
       try {
-        let res: any;
-        try {
-          res = await el(`/knowledge-base/text`, {
-            method: "POST",
-            body: JSON.stringify({ name: d.name, text: d.text }),
-          }, apiKey);
-        } catch (jsonErr) {
-          console.warn(`text endpoint failed for ${d.name}, retrying as file upload:`, jsonErr);
-          res = await uploadTextDoc(d.name, d.text, apiKey);
-        }
+        // ElevenLabs `/knowledge-base/text` is currently unstable (500s),
+        // so always upload as a markdown file.
+        const res = await uploadTextDoc(d.name, d.text, apiKey);
         const id = res?.id ?? res?.document_id;
         const name = res?.name ?? d.name;
         if (!id) throw new Error(`KB create returned no id`);
