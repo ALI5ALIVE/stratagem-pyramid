@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Suspense, lazy } from "react";
 import { AppLayout } from "./components/AppLayout";
 import HomePage from "./pages/HomePage";
 import SlideDeck from "./pages/SlideDeck";
@@ -21,7 +22,6 @@ import ExecutivePitch2 from "./pages/ExecutivePitch2";
 import ExecutivePitch3 from "./pages/ExecutivePitch3";
 import OperationalPitch from "./pages/OperationalPitch";
 import TechnicalDeepDive from "./pages/TechnicalDeepDive";
-import TechnicalDeepDiveV4 from "./pages/TechnicalDeepDiveV4";
 import CoAnalystPreview from "./pages/CoAnalystPreview";
 import PersonaDeepDive from "./pages/PersonaDeepDive";
 import RegulationManagementPlaybook from "./pages/RegulationManagementPlaybook";
@@ -33,7 +33,6 @@ import PlatformPlaybook from "./pages/PlatformPlaybook";
 import SignalsPlaybook from "./pages/SignalsPlaybook";
 import SalesEnablement from "./pages/SalesEnablement";
 import RoadmapDeck from "./pages/RoadmapDeck";
-import PracticeCenter from "./pages/PracticeCenter";
 import AuthPage from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
 import ReviewDashboard from "./pages/ReviewDashboard";
@@ -52,8 +51,14 @@ import QuizResult from "./pages/academy/QuizResult";
 import Certificate from "./pages/academy/Certificate";
 import AdminDashboard from "./pages/academy/AdminDashboard";
 
+const TechnicalDeepDiveV4 = lazy(() => import("./pages/TechnicalDeepDiveV4"));
+const PracticeCenter = lazy(() => import("./pages/PracticeCenter"));
 
 const queryClient = new QueryClient();
+
+const PageLoader = () => (
+  <div className="min-h-screen bg-background text-foreground" />
+);
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -77,7 +82,7 @@ const App = () => (
             <Route path="/pitch-executive-3" element={<ExecutivePitch3 />} />
             <Route path="/pitch-operational" element={<OperationalPitch />} />
             <Route path="/pitch-technical" element={<TechnicalDeepDive />} />
-            <Route path="/pitch-technical-v4" element={<TechnicalDeepDiveV4 />} />
+            <Route path="/pitch-technical-v4" element={<Suspense fallback={<PageLoader />}><TechnicalDeepDiveV4 /></Suspense>} />
             <Route path="/coanalyst-preview" element={<CoAnalystPreview />} />
             
             <Route path="/homepage-mockup" element={<HomepageMockup />} />
@@ -94,7 +99,7 @@ const App = () => (
             <Route path="/platform-playbook" element={<PlatformPlaybook />} />
             <Route path="/signals-playbook" element={<SignalsPlaybook />} />
             <Route path="/sales-enablement" element={<SalesEnablement />} />
-            <Route path="/practice-center" element={<PracticeCenter />} />
+            <Route path="/practice-center" element={<Suspense fallback={<PageLoader />}><PracticeCenter /></Suspense>} />
             <Route path="/roadmap" element={<RoadmapDeck />} />
             <Route path="/review" element={<ReviewDashboard />} />
             <Route path="/customer-overview" element={<CustomerOverview />} />
