@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Mic, Play, Square, Loader2, AlertCircle, Sparkles, Maximize2 } from "lucide-react";
+import { Mic, Play, Square, Loader2, AlertCircle, Sparkles, Maximize2, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { practiceScenarios, difficulties, type Difficulty, type PracticeScenario } from "@/data/practiceScenarios";
 import { useRoleplaySession } from "@/hooks/useRoleplaySession";
+import { execPitch3Slides } from "@/data/execPitch3Slides";
 
 const AGENT_ID = "agent_5601krecj299fy28nwehe96cejrm";
 const DECK_ROUTE = "/pitch-executive-3";
@@ -12,9 +13,11 @@ const DECK_ROUTE = "/pitch-executive-3";
 export default function PracticeCenter() {
   const [scenarioId, setScenarioId] = useState<string>(practiceScenarios[0].id);
   const [difficulty, setDifficulty] = useState<Difficulty>("skeptical");
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const session = useRoleplaySession();
   const transcriptEndRef = useRef<HTMLDivElement>(null);
+  const lastNotifiedSlideRef = useRef<number>(-1);
 
   const scenario: PracticeScenario = useMemo(
     () => practiceScenarios.find((s) => s.id === scenarioId) ?? practiceScenarios[0],
@@ -24,6 +27,50 @@ export default function PracticeCenter() {
   useEffect(() => {
     transcriptEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [session.transcript.length]);
+
+  const total = execPitch3Slides.length;
+  const slide = execPitch3Slides[currentSlide];
+  const SlideComponent = slide.component as React.ComponentType<any>;
+
+  const goPrev = () => setCurrentSlide((i) => Math.max(0, i - 1));
+  const goNext = () => setCurrentSlide((i) => Math.min(total - 1, i + 1));
+
+  // Keyboard navigation for slides
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+      if (e.key === "ArrowRight") { e.preventDefault(); goNext(); }
+      else if (e.key === "ArrowLeft") { e.preventDefault(); goPrev(); }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [total]);
+
+  // Notify the AI buyer of the current slide so its questions follow along.
+  useEffect(() => {
+    if (session.status !== "connected") return;
+    if (lastNotifiedSlideRef.current === currentSlide) return;
+    lastNotifiedSlideRef.current = currentSlide;
+    session.sendContext(
+      `The rep just moved to slide ${currentSlide + 1} of ${total}: "${slide.label}". ` +
+      `Ask ONE short buyer-style question that probes THIS slide's topic specifically. Stay in character.`,
+    );
+  }, [currentSlide, session.status, slide.label, total, session]);
+
+  // Reset slide-notification tracker when session ends/restarts
+  useEffect(() => {
+    if (session.status === "disconnected") {
+      lastNotifiedSlideRef.current = -1;
+    }
+  }, [session.status]);
 
   const canStart = session.status === "disconnected";
 
@@ -53,7 +100,7 @@ export default function PracticeCenter() {
               Practice the Medium Executive Pitch with a live AI buyer
             </h1>
             <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-              Slides on the left, transcript on the right. Pick the buyer persona and difficulty, then press Start and walk the deck.
+              Deliver each slide yourself — the buyer will react and ask questions tied to whatever slide you're showing. Use the Prev / Next buttons or arrow keys to advance.
             </p>
           </div>
           <Button variant="outline" size="sm" asChild>
@@ -110,19 +157,73 @@ export default function PracticeCenter() {
         </Card>
 
         <div className="grid gap-4 lg:grid-cols-[1.6fr,1fr]">
-          {/* Left: live slide deck */}
+          {/* Left: embedded slide */}
           <Card className="overflow-hidden bg-black/40 p-0">
-            <div className="relative w-full" style={{ aspectRatio: "16 / 9" }}>
-              <iframe
-                key={scenarioId}
-                src={DECK_ROUTE}
-                title="Medium Executive Pitch"
-                className="absolute inset-0 h-full w-full border-0"
-                allow="autoplay; clipboard-write; microphone"
-              />
+            <div className="relative w-full overflow-hidden bg-background" style={{ aspectRatio: "16 / 9" }}>
+              {/* Scale a 1280x720 stage to fit the column */}
+              <div className="absolute inset-0">
+                <div
+                  className="origin-top-left"
+                  style={{
+                    width: 1280,
+                    height: 720,
+                    transform: "scale(var(--slide-scale, 1))",
+                    transformOrigin: "top left",
+                  }}
+                  ref={(el) => {
+                    if (!el) return;
+                    const parent = el.parentElement;
+                    if (!parent) return;
+                    const apply = () => {
+                      const w = parent.clientWidth;
+                      const h = parent.clientHeight;
+                      const s = Math.min(w / 1280, h / 720);
+                      el.style.setProperty("--slide-scale", String(s));
+                    };
+                    apply();
+                    const ro = new ResizeObserver(apply);
+                    ro.observe(parent);
+                  }}
+                >
+                  <div style={{ width: 1280, height: 720, overflow: "hidden" }}>
+                    <SlideComponent
+                      key={slide.id}
+                      id={slide.id}
+                      slideNumber={currentSlide}
+                      {...((slide as any).dividerProps ?? {})}
+                      {...((slide as any).sectionProps ?? {})}
+                      {...(slide.id === "exec3-slide-platform"
+                        ? {
+                            jumpTargets: {
+                              dtop: "exec3-divider-dtop",
+                              mobile: "exec3-divider-mobile",
+                              intelligence: "exec3-divider-intelligence",
+                              core: "exec3-divider-dtop",
+                            },
+                          }
+                        : {})}
+                      {...(slide.id === "exec3-slide-insights-summary"
+                        ? {
+                            title: "The Platform · Insights & Intelligence",
+                            subtitle: "A platform-wide intelligence capability — just by asking",
+                            showWorkflow: true,
+                          }
+                        : {})}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center justify-between border-t border-border/40 px-4 py-2 text-xs text-muted-foreground">
-              <span>Use ↑ ↓ ← → inside the slide area to navigate. Press Start above to begin the call.</span>
+            <div className="flex items-center justify-between gap-3 border-t border-border/40 px-4 py-2">
+              <Button size="sm" variant="ghost" onClick={goPrev} disabled={currentSlide === 0}>
+                <ChevronLeft className="mr-1 h-4 w-4" /> Prev
+              </Button>
+              <div className="text-xs text-muted-foreground">
+                Slide {currentSlide + 1} / {total} — <span className="text-foreground">{slide.label}</span>
+              </div>
+              <Button size="sm" variant="ghost" onClick={goNext} disabled={currentSlide === total - 1}>
+                Next <ChevronRight className="ml-1 h-4 w-4" />
+              </Button>
             </div>
           </Card>
 
