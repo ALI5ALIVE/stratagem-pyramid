@@ -1,5 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Mic, Play, Square, Loader2, AlertCircle, Sparkles, Maximize2, ChevronLeft, ChevronRight, BookOpen, Check } from "lucide-react";
+import {
+  Mic, Play, Square, Loader2, AlertCircle, Sparkles, Maximize2,
+  ChevronLeft, ChevronRight, BookOpen, Check,
+  Briefcase, Shield, Plane, GraduationCap, Monitor, Settings,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -8,6 +12,15 @@ import { useRoleplaySession } from "@/hooks/useRoleplaySession";
 import { execPitch3Slides } from "@/data/execPitch3Slides";
 import { buildKnowledgeDocs, KB_NAME_PREFIX } from "@/lib/practice/buildKnowledgeDocs";
 import { supabase } from "@/integrations/supabase/client";
+import { personaProfiles } from "@/data/personaProfiles";
+import { getPersonaSlideFlavor } from "@/lib/practice/buildAgentPrompt";
+import {
+  DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+
+const PERSONA_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  Briefcase, Shield, Plane, GraduationCap, Monitor,
+};
 
 const AGENT_ID = "agent_5601krecj299fy28nwehe96cejrm";
 const DECK_ROUTE = "/pitch-executive-3";
@@ -28,6 +41,17 @@ export default function PracticeCenter() {
     () => practiceScenarios.find((s) => s.id === scenarioId) ?? practiceScenarios[0],
     [scenarioId],
   );
+
+  const persona = useMemo(
+    () => personaProfiles.find((p) => p.id === scenario.personaId),
+    [scenario.personaId],
+  );
+  const PersonaIcon = (persona && PERSONA_ICONS[persona.iconName]) ?? Briefcase;
+
+  // When scenario changes, snap difficulty to its suggested default
+  useEffect(() => {
+    if (scenario.defaultDifficulty) setDifficulty(scenario.defaultDifficulty);
+  }, [scenario.id, scenario.defaultDifficulty]);
 
   useEffect(() => {
     transcriptEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -64,11 +88,12 @@ export default function PracticeCenter() {
     if (session.status !== "connected") return;
     if (lastNotifiedSlideRef.current === currentSlide) return;
     lastNotifiedSlideRef.current = currentSlide;
+    const flavor = getPersonaSlideFlavor(scenario.personaId);
     session.sendContext(
       `The rep just moved to slide ${currentSlide + 1} of ${total}: "${slide.label}". ` +
-      `Ask ONE short buyer-style question that probes THIS slide's topic specifically. Stay in character.`,
+      `Ask ONE short buyer-style question that probes THIS slide's topic specifically. ${flavor} Stay in character.`,
     );
-  }, [currentSlide, session.status, slide.label, total, session]);
+  }, [currentSlide, session.status, slide.label, total, session, scenario.personaId]);
 
   // Reset slide-notification tracker when session ends/restarts
   useEffect(() => {
