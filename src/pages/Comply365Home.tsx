@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Sparkles, AlertTriangle, BookOpen, ShieldCheck, GraduationCap, Network, Users, TrendingUp } from "lucide-react";
+import { ArrowRight, Sparkles, AlertTriangle, BookOpen, ShieldCheck, GraduationCap, Network, TrendingUp } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
-import { PERSONAS } from "@/components/personas/personaConfig";
 import StatSourceChip from "@/components/shared/StatSourceChip";
 import SeoHead from "@/components/home/SeoHead";
 import TrustLogos from "@/components/home/TrustLogos";
-import CustomerBenefits from "@/components/home/CustomerBenefits";
 import AnimatedDTOP from "@/components/home/AnimatedDTOP";
 import CoAnalystComparison from "@/components/home/CoAnalystComparison";
 import CustomerQuotes from "@/components/home/CustomerQuotes";
 import HomeFooter from "@/components/home/HomeFooter";
 import BookWalkthroughDialog from "@/components/home/BookWalkthroughDialog";
+import UnifiedPlatformDiagram from "@/components/home/UnifiedPlatformDiagram";
+import IndustryTiles from "@/components/home/IndustryTiles";
 
 // ----------------------------------------------------------------------------
 // Top bar
