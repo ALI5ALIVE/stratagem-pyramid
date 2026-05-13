@@ -11,12 +11,20 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const { scenarioTitle, personaTitle, difficulty, transcript, keyMessages } = await req.json() as {
+    const {
+      scenarioTitle, personaTitle, difficulty, transcript, keyMessages,
+      personaLens, decisionCriteria = [], objections = [], slides = [], slidesShown = [],
+    } = await req.json() as {
       scenarioTitle: string;
       personaTitle: string;
       difficulty: string;
       transcript: TranscriptTurn[];
       keyMessages: string[];
+      personaLens?: string;
+      decisionCriteria?: string[];
+      objections?: string[];
+      slides?: string[];
+      slidesShown?: string[];
     };
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
@@ -30,27 +38,45 @@ serve(async (req) => {
       .join("\n");
 
     const system = `You are a sales coach grading a Comply365 sales rep's role-play with a simulated buyer.
+Be specific, use direct rep quotes, and reward persona-fit answers.
+
 Scenario: ${scenarioTitle}
 Buyer persona: ${personaTitle} (${difficulty} difficulty)
+${personaLens ? `Buyer lens: ${personaLens}` : ""}
 
-Key messages the rep should land:
+Key messages the rep should land (mark each as landed/missed in keyMessageStatus):
 ${keyMessages.map((m) => `- ${m}`).join("\n")}
 
-Score each rubric 0-5 and return strict JSON ONLY:
+${decisionCriteria.length ? `Persona decision criteria — reward answers that hit these:\n${decisionCriteria.map((d) => `- ${d}`).join("\n")}\n` : ""}
+${objections.length ? `Persona objections — for EACH one, judge whether the rep addressed it and how well:\n${objections.map((o) => `- ${o}`).join("\n")}\n` : ""}
+${slides.length ? `Deck slides (full deck): ${slides.join(" | ")}` : ""}
+${slidesShown.length ? `Slides the rep actually presented (in order): ${slidesShown.join(" | ")}` : ""}
+
+Return strict JSON ONLY in this exact shape:
 {
   "overall": number 0-100,
   "rubric": {
-    "discovery": { "score": number, "feedback": string },
-    "objectionHandling": { "score": number, "feedback": string },
-    "messageAccuracy": { "score": number, "feedback": string },
-    "terminologyCompliance": { "score": number, "feedback": string },
-    "nextStepAsk": { "score": number, "feedback": string }
+    "discovery":            { "score": number 0-5, "feedback": string, "quote": string },
+    "objectionHandling":    { "score": number 0-5, "feedback": string, "quote": string },
+    "messageAccuracy":      { "score": number 0-5, "feedback": string, "quote": string },
+    "terminologyCompliance":{ "score": number 0-5, "feedback": string, "quote": string },
+    "nextStepAsk":          { "score": number 0-5, "feedback": string, "quote": string },
+    "personaFit":           { "score": number 0-5, "feedback": string, "quote": string },
+    "slideCoverage":        { "score": number 0-5, "feedback": string, "quote": string }
   },
+  "keyMessageStatus": [{ "message": string, "landed": boolean, "evidence": string }],
+  "objectionsAnswered": [{ "objection": string, "addressed": boolean, "quality": number 0-5, "comment": string }],
   "strengths": string[],
   "improvements": string[],
-  "missedKeyMessages": string[]
+  "missedKeyMessages": string[],
+  "coachingScript": string[]   // exactly 3 short one-line drills the rep should rehearse next time
 }
-Terminology rules: must use 'Generative AI', 'Recommended Actions', 'Operational Data'. Forbidden: FOQA, FDM, ASAP. Product names have NO spaces: Comply365, SafetyManager365, ContentManager365.`;
+
+Rules:
+- "quote" must be a direct snippet from the REP turns; if there is no relevant quote, use "".
+- "personaFit" grades how well the rep tailored to the buyer's lens (${personaLens || "n/a"}).
+- "slideCoverage" grades whether the rep covered the right slides for this persona — penalise skipping critical ones.
+- Terminology: must use 'Generative AI', 'Recommended Actions', 'Operational Data'. Forbidden: FOQA, FDM, ASAP. Product names have NO spaces: Comply365, SafetyManager365, ContentManager365, TrainingManager365.`;
 
     const r = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",

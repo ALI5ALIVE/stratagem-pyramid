@@ -1,73 +1,56 @@
-# Practice Center — easier to use + full persona roster
+# Practice Center — declutter pre-call panels + richer scoring
 
-## Goals
-1. Make the Practice Center frictionless for delivering the Medium Executive Pitch.
-2. Let the user toggle between the **5 real buyer personas** (CEO/COO, VP Safety, VP Ops, Training Director, CIO/IT) and feel a genuinely different conversation each time — different voice, lens, objections, and scorecard.
+## Part 1 — Trim the right column
 
----
+Today the right column shows three permanent cards: Setup, Key messages, Scorecard. Concerns:
 
-## Part 1 — UX simplification (Practice Center page)
+- **Setup** (one-line description) is redundant — the buyer card you just clicked already conveys the same intent ("CEO/COO · Strategic, revenue & systemic risk").
+- **Key messages to land** is genuinely useful as a *prep* aid but if shown during the call it becomes a teleprompter — defeating the practice goal of recalling the messaging under pressure.
+- **AI Scorecard** placeholder is just dead space until a session ends.
 
-Today the page works but is busy: two button rows, a sync button, an external open-deck link, a small slide stage, and a tall right column.
+Change:
+- **Remove Setup card entirely** — fold its sentence (if any value remains) into a `title` tooltip on the buyer chip.
+- **Convert Key messages into a collapsible "Prep checklist"** that is:
+  - Open by default *before* the session starts, so the rep can read the 4–5 messages they need to land.
+  - Auto-collapses when the session connects, with a small "Reveal" link if they get stuck. This trains recall without being punitive.
+  - After the session ends and the scorecard is generated, it re-opens with a green ✓ next to messages the AI judged "landed" and a red ○ next to ones in `missedKeyMessages`.
+- **Hide the Scorecard card until** the session has ended (transcript exists + status is `disconnected`). Replace its placeholder slot with a single "Score session" button inline at the top of the transcript card once the call ends.
 
-Changes:
-- **Single guided header strip**: replace the two separate rows ("Buyer" + "Difficulty") with one compact horizontal control with three dropdown-style segments — `Persona ▾`, `Difficulty ▾`, `Voice ▾` — plus a single primary **Start call** button on the right. State of the rest of the UI defers to this strip.
-- **First-run coach panel**: when no session has started, the right column shows a 3-step "How this works" card (1. Pick a buyer · 2. Hit Start and allow mic · 3. Deliver each slide, advance with → key). Disappears once a session starts — replaced by transcript.
-- **Bigger slide stage**: switch grid from `1.6fr,1fr` to `2fr,1fr` on `lg`, and let the stage column expand to fill the viewport height (min `70vh`) so slides are readable. Drop the fixed 16:9 aspect cap.
-- **Slide rail underneath**: a thin horizontal scrollable strip of slide labels (clickable chips) under the stage, with the current one highlighted, so the rep can jump without arrowing through 19 slides. Keyboard ←/→ still works.
-- **Move "Sync knowledge base" + "Open deck full screen"** into a small overflow `…` menu in the header — they're admin/utility, not core flow.
-- **Persistent footer hint** while connected: "Press → for next slide · the buyer is reacting to: *<current slide label>*." Reinforces the link between slide and buyer behavior.
-- **Auto-scroll the transcript** (already present) + show the buyer's persona avatar/initials at the top of the transcript card so it's clear *who* you're talking to.
-- **Scorecard** stays where it is but collapses by default until the session ends.
+Net: right column shows 1 card during the call (transcript), 2 cards before/after (transcript + prep checklist + scorecard).
 
-## Part 2 — Add all 5 personas as scenarios
+## Part 2 — Make scoring genuinely useful
 
-`src/data/practiceScenarios.ts` currently has 2 scenarios that both target `ceo-coo`. Replace with **one scenario per persona** (all bound to the Medium Executive Pitch deck, route `/pitch-executive-3`):
+The edge function `elevenlabs-roleplay-score` already grades 5 rubrics + strengths/improvements/missed messages via Gemini 2.5 Flash. It works but can be richer. Improvements, all backend-only:
 
-| Scenario id | Persona | Voice | Default difficulty hint |
-|---|---|---|---|
-| `exec-medium-ceo-coo` | CEO / COO | George (measured exec male) | Skeptical |
-| `exec-medium-vp-safety` | VP Safety | Laura (analytical female) | Skeptical |
-| `exec-medium-vp-ops` | VP Operations | Brian (commanding male) | Hostile (time-pressed) |
-| `exec-medium-training` | Training & L&D Director | Jessica (engaging female) | Friendly |
-| `exec-medium-cio-it` | CIO / IT Director | Eric (technical male) | Skeptical |
+1. **Persona-aware grading.** Pass the persona's `objections` and `decisionCriteria` into the system prompt so the model rewards persona-fit responses (e.g. CIO scenario should grade integration/security answers higher; Training scenario should grade adoption/competency answers higher).
+2. **Slide coverage.** Pass the list of slide labels in the deck plus the slides the rep actually presented (we already know `currentSlide` over time — capture a `slidesShown: string[]` and forward it). New rubric line: `slideCoverage` (did they cover the right slides for this persona?).
+3. **Per-objection grading.** Add a `objectionsAnswered: Array<{ objection, addressed: boolean, quality: 0-5, comment }>` block so the rep sees which specific pushbacks they handled well or fumbled. Drives the most actionable feedback.
+4. **Quote-based evidence.** Ask the model to attach a short rep-quote to each rubric score (`"You said: 'we replace your safety system' — that's wrong, we integrate"`). Concrete > abstract.
+5. **Coaching micro-script.** A new `coachingScript: string[]` array — 3 one-line drills the rep should rehearse next time. Practical homework, not just grades.
+6. **Persistent history (optional, asks first).** Add a `practice_sessions` table (`user_id`, `scenario_id`, `persona_id`, `difficulty`, `transcript jsonb`, `scorecard jsonb`, `created_at`) so reps can see trend over time. Deferred — call out as a follow-up the user can opt into.
 
-Each scenario pulls its `keyMessages` from the matching persona's existing `decisionCriteria` + top 2 strategic priorities so the scorer grades the *right* messages for *that* buyer (e.g. CIO scenario rewards integration/security mentions, Training scenario rewards adoption/competency mentions).
+UI surface for the new fields:
+- Existing rubric grid extends to include `slideCoverage`.
+- New "Objections handled" sub-section under the rubric, one row per persona objection with ✓ / ◐ / ✗ + the model's quality score and one-line comment.
+- New "Drill next time" section at the bottom of the scorecard with the 3-line coaching script.
+- Each rubric row gets a small italic quote line under the feedback when present.
 
-`buyerLabel` becomes the persona title (e.g. "VP Safety — risk & compliance lens"). The persona tab UI in the header uses the persona's existing `iconName` + `color` from `personaProfiles.ts` for visual differentiation.
+## Part 3 — Track which slides were shown
 
-## Part 3 — Distinct AI behavior per persona
-
-`src/lib/practice/buildAgentPrompt.ts` already loads persona profile and injects priorities, pains, objections, and discovery questions. Tighten so persona truly drives behavior:
-
-- Add an explicit **"YOUR LENS"** line at the top of the persona block: e.g. *"You evaluate everything through cost & ROI"* (CEO), *"…through systemic risk and audit findings"* (Safety), *"…through delay/cancellation impact and crew workflow"* (Ops), *"…through learner adoption and competency outcomes"* (Training), *"…through integration, identity, and security"* (CIO).
-- Inject **2 of the persona's `objections` as required pushbacks** the agent must raise during the call.
-- Inject **3 of the persona's `discoveryQuestions`** as questions the agent should ask if the rep doesn't volunteer the answer.
-- The slide-context note (already sent on slide change) gets a per-persona suffix: e.g. CIO asks an integration/security flavored question on every slide; Training asks an adoption/rollout flavored question.
-
-This is what makes the toggle feel *different* — same deck, fundamentally different conversation.
-
-## Part 4 — Voice routing
-
-Voice id is already on the scenario (`voiceId`), but the ElevenLabs agent currently uses its own configured voice. Two options:
-- **A (preferred, no agent edit)**: pass `overrides.tts.voice_id = scenario.voiceId` to `Conversation.startSession`. Update `useRoleplaySession.start` to accept and forward the voice override.
-- **B**: leave voice fixed and drop the per-persona voice column. Less differentiation.
-
-Plan is **A** — small change in the hook, the agent already supports voice override.
-
-## Part 5 — Scorer per persona
-
-`elevenlabs-roleplay-score` already takes `personaTitle` and `keyMessages`. No edge function changes needed — the new persona-specific `keyMessages` flow through automatically and the rubric will grade against them.
-
----
+Tiny addition: `useRoleplaySession` keeps an internal `slidesShown` array, populated whenever `sendContext` fires from a slide change. Forward it to the scorer. No persistence yet.
 
 ## Files to touch
-- `src/data/practiceScenarios.ts` — replace 2 scenarios with 5 persona-bound scenarios; pull keyMessages from `personaProfiles`.
-- `src/lib/practice/buildAgentPrompt.ts` — add persona LENS, required objections, required discovery questions; richer slide-change context.
-- `src/hooks/useRoleplaySession.ts` — accept and forward `voiceId` as ElevenLabs `overrides.tts.voice_id`.
-- `src/pages/PracticeCenter.tsx` — UX rework: single control strip, larger stage, slide chip rail, first-run coach card, overflow menu for sync/open-deck, collapsible scorecard, persona avatar on transcript header.
+- `src/pages/PracticeCenter.tsx` — remove Setup card, collapsible Prep card with post-score check marks, gate Scorecard rendering, render new objection rows + drill section + quote lines.
+- `src/hooks/useRoleplaySession.ts` — track `slidesShown`, forward to score endpoint, expose `slidesShown` in scorecard request.
+- `supabase/functions/elevenlabs-roleplay-score/index.ts` — accept `persona`, `objections`, `slides`, `slidesShown`; add `slideCoverage`, `objectionsAnswered`, `coachingScript`, per-rubric `quote`; tighten system prompt for persona-fit.
+- `src/lib/practice/buildAgentPrompt.ts` — export a small helper to expose the persona's `objections` to the score caller (or the page imports `personaProfiles` directly).
 
-## Out of scope
-- No changes to the Medium pitch deck slides themselves.
-- No changes to scoring edge function or KB sync function.
-- No new database tables (session history persistence is a separate ask).
+## Out of scope (call out, do not build)
+- Persisting practice sessions in Supabase (Part 2.6) — only build if the user confirms they want history/trending.
+- Audio-quality / pacing / filler-word analysis — would need ElevenLabs raw audio, separate scope.
+- Leaderboards or team-level rollups.
+
+## Answer to "is this necessary in the UI?"
+- **Setup card**: no — remove.
+- **Key messages**: yes, but only as a *pre-call* checklist that hides during the call and returns post-score with pass/miss marks.
+- **Scorecard placeholder**: no — only show after the call ends.
