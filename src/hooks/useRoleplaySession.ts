@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Conversation } from "@elevenlabs/react";
 import type { Conversation as ElevenLabsConversation } from "@elevenlabs/react";
 import { supabase } from "@/integrations/supabase/client";
@@ -37,14 +37,19 @@ export interface UseRoleplaySession {
   scoreSession: () => Promise<void>;
   reset: () => void;
   error: string | null;
+  errorCode: string | null;
   sendContext: (text: string) => void;
   trackSlide: (slideLabel: string) => void;
+  restoreScorecard: (scenarioId: string) => void;
 }
+
+const SCORECARD_KEY = "practiceCenter:lastScorecard";
 
 export function useRoleplaySession(): UseRoleplaySession {
   const [transcript, setTranscript] = useState<TranscriptTurn[]>([]);
   const [partialUserText, setPartialUserText] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [errorCode, setErrorCode] = useState<string | null>(null);
   const [scoring, setScoring] = useState(false);
   const [scorecard, setScorecard] = useState<Scorecard | null>(null);
   const [scoreError, setScoreError] = useState<string | null>(null);
@@ -58,6 +63,24 @@ export function useRoleplaySession(): UseRoleplaySession {
   const micStreamRef = useRef<MediaStream | null>(null);
   const contextSentRef = useRef(false);
   const slidesShownRef = useRef<string[]>([]);
+
+  // Cleanup any live session on tab unload so the ElevenLabs concurrency
+  // slot is freed immediately rather than waiting for the WS to time out.
+  useEffect(() => {
+    const cleanup = () => {
+      try { conversationRef.current?.endSession(); } catch { /* ignore */ }
+      conversationRef.current = null;
+      micStreamRef.current?.getTracks().forEach((t) => t.stop());
+      micStreamRef.current = null;
+    };
+    window.addEventListener("beforeunload", cleanup);
+    window.addEventListener("pagehide", cleanup);
+    return () => {
+      window.removeEventListener("beforeunload", cleanup);
+      window.removeEventListener("pagehide", cleanup);
+      cleanup();
+    };
+  }, []);
 
   const appendMessage = useCallback((message: unknown) => {
     // ElevenLabs sends a normalized shape with `source` + `message`.
@@ -104,6 +127,7 @@ export function useRoleplaySession(): UseRoleplaySession {
     async (scenario: PracticeScenario, difficulty: Difficulty, agentId: string) => {
       if (startingRef.current || conversationRef.current) return;
       setError(null);
+      setErrorCode(null);
       setScorecard(null);
       setScoreError(null);
       setTranscript([]);
@@ -121,13 +145,36 @@ export function useRoleplaySession(): UseRoleplaySession {
         // Pre-acquire the mic and KEEP the stream alive for the whole
         // session. Without this, some browsers hand the SDK a stream that
         // is never actually opened, so the agent can hear nothing.
-        micStreamRef.current = await navigator.mediaDevices.getUserMedia({ audio: true });
+        try {
+          micStreamRef.current = await navigator.mediaDevices.getUserMedia({ audio: true });
+        } catch (micErr) {
+          const name = (micErr as DOMException)?.name ?? "";
+          if (name === "NotAllowedError" || name === "SecurityError") {
+            setErrorCode("MIC_BLOCKED");
+            throw new Error(
+              "Microphone blocked. Click the lock icon in your browser's address bar, allow microphone access, then try again.",
+            );
+          }
+          if (name === "NotFoundError" || name === "OverconstrainedError") {
+            setErrorCode("MIC_NOT_FOUND");
+            throw new Error("No microphone detected. Plug one in or check your input device, then try again.");
+          }
+          throw micErr;
+        }
 
         const { data, error: fnError } = await supabase.functions.invoke(
           "elevenlabs-roleplay-token",
           { body: { agentId } },
         );
-        if (fnError) throw new Error(fnError.message);
+        if (fnError) {
+          const ctx = (fnError as { context?: { code?: string; error?: string } }).context;
+          if (ctx?.code) setErrorCode(ctx.code);
+          throw new Error(ctx?.error || fnError.message || "Could not start the session.");
+        }
+        if (data?.code && !data?.signedUrl) {
+          setErrorCode(data.code);
+          throw new Error(data.error || "Could not start the session.");
+        }
         const signedUrl = typeof data?.signedUrl === "string" ? data.signedUrl : null;
         if (!signedUrl) {
           throw new Error("No ElevenLabs signed URL returned");
@@ -226,10 +273,20 @@ export function useRoleplaySession(): UseRoleplaySession {
           },
         },
       );
-      if (fnError) throw new Error(fnError.message);
+      if (fnError) {
+        const ctx = (fnError as { context?: { error?: string } }).context;
+        throw new Error(ctx?.error || fnError.message || "Scoring failed");
+      }
       const scoreResponse = data as (Scorecard & { error?: string });
       if (scoreResponse.error) throw new Error(scoreResponse.error);
       setScorecard(scoreResponse);
+      // Persist so a refresh after scoring still shows the result
+      try {
+        localStorage.setItem(
+          SCORECARD_KEY,
+          JSON.stringify({ scenarioId: scenario.id, scorecard: scoreResponse, ts: Date.now() }),
+        );
+      } catch { /* quota / private mode */ }
     } catch (e) {
       setScoreError(e instanceof Error ? e.message : "Scoring failed");
     } finally {
@@ -243,6 +300,7 @@ export function useRoleplaySession(): UseRoleplaySession {
     setScorecard(null);
     setScoreError(null);
     setError(null);
+    setErrorCode(null);
   }, []);
 
   const sendContext = useCallback((text: string) => {
@@ -259,6 +317,17 @@ export function useRoleplaySession(): UseRoleplaySession {
     }
   }, []);
 
+  const restoreScorecard = useCallback((scenarioId: string) => {
+    try {
+      const raw = localStorage.getItem(SCORECARD_KEY);
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as { scenarioId: string; scorecard: Scorecard; ts: number };
+      if (parsed?.scenarioId === scenarioId && parsed.scorecard) {
+        setScorecard(parsed.scorecard);
+      }
+    } catch { /* ignore */ }
+  }, []);
+
   return {
     status,
     isSpeaking,
@@ -272,7 +341,9 @@ export function useRoleplaySession(): UseRoleplaySession {
     scoreSession,
     reset,
     error,
+    errorCode,
     sendContext,
     trackSlide,
+    restoreScorecard,
   };
 }

@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "npm:@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -7,8 +8,55 @@ const corsHeaders = {
 
 interface TranscriptTurn { role: "rep" | "buyer"; text: string }
 
+async function callAiWithRetry(body: unknown, apiKey: string): Promise<Response> {
+  const delays = [400, 900, 1800];
+  let last: Response | null = null;
+  for (let i = 0; i <= delays.length; i++) {
+    const r = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (r.ok) return r;
+    last = r;
+    // Only retry on transient gateway errors
+    if (![429, 500, 502, 503, 504].includes(r.status)) return r;
+    if (i === delays.length) break;
+    const jitter = Math.floor(Math.random() * 250);
+    await new Promise((res) => setTimeout(res, delays[i] + jitter));
+  }
+  return last!;
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+
+  // Auth gate
+  const authHeader = req.headers.get("Authorization");
+  if (!authHeader?.startsWith("Bearer ")) {
+    return new Response(JSON.stringify({ error: "Sign in required." }), {
+      status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+  try {
+    const supabase = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_ANON_KEY")!,
+      { global: { headers: { Authorization: authHeader } } },
+    );
+    const { data: claims, error: authErr } = await supabase.auth.getClaims(
+      authHeader.replace("Bearer ", ""),
+    );
+    if (authErr || !claims?.claims) {
+      return new Response(JSON.stringify({ error: "Auth check failed." }), {
+        status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+  } catch {
+    return new Response(JSON.stringify({ error: "Auth check failed." }), {
+      status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
 
   try {
     const {
@@ -78,25 +126,29 @@ Rules:
 - "slideCoverage" grades whether the rep covered the right slides for this persona — penalise skipping critical ones.
 - Terminology: must use 'Generative AI', 'Recommended Actions', 'Operational Data'. Forbidden: FOQA, FDM, ASAP. Product names have NO spaces: Comply365, SafetyManager365, ContentManager365, TrainingManager365.`;
 
-    const r = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    const r = await callAiWithRetry({
         model: "google/gemini-2.5-flash",
         messages: [
           { role: "system", content: system },
           { role: "user", content: `Transcript:\n${transcriptText}\n\nReturn the JSON only.` },
         ],
         response_format: { type: "json_object" },
-      }),
-    });
+      }, LOVABLE_API_KEY);
 
     if (!r.ok) {
       const err = await r.text();
-      throw new Error(`AI gateway error ${r.status}: ${err}`);
+      console.error(`AI gateway ${r.status}:`, err);
+      if (r.status === 429) {
+        return new Response(JSON.stringify({ error: "Scoring is busy right now. Wait a moment and try again." }), {
+          status: 503, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      if (r.status === 402) {
+        return new Response(JSON.stringify({ error: "AI quota reached — please contact your admin." }), {
+          status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      throw new Error(`AI gateway error ${r.status}`);
     }
 
     const data = await r.json();
