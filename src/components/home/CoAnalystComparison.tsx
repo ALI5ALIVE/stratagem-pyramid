@@ -1,21 +1,21 @@
-import { Brain, X, CheckCircle2 } from "lucide-react";
+import { Sparkles, X, CheckCircle2 } from "lucide-react";
 import StatSourceChip from "@/components/shared/StatSourceChip";
 
-export default function CoAnalystComparison() {
+export default function IntelligenceLayer() {
   return (
     <section className="border-b border-border/60 relative overflow-hidden">
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,_hsl(var(--primary)/0.10),transparent_60%)]" />
       <div className="max-w-7xl mx-auto px-6 py-24">
         <div className="text-center">
           <div className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-primary">
-            <Brain className="h-3.5 w-3.5" /> The intelligence edge — CoAnalyst
+            <Sparkles className="h-3.5 w-3.5" /> The intelligence layer — built on your operational data
           </div>
           <div className="mt-8 flex items-end justify-center gap-6 md:gap-12 flex-wrap">
             <div>
               <div className="font-display text-7xl md:text-8xl font-bold tracking-tight text-foreground leading-none">~90%</div>
               <div className="mt-2 flex items-center justify-center gap-2 text-xs uppercase tracking-[0.22em] text-primary">
                 Domain accuracy at L4–5
-                <StatSourceChip source="Internal CoAnalyst evaluation against curated operational corpus (manuals, SMS reports, training records). Bloom's L4–5 = analyze/evaluate tasks." />
+                <StatSourceChip source="Internal evaluation of the Comply365 intelligence layer against a curated operational corpus (manuals, SMS reports, training records). Bloom's L4–5 = analyze/evaluate tasks." />
               </div>
             </div>
             <div className="text-3xl md:text-5xl font-display font-light text-muted-foreground/60 pb-2">vs</div>
@@ -41,7 +41,7 @@ export default function CoAnalystComparison() {
           </div>
           <div className="rounded-2xl border border-primary/40 bg-primary/5 p-6">
             <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-primary">
-              <CheckCircle2 className="h-3.5 w-3.5" /> CoAnalyst
+              <CheckCircle2 className="h-3.5 w-3.5" /> Intelligence Layer
             </div>
             <p className="mt-3 text-sm text-foreground leading-relaxed">
               "Per <span className="font-semibold">QRH 7.12 r.14</span> (effective 14 Mar): step 3 changed from manual cutoff to FADEC arbitration. <span className="font-semibold">42 crews</span> have not yet completed recurrent."
@@ -53,7 +53,7 @@ export default function CoAnalystComparison() {
         </div>
 
         <p className="mt-10 text-base md:text-lg text-foreground max-w-3xl mx-auto leading-relaxed text-center">
-          CoAnalyst is the only operational AI that understands your manuals, your safety reports and your training records — together.
+          The intelligence layer of the system of intelligence — the only operational AI that understands your manuals, your safety reports and your training records together.
         </p>
       </div>
     </section>
