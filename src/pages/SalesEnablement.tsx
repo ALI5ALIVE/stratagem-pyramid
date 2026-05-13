@@ -12,6 +12,8 @@ import SEClosingForReps from "@/components/sales-enablement-slides/SEClosingForR
 import SEPlainEnglishShift from "@/components/sales-enablement-slides/SEPlainEnglishShift";
 import SEDiscoveryToClose from "@/components/sales-enablement-slides/SEDiscoveryToClose";
 import SEUseCaseCheatSheet from "@/components/sales-enablement-slides/SEUseCaseCheatSheet";
+import SEDtopWhiteboardDrill from "@/components/sales-enablement-slides/SEDtopWhiteboardDrill";
+import SEDtopWhiteboardRunbook from "@/components/sales-enablement-slides/SEDtopWhiteboardRunbook";
 
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
 import PFSlide9Value from "@/components/platform-slides/PFSlide9Value";
@@ -38,7 +40,7 @@ const weekProps = {
     learningGoal:
       "By the end of Week 1 you can explain why the market is shifting, give the one-sentence platform pitch, walk the DTOP loop (Detect → Trigger → Orchestrate → Prove) on a whiteboard, and name the six signal sources behind Detect — without jargon, without reading off a slide.",
     estimatedMinutes: 14,
-    upNext: ["Plain-English definition", "The platform at a glance", "DTOP — the operating loop", "Value unlocked", "Recap talk track"],
+    upNext: ["Plain-English definition", "The platform at a glance", "DTOP — the operating loop", "DTOP whiteboard drill", "Value unlocked", "Recap talk track"],
   },
   w2: {
     moduleNumber: 3,
@@ -82,6 +84,8 @@ const slides = [
   // WEEK 1 continues — Module 2 content (no extra divider; Week 1 banner covers it)
   { id: "se-slide-whatis", label: "M2 · The Platform", component: TechV4PlatformOverview },
   { id: "se-slide-dtop", label: "M2 · DTOP", component: TechV4Slide5DTOP },
+  { id: "se-slide-dtop-whiteboard", label: "Week 1 · DTOP Whiteboard Drill", component: SEDtopWhiteboardDrill },
+  { id: "se-slide-dtop-whiteboard-runbook", label: "Week 1 · Whiteboard Runbook", component: SEDtopWhiteboardRunbook },
   { id: "se-slide-value", label: "M2 · Value Unlocked", component: PFSlide9Value },
   { id: "se-slide-recap-m2", label: "M2 · Recap", component: SERecapSlide },
   // WEEK 2
