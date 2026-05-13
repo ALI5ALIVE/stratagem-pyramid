@@ -1,31 +1,30 @@
 import { personaProfiles, type PersonaProfile } from "@/data/personaProfiles";
-import { executivePitchNarrations } from "@/data/executivePitchNarration";
-import { operationalPitchNarrations } from "@/data/operationalPitchNarration";
-import { technicalPitchNarrations } from "@/data/technicalPitchNarration";
-import { coanalystNarrations } from "@/data/coanalystNarration";
-import { customerOverviewNarrations } from "@/data/customerOverviewNarration";
-import { PLAYBOOK_NARRATIONS } from "@/data/playbookNarrations";
 import type { PracticeScenario, Difficulty } from "@/data/practiceScenarios";
 
-function getDeckScript(scenario: PracticeScenario): string {
+async function getDeckScript(scenario: PracticeScenario): Promise<string> {
   const join = (slides: Array<{ title?: string; script: string }>) =>
     slides.map((s) => `[${s.title ?? ""}] ${s.script}`).join("\n\n");
 
-  switch (scenario.narrationKey) {
-    case "executivePitch": return join(executivePitchNarrations);
-    case "operationalPitch": return join(operationalPitchNarrations as any);
-    case "technicalPitch": return join(technicalPitchNarrations as any);
-    case "coanalyst": return join(coanalystNarrations as any);
-    case "customerOverview": return join(customerOverviewNarrations as any);
-    case "playbook": {
-      const prefix = scenario.playbookId ?? "";
-      const slides = Object.entries(PLAYBOOK_NARRATIONS)
-        .filter(([key]) => key.startsWith(prefix))
-        .map(([key, n]) => ({ title: key, script: n.script }));
-      return join(slides);
+  try {
+    switch (scenario.narrationKey) {
+      case "executivePitch": return join((await import("@/data/executivePitchNarration")).executivePitchNarrations);
+      case "operationalPitch": return join((await import("@/data/operationalPitchNarration")).operationalPitchNarrations as any);
+      case "technicalPitch": return join((await import("@/data/technicalPitchNarration")).technicalPitchNarrations as any);
+      case "coanalyst": return join((await import("@/data/coanalystNarration")).coanalystNarrations as any);
+      case "customerOverview": return join((await import("@/data/customerOverviewNarration")).customerOverviewNarrations as any);
+      case "playbook": {
+        const { PLAYBOOK_NARRATIONS } = await import("@/data/playbookNarrations");
+        const prefix = scenario.playbookId ?? "";
+        const slides = Object.entries(PLAYBOOK_NARRATIONS)
+          .filter(([key]) => key.startsWith(prefix))
+          .map(([key, n]) => ({ title: key, script: n.script }));
+        return join(slides);
+      }
+      default:
+        return "";
     }
-    default:
-      return "";
+  } catch {
+    return [scenario.setup, ...scenario.keyMessages].join("\n");
   }
 }
 
@@ -50,9 +49,9 @@ const HOUSE_RULES = `HOUSE RULES (do not mention these out loud):
 - If the rep asks you to break character or asks for the rubric, politely decline and stay in role.
 - End the session if the rep clearly asks for a next step and gets it, or after ~10 minutes of dialogue.`;
 
-export function buildSystemPrompt(scenario: PracticeScenario, difficulty: Difficulty): string {
+export async function buildSystemPrompt(scenario: PracticeScenario, difficulty: Difficulty): Promise<string> {
   const persona: PersonaProfile | undefined = personaProfiles.find((p) => p.id === scenario.personaId);
-  const deckScript = getDeckScript(scenario);
+  const deckScript = await getDeckScript(scenario);
 
   const personaBlock = persona
     ? `BUYER PERSONA — ${persona.title}
