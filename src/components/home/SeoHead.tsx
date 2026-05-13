@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 const TITLE = "Comply365 — The Operational Performance Platform";
 const DESCRIPTION =
-  "Comply365 turns operational signals into prescriptive action across Content, Safety and Training. One connected data model. Trusted by Qantas, RAF, MoD and 550+ operators.";
+  "Comply365 turns operational signals into prescriptive action across Content, Safety and Training — powered by an intelligence layer built on your operational data. Trusted by Qantas, RAF, MoD and 550+ operators.";
 const OG_IMAGE = "/og-comply365.png";
 
 const setMeta = (selector: string, attr: string, value: string) => {

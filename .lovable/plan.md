@@ -1,151 +1,81 @@
+## Homepage refinement plan
 
-# Comply365 Home Page — World-Class Refresh Plan
+Scope: `src/pages/Comply365Home.tsx` and components under `src/components/home/`. No other pages, no routing, no backend.
 
-Goal: take the home page from "intellectually serious B2B" to **conversion-grade enterprise marketing** on par with Stripe, Datadog, Palantir, and Linear — without losing the differentiated DTOP / signals narrative that's already working.
+### 1. Drop "CoAnalyst" branding from the homepage
 
-Scope: `src/pages/Comply365Home.tsx` and a small set of new components under `src/components/home/`. No backend or routing changes.
+Replace every customer-facing mention of "CoAnalyst" with **"Intelligence Layer"** (positioned as the intelligence layer of the system of intelligence). The CoAnalyst product name continues to exist elsewhere (decks, playbooks) — this only affects the public homepage.
 
----
+Files:
+- `src/components/home/CoAnalystComparison.tsx` → rename to `IntelligenceLayer.tsx`. Update copy:
+  - Eyebrow: "The intelligence layer — built on your operational data"
+  - Right-hand answer card label: "Intelligence Layer" (was "CoAnalyst")
+  - Closing line: "The intelligence layer of the system of intelligence — the only operational AI that understands your manuals, your safety reports and your training records together."
+  - Keep the 90% vs 35% stat and `StatSourceChip` attribution intact.
+- `src/components/home/ProductShowcase.tsx` → rename the first tab from "CoAnalyst" to "Ask the Intelligence Layer". Update pin labels and any in-tab body copy.
+- `src/pages/Comply365Home.tsx` → swap import + component name, update any section headings/anchors that say "CoAnalyst".
+- `SeoHead.tsx` → strip "CoAnalyst" from `<title>`, meta description, and JSON-LD; replace with "intelligence layer".
 
-## 1. New Section Order (product-first)
+### 2. Reorder sections — DTOP right after the trust bar
 
-Current order buries the product behind 4 framing sections. New order surfaces it on the second scroll and front-loads trust.
+New order:
 
 ```text
-1. Hero                       (kept, refined)
-2. Trust bar — real logos     (NEW position, moved up from §9)
-3. Product showcase           (NEW — the missing piece)
-4. The Shift / Why now        (merged Signals + Stakes + Today/Tomorrow)
-5. Three modules              (kept, denser)
-6. DTOP operating model       (kept, with motion)
-7. CoAnalyst intelligence     (kept, with sourced stat)
-8. Customer proof             (NEW — quotes + named outcome)
-9. Personas / role deep-link  (kept, condensed)
-10. Final CTA                 (kept, simplified to one primary CTA)
-11. Footer                    (NEW — security, integrations, compliance, legal)
+Hero
+Trust bar
+DTOP (operating model — anchors the new way of working)
+Product showcase (3 Tuesday vignettes)
+Why now
+Intelligence Layer (90% vs 35% + before/after)
+Customer proof
+Personas
+Final CTA
+Footer
 ```
 
-Net effect: 10 same-shaped sections become 9 differently-shaped sections with real visual variety.
+Implementation: reorder JSX in `Comply365Home.tsx`. No component changes required for this step beyond moving `<AnimatedDTOP />` above `<ProductShowcase />`.
 
----
+Add a one-line bridge under the DTOP heading so it lands cleanly after the hero:
+> "Every signal travels the same path — here's what that looks like for the people running it."
+This sentence becomes the visual handoff into the product showcase.
 
-## 2. Section-by-Section Changes
+### 3. Rewrite the product showcase — three concrete Tuesday vignettes
 
-### Hero (refine)
-- Keep the headline and DTOP strap.
-- Replace the dual CTA with **one primary** ("Book a walkthrough" → opens scheduling modal) + one secondary text link ("See the platform →").
-- Add an **inline product peek** on the right side at `lg:` breakpoint — a single annotated UI tile (CoAnalyst answering a manual question, or a DTOP control card) so the hero shows the product, not just words.
-- Add `<title>`, meta description, OG image, and JSON-LD `Organization` + `SoftwareApplication` schema via a small `<SeoHead />` component.
+Replace the current three abstract tabs (CoAnalyst / Safety / Manuals) with three **role-based vignettes**, each tied to a real Tuesday-morning event, action, and outcome. Same tabbed structure; sharper content.
 
-### Trust bar (move up + upgrade)
-- Replace the text-in-box logos with **real greyscale SVG logos** (Qantas, RAF, MoD, British Airways, Delta, plus 2 more).
-- Single line, low-contrast, "Trusted by operators of mission-critical fleets" eyebrow.
-- Add the 3 trust metrics (550+ customers, ~2.5M users, 6 continents) inline — small, not as a separate stat grid.
+| Tab | Role | Event (8:42am) | Action | Outcome |
+|---|---|---|---|---|
+| 1 | **Director of Safety** | Crew report flags repeat altitude deviation on approach into LHR | Intelligence Layer surfaces 3 similar reports in 14 days, links to current SOP rev, drafts a recommended action | Investigation opened, Tech Pubs + Training auto-notified, audit trail started |
+| 2 | **Head of Training** | 42 crews flagged as not yet recurrent on QRH 7.12 r.14 (effective 14 Mar) | One click assigns the delta module in TrainingManager365, sets due date, notifies line managers | Compliance gap closed before next ops review; evidence filed |
+| 3 | **Tech Pubs Manager** | Regulator publishes EASA AD 2026-0098 affecting 2 fleet types | System maps the AD to 7 affected procedures, drafts revisions for review, flags downstream training impact | Revision cycle drops from 6 weeks to 4 days; nothing falls through the cracks |
 
-### Product showcase (NEW)
-- Three-tab interactive showcase: **CoAnalyst · Safety control surface · Connected manuals**.
-- Each tab shows a real annotated screenshot/UI mock with 2–3 callout pins explaining what the user is seeing.
-- Built as a self-contained component: `src/components/home/ProductShowcase.tsx`.
-- Uses real product screenshots if available, otherwise a high-fidelity Tailwind/SVG mock that matches the in-app aesthetic.
+Each tab card shows:
+- Top: time chip ("Tuesday 08:42") + role chip
+- Middle: a realistic-looking UI panel (inbox row → expanded card → action button) — reuse the annotated-pin pattern already in `ProductShowcase.tsx`, but simplify pins to **one per panel** for clarity
+- Bottom: a single outcome line with a metric (e.g. "6 weeks → 4 days", "42 crews assigned in 1 click")
 
-### The Shift (merge Signals + Stakes + Today/Tomorrow)
-- Collapse three sections into one **"Why now"** section with a denser, two-column layout:
-  - Left: signal definition + 4 signal-type chips (compressed from current 4 cards).
-  - Right: the cost stats with **`StatSourceChip`** on each ($25–35B, ~65%, 70%) — sources already documented in `mem://content/dtop/industry-exposure-figure` and `mem://brand/trust-signals`.
-- Drop the strikethrough Today/Tomorrow list — replace with a single horizontal "from → to" strip using the brand's existing pattern.
+Section heading rewrite:
+- H2: "Tuesday morning, before coffee."
+- Sub: "Three roles. Three signals. Three resolved by lunch."
 
-### Three modules (denser)
-- Keep the 3-card row but add a **one-line outcome** per module (e.g. "Audit-ready in days, not weeks") instead of the abstract blurb.
-- Add a tiny "Connected data model" diagram below the row (3 modules → shared substrate node) — replaces the current text-only "One Connected Data Model" line.
+This replaces the current "What it actually looks like on Tuesday morning" wording, which tested as confusing.
 
-### DTOP (add motion)
-- Keep the 4-step pipeline.
-- Add a subtle **animated signal traveling D → T → O → P** on viewport-enter (Framer Motion, ~3s loop, respects `prefers-reduced-motion`).
-- Add 1 short concrete example below each step (e.g. Detect: "Crew report flags a procedure deviation").
+### 4. Memory updates
 
-### CoAnalyst (add source + visual)
-- Keep the 90% vs 35% comparison.
-- Add `StatSourceChip` to both numbers (per `mem://content/coanalyst/accuracy-headline`).
-- Add a small **before/after answer comparison** card: same question, generic LLM answer vs CoAnalyst answer with citations to operational manuals — visual proof of the 90% claim.
+After implementation, update:
+- `mem://index.md` Core: add rule "Public homepage uses 'Intelligence Layer' — never 'CoAnalyst'."
+- New memory `mem://content/homepage/terminology` capturing the rename + scope (homepage only; decks unaffected).
 
-### Customer proof (NEW)
-- 3 named customer quote cards with: portrait/initials, name, role, company, 1-sentence quote, 1 outcome metric.
-- Use placeholder names if real testimonials aren't available yet, marked clearly as illustrative — or pull from the existing materials in the deck.
+### Out of scope
 
-### Personas (condense)
-- Keep the 4-card grid but compress padding by ~30% and remove the duplicate per-persona email chips at the bottom of the page (currently appears twice).
+- Decks, playbooks, persona pages, sales enablement (CoAnalyst stays there).
+- Any new screenshots/illustrations beyond reusing the existing pin pattern.
+- Routing, auth, password gate, backend, narration.
 
-### Final CTA (simplify)
-- One headline, one primary CTA, one secondary text link.
-- Remove the persona email chips here (already covered in §9).
-- **Replace `mailto:` with a real scheduling modal** (Calendly/Chili Piper iframe or a 3-field form posting to an edge function). Implementation: a `<BookWalkthroughDialog />` component triggered by every "Book a walkthrough" button on the page.
+### Acceptance
 
-### Footer (NEW)
-- 4 columns: Platform · Solutions · Trust (Security, Compliance, Integrations, Status) · Company.
-- Pre-empts procurement/IT gatekeeper objections raised in the evaluation.
-- Stub pages can be created later — the footer just needs the links visible.
-
----
-
-## 3. New / Modified Files
-
-| File | Action |
-|---|---|
-| `src/pages/Comply365Home.tsx` | Rewrite — new section order, simpler section components |
-| `src/components/home/SeoHead.tsx` | NEW — title, meta, OG, JSON-LD |
-| `src/components/home/ProductShowcase.tsx` | NEW — tabbed product visuals |
-| `src/components/home/AnimatedDTOP.tsx` | NEW — DTOP with signal animation |
-| `src/components/home/CoAnalystComparison.tsx` | NEW — before/after answer card |
-| `src/components/home/CustomerQuotes.tsx` | NEW — testimonial grid |
-| `src/components/home/HomeFooter.tsx` | NEW — full marketing footer |
-| `src/components/home/BookWalkthroughDialog.tsx` | NEW — replaces mailto CTAs |
-| `src/components/home/TrustLogos.tsx` | NEW — greyscale SVG customer logos |
-| `src/assets/logos/*.svg` | NEW — customer logo SVGs (placeholder if real ones not licensed) |
-| `src/components/shared/StatSourceChip.tsx` | Reuse — already exists |
-
----
-
-## 4. Acceptance Criteria
-
-- A first-time visitor sees a real product visual within the first scroll.
-- Every numeric claim on the page has a source chip.
-- Customer logos render as greyscale SVGs, not text in boxes.
-- At least 2 customer quotes with named role + company appear above the fold of the proof section.
-- Exactly **one** primary CTA appears throughout, and it opens a scheduling modal — no `mailto:` links remain on the page.
-- Page passes Lighthouse SEO ≥ 95 and has valid `SoftwareApplication` JSON-LD.
-- DTOP pipeline animates on scroll-in and respects `prefers-reduced-motion`.
-- All new colors come from the existing design system tokens — no hardcoded hex.
-- Mobile (≤ 768px) layout verified at 375px and 768px widths.
-
----
-
-## 5. Out of Scope (call out so we don't scope-creep)
-
-- Real customer testimonial content/legal sign-off — placeholders used until provided.
-- Stub destination pages for new footer links (Security, Status, Integrations) — links exist, pages are a follow-up.
-- A full booking backend — the dialog can post to an edge function or embed a third-party scheduler.
-- Localization / i18n.
-- Replacing the password gate.
-
----
-
-## 6. Risks
-
-- **Logo licensing**: real customer logos may need approval. Fallback: show greyscale silhouettes labeled "Tier-1 airline · Defense agency · National rail operator" — still more credible than current text boxes.
-- **Product screenshots**: if no real UI exists for a section, the high-fidelity mock must be clearly representative, not misleading.
-- **Animation cost**: Framer Motion adds ~30KB. Acceptable for a marketing page.
-
----
-
-## 7. Suggested Build Order (so the page is shippable at every step)
-
-1. SEO head + footer (quick wins, zero risk)
-2. Trust logos + section reorder
-3. Stat source chips on every number
-4. Product showcase component
-5. Customer quotes
-6. CTA consolidation + booking dialog
-7. DTOP animation + CoAnalyst comparison
-8. Final polish + mobile QA
-
-Each step leaves the page in a deployable state.
+- No occurrence of "CoAnalyst" in `src/pages/Comply365Home.tsx` or `src/components/home/**`.
+- DTOP section renders immediately after the trust bar.
+- Three vignette tabs render with role chip, time chip, single annotated panel, and outcome metric.
+- Lighthouse SEO unaffected; JSON-LD still valid.
+- Mobile (375px) and current viewport (1372px) both verified.

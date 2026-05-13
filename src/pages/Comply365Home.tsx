@@ -103,7 +103,7 @@ const Hero = () => (
               <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
               <span className="h-2.5 w-2.5 rounded-full bg-amber-500/80" />
               <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/80" />
-              <span className="ml-3 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">CoAnalyst</span>
+              <span className="ml-3 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Intelligence Layer</span>
             </div>
             <div className="p-5 space-y-4">
               <div className="rounded-lg bg-muted/40 px-3 py-2 text-sm">
@@ -388,10 +388,10 @@ export default function Comply365Home() {
       <TopBar />
       <Hero />
       <TrustLogos />
+      <AnimatedDTOP />
       <ProductShowcase />
       <WhyNow />
       <Platform />
-      <AnimatedDTOP />
       <CoAnalystComparison />
       <CustomerQuotes />
       <Personas />
