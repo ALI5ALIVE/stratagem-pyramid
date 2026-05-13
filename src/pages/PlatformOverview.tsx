@@ -14,8 +14,6 @@ import {
   Zap,
   CheckCircle2,
   Network,
-  AlertTriangle,
-  TrendingUp,
   Lock,
   ServerCog,
   Database,
@@ -28,7 +26,6 @@ import {
 import PlatformArchitectureDiagramV4 from "@/components/platform-slides/PlatformArchitectureDiagramV4";
 import logo from "@/assets/comply365-logo-white.png";
 import PersonaTabs, { usePersonaState } from "@/components/personas/PersonaTabs";
-import { PERSONAS, getPersona } from "@/components/personas/personaConfig";
 import TrustLogos from "@/components/home/TrustLogos";
 import CustomerQuotes from "@/components/home/CustomerQuotes";
 import StatSourceChip from "@/components/shared/StatSourceChip";
