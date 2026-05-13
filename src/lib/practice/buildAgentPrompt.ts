@@ -39,6 +39,26 @@ function difficultyDirective(d: Difficulty): string {
   }
 }
 
+const PERSONA_LENS: Record<string, string> = {
+  "ceo-coo": "You evaluate everything through revenue protection, systemic risk, and competitive separation. You ask 'so what for the P&L and the board?' on every claim.",
+  "vp-safety": "You evaluate everything through hazard intelligence, SMS maturity, audit readiness, and the credibility of aviation-specific AI vs generic AI.",
+  "vp-ops": "You evaluate everything through OTP, completion factor, cascading disruption, crew workflow, and how it lands in the OCC in real time. You hate anything that adds clicks for crew.",
+  "training-director": "You evaluate everything through learner adoption, competency outcomes, time-to-competency, and whether safety findings actually close the loop into training.",
+  "cio-it": "You evaluate everything through integration, identity (SSO/SAML), data security, tenant isolation, total cost of ownership and how this rationalises existing tools.",
+};
+
+const PERSONA_SLIDE_FLAVOR: Record<string, string> = {
+  "ceo-coo": "Frame your question around board-level value, revenue impact or competitive risk.",
+  "vp-safety": "Frame your question around hazard identification, audit evidence or SMS maturity.",
+  "vp-ops": "Frame your question around OTP, disruption prevention or how this lands in the OCC.",
+  "training-director": "Frame your question around adoption, competency or how training closes the loop on findings.",
+  "cio-it": "Frame your question around integration, security, identity or total cost.",
+};
+
+export function getPersonaSlideFlavor(personaId: string): string {
+  return PERSONA_SLIDE_FLAVOR[personaId] ?? "";
+}
+
 const HOUSE_RULES = `HOUSE RULES (do not mention these out loud):
 - Product names have NO spaces: Comply365, SafetyManager365, ContentManager365, TrainingManager365.
 - Use 'Generative AI', 'Recommended Actions', 'Operational Data'. Never say FOQA, FDM, ASAP.
@@ -53,9 +73,11 @@ const HOUSE_RULES = `HOUSE RULES (do not mention these out loud):
 export async function buildSystemPrompt(scenario: PracticeScenario, difficulty: Difficulty): Promise<string> {
   const persona: PersonaProfile | undefined = personaProfiles.find((p) => p.id === scenario.personaId);
   const deckScript = await getDeckScript(scenario);
+  const lens = PERSONA_LENS[scenario.personaId] ?? "";
 
   const personaBlock = persona
     ? `BUYER PERSONA — ${persona.title}
+YOUR LENS: ${lens}
 Reports to: ${persona.reportsTo}
 Org context: ${persona.orgContext}
 Profile: ${persona.profileSummary}
@@ -63,9 +85,9 @@ Top priorities:
 ${persona.strategicPriorities.slice(0, 4).map((s) => `- ${s}`).join("\n")}
 Daily pains:
 ${persona.dailyPains.slice(0, 4).map((s) => `- ${s}`).join("\n")}
-Likely objections:
-${persona.objections.slice(0, 5).map((o) => `- "${o.objection}"`).join("\n")}
-Discovery questions you naturally ask:
+REQUIRED PUSHBACKS — you MUST raise at least two of these during the call (in your own words, when relevant):
+${persona.objections.slice(0, 4).map((o) => `- "${o.objection}"`).join("\n")}
+REQUIRED DISCOVERY — if the rep doesn't volunteer the answer, you MUST ask at least three of these (in your own words):
 ${persona.discoveryQuestions.slice(0, 5).map((q) => `- ${q}`).join("\n")}`
     : `BUYER PERSONA — ${scenario.buyerLabel}`;
 
