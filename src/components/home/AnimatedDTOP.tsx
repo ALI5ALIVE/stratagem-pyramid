@@ -25,7 +25,7 @@ export default function AnimatedDTOP() {
           DTOP turns events into control.
         </h2>
         <p className="mt-4 text-muted-foreground max-w-2xl">
-          Every signal travels the same path: from operational data to evidenced outcome.
+          Every signal travels the same path — here's what that looks like for the people running it.
         </p>
 
         {/* Animated pipeline */}
