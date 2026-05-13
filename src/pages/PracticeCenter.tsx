@@ -317,6 +317,27 @@ export default function PracticeCenter() {
                 Next <ChevronRight className="ml-1 h-4 w-4" />
               </Button>
             </div>
+            {/* Slide chip rail — jump anywhere */}
+            <div className="flex gap-1 overflow-x-auto border-t border-border/40 px-3 py-2">
+              {execPitch3Slides.map((s, i) => {
+                const active = i === currentSlide;
+                return (
+                  <button
+                    key={s.id}
+                    type="button"
+                    onClick={() => setCurrentSlide(i)}
+                    className={`shrink-0 rounded px-2 py-1 text-[10px] transition ${
+                      active
+                        ? "bg-primary/20 text-foreground ring-1 ring-primary/50"
+                        : "text-muted-foreground hover:bg-muted/40 hover:text-foreground"
+                    }`}
+                    title={s.label}
+                  >
+                    {i + 1}. {s.label}
+                  </button>
+                );
+              })}
+            </div>
           </Card>
 
           {/* Right: session panel */}
@@ -324,6 +345,9 @@ export default function PracticeCenter() {
             <Card className="flex h-[560px] flex-col bg-card/60">
               <div className="flex items-center justify-between border-b border-border/40 px-5 py-3">
                 <div className="flex items-center gap-3">
+                  <div className={`flex h-7 w-7 items-center justify-center rounded-full border ${persona?.borderColor ?? "border-border"} ${persona?.bgColor ?? ""}`}>
+                    <PersonaIcon className={`h-3.5 w-3.5 ${persona?.color ?? "text-foreground"}`} />
+                  </div>
                   <div
                     className={`h-2 w-2 rounded-full ${
                       session.status === "connected"
@@ -335,14 +359,17 @@ export default function PracticeCenter() {
                         : "bg-muted-foreground/40"
                     }`}
                   />
-                  <div className="text-sm font-medium">
-                    {session.status === "connected"
-                      ? session.isSpeaking
-                        ? "Buyer speaking…"
-                        : "Listening — your turn"
-                      : session.status === "connecting"
-                      ? "Connecting…"
-                      : "Idle"}
+                  <div>
+                    <div className="text-sm font-medium leading-tight">{scenario.buyerLabel}</div>
+                    <div className="text-[11px] text-muted-foreground">
+                      {session.status === "connected"
+                        ? session.isSpeaking
+                          ? "Buyer speaking…"
+                          : "Listening — your turn"
+                        : session.status === "connecting"
+                        ? "Connecting…"
+                        : `Ready · ${difficulty}`}
+                    </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
