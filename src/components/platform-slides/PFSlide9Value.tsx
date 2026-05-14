@@ -18,23 +18,22 @@ const PFSlide9Value = ({ slideNumber, ...props }: PFSlide9ValueProps) => {
       slideNumber={slideNumber ?? 9}
       {...props}
     >
-      <div className="h-full grid grid-cols-1 md:grid-cols-5 gap-2">
+      <div className="h-full grid grid-cols-2 md:grid-cols-5 gap-2">
         {valuePillars.map((pillar, i) => {
           const Icon = iconMap[pillar.icon] || Sparkles;
           return (
-            <div key={i} className="p-3 rounded-lg border border-border bg-card flex flex-col gap-2">
-              <Icon className={`h-5 w-5 ${pillar.color}`} />
-              <h3 className={`text-xs font-semibold ${pillar.color}`}>{pillar.title}</h3>
-              <p className="text-[10px] text-muted-foreground leading-relaxed">{pillar.description}</p>
+            <div key={i} className="p-2.5 rounded-lg border border-border bg-card flex flex-col gap-1.5">
+              <Icon className={`h-4 w-4 ${pillar.color}`} />
+              <h3 className={`text-xs font-semibold leading-tight ${pillar.color}`}>{pillar.title}</h3>
               <ul className="space-y-1 mt-auto">
-                {pillar.bullets.map((b, j) => (
-                  <li key={j} className="text-[10px] text-foreground/70 flex gap-1.5">
+                {pillar.bullets.slice(0, 2).map((b, j) => (
+                  <li key={j} className="text-[10px] text-foreground/70 flex gap-1.5 leading-snug">
                     <span className={`${pillar.color} shrink-0`}>•</span>
                     <span>{b}</span>
                   </li>
                 ))}
               </ul>
-              <div className={`text-[10px] font-medium ${pillar.color} pt-1 border-t border-border`}>{pillar.shift}</div>
+              <div className={`text-[10px] font-medium ${pillar.color} pt-1.5 border-t border-border/50 leading-snug`}>{pillar.shift}</div>
             </div>
           );
         })}
