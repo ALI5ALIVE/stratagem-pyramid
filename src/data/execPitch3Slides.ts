@@ -67,7 +67,7 @@ export const sectionDividerProps = {
 export const execPitch3Slides = [
   { id: "exec3-slide-0", label: "Title", component: TechSlideOpener, isTransition: true },
   { id: "exec3-slide-1", label: "Strategic Shift", component: TechSlide1StrategicShift, buyerFocus: "the operational gap between data volume and decision speed" },
-  { id: "exec3-slide-outcomes", label: "Customer Outcomes", component: CustomerOutcomesSlide, buyerFocus: "named customer outcomes — push for proof and named references" },
+  { id: "exec3-slide-outcomes", label: "Customer Outcomes", component: CustomerOutcomesSlide, buyerFocus: "named customer outcomes — push for proof and named references", unlocksROI: true },
   { id: "exec3-slide-platform", label: "The Platform", component: TechV4PlatformOverview, buyerFocus: "the unified platform vs point tools — push on integration, not features" },
   { id: "exec3-divider-dtop", label: "▸ DTOP", component: TechSlideLayerDivider, dividerProps: dividerProps.dtop, isTransition: true },
   { id: "exec3-slide-dtop", label: "DTOP — System of Work", component: TechV4Slide5DTOP, buyerFocus: "Detect → Trigger → Orchestrate → Prove and how it lands in the OCC" },

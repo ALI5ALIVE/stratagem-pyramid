@@ -1,88 +1,117 @@
-# Practice Center — slide↔buyer alignment review
+# Practice Center — Buyer agent realism + ROI gating
 
-## What's wrong today
+## Problem
 
-Walking through the deck while the agent is live, four issues hurt the experience:
+Two issues observed on the skeptical CEO/COO scenario:
 
-1. **Initial-slide noise.** The slide-change effect fires the moment the session connects on slide 0 (Title). The buyer is already mid-greeting ("Hi, I'm Alex…"), so it gets a *second* "rep just moved to slide 1: Title — stay silent" instruction on top of its opening. Confusing and duplicated.
-2. **Divider slides treated like content slides.** Slides like `▸ DTOP`, `▸ Mobile`, `▸ Intelligence Layer`, `▸ Regulation Management`, `▸ 2026 Phased Roadmap` are 2-second transitions. The buyer should not ask "tell me more about ▸ DTOP" — they should wait for the next real slide. Today the silence timer fires on these and the buyer asks a question about a divider.
-3. **Slide context is too thin.** The buyer only gets the slide *label* ("CoAnalyst"). It has no slide-specific focus, so questions drift to whatever the persona last cared about, not what's on screen. The HOUSE_RULES say "anchor to the slide's topic" but the agent has no topic to anchor to.
-4. **Rapid slide flipping spams the agent.** If the rep clicks Next three times to skip dividers, three context updates get queued and the agent reacts to a stale slide. There's no debounce.
-5. **No UI feedback.** The rep can't tell whether the buyer is "tracking" the current slide, listening, or about to ask a question. Silent until it talks.
+1. **The buyer defaults to ROI on every slide.** The skeptical persona prompt + `keyMessages` ("Measurable ROI within 12 months") + `PERSONA_LENS` ("revenue protection… so what for the P&L") + `PERSONA_SLIDE_FLAVOR.ceo-coo` ("board-level value, revenue impact") all push the agent toward money questions regardless of what's on screen. The result: even on slide 1 (Strategic Shift) the buyer asks about payback.
+2. **The agent feels scripted.** It always ends with a question, asks one objection per turn at the same cadence, never reacts emotionally, never references its own world (yesterday's incident, recent reg change, fleet size), and stacks 2–3 asks in one breath. It also ignores the rep's energy.
+
+Plus a small runtime bug discovered while reading the slide-change effect: `(debounce as any)._silenceTimer = silenceTimer` crashes because `setTimeout` returns a `number`. Fix it with a `useRef`.
 
 ## Goal
 
-When the rep advances a slide, the buyer is **always aligned to what's on screen**, never asks about transition slides, never duplicates the opening, and the rep can *see* it's tracking.
+- Until the rep reaches **slide 2 — Customer Outcomes** (`exec3-slide-outcomes`), the buyer must **not** ask about ROI, payback, business case, dollars, total cost, pricing, or "tangible benefits." On those early slides, questions stay anchored to the topic of the slide (problem framing, platform shape, DTOP if shown later).
+- From `exec3-slide-outcomes` onward, ROI/proof/business-case questions are **unlocked** and expected when the slide warrants them.
+- Make the buyer feel closer to a real exec: varied cadence, occasional silence, short reactions, references their own world, single thread per turn, allowed to concede points, only sometimes ends with a question.
 
-## Changes
+## Scope (frontend only, no backend)
 
-All frontend, no backend or agent-prompt changes other than data.
+- `src/lib/practice/buildAgentPrompt.ts` — add a slide-aware ROI gate to `HOUSE_RULES`, add a "REALISM RULES" block, soften persona pushbacks so they're not all money-flavored, and change `PERSONA_SLIDE_FLAVOR.ceo-coo` so it does not say "revenue impact" by default.
+- `src/pages/PracticeCenter.tsx` —
+  - Send the **slide id**, **slide index**, and an explicit **ROI unlocked: yes/no** flag in every `sendContext` call (both the initial slide-change note and the silence-ask note).
+  - Replace the broken `(debounce as any)._silenceTimer` stash with a `useRef<number | null>` so the runtime errors stop.
+- `src/data/execPitch3Slides.ts` — add a small `unlocksROI: true` marker on the Customer Outcomes slide so the page logic doesn't hard-code an id.
 
-### 1. `src/data/execPitch3Slides.ts` — add per-slide focus
+No changes to: scoring edge function, `useRoleplaySession`, scenarios list, voices, narration data, or slide components.
 
-Add an optional `buyerFocus?: string` and `isTransition?: boolean` field to each slide. Examples:
+## Behaviour rules added to the agent prompt
 
-- Title → `isTransition: true` (no buyer prompt; opening line covers it)
-- Strategic Shift → focus: "the operational gap between data volume and decision speed"
-- Customer Outcomes → focus: "named customer outcomes — push for proof and named references"
-- The Platform → focus: "the unified platform vs point tools — push on integration, not features"
-- ▸ DTOP / ▸ Mobile / ▸ Intelligence / ▸ Regulation / ▸ Roadmap → `isTransition: true`
-- DTOP — System of Work → focus: "Detect → Trigger → Orchestrate → Prove and how it lands in the OCC"
-- Unified Mobile → focus: "one shell for crew — adoption, offline, and clicks per task"
-- Automation → focus: "what gets automated end-to-end and the human-in-the-loop boundary"
-- Insights — Just Ask → focus: "natural-language access to operational data — who can ask what"
-- CoAnalyst → focus: "~90% domain accuracy at L4–5 vs ~35% generic AI — push on how that's measured"
-- CoAnalyst vs Generic AI → focus: "why generic AI fails on aviation context — proof, not claims"
-- Recommendations & Prescriptive Actions → focus: "from recommendation to action — approval, audit, rollback"
-- Regulation Management → focus: "tracing a reg change to an in-app procedure update"
-- 2026 Phased Roadmap → focus: "locked dates, committed phases, and what's POC vs GA"
-- Why Comply365 → focus: "the three differentiators — push for the next step / commercial path"
+A new block appended to `HOUSE_RULES`:
 
-### 2. `src/pages/PracticeCenter.tsx` — fix the slide-change effect
+```text
+SLIDE-AWARE TOPIC GATE
+- Every system note tells you the slide id, slide index and whether ROI is unlocked.
+- Until ROI is explicitly unlocked, you MUST NOT ask about ROI, payback period,
+  business case, total cost, price, licensing, "tangible benefits", or the board case.
+  If those topics are on your mind, hold them. The rep gets to that slide.
+- Until ROI is unlocked, anchor every question to the topic of the current slide:
+  the problem on slide 1, customer outcomes on slide 2, the platform on slide 3,
+  DTOP on slide 5, mobile, intelligence, regulation, roadmap.
+- Once ROI is unlocked, you may probe proof, named references, payback, and
+  the commercial path — but still anchored to the slide on screen.
 
-Replace the current `useEffect` (lines 84–109):
+REALISM RULES (act like a real executive, not a chatbot)
+- Vary your cadence. Sometimes a one-word reaction ("hmm", "okay", "go on")
+  instead of a question. Sometimes a short statement instead of a question.
+  Only ~60% of your turns should end with a question.
+- One thread per turn. Never stack two or three questions in a single reply.
+- Use your own world. Reference yesterday's incident, last week's audit, your
+  fleet size, a recent reg change — the kind of texture a real buyer brings.
+- React to the rep's energy. If they sound rushed, slow them down. If they
+  oversell, get drier. If they land a strong point, you may concede ("fair
+  point") — you are not obliged to push back on everything.
+- Speak naturally for voice. Contractions, half-sentences, the occasional
+  trailing thought are fine. Avoid bullet-point speech and corporate jargon
+  dumps.
+- Stay in your persona's lens, but apply it through the slide on screen,
+  not through ROI by default.
+```
 
-- **Skip on first connect for slide 0.** Track `firstSlideAfterConnectRef`; if `currentSlide === 0` and the buyer's opening hasn't been heard yet (transcript has 0 buyer turns OR `lastNotifiedSlideRef.current === -1`), do not send a context update. Just `trackSlide` and arm the silence timer with a *longer* threshold (12s) so the opening can complete.
-- **Skip transition slides entirely.** If `slide.isTransition`, just `trackSlide(slide.label)` for scoring telemetry and return — no context message, no silence timer. Buyer keeps listening for the next real slide.
-- **Debounce rapid clicks.** Wrap the context send + timer arm in a 600ms debounce keyed on `currentSlide`. If the rep advances again within 600ms, the previous send is cancelled. Guarantees the agent only ever gets context for the slide the rep actually rests on.
-- **Richer context message.** Use `slide.buyerFocus` when present:
-  > "The rep just moved to slide N of M: '<label>'. Focus area: <buyerFocus>. Stay silent and let the rep walk you through it. Only respond when they speak."
-- **Silence timer.** Same 8s threshold for content slides, 12s for slide 0. Skip if buyer is currently speaking (already done) and skip if `transcript.length` grew (already done). Add: skip if `currentSlide` is a transition (defensive — debounce should already prevent it).
-- **Cleanup.** Both the debounce timeout and silence timeout cleared on slide change, disconnect, and unmount.
+The CEO/COO persona block also gets a softened slide flavor:
 
-### 3. `src/pages/PracticeCenter.tsx` — small UI alignment cues
+```text
+PERSONA_SLIDE_FLAVOR.ceo-coo:
+"Frame your question around the strategic shift, the operating model, or
+competitive separation — not ROI — until the rep reaches the Customer
+Outcomes slide."
+```
 
-In the slide footer (the "Slide X / Y — Label" row at line ~277), add a subtle status pill on the right when connected:
+`difficultyDirective("skeptical")` updated so "push back on numbers" only fires once ROI is unlocked.
 
-- "● Buyer following" (emerald, when slide just changed and timer is armed)
-- "● Buyer listening" (muted, default)
-- "● Buyer speaking" (amber, when `session.isSpeaking`)
-- Hide entirely on transition slides — replace with muted text "Section divider — buyer is waiting".
+## Page-side wiring
 
-This is the only signal the rep needs; no countdown, no extra chrome.
+In `PracticeCenter.tsx`:
 
-### 4. Quick prompt nudge (no edge-function change)
+1. Add `const silenceTimerRef = useRef<number | null>(null);` and use it in place of the broken `(debounce as any)._silenceTimer` stash. Clear it on debounce, on slide change, on disconnect, and on unmount.
+2. Compute `roiUnlocked = execPitch3Slides.slice(0, currentSlide + 1).some(s => (s as any).unlocksROI)` and append it to both context messages:
 
-In `src/lib/practice/buildAgentPrompt.ts` HOUSE_RULES, replace the slide-tracking line with:
-> "When you receive a system note that the rep moved to a new slide, anchor your *next* question or reaction to that slide's topic and focus area. If a system note says the slide is a section divider, do nothing and wait for the next real slide."
+```text
+Context for the buyer (do not read aloud):
+- slide_id: exec3-slide-1
+- slide_index: 1 of 18
+- slide_label: "Strategic Shift"
+- focus: the operational gap between data volume and decision speed
+- roi_unlocked: NO  ← do not ask about ROI, payback, business case, price
+```
 
-That's it. No persona, scenario, or scoring changes.
+and the silence-ask note appends:
 
-## Verification (manual — Practice Center is voice-driven, no automated harness)
+```text
+Ask ONE short buyer-style question that probes THIS slide's topic.
+roi_unlocked: NO — do not ask about ROI, payback or business case. Stay
+on the slide topic.
+```
 
-Run through these once after the change:
+When `roiUnlocked === true` the same message switches to:
 
-1. **Cold start.** Connect on Title slide → buyer greets and finishes; no duplicate "stay silent" context arrives; no silence question fires before the rep speaks.
-2. **Skip three dividers fast.** Click Next four times across `▸ DTOP → DTOP slide → ▸ Mobile → Mobile slide`. Confirm only one context message lands (for the final slide rested on) and nothing about the dividers.
-3. **Sit on a content slide silently.** Stay quiet 10s on Customer Outcomes → buyer asks a customer-outcomes-flavoured question (cite a named customer / proof).
-4. **Pitch immediately after advancing.** Move to The Platform and start talking within 3s → no canned silence prompt fires; buyer reacts to what you said.
-5. **Backwards navigation.** Press Left arrow back to a slide already shown → buyer gets a context update for the new slide; silence timer behaves the same.
-6. **End mid-arming.** Move to a slide, immediately End the session → no stray context messages fire after disconnect.
-7. **UI cues.** While connected, the footer pill cycles between "Buyer listening / following / speaking" correctly and shows "Section divider — buyer is waiting" on dividers.
+```text
+roi_unlocked: YES — proof, named references and payback are now fair game,
+but anchor your question to the slide on screen.
+```
+
+3. The `unlocksROI: true` marker is added to `exec3-slide-outcomes` only. Slide 1 (Strategic Shift) and the title remain locked.
+
+## Verification
+
+- Cold start the CEO/COO skeptical scenario. On slides 0 and 1, sit silent past the 8s timer; the buyer's question must be about the strategic shift / operational gap, not money. Repeat on the platform slide before reaching outcomes.
+- Advance to Customer Outcomes; sit silent; the buyer should now feel free to ask "who specifically — and what was the payback?" or similar.
+- Skip dividers fast — no buyer prompt fires, no console errors.
+- Confirm the runtime error `Cannot create property '_silenceTimer' on number` is gone after navigating across several slides.
+- Spot-check the VP Ops and CIO scenarios on slide 1 to confirm they also stay off ROI early (ops should ask about disruption / OCC; CIO about integration / identity).
 
 ## Out of scope
 
-- No edge-function changes (`elevenlabs-roleplay-token`, `-score`, `-kb-sync` untouched).
-- No `useRoleplaySession` API changes.
-- No new scenarios, personas, or voice routing.
-- No slide content rewrites.
+- No new scenarios, no new voices, no scoring changes.
+- No edits to `useRoleplaySession`, edge functions, or knowledge base.
+- No rework of slide order or content.
