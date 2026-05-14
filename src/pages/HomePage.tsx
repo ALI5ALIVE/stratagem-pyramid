@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { 
   Rocket, Briefcase, BookOpen, 
   Presentation, Brain, 
-  ArrowRight, Users, ScrollText, Workflow, Layers, Sparkles, Zap, Smartphone, GraduationCap, Radio
+  ArrowRight, Users, ScrollText, Workflow, Layers, Sparkles, Zap, Smartphone, GraduationCap, Radio, Mic
 } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
 
@@ -176,6 +176,14 @@ export default function HomePage() {
               icon: GraduationCap,
               badge: "24 slides · ~35 min",
               accent: "from-emerald-500 to-primary",
+            }} />
+            <DeckCardComponent card={{
+              title: "Practice Center",
+              description: "Live voice role-play with AI-driven buyer personas. Reps rehearse discovery, objection handling, and closing — scored on the spot.",
+              href: "/practice-center",
+              icon: Mic,
+              badge: "New · voice role-play",
+              accent: "from-primary to-violet-500",
             }} />
           </div>
         </section>
