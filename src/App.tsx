@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import { AppLayout } from "./components/AppLayout";
 import HomePage from "./pages/HomePage";
+import OperationalPlatformHome from "./pages/OperationalPlatformHome";
 import SlideDeck from "./pages/SlideDeck";
 
 import HomepageMockup from "./pages/HomepageMockup";
@@ -72,7 +73,8 @@ const App = () => (
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route element={<AppLayout />}>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<OperationalPlatformHome />} />
+            <Route path="/home-legacy" element={<HomePage />} />
             <Route path="/strategy" element={<SlideDeck />} />
             
             <Route path="/value-deck" element={<ValueDeck />} />
