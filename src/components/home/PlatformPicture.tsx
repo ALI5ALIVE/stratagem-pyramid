@@ -1,4 +1,4 @@
-import platformImg from "@/assets/comply365-platform-ecosystem.png";
+import PlatformArchitectureDiagramV4 from "@/components/platform-slides/PlatformArchitectureDiagramV4";
 
 export default function PlatformPicture() {
   return (
@@ -10,12 +10,10 @@ export default function PlatformPicture() {
             One platform. Four layers. One closed loop.
           </h2>
         </div>
-        <div className="overflow-hidden rounded-2xl border border-border/40 bg-card/40 p-4 lg:p-8">
-          <img
-            src={platformImg}
-            alt="Comply365 platform ecosystem — four layers of operational performance"
-            className="mx-auto w-full max-w-5xl"
-          />
+        <div className="rounded-2xl border border-border/40 bg-card/40 p-6 lg:p-10">
+          <div className="mx-auto w-full max-w-5xl">
+            <PlatformArchitectureDiagramV4 />
+          </div>
         </div>
       </div>
     </section>
