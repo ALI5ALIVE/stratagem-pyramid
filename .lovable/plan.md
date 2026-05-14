@@ -1,34 +1,75 @@
-## Add Operational Performance Roadmap to Sales Enablement Foundation
+## Goal
 
-The "Operational Performance Roadmap" is the maturity-curve slide rendered by `Slide5MaturityCurve` (used in Executive Pitch 2 as `exec2-slide-9` "Maturity Roadmap" and on `/maturity-curve` under the headline "The Operational Performance Roadmap"). It walks the five maturity stages from Fragmented & Reactive → Predictive & Self-Healing.
+Add a **whiteboard drill slide** for the Operational Performance Roadmap in Sales Enablement Week 1, so reps can hand-draw the five-stage maturity curve in the room and sell the vision without slides.
 
-### Changes
+## Where it goes
 
-**1. `src/pages/SalesEnablement.tsx`**
-- Import `Slide5MaturityCurve` from `@/components/slides/Slide5MaturityCurve`.
-- Insert a new Week 1 slide entry between `se-slide-value` and `se-slide-recap-m2`:
+Sales Enablement → Week 1 (Foundation), inserted **immediately after** `se-slide-maturity-roadmap` and **before** `se-slide-recap-m2`.
+
+```text
+… Value unlocked
+   → Operational Performance Roadmap            (existing)
+   → Operational Performance Roadmap Whiteboard (NEW)
+   → Recap talk track
+```
+
+## What to build
+
+**1. New component** `src/components/sales-enablement-slides/SERoadmapWhiteboardDrill.tsx`
+
+Same visual pattern as `SEDtopWhiteboardDrill.tsx` (cream whiteboard panel + stroke script on the right).
+
+Whiteboard SVG (hand-drawn Caveat font) shows:
+- A simple **hockey-stick curve** rising left-to-right
+- **5 numbered nodes** along the curve with stage names + DTOP-aligned colours:
+  1. Fragmented & Reactive (red)
+  2. Managed / Siloed (blue)
+  3. Connected Governance (teal) — marked **"INFLECTION · PLATFORM SHIFT"**
+  4. Intelligent Operations (violet)
+  5. Predictive Operations (amber/gold)
+- A **"YOU ARE HERE for most"** flag drawn **between stage 1 (Fragmented) and stage 2 (Managed/Siloed)** — pointing to the flat part of the curve where most buyers actually live
+- Y-axis label "value / capability", X-axis label "time / maturity"
+
+Right-hand **stroke script** (6 strokes, ~90 sec):
+1. Draw the axes — "value goes up, time goes right"
+2. Draw stages 1–2 flat and **plant the YOU ARE HERE flag between them** — "this is where most ops live today: fragmented data, siloed teams, reactive workflows"
+3. Draw the inflection at stage 3 — "this is the platform shift; lessons start to flow between safety, training, comms"
+4. Draw the curve up through stage 4 — "AI-assisted: weak-signal detection, prioritised interventions"
+5. Draw stage 5 at the top — "predictive: prevent the event before it happens"
+6. Tap the YOU-ARE-HERE flag again — "your job in the next 12 months isn't stage 5. It's getting from here, across the platform shift, to stage 3."
+
+Footer chip: "Practice 3× · time-box to 90 seconds · this is the vision sale."
+
+**2. Register in** `src/pages/SalesEnablement.tsx`
+
+- Import `SERoadmapWhiteboardDrill`
+- Insert slide entry between maturity-roadmap and recap-m2:
+  ```ts
+  { id: "se-slide-maturity-whiteboard", label: "W1 · Roadmap Whiteboard Drill", component: SERoadmapWhiteboardDrill }
   ```
-  { id: "se-slide-maturity-roadmap", label: "W1 · Operational Performance Roadmap", component: Slide5MaturityCurve },
-  ```
-- Update `weekProps.w1.upNext` to include "Operational Performance Roadmap" before "Recap talk track".
-- Update `weekProps.w1.estimatedMinutes` from 14 → 17 (one extra ~3-min teaching slide).
+- Append `"Operational Performance Roadmap whiteboard"` to `weekProps.w1.upNext`
+- Bump `weekProps.w1.estimatedMinutes` from 17 → 19
 
-**2. `src/data/salesEnablementNarration.ts`**
-- Add a new entry `se-slide-maturity-roadmap` following the 5-part Coach Script Standard (Why → Core Message → Pain → Value pivot → How to deliver → Transition).
-- Update the previous slide (`se-slide-value`) closing line so it bridges into the roadmap, not directly into the recap. New tail: *"Then bridge to the Operational Performance Roadmap — that's where they see themselves on the curve."*
-- Keep `se-slide-recap-m2` as the slide AFTER the roadmap; no other narration files touched.
+**3. Add narration in** `src/data/salesEnablementNarration.ts`
 
-### Narration draft (new entry)
+New `se-slide-maturity-whiteboard` entry following the **5-part Coach Script Standard**:
+- **Why this drill exists** — the roadmap slide is a great visual, but executives buy when *you* draw it; it proves you own the model.
+- **Core message** — five stages, one inflection. Most buyers live between stage 1 and stage 2 — that's where the YOU-ARE-HERE flag goes. Your job is to sell the *next* stage, not stage 5.
+- **Pain** — buyers think they're at stage 3; they're at 1.5. Naming that honestly is the unlock.
+- **How to deliver** — 90 seconds, 6 strokes, plant the flag between Fragmented and Managed, end by asking *"does that feel about right for where you are today?"* — then shut up.
+- **Transition** — into the Week 1 recap.
 
-> **Week 1 · Operational Performance Roadmap.** Why this slide matters: every prospect already lives somewhere on this curve, and the fastest way to make the conversation real is to let them point at where they are. The core message: operational performance maturity is a five-stage journey — Fragmented and Reactive, Managed, Connected, Proactive, and Predictive and Self-Healing — and the platform is the only one built to move customers along the entire curve. The pain you're addressing: most operators are stuck somewhere between Stage 2 and Stage 3, paying for tools that promised Stage 4 but never delivered because the foundation was never connected. The value lever: this is the only roadmap where each stage builds on the one below it, because every stage runs on the same connected foundation closed by DTOP. Delivery tip — do not present the curve, navigate it. Show all five stages, then ask one question: which stage best describes you today, and which stage are you being asked to reach in the next twelve to eighteen months? Their answer is the scope of every follow-up conversation. Avoid promising Stage 5 capabilities — Predictive and Self-Healing is roadmap, not today. Transition: now we recap Week 1 in three sentences you can repeat from memory.
+Also update `se-slide-maturity-roadmap` closing line to bridge into the whiteboard drill instead of straight to the recap.
 
-### Out of scope
-- No changes to `Slide5MaturityCurve` itself (it's reused as-is, same as Exec Pitch 2).
-- No exec-pitch / academy-DB / playbook changes.
-- No layout or styling changes.
+## Out of scope
 
-### Verification
-- Sidebar shows new "W1 · Operational Performance Roadmap" entry between Value Unlocked and Recap.
-- Title-pill slide count auto-updates (driven by `slides.length`).
-- Pressing play on the new slide fetches the new narration via the existing `useSalesEnablementNarration` hook (no hook changes needed — it looks up by slide id).
-- Week 1 `estimatedMinutes` reads 17 in the Foundation divider.
+- No changes to `Slide5MaturityCurve.tsx`, exec pitches, academy DB, or PPTX exporters.
+- No styling changes to other SE slides.
+
+## Verification
+
+- Sidebar shows "W1 · Roadmap Whiteboard Drill" in correct position
+- Slide renders at 1381×865 without clipping
+- YOU-ARE-HERE flag visibly sits between stage 1 and stage 2 nodes on the curve
+- Narration plays via existing `useSalesEnablementNarration` hook
+- Week 1 minutes pill shows 19
