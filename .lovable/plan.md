@@ -1,40 +1,40 @@
-# Close the loop on Chris's enablement notes
+## Sales Enablement narration cleanup
 
-Two remaining cleanups against `SalesEnablement.tsx` and the Week 1 narration.
+Reviewed `src/data/salesEnablementNarration.ts` against the live slide order in `src/pages/SalesEnablement.tsx`. Several scripts still reference slides that have been removed or reordered (most notably the old "cost-of-inaction" slide in the Strategic Shift transition), and there are two orphan narration entries for divider slides that no longer exist.
 
-## 1. Rename module labels to match the 3-week structure
+### Fixes
 
-In `src/pages/SalesEnablement.tsx`, every slide label currently uses `M1 …` through `M6 …`. Kathrina + Chris agreed modules should equal weeks (3, not 6). Rename the `label` strings on the existing slide entries so the sidebar reads:
+**1. `se-slide-shift` — remove "what it costs them" reference**
+Current closing line: *"The next slide quantifies what it costs them to live in the old model."*
+The cost-of-inaction slide was removed; the next slide is now the plain-English "Why This Matters" slide.
+→ Replace with: *"The next slide says it in plain English — why this shift matters to them, in three lines you can repeat in any room."*
 
-- Week 1 slides (Strategic Shift through Recap): `W1 · …`
-- Week 2 slides (Core Apps through Capability Talk Track): `W2 · …`
-- Week 3 slides (Discovery through Your enablement plan): `W3 · …`
+**2. `se-slide-dtop` — fix transition to whiteboard drill**
+Current closing line: *"Next: the value this loop unlocks."*
+DTOP is no longer followed by Value — it's followed by the whiteboard drill, then the runbook, then signals.
+→ Replace with: *"Next we drill the loop on a whiteboard — because the rep who can draw DTOP in ninety seconds wins the room."*
+Also keep the existing Signals Specialist Playbook pointer at the end.
 
-Also update the `kicker`/`moduleNumber` fields inside `weekProps` so `w1.moduleNumber = 1`, `w2.moduleNumber = 2`, `w3.moduleNumber = 3` (currently they read 2, 3, 4).
+**3. `se-slide-dtop-whiteboard-runbook` — add transition to signals slide**
+Currently ends with no bridge.
+→ Append: *"Next we zoom into the Detect layer — the six signal sources behind every trigger."*
 
-No slide IDs change — only display labels and divider numbering. The execPitch mapping pill keeps working because it's keyed on slide IDs.
+**4. `se-slide-outcomes` — fix transition to objections**
+Current closing line: *"Next: why we win."*
+Customer Outcomes is now followed by Objections, not Why Comply365.
+→ Replace with: *"Next: the three objections every prospect raises, and how to answer them in three steps."*
 
-## 2. Add a Signals teaching slide in Week 1
+**5. `se-slide-mobile` — tighten transition**
+Current closing references "the capability cheat sheet — your study page before every call." The next slide is the Capability Talk Track. Talk Track *is* the cheat-sheet rehearsal slide so this is acceptable, but rename for clarity.
+→ Replace final sentence with: *"Next: the capability talk track — one plain-English line and one discovery question per capability, ready to rehearse."*
 
-Chris and Kathrina both flagged Signals as core and wanted it covered early. Today the only Signals reference is one line in the Week 1 recap narration.
+**6. Remove orphan narration entries**
+`se-module-5` and `se-module-6` are narrations for divider slides that no longer exist in the deck (the deck only has `se-week-1`, `se-week-2`, `se-week-3` dividers). Delete both entries.
 
-Add a new slide between `se-slide-dtop-whiteboard-runbook` and `se-slide-value`:
+### Out of scope
+- No slide additions/removals in `SalesEnablement.tsx` — narration only.
+- No changes to other narration files (Exec/Tech/Ops decks).
+- No copy edits beyond fixing stale slide references and broken transitions.
 
-- `id: "se-slide-signals"` — label `W1 · The Six Signal Sources`
-- Component: reuse the existing Signals overview slide from `src/components/signals-slides/` (pick the "what is signals / six sources" slide that already exists; if none fits cleanly, create a small new component `SESignalsPrimer.tsx` that lists the six sources — Safety Reports, Operational Data, Maintenance, Crew Logs, Regulatory, Audit — with a one-line explanation each, using the standard `PitchSlideContainer`).
-- Add a matching narration entry in `src/data/salesEnablementNarration.ts` following the 5-part coach-script standard (why it matters, core message, value lever, delivery tip, transition).
-- Trim the Signals reference out of the existing `se-slide-recap-m2` narration so we're not repeating it.
-
-Slide count after the change becomes 28; the dynamic `slideCount` on the title pill picks this up automatically.
-
-## Out of scope
-
-- No content changes to Exec Pitch 3, Practice Center, or playbooks.
-- No decision yet on whether the standalone Platform Playbook should be folded into other assets — flagging that back to Chris/Kathrina rather than acting unilaterally.
-
-## Verification
-
-- Open `/sales-enablement`, sidebar labels read W1/W2/W3 only.
-- Title pill reads "28 slides · 3 weeks · ~50 min".
-- Week 1 contains a dedicated Signals slide between the DTOP whiteboard runbook and Value Unlocked, with its own narration.
-- Maps-to-Exec-Pitch-3 pill still appears on the original mapped slides.
+### Verification
+After edits, every script's "Next: …" line will point at a slide that actually exists in the current `slides[]` array, and no narration entries reference removed dividers.
