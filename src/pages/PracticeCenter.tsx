@@ -3,6 +3,7 @@ import {
   Mic, Play, Square, Loader2, AlertCircle, Sparkles, Maximize2,
   ChevronLeft, ChevronRight, RefreshCw,
   Briefcase, Shield, Plane, GraduationCap, Monitor,
+  ChevronDown, Copy, Lightbulb,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -12,6 +13,7 @@ import { useRoleplaySession } from "@/hooks/useRoleplaySession";
 import { execPitch3Slides } from "@/data/execPitch3Slides";
 import { personaProfiles } from "@/data/personaProfiles";
 import { getPersonaSlideFlavor } from "@/lib/practice/buildAgentPrompt";
+import { getSlidePrompts } from "@/data/practiceSlidePrompts";
 
 const PERSONA_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   Briefcase, Shield, Plane, GraduationCap, Monitor,
@@ -27,6 +29,7 @@ export default function PracticeCenter() {
   const [scenarioId, setScenarioId] = useState<string>(practiceScenarios[0].id);
   const [difficulty, setDifficulty] = useState<Difficulty>("skeptical");
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [promptsOpen, setPromptsOpen] = useState(false);
 
   const session = useRoleplaySession();
   const transcriptEndRef = useRef<HTMLDivElement>(null);
@@ -66,6 +69,15 @@ export default function PracticeCenter() {
 
   const goPrev = () => setCurrentSlide((i) => Math.max(0, i - 1));
   const goNext = () => setCurrentSlide((i) => Math.min(total - 1, i + 1));
+
+  const slidePrompts = getSlidePrompts(slide.id);
+  const isTransitionSlide = (slide as any).isTransition === true;
+
+  const copyToClipboard = (text: string) => {
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(text).catch(() => {});
+    }
+  };
 
   // Keyboard navigation for slides
   useEffect(() => {
@@ -361,6 +373,99 @@ export default function PracticeCenter() {
               <Button size="sm" variant="ghost" onClick={goNext} disabled={currentSlide === total - 1}>
                 Next <ChevronRight className="ml-1 h-4 w-4" />
               </Button>
+            </div>
+
+            {/* Per-slide coaching prompts */}
+            <div className="shrink-0 border-t border-border/40">
+              <button
+                type="button"
+                onClick={() => setPromptsOpen((v) => !v)}
+                className="flex w-full items-center justify-between gap-3 px-4 py-2 text-left transition hover:bg-muted/20"
+              >
+                <div className="flex items-center gap-2 text-xs">
+                  <Lightbulb className="h-3.5 w-3.5 text-primary" />
+                  <span className="font-semibold uppercase tracking-wider text-muted-foreground">
+                    Prompts for this slide
+                  </span>
+                  <span className="text-muted-foreground/70">·</span>
+                  <span className="text-foreground/80">{slide.label}</span>
+                </div>
+                <ChevronDown
+                  className={`h-4 w-4 text-muted-foreground transition-transform ${
+                    promptsOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              {promptsOpen && (
+                <div className="max-h-[260px] overflow-y-auto border-t border-border/30 bg-background/40 px-4 py-3">
+                  {isTransitionSlide || !slidePrompts ? (
+                    <div className="text-xs text-muted-foreground italic">
+                      {isTransitionSlide
+                        ? "Section divider — no prompts. Use this beat to pause and read the room."
+                        : "No prompts authored for this slide yet."}
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      <div>
+                        <div className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-primary">
+                          Opener
+                        </div>
+                        <div className="flex items-start justify-between gap-2 rounded-md border border-border/40 bg-card/60 px-3 py-2">
+                          <p className="text-xs italic text-foreground/90">
+                            "{slidePrompts.opener}"
+                          </p>
+                          <button
+                            type="button"
+                            onClick={() => copyToClipboard(slidePrompts.opener)}
+                            className="shrink-0 rounded p-1 text-muted-foreground hover:bg-muted/30 hover:text-foreground"
+                            aria-label="Copy opener"
+                          >
+                            <Copy className="h-3 w-3" />
+                          </button>
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-primary">
+                          Land these
+                        </div>
+                        <ul className="space-y-1">
+                          {slidePrompts.talkingPoints.map((p) => (
+                            <li key={p} className="flex items-start gap-2 text-xs text-foreground/90">
+                              <span className="mt-1 h-1 w-1 shrink-0 rounded-full bg-primary" />
+                              <span>{p}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div>
+                        <div className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-primary">
+                          Ask the buyer
+                        </div>
+                        <ul className="space-y-1.5">
+                          {slidePrompts.buyerQuestions.map((q) => (
+                            <li
+                              key={q}
+                              className="flex items-start justify-between gap-2 rounded-md border border-border/30 bg-card/40 px-2.5 py-1.5"
+                            >
+                              <span className="text-xs text-foreground/90">"{q}"</span>
+                              <button
+                                type="button"
+                                onClick={() => copyToClipboard(q)}
+                                className="shrink-0 rounded p-1 text-muted-foreground hover:bg-muted/30 hover:text-foreground"
+                                aria-label="Copy question"
+                              >
+                                <Copy className="h-3 w-3" />
+                              </button>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </Card>
 

@@ -1,75 +1,90 @@
 ## Goal
 
-Add a **whiteboard drill slide** for the Operational Performance Roadmap in Sales Enablement Week 1, so reps can hand-draw the five-stage maturity curve in the room and sell the vision without slides.
+Give reps **per-slide coaching prompts** in the Practice Center so they always have an opener, a few talking points, and sample questions to ask the AI buyer for whichever slide is on screen.
 
-## Where it goes
+## Where it lives
 
-Sales Enablement → Week 1 (Foundation), inserted **immediately after** `se-slide-maturity-roadmap` and **before** `se-slide-recap-m2`.
+In `/practice-center`, **inside the left column under the slide stage** (between the slide and the Prev/Next bar, OR as a slim collapsible panel directly beneath the Prev/Next bar).
 
-```text
-… Value unlocked
-   → Operational Performance Roadmap            (existing)
-   → Operational Performance Roadmap Whiteboard (NEW)
-   → Recap talk track
-```
+A new compact card titled **"Prompts for this slide"** that updates as the rep navigates with arrows / Prev / Next. Default **collapsed** so it doesn't distract from delivery; one click expands it. Stays out of the right-hand transcript column so the live conversation isn't crowded.
 
 ## What to build
 
-**1. New component** `src/components/sales-enablement-slides/SERoadmapWhiteboardDrill.tsx`
+**1. New data file** `src/data/practiceSlidePrompts.ts`
 
-Same visual pattern as `SEDtopWhiteboardDrill.tsx` (cream whiteboard panel + stroke script on the right).
+```ts
+export interface SlidePrompts {
+  opener: string;              // one line the rep can say to land on the slide
+  talkingPoints: string[];     // 2–3 short bullets (the message to land)
+  buyerQuestions: string[];    // 2–3 questions the rep can ask the buyer to provoke engagement
+}
+export const practiceSlidePrompts: Record<string, SlidePrompts> = { ... };
+```
 
-Whiteboard SVG (hand-drawn Caveat font) shows:
-- A simple **hockey-stick curve** rising left-to-right
-- **5 numbered nodes** along the curve with stage names + DTOP-aligned colours:
-  1. Fragmented & Reactive (red)
-  2. Managed / Siloed (blue)
-  3. Connected Governance (teal) — marked **"INFLECTION · PLATFORM SHIFT"**
-  4. Intelligent Operations (violet)
-  5. Predictive Operations (amber/gold)
-- A **"YOU ARE HERE for most"** flag drawn **between stage 1 (Fragmented) and stage 2 (Managed/Siloed)** — pointing to the flat part of the curve where most buyers actually live
-- Y-axis label "value / capability", X-axis label "time / maturity"
+Keyed by `slide.id` from `execPitch3Slides.ts`. Covers every non-transition slide:
 
-Right-hand **stroke script** (6 strokes, ~90 sec):
-1. Draw the axes — "value goes up, time goes right"
-2. Draw stages 1–2 flat and **plant the YOU ARE HERE flag between them** — "this is where most ops live today: fragmented data, siloed teams, reactive workflows"
-3. Draw the inflection at stage 3 — "this is the platform shift; lessons start to flow between safety, training, comms"
-4. Draw the curve up through stage 4 — "AI-assisted: weak-signal detection, prioritised interventions"
-5. Draw stage 5 at the top — "predictive: prevent the event before it happens"
-6. Tap the YOU-ARE-HERE flag again — "your job in the next 12 months isn't stage 5. It's getting from here, across the platform shift, to stage 3."
+| Slide id | Theme of prompts |
+|---|---|
+| `exec3-slide-0` | Title — opener line + a "set the room" question |
+| `exec3-slide-1` | Strategic Shift — operational gap framing |
+| `exec3-slide-outcomes` | Customer Outcomes — proof, named references |
+| `exec3-slide-platform` | The Platform — point tools vs unified platform |
+| `exec3-slide-dtop` | DTOP — Detect/Trigger/Orchestrate/Prove walkthrough |
+| `exec3-slide-mobile` | Unified Mobile — adoption, offline, clicks-per-task |
+| `exec3-slide-automation` | Automation — what's automated, human-in-loop boundary |
+| `exec3-slide-insights-summary` | Insights · Just Ask — natural-language access |
+| `exec3-slide-coanalyst` | CoAnalyst — 90% vs 35% accuracy framing |
+| `exec3-slide-tiers-vs-ai` | CoAnalyst vs Generic AI — why generic fails |
+| `exec3-slide-insights` | Recommendations & Prescriptive Actions — approval/audit/rollback |
+| `exec3-slide-regulation` | Regulation Management — reg change → in-app update |
+| `exec3-slide-roadmap-2026` | 2026 Roadmap — POC vs GA, locked dates |
+| `exec3-slide-why` | Why Comply365 — three differentiators + next step |
 
-Footer chip: "Practice 3× · time-box to 90 seconds · this is the vision sale."
+Transition / divider slides (`isTransition: true`) skipped — show a small "Section divider — no prompts" hint.
 
-**2. Register in** `src/pages/SalesEnablement.tsx`
+Content tone: short, conversational, follows existing project terminology (DTOP, CoAnalyst 90% vs 35%, Detect→Trigger→Orchestrate→Prove). Buyer questions are designed to **make the AI buyer talk** so the rep can practise active discovery, not just monologue.
 
-- Import `SERoadmapWhiteboardDrill`
-- Insert slide entry between maturity-roadmap and recap-m2:
-  ```ts
-  { id: "se-slide-maturity-whiteboard", label: "W1 · Roadmap Whiteboard Drill", component: SERoadmapWhiteboardDrill }
-  ```
-- Append `"Operational Performance Roadmap whiteboard"` to `weekProps.w1.upNext`
-- Bump `weekProps.w1.estimatedMinutes` from 17 → 19
+Example for `exec3-slide-coanalyst`:
+- **opener**: "This is the slide that separates us from every generic AI demo you've seen this year."
+- **talking points**:
+  - "Domain-tuned on aviation taxonomy — ICAO, ASR, MOR — not the open web."
+  - "~90% accuracy at L4–5 reasoning vs ~35% for generic models on the same prompts."
+  - "Tenant-isolated — your operational data never trains anyone else's model."
+- **buyer questions**:
+  - "Where would you want to point CoAnalyst first — safety reports, ops data, or training records?"
+  - "Who in your team is currently being asked to answer questions the data should answer?"
+  - "If we benchmarked your current AI tool against CoAnalyst on five of your real questions, would that be useful?"
 
-**3. Add narration in** `src/data/salesEnablementNarration.ts`
+**2. Update** `src/pages/PracticeCenter.tsx`
 
-New `se-slide-maturity-whiteboard` entry following the **5-part Coach Script Standard**:
-- **Why this drill exists** — the roadmap slide is a great visual, but executives buy when *you* draw it; it proves you own the model.
-- **Core message** — five stages, one inflection. Most buyers live between stage 1 and stage 2 — that's where the YOU-ARE-HERE flag goes. Your job is to sell the *next* stage, not stage 5.
-- **Pain** — buyers think they're at stage 3; they're at 1.5. Naming that honestly is the unlock.
-- **How to deliver** — 90 seconds, 6 strokes, plant the flag between Fragmented and Managed, end by asking *"does that feel about right for where you are today?"* — then shut up.
-- **Transition** — into the Week 1 recap.
+- Import `practiceSlidePrompts`
+- Add local state `const [promptsOpen, setPromptsOpen] = useState(false)`
+- Below the slide-controls bar in the left card, add a collapsible region:
+  - Header row with chevron, title "Prompts for this slide", and small slide label
+  - When expanded:
+    - **Opener** — one line in italic muted card
+    - **Land these** — bulleted talking points
+    - **Ask the buyer** — bulleted questions, each with a small **Copy** button (uses `navigator.clipboard.writeText`)
+  - When current slide is a transition: collapsed body shows "Section divider — no prompts"
+- Keyboard: keep arrow-key slide nav. No new shortcut needed.
+- Styling: re-use existing `Card`, `Button`, semantic tokens (`text-muted-foreground`, `text-primary`, `border-border/40`). No new colors.
 
-Also update `se-slide-maturity-roadmap` closing line to bridge into the whiteboard drill instead of straight to the recap.
+**3. No changes to**
+- `practiceScenarios.ts`, `useRoleplaySession`, `buildAgentPrompt`, agent backend
+- Slide components or `execPitch3Slides.ts`
+- Right-column transcript / scorecard / checklist UI
+- Auto-advance / silence-prompt logic
 
 ## Out of scope
 
-- No changes to `Slide5MaturityCurve.tsx`, exec pitches, academy DB, or PPTX exporters.
-- No styling changes to other SE slides.
+- No backend changes, no DB tables, no edge function edits
+- No per-persona prompt variants in v1 (one prompt set per slide; persona lens already tunes the buyer's reactions)
+- No in-call popups or auto-spoken hints — rep opens the panel themselves
 
 ## Verification
 
-- Sidebar shows "W1 · Roadmap Whiteboard Drill" in correct position
-- Slide renders at 1381×865 without clipping
-- YOU-ARE-HERE flag visibly sits between stage 1 and stage 2 nodes on the curve
-- Narration plays via existing `useSalesEnablementNarration` hook
-- Week 1 minutes pill shows 19
+- Open `/practice-center` → cycle through every slide with arrow keys → prompts panel updates each time
+- Copy button on a buyer question writes to clipboard
+- Transition slides show the "no prompts" hint instead of an empty card
+- No layout shift on the slide stage; panel collapses cleanly
+- No regressions in the live AI buyer flow (Start / Next / End / Score)
