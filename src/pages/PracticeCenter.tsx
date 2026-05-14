@@ -70,7 +70,7 @@ export default function PracticeCenter() {
   const goPrev = () => setCurrentSlide((i) => Math.max(0, i - 1));
   const goNext = () => setCurrentSlide((i) => Math.min(total - 1, i + 1));
 
-  const slidePrompts = getSlidePrompts(slide.id);
+  const slidePrompts = getSlidePrompts(scenario.personaId, slide.id);
   const isTransitionSlide = (slide as any).isTransition === true;
 
   const copyToClipboard = (text: string) => {
