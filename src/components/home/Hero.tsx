@@ -70,7 +70,7 @@ function HeroCollage() {
       <div className="absolute right-0 top-32 w-[68%] rounded-xl border border-primary/30 bg-card/90 p-5 shadow-2xl backdrop-blur">
         <div className="mb-2 flex items-center gap-2">
           <div className="h-6 w-6 rounded-md bg-primary/20 text-center text-xs font-bold leading-6 text-primary">CA</div>
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-primary">CoAnalyst · Generative AI</span>
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-primary">System of Intelligence · Generative AI</span>
         </div>
         <p className="text-xs leading-relaxed text-foreground/90">
           Unstable approach trend on RWY 27 — 14 events, 30 days. Cross-references SMS hazard log and training currency.
