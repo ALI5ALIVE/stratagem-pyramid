@@ -24,7 +24,7 @@ const SERoadmapWhiteboardDrill = ({ slideNumber, ...narrationProps }: Props) => 
     showHeader
     {...narrationProps}
   >
-    <div className="h-full grid grid-cols-12 gap-5 px-8 pt-4 pb-6 max-w-[1700px] mx-auto">
+    <div className="h-full min-h-0 grid grid-cols-12 gap-4 px-8 pt-2 pb-2 max-w-[1700px] mx-auto">
       {/* Whiteboard */}
       <div className="col-span-7 rounded-xl bg-[#f5f1e6] border-4 border-[#3a2a1a] shadow-2xl p-6 relative overflow-hidden">
         <div className="absolute top-2 left-3 text-[10px] uppercase tracking-widest text-[#3a2a1a]/60 font-mono">whiteboard · 90 sec · the vision sale</div>
@@ -86,22 +86,22 @@ const SERoadmapWhiteboardDrill = ({ slideNumber, ...narrationProps }: Props) => 
       </div>
 
       {/* Stroke script */}
-      <div className="col-span-5 flex flex-col gap-2">
+      <div className="col-span-5 flex flex-col gap-1.5 min-h-0 overflow-hidden">
         <div className="text-[10px] uppercase tracking-widest text-primary flex items-center gap-2">
           <PenLine className="h-3 w-3" /> Stroke script · say it as you draw it
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1.5 min-h-0">
           {strokes.map((s) => (
-            <div key={s.n} className="flex items-start gap-3 p-2.5 rounded-lg border border-border bg-card/60">
-              <div className={`shrink-0 w-7 h-7 rounded-full ${s.dot} text-background font-bold flex items-center justify-center text-sm`}>{s.n}</div>
+            <div key={s.n} className="flex items-start gap-3 p-2 rounded-lg border border-border bg-card/60">
+              <div className={`shrink-0 w-6 h-6 rounded-full ${s.dot} text-background font-bold flex items-center justify-center text-xs`}>{s.n}</div>
               <div className="min-w-0">
-                <div className={`text-xs font-semibold ${s.color} uppercase tracking-wider`}>{s.label}</div>
-                <p className="text-sm text-foreground leading-snug">"{s.say}"</p>
+                <div className={`text-[10px] font-semibold ${s.color} uppercase tracking-wider`}>{s.label}</div>
+                <p className="text-xs text-foreground leading-snug">"{s.say}"</p>
               </div>
             </div>
           ))}
         </div>
-        <div className="mt-auto flex items-center gap-2 px-3 py-2 rounded-lg bg-primary/10 border border-primary/30 text-xs text-foreground">
+        <div className="mt-auto flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-primary/10 border border-primary/30 text-[11px] text-foreground">
           <Clock className="h-3.5 w-3.5 text-primary" />
           Practice 3× · time-box to <span className="font-bold text-primary">90 seconds</span> · this is the vision sale.
         </div>
