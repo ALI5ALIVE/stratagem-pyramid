@@ -3,7 +3,7 @@ import { ArrowUpRight, FileText, BookOpen, FlaskConical } from "lucide-react";
 const ITEMS = [
   { icon: FileText, kind: "Customer story", title: "How a top-10 carrier closed its safety → training loop in one quarter.", href: "#" },
   { icon: BookOpen, kind: "Analyst & regulator", title: "Where Comply365 sits on the operational performance landscape.", href: "#" },
-  { icon: FlaskConical, kind: "Technical brief", title: "Inside CoAnalyst: domain tuning, tenant isolation, evidence chain.", href: "#" },
+  { icon: FlaskConical, kind: "Technical brief", title: "Inside the System of Intelligence: domain tuning, tenant isolation, evidence chain.", href: "#" },
 ];
 
 export default function ResourcesStrip() {

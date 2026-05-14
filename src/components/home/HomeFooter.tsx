@@ -9,7 +9,7 @@ const COLS = [
       { label: "ContentManager365", to: "/platform#platform" },
       { label: "SafetyManager365", to: "/platform#platform" },
       { label: "TrainingManager365", to: "/platform#platform" },
-      { label: "CoAnalyst", to: "/platform#intelligence" },
+      { label: "System of Intelligence", to: "/platform#intelligence" },
       { label: "DTOP operating model", to: "/platform#dtop" },
     ],
   },
