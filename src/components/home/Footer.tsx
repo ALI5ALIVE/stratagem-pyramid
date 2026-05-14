@@ -41,7 +41,7 @@ export default function Footer() {
       <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
           <div>
-            <Link to="/" className="font-display text-lg font-semibold tracking-tight text-foreground">
+            <Link to="/operational-platform" className="font-display text-lg font-semibold tracking-tight text-foreground">
               Comply<span className="text-primary">365</span>
             </Link>
             <p className="mt-3 max-w-sm text-sm text-muted-foreground">

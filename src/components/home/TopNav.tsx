@@ -13,7 +13,7 @@ export default function TopNav() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/40 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6 lg:px-12">
-        <Link to="/" className="font-display text-lg font-semibold tracking-tight text-foreground">
+        <Link to="/operational-platform" className="font-display text-lg font-semibold tracking-tight text-foreground">
           Comply<span className="text-primary">365</span>
         </Link>
         <nav className="hidden items-center gap-8 md:flex">

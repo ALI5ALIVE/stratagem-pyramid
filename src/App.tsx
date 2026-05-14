@@ -73,8 +73,8 @@ const App = () => (
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route element={<AppLayout />}>
-            <Route path="/" element={<OperationalPlatformHome />} />
-            <Route path="/home-legacy" element={<HomePage />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/operational-platform" element={<OperationalPlatformHome />} />
             <Route path="/strategy" element={<SlideDeck />} />
             
             <Route path="/value-deck" element={<ValueDeck />} />
