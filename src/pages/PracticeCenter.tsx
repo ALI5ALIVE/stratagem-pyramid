@@ -20,6 +20,8 @@ const PERSONA_ICONS: Record<string, React.ComponentType<{ className?: string }>>
 const AGENT_ID = "agent_5601krecj299fy28nwehe96cejrm";
 const DECK_ROUTE = "/pitch-executive-3";
 const REP_SILENCE_MS = 8000;
+const REP_SILENCE_MS_OPENING = 12000;
+const SLIDE_DEBOUNCE_MS = 600;
 
 export default function PracticeCenter() {
   const [scenarioId, setScenarioId] = useState<string>(practiceScenarios[0].id);
@@ -29,6 +31,7 @@ export default function PracticeCenter() {
   const session = useRoleplaySession();
   const transcriptEndRef = useRef<HTMLDivElement>(null);
   const lastNotifiedSlideRef = useRef<number>(-1);
+  const [buyerFollowing, setBuyerFollowing] = useState(false);
 
   const scenario: PracticeScenario = useMemo(
     () => practiceScenarios.find((s) => s.id === scenarioId) ?? practiceScenarios[0],
@@ -82,36 +85,68 @@ export default function PracticeCenter() {
   }, [total]);
 
   // Notify the AI buyer of the current slide. Buyer listens first; only if
-  // the rep stays silent for REP_SILENCE_MS does the buyer ask a question.
+  // the rep stays silent does the buyer ask a slide-anchored question.
+  // - Title and divider slides: tracked for telemetry only, no prompts.
+  // - Rapid Next/Prev clicks debounced so only the resting slide is sent.
   useEffect(() => {
     if (session.status !== "connected") return;
     if (lastNotifiedSlideRef.current === currentSlide) return;
     lastNotifiedSlideRef.current = currentSlide;
-    const flavor = getPersonaSlideFlavor(scenario.personaId);
     session.trackSlide(slide.label);
-    session.sendContext(
-      `The rep just moved to slide ${currentSlide + 1} of ${total}: "${slide.label}". ` +
-      `Stay silent and let the rep walk you through this slide. Only respond when they speak. If they ask you something, react in character.`,
-    );
-    const baselineLen = session.transcript.length;
+
+    const isTransition = (slide as any).isTransition === true;
+    if (isTransition) {
+      setBuyerFollowing(false);
+      return;
+    }
+
+    const flavor = getPersonaSlideFlavor(scenario.personaId);
+    const focus = (slide as any).buyerFocus as string | undefined;
+    const isOpening = currentSlide === 0;
+    const silenceMs = isOpening ? REP_SILENCE_MS_OPENING : REP_SILENCE_MS;
     const slideAtSchedule = currentSlide;
-    const timer = window.setTimeout(() => {
+
+    setBuyerFollowing(true);
+    const followingTimer = window.setTimeout(() => setBuyerFollowing(false), 2500);
+
+    const debounce = window.setTimeout(() => {
       if (session.status !== "connected") return;
       if (slideAtSchedule !== lastNotifiedSlideRef.current) return;
-      if (session.transcript.length !== baselineLen) return;
-      if (session.isSpeaking) return;
+
       session.sendContext(
-        `The rep has not spoken since moving to slide "${slide.label}". ` +
-        `Ask ONE short buyer-style question that probes THIS slide's topic specifically. ${flavor} Stay in character.`,
+        `The rep just moved to slide ${currentSlide + 1} of ${total}: "${slide.label}".` +
+        (focus ? ` Focus area: ${focus}.` : "") +
+        ` Stay silent and let the rep walk you through this slide. Only respond when they speak. If they ask you something, react in character.`,
       );
-    }, REP_SILENCE_MS);
-    return () => window.clearTimeout(timer);
-  }, [currentSlide, session.status, slide.label, total, session, scenario.personaId]);
+      const baselineLen = session.transcript.length;
+      const silenceTimer = window.setTimeout(() => {
+        if (session.status !== "connected") return;
+        if (slideAtSchedule !== lastNotifiedSlideRef.current) return;
+        if (session.transcript.length !== baselineLen) return;
+        if (session.isSpeaking) return;
+        session.sendContext(
+          `The rep has not spoken since moving to slide "${slide.label}".` +
+          (focus ? ` Focus area: ${focus}.` : "") +
+          ` Ask ONE short buyer-style question that probes THIS slide's topic specifically. ${flavor} Stay in character.`,
+        );
+      }, silenceMs);
+      // Stash on the debounce closure for cleanup
+      (debounce as any)._silenceTimer = silenceTimer;
+    }, SLIDE_DEBOUNCE_MS);
+
+    return () => {
+      window.clearTimeout(followingTimer);
+      window.clearTimeout(debounce);
+      const st = (debounce as any)._silenceTimer;
+      if (st) window.clearTimeout(st);
+    };
+  }, [currentSlide, session.status, slide, total, session, scenario.personaId]);
 
   // Reset slide-notification tracker when session ends/restarts
   useEffect(() => {
     if (session.status === "disconnected") {
       lastNotifiedSlideRef.current = -1;
+      setBuyerFollowing(false);
     }
   }, [session.status]);
 
@@ -274,8 +309,34 @@ export default function PracticeCenter() {
               <Button size="sm" variant="ghost" onClick={goPrev} disabled={currentSlide === 0}>
                 <ChevronLeft className="mr-1 h-4 w-4" /> Prev
               </Button>
-              <div className="text-xs text-muted-foreground">
-                Slide {currentSlide + 1} / {total} — <span className="text-foreground">{slide.label}</span>
+              <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                <span>
+                  Slide {currentSlide + 1} / {total} — <span className="text-foreground">{slide.label}</span>
+                </span>
+                {session.status === "connected" && (
+                  (slide as any).isTransition ? (
+                    <span className="text-[11px] text-muted-foreground/80">Section divider — buyer is waiting</span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 text-[11px]">
+                      <span
+                        className={`h-1.5 w-1.5 rounded-full ${
+                          session.isSpeaking
+                            ? "animate-pulse bg-amber-400"
+                            : buyerFollowing
+                            ? "bg-emerald-400"
+                            : "bg-muted-foreground/50"
+                        }`}
+                      />
+                      <span className="text-muted-foreground">
+                        {session.isSpeaking
+                          ? "Buyer speaking"
+                          : buyerFollowing
+                          ? "Buyer following"
+                          : "Buyer listening"}
+                      </span>
+                    </span>
+                  )
+                )}
               </div>
               <Button size="sm" variant="ghost" onClick={goNext} disabled={currentSlide === total - 1}>
                 Next <ChevronRight className="ml-1 h-4 w-4" />
