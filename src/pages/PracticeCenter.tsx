@@ -402,7 +402,7 @@ export default function PracticeCenter() {
               </button>
               {promptsOpen && (
                 <div className="max-h-[260px] overflow-y-auto border-t border-border/30 bg-background/40 px-4 py-3">
-                  {isTransitionSlide || !slidePrompts ? (
+                  {!slidePrompts ? (
                     <div className="text-xs text-muted-foreground italic">
                       {isTransitionSlide
                         ? "Section divider — no prompts. Use this beat to pause and read the room."
