@@ -3,6 +3,7 @@ import {
   Mic, Play, Square, Loader2, AlertCircle, Sparkles, Maximize2,
   ChevronLeft, ChevronRight, RefreshCw,
   Briefcase, Shield, Plane, GraduationCap, Monitor,
+  ChevronDown, Copy, Lightbulb,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -12,6 +13,7 @@ import { useRoleplaySession } from "@/hooks/useRoleplaySession";
 import { execPitch3Slides } from "@/data/execPitch3Slides";
 import { personaProfiles } from "@/data/personaProfiles";
 import { getPersonaSlideFlavor } from "@/lib/practice/buildAgentPrompt";
+import { getSlidePrompts } from "@/data/practiceSlidePrompts";
 
 const PERSONA_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   Briefcase, Shield, Plane, GraduationCap, Monitor,
@@ -27,6 +29,7 @@ export default function PracticeCenter() {
   const [scenarioId, setScenarioId] = useState<string>(practiceScenarios[0].id);
   const [difficulty, setDifficulty] = useState<Difficulty>("skeptical");
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [promptsOpen, setPromptsOpen] = useState(false);
 
   const session = useRoleplaySession();
   const transcriptEndRef = useRef<HTMLDivElement>(null);
@@ -66,6 +69,15 @@ export default function PracticeCenter() {
 
   const goPrev = () => setCurrentSlide((i) => Math.max(0, i - 1));
   const goNext = () => setCurrentSlide((i) => Math.min(total - 1, i + 1));
+
+  const slidePrompts = getSlidePrompts(slide.id);
+  const isTransitionSlide = (slide as any).isTransition === true;
+
+  const copyToClipboard = (text: string) => {
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(text).catch(() => {});
+    }
+  };
 
   // Keyboard navigation for slides
   useEffect(() => {
