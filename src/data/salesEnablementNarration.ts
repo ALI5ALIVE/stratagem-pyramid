@@ -50,6 +50,13 @@ export const salesEnablementNarrations: SESlideNarration[] = [
       "This is the platform diagram and it does the heavy lifting in almost every customer meeting. The core message you must internalise: this is the first platform that joins safety, content, and training onto one operational data foundation, with an intelligence layer on top. The pain you're solving: today they pay for five to seven tools that don't share data and they integrate them with brittle point-to-point connections. The value lever: one foundation means signals from operations actually reach procedures and training — and back. When you deliver this, point to the foundation first, then the apps, then the intelligence layer, then mobile, then DTOP wrapping it all. Resist the urge to dive into any one box. Customers ask for the deep-dive when they're ready — your job here is to land the shape, not the features. Next we go straight into DTOP — the loop that makes this platform worth buying.",
   },
   {
+    slideId: "se-slide-signals",
+    title: "Week 1 · The Six Signal Sources",
+    voiceId: VOICE,
+    script:
+      "Why this matters: every prospect, in every discovery call, will eventually ask 'what data do you actually use?' — and most reps fumble it. This slide is your answer. The core message: Detect listens across six operational signal sources, and the reason DTOP works is that we fuse all six into one Detect layer instead of leaving them in six different tools. Name them in this order, every time — Safety Reports, Operational Data, Maintenance, Crew Logs, Regulatory, Audit. The value lever: point solutions cover one or two of these; only this platform unifies all six and turns them into triggers. Delivery tip — when you walk this slide, point at each source and say one sentence: which signals it carries and which downstream action it can trigger. Then ask the discovery question that converts: which of these six is hardest for you to get clean data out of today? Their answer is your wedge — and it almost always points at Maintenance or Crew Logs. Next: the value this loop unlocks.",
+  },
+  {
     slideId: "se-slide-value",
     title: "Week 1 · Value Unlocked",
     voiceId: VOICE,
