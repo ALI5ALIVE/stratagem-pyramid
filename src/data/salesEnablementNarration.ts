@@ -176,13 +176,6 @@ export const salesEnablementNarrations: SESlideNarration[] = [
       "This is the motion in plain English. The core message: discovery finds the disconnected loop, the walkthrough shows the loop close on their data shape, close scopes the next focused conversation around their highest-cost use case. A deliberate language choice — we say walkthrough, not demo. We are not running a polished customer demo today; we are walking a prospect through how DTOP would close their loop. The pain you're addressing: most reps over-pitch because they're guessing what matters; the three discovery questions stop the guessing. The value lever: outcome-based conversations beat feature checklists every time. Delivery tip — say the three lines, ask the three questions, write down their answers verbatim. Their words become your walkthrough script and the scope of the next session. Next: use cases.",
   },
   {
-    slideId: "se-module-5",
-    title: "Week 3 · Sell & Win Intro",
-    voiceId: VOICE,
-    script:
-      "This stretch of Week 3 is where messaging becomes value. By the end of it you can pick the right plain-English use case for the prospect's pain and walk them through Detect, Trigger, Orchestrate, Prove. We move through the use case cheat sheet, the Regulation Management use case, and customer outcomes. Pick the use case that matches the room — never run all of them.",
-  },
-  {
     slideId: "se-usecase-cheatsheet",
     title: "Week 3 · Use Case Cheat Sheet",
     voiceId: VOICE,
@@ -202,13 +195,6 @@ export const salesEnablementNarrations: SESlideNarration[] = [
     voiceId: VOICE,
     script:
       "Customer outcomes is your social-proof slide and it does more work than any feature slide. The core message: the trust signals you must land — five hundred and fifty plus airlines worldwide, around two and a half million users, six continents. Always cite those exactly. The pain it addresses: nobody wants to be a reference customer; everybody wants to be the next in a long line. The value lever: the long line already exists. Delivery tip — never claim a customer outcome you cannot defend with a named example offline. The figures on this slide are defensible; specific named claims must be cleared before being used. Next: the three objections every prospect raises, and how to answer them in three steps.",
-  },
-  {
-    slideId: "se-module-6",
-    title: "Week 3 · Closing Arc Intro",
-    voiceId: VOICE,
-    script:
-      "This is the closing arc of Week 3. By the end of it you handle the top three objections and walk a prospect to a clear next step. Three slides: the objections cheat sheet — three objections, not five — why Comply365 wins, and your enablement plan as a rep. The list is intentionally three for now — final wording is being reviewed by Marketing.",
   },
   {
     slideId: "se-slide-objections",
