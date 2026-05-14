@@ -1,22 +1,24 @@
 ## Issue
 
-On the Sales Enablement deck, the **W1 · Value Unlocked** slide (`PFSlide9Value`, rendered from `src/components/platform-slides/PFSlide9Value.tsx`) shows 5 pillar cards in a single row. Each card stacks: icon → title → description paragraph → 3 bullets → footer "shift" line. At the SE deck's container height the card content overflows top and bottom — the description and the bottom shift line bleed outside the card frame.
+Sales Enablement slides built on `PitchSlideContainer` (`src/components/shared/PitchSlideContainer.tsx`) get clipped at the bottom by the fixed `PlaybookNarrationBar`.
 
-## Fix scope (frontend only, single file)
+- Narration bar height: ~72px (h-12 button + py-2.5/3 + h-1 progress + border).
+- `PitchSlideContainer` currently sets `pb-10 sm:pb-12` (40–48px) — not enough clearance, so card footers, CTAs, and shift lines render under the play bar.
+- For comparison, `SlideContainer` (used by other playbooks) already uses `pb-16 sm:pb-20` and renders fine.
 
-Edit `src/components/platform-slides/PFSlide9Value.tsx` to shrink the card footprint so all 5 cards fit cleanly in the slide area, without changing source data in `platformPlaybook.ts`.
+This affects every SE slide that uses `PitchSlideContainer` / `SalesSlideContainer` (re-export): `SEPlainEnglishShift`, `SELayerTalkTrack`, `SEDtopWhiteboardDrill`, `SEDtopWhiteboardRunbook`, `SERoadmapWhiteboardDrill`, `SEUseCaseCheatSheet`, `SEObjections`, `SEDiscoveryToClose`, `SEClosingForReps`, `SERecapSlide`, plus exec/tech slides reused in the SE deck.
 
-Changes inside each card:
-1. Tighter padding (`p-3` → `p-2.5`) and reduced internal `gap-2` → `gap-1.5`.
-2. Drop the long description paragraph from the card (keep title, bullets, and shift line — the description duplicates the talk track).
-3. Trim bullets to a max of 2 (slice in the component, no data change).
-4. Smaller icon (`h-5 w-5` → `h-4 w-4`) and smaller title (`text-xs` retained, `leading-tight`).
-5. Footer shift line: keep but remove top border padding to save vertical space (`pt-1` → `pt-1.5` with thinner `border-border/50`).
+## Fix scope (single file, frontend only)
 
-Container: keep `grid-cols-5` on md+, but on smaller widths fall back to `grid-cols-2` (currently goes 1-col then 5-col, which is what causes the squeeze on the SE viewport).
+Edit `src/components/shared/PitchSlideContainer.tsx`:
+
+1. Increase bottom padding on the root container from `pb-10 sm:pb-12` to `pb-24 sm:pb-28` so a ~96–112px safe area sits above the narration bar.
+2. Move the optional bottom-right slide-number pill from `bottom-4 sm:bottom-6` to `bottom-20 sm:bottom-24` so it isn't hidden behind the bar either.
+
+That's it — no per-slide edits, no narration-bar changes, no data changes.
 
 ## Out of scope
 
-- No changes to `valuePillars` data (other playbooks reuse it).
-- No changes to other Value Unlocked slides (IRSlide7Value, MOSlide7Value, etc.) — SE only renders `PFSlide9Value`.
-- No narration, routing, or layout changes elsewhere.
+- Narration bar layout/height (shared across all decks; changing it would shift other decks).
+- Individual slide internals (they use `h-full` inside the container, so the new padding cascades automatically).
+- Routing, narration logic, or content edits.
