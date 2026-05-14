@@ -18,7 +18,8 @@ const PFSlide9Value = ({ slideNumber, ...props }: PFSlide9ValueProps) => {
       slideNumber={slideNumber ?? 9}
       {...props}
     >
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-2 items-start">
+      <div className="h-full flex items-center justify-center">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-2 items-start w-full">
         {valuePillars.map((pillar, i) => {
           const Icon = iconMap[pillar.icon] || Sparkles;
           return (
@@ -38,6 +39,7 @@ const PFSlide9Value = ({ slideNumber, ...props }: PFSlide9ValueProps) => {
             </div>
           );
         })}
+        </div>
       </div>
     </SlideContainer>
   );
