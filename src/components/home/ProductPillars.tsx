@@ -16,7 +16,7 @@ const PILLARS = [
   },
   {
     icon: Brain,
-    name: "CoAnalyst — Intelligence Layer",
+    name: "System of Intelligence",
     desc: "Generative AI tuned to your operation. Recommended Actions grounded in your Operational Data.",
     href: "/coanalyst",
   },

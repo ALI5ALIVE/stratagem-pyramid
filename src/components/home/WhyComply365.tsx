@@ -4,7 +4,7 @@ const WHY = [
   {
     icon: Brain,
     title: "Domain-tuned intelligence — not generic AI",
-    desc: "CoAnalyst is trained on your operational taxonomy. ~90% domain accuracy at L4–5 vs ~35% generic AI.",
+    desc: "Our System of Intelligence is trained on your operational taxonomy. ~90% domain accuracy at L4–5 vs ~35% generic AI.",
   },
   {
     icon: Workflow,

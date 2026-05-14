@@ -5,7 +5,7 @@ const COLS = [
     title: "Platform",
     links: [
       { label: "DTOP", href: "/dtop-playbook" },
-      { label: "CoAnalyst", href: "/coanalyst" },
+      { label: "System of Intelligence", href: "/coanalyst" },
       { label: "Mobile", href: "/mobile-playbook" },
       { label: "Regulation Management", href: "/regulation-management" },
     ],
