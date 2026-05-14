@@ -70,7 +70,7 @@ export default function PracticeCenter() {
   const goPrev = () => setCurrentSlide((i) => Math.max(0, i - 1));
   const goNext = () => setCurrentSlide((i) => Math.min(total - 1, i + 1));
 
-  const slidePrompts = getSlidePrompts(slide.id);
+  const slidePrompts = getSlidePrompts(scenario.personaId, slide.id);
   const isTransitionSlide = (slide as any).isTransition === true;
 
   const copyToClipboard = (text: string) => {
@@ -389,6 +389,10 @@ export default function PracticeCenter() {
                   </span>
                   <span className="text-muted-foreground/70">·</span>
                   <span className="text-foreground/80">{slide.label}</span>
+                  <span className="text-muted-foreground/70">·</span>
+                  <span className="rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium text-primary">
+                    for {scenario.buyerLabel}
+                  </span>
                 </div>
                 <ChevronDown
                   className={`h-4 w-4 text-muted-foreground transition-transform ${
