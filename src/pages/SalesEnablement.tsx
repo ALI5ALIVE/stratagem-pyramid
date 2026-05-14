@@ -30,20 +30,21 @@ import TechV4Slide5DTOP from "@/components/tech-slides/v4/TechV4Slide5DTOP";
 import TechSlideRegulationSummary from "@/components/tech-slides/TechSlideRegulationSummary";
 import CustomerOutcomesSlide from "@/components/shared/CustomerOutcomesSlide";
 import TechSlideWhyComply from "@/components/tech-slides/TechSlideWhyComply";
+import SIGSlide3SignalSources from "@/components/signals-slides/SIGSlide3SignalSources";
 
 const weekProps = {
   w1: {
-    moduleNumber: 2,
+    moduleNumber: 1,
     weekNumber: 1,
     kicker: "Foundation",
     title: "Set the scene — and put the platform in plain English",
     learningGoal:
       "By the end of Week 1 you can explain why the market is shifting, give the one-sentence platform pitch, walk the DTOP loop (Detect → Trigger → Orchestrate → Prove) on a whiteboard, and name the six signal sources behind Detect — without jargon, without reading off a slide.",
     estimatedMinutes: 14,
-    upNext: ["Plain-English definition", "The platform at a glance", "DTOP — the operating loop", "DTOP whiteboard drill", "Value unlocked", "Recap talk track"],
+    upNext: ["Plain-English definition", "The platform at a glance", "DTOP — the operating loop", "DTOP whiteboard drill", "The six signal sources", "Value unlocked", "Recap talk track"],
   },
   w2: {
-    moduleNumber: 3,
+    moduleNumber: 2,
     weekNumber: 2,
     kicker: "Capabilities",
     title: "How the capabilities fit together",
@@ -53,7 +54,7 @@ const weekProps = {
     upNext: ["Core Apps", "Intelligence & Orchestration", "Mobile", "Capability cheat sheet"],
   },
   w3: {
-    moduleNumber: 4,
+    moduleNumber: 3,
     weekNumber: 3,
     kicker: "Sell & Win",
     title: "Sell it, prove it, win it",
@@ -77,37 +78,37 @@ const execPitchMapping: Record<string, string> = {
 };
 
 const slides = [
-  // MODULE 1
+  // WEEK 1
   { id: "se-slide-0", label: "Title", component: SESlide0Title },
-  { id: "se-slide-shift", label: "M1 · Strategic Shift", component: TechSlide1StrategicShift },
-  { id: "se-plain-english-shift", label: "M1 · Why This Matters (Plain English)", component: SEPlainEnglishShift },
-  // WEEK 1 continues — Module 2 content (no extra divider; Week 1 banner covers it)
-  { id: "se-slide-whatis", label: "M2 · The Platform", component: TechV4PlatformOverview },
-  { id: "se-slide-dtop", label: "M2 · DTOP", component: TechV4Slide5DTOP },
-  { id: "se-slide-dtop-whiteboard", label: "Week 1 · DTOP Whiteboard Drill", component: SEDtopWhiteboardDrill },
-  { id: "se-slide-dtop-whiteboard-runbook", label: "Week 1 · Whiteboard Runbook", component: SEDtopWhiteboardRunbook },
-  { id: "se-slide-value", label: "M2 · Value Unlocked", component: PFSlide9Value },
-  { id: "se-slide-recap-m2", label: "M2 · Recap", component: SERecapSlide },
+  { id: "se-slide-shift", label: "W1 · Strategic Shift", component: TechSlide1StrategicShift },
+  { id: "se-plain-english-shift", label: "W1 · Why This Matters (Plain English)", component: SEPlainEnglishShift },
+  { id: "se-slide-whatis", label: "W1 · The Platform", component: TechV4PlatformOverview },
+  { id: "se-slide-dtop", label: "W1 · DTOP", component: TechV4Slide5DTOP },
+  { id: "se-slide-dtop-whiteboard", label: "W1 · DTOP Whiteboard Drill", component: SEDtopWhiteboardDrill },
+  { id: "se-slide-dtop-whiteboard-runbook", label: "W1 · Whiteboard Runbook", component: SEDtopWhiteboardRunbook },
+  { id: "se-slide-signals", label: "W1 · The Six Signal Sources", component: SIGSlide3SignalSources },
+  { id: "se-slide-value", label: "W1 · Value Unlocked", component: PFSlide9Value },
+  { id: "se-slide-recap-m2", label: "W1 · Recap", component: SERecapSlide },
   // WEEK 2
   { id: "se-week-2", label: "▸ Week 2 · Capabilities", component: SEModuleDivider, dividerProps: weekProps.w2 },
-  { id: "se-slide-4a", label: "M3 · Core Apps — SafetyManager365", component: TechV4Slide4aSafetyManager },
-  { id: "se-slide-4b", label: "M3 · Core Apps — ContentManager365", component: TechV4Slide4bContentManager },
-  { id: "se-slide-4c", label: "M3 · Core Apps — TrainingManager365", component: TechV4Slide4cTrainingManager },
-  { id: "se-slide-coanalyst", label: "M3 · Intelligence — CoAnalyst", component: TechV4Slide7CoAnalyst },
-  { id: "se-slide-insights", label: "M3 · Intelligence — Insights", component: TechV4SlideInsights },
-  { id: "se-slide-automation", label: "M3 · Intelligence — Automation", component: TechV4SlideAutomation },
-  { id: "se-slide-tiers-vs-ai", label: "M3 · CoAnalyst vs Generic AI", component: TechV4SlideTiersVsAI },
-  { id: "se-slide-mobile", label: "M3 · Mobile", component: TechV4SlideMobile },
-  { id: "se-slide-talktrack", label: "M3 · Capability Talk Track", component: SELayerTalkTrack },
+  { id: "se-slide-4a", label: "W2 · Core Apps — SafetyManager365", component: TechV4Slide4aSafetyManager },
+  { id: "se-slide-4b", label: "W2 · Core Apps — ContentManager365", component: TechV4Slide4bContentManager },
+  { id: "se-slide-4c", label: "W2 · Core Apps — TrainingManager365", component: TechV4Slide4cTrainingManager },
+  { id: "se-slide-coanalyst", label: "W2 · Intelligence — CoAnalyst", component: TechV4Slide7CoAnalyst },
+  { id: "se-slide-insights", label: "W2 · Intelligence — Insights", component: TechV4SlideInsights },
+  { id: "se-slide-automation", label: "W2 · Intelligence — Automation", component: TechV4SlideAutomation },
+  { id: "se-slide-tiers-vs-ai", label: "W2 · CoAnalyst vs Generic AI", component: TechV4SlideTiersVsAI },
+  { id: "se-slide-mobile", label: "W2 · Mobile", component: TechV4SlideMobile },
+  { id: "se-slide-talktrack", label: "W2 · Capability Talk Track", component: SELayerTalkTrack },
   // WEEK 3
   { id: "se-week-3", label: "▸ Week 3 · Sell & Win", component: SEModuleDivider, dividerProps: weekProps.w3 },
-  { id: "se-discovery-to-close", label: "M4 · Discovery → Demo → Close", component: SEDiscoveryToClose },
-  { id: "se-usecase-cheatsheet", label: "M5 · Use Case Cheat Sheet", component: SEUseCaseCheatSheet },
-  { id: "se-slide-regmgmt", label: "M5 · Regulation Management Use Case", component: TechSlideRegulationSummary },
-  { id: "se-slide-outcomes", label: "M5 · Customer Outcomes", component: CustomerOutcomesSlide },
-  { id: "se-slide-objections", label: "M6 · Objections", component: SEObjections },
-  { id: "se-slide-why", label: "M6 · Why Comply365", component: TechSlideWhyComply },
-  { id: "se-slide-closing", label: "M6 · Your enablement plan", component: SEClosingForReps },
+  { id: "se-discovery-to-close", label: "W3 · Discovery → Demo → Close", component: SEDiscoveryToClose },
+  { id: "se-usecase-cheatsheet", label: "W3 · Use Case Cheat Sheet", component: SEUseCaseCheatSheet },
+  { id: "se-slide-regmgmt", label: "W3 · Regulation Management Use Case", component: TechSlideRegulationSummary },
+  { id: "se-slide-outcomes", label: "W3 · Customer Outcomes", component: CustomerOutcomesSlide },
+  { id: "se-slide-objections", label: "W3 · Objections", component: SEObjections },
+  { id: "se-slide-why", label: "W3 · Why Comply365", component: TechSlideWhyComply },
+  { id: "se-slide-closing", label: "W3 · Your enablement plan", component: SEClosingForReps },
 ];
 
 // Inject Week 1 divider right after the title slide.
