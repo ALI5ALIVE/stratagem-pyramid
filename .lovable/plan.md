@@ -1,40 +1,34 @@
-## Sales Enablement narration cleanup
+## Add Operational Performance Roadmap to Sales Enablement Foundation
 
-Reviewed `src/data/salesEnablementNarration.ts` against the live slide order in `src/pages/SalesEnablement.tsx`. Several scripts still reference slides that have been removed or reordered (most notably the old "cost-of-inaction" slide in the Strategic Shift transition), and there are two orphan narration entries for divider slides that no longer exist.
+The "Operational Performance Roadmap" is the maturity-curve slide rendered by `Slide5MaturityCurve` (used in Executive Pitch 2 as `exec2-slide-9` "Maturity Roadmap" and on `/maturity-curve` under the headline "The Operational Performance Roadmap"). It walks the five maturity stages from Fragmented & Reactive → Predictive & Self-Healing.
 
-### Fixes
+### Changes
 
-**1. `se-slide-shift` — remove "what it costs them" reference**
-Current closing line: *"The next slide quantifies what it costs them to live in the old model."*
-The cost-of-inaction slide was removed; the next slide is now the plain-English "Why This Matters" slide.
-→ Replace with: *"The next slide says it in plain English — why this shift matters to them, in three lines you can repeat in any room."*
+**1. `src/pages/SalesEnablement.tsx`**
+- Import `Slide5MaturityCurve` from `@/components/slides/Slide5MaturityCurve`.
+- Insert a new Week 1 slide entry between `se-slide-value` and `se-slide-recap-m2`:
+  ```
+  { id: "se-slide-maturity-roadmap", label: "W1 · Operational Performance Roadmap", component: Slide5MaturityCurve },
+  ```
+- Update `weekProps.w1.upNext` to include "Operational Performance Roadmap" before "Recap talk track".
+- Update `weekProps.w1.estimatedMinutes` from 14 → 17 (one extra ~3-min teaching slide).
 
-**2. `se-slide-dtop` — fix transition to whiteboard drill**
-Current closing line: *"Next: the value this loop unlocks."*
-DTOP is no longer followed by Value — it's followed by the whiteboard drill, then the runbook, then signals.
-→ Replace with: *"Next we drill the loop on a whiteboard — because the rep who can draw DTOP in ninety seconds wins the room."*
-Also keep the existing Signals Specialist Playbook pointer at the end.
+**2. `src/data/salesEnablementNarration.ts`**
+- Add a new entry `se-slide-maturity-roadmap` following the 5-part Coach Script Standard (Why → Core Message → Pain → Value pivot → How to deliver → Transition).
+- Update the previous slide (`se-slide-value`) closing line so it bridges into the roadmap, not directly into the recap. New tail: *"Then bridge to the Operational Performance Roadmap — that's where they see themselves on the curve."*
+- Keep `se-slide-recap-m2` as the slide AFTER the roadmap; no other narration files touched.
 
-**3. `se-slide-dtop-whiteboard-runbook` — add transition to signals slide**
-Currently ends with no bridge.
-→ Append: *"Next we zoom into the Detect layer — the six signal sources behind every trigger."*
+### Narration draft (new entry)
 
-**4. `se-slide-outcomes` — fix transition to objections**
-Current closing line: *"Next: why we win."*
-Customer Outcomes is now followed by Objections, not Why Comply365.
-→ Replace with: *"Next: the three objections every prospect raises, and how to answer them in three steps."*
-
-**5. `se-slide-mobile` — tighten transition**
-Current closing references "the capability cheat sheet — your study page before every call." The next slide is the Capability Talk Track. Talk Track *is* the cheat-sheet rehearsal slide so this is acceptable, but rename for clarity.
-→ Replace final sentence with: *"Next: the capability talk track — one plain-English line and one discovery question per capability, ready to rehearse."*
-
-**6. Remove orphan narration entries**
-`se-module-5` and `se-module-6` are narrations for divider slides that no longer exist in the deck (the deck only has `se-week-1`, `se-week-2`, `se-week-3` dividers). Delete both entries.
+> **Week 1 · Operational Performance Roadmap.** Why this slide matters: every prospect already lives somewhere on this curve, and the fastest way to make the conversation real is to let them point at where they are. The core message: operational performance maturity is a five-stage journey — Fragmented and Reactive, Managed, Connected, Proactive, and Predictive and Self-Healing — and the platform is the only one built to move customers along the entire curve. The pain you're addressing: most operators are stuck somewhere between Stage 2 and Stage 3, paying for tools that promised Stage 4 but never delivered because the foundation was never connected. The value lever: this is the only roadmap where each stage builds on the one below it, because every stage runs on the same connected foundation closed by DTOP. Delivery tip — do not present the curve, navigate it. Show all five stages, then ask one question: which stage best describes you today, and which stage are you being asked to reach in the next twelve to eighteen months? Their answer is the scope of every follow-up conversation. Avoid promising Stage 5 capabilities — Predictive and Self-Healing is roadmap, not today. Transition: now we recap Week 1 in three sentences you can repeat from memory.
 
 ### Out of scope
-- No slide additions/removals in `SalesEnablement.tsx` — narration only.
-- No changes to other narration files (Exec/Tech/Ops decks).
-- No copy edits beyond fixing stale slide references and broken transitions.
+- No changes to `Slide5MaturityCurve` itself (it's reused as-is, same as Exec Pitch 2).
+- No exec-pitch / academy-DB / playbook changes.
+- No layout or styling changes.
 
 ### Verification
-After edits, every script's "Next: …" line will point at a slide that actually exists in the current `slides[]` array, and no narration entries reference removed dividers.
+- Sidebar shows new "W1 · Operational Performance Roadmap" entry between Value Unlocked and Recap.
+- Title-pill slide count auto-updates (driven by `slides.length`).
+- Pressing play on the new slide fetches the new narration via the existing `useSalesEnablementNarration` hook (no hook changes needed — it looks up by slide id).
+- Week 1 `estimatedMinutes` reads 17 in the Foundation divider.
