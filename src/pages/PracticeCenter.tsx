@@ -31,6 +31,8 @@ export default function PracticeCenter() {
   const session = useRoleplaySession();
   const transcriptEndRef = useRef<HTMLDivElement>(null);
   const lastNotifiedSlideRef = useRef<number>(-1);
+  const silenceTimerRef = useRef<number | null>(null);
+  const debounceTimerRef = useRef<number | null>(null);
   const [buyerFollowing, setBuyerFollowing] = useState(false);
 
   const scenario: PracticeScenario = useMemo(
@@ -106,6 +108,14 @@ export default function PracticeCenter() {
     const silenceMs = isOpening ? REP_SILENCE_MS_OPENING : REP_SILENCE_MS;
     const slideAtSchedule = currentSlide;
 
+    // ROI is unlocked once the rep has reached (or passed) the slide marked unlocksROI.
+    const roiUnlocked = execPitch3Slides
+      .slice(0, currentSlide + 1)
+      .some((s) => (s as any).unlocksROI === true);
+    const roiLine = roiUnlocked
+      ? "roi_unlocked: YES — proof, named references and payback are now fair game, but anchor your question to the slide on screen."
+      : "roi_unlocked: NO — do NOT ask about ROI, payback, business case, price or tangible benefits. Stay on this slide's topic.";
+
     setBuyerFollowing(true);
     const followingTimer = window.setTimeout(() => setBuyerFollowing(false), 2500);
 
@@ -114,9 +124,13 @@ export default function PracticeCenter() {
       if (slideAtSchedule !== lastNotifiedSlideRef.current) return;
 
       session.sendContext(
-        `The rep just moved to slide ${currentSlide + 1} of ${total}: "${slide.label}".` +
-        (focus ? ` Focus area: ${focus}.` : "") +
-        ` Stay silent and let the rep walk you through this slide. Only respond when they speak. If they ask you something, react in character.`,
+        `Context for the buyer (do not read aloud):\n` +
+        `- slide_id: ${slide.id}\n` +
+        `- slide_index: ${currentSlide + 1} of ${total}\n` +
+        `- slide_label: "${slide.label}"\n` +
+        (focus ? `- focus: ${focus}\n` : "") +
+        `- ${roiLine}\n` +
+        `Stay silent and let the rep walk you through this slide. Only respond when they speak. If they ask you something, react in character.`,
       );
       const baselineLen = session.transcript.length;
       const silenceTimer = window.setTimeout(() => {
@@ -127,18 +141,24 @@ export default function PracticeCenter() {
         session.sendContext(
           `The rep has not spoken since moving to slide "${slide.label}".` +
           (focus ? ` Focus area: ${focus}.` : "") +
-          ` Ask ONE short buyer-style question that probes THIS slide's topic specifically. ${flavor} Stay in character.`,
+          ` ${roiLine}` +
+          ` Ask ONE short buyer-style question that probes THIS slide's topic specifically. ${flavor} One thread only. Stay in character.`,
         );
       }, silenceMs);
-      // Stash on the debounce closure for cleanup
-      (debounce as any)._silenceTimer = silenceTimer;
+      silenceTimerRef.current = silenceTimer;
     }, SLIDE_DEBOUNCE_MS);
+    debounceTimerRef.current = debounce;
 
     return () => {
       window.clearTimeout(followingTimer);
-      window.clearTimeout(debounce);
-      const st = (debounce as any)._silenceTimer;
-      if (st) window.clearTimeout(st);
+      if (debounceTimerRef.current !== null) {
+        window.clearTimeout(debounceTimerRef.current);
+        debounceTimerRef.current = null;
+      }
+      if (silenceTimerRef.current !== null) {
+        window.clearTimeout(silenceTimerRef.current);
+        silenceTimerRef.current = null;
+      }
     };
   }, [currentSlide, session.status, slide, total, session, scenario.personaId]);
 
