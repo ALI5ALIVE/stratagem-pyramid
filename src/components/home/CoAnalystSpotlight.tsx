@@ -8,7 +8,7 @@ export default function CoAnalystSpotlight() {
       <div className="mx-auto grid max-w-[1400px] items-center gap-16 px-6 lg:grid-cols-[1fr_1.1fr] lg:px-12">
         <div>
           <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
-            <Sparkles className="h-3 w-3" /> CoAnalyst
+            <Sparkles className="h-3 w-3" /> System of Intelligence
           </p>
           <h2 className="font-display text-4xl font-semibold leading-tight tracking-tight text-foreground lg:text-5xl">
             Generative AI tuned to your operation, not the open web.
@@ -19,14 +19,14 @@ export default function CoAnalystSpotlight() {
           <div className="mt-8">
             <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
               <Link to="/coanalyst">
-                See CoAnalyst in action <ArrowRight className="ml-2 h-4 w-4" />
+                See the System of Intelligence in action <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
           </div>
         </div>
         <div className="rounded-2xl border border-primary/20 bg-card/60 p-6 shadow-2xl backdrop-blur lg:p-8">
           <div className="mb-4 flex items-center justify-between text-xs">
-            <span className="font-semibold uppercase tracking-wider text-primary">CoAnalyst · Answer</span>
+            <span className="font-semibold uppercase tracking-wider text-primary">System of Intelligence · Answer</span>
             <span className="text-muted-foreground">Tenant-isolated</span>
           </div>
           <p className="rounded-lg border border-border/50 bg-background/50 p-4 text-sm leading-relaxed text-foreground/90">
