@@ -50,6 +50,13 @@ export const salesEnablementNarrations: SESlideNarration[] = [
       "This is the platform diagram and it does the heavy lifting in almost every customer meeting. The core message you must internalise: this is the first platform that joins safety, content, and training onto one operational data foundation, with an intelligence layer on top. The pain you're solving: today they pay for five to seven tools that don't share data and they integrate them with brittle point-to-point connections. The value lever: one foundation means signals from operations actually reach procedures and training — and back. When you deliver this, point to the foundation first, then the apps, then the intelligence layer, then mobile, then DTOP wrapping it all. Resist the urge to dive into any one box. Customers ask for the deep-dive when they're ready — your job here is to land the shape, not the features. Next we go straight into DTOP — the loop that makes this platform worth buying.",
   },
   {
+    slideId: "se-slide-signals",
+    title: "Week 1 · The Six Signal Sources",
+    voiceId: VOICE,
+    script:
+      "Why this matters: every prospect, in every discovery call, will eventually ask 'what data do you actually use?' — and most reps fumble it. This slide is your answer. The core message: Detect listens across six operational signal sources, and the reason DTOP works is that we fuse all six into one Detect layer instead of leaving them in six different tools. Name them in this order, every time — Safety Reports, Operational Data, Maintenance, Crew Logs, Regulatory, Audit. The value lever: point solutions cover one or two of these; only this platform unifies all six and turns them into triggers. Delivery tip — when you walk this slide, point at each source and say one sentence: which signals it carries and which downstream action it can trigger. Then ask the discovery question that converts: which of these six is hardest for you to get clean data out of today? Their answer is your wedge — and it almost always points at Maintenance or Crew Logs. Next: the value this loop unlocks.",
+  },
+  {
     slideId: "se-slide-value",
     title: "Week 1 · Value Unlocked",
     voiceId: VOICE,
@@ -61,7 +68,7 @@ export const salesEnablementNarrations: SESlideNarration[] = [
     title: "Week 1 · Recap Talk Track",
     voiceId: VOICE,
     script:
-      "This is a rehearsal slide, not a content slide. The core message: there are three questions every prospect asks, and you need a clean one-sentence answer for each. What is it — the first connected operating platform for safety, content, and training. How is it different — one foundation instead of five to seven disconnected tools. What's the one thing to remember — point solutions can detect, only we can Detect, Trigger, Orchestrate, and Prove. Read each one out loud right now. If you stumble, replay this slide. Don't move on until all three feel natural. One more rep before you leave Week 1: you can also name the six signal sources Detect listens to — Safety Reports, Operational Data, Maintenance, Crew Logs, Regulatory, Audit. That is the answer to 'what data do you actually use?' on every discovery call. If you want to specialise in that layer, the Signals Specialist Playbook is your next step. Otherwise, Week 2 goes capability by capability.",
+      "This is a rehearsal slide, not a content slide. The core message: there are three questions every prospect asks, and you need a clean one-sentence answer for each. What is it — the first connected operating platform for safety, content, and training. How is it different — one foundation instead of five to seven disconnected tools. What's the one thing to remember — point solutions can detect, only we can Detect, Trigger, Orchestrate, and Prove. Read each one out loud right now. If you stumble, replay this slide. Don't move on until all three feel natural. You already named the six signal sources two slides ago — keep that list ready, it's the answer to 'what data do you actually use?' on every discovery call. Week 2 goes capability by capability.",
   },
   {
     slideId: "se-week-2",
