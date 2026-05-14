@@ -389,6 +389,10 @@ export default function PracticeCenter() {
                   </span>
                   <span className="text-muted-foreground/70">·</span>
                   <span className="text-foreground/80">{slide.label}</span>
+                  <span className="text-muted-foreground/70">·</span>
+                  <span className="rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium text-primary">
+                    for {scenario.buyerLabel}
+                  </span>
                 </div>
                 <ChevronDown
                   className={`h-4 w-4 text-muted-foreground transition-transform ${
