@@ -1,90 +1,106 @@
 ## Goal
 
-Give reps **per-slide coaching prompts** in the Practice Center so they always have an opener, a few talking points, and sample questions to ask the AI buyer for whichever slide is on screen.
+Make the Practice Center "Prompts for this slide" panel **persona-aware** — each of the 5 buyers (CEO/COO, VP Safety, VP Ops, Training Director, CIO) gets their own opener, talking points, and buyer questions for every content slide, so reps practise the right pitch for the right room.
 
-## Where it lives
+## Approach
 
-In `/practice-center`, **inside the left column under the slide stage** (between the slide and the Prev/Next bar, OR as a slim collapsible panel directly beneath the Prev/Next bar).
+Restructure the prompts data from one shared map to a **persona × slide** map, with a sensible fallback so nothing breaks if a combination is missing.
 
-A new compact card titled **"Prompts for this slide"** that updates as the rep navigates with arrows / Prev / Next. Default **collapsed** so it doesn't distract from delivery; one click expands it. Stays out of the right-hand transcript column so the live conversation isn't crowded.
+### 1. Refactor `src/data/practiceSlidePrompts.ts`
 
-## What to build
-
-**1. New data file** `src/data/practiceSlidePrompts.ts`
+New shape:
 
 ```ts
 export interface SlidePrompts {
-  opener: string;              // one line the rep can say to land on the slide
-  talkingPoints: string[];     // 2–3 short bullets (the message to land)
-  buyerQuestions: string[];    // 2–3 questions the rep can ask the buyer to provoke engagement
+  opener: string;
+  talkingPoints: string[];   // 2–3 items
+  buyerQuestions: string[];  // 2–3 items
 }
-export const practiceSlidePrompts: Record<string, SlidePrompts> = { ... };
+
+// First key = personaId from practiceScenarios.ts, second key = slide.id
+export const practiceSlidePrompts: Record<string, Record<string, SlidePrompts>> = {
+  "ceo-coo":           { /* 14 content slides */ },
+  "vp-safety":         { /* 14 content slides */ },
+  "vp-ops":            { /* 14 content slides */ },
+  "training-director": { /* 14 content slides */ },
+  "cio-it":            { /* 14 content slides */ },
+};
+
+// Generic fallback used if a persona/slide pair is somehow missing
+export const defaultSlidePrompts: Record<string, SlidePrompts> = { /* current map */ };
+
+export const getSlidePrompts = (
+  personaId: string | undefined,
+  slideId: string,
+): SlidePrompts | undefined => {
+  if (personaId && practiceSlidePrompts[personaId]?.[slideId]) {
+    return practiceSlidePrompts[personaId][slideId];
+  }
+  return defaultSlidePrompts[slideId];
+};
 ```
 
-Keyed by `slide.id` from `execPitch3Slides.ts`. Covers every non-transition slide:
+### 2. Persona lenses driving the content
 
-| Slide id | Theme of prompts |
+Each persona's prompts must reflect their actual lens (already defined in `practiceScenarios.ts` and `personaProfiles.ts`):
+
+| Persona | Lens emphasis |
 |---|---|
-| `exec3-slide-0` | Title — opener line + a "set the room" question |
-| `exec3-slide-1` | Strategic Shift — operational gap framing |
-| `exec3-slide-outcomes` | Customer Outcomes — proof, named references |
-| `exec3-slide-platform` | The Platform — point tools vs unified platform |
-| `exec3-slide-dtop` | DTOP — Detect/Trigger/Orchestrate/Prove walkthrough |
-| `exec3-slide-mobile` | Unified Mobile — adoption, offline, clicks-per-task |
-| `exec3-slide-automation` | Automation — what's automated, human-in-loop boundary |
-| `exec3-slide-insights-summary` | Insights · Just Ask — natural-language access |
-| `exec3-slide-coanalyst` | CoAnalyst — 90% vs 35% accuracy framing |
-| `exec3-slide-tiers-vs-ai` | CoAnalyst vs Generic AI — why generic fails |
-| `exec3-slide-insights` | Recommendations & Prescriptive Actions — approval/audit/rollback |
-| `exec3-slide-regulation` | Regulation Management — reg change → in-app update |
-| `exec3-slide-roadmap-2026` | 2026 Roadmap — POC vs GA, locked dates |
-| `exec3-slide-why` | Why Comply365 — three differentiators + next step |
+| **CEO / COO** | Revenue protection, competitive moat, board-ready ROI, named references, total cost story |
+| **VP Safety** | SMS maturity (L2→L4), hazard intelligence, audit readiness, ICAO taxonomy, ~90% vs ~35% accuracy |
+| **VP Ops** | OTP, disruption prevention, OCC integration, crew workflow, no rip-and-replace |
+| **Training Director** | Closed-loop safety→training, competency vs completion, mobile adoption, evidence of effectiveness |
+| **CIO / IT** | Integration sprawl, SSO/SAML, tenant isolation, open APIs, predictable TCO, phased POC |
 
-Transition / divider slides (`isTransition: true`) skipped — show a small "Section divider — no prompts" hint.
+For every one of the **14 content slides** in `execPitch3Slides.ts` (skipping the 5 transition/divider slides) each persona gets:
+- One persona-tuned **opener line** that lands the slide in their language
+- 2–3 **talking points** that emphasise what *this* persona buys on
+- 2–3 **buyer questions** the rep can ask to make *this* persona reveal pain
 
-Content tone: short, conversational, follows existing project terminology (DTOP, CoAnalyst 90% vs 35%, Detect→Trigger→Orchestrate→Prove). Buyer questions are designed to **make the AI buyer talk** so the rep can practise active discovery, not just monologue.
+Examples to anchor tone:
 
-Example for `exec3-slide-coanalyst`:
-- **opener**: "This is the slide that separates us from every generic AI demo you've seen this year."
-- **talking points**:
-  - "Domain-tuned on aviation taxonomy — ICAO, ASR, MOR — not the open web."
-  - "~90% accuracy at L4–5 reasoning vs ~35% for generic models on the same prompts."
-  - "Tenant-isolated — your operational data never trains anyone else's model."
-- **buyer questions**:
-  - "Where would you want to point CoAnalyst first — safety reports, ops data, or training records?"
-  - "Who in your team is currently being asked to answer questions the data should answer?"
-  - "If we benchmarked your current AI tool against CoAnalyst on five of your real questions, would that be useful?"
+`exec3-slide-coanalyst` for **VP Safety**:
+- opener: "Your safety team is the one that has to trust the answer this thing gives — so let me show you why ours is built differently from generic AI."
+- talking points:
+  - "Tuned on ICAO taxonomy, ASR, MOR — not Reddit and Wikipedia."
+  - "~90% accuracy at L4–5 reasoning vs ~35% generic — measured on the same prompts."
+  - "Every answer cites the source report — your investigators can audit the chain."
+- buyer questions:
+  - "Has anyone on your safety team tried a generic AI on a real ASR? What happened?"
+  - "What would have to be true for your investigators to trust an AI-generated narrative?"
+  - "Where in your SMS would a 90%-accurate answer engine save the most hours?"
 
-**2. Update** `src/pages/PracticeCenter.tsx`
+`exec3-slide-coanalyst` for **CIO / IT**:
+- opener: "I want to spend a minute on how this is architected, because the difference from generic AI is mostly an integration and isolation story."
+- talking points:
+  - "Tenant-isolated — your operational data never trains a shared model."
+  - "Domain tuning sits in your tenant; SSO/SAML and role-based access from day one."
+  - "Auditable prompt and response trail — every answer traceable end to end."
+  - buyer questions:
+    - "What does your AI governance policy require before you can point a model at operational data?"
+    - "Who in your team currently owns the line between 'AI assistant' and 'autonomous action'?"
+    - "Would a tenant-isolated deployment satisfy your data-residency constraints?"
 
-- Import `practiceSlidePrompts`
-- Add local state `const [promptsOpen, setPromptsOpen] = useState(false)`
-- Below the slide-controls bar in the left card, add a collapsible region:
-  - Header row with chevron, title "Prompts for this slide", and small slide label
-  - When expanded:
-    - **Opener** — one line in italic muted card
-    - **Land these** — bulleted talking points
-    - **Ask the buyer** — bulleted questions, each with a small **Copy** button (uses `navigator.clipboard.writeText`)
-  - When current slide is a transition: collapsed body shows "Section divider — no prompts"
-- Keyboard: keep arrow-key slide nav. No new shortcut needed.
-- Styling: re-use existing `Card`, `Button`, semantic tokens (`text-muted-foreground`, `text-primary`, `border-border/40`). No new colors.
+### 3. Update `src/pages/PracticeCenter.tsx`
 
-**3. No changes to**
-- `practiceScenarios.ts`, `useRoleplaySession`, `buildAgentPrompt`, agent backend
-- Slide components or `execPitch3Slides.ts`
-- Right-column transcript / scorecard / checklist UI
-- Auto-advance / silence-prompt logic
+- Change the import call: `getSlidePrompts(scenario.personaId, slide.id)` instead of `getSlidePrompts(slide.id)`
+- Add a small persona chip next to the panel header so the rep sees *whose* prompts are loaded:
+  ```
+  Prompts for this slide · The Platform · for CEO / COO
+  ```
+- The collapsible UI, copy buttons, and transition-slide handling stay exactly as they are.
 
-## Out of scope
+### 4. Out of scope
 
-- No backend changes, no DB tables, no edge function edits
-- No per-persona prompt variants in v1 (one prompt set per slide; persona lens already tunes the buyer's reactions)
-- No in-call popups or auto-spoken hints — rep opens the panel themselves
+- No DB / backend / edge-function changes.
+- No changes to `practiceScenarios.ts`, `personaProfiles.ts`, agent prompt builder, or scoring.
+- No new shortcuts or layout shifts.
+- No prompts for `isTransition` divider slides — they continue to show the existing "Section divider — no prompts" hint.
 
 ## Verification
 
-- Open `/practice-center` → cycle through every slide with arrow keys → prompts panel updates each time
-- Copy button on a buyer question writes to clipboard
-- Transition slides show the "no prompts" hint instead of an empty card
-- No layout shift on the slide stage; panel collapses cleanly
-- No regressions in the live AI buyer flow (Start / Next / End / Score)
+- Switch buyer card → re-open the prompts panel → opener and questions reflect the new persona's lens.
+- Cycle through every slide as each of the 5 personas → all 5 × 14 combinations render with no fallbacks visible (spot-check a few per persona).
+- Copy buttons still work.
+- Transition slides still show the divider hint.
+- No regressions to the live AI-buyer flow (Start / Next / End / Score).
