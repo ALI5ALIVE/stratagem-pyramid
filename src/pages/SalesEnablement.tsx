@@ -31,6 +31,7 @@ import TechSlideRegulationSummary from "@/components/tech-slides/TechSlideRegula
 import CustomerOutcomesSlide from "@/components/shared/CustomerOutcomesSlide";
 import TechSlideWhyComply from "@/components/tech-slides/TechSlideWhyComply";
 import SIGSlide3SignalSources from "@/components/signals-slides/SIGSlide3SignalSources";
+import Slide5MaturityCurve from "@/components/slides/Slide5MaturityCurve";
 
 const weekProps = {
   w1: {
@@ -40,8 +41,8 @@ const weekProps = {
     title: "Set the scene — and put the platform in plain English",
     learningGoal:
       "By the end of Week 1 you can explain why the market is shifting, give the one-sentence platform pitch, walk the DTOP loop (Detect → Trigger → Orchestrate → Prove) on a whiteboard, and name the six signal sources behind Detect — without jargon, without reading off a slide.",
-    estimatedMinutes: 14,
-    upNext: ["Plain-English definition", "The platform at a glance", "DTOP — the operating loop", "DTOP whiteboard drill", "The six signal sources", "Value unlocked", "Recap talk track"],
+    estimatedMinutes: 17,
+    upNext: ["Plain-English definition", "The platform at a glance", "DTOP — the operating loop", "DTOP whiteboard drill", "The six signal sources", "Value unlocked", "Operational Performance Roadmap", "Recap talk track"],
   },
   w2: {
     moduleNumber: 2,
@@ -88,6 +89,7 @@ const slides = [
   { id: "se-slide-dtop-whiteboard-runbook", label: "W1 · Whiteboard Runbook", component: SEDtopWhiteboardRunbook },
   { id: "se-slide-signals", label: "W1 · The Six Signal Sources", component: SIGSlide3SignalSources },
   { id: "se-slide-value", label: "W1 · Value Unlocked", component: PFSlide9Value },
+  { id: "se-slide-maturity-roadmap", label: "W1 · Operational Performance Roadmap", component: Slide5MaturityCurve },
   { id: "se-slide-recap-m2", label: "W1 · Recap", component: SERecapSlide },
   // WEEK 2
   { id: "se-week-2", label: "▸ Week 2 · Capabilities", component: SEModuleDivider, dividerProps: weekProps.w2 },
