@@ -1,82 +1,69 @@
-## Goal
+# Add "confined intelligence" nuance to Customer Footprint slides
 
-Equip reps in Week 3 (Sell & Win) to walk into any Comply365 account — whether they own one, two or three of the core apps — and confidently:
-1. Map the customer's current footprint
-2. Sell the missing pieces with tailored discovery questions
-3. Paint the platform vision (DTOP across all three apps + CoAnalyst)
-4. Quantify the value already captured vs the value still on the table
+## Problem
 
-## What's added
+The new Week 3 footprint slides (`SEFootprintSingleApp`, `SEFootprintTwoApps`, `SEFootprintAllThree`, `SEFootprintValueLadder`) currently imply that platform capabilities — **Insights & Recommendations**, **Automation**, **CoAnalyst**, **Unified Mobile** — only become available once the customer owns all three foundation apps. That's wrong and undersells the proposition.
 
-A new **Week 3 sub-track: "Customer Footprint Scenarios"** — 6 new slides inserted into the Sales Enablement deck immediately after `se-usecase-cheatsheet` and before `se-slide-regmgmt`. Also surfaced as its own Academy specialist module so reps can revisit it standalone.
+Reality: a single-app or two-app customer **does** get those capabilities — but **confined to the discipline(s) they own**. CoAnalyst on a Safety-only footprint answers safety questions brilliantly but can't reason across to procedure or training. Insights surface patterns inside Safety but can't recommend a procedure update or a targeted retraining. Automation can route a safety report but can't trigger a content revision or a training assignment. That nuance is both more honest and a stronger expansion narrative: *"You're already getting platform-grade intelligence — you're just getting it inside one lane. The next app widens the lane."*
 
-### New slides (in order)
+## Changes
 
-1. **SEFootprintIntro** — "Where is the customer today?"
-   - 2x2 / Venn-style visual showing 7 possible footprints (S, C, T, S+C, S+T, C+T, S+C+T)
-   - Quick stat: % of base in each footprint (placeholder, you confirm)
-   - Coach line: "Your job is never to sell what they have. It's to sell what they're missing — and the loop they can't close without it."
+### 1. `SEFootprintSingleApp.tsx` — add a "Platform capabilities you DO get (confined)" row to each of the 3 columns
 
-2. **SEFootprintSingleApp** — "They have ONE app"
-   - Three columns (S only / C only / T only), each with:
-     - What they're getting today (1-line value captured)
-     - What's broken without the other two (the loop that can't close)
-     - 3 discovery questions to open the cross-sell
-     - The "left on the table" number (e.g. Safety only → no closed-loop training, ~40% of recurrent issues stay recurrent)
+Insert a new block between **Value captured today** and **Loop that won't close**:
 
-3. **SEFootprintTwoApps** — "They have TWO apps"
-   - Three columns (S+C / S+T / C+T), same structure
-   - Emphasis: "Two apps gets you a half-loop. The third closes it."
-   - Discovery questions specifically for the missing third
+- **Safety only** — "CoAnalyst answers safety questions on your safety data. Insights surface patterns in your reports. Automation routes and assigns within Safety. All confined to the safety lane — they can't reach procedures or crews."
+- **Content only** — "CoAnalyst answers procedural and regulatory questions. Insights surface content gaps and version drift. Automation handles distribution and acknowledgement. All confined to the content lane — no signal layer feeding it, no training loop closing behind it."
+- **Training only** — "CoAnalyst answers competency and qualification questions. Insights surface training gaps and risk concentrations. Automation handles assignment and reminders. All confined to the training lane — disconnected from the procedures and signals that should drive what's trained."
 
-4. **SEFootprintAllThree** — "They have all THREE — now sell the platform"
-   - The vision pivot: apps → platform (CoAnalyst, Insights, Automation, Mobile)
-   - "You've bought the instruments. Now buy the conductor."
-   - Discovery questions for intelligence layer adoption
-   - DTOP loop fully lit up vs partially lit up (visual)
+Keep existing **Loop that won't close** + **Discovery questions** + **Left on the table** intact. Tighten copy density slightly so the column still fits without scroll on 1379×865.
 
-5. **SEFootprintValueLadder** — "Value captured vs value on the table"
-   - Horizontal bar / ladder visual: 1 app = ~25% of platform value, 2 apps = ~55%, 3 apps = ~75%, 3 apps + CoAnalyst/Automation = 100%
-   - Pillar breakdown (Controllable Cost, Systemic Risk, Line-of-Sight) at each rung
-   - Coach line: "Never present this as 'you're missing X%.' Present it as 'here's the loop you can't close yet.'"
+### 2. `SEFootprintTwoApps.tsx` — same pattern, "confined to two lanes"
 
-6. **SEFootprintPlaybook** — "The 3-move footprint play"
-   - Move 1: Audit the footprint in discovery (3 questions)
-   - Move 2: Name the broken loop out loud
-   - Move 3: Anchor the next purchase to the loop, not the product
-   - Mini role-play prompt + transition into Regulation Management use case
+Add a "Platform capabilities you DO get (across two lanes)" block per column:
 
-### Narration
+- **Safety + Content** — "CoAnalyst, Insights and Automation operate across signals and procedures. The training lane is dark — no targeted retraining, no competency evidence."
+- **Safety + Training** — "CoAnalyst, Insights and Automation operate across signals and competency. Procedures stay static — intelligence can't update the manual."
+- **Content + Training** — "CoAnalyst, Insights and Automation operate across procedures and competency. The signal layer is missing — intelligence has nothing operational to react to."
 
-Add 6 new entries to `src/data/salesEnablementNarration.ts` following the established 5-part coach script standard (Why → Core message → Pain → Value pivot → How to deliver → Transition). ~60–90s per slide. Reuses ElevenLabs "George" voice, no new audio config needed.
+### 3. `SEFootprintAllThree.tsx` — reframe so it doesn't imply capabilities arrive only now
 
-### Deck registration
+Add one short banner above the four-layer grid:
 
-Update `src/pages/SalesEnablement.tsx`:
-- Import the 6 new components
-- Insert them in the slides array between `se-usecase-cheatsheet` and `se-slide-regmgmt`
-- Update `weekProps.w3.upNext` to include "Footprint scenarios" and bump `estimatedMinutes` from 14 → ~22
+> "These capabilities aren't new at this stage — your customer already has them inside whichever apps they own. What changes at three apps is **scope**: now CoAnalyst, Insights and Automation can reason and act across the whole DTOP loop, not one lane of it."
 
-### Academy specialist module (optional second surface)
+No structural change to the four-layer grid.
 
-One migration to add a new `academy_modules` row:
-- `id: 'm-footprint'`
-- `module_number: 12`, `track: 'specialist'`, `accent_color: 'sky'`
-- `estimated_minutes: 8`
-- `slide_ids`: the 6 new slide ids
-- Plus 4 quiz questions in `academy_questions` (footprint identification, missing-loop naming, discovery question recall, value ladder positioning)
+### 4. `SEFootprintValueLadder.tsx` — clarify rung labels
 
-Reps can take it as part of the Week 3 flow OR standalone from the Academy.
+Update the rung sub-labels so the ladder doesn't read as "no intelligence until rung 4":
+
+- 1 app (~25%) — "Foundation in one lane + platform capabilities **confined to that lane**"
+- 2 apps (~55%) — "Half-loop + platform capabilities across **two lanes**"
+- 3 apps (~75%) — "DTOP loop closed + platform capabilities across **all three lanes**"
+- 3 apps + Intelligence layer (100%) — "Loop closes **and learns** — cross-lane reasoning, recommendations, automated orchestration"
+
+Keep the disclaimer ("directional, not contractual") in place.
+
+### 5. Narration updates in `src/data/salesEnablementNarration.ts`
+
+For `se-footprint-single`, `se-footprint-two`, `se-footprint-all`, `se-footprint-ladder`: amend the **Pain → Value pivot** and **How to deliver it** sections to coach the rep on this nuance explicitly. Key teaching line to add to all four:
+
+> "Don't tell a single-app customer they get nothing intelligent until they buy more. They already get CoAnalyst, Insights and Automation — inside the lane they own. Your job is to show them the lane is narrower than the problem."
+
+Keep the 5-part structure, ~60–90s per slide.
 
 ## Out of scope
 
-- No changes to existing W3 slides (`SEDiscoveryToClose`, `SEUseCaseCheatSheet`, `SEObjections`, `SEClosingForReps`)
-- No changes to W1/W2 content
-- No new product positioning — uses existing pillars (Controllable Cost, Systemic Risk, Line-of-Sight) and existing DTOP framing
-- No PPTX exporter updates (these are enablement-only slides, not customer-facing)
+- No changes to `SEFootprintIntro` or `SEFootprintPlaybook` (concepts already neutral on this point).
+- No changes to Week 1/Week 2 slides.
+- No Academy quiz changes — current questions don't conflict with the nuance.
+- No PPTX exporter or memory updates needed.
 
-## Open questions before I build
+## Files touched
 
-1. **Value ladder percentages** — I've sketched 25 / 55 / 75 / 100. Want me to use those as illustrative (with a "directional, not contractual" disclaimer per the pitch-deck disclaimer memory) or do you have firmer numbers from Line of Sight?
-2. **Footprint mix data** — the intro slide ideally cites % of current base in each footprint. Use placeholder ("~X% of base") or omit until you supply real numbers?
-3. **Single combined slide vs three columns** — for the "one app" and "two apps" slides, do you prefer one dense slide with three columns each (6 slides total as planned), or split into 6 slides per scenario (one app per slide, 13 slides total)? My recommendation is the dense version — fewer slides, easier to scan, and each scenario gets equal coach airtime.
+- `src/components/sales-enablement-slides/SEFootprintSingleApp.tsx`
+- `src/components/sales-enablement-slides/SEFootprintTwoApps.tsx`
+- `src/components/sales-enablement-slides/SEFootprintAllThree.tsx`
+- `src/components/sales-enablement-slides/SEFootprintValueLadder.tsx`
+- `src/data/salesEnablementNarration.ts`
