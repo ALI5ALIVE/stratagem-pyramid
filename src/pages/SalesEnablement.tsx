@@ -109,11 +109,11 @@ const slides = [
   { id: "se-slide-4b", label: "W2 · Core Apps — ContentManager365", component: TechV4Slide4bContentManager },
   { id: "se-slide-4c", label: "W2 · Core Apps — TrainingManager365", component: TechV4Slide4cTrainingManager },
   { id: "se-slide-coanalyst", label: "W2 · Intelligence — Intelligence Layer", component: TechV4Slide7CoAnalyst },
-  { id: "se-slide-coanalyst-usecases", label: "W2 · Intelligence & Insights — Use Cases", component: SECapabilityUseCases, dividerProps: { capability: "intelligence" } },
+  { id: "se-slide-coanalyst-usecases", label: "W2 · Intelligence & Insights — Use Cases", component: SECapabilityUseCases, componentProps: { capability: "intelligence" } },
   { id: "se-slide-insights", label: "W2 · Intelligence — Insights", component: TechV4SlideInsights },
-  { id: "se-slide-insights-usecases", label: "W2 · Recommendations — Use Cases", component: SECapabilityUseCases, dividerProps: { capability: "recommendations" } },
+  { id: "se-slide-insights-usecases", label: "W2 · Recommendations — Use Cases", component: SECapabilityUseCases, componentProps: { capability: "recommendations" } },
   { id: "se-slide-automation", label: "W2 · Intelligence — Automation", component: TechV4SlideAutomation },
-  { id: "se-slide-automation-usecases", label: "W2 · Automation — Use Cases", component: SECapabilityUseCases, dividerProps: { capability: "automation" } },
+  { id: "se-slide-automation-usecases", label: "W2 · Automation — Use Cases", component: SECapabilityUseCases, componentProps: { capability: "automation" } },
   { id: "se-slide-tiers-vs-ai", label: "W2 · Intelligence Layer vs Generic AI", component: TechV4SlideTiersVsAI },
   { id: "se-slide-mobile", label: "W2 · Mobile", component: TechV4SlideMobile },
   { id: "se-slide-talktrack", label: "W2 · Capability Talk Track", component: SELayerTalkTrack },
@@ -241,6 +241,7 @@ const SalesEnablement = () => {
               slideNumber={index}
               id={slide.id}
               {...((slide as any).dividerProps ?? {})}
+              {...((slide as any).componentProps ?? {})}
               {...slideNarrationProps}
               {...extraProps}
             />
