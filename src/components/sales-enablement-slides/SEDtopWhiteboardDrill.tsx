@@ -12,10 +12,10 @@ const strokes = [
   { n: 3, color: "text-violet-400", dot: "bg-violet-400", label: "Orchestrate", say: "We Orchestrate the work across procedures, training and comms." },
   { n: 4, color: "text-emerald-400", dot: "bg-emerald-400", label: "Prove", say: "And we Prove it closed — auditable, evidence-backed." },
   { n: 5, color: "text-foreground", dot: "bg-foreground/60", label: "Loop arrow", say: "And it loops — every Prove feeds the next Detect." },
-  { n: 6, color: "text-blue-300", dot: "bg-blue-300", label: "Six signal chips", say: "These six are the signal sources we listen to." },
+  { n: 6, color: "text-blue-300", dot: "bg-blue-300", label: "Four signal chips", say: "These four are the signal sources we listen to." },
 ];
 
-const signals = ["Safety Reports", "Operational Data", "Maintenance", "Crew Logs", "Regulatory", "Audit"];
+const signals = ["Regulation", "Anomalies", "Op Change Requests", "Macro / Geo Influences"];
 
 const SEDtopWhiteboardDrill = ({ slideNumber, ...narrationProps }: Props) => (
   <PitchSlideContainer
@@ -84,8 +84,8 @@ const SEDtopWhiteboardDrill = ({ slideNumber, ...narrationProps }: Props) => (
           <text x="40" y="380" fill="#1e3a5f" fontSize="14" fontWeight="700">6. Signals →</text>
           {signals.map((s, i) => (
             <g key={s}>
-              <rect x={40 + (i % 3) * 145} y={395 + Math.floor(i / 3) * 32} width="135" height="24" rx="12" fill="none" stroke="#2563eb" strokeWidth="2" />
-              <text x={107.5 + (i % 3) * 145} y={412 + Math.floor(i / 3) * 32} fill="#1e3a5f" fontSize="13" textAnchor="middle">{s}</text>
+              <rect x={40 + (i % 2) * 310} y={395 + Math.floor(i / 2) * 32} width="300" height="24" rx="12" fill="none" stroke="#2563eb" strokeWidth="2" />
+              <text x={190 + (i % 2) * 310} y={412 + Math.floor(i / 2) * 32} fill="#1e3a5f" fontSize="13" textAnchor="middle">{s}</text>
             </g>
           ))}
         </svg>
