@@ -47,11 +47,11 @@ export default function Comply365MockupHome() {
               <Sparkles className="h-3 w-3" /> For the people accountable when operations slip
             </span>
             <h1 className="mt-6 font-display text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.04] text-foreground">
-              Operations runs on signals.{" "}
-              <span className="text-muted-foreground/70">Nobody acts on them.</span>
+              From Silos{" "}
+              <span className="text-muted-foreground/70">to Signals.</span>
             </h1>
             <p className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">
-              Comply365 turns the signals your operation already produces into prescriptive action — across Content, Safety and Training, in one connected motion.
+              Operations runs on signals. Nobody acts on them. Comply365 turns the signals your operation already produces into prescriptive action — across Content, Safety and Training, in one connected motion.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <BookWalkthroughDialog
