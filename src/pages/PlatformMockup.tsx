@@ -15,6 +15,10 @@ import moduleTraining from "@/assets/platform-mockup/module-training-platform.jp
 import intelVsGeneric from "@/assets/platform-mockup/intelligence-vs-generic-platform.jpg";
 import steppingStones from "@/assets/platform-mockup/stepping-stones-curve.jpg";
 import ctaBanner from "@/assets/platform-mockup/cta-platform-banner.jpg";
+import dtopDetect from "@/assets/platform-mockup/dtop-detect.jpg";
+import dtopTrigger from "@/assets/platform-mockup/dtop-trigger.jpg";
+import dtopOrchestrate from "@/assets/platform-mockup/dtop-orchestrate.jpg";
+import dtopProve from "@/assets/platform-mockup/dtop-prove.jpg";
 
 const Eyebrow = ({ children }: { children: React.ReactNode }) => (
   <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] uppercase text-primary/80">
@@ -139,23 +143,143 @@ export default function PlatformMockup() {
       {/* 5. DTOP */}
       <section className="py-24 border-b border-border/40">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="text-center mb-16 space-y-4">
+          <div className="text-center mb-20 space-y-4 max-w-3xl mx-auto">
             <Eyebrow>How the Loop Closes</Eyebrow>
             <h2 className="text-4xl lg:text-5xl font-bold">Detect → Trigger → Orchestrate → Prove</h2>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              The operating model that turns every signal into coordinated action and audit-ready evidence —
+              powered by Insight & Intelligence, Automation, and Recommended Actions across all three modules.
+            </p>
           </div>
-          <div className="grid md:grid-cols-4 gap-4 mb-12">
+          <div className="space-y-24">
             {[
-              { letter: "D", label: "Detect", body: "Always-on sensing across operational data, safety reports, audits and ops feeds.", color: "border-blue-500/40 bg-blue-500/5 text-blue-400" },
-              { letter: "T", label: "Trigger", body: "The right workflow starts itself — no email chain, no waiting.", color: "border-amber-500/40 bg-amber-500/5 text-amber-400" },
-              { letter: "O", label: "Orchestrate", body: "Content, training and compliance move together, not in sequence.", color: "border-violet-500/40 bg-violet-500/5 text-violet-400" },
-              { letter: "P", label: "Prove", body: "Every action logged as it happens. Audit-ready by default.", color: "border-emerald-500/40 bg-emerald-500/5 text-emerald-400" },
-            ].map((s) => (
-              <Card key={s.letter} className={`p-6 border ${s.color} bg-card/40 backdrop-blur`}>
-                <div className="text-5xl font-black mb-3">{s.letter}</div>
-                <div className="text-lg font-bold text-foreground mb-2">{s.label}</div>
-                <p className="text-sm text-muted-foreground leading-relaxed">{s.body}</p>
-              </Card>
-            ))}
+              {
+                letter: "D",
+                step: "Detect",
+                capability: "Insight & Intelligence",
+                accent: "blue",
+                badge: "border-blue-500/40 bg-blue-500/10 text-blue-400",
+                bar: "bg-blue-500",
+                glow: "from-blue-500/20",
+                headline: "Always-on sensing across every operational signal.",
+                body: "Operational data, safety reports, audits, ops feeds, training records and content updates flow into one connected data model. The Intelligence Layer — trained on your domain, not the open web — reads them in context at ~90% accuracy and surfaces the signals that actually matter.",
+                bullets: [
+                  "Cross-source signal fusion (ops · safety · training · content)",
+                  "Domain-trained classification at L4–5 maturity",
+                  "Pattern detection across fleets, bases and time windows",
+                ],
+                outcome: "From noise to a ranked list of what to act on.",
+                image: dtopDetect,
+                alt: "Operations dashboard ranking incoming signals from ops, safety and audit feeds",
+              },
+              {
+                letter: "T",
+                step: "Trigger",
+                capability: "Automation",
+                accent: "amber",
+                badge: "border-amber-500/40 bg-amber-500/10 text-amber-400",
+                bar: "bg-amber-500",
+                glow: "from-amber-500/20",
+                headline: "The right workflow starts itself.",
+                body: "When a signal crosses threshold, the platform doesn't email someone — it instantiates the response. Tasks are routed to the right role, with the right context, on the right device, with the right SLA clock running. No inbox archaeology, no waiting for the weekly meeting.",
+                bullets: [
+                  "Policy-driven workflow instantiation",
+                  "Role- and competency-aware routing",
+                  "SLA, escalation and cross-team handoff built in",
+                ],
+                outcome: "Hours, not weeks, from signal to first action.",
+                image: dtopTrigger,
+                alt: "Workflow canvas firing tasks to pilot, ops controller and trainer roles",
+              },
+              {
+                letter: "O",
+                step: "Orchestrate",
+                capability: "Recommended Actions & Prescriptive Guidance",
+                accent: "violet",
+                badge: "border-violet-500/40 bg-violet-500/10 text-violet-400",
+                bar: "bg-violet-500",
+                glow: "from-violet-500/20",
+                headline: "Content, training and compliance move together — not in sequence.",
+                body: "The Intelligence Layer recommends the next best action and orchestrates it across modules: ContentManager365 issues the bulletin, TrainingManager365 assigns the micro-module to the affected crew, SafetyManager365 opens the investigation — all linked to the same root signal, all running in parallel.",
+                bullets: [
+                  "Cross-module recommended actions with prescriptive guidance",
+                  "Parallel execution across content, training and safety",
+                  "Human-in-the-loop approval at every step",
+                ],
+                outcome: "One signal, one coordinated response, three modules in lockstep.",
+                image: dtopOrchestrate,
+                alt: "Three module windows linked by a single violet thread of synchronized actions",
+              },
+              {
+                letter: "P",
+                step: "Prove",
+                capability: "Evidence by Default",
+                accent: "emerald",
+                badge: "border-emerald-500/40 bg-emerald-500/10 text-emerald-400",
+                bar: "bg-emerald-500",
+                glow: "from-emerald-500/20",
+                headline: "Every action logged as it happens. Audit-ready by default.",
+                body: "Detection, decision, action and outcome are stitched into a single timeline per signal. When the regulator asks \"what did you do and when,\" the answer is one click — not a six-week scramble through five systems.",
+                bullets: [
+                  "Immutable signal-to-outcome timeline",
+                  "Regulator-ready exports (EASA, FAA, MoD, ORR formats)",
+                  "Closed-loop measurement: did the action move the metric?",
+                ],
+                outcome: "Compliance becomes a by-product of operating well.",
+                image: dtopProve,
+                alt: "Vertical timeline tracing a signal across DTOP stages with an Audit-ready badge",
+              },
+            ].map((row, i) => {
+              const reverse = i % 2 === 1;
+              return (
+                <div
+                  key={row.letter}
+                  className={`grid lg:grid-cols-12 gap-10 lg:gap-16 items-center ${reverse ? "lg:[&>*:first-child]:order-2" : ""}`}
+                >
+                  <div className="lg:col-span-6 relative">
+                    <div className={`absolute -inset-6 bg-gradient-to-br ${row.glow} to-transparent blur-3xl`} />
+                    <img
+                      src={row.image}
+                      alt={row.alt}
+                      width={1280}
+                      height={832}
+                      loading="lazy"
+                      className="relative rounded-2xl border border-border/40 shadow-2xl"
+                    />
+                  </div>
+                  <div className="lg:col-span-6 relative pl-6">
+                    <div className={`absolute left-0 top-2 bottom-2 w-1 rounded-full ${row.bar}`} />
+                    <div className="space-y-5">
+                      <div className="flex items-center gap-3">
+                        <span className={`inline-flex h-10 w-10 items-center justify-center rounded-lg border text-lg font-black ${row.badge}`}>
+                          {row.letter}
+                        </span>
+                        <div>
+                          <div className="text-xs font-semibold tracking-[0.2em] uppercase text-muted-foreground">
+                            {row.step}
+                          </div>
+                          <div className="text-sm font-semibold text-foreground">{row.capability}</div>
+                        </div>
+                      </div>
+                      <h3 className="text-3xl lg:text-4xl font-bold leading-tight">{row.headline}</h3>
+                      <p className="text-base text-muted-foreground leading-relaxed">{row.body}</p>
+                      <ul className="space-y-2 pt-1">
+                        {row.bullets.map((b) => (
+                          <li key={b} className="flex gap-3 text-sm text-foreground/90">
+                            <span className={`mt-2 h-1.5 w-1.5 rounded-full ${row.bar} flex-shrink-0`} />
+                            <span>{b}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className={`inline-flex items-center gap-2 rounded-full border ${row.badge} px-4 py-2 text-sm font-semibold`}>
+                        <Sparkles className="h-3.5 w-3.5" />
+                        {row.outcome}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
