@@ -1,6 +1,6 @@
 import PitchSlideContainer from "@/components/shared/PitchSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { ShieldAlert, BookOpen, GraduationCap, HelpCircle } from "lucide-react";
+import { ShieldAlert, BookOpen, GraduationCap, HelpCircle, Sparkles } from "lucide-react";
 
 interface Props extends SlideNarrationProps {
   slideNumber?: number;
@@ -13,6 +13,7 @@ const scenarios = [
     chip: "text-emerald-300 bg-emerald-500/15 border-emerald-500/40",
     title: "Safety only",
     has: "Reports captured, investigations logged, recommendations written.",
+    confined: "CoAnalyst answers safety questions on safety data. Insights surface patterns in reports. Automation routes & assigns within Safety. All confined to the safety lane — they can't reach procedures or crews.",
     broken: "Recommendations vanish into someone else's backlog. No procedure update. No targeted retraining. No proof the behaviour changed.",
     questions: [
       "When a recurring safety signal lands today, how does it actually change a procedure?",
@@ -27,6 +28,7 @@ const scenarios = [
     chip: "text-amber-300 bg-amber-500/15 border-amber-500/40",
     title: "Content only",
     has: "Procedural source of truth, version control, regulator traceability, mobile distribution.",
+    confined: "CoAnalyst answers procedural & regulatory questions. Insights surface content gaps and version drift. Automation handles distribution & acknowledgement. All confined to the content lane — no signal layer feeding it, no training loop closing behind it.",
     broken: "Content updates aren't driven by signals — they're driven by calendars and complaints. No closed-loop training when a procedure changes.",
     questions: [
       "What triggers a procedure change today — is it ever an operational signal, or always a regulator or incident?",
@@ -41,6 +43,7 @@ const scenarios = [
     chip: "text-violet-300 bg-violet-500/15 border-violet-500/40",
     title: "Training only",
     has: "Records, completions, recurrent training cycles, evidence of qualification.",
+    confined: "CoAnalyst answers competency & qualification questions. Insights surface training gaps and risk concentrations. Automation handles assignment & reminders. All confined to the training lane — disconnected from the procedures and signals that should drive what's trained.",
     broken: "Training is calendar-driven, not signal-driven. High-risk crews get the same module as low-risk crews. No link to the procedure or signal that justified the training.",
     questions: [
       "What % of training spend is calendar-driven versus signal-driven today?",
@@ -56,7 +59,7 @@ const SEFootprintSingleApp = ({ slideNumber, ...narrationProps }: Props) => (
     id="se-footprint-single"
     slideNumber={slideNumber}
     title="They have ONE app — sell the missing loop"
-    subtitle="A single app captures value in its own lane. The loop only closes when the next two apps join the foundation."
+    subtitle="A single app captures value — and platform capabilities work on it — but everything stays confined to one lane until the foundation widens."
     showHeader
     {...narrationProps}
   >
@@ -74,6 +77,13 @@ const SEFootprintSingleApp = ({ slideNumber, ...narrationProps }: Props) => (
             <div>
               <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-0.5">Value captured today</div>
               <p className="text-xs text-foreground leading-snug">{s.has}</p>
+            </div>
+            <div className="rounded border border-primary/30 bg-primary/5 p-2">
+              <div className="flex items-center gap-1 text-[10px] uppercase tracking-wider text-primary mb-0.5">
+                <Sparkles className="h-3 w-3" />
+                Platform capabilities — confined to this lane
+              </div>
+              <p className="text-[11px] text-foreground leading-snug">{s.confined}</p>
             </div>
             <div>
               <div className="text-[10px] uppercase tracking-wider text-rose-400 mb-0.5">Loop that won't close</div>
