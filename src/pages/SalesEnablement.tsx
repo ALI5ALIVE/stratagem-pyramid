@@ -34,6 +34,7 @@ import TechV4Slide4cTrainingManager from "@/components/tech-slides/v4/TechV4Slid
 import TechV4Slide7CoAnalyst from "@/components/tech-slides/v4/TechV4Slide7CoAnalyst";
 import TechV4SlideInsights from "@/components/tech-slides/v4/TechV4SlideInsights";
 import TechV4SlideAutomation from "@/components/tech-slides/v4/TechV4SlideAutomation";
+import SECapabilityUseCases from "@/components/sales-enablement-slides/SECapabilityUseCases";
 import TechV4SlideTiersVsAI from "@/components/tech-slides/v4/TechV4SlideTiersVsAI";
 import TechV4SlideMobile from "@/components/tech-slides/v4/TechV4SlideMobile";
 import TechV4Slide5DTOP from "@/components/tech-slides/v4/TechV4Slide5DTOP";
@@ -62,7 +63,7 @@ const weekProps = {
     learningGoal:
       "By the end of Week 2 you can describe each capability in 60 seconds, ask one good discovery question per capability, and pick the right capability to lead with for the room you're in.",
     estimatedMinutes: 16,
-    upNext: ["Core Apps", "Intelligence & Orchestration", "Mobile", "Capability cheat sheet"],
+    upNext: ["Core Apps", "Intelligence & Orchestration", "Capability use cases", "Mobile", "Capability cheat sheet"],
   },
   w3: {
     moduleNumber: 3,
@@ -108,8 +109,11 @@ const slides = [
   { id: "se-slide-4b", label: "W2 · Core Apps — ContentManager365", component: TechV4Slide4bContentManager },
   { id: "se-slide-4c", label: "W2 · Core Apps — TrainingManager365", component: TechV4Slide4cTrainingManager },
   { id: "se-slide-coanalyst", label: "W2 · Intelligence — Intelligence Layer", component: TechV4Slide7CoAnalyst },
+  { id: "se-slide-coanalyst-usecases", label: "W2 · Intelligence & Insights — Use Cases", component: SECapabilityUseCases, dividerProps: { capability: "intelligence" } },
   { id: "se-slide-insights", label: "W2 · Intelligence — Insights", component: TechV4SlideInsights },
+  { id: "se-slide-insights-usecases", label: "W2 · Recommendations — Use Cases", component: SECapabilityUseCases, dividerProps: { capability: "recommendations" } },
   { id: "se-slide-automation", label: "W2 · Intelligence — Automation", component: TechV4SlideAutomation },
+  { id: "se-slide-automation-usecases", label: "W2 · Automation — Use Cases", component: SECapabilityUseCases, dividerProps: { capability: "automation" } },
   { id: "se-slide-tiers-vs-ai", label: "W2 · Intelligence Layer vs Generic AI", component: TechV4SlideTiersVsAI },
   { id: "se-slide-mobile", label: "W2 · Mobile", component: TechV4SlideMobile },
   { id: "se-slide-talktrack", label: "W2 · Capability Talk Track", component: SELayerTalkTrack },
