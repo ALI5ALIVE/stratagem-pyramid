@@ -13,7 +13,6 @@ import moduleContent from "@/assets/platform-mockup/module-content-platform.jpg"
 import moduleSafety from "@/assets/platform-mockup/module-safety-platform.jpg";
 import moduleTraining from "@/assets/platform-mockup/module-training-platform.jpg";
 import intelVsGeneric from "@/assets/platform-mockup/intelligence-vs-generic-platform.jpg";
-import steppingStones from "@/assets/platform-mockup/stepping-stones-curve.jpg";
 import ctaBanner from "@/assets/platform-mockup/cta-platform-banner.jpg";
 import dtopDetect from "@/assets/platform-mockup/dtop-detect.jpg";
 import dtopTrigger from "@/assets/platform-mockup/dtop-trigger.jpg";
@@ -420,12 +419,6 @@ export default function PlatformMockup() {
             <h2 className="text-4xl lg:text-5xl font-bold">Connect → Automate → Predict.</h2>
             <p className="text-lg text-muted-foreground">12–18 months, not 5–7 years.</p>
           </div>
-          <img
-            src={steppingStones}
-            alt="Three-step staircase: Connect, Automate, Predict"
-            loading="lazy"
-            className="w-full max-w-4xl mx-auto rounded-2xl border border-border/40 mb-12"
-          />
           <div className="grid md:grid-cols-3 gap-6">
             {[
               { p: "Phase 1", t: "Connect", b: "One platform, one data model. Investigation time drops from weeks to days.", color: "border-blue-500/30" },
