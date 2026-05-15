@@ -51,7 +51,7 @@ export default function Comply365MockupHome() {
               <span className="text-muted-foreground/70">to Signals.</span>
             </h1>
             <p className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">
-              Operations runs on signals. Nobody acts on them. Comply365 turns the signals your operation already produces into prescriptive action — across Content, Safety and Training, in one connected motion.
+              Most operations are stuck in silos — Content, Safety and Training reporting in three formats, three rhythms, three blind spots. Comply365 connects them into one signal stream, and turns every signal into prescriptive action.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <BookWalkthroughDialog
