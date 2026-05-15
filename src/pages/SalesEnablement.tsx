@@ -50,9 +50,9 @@ const weekProps = {
     kicker: "Foundation",
     title: "Set the scene — and put the platform in plain English",
     learningGoal:
-      "By the end of Week 1 you can explain why the market is shifting, give the one-sentence platform pitch, walk the DTOP loop (Detect → Trigger → Orchestrate → Prove) on a whiteboard, and name the six signal sources behind Detect — without jargon, without reading off a slide.",
+      "By the end of Week 1 you can explain why the market is shifting, give the one-sentence platform pitch, walk the DTOP loop (Detect → Trigger → Orchestrate → Prove) on a whiteboard, and name the four signal sources behind Detect — without jargon, without reading off a slide.",
     estimatedMinutes: 19,
-    upNext: ["Plain-English definition", "The platform at a glance", "DTOP — the operating loop", "DTOP whiteboard drill", "The six signal sources", "Value unlocked", "Operational Performance Roadmap", "Operational Performance Roadmap whiteboard", "Recap talk track"],
+    upNext: ["Plain-English definition", "The platform at a glance", "DTOP — the operating loop", "DTOP whiteboard drill", "Signal sources", "Value unlocked", "Operational Performance Roadmap", "Operational Performance Roadmap whiteboard", "Recap talk track"],
   },
   w2: {
     moduleNumber: 2,
@@ -97,7 +97,7 @@ const slides = [
   { id: "se-slide-dtop", label: "W1 · DTOP", component: TechV4Slide5DTOP },
   { id: "se-slide-dtop-whiteboard", label: "W1 · DTOP Whiteboard Drill", component: SEDtopWhiteboardDrill },
   { id: "se-slide-dtop-whiteboard-runbook", label: "W1 · Whiteboard Runbook", component: SEDtopWhiteboardRunbook },
-  { id: "se-slide-signals", label: "W1 · The Six Signal Sources", component: SIGSlide3SignalSources },
+  { id: "se-slide-signals", label: "W1 · Signal Sources", component: SIGSlide3SignalSources },
   { id: "se-slide-value", label: "W1 · Value Unlocked", component: PFSlide9Value },
   { id: "se-slide-maturity-roadmap", label: "W1 · Operational Performance Roadmap", component: Slide5MaturityCurve },
   { id: "se-slide-maturity-whiteboard", label: "W1 · Roadmap Whiteboard Drill", component: SERoadmapWhiteboardDrill },
