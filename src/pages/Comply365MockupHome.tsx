@@ -1,7 +1,9 @@
 import { ArrowRight, Sparkles, Shield, FileText, GraduationCap, Layers, Radar, Workflow, BadgeCheck, Database, Lock, Globe2 } from "lucide-react";
+import { Link } from "react-router-dom";
 import TopNav from "@/components/home/TopNav";
 import CustomerTrustBar from "@/components/home/CustomerTrustBar";
 import Footer from "@/components/home/Footer";
+import BookWalkthroughDialog from "@/components/home/BookWalkthroughDialog";
 import PlatformEcosystemDiagram from "@/components/PlatformEcosystemDiagram";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -27,41 +29,86 @@ export default function Comply365MockupHome() {
       <TopNav />
 
       {/* 1. HERO */}
-      <section className="relative overflow-hidden border-b border-border/40">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-background" />
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-12 pt-28 pb-24 grid lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-6 space-y-6">
-            <Eyebrow>The Operational Performance Platform</Eyebrow>
-            <h1 className="text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight">
-              The industry's first AI-powered platform connecting{" "}
-              <span className="bg-gradient-to-r from-primary to-violet-400 bg-clip-text text-transparent">
-                ContentManager365 · SafetyManager365 · TrainingManager365
-              </span>
+      <section className="relative overflow-hidden border-b border-border/60">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_hsl(var(--primary)/0.18),transparent_55%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_hsl(38_92%_55%/0.10),transparent_55%)]" />
+          <div
+            className="absolute inset-0 opacity-[0.06]"
+            style={{
+              backgroundImage:
+                "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
+              backgroundSize: "56px 56px",
+            }}
+          />
+        </div>
+        <div className="max-w-7xl mx-auto px-6 pt-20 pb-20 md:pt-28 md:pb-24 grid lg:grid-cols-12 gap-10 items-center">
+          <div className="lg:col-span-7">
+            <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">
+              <Sparkles className="h-3 w-3" /> The Operational Performance Platform
+            </span>
+            <h1 className="mt-6 font-display text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.04] text-foreground">
+              Operations runs on signals.{" "}
+              <span className="text-muted-foreground/70">Nobody acts on them.</span>
             </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed max-w-xl">
-              Turn operational data into operational control — safer, smarter, more connected operations.
+            <p className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">
+              Comply365 turns operational signals into prescriptive action — across Content, Safety and Training. One connected data model. One operating rhythm.
             </p>
-            <div className="flex flex-wrap gap-4 pt-2">
-              <Button size="lg" className="gap-2">Explore the platform <ArrowRight className="h-4 w-4" /></Button>
-              <Button size="lg" variant="outline">Book a working session</Button>
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <BookWalkthroughDialog
+                trigger={
+                  <button className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary/90 transition-colors">
+                    Book a walkthrough <ArrowRight className="h-4 w-4" />
+                  </button>
+                }
+              />
+              <Link to="/platform" className="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground hover:text-primary transition-colors">
+                See the platform <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
             </div>
-            <div className="flex gap-6 pt-6 text-sm text-muted-foreground">
-              <span>~90% domain accuracy</span>
-              <span>·</span>
-              <span>Cited to source</span>
-              <span>·</span>
-              <span>Audit-ready by default</span>
+
+            <div className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-blue-500" /> Detect</span>
+              <ArrowRight className="h-3 w-3 opacity-40" />
+              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-amber-500" /> Trigger</span>
+              <ArrowRight className="h-3 w-3 opacity-40" />
+              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-violet-500" /> Orchestrate</span>
+              <ArrowRight className="h-3 w-3 opacity-40" />
+              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-emerald-500" /> Prove</span>
             </div>
           </div>
-          <div className="lg:col-span-6 relative">
-            <div className="absolute -inset-8 bg-gradient-to-tr from-primary/20 via-violet-500/10 to-transparent blur-3xl" />
-            <img
-              src={heroCollage}
-              alt="Platform surfaces: operations dashboard, Intelligence Layer answer card, and crew mobile checklist"
-              width={1600}
-              height={1100}
-              className="relative rounded-2xl border border-border/40 shadow-2xl"
-            />
+
+          {/* Product peek */}
+          <div className="lg:col-span-5 hidden lg:block">
+            <div className="relative">
+              <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-transparent to-emerald-500/10 blur-2xl" />
+              <div className="relative rounded-2xl border border-border bg-card shadow-2xl overflow-hidden">
+                <div className="bg-muted/30 px-4 py-2 flex items-center gap-2 border-b border-border">
+                  <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-amber-500/80" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/80" />
+                  <span className="ml-3 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Intelligence Layer</span>
+                </div>
+                <div className="p-5 space-y-4">
+                  <div className="rounded-lg bg-muted/40 px-3 py-2 text-sm">
+                    What revisions affect crews not yet recurrent?
+                  </div>
+                  <div className="rounded-lg border border-primary/30 bg-primary/5 p-4">
+                    <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.18em] text-primary">
+                      <Sparkles className="h-3 w-3" /> Recommended Action
+                    </div>
+                    <p className="mt-2 text-sm text-foreground leading-relaxed">
+                      <span className="font-semibold">QRH 7.12 r.14</span> — step 3 changed. <span className="font-semibold">42 crews</span> need recurrent.
+                    </p>
+                    <div className="mt-3 flex flex-wrap gap-1.5 text-[10px]">
+                      <span className="rounded-full border border-border bg-background px-2 py-0.5 text-muted-foreground">QRH r.14</span>
+                      <span className="rounded-full border border-border bg-background px-2 py-0.5 text-muted-foreground">Training</span>
+                      <span className="rounded-full border border-border bg-background px-2 py-0.5 text-muted-foreground">SMS #4421</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
