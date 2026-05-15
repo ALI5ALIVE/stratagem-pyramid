@@ -11,7 +11,6 @@ import moduleContent from "@/assets/mockup/module-content.jpg";
 import moduleSafety from "@/assets/mockup/module-safety.jpg";
 import moduleTraining from "@/assets/mockup/module-training.jpg";
 import intelligenceVsGeneric from "@/assets/mockup/intelligence-vs-generic.jpg";
-import dtopLoop from "@/assets/mockup/dtop-loop.jpg";
 import frontlineDevices from "@/assets/mockup/frontline-devices.jpg";
 import ctaApron from "@/assets/mockup/cta-apron.jpg";
 
@@ -214,12 +213,6 @@ export default function Comply365MockupHome() {
               </Card>
             ))}
           </div>
-          <img
-            src={dtopLoop}
-            alt="DTOP loop walkthrough: a single signal traversing Detect, Trigger, Orchestrate, Prove"
-            loading="lazy"
-            className="w-full rounded-2xl border border-border/40"
-          />
         </div>
       </section>
 
