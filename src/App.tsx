@@ -41,6 +41,7 @@ import CustomerOverview from "./pages/CustomerOverview";
 import PlatformOverview from "./pages/PlatformOverview";
 import Comply365Home from "./pages/Comply365Home";
 import Comply365MockupHome from "./pages/Comply365MockupHome";
+import PlatformMockup from "./pages/PlatformMockup";
 import SignalsEvent from "./pages/events/SignalsEvent";
 import SignalsEventBrief from "./pages/events/SignalsEventBrief";
 import PasswordGate from "./components/shared/PasswordGate";
@@ -111,6 +112,7 @@ const App = () => (
             <Route path="/platform" element={<PasswordGate><PlatformOverview /></PasswordGate>} />
             <Route path="/comply365-home" element={<PasswordGate><Comply365Home /></PasswordGate>} />
             <Route path="/comply365-mockup" element={<Comply365MockupHome />} />
+            <Route path="/platform-mockup" element={<PlatformMockup />} />
             <Route path="/events/from-signals-to-control" element={<SignalsEvent />} />
             <Route path="/events/from-signals-to-control/brief" element={<SignalsEventBrief />} />
             <Route path="/academy" element={<RequireAuth><AcademyHome /></RequireAuth>} />
