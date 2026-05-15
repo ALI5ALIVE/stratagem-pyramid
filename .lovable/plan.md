@@ -1,69 +1,74 @@
-# Add "confined intelligence" nuance to Customer Footprint slides
+## Goal
 
-## Problem
+Give reps a repeatable whiteboard motion for each customer footprint scenario, so they can draw the missing-loop story live on a call instead of reading slides.
 
-The new Week 3 footprint slides (`SEFootprintSingleApp`, `SEFootprintTwoApps`, `SEFootprintAllThree`, `SEFootprintValueLadder`) currently imply that platform capabilities — **Insights & Recommendations**, **Automation**, **CoAnalyst**, **Unified Mobile** — only become available once the customer owns all three foundation apps. That's wrong and undersells the proposition.
+## What gets added
 
-Reality: a single-app or two-app customer **does** get those capabilities — but **confined to the discipline(s) they own**. CoAnalyst on a Safety-only footprint answers safety questions brilliantly but can't reason across to procedure or training. Insights surface patterns inside Safety but can't recommend a procedure update or a targeted retraining. Automation can route a safety report but can't trigger a content revision or a training assignment. That nuance is both more honest and a stronger expansion narrative: *"You're already getting platform-grade intelligence — you're just getting it inside one lane. The next app widens the lane."*
+Three new whiteboard drill slides in **Week 3 · Sell & Win**, each placed immediately after its scenario slide:
 
-## Changes
+```text
+SEFootprintSingleApp           →  SEFootprintSingleWhiteboard      (NEW)
+SEFootprintTwoApps             →  SEFootprintTwoWhiteboard         (NEW)
+SEFootprintAllThree            →  SEFootprintAllThreeWhiteboard    (NEW)
+SEFootprintValueLadder         (unchanged)
+SEFootprintPlaybook            (unchanged)
+```
 
-### 1. `SEFootprintSingleApp.tsx` — add a "Platform capabilities you DO get (confined)" row to each of the 3 columns
+Each drill follows the same visual + pedagogical pattern as `SEDtopWhiteboardDrill`:
+- Cream/wood-framed whiteboard panel (left, 7/12 cols) with a hand-drawn SVG using the Caveat font
+- Numbered "stroke script" panel (right, 5/12 cols) — what to say as you draw each stroke
+- 90-second time-box footer
 
-Insert a new block between **Value captured today** and **Loop that won't close**:
+### Drill 1 — One App (e.g. Safety only)
+Strokes:
+1. Draw the lit lane (Safety box, blue, "lit")
+2. Draw the two dark lanes (Content, Training — dotted, "dark")
+3. Inside the lit lane, write `CoAnalyst · Insights · Automation` with a small "confined" label
+4. Draw the broken DTOP arrow that dies at Orchestrate
+5. Write the one discovery question: *"When Safety flags a risk, who owns the procedure and training change?"*
+6. Circle the gap — that's the sale
 
-- **Safety only** — "CoAnalyst answers safety questions on your safety data. Insights surface patterns in your reports. Automation routes and assigns within Safety. All confined to the safety lane — they can't reach procedures or crews."
-- **Content only** — "CoAnalyst answers procedural and regulatory questions. Insights surface content gaps and version drift. Automation handles distribution and acknowledgement. All confined to the content lane — no signal layer feeding it, no training loop closing behind it."
-- **Training only** — "CoAnalyst answers competency and qualification questions. Insights surface training gaps and risk concentrations. Automation handles assignment and reminders. All confined to the training lane — disconnected from the procedures and signals that should drive what's trained."
+### Drill 2 — Two Apps (e.g. Safety + Content)
+Strokes:
+1. Draw the two lit lanes side by side
+2. Draw the one dark lane
+3. Show the half-loop arrow: Detect → Trigger → Orchestrate (procedures only) → ✗ no Training → Prove partial
+4. Label intelligence as "across two lanes — still confined"
+5. Discovery question: *"When a procedure changes, how do you know every crew is trained on it before the next shift?"*
+6. Circle the missing lane
 
-Keep existing **Loop that won't close** + **Discovery questions** + **Left on the table** intact. Tighten copy density slightly so the column still fits without scroll on 1379×865.
+### Drill 3 — All Three + Platform Vision
+Strokes:
+1. Draw the closed DTOP loop with all three lanes lit
+2. Above the loop, draw the intelligence layer band (CoAnalyst · Insights · Automation · Mobile)
+3. Arrow from the intelligence band reaching across all three lanes ("scope, not new features")
+4. Write the compounding metric callout: *~90% domain accuracy vs ~35% generic*
+5. Vision line: *"You bought the instruments — this is the conductor"*
+6. Discovery question: *"Which decisions in your operation still rely on a human stitching three systems together?"*
 
-### 2. `SEFootprintTwoApps.tsx` — same pattern, "confined to two lanes"
+### Narration
 
-Add a "Platform capabilities you DO get (across two lanes)" block per column:
+Add 3 new entries to `src/data/salesEnablementNarration.ts` keyed by the new slide IDs, following the standard 5-part coach-script format (Why → Core message → Pain → Value pivot → Delivery tip → Transition). ~45–60 sec each.
 
-- **Safety + Content** — "CoAnalyst, Insights and Automation operate across signals and procedures. The training lane is dark — no targeted retraining, no competency evidence."
-- **Safety + Training** — "CoAnalyst, Insights and Automation operate across signals and competency. Procedures stay static — intelligence can't update the manual."
-- **Content + Training** — "CoAnalyst, Insights and Automation operate across procedures and competency. The signal layer is missing — intelligence has nothing operational to react to."
+### Registration
 
-### 3. `SEFootprintAllThree.tsx` — reframe so it doesn't imply capabilities arrive only now
+In `src/pages/SalesEnablement.tsx`:
+- Insert the three new components into the slides array directly after their matching scenario slides
+- Bump Week 3 `estimatedMinutes` from 22 → 26
+- Extend Week 3 `upNext` to mention "Footprint whiteboard drills"
 
-Add one short banner above the four-layer grid:
+## Files
 
-> "These capabilities aren't new at this stage — your customer already has them inside whichever apps they own. What changes at three apps is **scope**: now CoAnalyst, Insights and Automation can reason and act across the whole DTOP loop, not one lane of it."
+New:
+- `src/components/sales-enablement-slides/SEFootprintSingleWhiteboard.tsx`
+- `src/components/sales-enablement-slides/SEFootprintTwoWhiteboard.tsx`
+- `src/components/sales-enablement-slides/SEFootprintAllThreeWhiteboard.tsx`
 
-No structural change to the four-layer grid.
-
-### 4. `SEFootprintValueLadder.tsx` — clarify rung labels
-
-Update the rung sub-labels so the ladder doesn't read as "no intelligence until rung 4":
-
-- 1 app (~25%) — "Foundation in one lane + platform capabilities **confined to that lane**"
-- 2 apps (~55%) — "Half-loop + platform capabilities across **two lanes**"
-- 3 apps (~75%) — "DTOP loop closed + platform capabilities across **all three lanes**"
-- 3 apps + Intelligence layer (100%) — "Loop closes **and learns** — cross-lane reasoning, recommendations, automated orchestration"
-
-Keep the disclaimer ("directional, not contractual") in place.
-
-### 5. Narration updates in `src/data/salesEnablementNarration.ts`
-
-For `se-footprint-single`, `se-footprint-two`, `se-footprint-all`, `se-footprint-ladder`: amend the **Pain → Value pivot** and **How to deliver it** sections to coach the rep on this nuance explicitly. Key teaching line to add to all four:
-
-> "Don't tell a single-app customer they get nothing intelligent until they buy more. They already get CoAnalyst, Insights and Automation — inside the lane they own. Your job is to show them the lane is narrower than the problem."
-
-Keep the 5-part structure, ~60–90s per slide.
+Edited:
+- `src/data/salesEnablementNarration.ts` (3 new entries)
+- `src/pages/SalesEnablement.tsx` (register slides, update Week 3 metadata)
 
 ## Out of scope
 
-- No changes to `SEFootprintIntro` or `SEFootprintPlaybook` (concepts already neutral on this point).
-- No changes to Week 1/Week 2 slides.
-- No Academy quiz changes — current questions don't conflict with the nuance.
-- No PPTX exporter or memory updates needed.
-
-## Files touched
-
-- `src/components/sales-enablement-slides/SEFootprintSingleApp.tsx`
-- `src/components/sales-enablement-slides/SEFootprintTwoApps.tsx`
-- `src/components/sales-enablement-slides/SEFootprintAllThree.tsx`
-- `src/components/sales-enablement-slides/SEFootprintValueLadder.tsx`
-- `src/data/salesEnablementNarration.ts`
+- No changes to the existing footprint scenario slides, value ladder, or 3-move playbook
+- No changes to Week 1 / Week 2, Academy quizzes, PPTX exporters, or memory
