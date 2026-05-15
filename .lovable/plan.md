@@ -1,24 +1,17 @@
-# Replace `/comply365-mockup` hero with the `/comply365-home` hero
+# Link the new /platform-mockup page from the Comply365 mockup home
 
-Swap the current mockup hero section (the gradient + collage image hero, `Comply365MockupHome.tsx` lines 30–67) with the exact hero used on `/comply365-home` (`Comply365Home.tsx` lines 47–131).
+Update the platform links on `/comply365-mockup` so they navigate to the new `/platform-mockup` page instead of the existing `/platform` / `/platform-playbook` routes.
 
-That hero is the two-column layout with:
-- Left: "Operations runs on signals. Nobody acts on them." headline, subhead, **Book a walkthrough** dialog button, "See the platform" link, and the Detect → Trigger → Orchestrate → Prove pill row.
-- Right: the "Intelligence Layer" product-peek mock card (QRH 7.12 r.14 / Recommended Action).
-- Background: dual radial gradients + faint grid pattern.
+## Changes
 
-## Technical changes (single file: `src/pages/Comply365MockupHome.tsx`)
+1. **`src/pages/Comply365MockupHome.tsx`**
+   - Hero "See the platform" link (line 65): change `to="/platform"` → `to="/platform-mockup"`.
+   - "Explore the platform" button (line 139): wrap in `<Link to="/platform-mockup">` so it actually navigates.
 
-1. **Imports**:
-   - Add `Link` from `react-router-dom`.
-   - Add `BookWalkthroughDialog` from `@/components/home/BookWalkthroughDialog` (path used by `Comply365Home.tsx`).
-   - Keep existing `Sparkles`, `ArrowRight`.
-2. **Replace** the entire `{/* 1. HERO */}` `<section>` (lines 30–67) with the Hero markup copied verbatim from `Comply365Home.tsx`.
-3. **Keep** the `heroCollage` import — it is still referenced lower in the file (Section 14 blog card).
-4. No other sections, navigation, or routing change.
+2. **`src/components/home/TopNav.tsx`**
+   - Top nav `Platform` item (line 5): change `href: "/platform-playbook"` → `href: "/platform-mockup"`.
+   - Note: `TopNav` is shared — confirm with the user before changing, or scope the change to only the mockup page by inlining a custom nav. Default plan: update the shared TopNav since it's already mockup-flavoured (logo links to `/operational-platform`).
 
 ## Out of scope
-
-- No edits to `Comply365Home.tsx` or any shared component.
-- No changes to other sections of `/comply365-mockup`.
-- No new assets.
+- No changes to `/platform-mockup` itself.
+- No styling changes.
