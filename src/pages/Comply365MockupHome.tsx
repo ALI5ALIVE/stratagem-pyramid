@@ -1,7 +1,9 @@
-import { ArrowRight, Sparkles, Shield, FileText, GraduationCap, Layers, Radar, Workflow, BadgeCheck, Database, Lock, Globe2 } from "lucide-react";
+import { ArrowRight, Sparkles, Shield, FileText, GraduationCap, Gauge, Zap, BadgeCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import TopNav from "@/components/home/TopNav";
 import CustomerTrustBar from "@/components/home/CustomerTrustBar";
+import CustomerQuotes from "@/components/home/CustomerQuotes";
+import DayInOperationScenario from "@/components/home/DayInOperationScenario";
 import Footer from "@/components/home/Footer";
 import BookWalkthroughDialog from "@/components/home/BookWalkthroughDialog";
 import PlatformArchitectureCircular from "@/components/platform-slides/PlatformArchitectureCircular";
@@ -9,15 +11,12 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
 import heroCollage from "@/assets/mockup/hero-platform-collage.jpg";
-import moduleContent from "@/assets/mockup/module-content.jpg";
-import moduleSafety from "@/assets/mockup/module-safety.jpg";
-import moduleTraining from "@/assets/mockup/module-training.jpg";
 import intelligenceVsGeneric from "@/assets/mockup/intelligence-vs-generic.jpg";
 import frontlineDevices from "@/assets/mockup/frontline-devices.jpg";
 import ctaApron from "@/assets/mockup/cta-apron.jpg";
 
 const Eyebrow = ({ children }: { children: React.ReactNode }) => (
-  <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] uppercase text-primary/80">
+  <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.22em] uppercase text-primary/80">
     <span className="h-px w-8 bg-primary/40" />
     {children}
   </div>
@@ -28,7 +27,7 @@ export default function Comply365MockupHome() {
     <div className="min-h-screen bg-background text-foreground">
       <TopNav />
 
-      {/* 1. HERO */}
+      {/* 1. HERO — customer problem, named */}
       <section className="relative overflow-hidden border-b border-border/60">
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_hsl(var(--primary)/0.18),transparent_55%)]" />
@@ -45,14 +44,14 @@ export default function Comply365MockupHome() {
         <div className="max-w-7xl mx-auto px-6 pt-20 pb-20 md:pt-28 md:pb-24 grid lg:grid-cols-12 gap-10 items-center">
           <div className="lg:col-span-7">
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">
-              <Sparkles className="h-3 w-3" /> The Operational Performance Platform
+              <Sparkles className="h-3 w-3" /> For the people accountable when operations slip
             </span>
             <h1 className="mt-6 font-display text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.04] text-foreground">
               Operations runs on signals.{" "}
               <span className="text-muted-foreground/70">Nobody acts on them.</span>
             </h1>
             <p className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">
-              Comply365 turns operational signals into prescriptive action — across Content, Safety and Training. One connected data model. One operating rhythm.
+              Comply365 turns the signals your operation already produces into prescriptive action — across Content, Safety and Training, in one connected motion.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <BookWalkthroughDialog
@@ -62,8 +61,8 @@ export default function Comply365MockupHome() {
                   </button>
                 }
               />
-              <Link to="/platform-mockup" className="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground hover:text-primary transition-colors">
-                See the platform <ArrowRight className="h-3.5 w-3.5" />
+              <Link to="#scenario" className="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground hover:text-primary transition-colors">
+                See it on a Tuesday <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
 
@@ -78,7 +77,7 @@ export default function Comply365MockupHome() {
             </div>
           </div>
 
-          {/* Product peek */}
+          {/* Product peek — kept; it's a strong asset */}
           <div className="lg:col-span-5 hidden lg:block">
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-transparent to-emerald-500/10 blur-2xl" />
@@ -113,159 +112,129 @@ export default function Comply365MockupHome() {
         </div>
       </section>
 
-      {/* 2. CUSTOMER TRUST BAR */}
-      <section className="py-12 border-b border-border/40">
-        <p className="text-center text-sm text-muted-foreground mb-6">
-          Trusted by the operators who can't afford to get it wrong.
-        </p>
-        <CustomerTrustBar />
+      {/* 2. PROOF WALL — logos + 3 outcome metrics */}
+      <section className="py-16 border-b border-border/40">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <p className="text-center text-sm text-muted-foreground mb-8">
+            Trusted by the operators who can't afford to get it wrong.
+          </p>
+          <CustomerTrustBar />
+
+          <div className="mt-14 grid md:grid-cols-3 gap-6">
+            {[
+              { v: "200+", l: "Operators running mission-critical Ops, Safety and Training on Comply365." },
+              { v: "1M+",  l: "Frontline users — pilots, engineers, drivers, dispatchers — using it daily." },
+              { v: "~90%", l: "Domain accuracy from the Intelligence Layer, where generic AI sits at ~35%." },
+            ].map((s) => (
+              <div key={s.l} className="rounded-xl border border-border/50 bg-card/40 p-7">
+                <div className="font-display text-5xl font-bold text-foreground">{s.v}</div>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.l}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-6 text-[11px] text-muted-foreground/70 italic">
+            Operator outcomes are illustrative and dependent on customer-specific operational baseline, scope and integration.
+          </p>
+        </div>
       </section>
 
-      {/* 3. ONE PLATFORM */}
+      {/* 3. A DAY IN THE OPERATION — narrated scenario */}
+      <div id="scenario">
+        <DayInOperationScenario />
+      </div>
+
+      {/* 4. CUSTOMER STORIES — three quotes with hard metrics */}
+      <CustomerQuotes />
+
+      {/* 5. WHY OPERATORS CHOOSE COMPLY365 — outcomes, not features */}
+      <section className="py-24 border-b border-border/40 bg-muted/20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="grid lg:grid-cols-12 gap-10 mb-16">
+            <div className="lg:col-span-5">
+              <Eyebrow>Why operators choose Comply365</Eyebrow>
+              <h2 className="mt-4 font-display text-4xl lg:text-5xl font-bold leading-tight">
+                Three outcomes. Every operator. Every audit.
+              </h2>
+            </div>
+            <p className="lg:col-span-7 text-lg text-muted-foreground leading-relaxed self-end">
+              Not a list of features. The three things our customers tell us changed in their operation
+              the day they went live.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              {
+                icon: Zap,
+                title: "Faster to act on what matters.",
+                body: "Weak signals reach the right person with the right context — before they become events.",
+                quote: "Audit prep went from six weeks to four days.",
+                who: "Director of Compliance · Tier-1 European airline",
+              },
+              {
+                icon: BadgeCheck,
+                title: "Evidence the regulator trusts.",
+                body: "Every action carries its own audit trail — cited to manual, procedure and person.",
+                quote: "Findings closed before the auditor finished asking.",
+                who: "Head of Flight Safety · Defense aviation operator",
+              },
+              {
+                icon: Gauge,
+                title: "One platform. One ROI story.",
+                body: "Ops, Safety and Training share one data model — not three teams reporting in three formats.",
+                quote: "For the first time, the COO sees one operating rhythm.",
+                who: "Chief Operating Officer · National rail operator",
+              },
+            ].map((o) => (
+              <Card key={o.title} className="p-7 bg-card/60 border-border/40 hover:border-primary/40 transition-colors flex flex-col">
+                <o.icon className="h-7 w-7 text-primary mb-5" />
+                <h3 className="text-xl font-bold leading-snug mb-3">{o.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-6">{o.body}</p>
+                <div className="mt-auto pt-5 border-t border-border/60">
+                  <p className="text-sm italic text-foreground leading-snug">"{o.quote}"</p>
+                  <p className="mt-2 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">{o.who}</p>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 6. PLATFORM IN ONE GLANCE — tease, don't re-explain */}
       <section className="py-24 border-b border-border/40">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
-          <div className="space-y-6">
-            <Eyebrow>One Platform · One Partner · One Vision</Eyebrow>
-            <h2 className="text-4xl lg:text-5xl font-bold leading-tight">
-              One Platform. One Operating Model. One Closed Loop.
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-5 space-y-6">
+            <Eyebrow>The platform behind the story</Eyebrow>
+            <h2 className="font-display text-4xl lg:text-5xl font-bold leading-tight">
+              One connected platform.<br/>
+              <span className="text-muted-foreground/70">Three named modules.</span>
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              The first connected platform across Operations, Safety and Training — powered by an
-              <span className="text-foreground font-semibold"> Intelligence Layer </span>
-              that reaches <span className="text-primary font-semibold">~90% domain accuracy</span> where
-              generic AI sits at <span className="text-muted-foreground">~35%</span>. Every signal becomes a
-              workflow, every workflow becomes evidence, every change becomes readiness.
+              ContentManager365, SafetyManager365 and TrainingManager365 share one data model,
+              wrapped by an Intelligence Layer and the DTOP loop. The full architecture lives one click away.
             </p>
-            <Button asChild size="lg" variant="outline" className="gap-2">
+            <div className="flex flex-wrap gap-2 pt-2">
+              {[
+                { i: FileText,       n: "ContentManager365" },
+                { i: Shield,         n: "SafetyManager365" },
+                { i: GraduationCap,  n: "TrainingManager365" },
+              ].map((m) => (
+                <span key={m.n} className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/60 px-3 py-1.5 text-xs font-semibold">
+                  <m.i className="h-3.5 w-3.5 text-primary" /> {m.n}
+                </span>
+              ))}
+            </div>
+            <Button asChild size="lg" variant="outline" className="gap-2 mt-2">
               <Link to="/platform-mockup">Explore the platform <ArrowRight className="h-4 w-4" /></Link>
             </Button>
           </div>
-          <div className="flex justify-center">
+          <div className="lg:col-span-7 flex justify-center">
             <PlatformArchitectureCircular />
           </div>
         </div>
       </section>
 
-      {/* 4. THREE MODULES */}
-      <section className="py-24 border-b border-border/40 bg-muted/20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="text-center mb-16 space-y-4">
-            <Eyebrow>The Three Modules</Eyebrow>
-            <h2 className="text-4xl lg:text-5xl font-bold">Built for the operation. Connected by design.</h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                tag: "Living operational content",
-                name: "ContentManager365",
-                body: "Next-generation operational content management and distribution. Manuals, procedures and bulletins that update themselves when regulations or operations change — and prove it.",
-                icon: FileText,
-                img: moduleContent,
-                accent: "from-blue-500/30 to-blue-500/0",
-              },
-              {
-                tag: "Predictive safety, quality & risk",
-                name: "SafetyManager365",
-                body: "The most advanced safety, quality and risk solution — intelligent, predictive, proactive. Detect weak signals, trigger the right workflow, prove the loop closed.",
-                icon: Shield,
-                img: moduleSafety,
-                accent: "from-emerald-500/30 to-emerald-500/0",
-              },
-              {
-                tag: "Competency tied to operations",
-                name: "TrainingManager365",
-                body: "AI-powered training that schedules itself around operations and keeps every crew current — competency linked directly to the work and the risk.",
-                icon: GraduationCap,
-                img: moduleTraining,
-                accent: "from-violet-500/30 to-violet-500/0",
-              },
-            ].map((m) => (
-              <Card key={m.name} className="overflow-hidden bg-card/60 backdrop-blur border-border/40 hover:border-primary/40 transition-all group">
-                <div className="relative aspect-[3/2] overflow-hidden">
-                  <img src={m.img} alt={m.name} loading="lazy" className="w-full h-full object-cover" />
-                  <div className={`absolute inset-0 bg-gradient-to-t ${m.accent}`} />
-                </div>
-                <div className="p-6 space-y-3">
-                  <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary/80">
-                    <m.icon className="h-4 w-4" />
-                    {m.tag}
-                  </div>
-                  <h3 className="text-xl font-bold">{m.name}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{m.body}</p>
-                  <button className="inline-flex items-center gap-1 text-sm font-semibold text-primary group-hover:gap-2 transition-all">
-                    Learn more <ArrowRight className="h-3 w-3" />
-                  </button>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 5. INTELLIGENCE LAYER */}
-      <section className="py-24 border-b border-border/40 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-violet-500/5" />
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
-          <div className="space-y-6">
-            <Eyebrow>The Intelligence Layer</Eyebrow>
-            <h2 className="text-4xl lg:text-6xl font-bold leading-[1.05]">
-              ~90% domain accuracy. <span className="text-muted-foreground/60">Not 35%.</span>
-            </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Generic AI guesses. The Intelligence Layer <span className="text-foreground font-semibold">knows</span> —
-              because it's trained on your manuals, your safety data, your training records and your operational reality.
-              It doesn't just answer questions; it issues <span className="text-foreground font-semibold">Recommended Actions</span>
-              {" "}grounded in the regulation, the procedure and the person.
-            </p>
-            <div className="flex flex-wrap gap-3 pt-2">
-              {["~90% domain accuracy", "Cited to source", "Audit-ready by default"].map((p) => (
-                <span key={p} className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 text-sm font-semibold">
-                  <Sparkles className="h-3 w-3 text-primary" />
-                  {p}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div className="relative">
-            <div className="absolute -inset-6 bg-primary/10 blur-3xl" />
-            <img
-              src={intelligenceVsGeneric}
-              alt="Generic AI vs Intelligence Layer answer comparison"
-              loading="lazy"
-              className="relative rounded-2xl border border-border/40 shadow-2xl"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* 6. DTOP */}
-      <section className="py-24 border-b border-border/40">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="text-center mb-16 space-y-4">
-            <Eyebrow>How the Loop Closes</Eyebrow>
-            <h2 className="text-4xl lg:text-5xl font-bold">Detect → Trigger → Orchestrate → Prove</h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              The DTOP operating model. One signal in, one closed loop out — across every module.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-4 gap-4 mb-12">
-            {[
-              { letter: "D", label: "Detect", body: "Pick up the weak signal — early.", color: "border-blue-500/40 bg-blue-500/5 text-blue-400" },
-              { letter: "T", label: "Trigger", body: "Route it to the right workflow, automatically.", color: "border-amber-500/40 bg-amber-500/5 text-amber-400" },
-              { letter: "O", label: "Orchestrate", body: "Coordinate content, safety and training in one move.", color: "border-violet-500/40 bg-violet-500/5 text-violet-400" },
-              { letter: "P", label: "Prove", body: "Evidence-ready audit trail, every time.", color: "border-emerald-500/40 bg-emerald-500/5 text-emerald-400" },
-            ].map((s) => (
-              <Card key={s.letter} className={`p-6 border ${s.color} bg-card/40 backdrop-blur`}>
-                <div className="text-5xl font-black mb-3">{s.letter}</div>
-                <div className="text-lg font-bold text-foreground mb-2">{s.label}</div>
-                <p className="text-sm text-muted-foreground leading-relaxed">{s.body}</p>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 7. FRONTLINE MOBILE */}
+      {/* 7. WHERE THE WORK HAPPENS */}
       <section className="py-24 border-b border-border/40 bg-muted/20">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
           <div className="relative order-2 lg:order-1">
@@ -278,9 +247,9 @@ export default function Comply365MockupHome() {
             />
           </div>
           <div className="space-y-6 order-1 lg:order-2">
-            <Eyebrow>Where the Work Actually Happens</Eyebrow>
-            <h2 className="text-4xl lg:text-5xl font-bold leading-tight">
-              Same data model. In the cockpit, the hangar, the depot.
+            <Eyebrow>Where the work actually happens</Eyebrow>
+            <h2 className="font-display text-4xl lg:text-5xl font-bold leading-tight">
+              In the cockpit. In the hangar. In the depot.
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
               The platform follows the work to the frontline — same operational data, same evidence trail,
@@ -290,60 +259,21 @@ export default function Comply365MockupHome() {
         </div>
       </section>
 
-      {/* 8. CTA BAND */}
-      <section className="relative overflow-hidden">
-        <img src={ctaApron} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/40" />
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-12 py-32 text-center space-y-6">
-          <Eyebrow>Working Together to Power</Eyebrow>
-          <h2 className="text-4xl lg:text-5xl font-bold max-w-4xl mx-auto leading-tight">
-            Peak Operational Performance, Proactive Safety Management and Modern Training Management.
-          </h2>
-          <Button size="lg" className="gap-2 mt-4">Request a meeting <ArrowRight className="h-4 w-4" /></Button>
-        </div>
-      </section>
-
-      {/* 9. THE COMPLY365 DIFFERENCE */}
-      <section className="py-24 border-y border-border/40">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="text-center mb-16 space-y-4">
-            <Eyebrow>The Comply365 Difference</Eyebrow>
-            <h2 className="text-4xl lg:text-5xl font-bold">An Operational Power Multiplier</h2>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { icon: Layers, title: "Enterprise-Wide Approach", body: "Complete coverage across operations, safety and training — one platform, one ROI story, not three." },
-              { icon: Workflow, title: "Connecting the Dots", body: "Interconnects what used to be siloed — operations, safety and training share the same data and workflows." },
-              { icon: Globe2, title: "Configurable by Design", body: "Hybrid SaaS that adapts to your content mix and your operating model — without forking the platform." },
-              { icon: Database, title: "Data-Empowered", body: "From raw operational data to Recommended Actions — the Intelligence Layer turns the journey into a workflow, not a project." },
-              { icon: BadgeCheck, title: "Domain Expertise + AI", body: "Built by people who've run the operation. Fused with AI tuned to the domain — not retrofitted to it." },
-              { icon: Lock, title: "Security is Paramount", body: "Top-tier credentials, sovereign deployment options, and an evidence trail your auditor will actually trust." },
-            ].map((t) => (
-              <Card key={t.title} className="p-6 bg-card/60 border-border/40 hover:border-primary/40 transition-colors">
-                <t.icon className="h-8 w-8 text-primary mb-4" />
-                <h3 className="text-lg font-bold mb-2">{t.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{t.body}</p>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 10. FEATURED RESOURCES */}
-      <section className="py-24 border-b border-border/40 bg-muted/20">
+      {/* 8. RESOURCES */}
+      <section className="py-24 border-b border-border/40">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="flex items-end justify-between mb-12">
             <div>
-              <Eyebrow>Featured Resources</Eyebrow>
-              <h2 className="text-3xl lg:text-4xl font-bold mt-3">From the Comply365 newsroom</h2>
+              <Eyebrow>From the newsroom</Eyebrow>
+              <h2 className="font-display text-3xl lg:text-4xl font-bold mt-3">Operators in their own words.</h2>
             </div>
             <Button variant="outline" className="hidden md:inline-flex gap-2">View all <ArrowRight className="h-4 w-4" /></Button>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { tag: "Blog", title: "A Q&A with CEO Ilia Kostov on the AI-Powered Operational Performance Platform", img: heroCollage },
-              { tag: "Blog", title: "The Intelligence Layer: Why ~90% beats ~35%", img: intelligenceVsGeneric },
-              { tag: "Event", title: "Connections365: Platform & Next-Gen Brands Unveiled", img: ctaApron },
+              { tag: "Customer story", title: "How a Tier-1 carrier closed audit findings in under 24 hours.", img: heroCollage },
+              { tag: "Customer story", title: "11,000 crews re-current in 9 days — without grounding the schedule.", img: intelligenceVsGeneric },
+              { tag: "Customer story", title: "From 3 reporting formats to 1 operating rhythm at a national rail operator.", img: ctaApron },
             ].map((r) => (
               <Card key={r.title} className="overflow-hidden bg-card/60 border-border/40 hover:border-primary/40 transition-colors group cursor-pointer">
                 <div className="aspect-[16/9] overflow-hidden">
@@ -359,15 +289,30 @@ export default function Comply365MockupHome() {
         </div>
       </section>
 
-      {/* 11. CLOSING CTA */}
+      {/* 9. CLOSING CTA — outcome-framed */}
       <section className="relative overflow-hidden">
         <img src={ctaApron} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-l from-background via-background/80 to-background/40" />
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-12 py-24 text-center space-y-6">
-          <h2 className="text-3xl lg:text-5xl font-bold max-w-3xl mx-auto leading-tight">
-            Ready to turn operational data into operational control?
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/40" />
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-12 py-32 text-center space-y-6">
+          <Eyebrow>Your next signal</Eyebrow>
+          <h2 className="font-display text-4xl lg:text-6xl font-bold max-w-4xl mx-auto leading-[1.05]">
+            Turn the next signal into your next proof point.
           </h2>
-          <Button size="lg" className="gap-2">Get Started <ArrowRight className="h-4 w-4" /></Button>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Book a 30-minute walkthrough on your operation, your manuals, your audit cycle.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+            <BookWalkthroughDialog
+              trigger={
+                <button className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary/90 transition-colors">
+                  Book a walkthrough <ArrowRight className="h-4 w-4" />
+                </button>
+              }
+            />
+            <Link to="/platform-mockup" className="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground hover:text-primary transition-colors">
+              Explore the platform <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          </div>
         </div>
       </section>
 
