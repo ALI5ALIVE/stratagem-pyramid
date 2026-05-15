@@ -62,7 +62,7 @@ export default function Comply365MockupHome() {
                   </button>
                 }
               />
-              <Link to="/platform" className="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground hover:text-primary transition-colors">
+              <Link to="/platform-mockup" className="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground hover:text-primary transition-colors">
                 See the platform <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
@@ -136,7 +136,9 @@ export default function Comply365MockupHome() {
               generic AI sits at <span className="text-muted-foreground">~35%</span>. Every signal becomes a
               workflow, every workflow becomes evidence, every change becomes readiness.
             </p>
-            <Button size="lg" variant="outline" className="gap-2">Explore the platform <ArrowRight className="h-4 w-4" /></Button>
+            <Button asChild size="lg" variant="outline" className="gap-2">
+              <Link to="/platform-mockup">Explore the platform <ArrowRight className="h-4 w-4" /></Link>
+            </Button>
           </div>
           <div className="flex justify-center">
             <PlatformEcosystemDiagram />
