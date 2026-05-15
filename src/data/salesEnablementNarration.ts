@@ -120,6 +120,13 @@ export const salesEnablementNarrations: SESlideNarration[] = [
       "Intelligence Layer is the most strategic slide in the entire deck. The core message: Intelligence Layer is the intelligence layer that lives on top of the connected platform — it turns operational data into insights, recommendations, and triggered actions. The pain it addresses: customers are drowning in dashboards and starving for answers. The value lever — and you must land this exactly — Intelligence Layer delivers approximately ninety percent domain accuracy on aviation operational questions, versus around thirty-five percent for generic AI tools pointed at the same data. That gap exists because Intelligence Layer is grounded in the customer's own operational schema and our aviation taxonomy. Delivery tip — never call it a chatbot. Call it an analyst that lives inside your operation. Discovery question: who in your team spends the most time pulling reports that should already exist? Next: Insights and Recommendations.",
   },
   {
+    slideId: "se-slide-coanalyst-usecases",
+    title: "Week 2 · Intelligence & Insights — Use Cases",
+    voiceId: VOICE,
+    script:
+      "Why this slide matters: prospects buy capabilities they can picture themselves using on a Monday morning. This is the picture for Intelligence and Insights. The core message: at the solution level, Intelligence and Insights does the chores nobody has time for — pulling a lessor-ready safety report for one tail number, listing the crew who haven't synced in thirty days, scheduling renewals at one base. At the platform level, it answers the questions a director actually asks — show me the correlation between safety trends and training deficiencies, how is the Dangerous Goods refresh landing, are we ready for Part 145. The value lever: nobody else can answer the platform-level questions, because nobody else has the connected data underneath. Delivery tip — pick one solution example that matches your prospect's role, then jump to one platform question and stop talking. Discovery question: what's the report your team rebuilds every month that should already exist? Next: Recommendations and Prescriptive Actions.",
+  },
+  {
     slideId: "se-slide-insights",
     title: "Week 2 · Insights & Recommendations",
     voiceId: VOICE,
@@ -127,11 +134,25 @@ export const salesEnablementNarrations: SESlideNarration[] = [
       "Insights and Recommendations is how Intelligence Layer earns trust before it ever automates anything. The core message: it surfaces patterns, flags emerging risk, and — in the long run — recommends the next operational action with the evidence that supports the recommendation. The pain it addresses: today their analysts spend the majority of their week building decks instead of making decisions. The value lever: when the system writes the first draft with the evidence attached, the analyst's role shifts from report-builder to decision-maker. Delivery tip — emphasise that the answer always carries its evidence. That's the trust currency. On the roadmap, be precise — and be honest about the distinction between a POC and production. Insights is in POC in H1 2026 — that is an internal prototype we use to prove the approach, not a feature customers can buy or use yet. Production rollout for Insights is H2 2026. Recommendations and prescriptive actions are 2027 and beyond — that is the vision, not the near-term commitment. If a prospect pushes for Recommendations now, say plainly: Insights first, in H2 next year; Recommendations is the year after. Next: Automation.",
   },
   {
+    slideId: "se-slide-insights-usecases",
+    title: "Week 2 · Recommendations & Prescriptive Actions — Use Cases",
+    voiceId: VOICE,
+    script:
+      "Why this slide matters: Recommendations is the capability that gets the most enthusiasm and the most scepticism in the same meeting — use cases ground both. The core message: at the solution level, the system recommends the specific change — what risk control to add for unstable approach at location X, what search improvements the OMA needs, what would lift Dangerous Goods training engagement. At the platform level it goes further — where should leadership focus today, did Just Culture actually work, where would an audit hurt us. The pain it addresses: leadership today gets opinions, not prioritised recommendations with the evidence attached. The value lever: every recommendation cites its evidence, and every recommendation closes the loop into DTOP. Delivery tip — be honest about the roadmap. Recommendations is 2027 and beyond. Use these examples to sell the direction, not next quarter's invoice. Discovery question: where in your week do you want a prioritised list of next actions instead of another dashboard? Next: Automation.",
+  },
+  {
     slideId: "se-slide-automation",
     title: "Week 2 · Automation",
     voiceId: VOICE,
     script:
       "Automation is the controlled second step. The core message: once the customer trusts the system's answers, we automate the safe routines — routing, assignment, notifications, evidence assembly — with a human in the loop on anything that changes a procedure or a training plan. The pain it addresses: their best people spend hours every day on tasks that have a deterministic right answer. The value lever: hours back to where judgement actually matters. Delivery tip — always frame automation as human-in-the-loop by default. Customers fear runaway automation; you defuse it by making the guardrails the headline. On the roadmap — and keep the POC-versus-production distinction crisp — the Automation POC is targeted for April 2026; platform-wide rollout is H2 2026. POC means internal prototype, not something a customer can use yet. Next: how Intelligence Layer differs from generic AI.",
+  },
+  {
+    slideId: "se-slide-automation-usecases",
+    title: "Week 2 · Automation — Use Cases",
+    voiceId: VOICE,
+    script:
+      "Why this slide matters: Automation is the capability prospects struggle to picture without an example, because per-solution automation isn't universally available — the value lives at the platform layer. The core message: the platform triggers a training update when a procedure is revised, drafts a procedure update when a regulation is amended, and triggers a SafetyManager365 risk control review when training results deteriorate. Each of those is one stroke of the DTOP cycle made automatic. The pain it addresses: today these handoffs happen by email, weeks later, with no audit trail. The value lever: every automation closes a step in the loop and leaves auditable evidence behind it. Delivery tip — always say human-in-the-loop on anything that changes a procedure or a training plan. The automation does the routing and the draft; a human approves the change. Discovery question: which of these three handoffs costs you the most time today? Next: how Intelligence Layer differs from generic AI.",
   },
   {
     slideId: "se-slide-tiers-vs-ai",
