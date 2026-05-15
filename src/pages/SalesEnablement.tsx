@@ -15,6 +15,12 @@ import SEUseCaseCheatSheet from "@/components/sales-enablement-slides/SEUseCaseC
 import SEDtopWhiteboardDrill from "@/components/sales-enablement-slides/SEDtopWhiteboardDrill";
 import SEDtopWhiteboardRunbook from "@/components/sales-enablement-slides/SEDtopWhiteboardRunbook";
 import SERoadmapWhiteboardDrill from "@/components/sales-enablement-slides/SERoadmapWhiteboardDrill";
+import SEFootprintIntro from "@/components/sales-enablement-slides/SEFootprintIntro";
+import SEFootprintSingleApp from "@/components/sales-enablement-slides/SEFootprintSingleApp";
+import SEFootprintTwoApps from "@/components/sales-enablement-slides/SEFootprintTwoApps";
+import SEFootprintAllThree from "@/components/sales-enablement-slides/SEFootprintAllThree";
+import SEFootprintValueLadder from "@/components/sales-enablement-slides/SEFootprintValueLadder";
+import SEFootprintPlaybook from "@/components/sales-enablement-slides/SEFootprintPlaybook";
 
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
 import PFSlide9Value from "@/components/platform-slides/PFSlide9Value";
@@ -62,8 +68,8 @@ const weekProps = {
     title: "Sell it, prove it, win it",
     learningGoal:
       "By the end of Week 3 you can run the discovery → demo → close motion, pick the right use case for the room, and handle the top objections — ending with a clear next step.",
-    estimatedMinutes: 14,
-    upNext: ["Discovery → demo → close", "Use case cheat sheet", "Regulation Management", "Customer outcomes", "Objections", "Why Comply365", "Your enablement plan"],
+    estimatedMinutes: 22,
+    upNext: ["Discovery → demo → close", "Use case cheat sheet", "Customer footprint scenarios", "Regulation Management", "Customer outcomes", "Objections", "Why Comply365", "Your enablement plan"],
   },
 };
 
@@ -108,6 +114,12 @@ const slides = [
   { id: "se-week-3", label: "▸ Week 3 · Sell & Win", component: SEModuleDivider, dividerProps: weekProps.w3 },
   { id: "se-discovery-to-close", label: "W3 · Discovery → Demo → Close", component: SEDiscoveryToClose },
   { id: "se-usecase-cheatsheet", label: "W3 · Use Case Cheat Sheet", component: SEUseCaseCheatSheet },
+  { id: "se-footprint-intro", label: "W3 · Customer Footprint — Intro", component: SEFootprintIntro },
+  { id: "se-footprint-single", label: "W3 · Footprint — One App", component: SEFootprintSingleApp },
+  { id: "se-footprint-two", label: "W3 · Footprint — Two Apps", component: SEFootprintTwoApps },
+  { id: "se-footprint-all", label: "W3 · Footprint — All Three + Platform", component: SEFootprintAllThree },
+  { id: "se-footprint-ladder", label: "W3 · Footprint — Value Ladder", component: SEFootprintValueLadder },
+  { id: "se-footprint-playbook", label: "W3 · Footprint — 3-Move Play", component: SEFootprintPlaybook },
   { id: "se-slide-regmgmt", label: "W3 · Regulation Management Use Case", component: TechSlideRegulationSummary },
   { id: "se-slide-outcomes", label: "W3 · Customer Outcomes", component: CustomerOutcomesSlide },
   { id: "se-slide-objections", label: "W3 · Objections", component: SEObjections },
