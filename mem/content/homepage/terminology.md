@@ -1,6 +1,6 @@
 ---
-name: Homepage Terminology
-description: Public homepage uses "Intelligence Layer" instead of "Intelligence Layer"
+name: Intelligence Layer Terminology
+description: Across all surfaces (decks, playbooks, sales enablement, public site) refer to the intelligence capability as "Intelligence Layer", never "CoAnalyst"
 type: constraint
 ---
-On the public Comply365 homepage (src/pages/Comply365Home.tsx and src/components/home/**), never use the product name "Intelligence Layer". Refer to it as the **Intelligence Layer** (the intelligence layer of the system of intelligence). Intelligence Layer naming is preserved everywhere else (decks, playbooks, sales enablement). **Why:** Public web positioning must describe a capability, not a sub-brand.
+Everywhere — public site, all decks, playbooks, sales enablement training, Practice Center — the intelligence capability is called the **Intelligence Layer**. The legacy product name "CoAnalyst" must not appear in user-facing copy. Component file names, route paths, and code identifiers (e.g. `CoAnalystDeck`, `useCoAnalystNarration`, `/coanalyst`) are intentionally preserved to avoid breaking imports and shared links. **Why:** The intelligence capability is positioned as a layer of the platform, not a sub-brand.
