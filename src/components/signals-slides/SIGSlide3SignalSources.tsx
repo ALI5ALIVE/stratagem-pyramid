@@ -1,13 +1,13 @@
 import SlideContainer from "@/components/slides/SlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
 import { signalSources } from "@/data/signalsPlaybook";
-import { Plane, FileText, ShieldCheck, GraduationCap } from "lucide-react";
+import { BookCheck, AlertTriangle, GitBranch, Globe2 } from "lucide-react";
 
 const iconMap = {
-  Operations: Plane,
-  Content: FileText,
-  Safety: ShieldCheck,
-  Training: GraduationCap,
+  "Regulation Signals": BookCheck,
+  "Anomalies": AlertTriangle,
+  "Operational Change Requests": GitBranch,
+  "Micro, Macro & Geopolitical Influences": Globe2,
 };
 
 const colorMap: Record<string, { text: string; bg: string; border: string }> = {
@@ -22,7 +22,7 @@ const SIGSlide3SignalSources = (props: SlideNarrationProps) => {
     <SlideContainer
       id="sig-sources"
       title="Where signals come from"
-      subtitle="Signals live across four operational domains. Most operators see them in silos — we connect them."
+      subtitle="Signals live across four very different worlds — regulation, anomalies, operational change, and the world outside. Most operators see them in silos. We connect them."
       slideNumber={3}
       {...props}
     >
@@ -50,10 +50,10 @@ const SIGSlide3SignalSources = (props: SlideNarrationProps) => {
 
         <div className="p-4 rounded-lg border border-border bg-card/60">
           <p className="text-sm text-muted-foreground leading-relaxed">
-            <span className="text-foreground font-semibold">The unlock:</span> a signal in one domain almost always
-            implies action in another. A safety trend should change a manual. A manual change should drive recurrent
-            training. A training gap should change the schedule. <span className="text-primary">DTOP</span> is how that
-            actually happens.
+            <span className="text-foreground font-semibold">The unlock:</span> a regulation change should rewrite a
+            manual. An anomaly should trigger an investigation and a training nudge. An operational change request
+            should re-baseline both. A geopolitical shift should re-plan the schedule before the day starts.{" "}
+            <span className="text-primary">DTOP</span> is how that actually happens.
           </p>
         </div>
       </div>
