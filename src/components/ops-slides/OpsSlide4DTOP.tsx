@@ -103,11 +103,11 @@ const OpsSlide4DTOP = ({ slideNumber, ...narrationProps }: OpsSlide4Props) => {
           ))}
         </div>
 
-        {/* CoAnalyst Intelligence Layer */}
+        {/* Intelligence Layer Intelligence Layer */}
         <div className="p-3 rounded-lg border border-primary/30 bg-primary/10 flex items-start gap-3">
           <Brain className="h-5 w-5 shrink-0 mt-0.5 text-primary" />
           <div className="min-w-0">
-            <h4 className="text-sm font-bold text-primary">CoAnalyst✦ — Intelligence Layer</h4>
+            <h4 className="text-sm font-bold text-primary">Intelligence Layer✦ — Intelligence Layer</h4>
             <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">Aviation-specific AI that surfaces patterns, predicts risks, and drives closed-loop recommended action across all three modules.</p>
           </div>
         </div>

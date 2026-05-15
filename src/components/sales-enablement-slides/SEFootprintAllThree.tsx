@@ -9,7 +9,7 @@ interface Props extends SlideNarrationProps {
 const layers = [
   {
     icon: Sparkles,
-    name: "CoAnalyst",
+    name: "Intelligence Layer",
     color: "text-primary border-primary/40 bg-primary/10",
     pitch: "The intelligence layer — ~90% domain accuracy on aviation operational questions vs ~35% for generic AI.",
     question: "Who in your team spends the most time pulling reports that should already exist?",
@@ -50,7 +50,7 @@ const SEFootprintAllThree = ({ slideNumber, ...narrationProps }: Props) => (
       <div className="rounded-lg border border-primary/30 bg-primary/5 p-3">
         <div className="text-[10px] uppercase tracking-wider text-primary mb-1">What actually changes at three apps</div>
         <p className="text-xs text-foreground leading-snug">
-          These capabilities aren't new at this stage — your customer already has them inside whichever apps they own. What changes at three apps is <span className="text-primary font-semibold">scope</span>: now CoAnalyst, Insights and Automation can reason and act across the whole DTOP loop, not one lane of it.
+          These capabilities aren't new at this stage — your customer already has them inside whichever apps they own. What changes at three apps is <span className="text-primary font-semibold">scope</span>: now Intelligence Layer, Insights and Automation can reason and act across the whole DTOP loop, not one lane of it.
         </p>
       </div>
 

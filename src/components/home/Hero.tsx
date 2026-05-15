@@ -66,7 +66,7 @@ function HeroCollage() {
           ))}
         </div>
       </div>
-      {/* CoAnalyst answer card */}
+      {/* Intelligence Layer answer card */}
       <div className="absolute right-0 top-32 w-[68%] rounded-xl border border-primary/30 bg-card/90 p-5 shadow-2xl backdrop-blur">
         <div className="mb-2 flex items-center gap-2">
           <div className="h-6 w-6 rounded-md bg-primary/20 text-center text-xs font-bold leading-6 text-primary">CA</div>

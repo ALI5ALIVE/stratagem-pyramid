@@ -12,7 +12,7 @@ const cases = [
     accent: "text-emerald-400 border-emerald-500/40 bg-emerald-500/10",
     name: "Safety signal → procedure update",
     plain:
-      "A weak safety signal triggers a CoAnalyst recommendation, the manual updates, and the change reaches the crew on next login.",
+      "A weak safety signal triggers a Intelligence Layer recommendation, the manual updates, and the change reaches the crew on next login.",
     question: "When a safety signal lands, how long until the relevant procedure actually changes?",
   },
   {
@@ -28,7 +28,7 @@ const cases = [
     accent: "text-amber-400 border-amber-500/40 bg-amber-500/10",
     name: "Fatigue trend → roster intervention",
     plain:
-      "Operational data surfaces a fatigue pattern early; CoAnalyst recommends roster adjustments before it becomes a safety event.",
+      "Operational data surfaces a fatigue pattern early; Intelligence Layer recommends roster adjustments before it becomes a safety event.",
     question: "What signals would you want to see before a fatigue trend turned into an incident?",
   },
   {

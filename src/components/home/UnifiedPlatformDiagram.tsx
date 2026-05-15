@@ -57,7 +57,7 @@ export default function UnifiedPlatformDiagram() {
               </div>
               <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
                 ~90% domain accuracy
-                <StatSourceChip source="Comply365 internal benchmark of CoAnalyst on operational content vs. generic LLM baseline (~35%). See CoAnalyst intelligence framework." />
+                <StatSourceChip source="Comply365 internal benchmark of Intelligence Layer on operational content vs. generic LLM baseline (~35%). See Intelligence Layer intelligence framework." />
               </div>
             </div>
 

@@ -164,7 +164,7 @@ export const useCases: SignalUseCase[] = [
     withoutPlatform:
       "Backlog grows. Themes are missed. The next event is in last year's reports — but no one had the time to read them.",
     withPlatform: [
-      "CoAnalyst classifies and clusters reports with ~90% domain accuracy.",
+      "Intelligence Layer classifies and clusters reports with ~90% domain accuracy.",
       "DTOP triggers themes that breach thresholds, routes to the right owner.",
       "Action and outcome captured as evidence for the regulator.",
     ],
@@ -217,7 +217,7 @@ export const objections: SignalObjection[] = [
   {
     objection: "Isn't a signal just an alert with a new label?",
     response:
-      "Alerts fire on rules you wrote yesterday. Signals are patterns the system finds — including the ones you didn't think to look for. CoAnalyst (~90% domain accuracy vs ~35% generic) reads operational language, not just thresholds.",
+      "Alerts fire on rules you wrote yesterday. Signals are patterns the system finds — including the ones you didn't think to look for. Intelligence Layer (~90% domain accuracy vs ~35% generic) reads operational language, not just thresholds.",
     reframe: "Alerts tell you a rule fired. Signals tell you something is changing.",
   },
   {
@@ -235,7 +235,7 @@ export const objections: SignalObjection[] = [
   {
     objection: "Generic AI can do this for us.",
     response:
-      "Generic AI hits ~35% accuracy on aviation operational data. CoAnalyst is purpose-built — ~90% at L4–5 — because it's trained on the same operational language your team uses. Accuracy is the difference between a signal and noise.",
+      "Generic AI hits ~35% accuracy on aviation operational data. Intelligence Layer is purpose-built — ~90% at L4–5 — because it's trained on the same operational language your team uses. Accuracy is the difference between a signal and noise.",
     reframe: "You can't build operational control on a 35% reading of your data.",
   },
 ];
@@ -258,7 +258,7 @@ export const useTerms = [
   "control",
   "operational performance",
   "Systems of Record",
-  "CoAnalyst",
+  "Intelligence Layer",
   "DTOP",
   "Generative AI",
   "Recommended Actions",

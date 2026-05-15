@@ -173,10 +173,10 @@ export const architectureLayers: ArchitectureLayer[] = [
   {
     number: 3,
     title: "Intelligence & Orchestration Layer",
-    tagline: "CoAnalyst · Insights & Recommendations · Automation",
+    tagline: "Intelligence Layer · Insights & Recommendations · Automation",
     description:
-      "Three intelligence capabilities turn operational data into action: CoAnalyst for plain-English questions, Insights & Recommendations for proactive direction, and Automation for cross-product workflows.",
-    components: ["CoAnalyst", "Insights & Recommendations", "Automation & Orchestration"],
+      "Three intelligence capabilities turn operational data into action: Intelligence Layer for plain-English questions, Insights & Recommendations for proactive direction, and Automation for cross-product workflows.",
+    components: ["Intelligence Layer", "Insights & Recommendations", "Automation & Orchestration"],
     color: "text-amber-400",
     bg: "bg-amber-500/10",
     border: "border-amber-500/30",
@@ -246,7 +246,7 @@ export const coreApps: CoreApp[] = [
 // ============================================================
 export const intelligenceCapabilities: IntelligenceCapability[] = [
   {
-    name: "CoAnalyst",
+    name: "Intelligence Layer",
     short: "Ask anything",
     role: "Plain-English questions across the operational data foundation — answered in seconds with cited evidence.",
     bullets: [
@@ -259,7 +259,7 @@ export const intelligenceCapabilities: IntelligenceCapability[] = [
     color: "text-amber-400",
     bg: "bg-amber-500/10",
     border: "border-amber-500/30",
-    status: "Live · CoAnalyst Playbook",
+    status: "Live · Intelligence Layer Playbook",
   },
   {
     name: "Insights & Recommendations",
@@ -327,7 +327,7 @@ export const dtopModel = {
       letter: "D",
       label: "Detect",
       tagline: "See the signal",
-      detail: "Insights & Recommendations and CoAnalyst surface the signal across content, training and safety data.",
+      detail: "Insights & Recommendations and Intelligence Layer surface the signal across content, training and safety data.",
       color: "text-blue-400",
       bg: "bg-blue-500/10",
       border: "border-blue-500/30",
@@ -375,7 +375,7 @@ export const flagshipUseCase: PlatformUseCase = {
     detect:
       "Insights & Recommendations correlates the SafetyManager365 occurrence with related procedure usage in ContentManager365 and competence data in TrainingManager365 — surfacing the gap proactively.",
     trigger:
-      "CoAnalyst lets the safety team interrogate the pattern in plain English. A Recommended Action is raised: revise the procedure, re-train the affected roles, log a compliance checkpoint.",
+      "Intelligence Layer lets the safety team interrogate the pattern in plain English. A Recommended Action is raised: revise the procedure, re-train the affected roles, log a compliance checkpoint.",
     orchestrate:
       "Automation runs the workflow: ContentManager365 publishes the revised procedure, TrainingManager365 assigns the updated module to the affected roles, SafetyManager365 opens the compliance checkpoint, Teams notifies the operational owners.",
     prove:
@@ -383,7 +383,7 @@ export const flagshipUseCase: PlatformUseCase = {
   },
   outcome: "One signal → one closed loop → one auditable outcome",
   metric: "Weeks of coordination → hours of orchestration",
-  capabilities: ["Insights", "CoAnalyst", "Automation", "Core Apps", "Unified Mobile", "DTOP"],
+  capabilities: ["Insights", "Intelligence Layer", "Automation", "Core Apps", "Unified Mobile", "DTOP"],
 };
 
 // ============================================================
@@ -406,7 +406,7 @@ export const valuePillars: ValuePillar[] = [
   {
     title: "Intelligence That Acts",
     description:
-      "CoAnalyst, Insights & Recommendations and Automation turn operational data into action — not just dashboards.",
+      "Intelligence Layer, Insights & Recommendations and Automation turn operational data into action — not just dashboards.",
     bullets: [
       "Ask anything in plain English",
       "Recommended Actions across silos",
@@ -545,7 +545,7 @@ export const competitiveContrast: CompetitiveContrast[] = [
     approach: "Comply365 Operational Performance Platform",
     isUs: true,
     data: "One unified foundation",
-    intelligence: "CoAnalyst · Insights · Automation",
+    intelligence: "Intelligence Layer · Insights · Automation",
     action: "DTOP closes the loop",
     delivery: "One trusted mobile shell",
   },
@@ -565,7 +565,7 @@ export const moatStatements = [
 export const positioningLine = "From three disconnected disciplines → one operational performance platform.";
 
 export const elevatorClosePitch =
-  "Comply365 is the Operational Performance Platform for aviation. We own the operational core — Content, Training and Safety — as one connected system on a unified data foundation. CoAnalyst, Insights & Recommendations and Automation turn that data into intelligence and action. The Unified Mobile App delivers it to the frontline in the shell they already trust. DTOP — Detect, Trigger, Orchestrate, Prove — is the operating model that closes the loop. One platform. One operating model. One mobile entry point.";
+  "Comply365 is the Operational Performance Platform for aviation. We own the operational core — Content, Training and Safety — as one connected system on a unified data foundation. Intelligence Layer, Insights & Recommendations and Automation turn that data into intelligence and action. The Unified Mobile App delivers it to the frontline in the shell they already trust. DTOP — Detect, Trigger, Orchestrate, Prove — is the operating model that closes the loop. One platform. One operating model. One mobile entry point.";
 
 export const talkingPoints = [
   "Lead with the architecture: Core Apps → Data Foundation → Intelligence & Orchestration → Mobile → DTOP.",

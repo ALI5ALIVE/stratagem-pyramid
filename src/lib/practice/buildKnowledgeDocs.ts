@@ -66,7 +66,7 @@ export async function buildKnowledgeDocs(): Promise<KbDoc[]> {
 
   docs.push({
     name: `${NAME_PREFIX}coanalyst`,
-    text: `# CoAnalyst Playbook — Narrations\n\n${joinNarration(
+    text: `# Intelligence Layer Playbook — Narrations\n\n${joinNarration(
       coa.coanalystNarrations as any,
     )}`,
   });
@@ -154,7 +154,7 @@ export async function buildKnowledgeDocs(): Promise<KbDoc[]> {
       "## DTOP Operating Model",
       "Detect → Trigger → Orchestrate → Prove. Colors: D blue · T amber · O violet · P emerald.",
       "",
-      "## CoAnalyst headline",
+      "## Intelligence Layer headline",
       "~90% domain accuracy at L4–5 vs ~35% generic AI.",
       "",
       "## Master message",

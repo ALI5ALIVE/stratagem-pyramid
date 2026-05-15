@@ -10,7 +10,7 @@ const strokes = [
   { n: 1, color: "text-blue-400", dot: "bg-blue-400", label: "Two lit lanes", say: "They own Safety and Content. Draw both lit, side by side." },
   { n: 2, color: "text-muted-foreground", dot: "bg-muted-foreground", label: "One dark lane", say: "Draw Training as a dotted, empty box — the lane that's still dark." },
   { n: 3, color: "text-amber-400", dot: "bg-amber-400", label: "Half-loop arrow", say: "Detect → Trigger → Orchestrate (procedures only) → ✗ no Training → Prove is partial. The loop is half-closed." },
-  { n: 4, color: "text-primary", dot: "bg-primary", label: "Intelligence band", say: "Above the lit lanes, write CoAnalyst, Insights, Automation — label it 'across two lanes, still confined.'" },
+  { n: 4, color: "text-primary", dot: "bg-primary", label: "Intelligence band", say: "Above the lit lanes, write Intelligence Layer, Insights, Automation — label it 'across two lanes, still confined.'" },
   { n: 5, color: "text-violet-400", dot: "bg-violet-400", label: "Discovery question", say: "Write the question: 'When a procedure changes, how do you know every crew is trained on it before the next shift?'" },
   { n: 6, color: "text-emerald-400", dot: "bg-emerald-400", label: "Circle the missing lane", say: "Circle Training. That circle is the loop-close — and it's almost always the cheapest path to the full DTOP loop." },
 ];
@@ -31,7 +31,7 @@ const SEFootprintTwoWhiteboard = ({ slideNumber, ...narrationProps }: Props) => 
           {/* Intelligence band */}
           <g>
             <rect x="40" y="30" width="420" height="40" rx="8" fill="#ede9fe" stroke="#6d28d9" strokeWidth="3" />
-            <text x="55" y="56" fill="#6d28d9" fontSize="15" fontWeight="700">CoAnalyst · Insights · Automation</text>
+            <text x="55" y="56" fill="#6d28d9" fontSize="15" fontWeight="700">Intelligence Layer · Insights · Automation</text>
             <text x="305" y="56" fill="#b45309" fontSize="12" fontStyle="italic">— across 2 lanes</text>
           </g>
           {/* Lit Safety */}

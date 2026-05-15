@@ -32,7 +32,7 @@ const buildVsBuy = [
 
 const CASlide8VsGenericAI = (props: SlideNarrationProps) => {
   return (
-    <SlideContainer id="ca-vs-generic-ai" title="Why CoAnalyst Beats Generic AI" subtitle="Purpose-built aviation intelligence vs off-the-shelf AI tools" slideNumber={8} {...props}>
+    <SlideContainer id="ca-vs-generic-ai" title="Why Intelligence Layer Beats Generic AI" subtitle="Purpose-built aviation intelligence vs off-the-shelf AI tools" slideNumber={8} {...props}>
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 h-full">
         {/* Comparison table */}
         <div className="lg:col-span-3 bg-card/60 border border-border rounded-xl p-3 overflow-auto flex flex-col">
@@ -40,7 +40,7 @@ const CASlide8VsGenericAI = (props: SlideNarrationProps) => {
             <thead>
               <tr className="border-b border-border">
                 <th className="text-left py-1.5 text-xs text-muted-foreground font-medium">Capability</th>
-                <th className="text-center py-1.5 text-xs text-primary font-bold w-20">CoAnalyst</th>
+                <th className="text-center py-1.5 text-xs text-primary font-bold w-20">Intelligence Layer</th>
                 <th className="text-center py-1.5 text-xs text-muted-foreground font-medium w-20">Generic AI</th>
               </tr>
             </thead>
@@ -98,7 +98,7 @@ const CASlide8VsGenericAI = (props: SlideNarrationProps) => {
 
           <div className="bg-primary/10 border border-primary/30 rounded-xl p-2.5 flex-1 flex flex-col justify-center">
             <p className="text-xs font-semibold text-foreground italic leading-relaxed">
-              "Generic AI reads reports. CoAnalyst understands aviation operations."
+              "Generic AI reads reports. Intelligence Layer understands aviation operations."
             </p>
           </div>
         </div>

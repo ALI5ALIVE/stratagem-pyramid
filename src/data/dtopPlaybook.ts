@@ -293,7 +293,7 @@ export const objections: DTOPObjection[] = [
   },
   {
     objection: "We're not ready for AI — we need basics first",
-    response: "DTOP doesn't require AI. It's an operating model that works with rules-based automation today. CoAnalyst AI enhances it by finding patterns humans miss — but the core D→T→O→P workflow delivers value from day one with threshold-based triggers.",
+    response: "DTOP doesn't require AI. It's an operating model that works with rules-based automation today. Intelligence Layer AI enhances it by finding patterns humans miss — but the core D→T→O→P workflow delivers value from day one with threshold-based triggers.",
     reframe: "Start with the operating model. AI amplifies it later — it's not a prerequisite.",
   },
   {
@@ -307,7 +307,7 @@ export const talkingPoints = [
   "DTOP is the only closed-loop operating model that connects detection to proof in aviation.",
   "Point solutions detect. Only Comply365 can detect, trigger a coordinated response, orchestrate execution across safety, content, and training, and prove the outcome.",
   "Every airline has a gap between 'we found a problem' and 'we can prove we fixed it'. DTOP closes that gap.",
-  "DTOP doesn't require AI to start delivering value. It works with rules-based automation today. CoAnalyst AI amplifies it.",
+  "DTOP doesn't require AI to start delivering value. It works with rules-based automation today. Intelligence Layer AI amplifies it.",
   "The typical airline spends 70% of safety team time on coordination that DTOP automates.",
   "Regulators are moving from 'show me your SMS' to 'show me your SMS actually worked'. DTOP generates that evidence automatically.",
 ];

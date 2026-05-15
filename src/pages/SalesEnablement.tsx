@@ -107,10 +107,10 @@ const slides = [
   { id: "se-slide-4a", label: "W2 · Core Apps — SafetyManager365", component: TechV4Slide4aSafetyManager },
   { id: "se-slide-4b", label: "W2 · Core Apps — ContentManager365", component: TechV4Slide4bContentManager },
   { id: "se-slide-4c", label: "W2 · Core Apps — TrainingManager365", component: TechV4Slide4cTrainingManager },
-  { id: "se-slide-coanalyst", label: "W2 · Intelligence — CoAnalyst", component: TechV4Slide7CoAnalyst },
+  { id: "se-slide-coanalyst", label: "W2 · Intelligence — Intelligence Layer", component: TechV4Slide7CoAnalyst },
   { id: "se-slide-insights", label: "W2 · Intelligence — Insights", component: TechV4SlideInsights },
   { id: "se-slide-automation", label: "W2 · Intelligence — Automation", component: TechV4SlideAutomation },
-  { id: "se-slide-tiers-vs-ai", label: "W2 · CoAnalyst vs Generic AI", component: TechV4SlideTiersVsAI },
+  { id: "se-slide-tiers-vs-ai", label: "W2 · Intelligence Layer vs Generic AI", component: TechV4SlideTiersVsAI },
   { id: "se-slide-mobile", label: "W2 · Mobile", component: TechV4SlideMobile },
   { id: "se-slide-talktrack", label: "W2 · Capability Talk Track", component: SELayerTalkTrack },
   // WEEK 3

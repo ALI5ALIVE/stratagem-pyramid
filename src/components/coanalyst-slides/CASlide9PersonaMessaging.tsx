@@ -8,31 +8,31 @@ const personas = [
     icon: Shield, title: "Safety Leaders", color: "text-emerald-400", bgColor: "bg-emerald-500/10", borderColor: "border-emerald-500/30",
     cares: "Regulatory compliance, hazard visibility, investigation efficiency, proactive safety culture",
     helps: "Moves safety management from reactive investigation to proactive control monitoring with aviation-specific precision",
-    message: "CoAnalyst transforms your safety data into intelligence that identifies hazards, monitors control effectiveness, and enables proactive safety management — not just faster report processing.",
+    message: "Intelligence Layer transforms your safety data into intelligence that identifies hazards, monitors control effectiveness, and enables proactive safety management — not just faster report processing.",
   },
   {
     icon: Plane, title: "Operations Leaders", color: "text-blue-400", bgColor: "bg-blue-400/10", borderColor: "border-blue-400/30",
     cares: "On-time performance, dispatch reliability, operational disruption reduction, schedule integrity",
     helps: "Detects operational patterns and correlations that prevent delays and disruptions before they cascade",
-    message: "CoAnalyst gives you intelligence across your operation — connecting safety, training, and maintenance data to identify the patterns behind delays, disruptions, and reliability issues.",
+    message: "Intelligence Layer gives you intelligence across your operation — connecting safety, training, and maintenance data to identify the patterns behind delays, disruptions, and reliability issues.",
   },
   {
     icon: Wrench, title: "Maintenance & Engineering", color: "text-orange-400", bgColor: "bg-orange-400/10", borderColor: "border-orange-400/30",
     cares: "Fleet reliability, defect trends, component performance, maintenance efficiency",
     helps: "Surfaces cross-domain patterns linking maintenance events to safety and operational outcomes",
-    message: "CoAnalyst connects maintenance data with safety and operational intelligence to reveal defect trends, component risks, and reliability patterns that single-system analysis misses.",
+    message: "Intelligence Layer connects maintenance data with safety and operational intelligence to reveal defect trends, component risks, and reliability patterns that single-system analysis misses.",
   },
   {
     icon: Briefcase, title: "Airline Executives", color: "text-violet-400", bgColor: "bg-violet-400/10", borderColor: "border-violet-400/30",
     cares: "Revenue protection, cost reduction, regulatory standing, operational performance, competitive advantage",
     helps: "Connects operational intelligence directly to business outcomes — fewer delays, damages, and injuries protect revenue",
-    message: "CoAnalyst is the intelligence layer that connects safety and operational data to business performance — reducing costs, protecting revenue, and strengthening your competitive position.",
+    message: "Intelligence Layer is the intelligence layer that connects safety and operational data to business performance — reducing costs, protecting revenue, and strengthening your competitive position.",
   },
   {
     icon: Lightbulb, title: "Innovation & Transformation", color: "text-cyan-400", bgColor: "bg-cyan-400/10", borderColor: "border-cyan-400/30",
     cares: "Digital transformation, AI adoption, data strategy, measurable ROI from technology investment",
     helps: "Delivers production-ready aviation AI without the multi-year R&D investment of building in-house",
-    message: "CoAnalyst delivers aviation-specific AI intelligence that's production-ready — no multi-year build, no generic AI compromises. Purpose-built intelligence you can deploy and measure.",
+    message: "Intelligence Layer delivers aviation-specific AI intelligence that's production-ready — no multi-year build, no generic AI compromises. Purpose-built intelligence you can deploy and measure.",
   },
 ];
 
@@ -60,7 +60,7 @@ const CASlide9PersonaMessaging = (props: SlideNarrationProps) => {
             <p className="text-sm text-foreground leading-relaxed">{p.cares}</p>
           </div>
           <div>
-            <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide mb-2">What CoAnalyst Helps Them Achieve</p>
+            <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide mb-2">What Intelligence Layer Helps Them Achieve</p>
             <p className="text-sm text-foreground leading-relaxed">{p.helps}</p>
           </div>
           <div>

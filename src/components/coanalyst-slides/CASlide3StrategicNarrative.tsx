@@ -15,11 +15,11 @@ const narrativeSteps = [
   {
     phase: "The Shift",
     text: "Leading organizations recognize the future isn't about processing more reports faster. It's about transforming data into intelligence that identifies risks before events occur, monitors control effectiveness in real time, and drives proactive decision-making across every operational domain.",
-    example: "CoAnalyst surfaces a pattern: increasing reports of aircraft damages on a specific gate. Or detects that unrealistic pilot scheduling is a hazard that could lead to ground delays — before those delays happen.",
+    example: "Intelligence Layer surfaces a pattern: increasing reports of aircraft damages on a specific gate. Or detects that unrealistic pilot scheduling is a hazard that could lead to ground delays — before those delays happen.",
   },
   {
-    phase: "CoAnalyst",
-    text: "CoAnalyst is the intelligence layer of the Operational Performance Platform that ingests data across safety, ops, maintenance, training, and crew. It enriches it with aviation-trained AI, detects patterns and hazards, and generates four levels of intelligence — historical, real-time, proactive, and predictive.",
+    phase: "Intelligence Layer",
+    text: "Intelligence Layer is the intelligence layer of the Operational Performance Platform that ingests data across safety, ops, maintenance, training, and crew. It enriches it with aviation-trained AI, detects patterns and hazards, and generates four levels of intelligence — historical, real-time, proactive, and predictive.",
     example: "Ask: 'How did we perform in aircraft damages at this airport, on this gate, over the last four years?' — and get the answer in milliseconds. Or: 'What happened 10 minutes ago at Dubai airport?' — real-time intelligence from any report source.",
   },
   {

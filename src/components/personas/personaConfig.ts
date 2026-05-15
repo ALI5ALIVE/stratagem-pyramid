@@ -61,7 +61,7 @@ export const PERSONAS: Persona[] = [
     dtopFocus: "D",
     dtopFocusReason: "Detect — weak signals across operational data become triaged actions, not buried PDFs.",
     outcomes: [
-      { pillar: "Recommended Actions", metric: "~90%", metricLabel: "domain accuracy at L4–5", promise: "CoAnalyst recommends the next safety action — grounded in your corpus." },
+      { pillar: "Recommended Actions", metric: "~90%", metricLabel: "domain accuracy at L4–5", promise: "Intelligence Layer recommends the next safety action — grounded in your corpus." },
       { pillar: "Audit by Design", metric: "0", metricLabel: "audit-prep projects", promise: "Evidence is a byproduct of the work, not a quarterly scramble." },
       { pillar: "Closed Loop", metric: "100%", metricLabel: "events linked to action", promise: "No safety event ends without a documented response." },
     ],

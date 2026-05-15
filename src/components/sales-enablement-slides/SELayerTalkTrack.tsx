@@ -18,7 +18,7 @@ const rows = [
     layer: "Intelligence & Orchestration",
     icon: Brain,
     accent: "text-violet-400",
-    plain: "CoAnalyst turns shared operational data into insights, recommendations, and automated actions. Not a chatbot — an analyst that lives inside your operation.",
+    plain: "Intelligence Layer turns shared operational data into insights, recommendations, and automated actions. Not a chatbot — an analyst that lives inside your operation.",
     question: "Who in your team spends the most time pulling reports that should already exist?",
   },
   {

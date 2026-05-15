@@ -41,7 +41,7 @@ export const executivePitch2Narrations: ExecNarration2Slide[] = [
     title: "The Platform",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "This loop is powered by three purpose-built applications working as one platform. SafetyManager365 detects the signals — surfacing trends, risks, and patterns your teams would otherwise miss. ContentManager365 orchestrates the response — ensuring the right procedures reach the right people at the right time. TrainingManager365 closes the loop — delivering targeted training before the next event, not after the next audit finding. And connecting all three is CoAnalyst, our aviation intelligence engine, transforming over sixty-five thousand monthly data points into decisions you can act on. One platform. One version of truth. No gaps.",
+      "This loop is powered by three purpose-built applications working as one platform. SafetyManager365 detects the signals — surfacing trends, risks, and patterns your teams would otherwise miss. ContentManager365 orchestrates the response — ensuring the right procedures reach the right people at the right time. TrainingManager365 closes the loop — delivering targeted training before the next event, not after the next audit finding. And connecting all three is Intelligence Layer, our aviation intelligence engine, transforming over sixty-five thousand monthly data points into decisions you can act on. One platform. One version of truth. No gaps.",
   },
   {
     slideId: "exec2-slide-5",
@@ -69,7 +69,7 @@ export const executivePitch2Narrations: ExecNarration2Slide[] = [
     title: "Intelligence Journey",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Now, a word about intelligence. Generic AI tools give you about thirty-five percent accuracy on aviation-specific queries. They can't tell the difference between a bird strike report and a bird strike trend. CoAnalyst delivers over ninety percent accuracy — because it's been trained from the ground up on a decade of aviation operational data. That precision gap is everything. It's the difference between intelligence that drives action and noise that wastes your safety team's time. This isn't AI for the sake of AI. It's aviation intelligence, purpose-built to make your operation smarter every day.",
+      "Now, a word about intelligence. Generic AI tools give you about thirty-five percent accuracy on aviation-specific queries. They can't tell the difference between a bird strike report and a bird strike trend. Intelligence Layer delivers over ninety percent accuracy — because it's been trained from the ground up on a decade of aviation operational data. That precision gap is everything. It's the difference between intelligence that drives action and noise that wastes your safety team's time. This isn't AI for the sake of AI. It's aviation intelligence, purpose-built to make your operation smarter every day.",
   },
   {
     slideId: "exec2-slide-9",

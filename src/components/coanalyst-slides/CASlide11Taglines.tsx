@@ -23,16 +23,16 @@ const headlines = [
   "Move Beyond Reports. Move Beyond Events. Move to Intelligence.",
   "The Intelligence Engine Behind the Operational Performance Platform",
   "Smarter Safety. Stronger Operations. Better Outcomes.",
-  "CoAnalyst: Where Aviation Data Becomes Actionable Intelligence",
+  "Intelligence Layer: Where Aviation Data Becomes Actionable Intelligence",
   "Stop Managing Events. Start Managing Controls.",
 ];
 
 const pitches = [
-  "CoAnalyst is the intelligence layer of the Operational Performance Platform that transforms fragmented safety and operational data into actionable intelligence — helping airlines move from reactive event management to proactive control management. Purpose-built with aviation-trained AI, it delivers precision that generic tools can't match.",
-  "Airlines generate thousands of reports across safety, ops, maintenance, and training. CoAnalyst sits above SafetyManager365, ContentManager365 and TrainingManager365, connecting, enriching, and analyzing that data — revealing patterns, hazards, and weakening controls so organizations can act before events occur.",
-  "Most aviation organizations still manage safety reactively. CoAnalyst changes that by delivering four levels of intelligence — historical, real-time, proactive, and predictive — powering the DTOP model so airlines can shift from investigating events to managing the controls that prevent them.",
-  "Generic AI can summarize a report. CoAnalyst understands aviation operations. Built on millions of historic reports and thousands of domain-specific categories, it's the intelligence engine that makes the Operational Performance Platform intelligent.",
-  "CoAnalyst sits above SafetyManager365, ContentManager365 and TrainingManager365 as the intelligence layer — enriching, structuring, and analyzing data across every domain. The result: fewer delays, fewer damages, fewer injuries, and stronger operational performance.",
+  "Intelligence Layer is the intelligence layer of the Operational Performance Platform that transforms fragmented safety and operational data into actionable intelligence — helping airlines move from reactive event management to proactive control management. Purpose-built with aviation-trained AI, it delivers precision that generic tools can't match.",
+  "Airlines generate thousands of reports across safety, ops, maintenance, and training. Intelligence Layer sits above SafetyManager365, ContentManager365 and TrainingManager365, connecting, enriching, and analyzing that data — revealing patterns, hazards, and weakening controls so organizations can act before events occur.",
+  "Most aviation organizations still manage safety reactively. Intelligence Layer changes that by delivering four levels of intelligence — historical, real-time, proactive, and predictive — powering the DTOP model so airlines can shift from investigating events to managing the controls that prevent them.",
+  "Generic AI can summarize a report. Intelligence Layer understands aviation operations. Built on millions of historic reports and thousands of domain-specific categories, it's the intelligence engine that makes the Operational Performance Platform intelligent.",
+  "Intelligence Layer sits above SafetyManager365, ContentManager365 and TrainingManager365 as the intelligence layer — enriching, structuring, and analyzing data across every domain. The result: fewer delays, fewer damages, fewer injuries, and stronger operational performance.",
 ];
 
 const CASlide11Taglines = (props: SlideNarrationProps) => {

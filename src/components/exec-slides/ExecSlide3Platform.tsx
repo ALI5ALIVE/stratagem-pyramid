@@ -56,7 +56,7 @@ const ExecSlide3Platform = ({ slideNumber, ...narrationProps }: ExecSlide3Platfo
               <Brain className="w-7 h-7" />
             </div>
             <div className="flex-1">
-              <h3 className="text-lg font-semibold text-primary">The Intelligence Layer — CoAnalyst — CoAuthor — CoTrainer</h3>
+              <h3 className="text-lg font-semibold text-primary">The Intelligence Layer — Intelligence Layer — CoAuthor — CoTrainer</h3>
               <p className="text-sm text-muted-foreground mt-1">
                 Embedding intelligence across the platform to move from reactive compliance to predictive insights, from managing documents and processes to anticipating issues before they escalate. Empowering better decision-making, strengthened operational resilience, and enhanced safety at scale.
               </p>

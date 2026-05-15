@@ -223,7 +223,7 @@ const SlideAIVision = ({
             </p>
           </div>
 
-          {/* CTA — Link to CoAnalyst deck */}
+          {/* CTA — Link to Intelligence Layer deck */}
           <Link
             to="/coanalyst-preview"
             className="block group"
@@ -233,7 +233,7 @@ const SlideAIVision = ({
                 Learn how Comply365 AI Innovation is Superior to Generic AI Approaches
               </p>
               <div className="flex items-center justify-center gap-2 text-primary-foreground/80 text-xs">
-                <span>Explore the CoAnalyst Intelligence Engine</span>
+                <span>Explore the Intelligence Layer Intelligence Engine</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </div>
             </div>

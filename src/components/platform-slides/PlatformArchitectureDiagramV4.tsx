@@ -68,7 +68,7 @@ const PlatformArchitectureDiagramV4 = ({ compact = false }: { compact?: boolean 
             </div>
             <div className="text-[10px] text-muted-foreground leading-tight">Ask anything in plain English</div>
             <div className="text-[8px] text-amber-200/80 italic leading-tight mt-1 pt-1 border-t border-amber-500/20">
-              CoAnalyst across the platform · live on SafetyManager365 · Content & Training coming
+              Intelligence Layer across the platform · live on SafetyManager365 · Content & Training coming
             </div>
           </div>
           <div className="rounded-md border border-cyan-500/30 bg-background/40 p-1.5">

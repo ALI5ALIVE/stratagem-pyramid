@@ -2,11 +2,11 @@ import SlideContainer from "@/components/slides/SlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
 
 const deckFlow = [
-  { slide: "Cover", purpose: "Set category and tone", message: "Aviation Data Intelligence — CoAnalyst" },
+  { slide: "Cover", purpose: "Set category and tone", message: "Aviation Data Intelligence — Intelligence Layer" },
   { slide: "The Problem", purpose: "Frame the reactive model", message: "Aviation runs on reports, not intelligence" },
   { slide: "The Industry Shift", purpose: "Event → Control management", message: "From chasing events to managing controls" },
-  { slide: "The Platform", purpose: "CoAnalyst within the platform", message: "The intelligence layer above SafetyManager365, ContentManager365 and TrainingManager365" },
-  { slide: "CoAnalyst", purpose: "Introduce the platform", message: "The intelligence layer above your operational systems" },
+  { slide: "The Platform", purpose: "Intelligence Layer within the platform", message: "The intelligence layer above SafetyManager365, ContentManager365 and TrainingManager365" },
+  { slide: "Intelligence Layer", purpose: "Introduce the platform", message: "The intelligence layer above your operational systems" },
   { slide: "How It Works", purpose: "Explain the pipeline", message: "Ingest → Enrich → Detect → Intelligence → Activate" },
   { slide: "The Precision Gap", purpose: "Why not generic AI", message: "90% vs 30–40% at granular categorization" },
   { slide: "Business Outcomes", purpose: "Connect to value", message: "Fewer delays, damages, injuries. Revenue protection." },
@@ -51,7 +51,7 @@ const CASlide14DeckStructure = (props: SlideNarrationProps) => {
               </div>
               <div>
                 <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide mb-0.5">Positioning</p>
-                <p className="text-xs text-muted-foreground leading-relaxed">CoAnalyst is the intelligence layer of the Operational Performance Platform that transforms aviation data into operational intelligence — enabling the shift from critical event management to critical control management across safety, operations, maintenance, training, and crew domains.</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">Intelligence Layer is the intelligence layer of the Operational Performance Platform that transforms aviation data into operational intelligence — enabling the shift from critical event management to critical control management across safety, operations, maintenance, training, and crew domains.</p>
               </div>
             </div>
           </div>
@@ -60,7 +60,7 @@ const CASlide14DeckStructure = (props: SlideNarrationProps) => {
             <h3 className="text-xs font-bold text-foreground uppercase tracking-wide mb-2">Key Strategic Decisions</h3>
             <div className="space-y-1.5">
               {[
-                "Position CoAnalyst as the intelligence engine that makes the platform intelligent",
+                "Position Intelligence Layer as the intelligence engine that makes the platform intelligent",
                 "Lead with intelligence and control management, not report processing",
                 "Future roadmap: extend intelligence across training, documentation, and OCM analytics",
                 "Demonstrate how intelligence amplifies the value of every module",

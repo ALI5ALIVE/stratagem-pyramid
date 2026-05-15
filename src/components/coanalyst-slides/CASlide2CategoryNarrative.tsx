@@ -29,7 +29,7 @@ const CASlide2CategoryNarrative = (props: SlideNarrationProps) => {
             ))}
           </div>
           <div className="mt-auto pt-3">
-            <p className="text-[10px] text-muted-foreground uppercase tracking-wide mb-1.5">Data types CoAnalyst processes</p>
+            <p className="text-[10px] text-muted-foreground uppercase tracking-wide mb-1.5">Data types Intelligence Layer processes</p>
             <div className="flex flex-wrap gap-1">
               {dataTypes.map((t, i) => (
                 <span key={i} className="text-[9px] bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded px-1.5 py-0.5">{t}</span>
@@ -69,7 +69,7 @@ const CASlide2CategoryNarrative = (props: SlideNarrationProps) => {
             Current systems execute workflows — they capture, route, and close reports. No system transforms that data into intelligence. What's needed is an intelligence layer that sits above these operational modules.
           </p>
           <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3 mt-auto">
-            <p className="text-[11px] font-semibold text-emerald-400 mb-1.5">CoAnalyst fills this gap:</p>
+            <p className="text-[11px] font-semibold text-emerald-400 mb-1.5">Intelligence Layer fills this gap:</p>
             <p className="text-[10px] text-muted-foreground leading-relaxed">
               The intelligence layer that sits above SafetyManager365, ContentManager365 and TrainingManager365 — enriching data and driving the Detect → Trigger → Orchestrate → Prove model across safety, ops, maintenance, training, and crew.
             </p>

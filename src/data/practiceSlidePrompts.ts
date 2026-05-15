@@ -137,7 +137,7 @@ export const practiceSlidePrompts: Record<string, Record<string, SlidePrompts>> 
       ],
       buyerQuestions: [
         "Has your team tried plugging a generic AI into your operational data — what did you find?",
-        "Where would you want to point CoAnalyst first to prove the difference?",
+        "Where would you want to point Intelligence Layer first to prove the difference?",
         "What would have to be true for you to bet your reputation on an AI-generated answer?",
       ],
     },
@@ -538,7 +538,7 @@ export const practiceSlidePrompts: Record<string, Record<string, SlidePrompts>> 
       buyerQuestions: [
         "Has anyone on your team tried a generic AI on operational data — what did you find?",
         "Where would a 90%-accurate answer engine change how you run a shift?",
-        "What's the operational question you'd want CoAnalyst to answer first?",
+        "What's the operational question you'd want Intelligence Layer to answer first?",
       ],
     },
     "exec3-slide-tiers-vs-ai": {
@@ -729,7 +729,7 @@ export const practiceSlidePrompts: Record<string, Record<string, SlidePrompts>> 
     },
     "exec3-slide-coanalyst": {
       opener:
-        "Here's why CoAnalyst matters for L&D — it understands aviation context the way your senior trainers do, and it never gives a confidently wrong answer about a procedure.",
+        "Here's why Intelligence Layer matters for L&D — it understands aviation context the way your senior trainers do, and it never gives a confidently wrong answer about a procedure.",
       talkingPoints: [
         "Tuned on aviation taxonomy — recognises procedure references, fleet codes, role authorities.",
         "~90% accuracy at L4–5 reasoning vs ~35% generic — your team can trust the output.",

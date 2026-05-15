@@ -26,7 +26,7 @@ const ExecSlide4Intelligence = ({
   return (
     <SalesSlideContainer
       id="exec-slide-5"
-      title="The Intelligence Layer — CoAnalyst — CoAuthor — CoTrainer"
+      title="The Intelligence Layer — Intelligence Layer — CoAuthor — CoTrainer"
       subtitle="Connecting Safety, Content & Training unlocks intelligence that generative AI can't replicate."
       slideNumber={slideNumber}
       isPlaying={isPlaying}
@@ -43,7 +43,7 @@ const ExecSlide4Intelligence = ({
           <p className="text-sm text-foreground leading-relaxed">
             <span className="font-semibold text-primary">Why connection matters:</span>{" "}
             When Safety, Content, and Training share one data model, a safety signal detected Tuesday triggers the right procedural update <span className="italic">and</span> targeted crew retraining — automatically. 
-            This connection is what powers the intelligence layer. CoAnalyst can only drive performance because it sees across all three domains simultaneously — transforming siloed applications into a single operating model where every signal drives a measurable response.
+            This connection is what powers the intelligence layer. Intelligence Layer can only drive performance because it sees across all three domains simultaneously — transforming siloed applications into a single operating model where every signal drives a measurable response.
           </p>
         </div>
 
@@ -51,7 +51,7 @@ const ExecSlide4Intelligence = ({
         <div className="flex items-center gap-12 justify-center">
           <div className="text-center">
             <p className="text-6xl font-bold text-primary">90%</p>
-            <p className="text-sm text-muted-foreground mt-1">CoAnalyst</p>
+            <p className="text-sm text-muted-foreground mt-1">Intelligence Layer</p>
           </div>
           <div className="text-center">
             <p className="text-lg font-semibold text-muted-foreground">vs</p>
@@ -95,7 +95,7 @@ const ExecSlide4Intelligence = ({
                   </div>
                 </div>
                 <div className="flex gap-2 text-[10px] text-muted-foreground">
-                   <span className="flex-1">CoAnalyst</span>
+                   <span className="flex-1">Intelligence Layer</span>
                    <span className="flex-1">Generative AI</span>
                 </div>
               </div>

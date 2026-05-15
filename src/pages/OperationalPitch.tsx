@@ -24,7 +24,7 @@ const slides = [
   { id: "ops-slide-3", label: "Before & After", component: OpsSlide3BeforeAfter },
   { id: "ops-slide-3b", label: "The Platform", component: OpsSlide4Platform },
   { id: "ops-slide-platform-insights", label: "Platform Insights & Intelligence", component: OpsSlidePlatformInsights },
-  { id: "ops-slide-5", label: "CoAnalyst vs Generic AI", component: OpsSlide5Intelligence },
+  { id: "ops-slide-5", label: "Intelligence Layer vs Generic AI", component: OpsSlide5Intelligence },
   { id: "ops-slide-4", label: "DTOP — System of Work", component: OpsSlide4DTOP },
   { id: "ops-slide-7", label: "Stepping Stones", component: OpsSlide7SteppingStones },
   { id: "ops-slide-8", label: "Maturity Roadmap", component: OpsSlide8MaturityRoadmap },

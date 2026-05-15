@@ -327,7 +327,7 @@ export const internalValue = {
     },
     {
       title: "Foundation for future AI products",
-      detail: "Predictive risk detection, automated compliance monitoring and the next evolution of CoAnalyst.",
+      detail: "Predictive risk detection, automated compliance monitoring and the next evolution of Intelligence Layer.",
     },
   ],
 };
@@ -443,9 +443,9 @@ export const objections: InsightsObjection[] = [
     reframe: "Start with the data that already runs your operation. Expand from there.",
   },
   {
-    objection: "How is this different from CoAnalyst?",
+    objection: "How is this different from Intelligence Layer?",
     response:
-      "CoAnalyst is the persona-facing intelligence layer for Safety, Content and Training. Insights & Recommendations proves the platform-wide reasoning capability that powers it — the foundation of the Comply365 Intelligence Layer.",
+      "Intelligence Layer is the persona-facing intelligence layer for Safety, Content and Training. Insights & Recommendations proves the platform-wide reasoning capability that powers it — the foundation of the Comply365 Intelligence Layer.",
     reframe: "Same intelligence vision. Insights & Recommendations is the platform-wide engine underneath.",
   },
   {
