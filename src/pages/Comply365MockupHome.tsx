@@ -4,7 +4,7 @@ import TopNav from "@/components/home/TopNav";
 import CustomerTrustBar from "@/components/home/CustomerTrustBar";
 import Footer from "@/components/home/Footer";
 import BookWalkthroughDialog from "@/components/home/BookWalkthroughDialog";
-import PlatformEcosystemDiagram from "@/components/PlatformEcosystemDiagram";
+import PlatformArchitectureCircular from "@/components/platform-slides/PlatformArchitectureCircular";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
@@ -141,7 +141,7 @@ export default function Comply365MockupHome() {
             </Button>
           </div>
           <div className="flex justify-center">
-            <PlatformEcosystemDiagram />
+            <PlatformArchitectureCircular />
           </div>
         </div>
       </section>
