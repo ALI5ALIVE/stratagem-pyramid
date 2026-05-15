@@ -1,194 +1,199 @@
 
-# Comply365 Homepage Mockup — Copy + Image Brief
+# Platform Page Mockup — Copy + Image Brief
 
-This is a **content/design mockup only** (no code yet). Structure follows the Comply365 preview page you linked. Copy is rewritten to reflect our current platform story: three named modules, the Intelligence Layer (~90% domain accuracy vs ~35% generic), the DTOP operating model, and frontline mobile. Each section names the visual asset required, where it sits, and what it should convey.
+A new standalone page at **`/platform-mockup`**, structurally inspired by the Comply365 Platform template (page_id=2606) but with **original copy** drawn from the Operational (medium) pitch narrative — DTOP, Intelligence Layer, three named modules, ~90% vs ~35% accuracy, fragmentation cost, stepping stones. Tone: confident, operator-grade, evidence-led.
+
+Built as a sibling to the existing `/comply365-mockup` page using the same dark theme tokens, `TopNav`, `CustomerTrustBar`, `Footer`, and `PlatformArchitectureDiagramV4`.
 
 ---
 
 ## Section 1 — Hero
 
 **Eyebrow:** THE OPERATIONAL PERFORMANCE PLATFORM
+**H1:** One platform where Operations, Safety and Training finally move as one.
+**Sub:** Built for the operators who can't afford to get it wrong — connecting ContentManager365, SafetyManager365 and TrainingManager365 through an Intelligence Layer trained on your domain, not the open web.
+**CTAs:** `Talk to us` · `See the operating model`
 
-**H1:** The industry's first AI-powered platform connecting
-*ContentManager365 · SafetyManager365 · TrainingManager365*
-
-**Sub:** Turn operational data into operational control — safer, smarter, more connected operations.
-
-**CTAs:** `Explore the platform` (primary) · `Book a working session` (secondary)
-
-**Visual — full-bleed right / behind copy:**
-Looping silent video OR layered still showing three product surfaces stacked at 15° tilt: (1) OCC dashboard with live "Recommended Actions" list, (2) Intelligence Layer answer card citing FOM §4.2, (3) crew mobile checklist. Soft blue→violet mesh gradient behind. *(File: `hero-platform-collage.webp`, 1600×1100, dark theme.)*
+**Image — `platform-hero-stack.jpg` (1600×1100):** Three-quarter perspective of a layered glass stack — bottom slab "One Connected Data Model", three middle slabs labelled with the three modules, top slab a glowing "Intelligence Layer" with a Recommended Action card floating above. Dark navy → indigo mesh, soft caustic light. No people.
 
 ---
 
 ## Section 2 — Customer Trust Bar
-
-Logos in monochrome scroller: Qantas, Royal Air Force, MoD, British Airways, Delta + 2 rail/defense slots.
-**Caption above:** Trusted by the operators who can't afford to get it wrong.
-
-*(Reuse existing logo SVGs.)*
+Reuse existing `CustomerTrustBar`. Caption: *Trusted by 50+ airlines, defense forces and rail operators — including 7 of the top 10 North American carriers.*
 
 ---
 
-## Section 3 — One Platform. One Partner. One Vision.
+## Section 3 — The Problem We Solve (from Pitch §1–2)
 
-**H2:** One Platform. One Operating Model. One Closed Loop.
+**Eyebrow:** THE WIRING PROBLEM
+**H2:** Your teams are excellent. Your systems were never designed to talk to each other.
+**Body:** A flight-data alert lands in one inbox. A safety report in another. A training expiry in a third. Six weeks later, the loop closes — if it closes at all. Fragmentation isn't a people problem; on a mid-size fleet it's a **$110M+ annual drag** on schedule, fuel, AOG and findings.
 
-**Body:**
-The first connected platform across Operations, Safety and Training — powered by an Intelligence Layer that reaches ~90% domain accuracy where generic AI sits at ~35%. We unite operational content, safety/quality/risk, and training into one ecosystem so every signal becomes a workflow, every workflow becomes evidence, and every change becomes readiness.
+**Three stat tiles:**
+- `$8K–$25K` — fuel cost of a single avoidable go-around
+- `Up to $500K` — cost of one AOG day
+- `$50K–$2M` — exposure of one regulatory finding
 
-**CTA:** `Explore the platform`
-
-**Visual — centered below copy:**
-The existing `PlatformArchitectureDiagramV4` (or the `platform-ecosystem.png` asset) showing: foundation (One Connected Data Model) → 3 modules → Intelligence Layer cap → DTOP wrapper. *(Already in repo — reuse.)*
-
----
-
-## Section 4 — The Three Modules (cards row)
-
-Three equal cards, dark surface, accent border per module.
-
-### Card 1 — ContentManager365
-**Tag:** Living operational content
-**Body:** Next-generation operational content management and distribution. Manuals, procedures and bulletins that update themselves when regulations or operations change — and prove it.
-**Link:** `Learn more →`
-**Image:** Screenshot of a manual page with an "auto-revised" diff badge and an Intelligence Layer side-panel suggesting the edit. *(File: `module-content.webp`, 720×480.)*
-
-### Card 2 — SafetyManager365
-**Tag:** Predictive safety, quality & risk
-**Body:** The most advanced safety, quality and risk solution — intelligent, predictive, proactive. Detect weak signals, trigger the right workflow, prove the loop closed.
-**Link:** `Learn more →`
-**Image:** Risk heatmap with one cell pulsing amber and a "Recommended Action: open investigation" callout. *(File: `module-safety.webp`, 720×480.)*
-
-### Card 3 — TrainingManager365
-**Tag:** Competency tied to operations
-**Body:** AI-powered training that schedules itself around operations and keeps every crew current — competency linked directly to the work and the risk.
-**Link:** `Learn more →`
-**Image:** Crew currency board with a row auto-flipping from amber to green after a sim slot is assigned. *(File: `module-training.webp`, 720×480.)*
+**Image — `fragmentation-inboxes.jpg` (1100×620):** Stylized desktop with three disconnected app windows (safety, training, content) and red dotted lines that fail to connect. Dark UI, amber alert dots.
 
 ---
 
-## Section 5 — The Intelligence Layer (NEW — promote above DTOP)
+## Section 4 — Platform Picture
 
-**Eyebrow:** THE INTELLIGENCE LAYER
-
-**H2:** ~90% domain accuracy. Not 35%.
-
-**Body:**
-Generic AI guesses. The Intelligence Layer *knows* — because it's trained on your manuals, your safety data, your training records and your operational reality. It doesn't just answer questions; it issues Recommended Actions grounded in the regulation, the procedure and the person.
-
-**Three pill stats below copy:**
-`~90% domain accuracy` · `Cited to source` · `Audit-ready by default`
-
-**Visual — split layout, image right:**
-Side-by-side comparison card. Left: "Generic AI" giving a vague answer. Right: "Intelligence Layer" giving the same prompt with citations to FOM §4.2, SMS Hazard #1183 and a Recommended Action button. *(File: `intelligence-layer-vs-generic.webp`, 900×620.)*
+**Eyebrow:** ONE PLATFORM. ONE OPERATING MODEL.
+**H2:** Foundation, modules, intelligence — wrapped in a closed loop.
+**Body:** One connected data model under three named modules, capped by an Intelligence Layer that turns operational data into Recommended Actions, all wrapped in the DTOP loop so every signal becomes evidence.
+**Visual:** Reuse `PlatformArchitectureDiagramV4` in a bordered card.
 
 ---
 
-## Section 6 — DTOP Operating Model
+## Section 5 — DTOP Operating Model (from Pitch §4)
 
 **Eyebrow:** HOW THE LOOP CLOSES
-
 **H2:** Detect → Trigger → Orchestrate → Prove
 
-Four colored tiles in a row (existing DTOP color tokens — D blue, T amber, O violet, P emerald). Each tile: letter, label, one-line description (reuse `DTOPStrip` copy).
+Four colored tiles using existing DTOP tokens (D blue · T amber · O violet · P emerald), each with a one-liner:
+- **Detect** — Always-on sensing across operational data, safety reports, audits and ops feeds.
+- **Trigger** — The right workflow starts itself — no email chain, no waiting.
+- **Orchestrate** — Content, training and compliance move together, not in sequence.
+- **Prove** — Every action logged as it happens. Audit-ready by default.
 
-**Visual — below the tiles:**
-Animated/static loop diagram showing a single signal (e.g. "unstable approach RWY 27") moving through D→T→O→P with the corresponding module lighting up at each step (Safety → Content → Training → Audit). *(File: `dtop-loop-walkthrough.webp`, 1400×500.)*
-
----
-
-## Section 7 — Frontline Mobile (NEW — addition vs template)
-
-**Eyebrow:** WHERE THE WORK ACTUALLY HAPPENS
-
-**H2:** Same data model. In the cockpit, the hangar, the depot.
-
-**Body:**
-The platform follows the work to the frontline — same operational data, same evidence trail, designed for gloves, glare and gaps in connectivity.
-
-**Visual — image left, copy right:**
-Pilot tablet + engineer rugged device + rail driver phone, fanned out, each showing a contextual checklist tied back to the same source procedure. *(File: `frontline-devices-fan.webp`, 1100×700.)*
+**Image — `dtop-signal-trace.jpg` (1400×500):** A single signal ("unstable approach RWY 27") tracing across four tiles, lighting the Safety → Content → Training → Audit modules in turn.
 
 ---
 
-## Section 8 — Working Together to Power…
+## Section 6 — The Three Modules (cards row)
 
-(Direct lift of template's CTA band.)
+Three equal cards, dark surface, accent border per module — copy leads with operational outcome.
 
-**Eyebrow:** WORKING TOGETHER TO POWER
-**H2:** Peak Operational Performance, Proactive Safety Management and Modern Training Management.
-**CTA:** `Request a meeting`
+### ContentManager365 — *Living operational content*
+The preferred operational content platform for **140+ airlines, defense and rail operators**. Manuals, procedures and bulletins that update themselves when regulations or operations change — and prove it.
+**Image — `module-content-platform.jpg` (720×480):** Manual page with auto-revised diff badge and Intelligence Layer side-panel suggesting the edit, citing FOM §4.2.
 
-**Visual — full-width banner behind:**
-Aerial shot of an apron at dawn — aircraft, ground crew, dispatch tower visible — slightly desaturated with blue overlay for legibility. *(File: `cta-banner-apron.webp`, 1920×600.)*
+### SafetyManager365 — *Predictive safety, quality & risk*
+Detect weak signals across **65,000+ monthly data points**, trigger the right investigation, and close the loop — intelligent, predictive, proactive.
+**Image — `module-safety-platform.jpg` (720×480):** Risk heatmap with one cell pulsing amber, "Recommended Action: open investigation" callout.
+
+### TrainingManager365 — *Competency tied to operations*
+AI-powered scheduling, qualification tracking and crew readiness — competency linked directly to the work and the risk it carries.
+**Image — `module-training-platform.jpg` (720×480):** Crew currency board with a row auto-flipping amber → green after a sim slot is assigned.
 
 ---
 
-## Section 9 — The Comply365 Difference (6-tile grid)
+## Section 7 — The Intelligence Layer (from Pitch §5)
 
-**Eyebrow:** THE COMPLY365 DIFFERENCE
-**H2:** An Operational Power Multiplier
+**Eyebrow:** THE INTELLIGENCE LAYER
+**H2:** ~90% domain accuracy. Not 35%.
+**Body:** Generic AI guesses. The Intelligence Layer *knows* — because it's trained on millions of aviation operational reports, your manuals, your safety data and your training records. It doesn't answer questions; it issues Recommended Actions grounded in regulation, procedure and person.
 
-3×2 grid. Each tile: icon (reuse Comply365 SVG icons), title, two-line body.
+**Four-tier strip** (Historical · Reactive · Proactive · Predictive) — single line each.
+
+**Image — `intelligence-vs-generic-platform.jpg` (1100×680):** Side-by-side answer cards. Left "Generic AI" — vague, no citations. Right "Intelligence Layer" — same prompt, citations to FOM §4.2 + SMS Hazard #1183 + a Recommended Action button.
+
+---
+
+## Section 8 — Near-Term Use Cases (from Pitch §6)
+
+**Eyebrow:** PROOF IN 90 DAYS
+**H2:** Four use cases your team could deploy this quarter.
+
+2×2 grid:
+1. **Hard landing response** — FOQA trend → affected crew identified → targeted sim within 48 hours.
+2. **Regulatory change cascade** — New directive → every procedure, training record and qualification updated automatically.
+3. **Fatigue risk** — Roster + safety reports cross-referenced to flag fatigue patterns before they become incidents.
+4. **Compliance gap closure** — Expiring qualifications spotted and retrained before the gap creates exposure.
+
+*(No image — typographic grid with module-color accents per tile.)*
+
+---
+
+## Section 9 — Stepping Stones (from Pitch §7–8)
+
+**Eyebrow:** THE PATH, NOT A BIG BANG
+**H2:** Connect → Automate → Predict. 12–18 months, not 5–7 years.
+
+Three phase cards, horizontal:
+- **Phase 1 — Connect.** One platform, one data model. Investigation time drops from weeks to days.
+- **Phase 2 — Automate.** Triggers replace email chains. Workflows fire on signal, not memory.
+- **Phase 3 — Predict.** Intelligence Layer's proactive + predictive tiers identify patterns before events.
+
+**Image — `stepping-stones-curve.jpg` (1200×500):** A simple ascending three-step curve, each step colored by phase, end label "Predictive Operation".
+
+---
+
+## Section 10 — One Platform. Multiple Solutions. (template parity)
+
+**H2:** One platform. Multiple operating environments.
+Three industry tiles (reuse Aviation/Defense/Rail SVGs already in repo):
+- **Airlines** — Streamlined, unified Flight Ops + Tech Ops driving unparalleled efficiency. → `/solutions/airlines`
+- **Defense** — Empower warfighters and support teams with agility in any environment. → `/solutions/defense`
+- **Rail** — Mobile-first, digitized rail operations — safer and more compliant. → `/solutions/rail`
+
+---
+
+## Section 11 — The Comply365 Difference (6-tile grid, original copy)
+
+**Eyebrow:** WHY OPERATORS CHOOSE US
+**H2:** An operational power multiplier — built by people who've run the operation.
 
 | # | Title | Body |
 |---|---|---|
-| 1 | Enterprise-Wide Approach | Complete coverage across operations, safety and training — one platform, one ROI story, not three. |
-| 2 | Connecting the Dots | Interconnects what used to be siloed — operations, safety and training share the same data and the same workflows. |
-| 3 | Configurable by Design | Hybrid SaaS that adapts to your content mix and your operating model — without forking the platform. |
-| 4 | Data-Empowered | From raw operational data to Recommended Actions — the Intelligence Layer turns the journey into a workflow, not a project. |
-| 5 | Domain Expertise + AI | Built by people who've run the operation. Fused with AI tuned to the domain — not retrofitted to it. |
-| 6 | Security is Paramount | Top-tier credentials, sovereign deployment options, and an evidence trail your auditor will actually trust. |
+| 1 | Connected Foundation | One platform across Ops, Safety and Training. 50+ airlines, 7 of the top 10 North American carriers, 1M+ frontline users. |
+| 2 | Domain-Trained Intelligence | ~90% accuracy on aviation queries vs ~35% from generic AI. Trained on the domain, not retrofitted to it. |
+| 3 | Proof by Default | Every action logged, every change traced, every decision auditable. You're always ready. |
+| 4 | Configurable, Not Forked | Hybrid SaaS that adapts to your content mix and operating model — without a custom branch. |
+| 5 | Frontline-Ready | Designed for gloves, glare and gaps in connectivity — same data model from OCC to cockpit to depot. |
+| 6 | Security is Paramount | Top-tier credentials, sovereign deployment options, military-grade infrastructure. |
 
-*(Icons: reuse existing Sky/Platform/Flexibility/Author/Manage/Defense SVGs from Comply365 brand kit.)*
-
----
-
-## Section 10 — Featured Resources
-
-Three cards — preserve template structure.
-
-1. **Blog** — *A Q&A with CEO Ilia Kostov on the AI-Powered Operational Performance Platform* — image: portrait of Ilia.
-2. **Blog** — *The Intelligence Layer: Why ~90% beats ~35%* — image: data viz of accuracy comparison.
-3. **Blog** — *Connections365: Platform & Next-Gen Brands Unveiled* — image: event banner.
+*(Reuse existing Comply365 SVG icons.)*
 
 ---
 
-## Section 11 — Closing CTA + Footer
-
-Repeat of Section 8 band ("Working Together to Power…") with `Get Started` button, then standard footer (legal, social, contact, white-paper download form).
-
----
-
-## Image Asset Summary (what to commission/generate)
-
-| File | Section | Size | Notes |
-|---|---|---|---|
-| `hero-platform-collage.webp` | 1 | 1600×1100 | 3 surfaces fanned, dark, mesh gradient |
-| `module-content.webp` | 4 | 720×480 | Manual diff + AI side-panel |
-| `module-safety.webp` | 4 | 720×480 | Risk heatmap pulsing |
-| `module-training.webp` | 4 | 720×480 | Currency board flipping green |
-| `intelligence-layer-vs-generic.webp` | 5 | 900×620 | Side-by-side answer comparison |
-| `dtop-loop-walkthrough.webp` | 6 | 1400×500 | Single signal traversing D→T→O→P |
-| `frontline-devices-fan.webp` | 7 | 1100×700 | Three frontline devices fanned |
-| `cta-banner-apron.webp` | 8 | 1920×600 | Aerial apron at dawn, blue overlay |
-
-Existing assets reused: `platform-ecosystem.png`, Comply365 difference SVG icons, customer logos, `PlatformArchitectureDiagramV4`.
+## Section 12 — Featured Resources
+Three blog cards — keep template structure, original titles:
+1. *Q&A with CEO Ilia Kostov: Inside the AI-Powered Operational Performance Platform*
+2. *The Intelligence Layer — Why ~90% beats ~35% in operational AI*
+3. *DTOP in practice: closing a hard-landing loop in 48 hours*
 
 ---
 
-## What's different from the Comply365 template
+## Section 13 — Closing CTA + Footer
 
-1. **Adds an Intelligence Layer hero section** (Section 5) — the template doesn't promote it as its own block; ours does because it's our defensible differentiator.
-2. **Adds Frontline Mobile** (Section 7) — important to our story, missing from the template.
-3. **Adds DTOP** (Section 6) — replaces the template's generic "AI-powered" framing with our named operating model.
-4. Module cards keep the template's 3-card pattern but lead with the *operational outcome*, not the product description.
+Repeat band: **Peak Operational Performance, Proactive Safety, Modern Training.** CTA `Request a meeting`.
+**Image — `cta-platform-banner.jpg` (1920×600):** Aerial dawn apron, slightly desaturated with indigo overlay.
+
+---
+
+## Image Asset Summary
+
+| File | Section | Size |
+|---|---|---|
+| `platform-hero-stack.jpg` | 1 | 1600×1100 |
+| `fragmentation-inboxes.jpg` | 3 | 1100×620 |
+| `dtop-signal-trace.jpg` | 5 | 1400×500 |
+| `module-content-platform.jpg` | 6 | 720×480 |
+| `module-safety-platform.jpg` | 6 | 720×480 |
+| `module-training-platform.jpg` | 6 | 720×480 |
+| `intelligence-vs-generic-platform.jpg` | 7 | 1100×680 |
+| `stepping-stones-curve.jpg` | 9 | 1200×500 |
+| `cta-platform-banner.jpg` | 13 | 1920×600 |
+
+Reused: `PlatformArchitectureDiagramV4`, Aviation/Defense/Rail SVGs, Comply365 difference icons, customer logos, `TopNav`, `CustomerTrustBar`, `Footer`.
+
+---
+
+## Where this differs from the Comply365 template
+
+1. **Promotes the Intelligence Layer to its own block** (Section 7) — template buries it.
+2. **Adds the cost-of-fragmentation block** (Section 3) — anchors value before features.
+3. **Adds 90-day use cases** (Section 8) and **stepping-stones** (Section 9) — proves "how", not just "what".
+4. **DTOP becomes the operating model** (Section 5), replacing the template's generic "Detect/Trigger/Orchestrate/Prove" headings that pointed to repeated ContentManager copy.
+5. **"Difference" tiles rewritten** with hard numbers (50+ airlines, 1M+ users, ~90% accuracy) instead of generic claims.
 
 ## Out of scope for this plan
 
-- No code changes yet — this is a copy + visual brief.
-- Image generation (will happen at build time once you approve the briefs).
-- Routing / nav changes.
+- No code yet — copy + visual brief only.
+- Image generation happens at build time once approved.
+- No nav/route changes beyond adding `/platform-mockup`.
 
-Once you approve, I'll either (a) generate the missing images and build the page in `OperationalPlatformHome.tsx`, or (b) produce a single static design comp first if you'd prefer to see it before code.
+On approval I'll generate the 9 images and build `src/pages/PlatformMockup.tsx` + register the route, mirroring the structure of `Comply365MockupHome.tsx`.
