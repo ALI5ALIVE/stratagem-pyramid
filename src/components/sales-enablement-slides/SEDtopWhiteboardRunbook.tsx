@@ -25,9 +25,9 @@ const columns = [
     border: "border-amber-400/40",
     title: "Run — during",
     items: [
-      { h: "Draw the 6 strokes in order", b: "Detect → Trigger → Orchestrate → Prove, the loop arrow, then the 6 signal chips. Speak each line." },
+      { h: "Draw the 6 strokes in order", b: "Detect → Trigger → Orchestrate → Prove, the loop arrow, then the 4 signal chips. Speak each line." },
       { h: "After Stroke 4 — stop and point", b: '"Which of these four steps breaks first for you today?"' },
-      { h: "After Stroke 6 — point at chips", b: '"Which of these six signal sources is hardest for you to reach right now?"' },
+      { h: "After Stroke 6 — point at chips", b: '"Which of these four signal sources is hardest for you to reach right now?"' },
       { h: "Write their answer on the board", b: "Next to the broken step. That single act converts a pitch into a discovery." },
     ],
   },
