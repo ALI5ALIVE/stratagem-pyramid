@@ -21,6 +21,9 @@ import SEFootprintTwoApps from "@/components/sales-enablement-slides/SEFootprint
 import SEFootprintAllThree from "@/components/sales-enablement-slides/SEFootprintAllThree";
 import SEFootprintValueLadder from "@/components/sales-enablement-slides/SEFootprintValueLadder";
 import SEFootprintPlaybook from "@/components/sales-enablement-slides/SEFootprintPlaybook";
+import SEFootprintSingleWhiteboard from "@/components/sales-enablement-slides/SEFootprintSingleWhiteboard";
+import SEFootprintTwoWhiteboard from "@/components/sales-enablement-slides/SEFootprintTwoWhiteboard";
+import SEFootprintAllThreeWhiteboard from "@/components/sales-enablement-slides/SEFootprintAllThreeWhiteboard";
 
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
 import PFSlide9Value from "@/components/platform-slides/PFSlide9Value";
@@ -68,8 +71,8 @@ const weekProps = {
     title: "Sell it, prove it, win it",
     learningGoal:
       "By the end of Week 3 you can run the discovery → demo → close motion, pick the right use case for the room, and handle the top objections — ending with a clear next step.",
-    estimatedMinutes: 22,
-    upNext: ["Discovery → demo → close", "Use case cheat sheet", "Customer footprint scenarios", "Regulation Management", "Customer outcomes", "Objections", "Why Comply365", "Your enablement plan"],
+    estimatedMinutes: 26,
+    upNext: ["Discovery → demo → close", "Use case cheat sheet", "Customer footprint scenarios", "Footprint whiteboard drills", "Regulation Management", "Customer outcomes", "Objections", "Why Comply365", "Your enablement plan"],
   },
 };
 
@@ -116,8 +119,11 @@ const slides = [
   { id: "se-usecase-cheatsheet", label: "W3 · Use Case Cheat Sheet", component: SEUseCaseCheatSheet },
   { id: "se-footprint-intro", label: "W3 · Customer Footprint — Intro", component: SEFootprintIntro },
   { id: "se-footprint-single", label: "W3 · Footprint — One App", component: SEFootprintSingleApp },
+  { id: "se-footprint-single-whiteboard", label: "W3 · Footprint — One App Whiteboard", component: SEFootprintSingleWhiteboard },
   { id: "se-footprint-two", label: "W3 · Footprint — Two Apps", component: SEFootprintTwoApps },
+  { id: "se-footprint-two-whiteboard", label: "W3 · Footprint — Two Apps Whiteboard", component: SEFootprintTwoWhiteboard },
   { id: "se-footprint-all", label: "W3 · Footprint — All Three + Platform", component: SEFootprintAllThree },
+  { id: "se-footprint-all-whiteboard", label: "W3 · Footprint — All Three Whiteboard", component: SEFootprintAllThreeWhiteboard },
   { id: "se-footprint-ladder", label: "W3 · Footprint — Value Ladder", component: SEFootprintValueLadder },
   { id: "se-footprint-playbook", label: "W3 · Footprint — 3-Move Play", component: SEFootprintPlaybook },
   { id: "se-slide-regmgmt", label: "W3 · Regulation Management Use Case", component: TechSlideRegulationSummary },
