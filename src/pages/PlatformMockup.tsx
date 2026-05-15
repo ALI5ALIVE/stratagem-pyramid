@@ -2,7 +2,6 @@ import { ArrowRight, Sparkles, Shield, FileText, GraduationCap, Layers, Workflow
 import TopNav from "@/components/home/TopNav";
 import CustomerTrustBar from "@/components/home/CustomerTrustBar";
 import Footer from "@/components/home/Footer";
-import PlatformArchitectureDiagramV4 from "@/components/platform-slides/PlatformArchitectureDiagramV4";
 import PlatformArchitectureCircular from "@/components/platform-slides/PlatformArchitectureCircular";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -131,28 +130,6 @@ export default function PlatformMockup() {
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               One connected data model under three named modules, capped by an Intelligence Layer that turns
               operational data into Recommended Actions, all wrapped in the DTOP loop so every signal becomes evidence.
-            </p>
-          </div>
-          <div className="rounded-2xl border border-border/40 bg-card/40 p-6 lg:p-10">
-            <div className="mx-auto w-full max-w-5xl">
-              <PlatformArchitectureDiagramV4 />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 4b. CLOSED-LOOP CIRCULAR VIEW */}
-      <section className="py-24 border-b border-border/40">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="text-center mb-12 space-y-4">
-            <Eyebrow>The Closed Loop</Eyebrow>
-            <h2 className="text-4xl lg:text-5xl font-bold">
-              Foundation in. DTOP around. One continuous loop.
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              The same platform — viewed as concentric layers. Your operational data and the three modules sit at the
-              core. The Intelligence Layer wraps them. Unified Mobile delivers them. DTOP closes the loop around
-              everything, turning every signal into evidence.
             </p>
           </div>
           <div className="rounded-2xl border border-border/40 bg-card/40 p-6 lg:p-12">
