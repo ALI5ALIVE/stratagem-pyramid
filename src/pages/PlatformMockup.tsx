@@ -345,14 +345,14 @@ export default function PlatformMockup() {
           <div className="space-y-6">
             <Eyebrow>The Intelligence Layer</Eyebrow>
             <h2 className="text-4xl lg:text-6xl font-bold leading-[1.05]">
-              ~90% domain accuracy. <span className="text-muted-foreground/60">Not 35%.</span>
+              Insight that acts. <span className="text-muted-foreground/60">Intelligence you can trust.</span>
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
               Generic AI guesses. The Intelligence Layer <span className="text-foreground font-semibold">knows</span> —
               because it's trained on millions of aviation operational reports, your manuals, your safety data and
               your training records. It doesn't answer questions; it issues
               <span className="text-foreground font-semibold"> Recommended Actions </span>
-              grounded in regulation, procedure and person.
+              grounded in regulation, procedure and person — at <span className="text-foreground font-semibold">~90% domain accuracy</span> vs ~35% for generic AI.
             </p>
             <div className="grid grid-cols-2 gap-3 pt-2">
               {[
