@@ -190,26 +190,71 @@ const PlatformArchitectureCircular = () => {
           ~90% domain accuracy
         </text>
 
-        {/* Center — Foundation */}
-        <circle cx={cx} cy={cy} r={rCore} fill="url(#coreGrad)" stroke="hsl(217 91% 60% / 0.6)" strokeWidth={1.5} />
-        <text x={cx} y={cy - 56} textAnchor="middle" fill="hsl(217 91% 70%)" fontSize={9} fontWeight={700} letterSpacing={2}>
-          FOUNDATION
-        </text>
-        <text x={cx} y={cy - 38} textAnchor="middle" fill="hsl(0 0% 95%)" fontSize={11} fontWeight={700}>
-          One Connected Data Model
-        </text>
-        <text x={cx} y={cy - 14} textAnchor="middle" fill="hsl(0 0% 90%)" fontSize={11} fontWeight={600}>
-          ContentManager365
-        </text>
-        <text x={cx} y={cy + 4} textAnchor="middle" fill="hsl(0 0% 90%)" fontSize={11} fontWeight={600}>
-          SafetyManager365
-        </text>
-        <text x={cx} y={cy + 22} textAnchor="middle" fill="hsl(0 0% 90%)" fontSize={11} fontWeight={600}>
-          TrainingManager365
-        </text>
-        <text x={cx} y={cy + 48} textAnchor="middle" fill="hsl(0 0% 60%)" fontSize={9} letterSpacing={1.2}>
-          Systems of record · operational data
-        </text>
+        {/* Center — Foundation: 3 wedges, one per app */}
+        {(() => {
+          const apps = [
+            { name: "ContentManager365", short: "Content", tag: "Procedures · Manuals", color: "hsl(217 91% 60%)" },
+            { name: "SafetyManager365", short: "Safety", tag: "Risk · Audits", color: "hsl(346 77% 60%)" },
+            { name: "TrainingManager365", short: "Training", tag: "Competency", color: "hsl(160 84% 50%)" },
+          ];
+          // Three 120° wedges starting at top (-90°)
+          const start0 = -90;
+          return (
+            <>
+              {apps.map((app, i) => {
+                const s = start0 + i * 120;
+                const e = s + 120;
+                const mid = (s + e) / 2;
+                const labelR = 62;
+                const tagR = 78;
+                const namePos = labelPos(mid, labelR);
+                const tagPos = labelPos(mid, tagR);
+                return (
+                  <g key={app.name}>
+                    <path
+                      d={arcPath(cx, cy, rCore, 26, s + 1.5, e - 1.5)}
+                      fill={app.color}
+                      fillOpacity={0.18}
+                      stroke={app.color}
+                      strokeOpacity={0.55}
+                      strokeWidth={1.25}
+                    />
+                    <text
+                      x={namePos.x}
+                      y={namePos.y}
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                      fill="hsl(0 0% 96%)"
+                      fontSize={10.5}
+                      fontWeight={700}
+                    >
+                      {app.name}
+                    </text>
+                    <text
+                      x={tagPos.x}
+                      y={tagPos.y}
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                      fill={app.color}
+                      fontSize={8.5}
+                      letterSpacing={1}
+                    >
+                      {app.tag}
+                    </text>
+                  </g>
+                );
+              })}
+              {/* Center hub */}
+              <circle cx={cx} cy={cy} r={26} fill="hsl(222 47% 6%)" stroke="hsl(217 91% 60% / 0.7)" strokeWidth={1.25} />
+              <text x={cx} y={cy - 4} textAnchor="middle" fill="hsl(217 91% 75%)" fontSize={8} fontWeight={700} letterSpacing={1.6}>
+                FOUNDATION
+              </text>
+              <text x={cx} y={cy + 8} textAnchor="middle" fill="hsl(0 0% 80%)" fontSize={7} letterSpacing={0.8}>
+                Connected data
+              </text>
+            </>
+          );
+        })()}
       </svg>
 
       {/* Legend */}
