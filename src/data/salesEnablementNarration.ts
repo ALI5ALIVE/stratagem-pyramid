@@ -197,6 +197,48 @@ export const salesEnablementNarrations: SESlideNarration[] = [
       "This is the page you study before every customer call. The core message: five plain-English use cases — safety signal to procedure update, regulation change to targeted training, fatigue trend to roster intervention, ops disruption to crew comms, audit prep to continuous proof. Each one carries the discovery question that surfaces it. The pain you're addressing: reps over-rotate on a single use case and miss the buyer's actual pain. The value lever: pattern-match the prospect's words to the cheat sheet, then run that use case as a DTOP story. Delivery tip — never run all five in one meeting. Pick one, tell it end-to-end in Detect, Trigger, Orchestrate, Prove order, and ask the discovery question on the others to qualify the next conversation. Avoid the dollar figures we have not signed off; this slide is messaging, not modelling. Next: the Regulation Management use case.",
   },
   {
+    slideId: "se-footprint-intro",
+    title: "Week 3 · Customer Footprint — Intro",
+    voiceId: VOICE,
+    script:
+      "This slide matters because almost every conversation you walk into is not a greenfield account — the customer already owns one or more of our core apps, and the deal you're trying to make is a cross-sell or a platform expansion. The core message: there are seven possible footprints — Safety only, Content only, Training only, the three pairs, and all three together — and your first job in any account is to map which one you're in. The pain you're addressing: reps default to pitching whatever they know best, instead of selling what the customer is missing. The value lever: when you sell against a footprint, you stop selling features and start selling the loop the customer can't yet close. Delivery tip — say the coach line out loud right now, because you'll use it in every account review for the rest of your career: your job is never to sell what they already have, it's to sell what they're missing, and the loop they can't close without it. Next we walk the three single-app scenarios.",
+  },
+  {
+    slideId: "se-footprint-single",
+    title: "Week 3 · Footprint — One App",
+    voiceId: VOICE,
+    script:
+      "This is the most common footprint you will inherit, and it's also the most under-sold. The core message: a single app captures real value in its own lane — but the loop never closes, because Detect-Trigger-Orchestrate-Prove only works when all three apps share the foundation. The pain you're naming, lane by lane. Safety only — recommendations get written and then vanish into someone else's backlog, because there's no Content to update and no Training to assign. Content only — manuals stay current, but procedure changes are calendar-driven and complaint-driven, never signal-driven, and you can't prove anyone was retrained on the change. Training only — completions get recorded, but training stays calendar-driven, the high-risk crew gets the same module as the low-risk crew, and you can't link any module back to the procedure or the signal that justified it. The value lever: every cross-sell here is a loop-close, not a SKU-add. Delivery tip — never lead with the SKU. Lead with the loop. Ask the three discovery questions for the lane the customer is in, write their answers down verbatim, and let those words become the scope of your follow-up. Next: the two-app scenarios — where the half-loop becomes visible.",
+  },
+  {
+    slideId: "se-footprint-two",
+    title: "Week 3 · Footprint — Two Apps",
+    voiceId: VOICE,
+    script:
+      "Two apps is the most strategic footprint to sell from, because the half-loop is visible to the customer the moment you draw it. The core message: two apps gets you a half-loop, the third closes it — and the third is always the one with the highest commercial conviction, because the customer has already proven they value the platform shape. The pain, by combination. Safety plus Content but no Training — procedures change because of safety signals, but humans don't get retrained on the change, so behaviour doesn't shift and repeat events stay repeat events. Safety plus Training but no Content — you retrain crews on stale procedures, and the audit trail stops making sense. Content plus Training but no Safety — Detect is missing entirely, the system stays reactive, and the only triggers for change are regulators and incidents. The value lever: name the missing app by the loop it would close, never by the SKU. Delivery tip — when you walk this slide, draw their current half-loop on a whiteboard, then add the missing third in a different colour and watch the buyer lean in. That is the single most powerful selling moment in this entire academy. Next: the all-three customers — where you sell the platform vision, not the apps.",
+  },
+  {
+    slideId: "se-footprint-all",
+    title: "Week 3 · Footprint — All Three + Platform",
+    voiceId: VOICE,
+    script:
+      "If the customer already owns all three apps, your job changes completely. The core message: three apps closes the loop — the intelligence layer is what compounds it. You're no longer selling SafetyManager365, ContentManager365, or TrainingManager365 — you're selling CoAnalyst, Insights and Recommendations, Automation, and the Unified Mobile shell. The pain you're addressing: customers who own all three apps still feel the platform is being underused, because the foundation is closed but the system doesn't yet learn from itself. The value lever, layer by layer — CoAnalyst delivers approximately ninety percent domain accuracy on aviation operational questions versus around thirty-five percent for generic AI; Insights surfaces patterns with the evidence attached, with the POC in H1 2026 and production in H2 2026; Automation handles the deterministic tasks with a human in the loop, POC targeted for April 2026; the Unified Mobile shell brings content, training, and safety into one app, Phase 1 in H1 2026. Be honest about the POC versus production distinction — never promise production for a POC date. Delivery tip — say the coach line slowly: you've bought the instruments; the intelligence layer is the conductor — without it the orchestra plays, but no one is listening for the next note. Then ask the four discovery questions, one per layer, and let the buyer choose which one matters most to them. Next: the value ladder — how to quantify what's captured and what's still on the table.",
+  },
+  {
+    slideId: "se-footprint-ladder",
+    title: "Week 3 · Footprint — Value Ladder",
+    voiceId: VOICE,
+    script:
+      "This is the slide you use in account reviews and renewal conversations, not in first meetings. The core message: platform value compounds, it does not add — each rung unlocks the one above it, and you cannot leap rungs. One app captures roughly twenty-five percent of platform value — efficiency in one lane. Two apps gets to roughly fifty-five percent — a half-loop. Three apps reaches roughly seventy-five percent — the full DTOP loop closes and change cycles compress. Three apps plus the intelligence layer is one hundred percent — the loop now learns from every cycle. These percentages are directional sales modelling, not contractual commitments — say that out loud if the customer pushes. Customer-specific value gets modelled in Line-of-Sight before any commercial conversation. The pain you're addressing: customers fixate on what they already paid for and stop seeing what they haven't. This slide makes the gap visible without making it accusatory. The value lever: the three pillars at every rung — controllable cost, systemic risk, and line-of-sight — show the buyer that the gap is operational, not commercial. Delivery tip — never present this as 'you're missing X percent.' Present it as 'here's the loop you can't close yet, and here's what closing it is worth to you.' Next: the three-move footprint play — what to actually do in the room.",
+  },
+  {
+    slideId: "se-footprint-playbook",
+    title: "Week 3 · Footprint — 3-Move Play",
+    voiceId: VOICE,
+    script:
+      "This is the playbook itself, and it's the one slide from this section you should be able to recite from memory by the end of Week 3. The core message: three moves — audit the footprint, name the broken loop, anchor the next purchase to closing it. Move one — audit. Three discovery questions to find which of S, C, T they own and where the loop currently stops. Move two — name. Use their own words from move one, draw the half-loop on a whiteboard, and show them where it stops, plus what 'stops' costs them in repeat events, audit prep, or training rework. Move three — anchor. Never sell the SKU; sell the loop the missing app would close. Loop language beats SKU language in every single conversation. The pain you're addressing: most reps go straight to the product pitch and miss the loop framing entirely, which is why cross-sells stall at procurement. The value lever: when the loop is named, the next purchase scopes itself — and the customer becomes your champion because they helped name the gap. Delivery tip — pair up after this slide, run the role-play with one of the seven footprints, and book ninety seconds per role. Then take the same scenarios into Practice Center against the AI buyer. Next: Regulation Management — your highest-conviction use case for the compliance and quality leaders you'll meet in these accounts.",
+  },
+  {
     slideId: "se-slide-regmgmt",
     title: "Week 3 · Regulation Management",
     voiceId: VOICE,
