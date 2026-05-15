@@ -1,57 +1,84 @@
-# Update "Where signals come from" slide + downstream consistency
+# Add 3 Use-Case slides after each Intelligence Layer capability (Week 2)
 
-Replace the 4 cards on the shared signal-sources slide with the user's new categories, and bring the DTOP whiteboard drill and Sales Enablement narration scripts into alignment so all references say "four signal sources" with the same names.
+Add a dedicated "Use Cases" slide after each of the three Intelligence Layer capability slides in the Sales Enablement Week 2 deck. Each new slide pairs **Per Solution** examples (Safety / Content / Training) with **Platform** examples, using the user-supplied copy verbatim.
 
-## 1. The slide (`SIGSlide3SignalSources.tsx` — used on Sales Enablement and Signals Playbook)
+## Mapping (existing slide → new use-case slide that follows it)
 
-Replace the 4 current cards (Operations / Content / Safety / Training) with:
+| # | Existing capability slide | Title shown today | New slide that follows |
+|---|---|---|---|
+| 1 | `se-slide-coanalyst` (`TechV4Slide7CoAnalyst`) | "In-Product · Insights & Intelligence" | **W2 · Intelligence & Insights — Use Cases** |
+| 2 | `se-slide-automation` (`TechV4SlideAutomation`) | "The Platform · Automation" | **W2 · Automation — Use Cases** |
+| 3 | `se-slide-insights` (`TechV4SlideInsights`) | "The Platform · Recommendations & Prescriptive Actions" | **W2 · Recommendations & Prescriptive Actions — Use Cases** |
 
-| # | Title | Color | Icon | Examples |
-|---|---|---|---|---|
-| 1 | **Regulation Signals** | sky | `BookCheck` | EASA / FAA / CAA / MoD / ORR rule changes · Airworthiness Directives · IOSA & ISARPs audit updates |
-| 2 | **Anomalies** | amber | `AlertTriangle` | Operational data exceedances · Safety reports & near-misses · Audit findings & recurring non-conformities |
-| 3 | **Operational Change Requests** | violet | `GitBranch` | Fleet, route & base changes · Procedure / manual revisions · Supplier, MRO & contract changes |
-| 4 | **Micro, Macro & Geopolitical Influences** | emerald | `Globe2` | Weather systems & NOTAMs · Fuel pricing & supply shocks · Airspace closures & geopolitical events |
+(Note: the file names are slightly counter-intuitive — `TechV4SlideInsights.tsx` actually renders the *Recommendations* slide. Going by rendered title, not filename.)
 
-Slide copy:
-- **Subtitle** → "Signals live across four very different worlds — regulation, anomalies, operational change, and the world outside. Most operators see them in silos. We connect them."
-- **Bottom unlock paragraph** → "A regulation change should rewrite a manual. An anomaly should trigger an investigation and a training nudge. An operational change request should re-baseline both. A geopolitical shift should re-plan the schedule before the day starts. **DTOP** is how that actually happens."
+## Slide layout (one shared component, three data variants)
 
-## 2. DTOP whiteboard drill (`SEDtopWhiteboardDrill.tsx`)
+Each new slide renders inside `SalesSlideContainer` with the same two-column structure so the trio feels like a set:
 
-- Replace the `signals` array `["Safety Reports", "Operational Data", "Maintenance", "Crew Logs", "Regulatory", "Audit"]` with the new four: `["Regulation", "Anomalies", "Op Change Requests", "Macro / Geo Influences"]`.
-- Update Stroke 6 narration line: "These four are the signal sources we listen to."
-- Update the SVG chip layout to fit 4 chips cleanly under the Detect box (was 6).
+```text
+┌──────────────────────────────────────────────────────────────────────┐
+│  Title: <Capability> — Use Cases                                     │
+│  Subtitle: How this shows up per solution and across the platform    │
+├──────────────────────────┬───────────────────────────────────────────┤
+│  PER SOLUTION (left)     │  PLATFORM (right)                         │
+│  3 stacked cards:        │  3 stacked cards (numbered)               │
+│   • Safety (emerald)     │   1. …                                    │
+│   • Content (violet)     │   2. …                                    │
+│   • Training (amber)     │   3. …                                    │
+│                          │                                           │
+│  Each card: solution     │  Each card: a single-sentence use case    │
+│  badge + 1-3 lines       │  with a short DTOP-cycle annotation       │
+│  of use-case copy.       │  where the user provided one              │
+└──────────────────────────┴───────────────────────────────────────────┘
+```
 
-## 3. Whiteboard runbook (`SEDtopWhiteboardRunbook.tsx`)
+For the **Automation** slide, the left column collapses to a single muted card stating "Per Solution: not universally available — handled at the platform layer" so the right column can breathe and show all 3 platform automations larger.
 
-- Stroke-6 reference and discovery question updated: "Which of these four signal sources is hardest for you to reach right now?"
-- "6 signal chips" wording → "4 signal chips" wherever it appears.
+Per-solution cards reuse existing module accent colors (Safety = emerald, Content = violet, Training = amber) to match the Core Apps slides. Platform cards use the primary blue accent. No new colors introduced.
 
-## 4. Sales Enablement nav label (`SalesEnablement.tsx`)
+## Content (verbatim from the user, lightly tightened only where wording was incomplete)
 
-- "W1 · The Six Signal Sources" → **"W1 · Signal Sources"**
-- The intro paragraph that says "name the six signal sources behind Detect" → "name the four signal sources behind Detect".
+### 1. Intelligence & Insights — Use Cases
+- **Per Solution**
+  - Safety — Generate a list of safety reports for a specific aircraft for the lessor, formatted to their spec and sent electronically on schedule.
+  - Content — List flight crew who haven't synced their mobile devices in the last 30 days; send to fleet captains for follow-up.
+  - Training — List crew with upcoming training renewals at a specific base to schedule classroom training.
+- **Platform**
+  1. "Show me the correlation between recent safety trends and training deficiencies."
+  2. "How are we performing against the recent updates to the Dangerous Goods manual? Has the resulting training reduced incidents?"
+  3. "Are we ready for the upcoming Part 145 audit?"
 
-## 5. Narration scripts (`src/data/salesEnablementNarration.ts`)
+### 2. Automation — Use Cases
+- **Per Solution** — *Not universally available; handled at the platform layer.*
+- **Platform**
+  1. **Trigger Training Updates on Procedure Revision** — When a new procedure revision is published, notify owners of linked training modules and create a review-and-update task in TrainingManager365. *(One step in the DTOP cycle.)*
+  2. **Trigger Document Updates on Regulation Amendment** — When a regulation revision is published, draft updated procedures with AI-generated content for document-owner review. *(Another step in the DTOP cycle.)*
+  3. **Trigger Risk Control Review on Deteriorating Training Results** — When training evaluations fall below a threshold, trigger a SafetyManager365 risk review for the controls linked to that training module.
 
-Three scripts need their "six signal sources" lists rewritten to the new four. Keep tone, length and teaching-format intact:
+### 3. Recommendations & Prescriptive Actions — Use Cases
+- **Per Solution**
+  - Safety — "What risk controls would you recommend to mitigate unstable approach at location X?"
+  - Content — "Based on how users search the OMA, what updates would make search faster and easier?"
+  - Training — "What updates would you recommend to our Dangerous Goods training to improve engagement?"
+- **Platform**
+  1. **"Where should my attention be focused today?"** — surfaces emerging risk patterns and recommended actions.
+  2. **"How successful was our Just Culture campaign?"** — measures outcomes vs. intended benefits, identifies improvement patterns, and recommends next actions.
+  3. **"If we were audited today, where would attention focus?"** — identifies areas of concern and proposes rectification and preventative action.
 
-- **se-slide-signals** — rewrite the "Name them in this order" list to: Regulation, Anomalies, Operational Change Requests, Micro/Macro/Geopolitical Influences. Update the discovery question to "which of these four is hardest for you to act on today?"
-- **se-slide-recap-m2** — change "six signal sources" → "four signal sources" and the names.
-- **se-slide-dtop** + **se-slide-dtop-whiteboard** + **se-slide-dtop-whiteboard-runbook** — replace each enumeration of the old six names with the new four; replace "six signal chips" with "four signal chips".
+## Technical changes
 
-Other narrations that say "DTOP" without enumerating the old six are left alone.
+- **New file**: `src/components/sales-enablement-slides/SECapabilityUseCases.tsx` — one shared component that takes `{ capability: "intelligence" | "automation" | "recommendations" }` and renders the right data set. Uses `SalesSlideContainer`, lucide icons (`ShieldCheck`, `FileText`, `GraduationCap`, `Workflow`, `Sparkles`), and existing semantic tokens / module color classes already in use on Core Apps slides.
+- **Edit**: `src/pages/SalesEnablement.tsx`
+  - Import the new component.
+  - Insert three new entries into the slide list with ids `se-slide-coanalyst-usecases`, `se-slide-automation-usecases`, `se-slide-insights-usecases` immediately after their parent capability slides.
+  - Append the three new slide titles to the `weekProps.w2.upNext` array so the Week 2 divider preview lists them.
+- **Edit**: `src/data/salesEnablementNarration.ts`
+  - Add three short coach-script narrations following the project's 5-part teaching format (one per new slide). Each ~120-160 words. They reference the parent capability and frame the use cases as "what to say in discovery".
 
 ## Out of scope
 
-- No changes to `/platform-mockup` Detect row.
-- No new images.
-- No re-recording of voice audio (script text only — re-generation handled by existing TTS flow on next play).
-- No edits to other playbook narrations (`playbookNarrations.ts`, etc.) unless they enumerate the old six explicitly.
-
-## Technical notes
-
-- `signalSources` type in `signalsPlaybook.ts` keeps its shape; only the array contents change. `iconMap` in the slide is rekeyed to the new 4 titles.
-- Add `BookCheck`, `AlertTriangle`, `GitBranch`, `Globe2` to the slide's `lucide-react` import; remove the now-unused `Plane`, `FileText`, `ShieldCheck`, `GraduationCap`.
-- Whiteboard SVG: redistribute 4 chips across the same horizontal band — wider chips, larger font, balanced spacing.
+- No edits to the three existing capability slides themselves (titles, copy, visuals untouched).
+- No new images, no PPTX export, no narration audio re-recording (TTS regenerates on next playback).
+- No changes to Week 1 or Week 3 deck order.
+- No memory writes — these are content additions, not new conventions.
