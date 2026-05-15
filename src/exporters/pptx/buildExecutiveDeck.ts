@@ -298,7 +298,7 @@ const dtopSpec: SlideSpec = {
       "A connected, intelligent, and predictive platform turning signals into orchestrated change and measurable outcomes",
     );
 
-    // Left: ecosystem image (Safety/Content/Training + CoAnalyst hub)
+    // Left: ecosystem image (Safety/Content/Training + Intelligence Layer hub)
     const leftX = 0.5;
     const leftW = 4.2;
     const leftY = CONTENT_TOP;
@@ -464,7 +464,7 @@ const platformSpec: SlideSpec = {
     const rightX = 6.4;
     const rightW = W - rightX - 0.5;
     const cards = [
-      { eyebrow: "INTELLIGENCE LAYER", title: "CoAnalyst", body: "Domain-trained AI reasoning across safety, content and training together. 90% accuracy vs 35% generic AI.", color: C.amber },
+      { eyebrow: "INTELLIGENCE LAYER", title: "Intelligence Layer", body: "Domain-trained AI reasoning across safety, content and training together. 90% accuracy vs 35% generic AI.", color: C.amber },
       { eyebrow: "CORE APP", title: "SafetyManager365", body: "SMS, investigations, hazard register, audits and risk — built on the operational data foundation.", color: C.rose },
       { eyebrow: "CORE APP", title: "ContentManager365 + CoAuthor", body: "Procedure authoring, revision cascades, regulatory change impact and multi-format distribution.", color: C.amber },
       { eyebrow: "CORE APP", title: "TrainingManager365 + CoTrainer", body: "Competency-based training, targeted assignments and qualification tracking — triggered by safety events.", color: C.violet },

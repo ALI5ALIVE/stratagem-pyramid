@@ -24,7 +24,7 @@ const OpsSlide5Intelligence = ({ slideNumber, ...narrationProps }: OpsSlide5Prop
   return (
     <SalesSlideContainer
       id="ops-slide-5"
-      title="CoAnalyst — Domain-Trained Intelligence"
+      title="Intelligence Layer — Domain-Trained Intelligence"
       subtitle="Domain-trained intelligence — purpose-built for aviation, where generic AI falls short."
       slideNumber={slideNumber}
       {...narrationProps}
@@ -37,7 +37,7 @@ const OpsSlide5Intelligence = ({ slideNumber, ...narrationProps }: OpsSlide5Prop
         <div className="flex items-center gap-12 justify-center">
           <div className="text-center">
             <p className="text-5xl font-bold text-primary">90%</p>
-            <p className="text-xs text-muted-foreground mt-1">CoAnalyst</p>
+            <p className="text-xs text-muted-foreground mt-1">Intelligence Layer</p>
           </div>
           <div className="text-center">
             <p className="text-lg font-semibold text-muted-foreground">vs</p>
@@ -97,7 +97,7 @@ const OpsSlide5Intelligence = ({ slideNumber, ...narrationProps }: OpsSlide5Prop
                     </div>
                   </div>
                   <div className="flex gap-2 text-[9px] text-muted-foreground">
-                   <span className="flex-1">CoAnalyst</span>
+                   <span className="flex-1">Intelligence Layer</span>
                     <span className="flex-1">Generative AI</span>
                   </div>
                 </div>

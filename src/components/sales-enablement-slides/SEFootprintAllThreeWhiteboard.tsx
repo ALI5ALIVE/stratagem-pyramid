@@ -9,7 +9,7 @@ interface Props extends SlideNarrationProps {
 const strokes = [
   { n: 1, color: "text-blue-400", dot: "bg-blue-400", label: "Three lit lanes", say: "Draw all three lit — Safety, Content, Training. The foundation is in place." },
   { n: 2, color: "text-violet-400", dot: "bg-violet-400", label: "Closed DTOP loop", say: "Draw the DTOP arrow as a full loop — Detect, Trigger, Orchestrate, Prove — back to Detect. Every signal can now reach a procedure, a crew, and an audit trail." },
-  { n: 3, color: "text-primary", dot: "bg-primary", label: "Intelligence band", say: "Above the loop, draw the intelligence band — CoAnalyst, Insights, Automation, Mobile. Say: 'this is scope, not new features — they already had these inside their lanes.'" },
+  { n: 3, color: "text-primary", dot: "bg-primary", label: "Intelligence band", say: "Above the loop, draw the intelligence band — Intelligence Layer, Insights, Automation, Mobile. Say: 'this is scope, not new features — they already had these inside their lanes.'" },
   { n: 4, color: "text-amber-400", dot: "bg-amber-400", label: "Cross-lane reach", say: "Draw arrows from the band reaching across all three lanes. The intelligence layer can now reason across the whole loop, not one lane of it." },
   { n: 5, color: "text-emerald-400", dot: "bg-emerald-400", label: "Accuracy callout", say: "Write the headline: ~90% domain accuracy vs ~35% generic AI. That's the conductor in front of the orchestra." },
   { n: 6, color: "text-foreground", dot: "bg-foreground/60", label: "Vision question", say: "Ask: 'Which decisions in your operation still rely on a human stitching three systems together?' Then stop — let them answer." },
@@ -31,7 +31,7 @@ const SEFootprintAllThreeWhiteboard = ({ slideNumber, ...narrationProps }: Props
           {/* Intelligence band */}
           <g>
             <rect x="40" y="25" width="620" height="50" rx="8" fill="#ede9fe" stroke="#6d28d9" strokeWidth="3" />
-            <text x="55" y="55" fill="#6d28d9" fontSize="18" fontWeight="700">CoAnalyst · Insights · Automation · Mobile</text>
+            <text x="55" y="55" fill="#6d28d9" fontSize="18" fontWeight="700">Intelligence Layer · Insights · Automation · Mobile</text>
             <text x="450" y="55" fill="#b45309" fontSize="13" fontStyle="italic">— scope, not new features</text>
           </g>
           {/* Cross-lane arrows from band */}

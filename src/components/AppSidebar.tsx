@@ -45,7 +45,7 @@ const salesEnablementItems: NavItem[] = [
 const capabilityItems: NavItem[] = [
   { title: "Platform Playbook", url: "/platform-playbook", icon: Layers, badge: "Master" },
   { title: "Signals 101", url: "/signals-playbook", icon: Radio },
-  { title: "CoAnalyst Playbook", url: "/coanalyst", icon: Brain },
+  { title: "Intelligence Layer Playbook", url: "/coanalyst", icon: Brain },
   { title: "Regulation Management", url: "/regulation-management", icon: ScrollText },
   { title: "DTOP Operating Model", url: "/dtop-playbook", icon: Workflow },
   { title: "Insights & Recommendations", url: "/insights-playbook", icon: Sparkles },

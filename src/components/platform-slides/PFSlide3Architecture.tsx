@@ -32,7 +32,7 @@ const PFSlide3Architecture = (props: SlideNarrationProps) => {
           </div>
           <div className="p-3 rounded-lg border border-amber-500/30 bg-amber-500/5">
             <p className="text-[10px] uppercase tracking-wider text-amber-300 mb-1">Action</p>
-            <p className="text-xs text-foreground/80 leading-relaxed">CoAnalyst, Insights & Recommendations and Automation turn data into action.</p>
+            <p className="text-xs text-foreground/80 leading-relaxed">Intelligence Layer, Insights & Recommendations and Automation turn data into action.</p>
           </div>
           <div className="p-3 rounded-lg border border-cyan-500/30 bg-cyan-500/5">
             <p className="text-[10px] uppercase tracking-wider text-cyan-300 mb-1">Substrate</p>

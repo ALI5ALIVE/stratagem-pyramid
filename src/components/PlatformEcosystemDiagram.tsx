@@ -8,7 +8,7 @@ const PlatformEcosystemDiagram = ({ className = "" }: PlatformEcosystemDiagramPr
   return (
     <img
       src={platformEcosystem}
-      alt="Comply365 Platform Ecosystem — Safety, Content, and Training connected through CoAnalyst intelligence layer"
+      alt="Comply365 Platform Ecosystem — Safety, Content, and Training connected through Intelligence Layer intelligence layer"
       className={`w-full h-auto ${className}`}
       style={{ maxWidth: "500px" }}
     />

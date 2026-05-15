@@ -54,7 +54,7 @@ const PFSlide5Intelligence = (props: SlideNarrationProps) => {
         <div className="rounded-lg border border-primary/30 bg-primary/5 p-2.5 text-center">
           <p className="text-xs text-foreground/90">
             <span className="text-amber-300 font-semibold">Insights</span> decides ·
-            <span className="text-amber-300 font-semibold"> CoAnalyst</span> interrogates ·
+            <span className="text-amber-300 font-semibold"> Intelligence Layer</span> interrogates ·
             <span className="text-violet-300 font-semibold"> Automation</span> acts
           </p>
         </div>

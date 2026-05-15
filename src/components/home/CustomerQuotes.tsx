@@ -10,7 +10,7 @@ const QUOTES = [
     metricLabel: "Audit prep",
   },
   {
-    quote: "CoAnalyst gave us answers our crews trust. Cited from our actual manuals — not the internet.",
+    quote: "Intelligence Layer gave us answers our crews trust. Cited from our actual manuals — not the internet.",
     name: "Head of Flight Safety",
     company: "Defense aviation operator",
     initials: "HS",

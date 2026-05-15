@@ -40,7 +40,7 @@ const CASlide0Title = ({
 
       <div className="flex-1 flex flex-col justify-center px-6 sm:px-10 lg:px-16 relative z-10">
         <div className="max-w-7xl w-full mx-auto">
-          <p className="text-primary text-sm font-medium tracking-widest uppercase mb-4">CoAnalyst — The Intelligence Layer</p>
+          <p className="text-primary text-sm font-medium tracking-widest uppercase mb-4">Intelligence Layer — The Intelligence Layer</p>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold leading-tight mb-4">
             <span className="title-accent">The Intelligence</span>
             <br />
@@ -49,7 +49,7 @@ const CASlide0Title = ({
           <p className="text-muted-foreground text-lg sm:text-xl max-w-2xl mb-10">
             From reports to intelligence. From events to control.
             <br />
-            <span className="text-primary font-medium">How CoAnalyst powers the Operational Performance Platform.</span>
+            <span className="text-primary font-medium">How Intelligence Layer powers the Operational Performance Platform.</span>
           </p>
         </div>
       </div>

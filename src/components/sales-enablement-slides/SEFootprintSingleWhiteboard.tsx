@@ -9,7 +9,7 @@ interface Props extends SlideNarrationProps {
 const strokes = [
   { n: 1, color: "text-blue-400", dot: "bg-blue-400", label: "Lit lane", say: "They own Safety. Draw it lit — that's the lane that works today." },
   { n: 2, color: "text-muted-foreground", dot: "bg-muted-foreground", label: "Dark lanes", say: "Now draw Content and Training as dotted, empty boxes — those are the dark lanes." },
-  { n: 3, color: "text-primary", dot: "bg-primary", label: "Confined intelligence", say: "Inside Safety, write CoAnalyst, Insights, Automation — and label it 'confined to this lane.'" },
+  { n: 3, color: "text-primary", dot: "bg-primary", label: "Confined intelligence", say: "Inside Safety, write Intelligence Layer, Insights, Automation — and label it 'confined to this lane.'" },
   { n: 4, color: "text-amber-400", dot: "bg-amber-400", label: "Broken loop", say: "Draw the DTOP arrow. It dies at Orchestrate — there's nowhere for the procedure or the training change to land." },
   { n: 5, color: "text-violet-400", dot: "bg-violet-400", label: "Discovery question", say: "Write the question: 'When Safety flags a risk, who owns the procedure and training change?'" },
   { n: 6, color: "text-emerald-400", dot: "bg-emerald-400", label: "Circle the gap", say: "Circle the dark lanes. That circle is the sale — close one of them, and the loop starts to close." },
@@ -33,7 +33,7 @@ const SEFootprintSingleWhiteboard = ({ slideNumber, ...narrationProps }: Props) 
             <rect x="40" y="50" width="200" height="160" rx="8" fill="#dbeafe" stroke="#2563eb" strokeWidth="4" />
             <text x="60" y="85" fill="#2563eb" fontSize="26" fontWeight="700">Safety</text>
             <text x="60" y="110" fill="#1e3a5f" fontSize="14">(LIT — they own this)</text>
-            <text x="60" y="145" fill="#1e3a5f" fontSize="13">+ CoAnalyst</text>
+            <text x="60" y="145" fill="#1e3a5f" fontSize="13">+ Intelligence Layer</text>
             <text x="60" y="165" fill="#1e3a5f" fontSize="13">+ Insights</text>
             <text x="60" y="185" fill="#1e3a5f" fontSize="13">+ Automation</text>
             <text x="60" y="205" fill="#b45309" fontSize="12" fontStyle="italic">confined to this lane</text>

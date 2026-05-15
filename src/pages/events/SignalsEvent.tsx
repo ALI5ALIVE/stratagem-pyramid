@@ -5,11 +5,11 @@ import { Radar, Zap, GitBranch, BadgeCheck, ArrowRight, Activity } from "lucide-
 const stats = [
   { value: "12K+", label: "Monthly operational signals", sub: "per mid-size carrier — most go unheard" },
   { value: "~35%", label: "Generic AI accuracy", sub: "on aviation categorisation — too unreliable to act on" },
-  { value: "~90%", label: "Domain AI accuracy", sub: "with CoAnalyst — the threshold where signals become decisions" },
+  { value: "~90%", label: "Domain AI accuracy", sub: "with Intelligence Layer — the threshold where signals become decisions" },
 ];
 
 const tracks = [
-  { letter: "D", name: "Detect", color: "sky", desc: "The signals others miss.", tag: "CoAnalyst · Insights" },
+  { letter: "D", name: "Detect", color: "sky", desc: "The signals others miss.", tag: "Intelligence Layer · Insights" },
   { letter: "T", name: "Trigger", color: "amber", desc: "The right action, automatically.", tag: "Automation · DTOP" },
   { letter: "O", name: "Orchestrate", color: "violet", desc: "Safety, content, and training as one system.", tag: "Platform Foundation" },
   { letter: "P", name: "Prove", color: "emerald", desc: "Continuous control to regulators and the board.", tag: "Audit · Line of Sight" },
@@ -158,7 +158,7 @@ const SignalsEvent = () => {
             The Operational Performance Platform.
           </h2>
           <p className="text-muted-foreground max-w-3xl mb-10">
-            One platform. Three Systems of Record. One operating model — unified by CoAnalyst
+            One platform. Three Systems of Record. One operating model — unified by Intelligence Layer
             intelligence and the DTOP loop.
           </p>
 

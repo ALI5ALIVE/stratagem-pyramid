@@ -14,7 +14,7 @@ const pillars = [
   },
   {
     icon: Brain,
-    title: "CoAnalyst",
+    title: "Intelligence Layer",
     point: "~90% domain accuracy vs ~35% generic AI",
     body: "Purpose-built intelligence that reads aviation operational language. The difference between detecting a signal and missing it is accuracy.",
     color: "text-violet-400",

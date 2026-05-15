@@ -41,14 +41,14 @@ export const executivePitchNarrations: ExecNarrationSlide[] = [
     title: "The Platform",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "This loop is powered by three applications working as one. Safety Manager detects the signals. Content Manager orchestrates the procedural response. Training Manager ensures crew readiness before the next event. And CoAnalyst — our intelligence layer — connects all three, transforming sixty-five thousand monthly data points into decisions you can act on. One platform. One version of truth.",
+      "This loop is powered by three applications working as one. Safety Manager detects the signals. Content Manager orchestrates the procedural response. Training Manager ensures crew readiness before the next event. And Intelligence Layer — our intelligence layer — connects all three, transforming sixty-five thousand monthly data points into decisions you can act on. One platform. One version of truth.",
   },
   {
     slideId: "exec-slide-5",
     title: "Intelligence Layer",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Here's why this matters. Generic AI gives you thirty-five percent accuracy on aviation queries. It can't distinguish a bird strike report from a bird strike trend. CoAnalyst delivers over ninety percent — trained on ten years of aviation operational data. That precision gap is the difference between intelligence that drives action and noise that wastes your safety team's time.",
+      "Here's why this matters. Generic AI gives you thirty-five percent accuracy on aviation queries. It can't distinguish a bird strike report from a bird strike trend. Intelligence Layer delivers over ninety percent — trained on ten years of aviation operational data. That precision gap is the difference between intelligence that drives action and noise that wastes your safety team's time.",
   },
   {
     slideId: "exec-slide-6",
@@ -62,7 +62,7 @@ export const executivePitchNarrations: ExecNarrationSlide[] = [
     title: "Why Comply365",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Three things set Comply three six five apart — and they're the reason leading carriers across North America trust us with their operations today. First, a connected foundation. We're not stitching point solutions together. Safety, content, and training share one data model, one version of truth. The largest carriers in North America rely on this every day. Second, embedded intelligence. CoAnalyst wasn't built as a generic AI with an aviation skin. It's been trained from the ground up on ten years of aviation operational data — delivering over ninety percent accuracy where general-purpose tools plateau at thirty-five. That precision is the difference between actionable intelligence and noise. Third, proof by default. Every action is logged automatically. Every change is traced. Every decision is auditable. You don't prepare for regulators — you're always ready. Let's schedule a thirty-minute discovery session to map your operational signals to measurable outcomes — and build a custom cost avoidance model with your numbers.",
+      "Three things set Comply three six five apart — and they're the reason leading carriers across North America trust us with their operations today. First, a connected foundation. We're not stitching point solutions together. Safety, content, and training share one data model, one version of truth. The largest carriers in North America rely on this every day. Second, embedded intelligence. Intelligence Layer wasn't built as a generic AI with an aviation skin. It's been trained from the ground up on ten years of aviation operational data — delivering over ninety percent accuracy where general-purpose tools plateau at thirty-five. That precision is the difference between actionable intelligence and noise. Third, proof by default. Every action is logged automatically. Every change is traced. Every decision is auditable. You don't prepare for regulators — you're always ready. Let's schedule a thirty-minute discovery session to map your operational signals to measurable outcomes — and build a custom cost avoidance model with your numbers.",
   },
 ];
 
@@ -101,7 +101,7 @@ export const exec3PitchNarrations: ExecNarrationSlide[] = [
     title: "The Platform",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "This is the architecture in one picture, and it's deliberately simple. At the foundation, three core applications sharing one operational data model — SafetyManager365 for occurrences and assurance, ContentManager365 for procedures and manuals, TrainingManager365 for competency and recurrent training. Above them, the intelligence and orchestration layer — automation, insights, and CoAnalyst — turning that shared data into action. Above that, one unified mobile shell so the frontline only ever opens one app. And wrapping the whole stack, DTOP — the operating model that makes it all move together. Most of your current vendors sell you one of these boxes. We give you all four, on one platform, one data foundation, one place to prove it worked. Let's walk through how it actually works in your operation, starting with that operating model.",
+      "This is the architecture in one picture, and it's deliberately simple. At the foundation, three core applications sharing one operational data model — SafetyManager365 for occurrences and assurance, ContentManager365 for procedures and manuals, TrainingManager365 for competency and recurrent training. Above them, the intelligence and orchestration layer — automation, insights, and Intelligence Layer — turning that shared data into action. Above that, one unified mobile shell so the frontline only ever opens one app. And wrapping the whole stack, DTOP — the operating model that makes it all move together. Most of your current vendors sell you one of these boxes. We give you all four, on one platform, one data foundation, one place to prove it worked. Let's walk through how it actually works in your operation, starting with that operating model.",
   },
   {
     slideId: "exec3-divider-dtop",
@@ -154,17 +154,17 @@ export const exec3PitchNarrations: ExecNarrationSlide[] = [
   },
   {
     slideId: "exec3-slide-coanalyst",
-    title: "CoAnalyst",
+    title: "Intelligence Layer",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "CoAnalyst is the intelligence layer of the platform — and the master message I want you to leave the room with is this: from events to control. We've taken millions of aviation reports and trained a hybrid architecture — domain models doing the heavy classification work, with a generative AI layer on top for natural-language interaction, and continuous learning so it gets sharper every quarter. The reason this matters commercially is precision. At deep classification — the level of cause and root cause — CoAnalyst delivers around ninety percent accuracy, where generic AI plateaus around thirty-five percent. That precision is the difference between an analyst trusting the recommendation and an analyst re-doing the work by hand. Let me put a sharper number on that.",
+      "Intelligence Layer is the intelligence layer of the platform — and the master message I want you to leave the room with is this: from events to control. We've taken millions of aviation reports and trained a hybrid architecture — domain models doing the heavy classification work, with a generative AI layer on top for natural-language interaction, and continuous learning so it gets sharper every quarter. The reason this matters commercially is precision. At deep classification — the level of cause and root cause — Intelligence Layer delivers around ninety percent accuracy, where generic AI plateaus around thirty-five percent. That precision is the difference between an analyst trusting the recommendation and an analyst re-doing the work by hand. Let me put a sharper number on that.",
   },
   {
     slideId: "exec3-slide-tiers-vs-ai",
-    title: "CoAnalyst vs Generic AI",
+    title: "Intelligence Layer vs Generic AI",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "This is the chart that ends the build-or-buy debate inside your IT team. Read it left to right by depth of classification. At Levels one to three — broad occurrence categories like 'bird strike' or 'runway excursion' — generic AI is roughly comparable to a domain model. That's the surface, and that's where most vendor demos stop, because it's the only place generic AI looks credible. Go to Levels four and five — the depth your safety, training and compliance teams actually operate at — granular subcategories, contributing factors, cause and root cause — and the picture inverts. Generic AI collapses into the thirty to forty percent range. CoAnalyst holds around ninety. The reason is architectural — our domain models are trained on millions of aviation reports, with a generative AI layer on top for natural-language interaction; generic AI has none of that grounding. In practical terms, generic AI will call a repeated bird strike a one-off and miss the cluster that signals a runway hazard trend. That's the precision gap — and it's why our customers stopped trying to wrap a chatbot around their safety database. Now let's look at what the platform does with that intelligence — turning patterns into prescriptive next steps.",
+      "This is the chart that ends the build-or-buy debate inside your IT team. Read it left to right by depth of classification. At Levels one to three — broad occurrence categories like 'bird strike' or 'runway excursion' — generic AI is roughly comparable to a domain model. That's the surface, and that's where most vendor demos stop, because it's the only place generic AI looks credible. Go to Levels four and five — the depth your safety, training and compliance teams actually operate at — granular subcategories, contributing factors, cause and root cause — and the picture inverts. Generic AI collapses into the thirty to forty percent range. Intelligence Layer holds around ninety. The reason is architectural — our domain models are trained on millions of aviation reports, with a generative AI layer on top for natural-language interaction; generic AI has none of that grounding. In practical terms, generic AI will call a repeated bird strike a one-off and miss the cluster that signals a runway hazard trend. That's the precision gap — and it's why our customers stopped trying to wrap a chatbot around their safety database. Now let's look at what the platform does with that intelligence — turning patterns into prescriptive next steps.",
   },
   {
     slideId: "exec3-slide-insights",
@@ -206,7 +206,7 @@ export const exec3PitchNarrations: ExecNarrationSlide[] = [
     title: "Why Comply365",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Three reasons leading carriers trust Comply365 with their operation, and they're the three reasons you should consider us too. First — a connected foundation. We don't stitch point solutions together. Safety, content, and training share one connected data model, one version of truth. Five hundred and fifty plus airlines, around two and a half million users, across six continents already operate on it. Second — embedded intelligence. CoAnalyst was built from the ground up on aviation operational data — around ninety percent accuracy at the depth that matters, where generic AI plateaus at thirty-five. That precision is what makes the recommendations defensible. Third — proof by default. Every action logged, every change traced, every decision auditable. You don't prepare for regulators anymore — you're always ready. To learn more about the power of the Comply365 Operational Performance Platform for your organisation, contact us today.",
+      "Three reasons leading carriers trust Comply365 with their operation, and they're the three reasons you should consider us too. First — a connected foundation. We don't stitch point solutions together. Safety, content, and training share one connected data model, one version of truth. Five hundred and fifty plus airlines, around two and a half million users, across six continents already operate on it. Second — embedded intelligence. Intelligence Layer was built from the ground up on aviation operational data — around ninety percent accuracy at the depth that matters, where generic AI plateaus at thirty-five. That precision is what makes the recommendations defensible. Third — proof by default. Every action logged, every change traced, every decision auditable. You don't prepare for regulators anymore — you're always ready. To learn more about the power of the Comply365 Operational Performance Platform for your organisation, contact us today.",
   },
 ];
 

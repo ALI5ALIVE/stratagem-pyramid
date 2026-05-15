@@ -172,22 +172,22 @@ export const personaProfiles: PersonaProfile[] = [
       "Proactive alerting — must identify emerging hazards from trend analysis, not just report on historical data",
       "Data security and regulatory compliance — safety data is sensitive; must meet aviation data handling requirements"
     ],
-    valueProposition: "The Comply365 Operational Performance Platform connects safety, content and training on one operational data foundation — so a hazard detected today can trigger a procedure revision and crew retraining tomorrow, with auditable proof of the loop. CoAnalyst is the intelligence layer that accelerates this: aviation-specific AI that processes your safety reports, identifies hazard patterns across the whole operation, monitors control effectiveness, and generates audit-ready documentation. Platform first, intelligence on top.",
+    valueProposition: "The Comply365 Operational Performance Platform connects safety, content and training on one operational data foundation — so a hazard detected today can trigger a procedure revision and crew retraining tomorrow, with auditable proof of the loop. Intelligence Layer is the intelligence layer that accelerates this: aviation-specific AI that processes your safety reports, identifies hazard patterns across the whole operation, monitors control effectiveness, and generates audit-ready documentation. Platform first, intelligence on top.",
     keyMessages: [
-      "Your investigators spend 60% of their time on report processing and triage. CoAnalyst automates that work so they can focus on what matters — preventing the next incident.",
-      "You're sitting on years of safety data that contains patterns your team hasn't had time to find. CoAnalyst surfaces those patterns automatically.",
+      "Your investigators spend 60% of their time on report processing and triage. Intelligence Layer automates that work so they can focus on what matters — preventing the next incident.",
+      "You're sitting on years of safety data that contains patterns your team hasn't had time to find. Intelligence Layer surfaces those patterns automatically.",
       "Moving from SMS Level 2-3 to Level 4 isn't about collecting more data — it's about connecting the data you have into predictive intelligence. That's exactly what we enable.",
-      "Audit preparation that takes weeks should take hours. CoAnalyst generates compliance evidence, trend analyses, and corrective action tracking automatically.",
+      "Audit preparation that takes weeks should take hours. Intelligence Layer generates compliance evidence, trend analyses, and corrective action tracking automatically.",
       "Generic AI doesn't understand the difference between a bird strike and a lightning strike. Our models are trained on aviation safety data and ICAO taxonomy."
     ],
     objections: [
       {
         objection: "We already have a safety reporting system.",
-        response: "Your reporting system captures data. CoAnalyst turns that data into intelligence. We integrate with your existing system — we don't replace it. Think of us as the analytical brain that sits on top of your data and finds the patterns your team doesn't have time to look for."
+        response: "Your reporting system captures data. Intelligence Layer turns that data into intelligence. We integrate with your existing system — we don't replace it. Think of us as the analytical brain that sits on top of your data and finds the patterns your team doesn't have time to look for."
       },
       {
         objection: "Our safety team is resistant to AI — they don't trust it for safety-critical work.",
-        response: "We designed CoAnalyst as a co-analyst, not a replacement. It surfaces patterns and recommendations — your safety professionals make the decisions. It's like giving every investigator a research assistant who's read every report you've ever filed and can cross-reference instantly."
+        response: "We designed Intelligence Layer as a co-analyst, not a replacement. It surfaces patterns and recommendations — your safety professionals make the decisions. It's like giving every investigator a research assistant who's read every report you've ever filed and can cross-reference instantly."
       },
       {
         objection: "We need to see proof this works in aviation, not just demos.",
@@ -195,11 +195,11 @@ export const personaProfiles: PersonaProfile[] = [
       },
       {
         objection: "Our data quality isn't good enough for AI.",
-        response: "We hear this often, and it's rarely as bad as people think. CoAnalyst is designed to work with real-world aviation safety data — including inconsistent taxonomy, free-text narratives, and incomplete records. Part of the value is that it actually helps improve data quality by standardizing and categorizing as it processes."
+        response: "We hear this often, and it's rarely as bad as people think. Intelligence Layer is designed to work with real-world aviation safety data — including inconsistent taxonomy, free-text narratives, and incomplete records. Part of the value is that it actually helps improve data quality by standardizing and categorizing as it processes."
       },
       {
-        objection: "Why CoAnalyst over generic AI (ChatGPT, Copilot, etc.)?",
-        response: "Generic AI is trained on the open internet — it doesn't know ICAO taxonomy, SMS frameworks, or your fleet's specific procedures, and it can't be trusted with safety-sensitive data on shared infrastructure. CoAnalyst runs on a tiered intelligence model (Historical → Reactive → Proactive → Predictive) trained on aviation operational data, with your data isolated in your tenant. Generic AI hits ~35% accuracy on aviation safety classification; CoAnalyst delivers ~90% because it understands the domain. It's the difference between a brilliant generalist and a specialist who's read every safety report you've ever filed."
+        objection: "Why Intelligence Layer over generic AI (ChatGPT, Copilot, etc.)?",
+        response: "Generic AI is trained on the open internet — it doesn't know ICAO taxonomy, SMS frameworks, or your fleet's specific procedures, and it can't be trusted with safety-sensitive data on shared infrastructure. Intelligence Layer runs on a tiered intelligence model (Historical → Reactive → Proactive → Predictive) trained on aviation operational data, with your data isolated in your tenant. Generic AI hits ~35% accuracy on aviation safety classification; Intelligence Layer delivers ~90% because it understands the domain. It's the difference between a brilliant generalist and a specialist who's read every safety report you've ever filed."
       }
     ],
     contentAlignment: {
@@ -283,7 +283,7 @@ export const personaProfiles: PersonaProfile[] = [
       },
       {
         objection: "Our ops team doesn't have time to learn new tools.",
-        response: "That's exactly why we built CoAnalyst as a conversational interface. Your team asks questions in natural language — 'What's driving delays on the LHR-JFK route this month?' — and gets instant, data-backed answers. No training required."
+        response: "That's exactly why we built Intelligence Layer as a conversational interface. Your team asks questions in natural language — 'What's driving delays on the LHR-JFK route this month?' — and gets instant, data-backed answers. No training required."
       },
       {
         objection: "How does this connect to our existing data?",

@@ -217,7 +217,7 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "Platform Snapshot",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Use this slide to plant a mental map before the architecture deep-dive. One platform, four bands. Foundation — three core apps on one operational data foundation. Intelligence and orchestration — CoAnalyst, Insights, Automation. Mobile — one trusted shell. Operating model — DTOP. The proof point: one platform, one operating model, one mobile entry point. Bridge: now let me walk each layer in turn.",
+      "Use this slide to plant a mental map before the architecture deep-dive. One platform, four bands. Foundation — three core apps on one operational data foundation. Intelligence and orchestration — Intelligence Layer, Insights, Automation. Mobile — one trusted shell. Operating model — DTOP. The proof point: one platform, one operating model, one mobile entry point. Bridge: now let me walk each layer in turn.",
   },
   {
     slideId: "tech-slide-4",
@@ -259,7 +259,7 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "Why Comply365",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Three things set us apart. First — connected foundation. Not point solutions stitched together. One data model, three core apps, one intelligence layer. Five hundred and fifty plus airlines worldwide, around two and a half million users, six continents. Second — embedded intelligence. CoAnalyst built from the ground up on aviation operational data — around ninety percent accuracy where generic AI plateaus at thirty-five. Third — proof by default. Every action logged automatically, every change traced, every decision auditable. The proof point: you don't prepare for regulators — you're always ready. Bridge: there's one final slide on why only Comply365 can deliver this end-to-end.",
+      "Three things set us apart. First — connected foundation. Not point solutions stitched together. One data model, three core apps, one intelligence layer. Five hundred and fifty plus airlines worldwide, around two and a half million users, six continents. Second — embedded intelligence. Intelligence Layer built from the ground up on aviation operational data — around ninety percent accuracy where generic AI plateaus at thirty-five. Third — proof by default. Every action logged automatically, every change traced, every decision auditable. The proof point: you don't prepare for regulators — you're always ready. Bridge: there's one final slide on why only Comply365 can deliver this end-to-end.",
   },
   {
     slideId: "tech-slide-why-only-comply365",

@@ -1,74 +1,62 @@
 ## Goal
 
-Give reps a repeatable whiteboard motion for each customer footprint scenario, so they can draw the missing-loop story live on a call instead of reading slides.
+Replace user-facing references to "CoAnalyst" with "Intelligence Layer" across the entire app — every deck, every narration, every playbook, the Practice Center, and the Sales Enablement academy — so the product is consistently positioned as a capability ("Intelligence Layer") rather than a sub-brand.
 
-## What gets added
+## Scope (text replacement only)
 
-Three new whiteboard drill slides in **Week 3 · Sell & Win**, each placed immediately after its scenario slide:
+90 files / ~342 occurrences. The change is **strings only** — no file renames, no route changes, no symbol/import renames, no DB schema changes. This keeps imports, URLs, IDs, and audio caches working while flipping every visible label.
 
-```text
-SEFootprintSingleApp           →  SEFootprintSingleWhiteboard      (NEW)
-SEFootprintTwoApps             →  SEFootprintTwoWhiteboard         (NEW)
-SEFootprintAllThree            →  SEFootprintAllThreeWhiteboard    (NEW)
-SEFootprintValueLadder         (unchanged)
-SEFootprintPlaybook            (unchanged)
-```
+### What gets rewritten
 
-Each drill follows the same visual + pedagogical pattern as `SEDtopWhiteboardDrill`:
-- Cream/wood-framed whiteboard panel (left, 7/12 cols) with a hand-drawn SVG using the Caveat font
-- Numbered "stroke script" panel (right, 5/12 cols) — what to say as you draw each stroke
-- 90-second time-box footer
+- All slide titles, subtitles, headings, body copy and chip labels in:
+  - `src/components/coanalyst-slides/*` (the dedicated deep-dive deck)
+  - `src/components/exec-slides/*`, `exec2-slides/*`, `ops-slides/*`, `tech-slides/*`, `platform-slides/*`, `signals-slides/*`, `sales-enablement-slides/*`, `slides/SlideAIVision.tsx`, `mobile-slides`, `insights-slides`, `automation-slides`, `regmgmt-slides` (only files in the rg list)
+  - Home / public site components in `src/components/home/*` (`CoAnalystSpotlight`, `Hero`, `Footer`, `ProductPillars`, `UnifiedPlatformDiagram`, `CustomerQuotes`) — already partly aligned per the homepage terminology memory; finish the job
+  - `src/components/PlatformEcosystemDiagram.tsx`, `AppSidebar.tsx`, `personas/personaConfig.ts`
+- All narration scripts in `src/data/*Narration.ts`, `playbookNarrations.ts`, `*Playbook.ts`, `personaProfiles.ts`, `execPitch3Slides.ts`, `coanalystNarration.ts`, `salesEnablementNarration.ts`, `practiceScenarios.ts`, `practiceSlidePrompts.ts`
+- Practice Center plumbing: `src/lib/practice/buildAgentPrompt.ts`, `buildKnowledgeDocs.ts` (knowledge doc titles, headlines and instruction lines)
+- PPTX exporters: `buildExecutiveDeck.ts`, `buildExecutivePitch3Deck.ts` (string content used for slide rendering)
+- Pages with inline copy: `Comply365Home.tsx`, `HomePage.tsx`, `OperationalPlatformHome.tsx`, `OperationalPitch.tsx`, `TechnicalDeepDive.tsx`, `TechnicalDeepDiveV4.tsx`, `SalesEnablement.tsx` (menu labels), `ReviewDashboard.tsx`, `events/SignalsEvent.tsx`, `events/SignalsEventBrief.tsx`, `CoAnalystPreview.tsx`, `CoAnalystDeck.tsx`
+- Route-mounted titles in `App.tsx` (page/document titles only)
+- Memory files: rewrite `mem://strategy/coanalyst-positioning-v2`, `mem://content/coanalyst/*`, `mem://content/homepage/terminology` (no longer needed as a constraint — fold into a single rule), and update `mem://index.md` Core line "CoAnalyst headline …" → "Intelligence Layer headline …"
 
-### Drill 1 — One App (e.g. Safety only)
-Strokes:
-1. Draw the lit lane (Safety box, blue, "lit")
-2. Draw the two dark lanes (Content, Training — dotted, "dark")
-3. Inside the lit lane, write `CoAnalyst · Insights · Automation` with a small "confined" label
-4. Draw the broken DTOP arrow that dies at Orchestrate
-5. Write the one discovery question: *"When Safety flags a risk, who owns the procedure and training change?"*
-6. Circle the gap — that's the sale
+### What is NOT changed
 
-### Drill 2 — Two Apps (e.g. Safety + Content)
-Strokes:
-1. Draw the two lit lanes side by side
-2. Draw the one dark lane
-3. Show the half-loop arrow: Detect → Trigger → Orchestrate (procedures only) → ✗ no Training → Prove partial
-4. Label intelligence as "across two lanes — still confined"
-5. Discovery question: *"When a procedure changes, how do you know every crew is trained on it before the next shift?"*
-6. Circle the missing lane
+- File names containing "CoAnalyst" (e.g. `TechV4Slide7CoAnalyst.tsx`, `CoAnalystDeck.tsx`, `useCoAnalystNarration.ts`, the `coanalyst-slides/` and `CASlide*` files). Renaming would cascade through dozens of imports for zero user benefit.
+- React component identifiers, variable names, object keys, slide `id` strings (`se-slide-coanalyst`, `ca-slide-*`), CSS classes, narration map keys.
+- Routes (`/coanalyst`, `/coanalyst-preview`). Existing shared links keep working.
+- Supabase migration files (read-only) and `tsconfig.app.tsbuildinfo` (generated).
+- The `useCoAnalystNarration` hook name and narration cache key.
+- `mem://content/sales-enablement/coach-script-standard.md` lone reference if it just describes existing behaviour — re-checked during edit.
 
-### Drill 3 — All Three + Platform Vision
-Strokes:
-1. Draw the closed DTOP loop with all three lanes lit
-2. Above the loop, draw the intelligence layer band (CoAnalyst · Insights · Automation · Mobile)
-3. Arrow from the intelligence band reaching across all three lanes ("scope, not new features")
-4. Write the compounding metric callout: *~90% domain accuracy vs ~35% generic*
-5. Vision line: *"You bought the instruments — this is the conductor"*
-6. Discovery question: *"Which decisions in your operation still rely on a human stitching three systems together?"*
+### Phrasing rules
 
-### Narration
+- Default: **Intelligence Layer** (Title Case, treated as a capability name).
+- "CoAnalyst answers / decides / recommends" → "The Intelligence Layer answers / decides / recommends".
+- "CoAnalyst, Insights and Automation" → "The Intelligence Layer, Insights and Automation" — but where the original sentence already lists the layer's *components*, rewrite to "Intelligence Layer capabilities — CoAnalyst-style Q&A, Insights, Automation" only if removing CoAnalyst would lose meaning. Default is the straight swap; exceptions resolved per-occurrence with a simple "does this still parse?" check.
+- "CoAnalyst headline: ~90% vs ~35%" → "Intelligence Layer headline: ~90% vs ~35%".
+- "CoAnalyst Playbook" (Practice Center knowledge doc title) → "Intelligence Layer Playbook".
+- Menu label `"W2 · Intelligence — CoAnalyst"` → `"W2 · Intelligence Layer"`. `"W2 · CoAnalyst vs Generic AI"` → `"W2 · Intelligence Layer vs Generic AI"`.
 
-Add 3 new entries to `src/data/salesEnablementNarration.ts` keyed by the new slide IDs, following the standard 5-part coach-script format (Why → Core message → Pain → Value pivot → Delivery tip → Transition). ~45–60 sec each.
+### Side effects to verify
 
-### Registration
+- ElevenLabs narration audio is cached by slide id, but the *text* sent to TTS changes — first replay of every affected slide will re-fetch audio. Expected and acceptable.
+- Practice Center agent prompt and knowledge docs are built at session start, so the next role-play session picks the new wording up automatically.
+- PPTX exports regenerate from current strings — no rebuild step needed beyond running the export.
 
-In `src/pages/SalesEnablement.tsx`:
-- Insert the three new components into the slides array directly after their matching scenario slides
-- Bump Week 3 `estimatedMinutes` from 22 → 26
-- Extend Week 3 `upNext` to mention "Footprint whiteboard drills"
+## Execution order
 
-## Files
-
-New:
-- `src/components/sales-enablement-slides/SEFootprintSingleWhiteboard.tsx`
-- `src/components/sales-enablement-slides/SEFootprintTwoWhiteboard.tsx`
-- `src/components/sales-enablement-slides/SEFootprintAllThreeWhiteboard.tsx`
-
-Edited:
-- `src/data/salesEnablementNarration.ts` (3 new entries)
-- `src/pages/SalesEnablement.tsx` (register slides, update Week 3 metadata)
+1. Update memory: rewrite the four CoAnalyst memory files + index Core line, and retire the homepage-only constraint (it becomes the global rule).
+2. Sweep `src/data/*` (narration + playbook copy) — highest content density, lowest risk of breaking imports.
+3. Sweep `src/components/**` slide files (coanalyst-slides, exec, ops, tech, platform, signals, home, sales-enablement, mobile/insights/automation/regmgmt where listed).
+4. Sweep `src/pages/*` and `src/lib/practice/*` and `src/exporters/pptx/*`.
+5. Sweep `src/App.tsx` and `AppSidebar.tsx` (labels only).
+6. Verify: `rg -n "CoAnalyst" src` should return only intentional residue (file paths in imports, identifiers, IDs, route strings). Hand-review any remaining hits.
+7. Spot-check the preview on `/sales-enablement` (Week 2 + footprint slides), `/coanalyst` deep-dive deck, `/`, `/operational-platform`, and `/practice-center` to confirm no leftover "CoAnalyst" wording.
 
 ## Out of scope
 
-- No changes to the existing footprint scenario slides, value ladder, or 3-move playbook
-- No changes to Week 1 / Week 2, Academy quizzes, PPTX exporters, or memory
+- Renaming the dedicated `/coanalyst` deck route or its files.
+- Visual redesign of any slide.
+- Changing the 90 % vs 35 % accuracy figure or any other metric.
+- Editing supabase migration history.

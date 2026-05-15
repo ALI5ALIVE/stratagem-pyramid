@@ -17,7 +17,7 @@ const differentiators = [
   {
     icon: Brain,
     title: "Embedded Intelligence",
-    desc: "Accelerated decisioning and organizational agility with industry specific AI innovation across our platform – CoAnalyst, CoAuthor and CoTrainer – so that airlines can operate smarter, faster, and safer.",
+    desc: "Accelerated decisioning and organizational agility with industry specific AI innovation across our platform – Intelligence Layer, CoAuthor and CoTrainer – so that airlines can operate smarter, faster, and safer.",
     color: "border-purple-500/20 bg-purple-500/5",
     iconColor: "text-purple-400",
   },

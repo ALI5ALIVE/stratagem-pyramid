@@ -13,7 +13,7 @@ const scenarios = [
     chip: "text-emerald-300 bg-emerald-500/15 border-emerald-500/40",
     title: "Safety only",
     has: "Reports captured, investigations logged, recommendations written.",
-    confined: "CoAnalyst answers safety questions on safety data. Insights surface patterns in reports. Automation routes & assigns within Safety. All confined to the safety lane — they can't reach procedures or crews.",
+    confined: "Intelligence Layer answers safety questions on safety data. Insights surface patterns in reports. Automation routes & assigns within Safety. All confined to the safety lane — they can't reach procedures or crews.",
     broken: "Recommendations vanish into someone else's backlog. No procedure update. No targeted retraining. No proof the behaviour changed.",
     questions: [
       "When a recurring safety signal lands today, how does it actually change a procedure?",
@@ -28,7 +28,7 @@ const scenarios = [
     chip: "text-amber-300 bg-amber-500/15 border-amber-500/40",
     title: "Content only",
     has: "Procedural source of truth, version control, regulator traceability, mobile distribution.",
-    confined: "CoAnalyst answers procedural & regulatory questions. Insights surface content gaps and version drift. Automation handles distribution & acknowledgement. All confined to the content lane — no signal layer feeding it, no training loop closing behind it.",
+    confined: "Intelligence Layer answers procedural & regulatory questions. Insights surface content gaps and version drift. Automation handles distribution & acknowledgement. All confined to the content lane — no signal layer feeding it, no training loop closing behind it.",
     broken: "Content updates aren't driven by signals — they're driven by calendars and complaints. No closed-loop training when a procedure changes.",
     questions: [
       "What triggers a procedure change today — is it ever an operational signal, or always a regulator or incident?",
@@ -43,7 +43,7 @@ const scenarios = [
     chip: "text-violet-300 bg-violet-500/15 border-violet-500/40",
     title: "Training only",
     has: "Records, completions, recurrent training cycles, evidence of qualification.",
-    confined: "CoAnalyst answers competency & qualification questions. Insights surface training gaps and risk concentrations. Automation handles assignment & reminders. All confined to the training lane — disconnected from the procedures and signals that should drive what's trained.",
+    confined: "Intelligence Layer answers competency & qualification questions. Insights surface training gaps and risk concentrations. Automation handles assignment & reminders. All confined to the training lane — disconnected from the procedures and signals that should drive what's trained.",
     broken: "Training is calendar-driven, not signal-driven. High-risk crews get the same module as low-risk crews. No link to the procedure or signal that justified the training.",
     questions: [
       "What % of training spend is calendar-driven versus signal-driven today?",

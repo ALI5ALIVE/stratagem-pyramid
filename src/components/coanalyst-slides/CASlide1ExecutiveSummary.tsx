@@ -11,7 +11,7 @@ const proofPoints = [
 
 const CASlide1ExecutiveSummary = (props: SlideNarrationProps) => {
   return (
-    <SlideContainer id="ca-exec-summary" title="Executive Summary" subtitle="CoAnalyst within the Operational Performance Platform" slideNumber={1} {...props}>
+    <SlideContainer id="ca-exec-summary" title="Executive Summary" subtitle="Intelligence Layer within the Operational Performance Platform" slideNumber={1} {...props}>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-full">
         {/* Left — Positioning */}
         <div className="space-y-3">
@@ -30,7 +30,7 @@ const CASlide1ExecutiveSummary = (props: SlideNarrationProps) => {
               <h3 className="text-xs font-bold text-foreground uppercase tracking-wide">Positioning</h3>
             </div>
             <p className="text-foreground text-sm leading-relaxed">
-              CoAnalyst transforms aviation data into operational intelligence, enabling airlines to move from <span className="text-primary font-semibold">reactive event management</span> to <span className="text-primary font-semibold">proactive control management</span>.
+              Intelligence Layer transforms aviation data into operational intelligence, enabling airlines to move from <span className="text-primary font-semibold">reactive event management</span> to <span className="text-primary font-semibold">proactive control management</span>.
             </p>
           </div>
 

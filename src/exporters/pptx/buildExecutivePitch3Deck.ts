@@ -449,9 +449,9 @@ const exec3IntelligenceDivider: SlideSpec = layerDividerSpec({
   layerNumber: 3,
   layerName: "Intelligence & Orchestration",
   tagline:
-    "Automation · Insights & Intelligence · CoAnalyst (Recommendations & Prescriptive Actions) — turning operational data into action.",
+    "Automation · Insights & Intelligence · Intelligence Layer (Recommendations & Prescriptive Actions) — turning operational data into action.",
   active: "intelligence",
-  upNext: ["Automation", "Insights & Recommendations", "CoAnalyst", "CoAnalyst vs Generic AI"],
+  upNext: ["Automation", "Insights & Recommendations", "Intelligence Layer", "Intelligence Layer vs Generic AI"],
 });
 
 const exec3MobileDivider: SlideSpec = layerDividerSpec({
@@ -642,16 +642,16 @@ const insightsJustAskSpec: SlideSpec = {
 };
 
 /* ─────────────────────────────────────────────────────────────────
-   CoAnalyst (mirrors TechV4Slide7CoAnalyst — apps × capabilities matrix).
+   Intelligence Layer (mirrors TechV4Slide7CoAnalyst — apps × capabilities matrix).
    ───────────────────────────────────────────────────────────────── */
 
 const coAnalystSpec: SlideSpec = {
-  label: "CoAnalyst",
+  label: "Intelligence Layer",
   build: (slide, ctx) => {
     chrome(slide, ctx);
     header(
       slide,
-      "The Platform · CoAnalyst",
+      "The Platform · Intelligence Layer",
       "Domain-trained intelligence — embedded in every application",
       "Ask in plain English · cross-domain insight · recommended next actions.",
     );
@@ -774,7 +774,7 @@ export async function buildExecutivePitch3Deck(opts: BuildOpts = {}): Promise<Bl
     byLabel("Automation"),                         // 10
     insightsJustAskSpec,                           // 11 · Insights — Just Ask
     coAnalystSpec,                                 // 12
-    byLabel("Tiers vs Generic AI"),                // 13 · CoAnalyst vs Generic AI
+    byLabel("Tiers vs Generic AI"),                // 13 · Intelligence Layer vs Generic AI
     byLabel("Recommendations & Prescriptive Actions"), // 14
     exec3RegulationDivider,                        // 15
     regulationSummarySpec,                         // 16

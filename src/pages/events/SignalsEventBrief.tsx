@@ -6,7 +6,7 @@ const messagingArchitecture = [
   { layer: "Category", message: "Built for the signal age of aviation." },
   { layer: "Problem", message: "Operators are drowning in unacted signals." },
   { layer: "Shift", message: "Event management → signal management → control management." },
-  { layer: "Solution", message: "Three Systems of Record + CoAnalyst + DTOP." },
+  { layer: "Solution", message: "Three Systems of Record + Intelligence Layer + DTOP." },
   { layer: "Proof", message: "~90% domain AI accuracy vs ~35% generic. Continuous audit evidence." },
   { layer: "Outcome", message: "Fewer surprises, faster response, provable control." },
 ];
@@ -62,13 +62,13 @@ const colorMap: Record<string, { text: string; bg: string; border: string }> = {
 
 const arc = [
   { phase: "Open", title: "The signal problem", body: "Industry frame: operators have data, not signals. Set the stakes." },
-  { phase: "Middle", title: "The platform answer", body: "Category + DTOP + CoAnalyst — told through the four departments." },
+  { phase: "Middle", title: "The platform answer", body: "Category + DTOP + Intelligence Layer — told through the four departments." },
   { phase: "Close", title: "The control outcome", body: "Provable, continuous, board-ready operational control." },
 ];
 
 const useTerms = [
   "signals", "control", "operational performance", "Systems of Record",
-  "CoAnalyst", "DTOP", "Generative AI", "Recommended Actions", "Operational Data",
+  "Intelligence Layer", "DTOP", "Generative AI", "Recommended Actions", "Operational Data",
 ];
 const avoidTerms = [
   "FOQA", "FDM", "ASAP", "AI copilot", "single pane of glass", "unqualified ROI claims",

@@ -13,7 +13,7 @@ const pipelineSteps = ["Data", "AI Enrichment", "Intelligence Tiers", "Operation
 
 const CASlide6HowItWorks = (props: SlideNarrationProps) => {
   return (
-    <SlideContainer id="ca-how-it-works" title="How CoAnalyst Works" subtitle="Four levels of intelligence — from hindsight to foresight" slideNumber={6} {...props}>
+    <SlideContainer id="ca-how-it-works" title="How Intelligence Layer Works" subtitle="Four levels of intelligence — from hindsight to foresight" slideNumber={6} {...props}>
       <div className="flex flex-col justify-center h-full gap-5">
         {/* Minimal pipeline reference */}
         <div className="flex items-center justify-center gap-1.5">
@@ -52,7 +52,7 @@ const CASlide6HowItWorks = (props: SlideNarrationProps) => {
         {/* Positioning callout */}
         <div className="bg-card/60 border border-border rounded-xl p-3 text-center max-w-4xl mx-auto">
           <p className="text-[11px] text-muted-foreground">
-            <span className="text-primary font-semibold">CoAnalyst is the intelligence layer</span> that sits above operational systems. Other systems execute workflows. CoAnalyst enriches, structures, analyzes, and activates the data that powers them.
+            <span className="text-primary font-semibold">Intelligence Layer is the intelligence layer</span> that sits above operational systems. Other systems execute workflows. Intelligence Layer enriches, structures, analyzes, and activates the data that powers them.
           </p>
         </div>
       </div>

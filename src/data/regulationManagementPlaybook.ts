@@ -109,8 +109,8 @@ export const dtopMapping: DTOPMappingStep[] = [
     step: "P",
     label: "Prove",
     whatHappens:
-      "Real-time compliance dashboards, audit-ready evidence and CoAnalyst impact reports close the loop — from detection to closure.",
-    modules: ["CoAnalyst", "Compliance Dashboard"],
+      "Real-time compliance dashboards, audit-ready evidence and Intelligence Layer impact reports close the loop — from detection to closure.",
+    modules: ["Intelligence Layer", "Compliance Dashboard"],
     evidence: "Audit-ready trail for every regulatory change",
     color: "emerald",
     bg: "bg-emerald-500/10",
@@ -215,9 +215,9 @@ export const valuePillars: ValuePillar[] = [
   {
     title: "AI-Driven Insights & Automation",
     description:
-      "CoAnalyst enables complex regulatory queries, scenario planning, and automated impact analysis that would take teams weeks to perform manually.",
+      "Intelligence Layer enables complex regulatory queries, scenario planning, and automated impact analysis that would take teams weeks to perform manually.",
     icon: "Sparkles",
-    metrics: "Weeks of analysis → minutes with CoAnalyst",
+    metrics: "Weeks of analysis → minutes with Intelligence Layer",
   },
   {
     title: "Future-Proof Scalable Foundation",
@@ -259,9 +259,9 @@ export const howItWorksLayers: HowItWorksLayer[] = [
   },
   {
     layer: 3,
-    title: "Intelligence Layer — CoAnalyst Queries & Scenario Planning",
+    title: "Intelligence Layer — Intelligence Layer Queries & Scenario Planning",
     description:
-      "CoAnalyst sits on top of the structured regulation data to enable natural-language queries, complex cross-referencing, and 'what-if' scenario planning.",
+      "Intelligence Layer sits on top of the structured regulation data to enable natural-language queries, complex cross-referencing, and 'what-if' scenario planning.",
     details: [
       "\"Show me all EASA regulations impacting our dangerous goods procedures\"",
       "\"What training requirements change if we add a new aircraft type?\"",
@@ -304,16 +304,16 @@ export const useCases: UseCase[] = [
     scenario:
       "A Head of Compliance wants to understand the cumulative impact of all regulatory changes in the past 12 months on their dangerous goods operation.",
     outcome:
-      "CoAnalyst processes the query across the structured regulation database and returns a comprehensive impact report with linked procedures and training gaps.",
-    products: ["CoAnalyst", "Regulation Management"],
+      "Intelligence Layer processes the query across the structured regulation database and returns a comprehensive impact report with linked procedures and training gaps.",
+    products: ["Intelligence Layer", "Regulation Management"],
   },
   {
     title: "Scenario Planning & Future Readiness",
     scenario:
       "The airline is evaluating adding a new aircraft type to its fleet. Leadership needs to understand the full regulatory impact — new certifications, procedure updates, training requirements.",
     outcome:
-      "CoAnalyst models the scenario against the full regulation database, producing a readiness plan with estimated effort and timeline.",
-    products: ["CoAnalyst", "TrainingManager365", "ContentManager365"],
+      "Intelligence Layer models the scenario against the full regulation database, producing a readiness plan with estimated effort and timeline.",
+    products: ["Intelligence Layer", "TrainingManager365", "ContentManager365"],
   },
   {
     title: "Executive-Level Assurance",
@@ -450,7 +450,7 @@ export const roadmapPhases: RoadmapPhase[] = [
       "Partner airline identified and onboarded",
       "Core regulation set structured and loaded (e.g., EASA Part-OPS)",
       "Basic cross-referencing to ContentManager365 procedures demonstrated",
-      "CoAnalyst natural-language queries validated against regulation data",
+      "Intelligence Layer natural-language queries validated against regulation data",
       "Commercial model validated with partner feedback",
     ],
     color: "hsl(var(--primary))",
@@ -475,7 +475,7 @@ export const roadmapPhases: RoadmapPhase[] = [
     outcomes: [
       "Regulation becomes a first-class entity across the entire Comply365 platform",
       "API marketplace for third-party integrations",
-      "Advanced CoAnalyst scenario planning and predictive compliance",
+      "Advanced Intelligence Layer scenario planning and predictive compliance",
       "Multi-industry expansion (rail, defense, energy)",
       "Regulation-as-a-Service offering for the broader market",
     ],

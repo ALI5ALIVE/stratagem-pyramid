@@ -13,7 +13,7 @@ const scenarios = [
     accent: "border-emerald-500/40 bg-emerald-500/5",
     chip: "text-emerald-300 bg-emerald-500/15 border-emerald-500/40",
     has: "Safety signals can drive procedure changes. Content is the procedural source of truth.",
-    confined: "CoAnalyst, Insights and Automation operate across signals and procedures. The training lane is dark — no targeted retraining, no competency evidence.",
+    confined: "Intelligence Layer, Insights and Automation operate across signals and procedures. The training lane is dark — no targeted retraining, no competency evidence.",
     halfLoop: "Detect → Trigger → Orchestrate (content). The Orchestrate step stops at the manual — humans still aren't being retrained on the change.",
     questions: [
       "When a procedure changes because of a safety signal, how is targeted retraining assigned today?",
@@ -28,7 +28,7 @@ const scenarios = [
     accent: "border-violet-500/40 bg-violet-500/5",
     chip: "text-violet-300 bg-violet-500/15 border-violet-500/40",
     has: "Safety signals can trigger targeted retraining. Competency is evidenced.",
-    confined: "CoAnalyst, Insights and Automation operate across signals and competency. Procedures stay static — intelligence can't update the manual.",
+    confined: "Intelligence Layer, Insights and Automation operate across signals and competency. Procedures stay static — intelligence can't update the manual.",
     halfLoop: "Detect → Trigger → Orchestrate (training). The procedure itself never updates — you're retraining on stale content.",
     questions: [
       "When a safety signal exposes a procedural weakness, who updates the manual — and how long does it take?",
@@ -43,7 +43,7 @@ const scenarios = [
     accent: "border-amber-500/40 bg-amber-500/5",
     chip: "text-amber-300 bg-amber-500/15 border-amber-500/40",
     has: "Procedure-to-training is connected. Regulation changes can flow to crews with proof of training.",
-    confined: "CoAnalyst, Insights and Automation operate across procedures and competency. The signal layer is missing — intelligence has nothing operational to react to.",
+    confined: "Intelligence Layer, Insights and Automation operate across procedures and competency. The signal layer is missing — intelligence has nothing operational to react to.",
     halfLoop: "Trigger → Orchestrate → Prove. Detect is missing — there's no operational signal layer driving what should change in the first place.",
     questions: [
       "What triggers a procedure or training change today — is it ever an operational safety signal, or always a regulator or incident?",

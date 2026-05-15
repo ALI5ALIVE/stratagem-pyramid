@@ -38,7 +38,7 @@ export const customerOverviewNarrations: COSlideNarration[] = [
     title: "The Platform",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "This is your one-screen explanation of the Operational Performance Platform. Walk it bottom-up. The foundation is three core apps already in daily use — ContentManager365, TrainingManager365 and SafetyManager365 — sharing one operational data foundation. Above that, the intelligence and orchestration layer — Insights and Recommendations, CoAnalyst, and Automation — turning data into action. Above that, one trusted unified mobile app for the frontline. And wrapping the whole stack: DTOP — Detect, Trigger, Orchestrate, Prove. The proof point: one platform, one operating model, one mobile entry point. Bridge: let me show you what the before-and-after of working this way actually feels like.",
+      "This is your one-screen explanation of the Operational Performance Platform. Walk it bottom-up. The foundation is three core apps already in daily use — ContentManager365, TrainingManager365 and SafetyManager365 — sharing one operational data foundation. Above that, the intelligence and orchestration layer — Insights and Recommendations, Intelligence Layer, and Automation — turning data into action. Above that, one trusted unified mobile app for the frontline. And wrapping the whole stack: DTOP — Detect, Trigger, Orchestrate, Prove. The proof point: one platform, one operating model, one mobile entry point. Bridge: let me show you what the before-and-after of working this way actually feels like.",
   },
   {
     slideId: "co-slide-4",

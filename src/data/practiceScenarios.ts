@@ -81,7 +81,7 @@ export const practiceScenarios: PracticeScenario[] = [
       "From reactive investigation to proactive hazard intelligence",
       "SMS maturity — Level 2/3 to Level 4 predictive",
       "Audit-ready evidence in hours, not weeks",
-      "CoAnalyst ~90% domain accuracy vs ~35% generic AI",
+      "Intelligence Layer ~90% domain accuracy vs ~35% generic AI",
       "Aviation-trained, ICAO taxonomy native — not generic AI",
     ],
   },

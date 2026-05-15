@@ -5,35 +5,35 @@ const sections = [
   {
     label: "Hero",
     headline: "Activate Your Aviation Data. Intelligence for Safety, Operations, and Beyond.",
-    copy: "CoAnalyst is the intelligence engine within the Operational Performance Platform that transforms fragmented safety and operational data into actionable intelligence — enabling aviation organizations to move from critical event management to critical control management.",
-    cta: "See CoAnalyst in Action →",
+    copy: "Intelligence Layer is the intelligence engine within the Operational Performance Platform that transforms fragmented safety and operational data into actionable intelligence — enabling aviation organizations to move from critical event management to critical control management.",
+    cta: "See Intelligence Layer in Action →",
   },
   {
     label: "Value Prop",
     headline: "Intelligence That Changes How You Operate",
-    copy: "Most aviation organizations manage safety reactively. An event happens. A report is filed. Analysts investigate. CoAnalyst changes this model — identifying patterns, detecting hazards, monitoring control effectiveness, and delivering predictive intelligence across flight safety, flight ops, cabin ops, ground ops, and maintenance & engineering.",
+    copy: "Most aviation organizations manage safety reactively. An event happens. A report is filed. Analysts investigate. Intelligence Layer changes this model — identifying patterns, detecting hazards, monitoring control effectiveness, and delivering predictive intelligence across flight safety, flight ops, cabin ops, ground ops, and maintenance & engineering.",
   },
   {
     label: "How It Works",
     headline: "From Data to Intelligence",
-    copy: "CoAnalyst ingests aviation data across domains, enriches it with aviation-trained AI (summarization, translation in 60+ languages, categorization across 4,000+ event types), detects patterns and hazards at scale, generates four levels of intelligence (historical, real-time, proactive, predictive), and activates your operational systems with enriched data quality.",
+    copy: "Intelligence Layer ingests aviation data across domains, enriches it with aviation-trained AI (summarization, translation in 60+ languages, categorization across 4,000+ event types), detects patterns and hazards at scale, generates four levels of intelligence (historical, real-time, proactive, predictive), and activates your operational systems with enriched data quality.",
   },
   {
     label: "Differentiator",
     headline: "Purpose-Built Beats General-Purpose",
-    copy: "Generic AI achieves 30–40% accuracy at granular aviation categorization and hallucinates. CoAnalyst's hybrid AI architecture — domain-trained ML models combined with LLMs — delivers 90% accuracy across 4,000+ categories, built on millions of historic aviation reports and continuous R&D since 2023.",
+    copy: "Generic AI achieves 30–40% accuracy at granular aviation categorization and hallucinates. Intelligence Layer's hybrid AI architecture — domain-trained ML models combined with LLMs — delivers 90% accuracy across 4,000+ categories, built on millions of historic aviation reports and continuous R&D since 2023.",
   },
   {
     label: "CTA",
     headline: "Ready to Move from Events to Controls?",
-    copy: "See how leading airlines use CoAnalyst to detect risks earlier, manage controls proactively, and protect operational performance — with intelligence that no generic AI can match.",
+    copy: "See how leading airlines use Intelligence Layer to detect risks earlier, manage controls proactively, and protect operational performance — with intelligence that no generic AI can match.",
     cta: "Request a Demo",
   },
 ];
 
 const CASlide12WebsiteMessaging = (props: SlideNarrationProps) => {
   return (
-    <SlideContainer id="ca-website-messaging" title="Website Messaging" subtitle="Ready-to-use copy for the CoAnalyst product page" slideNumber={12} {...props}>
+    <SlideContainer id="ca-website-messaging" title="Website Messaging" subtitle="Ready-to-use copy for the Intelligence Layer product page" slideNumber={12} {...props}>
       <div className="flex flex-col gap-2 h-full justify-center max-w-5xl mx-auto w-full">
         {sections.map((section, i) => (
           <div key={i} className="bg-card/60 border border-border rounded-xl p-3 flex items-start gap-3">

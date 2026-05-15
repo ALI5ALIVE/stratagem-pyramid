@@ -31,7 +31,7 @@ export const useCoAnalystNarration = () => {
 
     const narration = getCoAnalystNarration(slideId);
     if (!narration) {
-      throw new Error(`No CoAnalyst narration found for slide ${slideId}`);
+      throw new Error(`No Intelligence Layer narration found for slide ${slideId}`);
     }
 
     const response = await fetch(`${SUPABASE_URL}/functions/v1/elevenlabs-tts`, {
@@ -120,7 +120,7 @@ export const useCoAnalystNarration = () => {
         isLoading: false,
       }));
     } catch (error) {
-      console.error("Failed to play CoAnalyst narration:", error);
+      console.error("Failed to play Intelligence Layer narration:", error);
       setState(prev => ({
         ...prev,
         isPlaying: false,

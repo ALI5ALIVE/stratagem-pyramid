@@ -212,7 +212,7 @@ export default function HomePage() {
               accent: "from-blue-500 to-emerald-500",
             }} />
             <DeckCardComponent card={{
-              title: "CoAnalyst Playbook",
+              title: "Intelligence Layer Playbook",
               description: "AI product positioning, messaging architecture, and go-to-market.",
               href: "/coanalyst",
               icon: Brain,
