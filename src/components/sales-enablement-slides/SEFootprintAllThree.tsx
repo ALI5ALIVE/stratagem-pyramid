@@ -47,6 +47,13 @@ const SEFootprintAllThree = ({ slideNumber, ...narrationProps }: Props) => (
     {...narrationProps}
   >
     <div className="h-full flex flex-col gap-4 max-w-7xl mx-auto px-4 pt-2">
+      <div className="rounded-lg border border-primary/30 bg-primary/5 p-3">
+        <div className="text-[10px] uppercase tracking-wider text-primary mb-1">What actually changes at three apps</div>
+        <p className="text-xs text-foreground leading-snug">
+          These capabilities aren't new at this stage — your customer already has them inside whichever apps they own. What changes at three apps is <span className="text-primary font-semibold">scope</span>: now CoAnalyst, Insights and Automation can reason and act across the whole DTOP loop, not one lane of it.
+        </p>
+      </div>
+
       <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/10 p-3">
         <div className="text-[10px] uppercase tracking-wider text-emerald-300 mb-1">DTOP loop status</div>
         <p className="text-xs text-foreground">
