@@ -157,12 +157,6 @@ export default function PlatformMockup() {
               </Card>
             ))}
           </div>
-          <img
-            src={dtopTrace}
-            alt="A single signal traversing Detect, Trigger, Orchestrate, Prove"
-            loading="lazy"
-            className="w-full rounded-2xl border border-border/40"
-          />
         </div>
       </section>
 
