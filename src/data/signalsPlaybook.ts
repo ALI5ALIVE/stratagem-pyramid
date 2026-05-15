@@ -65,24 +65,40 @@ export interface SignalSource {
 
 export const signalSources: SignalSource[] = [
   {
-    domain: "Operations",
-    examples: ["Disruption patterns", "Crew duty pressure", "Diversion clusters", "OCC chatter"],
+    domain: "Regulation Signals",
+    examples: [
+      "EASA / FAA / CAA / MoD / ORR rule changes",
+      "Airworthiness Directives",
+      "IOSA & ISARPs audit updates",
+    ],
     color: "sky",
   },
   {
-    domain: "Content",
-    examples: ["Outdated procedures", "Unread bulletins", "Conflicting manual versions", "Reg change drift"],
+    domain: "Anomalies",
+    examples: [
+      "Operational data exceedances",
+      "Safety reports & near-misses",
+      "Audit findings & recurring non-conformities",
+    ],
+    color: "amber",
+  },
+  {
+    domain: "Operational Change Requests",
+    examples: [
+      "Fleet, route & base changes",
+      "Procedure / manual revisions",
+      "Supplier, MRO & contract changes",
+    ],
     color: "violet",
   },
   {
-    domain: "Safety",
-    examples: ["Repeat hazard reports", "Precursor events", "Threshold exceedances", "Trend reversals"],
+    domain: "Micro, Macro & Geopolitical Influences",
+    examples: [
+      "Weather systems & NOTAMs",
+      "Fuel pricing & supply shocks",
+      "Airspace closures & geopolitical events",
+    ],
     color: "emerald",
-  },
-  {
-    domain: "Training",
-    examples: ["Competency dips", "Recurrent failures", "Skill decay patterns", "Check-ride trends"],
-    color: "amber",
   },
 ];
 
