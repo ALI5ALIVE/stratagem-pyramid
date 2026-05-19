@@ -34,20 +34,20 @@ const DATA: Record<Capability, CapabilityData> = {
     perSolution: [
       {
         module: "Safety",
-        body: "Generate a list of safety reports for a specific aircraft for the lessor — formatted to their spec and sent electronically on schedule.",
+        body: "Create a list of safety reports associated with a specific aircraft to send to the lessor for their safety records — formatted to the lessor's requirements and sent electronically on a schedule.",
       },
       {
         module: "Content",
-        body: "List flight crew who haven't synced their mobile devices in the last 30 days; pass to fleet captains for follow-up and compliance.",
+        body: "Create a list of flight crew who haven't synched their mobile devices in the past 30 days — passed to fleet captains for follow-up and compliance.",
       },
       {
         module: "Training",
-        body: "List crew with upcoming training renewals at a specific base in order to schedule classroom training.",
+        body: "Create a list of crew with upcoming training renewals for a specific base, to schedule classroom training.",
       },
     ],
     platform: [
-      { body: "\"Show me the correlation between recent safety trends and training deficiencies.\"" },
-      { body: "\"How are we performing against the recent updates to the Dangerous Goods manual? Has the resulting training reduced incidents?\"" },
+      { body: "\"Show me a correlation between recent safety trends and training deficiencies.\"" },
+      { body: "\"How are we performing with the recent updates to the Dangerous Goods manual? Has the resulting training led to fewer incidents?\"" },
       { body: "\"Are we ready for the upcoming Part 145 audit?\"" },
     ],
   },

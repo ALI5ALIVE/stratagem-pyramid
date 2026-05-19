@@ -120,6 +120,13 @@ export const salesEnablementNarrations: SESlideNarration[] = [
       "Why this slide matters: prospects buy capabilities they can picture themselves using on a Monday morning. This is the picture for Intelligence and Insights. The core message: at the solution level, Intelligence and Insights does the chores nobody has time for — pulling a lessor-ready safety report for one tail number, listing the crew who haven't synced in thirty days, scheduling renewals at one base. At the platform level, it answers the questions a director actually asks — show me the correlation between safety trends and training deficiencies, how is the Dangerous Goods refresh landing, are we ready for Part 145. The value lever: nobody else can answer the platform-level questions, because nobody else has the connected data underneath. Delivery tip — pick one solution example that matches your prospect's role, then jump to one platform question and stop talking. Discovery question: what's the report your team rebuilds every month that should already exist? Next: Recommendations and Prescriptive Actions.",
   },
   {
+    slideId: "se-platform-wide-intelligence-usecases",
+    title: "Week 2 · Intelligence & Insights — Platform-Wide Use Cases",
+    voiceId: VOICE,
+    script:
+      "Why this slide matters: this is where Intelligence and Insights stops being a feature pitch and becomes a board-level capability. Three questions only the platform layer can answer — show me the correlation between recent safety trends and training deficiencies, how is the Dangerous Goods manual update landing in incident rates, are we ready for Part 145. Core message: no single Core App can answer these — they require the unified operational data substrate plus the intelligence layer on top. The pain you're addressing: today these questions take weeks of BI tickets and still come back ambiguous. The value lever: cross-domain answers in seconds, with cited evidence and recommended next actions tied to DTOP. How to deliver it: pick the question that fits the room — safety-and-training for a Director of Safety, the Dangerous Goods loop for a Head of Training, Part 145 for a Quality leader — and walk one card end to end. Point at the DTOP chips on each card so they see the loop close. Discovery question: which of these three cross-domain questions does your leadership ask most often without a straight answer? Transition: next we go one layer down into Insights and how the platform surfaces patterns and recommendations.",
+  },
+  {
     slideId: "se-slide-insights",
     title: "Week 2 · Insights & Recommendations",
     voiceId: VOICE,
@@ -275,10 +282,10 @@ export const salesEnablementNarrations: SESlideNarration[] = [
   },
   {
     slideId: "se-slide-regmgmt",
-    title: "Week 3 · Regulation Management",
+    title: "Week 2 · Regulation Management Use Case",
     voiceId: VOICE,
     script:
-      "Regulation Management is your highest-conviction use case for compliance and quality leaders. The core message: when a regulator publishes a change, the platform identifies every affected procedure and training module, drafts the redlines, and pushes the updated content to the right crew with auditable proof of receipt. The pain it addresses: today this is a many-week manual exercise across four or five teams, and the audit trail is reconstructed after the fact. The value lever: weeks compress into days, and the audit trail assembles itself. Delivery tip — always anchor on a real recent regulatory change relevant to the prospect — that's the difference between a demo and a proof. Next: customer outcomes.",
+      "Regulation Management is your highest-conviction use case for compliance and quality leaders, and it belongs in Week 2 because it's the cleanest end-to-end demonstration of the capability stack you just walked. The core message: when a regulator publishes a change, the platform identifies every affected procedure and training module, drafts the redlines, and pushes the updated content to the right crew with auditable proof of receipt. The pain it addresses: today this is a many-week manual exercise across four or five teams, and the audit trail is reconstructed after the fact. The value lever: weeks compress into days, and the audit trail assembles itself. Delivery tip — always anchor on a real recent regulatory change relevant to the prospect; that's the difference between a demo and a proof. Transition: next, Unified Mobile — how all of this lands in the hands of the frontline crew.",
   },
   {
     slideId: "se-slide-outcomes",
