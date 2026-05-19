@@ -26,6 +26,7 @@ import SEFootprintTwoWhiteboard from "@/components/sales-enablement-slides/SEFoo
 import SEFootprintAllThreeWhiteboard from "@/components/sales-enablement-slides/SEFootprintAllThreeWhiteboard";
 import SEWeek2PlatformOverview from "@/components/sales-enablement-slides/SEWeek2PlatformOverview";
 import SEPlatformInsightsIntelligence from "@/components/sales-enablement-slides/SEPlatformInsightsIntelligence";
+import SEPlatformWideIntelligenceUseCases from "@/components/sales-enablement-slides/SEPlatformWideIntelligenceUseCases";
 
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
 import PFSlide9Value from "@/components/platform-slides/PFSlide9Value";
@@ -62,7 +63,7 @@ const weekProps = {
     learningGoal:
       "By the end of Week 2 you can explain the platform-wide Insights & Intelligence capability, walk the Intelligence layer (Intelligence Layer · Insights · Automation), and pick the right capability to lead with for the room you're in.",
     estimatedMinutes: 16,
-    upNext: ["The Platform map", "Insights & Intelligence", "Intelligence Layer", "Insights", "Automation", "Intelligence Layer vs Generic AI", "Mobile", "Capability cheat sheet"],
+    upNext: ["The Platform map", "Insights & Intelligence", "Intelligence Layer", "Use cases", "Platform-wide use cases", "Insights", "Automation", "Intelligence Layer vs Generic AI", "Regulation Management", "Mobile", "Capability cheat sheet"],
   },
   w3: {
     moduleNumber: 3,
@@ -72,7 +73,7 @@ const weekProps = {
     learningGoal:
       "By the end of Week 3 you can run the discovery → demo → close motion, pick the right use case for the room, and handle the top objections — ending with a clear next step.",
     estimatedMinutes: 26,
-    upNext: ["Discovery → demo → close", "Use case cheat sheet", "Customer footprint scenarios", "Footprint whiteboard drills", "Regulation Management", "Customer outcomes", "Objections", "Why Comply365", "Your enablement plan"],
+    upNext: ["Discovery → demo → close", "Use case cheat sheet", "Customer footprint scenarios", "Footprint whiteboard drills", "Customer outcomes", "Objections", "Why Comply365", "Your enablement plan"],
   },
 };
 
@@ -108,11 +109,13 @@ const slides = [
   { id: "se-platform-insights-intelligence", label: "W2 · Platform · Insights & Intelligence", component: SEPlatformInsightsIntelligence },
   { id: "se-slide-coanalyst", label: "W2 · Intelligence — Intelligence Layer", component: TechV4Slide7CoAnalyst },
   { id: "se-slide-coanalyst-usecases", label: "W2 · Intelligence & Insights — Use Cases", component: SECapabilityUseCases, componentProps: { capability: "intelligence" } },
+  { id: "se-platform-wide-intelligence-usecases", label: "W2 · Intelligence & Insights — Platform-Wide Use Cases", component: SEPlatformWideIntelligenceUseCases },
   { id: "se-slide-insights", label: "W2 · Intelligence — Insights", component: TechV4SlideInsights },
   { id: "se-slide-insights-usecases", label: "W2 · Recommendations — Use Cases", component: SECapabilityUseCases, componentProps: { capability: "recommendations" } },
   { id: "se-slide-automation", label: "W2 · Intelligence — Automation", component: TechV4SlideAutomation },
   { id: "se-slide-automation-usecases", label: "W2 · Automation — Use Cases", component: SECapabilityUseCases, componentProps: { capability: "automation" } },
   { id: "se-slide-tiers-vs-ai", label: "W2 · Intelligence Layer vs Generic AI", component: TechV4SlideTiersVsAI },
+  { id: "se-slide-regmgmt", label: "W2 · Regulation Management Use Case", component: TechSlideRegulationSummary },
   { id: "se-slide-mobile", label: "W2 · Mobile", component: TechV4SlideMobile },
   { id: "se-slide-talktrack", label: "W2 · Capability Talk Track", component: SELayerTalkTrack },
   // WEEK 3
@@ -128,7 +131,6 @@ const slides = [
   { id: "se-footprint-all-whiteboard", label: "W3 · Footprint — All Three Whiteboard", component: SEFootprintAllThreeWhiteboard },
   { id: "se-footprint-ladder", label: "W3 · Footprint — Value Ladder", component: SEFootprintValueLadder },
   { id: "se-footprint-playbook", label: "W3 · Footprint — 3-Move Play", component: SEFootprintPlaybook },
-  { id: "se-slide-regmgmt", label: "W3 · Regulation Management Use Case", component: TechSlideRegulationSummary },
   { id: "se-slide-outcomes", label: "W3 · Customer Outcomes", component: CustomerOutcomesSlide },
   { id: "se-slide-objections", label: "W3 · Objections", component: SEObjections },
   { id: "se-slide-why", label: "W3 · Why Comply365", component: TechSlideWhyComply },
