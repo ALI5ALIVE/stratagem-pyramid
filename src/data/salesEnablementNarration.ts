@@ -92,6 +92,13 @@ export const salesEnablementNarrations: SESlideNarration[] = [
       "Week 2 is the longest week because the capabilities are where the walkthrough lives. By the end of it you should be able to give a sixty-second walk-through of each capability and ask one good discovery question per capability. We go in this order: Core Apps — SafetyManager365, ContentManager365, TrainingManager365 — then the Intelligence layer with Intelligence Layer, Insights and Recommendations, and Automation, then how Intelligence Layer differs from generic AI, then the Unified Mobile App, and we close with the capability cheat sheet. DTOP itself you already learned in Week 1 — this week you map each capability onto the loop. Take it slowly. This is the week reps under-prepare for and lose deals over.",
   },
   {
+    slideId: "se-week-2-overview",
+    title: "Week 2 · The Platform Map",
+    voiceId: VOICE,
+    script:
+      "Why this slide matters: before we drill into any single capability, reps need the whole-platform picture in their head, so each capability lands as part of one system instead of a feature list. Core message — say this back verbatim: Comply365 is one Operational Performance Platform. Three Core Apps — SafetyManager365, ContentManager365, TrainingManager365 — an Intelligence and Orchestration layer on top with Intelligence Layer, Insights and Automation, one Unified Mobile shell for the frontline, all wired together by DTOP. The pain this addresses: prospects buy capabilities one at a time and end up with five to seven disconnected tools that don't share data — this slide reframes the conversation around one foundation, which is the only place our differentiation actually shows. How to deliver it: point at the diagram in this order — Core Apps first, then the Intelligence layer sitting on top, then Mobile as the frontline shell, then DTOP wrapping the whole thing. Say one platform, not modules or suite. Do not use FOQA, FDM or ASAP — say flight data signals and crew-reported events. Transition: now we walk each block in the order shown — starting with SafetyManager365.",
+  },
+  {
     slideId: "se-slide-4a",
     title: "Week 2 · SafetyManager365",
     voiceId: VOICE,
