@@ -23,6 +23,13 @@ import TechSlideRegulationSummary from "@/components/tech-slides/TechSlideRegula
 import CustomerOutcomesSlide from "@/components/shared/CustomerOutcomesSlide";
 import TechSlideWhyComply from "@/components/tech-slides/TechSlideWhyComply";
 
+// Sales Enablement W2 capability + capstone slides
+import SEWeek2PlatformOverview from "@/components/sales-enablement-slides/SEWeek2PlatformOverview";
+import SEPlatformInsightsIntelligence from "@/components/sales-enablement-slides/SEPlatformInsightsIntelligence";
+import SEPlatformWideIntelligenceUseCases from "@/components/sales-enablement-slides/SEPlatformWideIntelligenceUseCases";
+import SECapabilityUseCases from "@/components/sales-enablement-slides/SECapabilityUseCases";
+import SEW2CapstoneWhiteboard from "@/components/sales-enablement-slides/SEW2CapstoneWhiteboard";
+
 // --- Specialist Playbook slide decks ---
 // Signals
 import SIGSlide0Title from "@/components/signals-slides/SIGSlide0Title";
@@ -136,6 +143,14 @@ export const SLIDE_REGISTRY: Record<string, React.ComponentType<any>> = {
   "se-slide-objections": SEObjections,
   "se-slide-why": TechSlideWhyComply,
   "se-slide-closing": SEClosingForReps,
+  // --- Sales Enablement Week 2 (Capabilities) ---
+  "se-week-2-overview": SEWeek2PlatformOverview,
+  "se-platform-insights-intelligence": SEPlatformInsightsIntelligence,
+  "se-platform-wide-intelligence-usecases": SEPlatformWideIntelligenceUseCases,
+  "se-slide-coanalyst-usecases": (props: any) => SECapabilityUseCases({ ...props, capability: "intelligence" }),
+  "se-slide-insights-usecases": (props: any) => SECapabilityUseCases({ ...props, capability: "recommendations" }),
+  "se-slide-automation-usecases": (props: any) => SECapabilityUseCases({ ...props, capability: "automation" }),
+  "se-w2-capstone-whiteboard": SEW2CapstoneWhiteboard,
   // --- Signals ---
   "sig-title": SIGSlide0Title,
   "sig-why": SIGSlide1WhyMatters,
