@@ -201,7 +201,7 @@ export const salesEnablementNarrations: SESlideNarration[] = [
     title: "Week 3 · Sell & Win",
     voiceId: VOICE,
     script:
-      "Week 3 is sell and win. By the end of this week you can run the discovery, walkthrough, and close motion in plain English, pick the right use case for the room, and handle the top three objections — every time ending with a clear next step. We move through the discovery-to-close cheat sheet, the use case cheat sheet, the Regulation Management use case, customer outcomes, objections, why Comply365, and your enablement plan as a rep. A note on language — we say walkthrough, not demo. We are not yet at the point of running a polished customer demo; what we run today is a focused walkthrough on the prospect's highest-cost use case. This is the week where messaging becomes value — slow down on the cheat sheets and learn the three lines and three questions cold.",
+      "Week 3 is sell and win. By the end of this week you can run the discovery, walkthrough, and close motion in plain English, pick the right use case for the room, and handle the top three objections — every time ending with a clear next step. We move through the discovery-to-close cheat sheet, the use case cheat sheet, the customer footprint scenarios and whiteboard drills, customer outcomes, objections, why Comply365, and your enablement plan as a rep. A note on language — we say walkthrough, not demo. We are not yet at the point of running a polished customer demo; what we run today is a focused walkthrough on the prospect's highest-cost use case. This is the week where messaging becomes value — slow down on the cheat sheets and learn the three lines and three questions cold.",
   },
   {
     slideId: "se-discovery-to-close",
