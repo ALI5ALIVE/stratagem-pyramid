@@ -29,8 +29,8 @@ interface CapabilityData {
 
 const DATA: Record<Capability, CapabilityData> = {
   intelligence: {
-    title: "Intelligence & Insights — Use Cases",
-    subtitle: "How this shows up per solution and across the platform.",
+    title: "Intelligence & Insights — Per-Solution Use Cases",
+    subtitle: "Day-to-day chores Intelligence & Insights removes inside each Core App.",
     perSolution: [
       {
         module: "Safety",
