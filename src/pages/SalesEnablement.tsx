@@ -24,6 +24,7 @@ import SEFootprintPlaybook from "@/components/sales-enablement-slides/SEFootprin
 import SEFootprintSingleWhiteboard from "@/components/sales-enablement-slides/SEFootprintSingleWhiteboard";
 import SEFootprintTwoWhiteboard from "@/components/sales-enablement-slides/SEFootprintTwoWhiteboard";
 import SEFootprintAllThreeWhiteboard from "@/components/sales-enablement-slides/SEFootprintAllThreeWhiteboard";
+import SEWeek2PlatformOverview from "@/components/sales-enablement-slides/SEWeek2PlatformOverview";
 
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
 import PFSlide9Value from "@/components/platform-slides/PFSlide9Value";
@@ -105,6 +106,7 @@ const slides = [
   { id: "se-slide-recap-m2", label: "W1 · Recap", component: SERecapSlide },
   // WEEK 2
   { id: "se-week-2", label: "▸ Week 2 · Capabilities", component: SEModuleDivider, dividerProps: weekProps.w2 },
+  { id: "se-week-2-overview", label: "W2 · The Platform (map)", component: SEWeek2PlatformOverview },
   { id: "se-slide-4a", label: "W2 · Core Apps — SafetyManager365", component: TechV4Slide4aSafetyManager },
   { id: "se-slide-4b", label: "W2 · Core Apps — ContentManager365", component: TechV4Slide4bContentManager },
   { id: "se-slide-4c", label: "W2 · Core Apps — TrainingManager365", component: TechV4Slide4cTrainingManager },
