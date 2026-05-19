@@ -322,6 +322,48 @@ export const salesEnablementNarrations: SESlideNarration[] = [
     script:
       "This is the Week 2 capstone — and it's the slide you'll come back to more than any other in this academy. Why it matters: by now you can name each capability in isolation, but customers don't buy capabilities, they buy outcomes. This slide proves the platform delivers one, end-to-end, in five days. The core message — one sentence, learn it verbatim: one use case, every capability, one DTOP loop. The pain you're naming: today the same scenario takes their team three weeks across five disconnected tools, and they still can't prove the loop closed. The value lever: on this platform, an unstable approach trend at Madrid — airport code MAD — is Detected by Operational Data on day one, Triggered into recommended controls by the Intelligence Layer on day two, Orchestrated by Automation and Unified Mobile through to crew devices by day three, and Proven flat and audit-ready by Insights on day five. How to deliver it: draw the loop first, name the capability inside each cell second, and only then tell the story — point at each box as you speak. Do not list capabilities; let the use case do that work for you. End on Prove, then pause. Practise this until you can do it in sixty seconds without looking at the slide. Next we move into Week 3 — turning this capstone into a discovery, walkthrough and close.",
   },
+  {
+    slideId: "se-discovery-question-bank",
+    title: "Week 3 · Discovery Question Bank",
+    voiceId: VOICE,
+    script:
+      "This slide matters because discovery is where deals are won or lost — and most reps wing it. The core message: every great discovery call pulls four to six questions from the bank, one per DTOP step minimum. The pain you're naming: reps default to pitching when they get nervous; this gives you a script you can fall back to in any room. The value lever: each question comes with what a good answer sounds like, and what a red-flag answer sounds like — so you're listening for the wedge, not just talking. How to deliver it: never read these out loud as a list. Pick four. Ask one. Shut up. Take notes. The red-flag answers are the ones you want — they are the gaps DTOP closes. Avoid stacking questions back-to-back; let silence do the work. Next: the persona playbook — because the same question lands differently depending on the room.",
+  },
+  {
+    slideId: "se-persona-playbook",
+    title: "Week 3 · Persona Playbook",
+    voiceId: VOICE,
+    script:
+      "This slide matters because the same pitch crashes against one persona and sings to the next. The core message — five rooms, five different conversations, one platform underneath. For each persona: the pain in one line, the two questions only they can answer, the metric they care about, the terminology landmine to avoid, and the proof artifact to point at. The pain you're addressing: reps tend to give the CEO pitch to everyone — and the VP Safety wants risk evidence while the CIO wants integration and governance. The value lever: when you mirror their metric back in the first five minutes, you earn the next meeting. How to deliver it: before any call, open this slide and pick the row. Internalise the landmine — never say FOQA or FDM or ASAP to safety; use Operational Data and Generative AI. Never pitch an SMS replacement; we extend theirs. End every persona conversation with the proof artifact you'll send within an hour of the call. Next we move into the use case cheat sheet — same discipline, applied to which use case to surface for which buyer.",
+  },
+  {
+    slideId: "se-competitive-cheatsheet",
+    title: "Week 3 · Competitive Cheat Sheet",
+    voiceId: VOICE,
+    script:
+      "This slide matters because the question 'how are you different from X' will come — and the worst answer is 'we do everything they do, plus more'. The core message: every competitor stops at a specific point in the DTOP loop. Name the stop, deliver the one-sentence reframe, then ask the trap question that lets the prospect feel the gap themselves. The pain you're naming: reps argue features and lose; you want them to argue scope of the loop. The value lever: when you say 'standalone SMS is great at Detect — and it stops there', you've moved the conversation from feature-by-feature to operating-model. How to deliver it: never disparage the competitor — acknowledge what they're strong at, name where they stop, then drop the trap question and stay silent. The trap question is the one the prospect can't answer without realising their current stack is half a loop. One competitor per call is plenty. Next: objections — same Acknowledge, Reframe, Bridge pattern, but now eight of them with the proof artifact to send afterwards.",
+  },
+  {
+    slideId: "se-discovery-call-runbook",
+    title: "Week 3 · Discovery-Call Runbook",
+    voiceId: VOICE,
+    script:
+      "This slide matters because a 45-minute first call has a shape, and reps who improvise the shape lose the room. The core message — four blocks: 0 to 2 minutes Open, 2 to 10 minutes Frame, 10 to 35 minutes Discover, 35 to 45 minutes Qualify and book the next step. The pain you're naming: most first calls die in the Discover block because the rep either pitches too early or asks too many soft questions. The value lever: this runbook is verbatim — opener, transition, close — and you keep it open on a second monitor during real calls. How to deliver it as a coach: practise the opener until it sounds conversational, not scripted. Practise the silence after the discovery questions — silence is what makes a customer fill in the gap. Practise the close line out loud, with a date and a name, before the call so it isn't the first time you say it. Never let a discovery call end without a calendar invite proposed. Next: deal-stage next-step language — the scripted lines that move every stage of the deal forward.",
+  },
+  {
+    slideId: "se-deal-stage-language",
+    title: "Week 3 · Deal-Stage Next-Step Language",
+    voiceId: VOICE,
+    script:
+      "This slide matters because deals stall between stages, not inside them — and the unlock is a scripted line, said out loud, with a date and a name. The core message — four transitions: first call to working session, working session to focused use-case session, use-case session to executive readout, readout to commercial scoping. For each, a goal, the right person to bring next, and a scripted line. The pain you're naming: reps over-rely on email and under-rely on a verbal commitment in the room. The value lever: when you propose the next step before you hang up, with the two people you need in it, you close 60 percent more often. How to deliver it: pick the line, customise the date and the names, say it before the call wraps. Avoid generic phrases like 'let's circle back'. Always include who else needs to be in the next room, and why — that's what advances the deal organisationally, not just in your CRM. Next: Why Comply365, our closing argument.",
+  },
+  {
+    slideId: "se-practice-center-bridge",
+    title: "Week 3 · Practice Center Bridge",
+    voiceId: VOICE,
+    script:
+      "This slide matters because reading about objections does not make you good at handling them — only reps do. The core message: run a Practice Center role-play before you take a real meeting with that persona. Three featured Week 3 scenarios: VP Safety, VP Ops, CIO — voice-driven, scored, repeatable. The pain you're naming: most reps practise on customers; the ones who win practise on the AI first. The value lever: every scenario uses the same narration scripts you've just studied, and scores you against the key messages — so you know which message you're under-landing before it costs you a deal. How to deliver it as a coach: rule of thumb — don't run a real first call with a persona until you can score green on the matching role-play. Run it twice on friendly, once on skeptical, once on hostile, and only then book the real meeting. Next: your first 30 days as a Comply365 seller — read, shadow, practise, lead.",
+  },
 ];
 
 export const getSalesEnablementNarration = (slideId: string): SESlideNarration | undefined =>
