@@ -1,65 +1,45 @@
 ## Goal
 
-Re-sequence Week 2 so the platform-wide use cases land immediately after the platform-wide Insights & Intelligence story, and rewrite every Week 2 narration so the transitions and references match the new slide order.
+Rewrite the Week 2 Sales Enablement narration scripts so each script (a) accurately describes the slide it plays on, and (b) ends with a transition that names the *actual* next slide in the deck. No slide order changes, no visual changes.
 
-## New Week 2 slide order
+## Current Week 2 slide order (from `src/pages/SalesEnablement.tsx`)
 
-```text
-01  W2 · Divider                                       (se-week-2)
-02  W2 · The Platform (map)                            (se-week-2-overview)
-03  W2 · Platform · Insights & Intelligence            (se-platform-insights-intelligence)
-04  W2 · Intelligence & Insights — Platform-Wide UCs   (se-platform-wide-intelligence-usecases)  ← MOVED UP
-05  W2 · Intelligence — Intelligence Layer             (se-slide-coanalyst)
-06  W2 · Intelligence & Insights — Use Cases           (se-slide-coanalyst-usecases)             (per-solution)
-07  W2 · Intelligence — Insights                       (se-slide-insights)
-08  W2 · Recommendations — Use Cases                   (se-slide-insights-usecases)
-09  W2 · Intelligence — Automation                     (se-slide-automation)
-10  W2 · Automation — Use Cases                        (se-slide-automation-usecases)
-11  W2 · Intelligence Layer vs Generic AI              (se-slide-tiers-vs-ai)
-12  W2 · Regulation Management Use Case                (se-slide-regmgmt)
-13  W2 · Mobile                                        (se-slide-mobile)
-14  W2 · Capability Talk Track                         (se-slide-talktrack)
-```
+1. `se-week-2` — Week 2 divider
+2. `se-week-2-overview` — The Platform (map)
+3. `se-platform-insights-intelligence` — Platform · Insights & Intelligence
+4. `se-platform-wide-intelligence-usecases` — Intelligence & Insights · Platform-Wide Use Cases
+5. `se-slide-coanalyst` — Intelligence Layer
+6. `se-slide-coanalyst-usecases` — Intelligence & Insights · Per-Solution Use Cases
+7. `se-slide-insights` — Insights
+8. `se-slide-insights-usecases` — Recommendations & Prescriptive Actions · Use Cases
+9. `se-slide-automation` — Automation
+10. `se-slide-automation-usecases` — Automation · Use Cases
+11. `se-slide-tiers-vs-ai` — Intelligence Layer vs Generic AI
+12. `se-slide-regmgmt` — Regulation Management Use Case
+13. `se-slide-mobile` — Unified Mobile
+14. `se-slide-talktrack` — Capability Talk Track
 
-Rationale: the platform-wide capability story (slide 03) introduces "ask anything, get cross-domain answers". The three platform-wide use cases (slide 04) make it concrete *before* we zoom into the Intelligence Layer mechanics and the per-solution chores in slides 05–06.
+## Misalignments to fix
 
-## Changes
+- **`se-platform-insights-intelligence`** — script is solid but its transition wording overlaps with the next slide's own intro; tighten so it names slide 4 explicitly.
+- **`se-platform-wide-intelligence-usecases`** — duplicates content the previous slide already covered (knowledge graph, 90% vs 35%); needs to focus on the three named questions (Safety↔Training correlation, DG manual landing, Part 145 readiness) and transition into the Intelligence Layer deep-dive.
+- **`se-slide-coanalyst`** — currently re-litigates the 90% vs 35% headline already delivered on slide 3; refocus on "what the Intelligence Layer *is* under the hood" and transition cleanly into per-solution use cases.
+- **`se-slide-coanalyst-usecases`** — wording is fine; only the transition needs to point at **Insights** (not "patterns before automation" framing that pre-empts the slide).
+- **`se-slide-insights`** — biggest mismatch. Script is titled "Insights & Recommendations" and conflates both capabilities. Rewrite as **Insights only** (pattern surfacing, evidence, POC H1 2026 → production H2 2026), and transition into the Recommendations use-cases slide.
+- **`se-slide-insights-usecases`** — currently titled "Recommendations & Prescriptive Actions — Use Cases" in narration but the script jumps between solution and platform examples without anchoring. Rewrite to walk the per-solution row then the platform row exactly as rendered by `SECapabilityUseCases` (capability: "recommendations"), keeping the 2027+ roadmap caveat. Transition into Automation.
+- **`se-slide-automation`** — solid; minor transition tweak to point at the Automation use cases.
+- **`se-slide-automation-usecases`** — solid; transition needs to point at Intelligence Layer vs Generic AI.
+- **`se-slide-tiers-vs-ai`** — transition already points at Regulation Management; verify wording.
+- **`se-slide-regmgmt`** — currently lives in W3 narration block; confirm it transitions into **Unified Mobile** (slide 13), not into outcomes.
+- **`se-slide-mobile`** — transition needs to point at the Capability Talk Track.
+- **`se-slide-talktrack`** — closing transition should hand over to Week 3.
+- **`se-week-2` divider** — order list inside the script must match the 13-slide order above.
 
-### 1. `src/pages/SalesEnablement.tsx`
-- Move `se-platform-wide-intelligence-usecases` to immediately after `se-platform-insights-intelligence`.
-- Update `weekProps.w2.upNext` to reflect new order:
-  `["The Platform map", "Insights & Intelligence", "Platform-wide use cases", "Intelligence Layer", "Per-solution use cases", "Insights", "Recommendations use cases", "Automation", "Automation use cases", "Intelligence Layer vs Generic AI", "Regulation Management", "Mobile", "Capability cheat sheet"]`
-- Refresh `weekProps.w2.learningGoal` to reference the new flow (lead with platform-wide intelligence, then layer, then per-capability, then mobile).
+## Edits (one file)
 
-### 2. `src/data/salesEnablementNarration.ts` — rewrite Week 2 scripts
-
-All scripts keep the 5-part coach standard (Why this matters → Core message → Pain→Value pivot → How to deliver → Transition). Only the transition lines and the cross-slide references need substantive rewriting; the body copy stays close to current.
-
-| Slide ID | Fix |
-|---|---|
-| `se-week-2` | Replace the outdated "Core Apps — SafetyManager365 / ContentManager365 / TrainingManager365 then Intelligence layer" agenda with the actual flow: Platform map → Platform-wide Insights & Intelligence → Platform-wide use cases → Intelligence Layer → per-solution use cases → Insights → Automation → Layer vs Generic AI → Regulation Management → Mobile → Talk Track. |
-| `se-week-2-overview` | Keep body; transition already correctly hands off to platform-wide Insights & Intelligence. Minor polish only. |
-| `se-platform-insights-intelligence` | Transition rewritten: "next we make these promises concrete — three platform-wide questions only this layer can answer" (instead of going straight into the Intelligence Layer deep dive). |
-| `se-platform-wide-intelligence-usecases` | Transition rewritten: "next we open the box — the Intelligence Layer that actually runs these answers" (instead of "next: Insights"). |
-| `se-slide-coanalyst` | Transition rewritten: "next, how this shows up on a Monday morning — the per-solution use cases your buyer can picture themselves running" (instead of going to "Insights and Recommendations"). |
-| `se-slide-coanalyst-usecases` | Reframe scope: this slide is now *per-solution* only (since platform-wide moved to slide 04). Drop the "and at the platform level…" paragraph. Transition: "next: Insights — how the platform earns trust by surfacing patterns before it ever automates." |
-| `se-slide-insights` | Body unchanged; transition unchanged ("Next: Automation" via Recommendations use cases) — needs to read "Next: Recommendations and Prescriptive Actions use cases, then Automation." |
-| `se-slide-insights-usecases` | Transition unchanged ("Next: Automation"). |
-| `se-slide-automation` | Transition rewritten: "Next: Automation use cases, then how Intelligence Layer differs from generic AI." |
-| `se-slide-automation-usecases` | Transition unchanged ("Next: Intelligence Layer vs Generic AI"). |
-| `se-slide-tiers-vs-ai` | Transition rewritten: "Next: Regulation Management — the cleanest end-to-end use case to demonstrate the whole capability stack." (Currently says "Next: Unified Mobile.") |
-| `se-slide-regmgmt` | Transition unchanged (already → Mobile). |
-| `se-slide-mobile` | Transition unchanged (→ Capability talk track). |
-| `se-slide-talktrack` | Verify it closes Week 2 cleanly and hands off to Week 3. |
-
-### 3. Light copy alignment fixes
-- Anywhere in W2 narration that still says "Core Apps deep-dive" or implies a SafetyManager365/ContentManager365/TrainingManager365 dedicated slide → rewrite, since those slides were removed earlier.
-- Replace any "next: Intelligence Layer" wording where the next actual slide is now Platform-wide Use Cases.
+**`src/data/salesEnablementNarration.ts`** — rewrite the `script` field for each of the 13 Week 2 entries listed above. All scripts continue to follow the 5-part coach standard (Why → Core message → Pain→Value → How to deliver → Transition), keep BrandNumber product names, the canonical "~90% domain accuracy vs ~35% generic AI" headline (used only on slides 3 and 11 where it belongs), locked roadmap dates (Insights POC H1 2026 / production H2 2026, Automation POC April 2026 / platform H2 2026, Mobile phased through 2027+), and the no-pilot-wording embargo.
 
 ## Out of scope
-- No layout/visual changes to existing slides.
-- No edits to Week 1 or Week 3.
-- No PPTX exporter changes.
 
-## Open question
-Slide 04 (platform-wide) and slide 06 (per-solution use cases) both use the title "Intelligence & Insights — Use Cases", which is now confusing. I will retitle slide 06 to **"Intelligence & Insights — Per-Solution Use Cases"** (component label + narration title) unless you'd prefer different wording.
+- No changes to slide components, slide order, `SalesEnablement.tsx`, Week 1, Week 3, or PPTX exporters.
+- No new memory entries (existing `coach-script-standard` memory already governs format).
