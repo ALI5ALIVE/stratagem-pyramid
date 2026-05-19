@@ -25,13 +25,11 @@ import SEFootprintSingleWhiteboard from "@/components/sales-enablement-slides/SE
 import SEFootprintTwoWhiteboard from "@/components/sales-enablement-slides/SEFootprintTwoWhiteboard";
 import SEFootprintAllThreeWhiteboard from "@/components/sales-enablement-slides/SEFootprintAllThreeWhiteboard";
 import SEWeek2PlatformOverview from "@/components/sales-enablement-slides/SEWeek2PlatformOverview";
+import SEPlatformInsightsIntelligence from "@/components/sales-enablement-slides/SEPlatformInsightsIntelligence";
 
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
 import PFSlide9Value from "@/components/platform-slides/PFSlide9Value";
 import TechV4PlatformOverview from "@/components/tech-slides/v4/TechV4PlatformOverview";
-import TechV4Slide4aSafetyManager from "@/components/tech-slides/v4/TechV4Slide4aSafetyManager";
-import TechV4Slide4bContentManager from "@/components/tech-slides/v4/TechV4Slide4bContentManager";
-import TechV4Slide4cTrainingManager from "@/components/tech-slides/v4/TechV4Slide4cTrainingManager";
 import TechV4Slide7CoAnalyst from "@/components/tech-slides/v4/TechV4Slide7CoAnalyst";
 import TechV4SlideInsights from "@/components/tech-slides/v4/TechV4SlideInsights";
 import TechV4SlideAutomation from "@/components/tech-slides/v4/TechV4SlideAutomation";
@@ -62,9 +60,9 @@ const weekProps = {
     kicker: "Capabilities",
     title: "How the capabilities fit together",
     learningGoal:
-      "By the end of Week 2 you can describe each capability in 60 seconds, ask one good discovery question per capability, and pick the right capability to lead with for the room you're in.",
+      "By the end of Week 2 you can explain the platform-wide Insights & Intelligence capability, walk the Intelligence layer (Intelligence Layer · Insights · Automation), and pick the right capability to lead with for the room you're in.",
     estimatedMinutes: 16,
-    upNext: ["Core Apps", "Intelligence & Orchestration", "Capability use cases", "Mobile", "Capability cheat sheet"],
+    upNext: ["The Platform map", "Insights & Intelligence", "Intelligence Layer", "Insights", "Automation", "Intelligence Layer vs Generic AI", "Mobile", "Capability cheat sheet"],
   },
   w3: {
     moduleNumber: 3,
@@ -107,9 +105,7 @@ const slides = [
   // WEEK 2
   { id: "se-week-2", label: "▸ Week 2 · Capabilities", component: SEModuleDivider, dividerProps: weekProps.w2 },
   { id: "se-week-2-overview", label: "W2 · The Platform (map)", component: SEWeek2PlatformOverview },
-  { id: "se-slide-4a", label: "W2 · Core Apps — SafetyManager365", component: TechV4Slide4aSafetyManager },
-  { id: "se-slide-4b", label: "W2 · Core Apps — ContentManager365", component: TechV4Slide4bContentManager },
-  { id: "se-slide-4c", label: "W2 · Core Apps — TrainingManager365", component: TechV4Slide4cTrainingManager },
+  { id: "se-platform-insights-intelligence", label: "W2 · Platform · Insights & Intelligence", component: SEPlatformInsightsIntelligence },
   { id: "se-slide-coanalyst", label: "W2 · Intelligence — Intelligence Layer", component: TechV4Slide7CoAnalyst },
   { id: "se-slide-coanalyst-usecases", label: "W2 · Intelligence & Insights — Use Cases", component: SECapabilityUseCases, componentProps: { capability: "intelligence" } },
   { id: "se-slide-insights", label: "W2 · Intelligence — Insights", component: TechV4SlideInsights },
