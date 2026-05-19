@@ -49,7 +49,7 @@ const SEPlatformInsightsIntelligence = ({ slideNumber, ...narrationProps }: Prop
           </div>
           <p className="text-xs text-foreground/85 leading-relaxed">
             Instant cross-domain insight:{" "}
-            <span className="text-foreground font-semibold">3 stations show DG handling spikes</span> — all three
+            <span className="text-foreground font-semibold">3 stations show Dangerous Goods (DG) handling spikes</span> — all three
             correlate with overdue DG recurrent training.{" "}
             <span className="text-emerald-300 font-semibold">Recommended actions generated.</span>
           </p>
