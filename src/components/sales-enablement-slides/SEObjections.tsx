@@ -1,78 +1,58 @@
 import PitchSlideContainer from "@/components/shared/PitchSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { objections } from "@/data/dtopPlaybook";
-import { Hand, Repeat, ArrowRight } from "lucide-react";
+import { expandedObjections } from "@/data/week3FieldKit";
+import { Hand, Repeat, ArrowRight, FileCheck2 } from "lucide-react";
 
 interface Props extends SlideNarrationProps {
   slideNumber?: number;
 }
 
-// Acknowledge → Reframe → Bridge structure derived from existing playbook content.
-const acknowledgements = [
-  "Totally fair — most operators are.",
-  "Good — that's the right foundation.",
-  "That's a sensible starting point.",
-  "Agreed — basics matter.",
-  "Understood — budget pressure is real.",
-];
-
-const bridges = [
-  "Want a 20-minute walkthrough of what 'beyond detect' looks like on your data?",
-  "Can I walk you through how the TMS gets smarter when it's wired to live safety data?",
-  "Want a walkthrough of content that reacts to operational events?",
-  "Want a walkthrough of DTOP working with rules-only — no AI required?",
-  "Want a focused walkthrough on your highest-cost use case?",
-];
-
-const SEObjections = ({ slideNumber, ...narrationProps }: Props) => {
-  // Academy slide intentionally surfaces only the top 3 objections — keep in sync with narration ("three on the slide").
-  const top3 = objections.slice(0, 3);
-  return (
-    <PitchSlideContainer
-      id="se-objections"
-      slideNumber={slideNumber}
-      title="Objections cheat sheet"
-      subtitle="Top 3 pushbacks · Acknowledge → Reframe → Bridge. Final wording pending review."
-      showHeader
-      {...narrationProps}
-    >
-      <div className="h-full flex flex-col gap-1.5 max-w-7xl mx-auto px-4">
-        {top3.map((o, i) => (
-          <div key={i} className="p-2.5 rounded-lg border border-border bg-card">
-            <div className="flex items-start gap-2 mb-1.5">
-              <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/30 shrink-0">
-                #{i + 1}
-              </span>
-              <p className="text-xs font-semibold text-foreground italic">"{o.objection}"</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-1.5 mt-1.5">
-              <div className="p-2 rounded border border-border bg-background/50">
-                <div className="flex items-center gap-1 text-[10px] uppercase tracking-wider text-amber-400 mb-1">
-                  <Hand className="h-3 w-3" /> Acknowledge
-                </div>
-                <p className="text-[11px] text-foreground/80">{acknowledgements[i]}</p>
-              </div>
-              <div className="p-2 rounded border border-border bg-background/50">
-                <div className="flex items-center gap-1 text-[10px] uppercase tracking-wider text-violet-400 mb-1">
-                  <Repeat className="h-3 w-3" /> Reframe
-                </div>
-                <p className="text-[11px] text-foreground/80 leading-snug">{o.reframe}</p>
-              </div>
-              <div className="p-2 rounded border border-primary/30 bg-primary/5">
-                <div className="flex items-center gap-1 text-[10px] uppercase tracking-wider text-primary mb-1">
-                  <ArrowRight className="h-3 w-3" /> Bridge to next step
-                </div>
-                <p className="text-[11px] text-foreground italic">"{bridges[i]}"</p>
-              </div>
-            </div>
+const SEObjections = ({ slideNumber, ...narrationProps }: Props) => (
+  <PitchSlideContainer
+    id="se-objections"
+    slideNumber={slideNumber}
+    title="Objections cheat sheet"
+    subtitle="Eight pushbacks you'll hear. Acknowledge → Reframe → Bridge. Plus the proof artifact to send right after the call."
+    showHeader
+    {...narrationProps}
+  >
+    <div className="h-full flex flex-col gap-1 max-w-7xl mx-auto px-4 pt-2">
+      {expandedObjections.map((o, i) => (
+        <div key={i} className="rounded-lg border border-border bg-card p-2 grid grid-cols-12 gap-2">
+          <div className="col-span-12 md:col-span-3 flex items-start gap-1.5">
+            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/30 shrink-0">
+              #{i + 1}
+            </span>
+            <p className="text-[11px] font-semibold text-foreground italic leading-snug">"{o.objection}"</p>
           </div>
-        ))}
-        <div className="text-[11px] text-muted-foreground italic text-center pt-1">
-          Additional objections + final paring pending Marketing review.
+          <div className="col-span-6 md:col-span-2 border-l border-border/40 md:pl-2">
+            <div className="flex items-center gap-1 text-[9px] uppercase tracking-wider text-amber-400 mb-0.5">
+              <Hand className="h-2.5 w-2.5" /> Acknowledge
+            </div>
+            <p className="text-[10.5px] text-foreground/85 leading-snug">{o.acknowledge}</p>
+          </div>
+          <div className="col-span-6 md:col-span-3 border-l border-border/40 md:pl-2">
+            <div className="flex items-center gap-1 text-[9px] uppercase tracking-wider text-violet-400 mb-0.5">
+              <Repeat className="h-2.5 w-2.5" /> Reframe
+            </div>
+            <p className="text-[10.5px] text-foreground/85 leading-snug">{o.reframe}</p>
+          </div>
+          <div className="col-span-6 md:col-span-2 border-l border-border/40 md:pl-2">
+            <div className="flex items-center gap-1 text-[9px] uppercase tracking-wider text-primary mb-0.5">
+              <ArrowRight className="h-2.5 w-2.5" /> Bridge
+            </div>
+            <p className="text-[10.5px] italic text-foreground/85 leading-snug">"{o.bridge}"</p>
+          </div>
+          <div className="col-span-6 md:col-span-2 border-l border-border/40 md:pl-2">
+            <div className="flex items-center gap-1 text-[9px] uppercase tracking-wider text-emerald-300 mb-0.5">
+              <FileCheck2 className="h-2.5 w-2.5" /> Send next
+            </div>
+            <p className="text-[10.5px] text-foreground/85 leading-snug">{o.proofArtifact}</p>
+          </div>
         </div>
-      </div>
-    </PitchSlideContainer>
-  );
-};
+      ))}
+    </div>
+  </PitchSlideContainer>
+);
 
 export default SEObjections;

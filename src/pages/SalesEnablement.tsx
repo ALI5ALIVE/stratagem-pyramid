@@ -28,6 +28,12 @@ import SEWeek2PlatformOverview from "@/components/sales-enablement-slides/SEWeek
 import SEPlatformInsightsIntelligence from "@/components/sales-enablement-slides/SEPlatformInsightsIntelligence";
 import SEPlatformWideIntelligenceUseCases from "@/components/sales-enablement-slides/SEPlatformWideIntelligenceUseCases";
 import SEW2CapstoneWhiteboard from "@/components/sales-enablement-slides/SEW2CapstoneWhiteboard";
+import SEDiscoveryQuestionBank from "@/components/sales-enablement-slides/SEDiscoveryQuestionBank";
+import SEPersonaPlaybook from "@/components/sales-enablement-slides/SEPersonaPlaybook";
+import SECompetitiveCheatSheet from "@/components/sales-enablement-slides/SECompetitiveCheatSheet";
+import SEDiscoveryCallRunbook from "@/components/sales-enablement-slides/SEDiscoveryCallRunbook";
+import SEDealStageLanguage from "@/components/sales-enablement-slides/SEDealStageLanguage";
+import SEPracticeCenterBridge from "@/components/sales-enablement-slides/SEPracticeCenterBridge";
 
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
 import PFSlide9Value from "@/components/platform-slides/PFSlide9Value";
@@ -72,9 +78,23 @@ const weekProps = {
     kicker: "Sell & Win",
     title: "Sell it, prove it, win it",
     learningGoal:
-      "By the end of Week 3 you can run the discovery → demo → close motion, pick the right use case for the room, and handle the top objections — ending with a clear next step.",
-    estimatedMinutes: 26,
-    upNext: ["Discovery → demo → close", "Use case cheat sheet", "Customer footprint scenarios", "Footprint whiteboard drills", "Customer outcomes", "Objections", "Why Comply365", "Your enablement plan"],
+      "By the end of Week 3 you can run a real discovery call, pull the right questions for the room, read the persona, handle the top 8 objections, position against any competitor in the DTOP loop, and end every conversation with the scripted next-step line that books the meeting.",
+    estimatedMinutes: 42,
+    upNext: [
+      "Discovery → walkthrough → close",
+      "Discovery question bank (DTOP)",
+      "Persona playbook",
+      "Use case cheat sheet",
+      "Customer footprint scenarios + whiteboards",
+      "Customer outcomes",
+      "Competitive cheat sheet",
+      "Objections (8 + proof)",
+      "Discovery-call runbook",
+      "Deal-stage next-step language",
+      "Why Comply365",
+      "Practice Center bridge",
+      "Your first 30 days",
+    ],
   },
 };
 
@@ -123,6 +143,8 @@ const slides = [
   // WEEK 3
   { id: "se-week-3", label: "▸ Week 3 · Sell & Win", component: SEModuleDivider, dividerProps: weekProps.w3 },
   { id: "se-discovery-to-close", label: "W3 · Discovery → Demo → Close", component: SEDiscoveryToClose },
+  { id: "se-discovery-question-bank", label: "W3 · Discovery Question Bank", component: SEDiscoveryQuestionBank },
+  { id: "se-persona-playbook", label: "W3 · Persona Playbook", component: SEPersonaPlaybook },
   { id: "se-usecase-cheatsheet", label: "W3 · Use Case Cheat Sheet", component: SEUseCaseCheatSheet },
   { id: "se-footprint-intro", label: "W3 · Customer Footprint — Intro", component: SEFootprintIntro },
   { id: "se-footprint-single", label: "W3 · Footprint — One App", component: SEFootprintSingleApp },
@@ -134,9 +156,13 @@ const slides = [
   { id: "se-footprint-ladder", label: "W3 · Footprint — Value Ladder", component: SEFootprintValueLadder },
   { id: "se-footprint-playbook", label: "W3 · Footprint — 3-Move Play", component: SEFootprintPlaybook },
   { id: "se-slide-outcomes", label: "W3 · Customer Outcomes", component: CustomerOutcomesSlide },
+  { id: "se-competitive-cheatsheet", label: "W3 · Competitive Cheat Sheet", component: SECompetitiveCheatSheet },
   { id: "se-slide-objections", label: "W3 · Objections", component: SEObjections },
+  { id: "se-discovery-call-runbook", label: "W3 · Discovery-Call Runbook", component: SEDiscoveryCallRunbook },
+  { id: "se-deal-stage-language", label: "W3 · Deal-Stage Next-Step Language", component: SEDealStageLanguage },
   { id: "se-slide-why", label: "W3 · Why Comply365", component: TechSlideWhyComply },
-  { id: "se-slide-closing", label: "W3 · Your enablement plan", component: SEClosingForReps },
+  { id: "se-practice-center-bridge", label: "W3 · Practice Center Bridge", component: SEPracticeCenterBridge },
+  { id: "se-slide-closing", label: "W3 · Your First 30 Days", component: SEClosingForReps },
 ];
 
 // Inject Week 1 divider right after the title slide.

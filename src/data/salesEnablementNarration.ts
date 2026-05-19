@@ -201,7 +201,7 @@ export const salesEnablementNarrations: SESlideNarration[] = [
     title: "Week 3 · Sell & Win",
     voiceId: VOICE,
     script:
-      "Week 3 is sell and win. By the end of this week you can run the discovery, walkthrough, and close motion in plain English, pick the right use case for the room, and handle the top three objections — every time ending with a clear next step. We move through the discovery-to-close cheat sheet, the use case cheat sheet, the customer footprint scenarios and whiteboard drills, customer outcomes, objections, why Comply365, and your enablement plan as a rep. A note on language — we say walkthrough, not demo. We are not yet at the point of running a polished customer demo; what we run today is a focused walkthrough on the prospect's highest-cost use case. This is the week where messaging becomes value — slow down on the cheat sheets and learn the three lines and three questions cold.",
+      "Week 3 is sell and win — and it has been rebuilt to make this a world-class enablement week. By the end of it you can run a real discovery call from a verbatim runbook, pull twelve discovery questions grouped by DTOP step, read any of five personas in the room, handle the top eight objections with a proof artifact to send afterwards, position against any competitor by naming where they stop in the loop, advance the deal with scripted next-step language, and end the month with a focused use-case session booked. A note on language — we say walkthrough, not demo. We are not yet at the point of running a polished customer demo; what we run today is a focused walkthrough on the prospect's highest-cost use case. Slow down on every cheat sheet. Read them aloud. Then go practise in Practice Center before any real call.",
   },
   {
     slideId: "se-discovery-to-close",
@@ -215,7 +215,7 @@ export const salesEnablementNarrations: SESlideNarration[] = [
     title: "Week 3 · Use Case Cheat Sheet",
     voiceId: VOICE,
     script:
-      "This is the page you study before every customer call. The core message: five plain-English use cases — safety signal to procedure update, regulation change to targeted training, fatigue trend to roster intervention, ops disruption to crew comms, audit prep to continuous proof. Each one carries the discovery question that surfaces it. The pain you're addressing: reps over-rotate on a single use case and miss the buyer's actual pain. The value lever: pattern-match the prospect's words to the cheat sheet, then run that use case as a DTOP story. Delivery tip — never run all five in one meeting. Pick one, tell it end-to-end in Detect, Trigger, Orchestrate, Prove order, and ask the discovery question on the others to qualify the next conversation. Avoid the dollar figures we have not signed off; this slide is messaging, not modelling. Next: the Regulation Management use case.",
+      "This is the page you study before every customer call. The core message: seven plain-English use cases, each carrying the discovery question that uncovers it, the phrase to listen for that means it's live, the DTOP step to anchor on, and the proof artifact to send after the call. The pain you're addressing: reps over-rotate on a single use case and miss the buyer's actual pain. The value lever: pattern-match the prospect's words to the cheat sheet, then run that use case as a DTOP story. Delivery tip — never run all seven in one meeting. Pick one. Ask the question. Listen for the red-flag phrase in the listen-for column — that's your signal the use case is live. Anchor on the DTOP step, then send the proof artifact within an hour of the call. Avoid dollar figures we have not signed off. Next: customer footprint scenarios.",
   },
   {
     slideId: "se-footprint-intro",
@@ -299,7 +299,7 @@ export const salesEnablementNarrations: SESlideNarration[] = [
     title: "Week 3 · Objections Cheat Sheet",
     voiceId: VOICE,
     script:
-      "Objections cheat sheet — read this slide aloud, every line, and practise the responses until they sound like yours, not ours. The core message: every objection follows the same three-step pattern — Acknowledge, Reframe, Bridge. Acknowledge what they said without defending. Reframe to the part of their pain the objection actually exposes. Bridge to a concrete next step — usually a twenty-minute focused walkthrough on their highest-cost use case. The pain you're addressing in this slide: most reps argue with objections instead of using them as discovery. The value lever: a well-handled objection is a faster path to the next conversation than no objection at all. Delivery tip — never escalate. The customer's objection is information, not opposition. Three on the slide, intentionally; final wording is still under Marketing review. Next: why we win.",
+      "Objections cheat sheet — read this slide aloud, every line, and practise the responses until they sound like yours, not ours. The core message: every objection follows the same four-step pattern — Acknowledge, Reframe, Bridge, then send the proof artifact within the hour. Eight objections here, covering SMS, legacy content, AI governance, regulator approval, an existing LMS, locked budget, prior failed attempts, and 'we're too small'. The pain you're addressing: most reps argue with objections instead of using them as discovery. The value lever: a well-handled objection is a faster path to the next conversation than no objection at all, and the proof artifact you send afterwards is what keeps the conversation alive between meetings. Delivery tip — never escalate. The customer's objection is information, not opposition. Send the proof artifact within sixty minutes of the call ending. Next: the discovery-call runbook — how to put all of this together inside a real 45-minute first call.",
   },
   {
     slideId: "se-slide-why",
@@ -313,7 +313,7 @@ export const salesEnablementNarrations: SESlideNarration[] = [
     title: "Week 3 · Your First 7 Days",
     voiceId: VOICE,
     script:
-      "This slide is the rep's commitment, not the customer's. The order matters. Step one — read the Enablement deck end to end, Week 1 first. Step two — only then read the Medium Pitch, Executive Pitch 3, because every Enablement slide is teaching you a slide in that deck. Step three — practise the we already have an SMS role-play using Acknowledge, Reframe, Bridge, and end by booking a twenty-minute focused walkthrough on the prospect's highest-cost use case. Step four — bookmark the Command Centre as your single source of truth, and use the Persona Deep-Dive and Signals 101 Playbook as your reference shelves. The pain this addresses: most new reps wait to be pulled into deals; the ones who win are the ones who ramp themselves. The value lever: when you can tick every line of the readiness checklist honestly, you're ready for the next conversation. Final delivery tip — the closing line of this academy is the same line you should carry into every customer meeting: you're not selling software, you're selling the first connected operating model in aviation. Now go practise.",
+      "This slide is the rep's commitment, not the customer's — and it is now a 30-day calendar, not a checklist. Days 1 to 7 you read. The Enablement deck end-to-end, then Executive Pitch 3 alongside it. Days 8 to 14 you shadow. Two live calls minimum, one discovery and one walkthrough. Days 15 to 21 you practise. Three Practice Center sessions — VP Safety, VP Ops, CIO — using Acknowledge, Reframe, Bridge on every objection. Days 22 to 30 you lead. A real discovery call, using the runbook on a second monitor, ending with the scripted deal-stage line that books the next session. The pain this addresses: most new reps wait to be pulled into deals; the ones who win ramp themselves. The value lever: by day 30 you've booked your first focused use-case session, with the right two people in the room. Final delivery tip — the closing line of this academy is the same line you carry into every customer meeting: you're not selling software, you're selling the first connected operating model in aviation. Now go practise.",
   },
   {
     slideId: "se-w2-capstone-whiteboard",
@@ -321,6 +321,48 @@ export const salesEnablementNarrations: SESlideNarration[] = [
     voiceId: VOICE,
     script:
       "This is the Week 2 capstone — and it's the slide you'll come back to more than any other in this academy. Why it matters: by now you can name each capability in isolation, but customers don't buy capabilities, they buy outcomes. This slide proves the platform delivers one, end-to-end, in five days. The core message — one sentence, learn it verbatim: one use case, every capability, one DTOP loop. The pain you're naming: today the same scenario takes their team three weeks across five disconnected tools, and they still can't prove the loop closed. The value lever: on this platform, an unstable approach trend at Madrid — airport code MAD — is Detected by Operational Data on day one, Triggered into recommended controls by the Intelligence Layer on day two, Orchestrated by Automation and Unified Mobile through to crew devices by day three, and Proven flat and audit-ready by Insights on day five. How to deliver it: draw the loop first, name the capability inside each cell second, and only then tell the story — point at each box as you speak. Do not list capabilities; let the use case do that work for you. End on Prove, then pause. Practise this until you can do it in sixty seconds without looking at the slide. Next we move into Week 3 — turning this capstone into a discovery, walkthrough and close.",
+  },
+  {
+    slideId: "se-discovery-question-bank",
+    title: "Week 3 · Discovery Question Bank",
+    voiceId: VOICE,
+    script:
+      "This slide matters because discovery is where deals are won or lost — and most reps wing it. The core message: every great discovery call pulls four to six questions from the bank, one per DTOP step minimum. The pain you're naming: reps default to pitching when they get nervous; this gives you a script you can fall back to in any room. The value lever: each question comes with what a good answer sounds like, and what a red-flag answer sounds like — so you're listening for the wedge, not just talking. How to deliver it: never read these out loud as a list. Pick four. Ask one. Shut up. Take notes. The red-flag answers are the ones you want — they are the gaps DTOP closes. Avoid stacking questions back-to-back; let silence do the work. Next: the persona playbook — because the same question lands differently depending on the room.",
+  },
+  {
+    slideId: "se-persona-playbook",
+    title: "Week 3 · Persona Playbook",
+    voiceId: VOICE,
+    script:
+      "This slide matters because the same pitch crashes against one persona and sings to the next. The core message — five rooms, five different conversations, one platform underneath. For each persona: the pain in one line, the two questions only they can answer, the metric they care about, the terminology landmine to avoid, and the proof artifact to point at. The pain you're addressing: reps tend to give the CEO pitch to everyone — and the VP Safety wants risk evidence while the CIO wants integration and governance. The value lever: when you mirror their metric back in the first five minutes, you earn the next meeting. How to deliver it: before any call, open this slide and pick the row. Internalise the landmine — never say FOQA or FDM or ASAP to safety; use Operational Data and Generative AI. Never pitch an SMS replacement; we extend theirs. End every persona conversation with the proof artifact you'll send within an hour of the call. Next we move into the use case cheat sheet — same discipline, applied to which use case to surface for which buyer.",
+  },
+  {
+    slideId: "se-competitive-cheatsheet",
+    title: "Week 3 · Competitive Cheat Sheet",
+    voiceId: VOICE,
+    script:
+      "This slide matters because the question 'how are you different from X' will come — and the worst answer is 'we do everything they do, plus more'. The core message: every competitor stops at a specific point in the DTOP loop. Name the stop, deliver the one-sentence reframe, then ask the trap question that lets the prospect feel the gap themselves. The pain you're naming: reps argue features and lose; you want them to argue scope of the loop. The value lever: when you say 'standalone SMS is great at Detect — and it stops there', you've moved the conversation from feature-by-feature to operating-model. How to deliver it: never disparage the competitor — acknowledge what they're strong at, name where they stop, then drop the trap question and stay silent. The trap question is the one the prospect can't answer without realising their current stack is half a loop. One competitor per call is plenty. Next: objections — same Acknowledge, Reframe, Bridge pattern, but now eight of them with the proof artifact to send afterwards.",
+  },
+  {
+    slideId: "se-discovery-call-runbook",
+    title: "Week 3 · Discovery-Call Runbook",
+    voiceId: VOICE,
+    script:
+      "This slide matters because a 45-minute first call has a shape, and reps who improvise the shape lose the room. The core message — four blocks: 0 to 2 minutes Open, 2 to 10 minutes Frame, 10 to 35 minutes Discover, 35 to 45 minutes Qualify and book the next step. The pain you're naming: most first calls die in the Discover block because the rep either pitches too early or asks too many soft questions. The value lever: this runbook is verbatim — opener, transition, close — and you keep it open on a second monitor during real calls. How to deliver it as a coach: practise the opener until it sounds conversational, not scripted. Practise the silence after the discovery questions — silence is what makes a customer fill in the gap. Practise the close line out loud, with a date and a name, before the call so it isn't the first time you say it. Never let a discovery call end without a calendar invite proposed. Next: deal-stage next-step language — the scripted lines that move every stage of the deal forward.",
+  },
+  {
+    slideId: "se-deal-stage-language",
+    title: "Week 3 · Deal-Stage Next-Step Language",
+    voiceId: VOICE,
+    script:
+      "This slide matters because deals stall between stages, not inside them — and the unlock is a scripted line, said out loud, with a date and a name. The core message — four transitions: first call to working session, working session to focused use-case session, use-case session to executive readout, readout to commercial scoping. For each, a goal, the right person to bring next, and a scripted line. The pain you're naming: reps over-rely on email and under-rely on a verbal commitment in the room. The value lever: when you propose the next step before you hang up, with the two people you need in it, you close 60 percent more often. How to deliver it: pick the line, customise the date and the names, say it before the call wraps. Avoid generic phrases like 'let's circle back'. Always include who else needs to be in the next room, and why — that's what advances the deal organisationally, not just in your CRM. Next: Why Comply365, our closing argument.",
+  },
+  {
+    slideId: "se-practice-center-bridge",
+    title: "Week 3 · Practice Center Bridge",
+    voiceId: VOICE,
+    script:
+      "This slide matters because reading about objections does not make you good at handling them — only reps do. The core message: run a Practice Center role-play before you take a real meeting with that persona. Three featured Week 3 scenarios: VP Safety, VP Ops, CIO — voice-driven, scored, repeatable. The pain you're naming: most reps practise on customers; the ones who win practise on the AI first. The value lever: every scenario uses the same narration scripts you've just studied, and scores you against the key messages — so you know which message you're under-landing before it costs you a deal. How to deliver it as a coach: rule of thumb — don't run a real first call with a persona until you can score green on the matching role-play. Run it twice on friendly, once on skeptical, once on hostile, and only then book the real meeting. Next: your first 30 days as a Comply365 seller — read, shadow, practise, lead.",
   },
 ];
 
