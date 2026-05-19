@@ -315,6 +315,13 @@ export const salesEnablementNarrations: SESlideNarration[] = [
     script:
       "This slide is the rep's commitment, not the customer's. The order matters. Step one — read the Enablement deck end to end, Week 1 first. Step two — only then read the Medium Pitch, Executive Pitch 3, because every Enablement slide is teaching you a slide in that deck. Step three — practise the we already have an SMS role-play using Acknowledge, Reframe, Bridge, and end by booking a twenty-minute focused walkthrough on the prospect's highest-cost use case. Step four — bookmark the Command Centre as your single source of truth, and use the Persona Deep-Dive and Signals 101 Playbook as your reference shelves. The pain this addresses: most new reps wait to be pulled into deals; the ones who win are the ones who ramp themselves. The value lever: when you can tick every line of the readiness checklist honestly, you're ready for the next conversation. Final delivery tip — the closing line of this academy is the same line you should carry into every customer meeting: you're not selling software, you're selling the first connected operating model in aviation. Now go practise.",
   },
+  {
+    slideId: "se-w2-capstone-whiteboard",
+    title: "Week 2 · Capstone Whiteboard",
+    voiceId: VOICE,
+    script:
+      "This is the Week 2 capstone — and it's the slide you'll come back to more than any other in this academy. Why it matters: by now you can name each capability in isolation, but customers don't buy capabilities, they buy outcomes. This slide proves the platform delivers one, end-to-end, in five days. The core message — one sentence, learn it verbatim: one use case, every capability, one DTOP loop. The pain you're naming: today the same scenario takes their team three weeks across five disconnected tools, and they still can't prove the loop closed. The value lever: on this platform, an unstable approach trend at MAD is Detected by Operational Data on day one, Triggered into recommended controls by the Intelligence Layer on day two, Orchestrated by Automation and Unified Mobile through to crew devices by day three, and Proven flat and audit-ready by Insights on day five. How to deliver it: draw the loop first, name the capability inside each cell second, and only then tell the story — point at each box as you speak. Do not list capabilities; let the use case do that work for you. End on Prove, then pause. Practise this until you can do it in sixty seconds without looking at the slide. Next we move into Week 3 — turning this capstone into a discovery, walkthrough and close.",
+  },
 ];
 
 export const getSalesEnablementNarration = (slideId: string): SESlideNarration | undefined =>
