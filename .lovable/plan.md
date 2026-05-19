@@ -1,29 +1,30 @@
-## Goal
+# Plan — Realign W2 "In-Product · Insights & Intelligence" narration
 
-Align the Week 2 use-case slide copy verbatim with the source the user supplied. Visuals stay; only string content changes.
+## Problem
+The narration for `se-slide-coanalyst` (component `TechV4Slide7CoAnalyst`, titled "In-Product · Insights & Intelligence — The same intelligence layer expressed inside every core application") currently describes the Intelligence Layer in the abstract. The actual slide visualises a 3×3 matrix: the **same** capability surfacing **inside each Core App** — **SafetyManager365 = Available**, **ContentManager365 = Coming Soon**, **TrainingManager365 = Coming Soon** — with three capability rows (Ask in plain English · Cross-domain insight & root cause · Cited answer + single next step). The narration never names that story and doesn't tee up the next slide's per-app use cases.
 
-## Audit vs. source
+## Edit (single file)
+`src/data/salesEnablementNarration.ts` — rewrite the `script` for `slideId: "se-slide-coanalyst"`.
 
-**Intelligence & Insights — Per-Solution** (`SECapabilityUseCases`, capability `intelligence`): already matches. No change.
+New script must land:
 
-**Automation — Use Cases** (`SECapabilityUseCases`, capability `automation`):
-- Card 1 "Trigger Training Updates on Procedure Revision" — expand body to: *"When a new revision of a procedure is published, send a notification to owners of linked training modules to inform them of the revision. Create a task in TrainingManager365 to perform a review and carry out updates."* Keep the "One step in the DTOP cycle." note.
-- Card 2 "Trigger Document Updates on Regulation Amendment" — expand body to: *"When a new revision of a regulation is published, trigger a new draft of related procedures with AI-generated content updates — which in turn triggers a document-owner review."* Keep the "Another step in the DTOP cycle." note.
-- Card 3 "Trigger Risk Control Review on Deteriorating Training Results" — adjust body to: *"When training evaluations fall below a pre-determined threshold, trigger a risk review in SafetyManager365 for the risk controls linked to the associated training module."* No DTOP note (user didn't supply one).
+1. **Why this slide matters** — we just showed platform-wide Insights & Intelligence; this slide shows the *same* intelligence layer **expressed inside each Core App** so reps don't get asked "great, but does it work where my team already lives?".
+2. **Core message (verbatim line)** — "One intelligence layer, three doorways: Safety today, Content and Training next — same engine, same guardrails, scoped to the app the user is already in."
+3. **What's on the slide** — three columns are the Core Apps with rollout chips: **SafetyManager365 — Available now**, **ContentManager365 — Coming Soon**, **TrainingManager365 — Coming Soon**. Three rows are the capability the layer brings into each app: ask in plain English, cross-domain insight & root cause, cited answer plus the single next step a human takes inside that app.
+4. **The honest limitation** — in-product, the layer reasons over **that app's own data** (single-domain). The platform-wide view shown two slides ago is what you get when the same layer reasons **across** all three. Same engine, different scope. Reps must say this out loud — it's how we defuse "is this real or roadmap?".
+5. **Pain → value pivot** — pain: today an analyst leaves the app, opens BI, exports CSVs, then comes back. Value: the answer arrives **where the work happens**, with cited evidence and one next step a human confirms — never an autonomous workflow.
+6. **How to deliver** — point at the Safety column first ("this is live"), then the Content and Training columns ("same pattern, sequenced rollout"). Do **not** quote the 90% vs 35% accuracy stat here — that lives on the Intelligence-Layer-vs-Generic-AI slide later in Week 2; reusing it here blunts it.
+7. **Discovery question** — "Which of your three teams — Safety, Content, or Training — loses the most hours per week leaving their app to chase an answer?"
+8. **Transition** — "Next slide, the Monday-morning picture: the specific per-solution use case inside each Core App — the safety-report pull in SafetyManager365, the mobile-sync list in ContentManager365, and the recurrency roster in TrainingManager365."
 
-**Recommendations & Prescriptive Actions** (`SECapabilityUseCases`, capability `recommendations`):
-- Per-Solution Content card — change to: *"Based on how users are searching our OMA, what updates do you recommend to make search quicker and easier?"*
-- Per-Solution Training card — change to: *"What updates would you recommend to our Dangerous Goods training to improve engagement statistics?"*
-- Per-Solution Safety card — change to: *"What risk controls would you recommend to mitigate against unstable approach at location X?"* (adds "against").
-- Platform cards already match — no change.
-
-**Intelligence & Insights — Platform-Wide Use Cases** (`SEPlatformWideIntelligenceUseCases`): all three cards already match the user's source. No change.
-
-## Edits
-
-Single file: `src/components/sales-enablement-slides/SECapabilityUseCases.tsx` — update the `body` strings for the 3 Automation cards and 3 Recommendations per-solution cards as listed above.
+## Constraints respected
+- BrandNumber product naming (SafetyManager365, ContentManager365, TrainingManager365).
+- 5-part Coach Script Standard (rep-facing teaching script, not customer copy).
+- No "90% vs 35%" reuse; no "pilot" framing; no FOQA/FDM/ASAP.
+- Roadmap honesty: Safety = available; Content/Training = "coming soon" (matches the slide's chips — no fabricated dates).
+- Visuals, slide order, and the next slide's narration (`se-slide-coanalyst-usecases`) are unchanged; only the transition tail of the current script is rewritten to hand off cleanly to that slide's three per-app cards.
 
 ## Out of scope
-
-- No layout, narration, slide order, Week 1, Week 3 or PPTX exporter changes.
-- Narration scripts already reference these use cases at the conceptual level; no script rewrite needed.
+- No component, layout, or slide-order changes.
+- No edits to `se-slide-coanalyst-usecases` script (already correctly per-app — Safety report pull, Content mobile-sync list, Training recurrency roster).
+- No Week 1 or Week 3 narration changes.
