@@ -62,9 +62,9 @@ const weekProps = {
     kicker: "Capabilities",
     title: "How the capabilities fit together",
     learningGoal:
-      "By the end of Week 2 you can land the platform-wide Insights & Intelligence capability, name the three platform-wide use cases only this layer can answer, walk the Intelligence Layer (Insights · Automation), handle the generic-AI objection, anchor on Regulation Management as your end-to-end proof, and close on the Unified Mobile experience.",
+      "By the end of Week 2 you can walk the platform map, land Insights & Intelligence as a platform-wide capability, name the cross-domain use cases only this layer can answer, explain the Intelligence Layer stack (Insights → Recommendations → Automation) and why it beats generic AI (~90% vs ~35%), anchor on Regulation Management as your end-to-end proof, show how Unified Mobile closes the loop on the device — and tell the whole story as one DTOP loop in 60 seconds using the W2 capstone.",
     estimatedMinutes: 16,
-    upNext: ["The Platform map", "Insights & Intelligence", "Platform-wide use cases", "Intelligence Layer", "Per-solution use cases", "Insights", "Recommendations use cases", "Automation", "Automation use cases", "Intelligence Layer vs Generic AI", "Regulation Management", "Mobile", "Capability cheat sheet"],
+    upNext: ["The Platform map", "Insights & Intelligence", "Platform-wide use cases", "Intelligence Layer", "Per-solution use cases", "Insights", "Recommendations use cases", "Automation", "Automation use cases", "Intelligence Layer vs Generic AI", "Regulation Management (end-to-end proof)", "Unified Mobile", "Capability cheat sheet", "Capstone — one use case, every capability, one DTOP loop"],
   },
   w3: {
     moduleNumber: 3,
