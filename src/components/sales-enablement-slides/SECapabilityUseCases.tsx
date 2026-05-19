@@ -135,7 +135,7 @@ const SECapabilityUseCases = ({ slideNumber, capability, ...narrationProps }: Pr
           </div>
 
           {data.perSolution ? (
-            <div className="flex flex-col gap-3 flex-1 auto-rows-fr">
+            <div className={`${showPlatform ? "flex flex-col" : "grid grid-cols-1 lg:grid-cols-3"} gap-3 flex-1 auto-rows-fr`}>
               {data.perSolution.map((card) => {
                 const s = moduleStyle[card.module];
                 const Icon = s.icon;
