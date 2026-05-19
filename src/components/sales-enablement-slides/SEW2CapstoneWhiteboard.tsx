@@ -14,7 +14,7 @@ const beats = [
     dot: "bg-blue-400",
     capability: "Operational Data + Generative AI",
     say:
-      "Day 1 — the platform spots a rising trend of unstable approaches at MAD over the last 14 days. No analyst exported a CSV; the signal surfaced itself.",
+      "Day 1 — the platform spots a rising trend of unstable approaches at Madrid (MAD) over the last 14 days. No analyst exported a CSV; the signal surfaced itself.",
   },
   {
     n: 2,
@@ -58,7 +58,7 @@ const SEW2CapstoneWhiteboard = ({ slideNumber, ...narrationProps }: Props) => (
     id="se-w2-capstone-whiteboard"
     slideNumber={slideNumber}
     title="W2 Capstone — One Use Case, Every Capability, One DTOP Loop"
-    subtitle="Unstable approach trend at MAD · closed in 5 days, end-to-end · drill this until you can recite it in 60 seconds."
+    subtitle="Unstable approach trend at Madrid (MAD) · closed in 5 days, end-to-end · drill this until you can recite it in 60 seconds."
     showHeader
     {...narrationProps}
   >
@@ -81,7 +81,7 @@ const SEW2CapstoneWhiteboard = ({ slideNumber, ...narrationProps }: Props) => (
             <rect x="30" y="50" width="300" height="150" rx="8" fill="none" stroke="#2563eb" strokeWidth="4" />
             <text x="50" y="82" fill="#2563eb" fontSize="24" fontWeight="700">1. Detect</text>
             <text x="50" y="112" fill="#1e3a5f" fontSize="16">unstable approach trend</text>
-            <text x="50" y="134" fill="#1e3a5f" fontSize="16">spotted at MAD · 14 days</text>
+            <text x="50" y="134" fill="#1e3a5f" fontSize="16">spotted at Madrid (MAD) · 14d</text>
             <rect x="50" y="150" width="240" height="32" rx="16" fill="#dbeafe" stroke="#2563eb" strokeWidth="1.5" />
             <text x="170" y="172" fill="#1e3a5f" fontSize="13" textAnchor="middle" fontWeight="700">
               Op Data + Generative AI
