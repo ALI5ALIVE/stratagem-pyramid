@@ -1,36 +1,34 @@
-Enable the narration play button on Week module divider slides in `src/pages/SalesEnablement.tsx`.
+## Two minor fixes for the Sales Enablement · Capabilities week
 
-## Root cause
+### 1. Slide referencing "DG" — spell out Dangerous Goods on first use
 
-In the slide map (lines 228–238), divider slides explicitly receive **no** narration props:
+File: `src/components/sales-enablement-slides/SEPlatformInsightsIntelligence.tsx` (lines 52–53)
+
+Change the first mention so the acronym is defined inline, then keep the shorthand:
+
+- Before: `3 stations show DG handling spikes … overdue DG recurrent training.`
+- After:  `3 stations show Dangerous Goods (DG) handling spikes … overdue DG recurrent training.`
+
+No other slides need changes — the sibling use-cases slide already says "Dangerous Goods" in full.
+
+### 2. Fix "FOQA" pronunciation in the narration audio
+
+The TTS engine is reading F‑O‑Q‑A letter-by-letter. We want it pronounced as one word ("Foe‑kuh", rhymes with Oprah).
+
+Fix at the edge function level so every current and future narration benefits, mirroring the existing `DTOP → "D-T-O-P"` substitution.
+
+File: `supabase/functions/elevenlabs-tts/index.ts`
+
+Add a normaliser alongside the existing DTOP rule:
 
 ```ts
-const slideNarrationProps = (slide as any).dividerProps
-  ? {}                       // ← dividers get nothing, so no onPlay → no play button
-  : { isActive, isPlaying, isLoading, progress, hasCompleted, onPlay, onPause };
+processedText = processedText.replace(/\bFOQA\b/g, "Foe-kuh");
 ```
 
-`PitchSlideContainer` only renders `SlidePlayButton` when `onPlay` is defined, so Week 1 / Week 2 / Week 3 dividers never show one — even though narration entries already exist for `se-week-1`, `se-week-2`, and `se-week-3`.
+(Optionally also `FDM → "F-D-M"` and `ASAP → "A-S-A-P"` if Paul ever wants them read as letters — leaving those out for now since he didn't ask.)
 
-## Change
+No narration script edits needed; the script text remains "FOQA" for readability, only the audio pronunciation changes.
 
-Remove the divider exclusion so every slide gets narration props:
-
-```ts
-const slideNarrationProps = {
-  isActive,
-  isPlaying: isActive && narration.isPlaying,
-  isLoading: isActive && narration.isLoading,
-  progress: isActive ? narration.progress : 0,
-  hasCompleted: isActive && narration.hasCompleted,
-  onPlay: () => narration.play(slide.id),
-  onPause: () => narration.pause(),
-};
-```
-
-`SEModuleDivider` already spreads `...narrationProps` into `PitchSlideContainer`, so the play button will appear automatically on all three week dividers.
-
-## Scope
-
-- One-line conditional removed in `src/pages/SalesEnablement.tsx`.
-- No component, narration, or DB changes.
+### Verification
+- Reload `/sales-enablement`, navigate to the Insights & Intelligence slide → confirm "Dangerous Goods (DG)" reads correctly.
+- Play the Week 2 divider narration → confirm "FOQA" is now spoken as one word.
