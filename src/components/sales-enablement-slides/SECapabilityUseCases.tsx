@@ -54,17 +54,17 @@ const DATA: Record<Capability, CapabilityData> = {
     platform: [
       {
         headline: "Trigger Training Updates on Procedure Revision",
-        body: "When a new procedure revision is published, notify owners of linked training modules and create a review-and-update task in TrainingManager365.",
+        body: "When a new revision of a procedure is published, send a notification to owners of linked training modules to inform them of the revision. Create a task in TrainingManager365 to perform a review and carry out updates.",
         note: "One step in the DTOP cycle.",
       },
       {
         headline: "Trigger Document Updates on Regulation Amendment",
-        body: "When a regulation revision is published, draft updated procedures with AI-generated content for document-owner review.",
+        body: "When a new revision of a regulation is published, trigger a new draft of related procedures with AI-generated content updates — which in turn triggers a document-owner review.",
         note: "Another step in the DTOP cycle.",
       },
       {
         headline: "Trigger Risk Control Review on Deteriorating Training Results",
-        body: "When training evaluations fall below a threshold, trigger a SafetyManager365 risk review for the controls linked to that training module.",
+        body: "When training evaluations fall below a pre-determined threshold, trigger a risk review in SafetyManager365 for the risk controls linked to the associated training module.",
       },
     ],
   },
@@ -74,15 +74,15 @@ const DATA: Record<Capability, CapabilityData> = {
     perSolution: [
       {
         module: "Safety",
-        body: "\"What risk controls would you recommend to mitigate unstable approach at location X?\"",
+        body: "\"What risk controls would you recommend to mitigate against unstable approach at location X?\"",
       },
       {
         module: "Content",
-        body: "\"Based on how users search the OMA, what updates would make search faster and easier?\"",
+        body: "\"Based on how users are searching our OMA, what updates do you recommend to make search quicker and easier?\"",
       },
       {
         module: "Training",
-        body: "\"What updates would you recommend to our Dangerous Goods training to improve engagement?\"",
+        body: "\"What updates would you recommend to our Dangerous Goods training to improve engagement statistics?\"",
       },
     ],
     platform: [
