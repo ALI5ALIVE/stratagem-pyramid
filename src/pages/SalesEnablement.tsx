@@ -27,6 +27,7 @@ import SEFootprintAllThreeWhiteboard from "@/components/sales-enablement-slides/
 import SEWeek2PlatformOverview from "@/components/sales-enablement-slides/SEWeek2PlatformOverview";
 import SEPlatformInsightsIntelligence from "@/components/sales-enablement-slides/SEPlatformInsightsIntelligence";
 import SEPlatformWideIntelligenceUseCases from "@/components/sales-enablement-slides/SEPlatformWideIntelligenceUseCases";
+import SEW2CapstoneWhiteboard from "@/components/sales-enablement-slides/SEW2CapstoneWhiteboard";
 
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
 import PFSlide9Value from "@/components/platform-slides/PFSlide9Value";
@@ -118,6 +119,7 @@ const slides = [
   { id: "se-slide-regmgmt", label: "W2 · Regulation Management Use Case", component: TechSlideRegulationSummary },
   { id: "se-slide-mobile", label: "W2 · Mobile", component: TechV4SlideMobile },
   { id: "se-slide-talktrack", label: "W2 · Capability Talk Track", component: SELayerTalkTrack },
+  { id: "se-w2-capstone-whiteboard", label: "W2 · Capstone — One Use Case, Every Capability, One DTOP Loop", component: SEW2CapstoneWhiteboard },
   // WEEK 3
   { id: "se-week-3", label: "▸ Week 3 · Sell & Win", component: SEModuleDivider, dividerProps: weekProps.w3 },
   { id: "se-discovery-to-close", label: "W3 · Discovery → Demo → Close", component: SEDiscoveryToClose },
