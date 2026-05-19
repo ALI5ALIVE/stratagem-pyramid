@@ -45,11 +45,7 @@ const DATA: Record<Capability, CapabilityData> = {
         body: "Create a list of crew with upcoming training renewals for a specific base, to schedule classroom training.",
       },
     ],
-    platform: [
-      { body: "\"Show me a correlation between recent safety trends and training deficiencies.\"" },
-      { body: "\"How are we performing with the recent updates to the Dangerous Goods manual? Has the resulting training led to fewer incidents?\"" },
-      { body: "\"Are we ready for the upcoming Part 145 audit?\"" },
-    ],
+    platform: [],
   },
   automation: {
     title: "Automation — Use Cases",
@@ -115,6 +111,12 @@ const moduleStyle = {
 const SECapabilityUseCases = ({ slideNumber, capability, ...narrationProps }: Props) => {
   const data = DATA[capability];
   const wide = data.perSolution === null;
+  const showPlatform = data.platform.length > 0;
+  const perSolutionSpan = !showPlatform
+    ? "lg:col-span-12"
+    : wide
+      ? "lg:col-span-4"
+      : "lg:col-span-5";
 
   return (
     <SalesSlideContainer
@@ -126,7 +128,7 @@ const SECapabilityUseCases = ({ slideNumber, capability, ...narrationProps }: Pr
     >
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 min-h-0">
         {/* PER SOLUTION */}
-        <div className={wide ? "lg:col-span-4 flex flex-col gap-3" : "lg:col-span-5 flex flex-col gap-3"}>
+        <div className={`${perSolutionSpan} flex flex-col gap-3`}>
           <div className="flex items-center gap-2 shrink-0">
             <Layers className="h-4 w-4 text-muted-foreground" />
             <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Per Solution</span>
@@ -165,6 +167,7 @@ const SECapabilityUseCases = ({ slideNumber, capability, ...narrationProps }: Pr
         </div>
 
         {/* PLATFORM */}
+        {showPlatform && (
         <div className={wide ? "lg:col-span-8 flex flex-col gap-3" : "lg:col-span-7 flex flex-col gap-3"}>
           <div className="flex items-center gap-2 shrink-0">
             {capability === "automation" ? (
@@ -199,6 +202,7 @@ const SECapabilityUseCases = ({ slideNumber, capability, ...narrationProps }: Pr
             ))}
           </div>
         </div>
+        )}
       </div>
     </SalesSlideContainer>
   );
