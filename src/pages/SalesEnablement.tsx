@@ -61,9 +61,9 @@ const weekProps = {
     kicker: "Capabilities",
     title: "How the capabilities fit together",
     learningGoal:
-      "By the end of Week 2 you can explain the platform-wide Insights & Intelligence capability, walk the Intelligence layer (Intelligence Layer · Insights · Automation), and pick the right capability to lead with for the room you're in.",
+      "By the end of Week 2 you can land the platform-wide Insights & Intelligence capability, name the three platform-wide use cases only this layer can answer, walk the Intelligence Layer (Insights · Automation), handle the generic-AI objection, anchor on Regulation Management as your end-to-end proof, and close on the Unified Mobile experience.",
     estimatedMinutes: 16,
-    upNext: ["The Platform map", "Insights & Intelligence", "Intelligence Layer", "Use cases", "Platform-wide use cases", "Insights", "Automation", "Intelligence Layer vs Generic AI", "Regulation Management", "Mobile", "Capability cheat sheet"],
+    upNext: ["The Platform map", "Insights & Intelligence", "Platform-wide use cases", "Intelligence Layer", "Per-solution use cases", "Insights", "Recommendations use cases", "Automation", "Automation use cases", "Intelligence Layer vs Generic AI", "Regulation Management", "Mobile", "Capability cheat sheet"],
   },
   w3: {
     moduleNumber: 3,
@@ -107,9 +107,9 @@ const slides = [
   { id: "se-week-2", label: "▸ Week 2 · Capabilities", component: SEModuleDivider, dividerProps: weekProps.w2 },
   { id: "se-week-2-overview", label: "W2 · The Platform (map)", component: SEWeek2PlatformOverview },
   { id: "se-platform-insights-intelligence", label: "W2 · Platform · Insights & Intelligence", component: SEPlatformInsightsIntelligence },
-  { id: "se-slide-coanalyst", label: "W2 · Intelligence — Intelligence Layer", component: TechV4Slide7CoAnalyst },
-  { id: "se-slide-coanalyst-usecases", label: "W2 · Intelligence & Insights — Use Cases", component: SECapabilityUseCases, componentProps: { capability: "intelligence" } },
   { id: "se-platform-wide-intelligence-usecases", label: "W2 · Intelligence & Insights — Platform-Wide Use Cases", component: SEPlatformWideIntelligenceUseCases },
+  { id: "se-slide-coanalyst", label: "W2 · Intelligence — Intelligence Layer", component: TechV4Slide7CoAnalyst },
+  { id: "se-slide-coanalyst-usecases", label: "W2 · Intelligence & Insights — Per-Solution Use Cases", component: SECapabilityUseCases, componentProps: { capability: "intelligence" } },
   { id: "se-slide-insights", label: "W2 · Intelligence — Insights", component: TechV4SlideInsights },
   { id: "se-slide-insights-usecases", label: "W2 · Recommendations — Use Cases", component: SECapabilityUseCases, componentProps: { capability: "recommendations" } },
   { id: "se-slide-automation", label: "W2 · Intelligence — Automation", component: TechV4SlideAutomation },
