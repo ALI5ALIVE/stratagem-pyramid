@@ -24,7 +24,10 @@ serve(async (req) => {
     }
 
     // Pronounce brand acronym letter-by-letter (e.g. "DTOP" -> "D-T-O-P")
-    const processedText = text.replace(/\bDTOP\b/g, "D-T-O-P");
+    // Pronounce "FOQA" as one word (rhymes with "Oprah"), not F-O-Q-A
+    const processedText = text
+      .replace(/\bDTOP\b/g, "D-T-O-P")
+      .replace(/\bFOQA\b/g, "Foe-kuh");
 
     console.log(`Generating TTS for text length: ${processedText.length}, voice: ${voiceId}`);
 
