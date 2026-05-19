@@ -8,13 +8,6 @@ interface Props extends SlideNarrationProps {
 
 const blocks = [
   {
-    tag: "Core Apps · Foundation",
-    title: "SafetyManager365 · ContentManager365 · TrainingManager365",
-    desc: "The three operational systems of record.",
-    color: "text-blue-400",
-    border: "border-blue-500/30 bg-blue-500/5",
-  },
-  {
     tag: "Intelligence & Orchestration",
     title: "Intelligence Layer · Insights · Automation",
     desc: "Turns the signals already in your operation into prescriptive action.",
