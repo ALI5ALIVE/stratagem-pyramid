@@ -456,3 +456,147 @@ export const stepName: Record<DtopStep, string> = {
   O: "Orchestrate",
   P: "Prove",
 };
+
+// ---------------------------------------------------------------------------
+// Who-to-Target — high-propensity accounts, anchored on existing Comply365
+// footprint. The easiest, fastest, highest-win-rate motion is expanding
+// inside customers who already trust one of the apps.
+// ---------------------------------------------------------------------------
+
+export interface PropensityTier {
+  tier: string; // "Tier 1"
+  label: string; // headline label
+  who: string; // who qualifies
+  why: string; // why they're high-propensity
+  talkTrack: string; // how to open the conversation
+  nextStep: string; // what to put on the table
+  accent: "emerald" | "sky" | "violet";
+}
+
+export const propensityTiers: PropensityTier[] = [
+  {
+    tier: "Tier 1",
+    label: "One app live · renewal in <12 months",
+    who: "Single-app customer (SafetyManager365, ContentManager365 or TrainingManager365) with a renewal window inside the next 12 months.",
+    why: "Highest propensity. They already trust the brand. The renewal is the trojan horse — lift the conversation out of price and into platform.",
+    talkTrack:
+      "Reframe the renewal as a strategic review. Don't lead with pricing — lead with where they are on the Operational Performance Roadmap.",
+    nextStep: "Offer the half-day Strategy & Vision Session as the renewal conversation.",
+    accent: "emerald",
+  },
+  {
+    tier: "Tier 2",
+    label: "Two apps live · already proved value twice",
+    who: "Customers running two of the three Core Apps — they've already crossed the integration trust threshold.",
+    why: "They've proved value twice. The third app plus the Intelligence Layer is the unlock — and they're pre-qualified on procurement.",
+    talkTrack:
+      "Show what the third app + platform-wide intelligence opens up. Anchor on a cross-domain use case only the full footprint can answer.",
+    nextStep: "Walkthrough on one cross-domain use case, then book the Strategy & Vision Session with their exec sponsor.",
+    accent: "sky",
+  },
+  {
+    tier: "Tier 3",
+    label: "Strategic / multi-BU customer",
+    who: "Multi-business-unit or multi-region customer already on the platform — the kind of account where the board is asking about AI and operational performance.",
+    why: "The story they need is the roadmap, not the next feature. They're the natural home for the Operational Performance Roadmap conversation.",
+    talkTrack:
+      "Lead with the roadmap and the vision. Position the half-day session as a peer-level strategy workshop with their leadership team.",
+    nextStep: "Book the Strategy & Vision Session as a joint exec workshop — bring our AE + SE, they bring exec + ops + IT.",
+    accent: "violet",
+  },
+];
+
+export const tier1Signals: string[] = [
+  "Renewal date inside the next 12 months",
+  "Named exec sponsor on the account",
+  "Recent audit finding, incident or regulator chatter",
+  "Visible mobile or training gap in their day-to-day requests",
+  "No AI vendor locked in for operational data yet",
+];
+
+export const whoNotToChaseFirst: string[] = [
+  "Cold prospects with no Comply365 footprint",
+  "RFPs we didn't shape",
+  "Single-app POCs against an entrenched incumbent",
+];
+
+// ---------------------------------------------------------------------------
+// Strategy & Vision Session — complimentary half-day workshop. Fixed agenda
+// reps can put on the table without scoping.
+// ---------------------------------------------------------------------------
+
+export interface AgendaBlock {
+  time: string;
+  title: string;
+  detail: string;
+  isBreak?: boolean;
+}
+
+export const visionSessionAgenda: AgendaBlock[] = [
+  {
+    time: "0:00 – 0:30",
+    title: "Where the industry is going",
+    detail: "The shift from prescriptive compliance to performance-based oversight. DTOP in plain English.",
+  },
+  {
+    time: "0:30 – 1:15",
+    title: "The platform story",
+    detail: "One platform, three Core Apps, one Intelligence Layer, one Unified Mobile — wired together by DTOP.",
+  },
+  {
+    time: "1:15 – 2:00",
+    title: "Capabilities deep-dive",
+    detail: "Tailored to their current footprint. Insights, Recommendations, Automation — anchored on their data shape.",
+  },
+  {
+    time: "2:00 – 2:15",
+    title: "Break",
+    detail: "Coffee. Informal questions. The room usually starts opening up here.",
+    isBreak: true,
+  },
+  {
+    time: "2:15 – 3:00",
+    title: "Operational Performance Roadmap",
+    detail: "Where they are today on the L1→L5 curve. What L4 predictive looks like for their operation.",
+  },
+  {
+    time: "3:00 – 3:45",
+    title: "Their DTOP loop, end-to-end",
+    detail: "One of their real use cases walked Detect → Trigger → Orchestrate → Prove on a whiteboard.",
+  },
+  {
+    time: "3:45 – 4:00",
+    title: "Agreed next step",
+    detail: "Scope the focused use-case session, name the exec sponsor, lock the date.",
+  },
+];
+
+export const visionSessionAttendees: string[] = [
+  "Exec sponsor (CEO / COO)",
+  "VP Safety or Head of SMS",
+  "VP Operations",
+  "Training & L&D lead",
+  "IT / Data lead",
+  "Comply365 AE + SE",
+];
+
+export const visionSessionLeaveBehind: string[] = [
+  "One-page Operational Performance maturity snapshot",
+  "Candidate first DTOP use case",
+  "90-day 'what's possible' view",
+];
+
+export const visionSessionRepTalkTrack: { step: string; line: string }[] = [
+  {
+    step: "Acknowledge",
+    line: "Totally hear you on [the day-to-day request] — we'll get that handled in parallel.",
+  },
+  {
+    step: "Reframe",
+    line: "The bigger question your leadership is being asked is where you'll be on operational performance in twelve months — and that one doesn't get answered in a ticket.",
+  },
+  {
+    step: "Propose",
+    line: "We run a complimentary half-day Strategy & Vision Session for that — fixed agenda, on-site or virtual, your team plus ours. Want me to send the agenda and propose two dates?",
+  },
+];
