@@ -34,6 +34,8 @@ import SECompetitiveCheatSheet from "@/components/sales-enablement-slides/SEComp
 import SEDiscoveryCallRunbook from "@/components/sales-enablement-slides/SEDiscoveryCallRunbook";
 import SEDealStageLanguage from "@/components/sales-enablement-slides/SEDealStageLanguage";
 import SEPracticeCenterBridge from "@/components/sales-enablement-slides/SEPracticeCenterBridge";
+import SEWhoToTarget from "@/components/sales-enablement-slides/SEWhoToTarget";
+import SEStrategyVisionSession from "@/components/sales-enablement-slides/SEStrategyVisionSession";
 
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
 import PFSlide9Value from "@/components/platform-slides/PFSlide9Value";
@@ -78,9 +80,10 @@ const weekProps = {
     kicker: "Sell & Win",
     title: "Sell it, prove it, win it",
     learningGoal:
-      "By the end of Week 3 you can run a real discovery call, pull the right questions for the room, read the persona, handle the top 8 objections, position against any competitor in the DTOP loop, and end every conversation with the scripted next-step line that books the meeting.",
-    estimatedMinutes: 42,
+      "By the end of Week 3 you can pick the right account to chase, run a real discovery call, pull the right questions for the room, read the persona, handle the top 8 objections, position against any competitor in the DTOP loop, end every conversation with the scripted next-step line, and put the complimentary half-day Strategy & Vision Session on the table.",
+    estimatedMinutes: 48,
     upNext: [
+      "Who to target (high-propensity accounts)",
       "Discovery → walkthrough → close",
       "Discovery question bank (DTOP)",
       "Persona playbook",
@@ -94,6 +97,7 @@ const weekProps = {
       "Why Comply365",
       "Practice Center bridge",
       "Your first 30 days",
+      "Strategy & Vision Session (the offer)",
     ],
   },
 };
@@ -142,6 +146,7 @@ const slides = [
   { id: "se-w2-capstone-whiteboard", label: "W2 · Capstone — One Use Case, Every Capability, One DTOP Loop", component: SEW2CapstoneWhiteboard },
   // WEEK 3
   { id: "se-week-3", label: "▸ Week 3 · Sell & Win", component: SEModuleDivider, dividerProps: weekProps.w3 },
+  { id: "se-who-to-target", label: "W3 · Who to Target", component: SEWhoToTarget },
   { id: "se-discovery-to-close", label: "W3 · Discovery → Demo → Close", component: SEDiscoveryToClose },
   { id: "se-discovery-question-bank", label: "W3 · Discovery Question Bank", component: SEDiscoveryQuestionBank },
   { id: "se-persona-playbook", label: "W3 · Persona Playbook", component: SEPersonaPlaybook },
@@ -163,6 +168,7 @@ const slides = [
   { id: "se-slide-why", label: "W3 · Why Comply365", component: TechSlideWhyComply },
   { id: "se-practice-center-bridge", label: "W3 · Practice Center Bridge", component: SEPracticeCenterBridge },
   { id: "se-slide-closing", label: "W3 · Your First 30 Days", component: SEClosingForReps },
+  { id: "se-strategy-vision-session", label: "W3 · Strategy & Vision Session", component: SEStrategyVisionSession },
 ];
 
 // Inject Week 1 divider right after the title slide.
