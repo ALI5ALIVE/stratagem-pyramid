@@ -81,7 +81,7 @@ const weekProps = {
     title: "Sell it, prove it, win it",
     learningGoal:
       "By the end of Week 3 you can pick the right account to chase, run a real discovery call, pull the right questions for the room, read the persona, handle the top 8 objections, position against any competitor in the DTOP loop, end every conversation with the scripted next-step line, and put the complimentary half-day Strategy & Vision Session on the table.",
-    estimatedMinutes: 48,
+    estimatedMinutes: 38,
     upNext: [
       "Who to target (high-propensity accounts)",
       "Discovery → walkthrough → close",
@@ -94,9 +94,6 @@ const weekProps = {
       "Objections (8 + proof)",
       "Discovery-call runbook",
       "Deal-stage next-step language",
-      "Why Comply365",
-      "Practice Center bridge",
-      "Your first 30 days",
       "Strategy & Vision Session (the offer)",
     ],
   },
@@ -111,7 +108,6 @@ const execPitchMapping: Record<string, string> = {
   "se-slide-dtop": "DTOP / Operating Model",
   "se-slide-coanalyst": "Intelligence Layer",
   "se-slide-outcomes": "Proof & Outcomes",
-  "se-slide-why": "Why Comply365",
 };
 
 const slides = [
@@ -165,9 +161,6 @@ const slides = [
   { id: "se-slide-objections", label: "W3 · Objections", component: SEObjections },
   { id: "se-discovery-call-runbook", label: "W3 · Discovery-Call Runbook", component: SEDiscoveryCallRunbook },
   { id: "se-deal-stage-language", label: "W3 · Deal-Stage Next-Step Language", component: SEDealStageLanguage },
-  { id: "se-slide-why", label: "W3 · Why Comply365", component: TechSlideWhyComply },
-  { id: "se-practice-center-bridge", label: "W3 · Practice Center Bridge", component: SEPracticeCenterBridge },
-  { id: "se-slide-closing", label: "W3 · Your First 30 Days", component: SEClosingForReps },
   { id: "se-strategy-vision-session", label: "W3 · Strategy & Vision Session", component: SEStrategyVisionSession },
 ];
 
