@@ -1,107 +1,64 @@
-## Goal
+## Analysis: Discovery-Call Runbook — language & flow improvements
 
-Tighten the Week 3 flow into a world-class "Sell & Win" arc, and fix slides where content is clipped by the fixed narration bar at the bottom of the viewport.
+### The core issue you flagged
 
-## Part A — Flow improvements (Week 3)
+**Open block, "Say this":**
+> "My goal today is to understand where **the loop breaks** for you operationally…"
 
-Current W3 order (24 slides) groups as: 2 recaps → targeting → process → discovery/persona/use cases → 6 footprint slides → outcomes → competitive → objections → discovery runbook → deal-stage language → strategy & vision. Three problems:
+"The loop" is internal Comply365 jargon (Detect → Trigger → Orchestrate → Prove, "closing the loop"). On a *first* call the customer has no shared definition for it — they'll either nod politely while confused, or mentally translate it as "is he talking about our SMS loop? feedback loop? PDCA?". Either way the rep has burned the opener on a phrase the buyer can't picture.
 
-1. **Two opening recaps feel redundant.** "Recap — One Use Case, Every Capability, One DTOP Loop" (re-use of W2 capstone) immediately followed by "Recap — Signals → DTOP" repeats the loop framing twice before the rep learns anything new.
-2. **Discovery-Call Runbook lands too late.** It's the structural call template — currently sits *after* Objections, but Objections, Persona Playbook, Question Bank, and Use Case Cheat Sheet are all inputs *into* the runbook. Reps need the runbook first, then the tactical kits slot into it.
-3. **No Week 3 closing capstone.** W2 ends on a capstone whiteboard. W3 ends on the Strategy & Vision Session CTA but has no "you can now do this end-to-end" summary mirroring it.
+Same problem repeats in the **Discover** block:
+> "…proof your last five actions **closed the loop** — how long?"
 
-### Proposed re-order
+By minute 10–35 the rep has *just* framed DTOP, so "closed the loop" is slightly more defensible — but it's still shorthand. A regulator-facing buyer thinks in words like "evidence", "audit trail", "time-to-close", not "loop".
 
-```text
-Open (frame the week)
-  1. W3 Divider · Sell & Win
-  2. Recap — Signals → DTOP (animated)        ← keep only this one recap
-                                                 (drop the W2-capstone re-use)
+### Other weaknesses in the runbook
 
-Target (who & why)
-  3. Who to Target
-  4. Customer Footprint — Intro
-  5. Footprint — One App  → One-App Whiteboard
-  6. Footprint — Two Apps → Two-Apps Whiteboard
-  7. Footprint — All Three + Platform → Whiteboard
-  8. Footprint — Value Ladder
-  9. Footprint — 3-Move Play
+1. **Open is rep-centric, not buyer-centric.** "…then I'll know whether what we do is even relevant" makes the call about *us* qualifying *them*. Better discovery openers frame the value *to the buyer* of the next 30 minutes ("…so you walk away with a clear view of where you'd get leverage, even if it isn't us").
 
-Run the call (structure first, then tactics)
- 10. Discovery → Demo → Close (the arc)
- 11. Discovery-Call Runbook                     ← MOVED UP from late W3
- 12. Discovery Question Bank
- 13. Persona Playbook
- 14. Use Case Cheat Sheet
- 15. Customer Outcomes
+2. **Frame block uses unexplained DTOP acronym in the "Say this".** "Most operators we work with are great at Detect — the signals are there. Where it breaks is between Trigger and Prove." If the rep hasn't drawn DTOP on screen yet, "Trigger" and "Prove" land as empty labels. The script should either (a) name DTOP explicitly with a one-line gloss, or (b) use plain-English verbs ("great at spotting issues … breaks down between deciding what to change and proving it landed").
 
-Win the room (objections + competitive)
- 16. Objections
- 17. Competitive Cheat Sheet
+3. **Discover block stacks three questions in one "Say this" cell** separated by "…". Reps will read it as one breath. The cell should be reformatted as a bulleted list of 3 distinct asks, with the instruction "ask one, then go silent for 10 seconds."
 
-Close & next step
- 18. Deal-Stage Next-Step Language
- 19. Strategy & Vision Session
- 20. NEW · W3 Capstone — "Your first 30 days"   ← mirrors W2 capstone
-```
+4. **Qualify + Next step is solid** but "this side of [date]" is a UK-ism that confuses US buyers — replace with "before [date]".
 
-### New slide to add
+5. **No "if they push back" branch.** A first-call runbook should give the rep one fallback line for the two most common derailments: "send me a deck first" and "we already have [competitor]". One extra micro-row would make this genuinely field-ready.
 
-**`SEW3Capstone` — "Your first 30 days as a rep"**
-Single whiteboard slide mirroring `SEW2CapstoneWhiteboard`:
-- One target account chosen using Who-to-Target criteria
-- Discovery call run from the Runbook with 3 persona-tuned questions
-- One use case picked from the cheat sheet
-- One objection handled
-- Close line from Deal-Stage Language
-- Booked: Strategy & Vision Session
-Rep's 60-second self-test: "name the account, the call, the use case, the objection, the next step."
+6. **Visual density.** All four rows are equal height, but Discover (25 of the 45 minutes) is the heart of the call. Giving it a visually larger row, or a "← 55% of the call lives here" marker, teaches the shape, not just the script.
 
-### Narration updates required
+### Proposed rewrites (verbatim, drop-in)
 
-- Drop the W3 capstone-recap narration script (`se-w3-capstone-recap`).
-- Update Signals→DTOP narration's "Next" transition to point at Who to Target.
-- Re-sequence the runbook narration to be the *structural* call template, with Question Bank / Persona / Use Case slides framed as "what you slot into each phase of the runbook."
-- Add a short narration for the new W3 Capstone (5-part coach format per `mem://content/sales-enablement/coach-script-standard`).
+**Open → Say this:**
+> "Thanks for the 30 minutes. My goal is simple — by the end of this call you'll know whether what we do is actually relevant to the problems on your plate, even if the answer is no. To get there I'd like to ask a few questions before I show anything. Fair?"
 
----
+**Open → Do this:** add — *"Avoid jargon in the first 5 minutes. No 'loop', no 'DTOP', no 'closed-loop compliance'. Earn those words later."*
 
-## Part B — Narration-bar overflow fixes
+**Frame → Say this:**
+> "Most operators we talk to are strong at *spotting* safety and compliance signals. Where it usually breaks down is the middle bit — deciding what to change, getting that change into manuals and training, and then *proving* to a regulator it actually reached the crew. Does that match what you see?"
 
-The fixed glassmorphism narration bar at `bottom-0` is ~76 px tall. `PitchSlideContainer` already reserves `pb-24 sm:pb-28` (~112 px), so slides built inside it are safe *if their inner content respects the container's flex-1 area*. Problems are in:
+**Discover → Say this** (reformat as three bullets, one at a time):
+- "When a safety or compliance signal lands on your desk, what actually triggers a procedure or training change?"
+- "From that decision to the crew flying or operating the new version — how long, realistically?"
+- "If an auditor walked in tomorrow and asked for evidence that your last five corrective actions reached the front line, how long would it take you to produce it?"
 
-1. **Slides that bypass the container's reserved padding** by using `h-full` + their own `pb-6` (e.g. `SEW3SignalsRecap` line 117: `... pt-2 pb-6`). The inner div eats into the container's bottom reserve.
-2. **Slides with too much content for the safe area** (5+ tall rows, dense whiteboards): `SEPersonaPlaybook`, `SEDiscoveryQuestionBank`, `SEUseCaseCheatSheet`, `SEFootprintValueLadder`, `SEFootprintPlaybook`, `SEDiscoveryCallRunbook`, `SECompetitiveCheatSheet`, `SEObjections`, `SEStrategyVisionSession`.
+**Qualify → Say this:** replace "this side of [date]" with "before [date]".
 
-### Fix approach (apply per slide as needed)
+**New 5th micro-row — "If they push back":**
+| 0 min, anytime | Handle | *Do:* Don't fight it. Trade. *Say:* "Happy to send a tailored deck — what's the one use case I should build it around?" / "Totally fair you have [competitor]. What's the one thing you wish it did that it doesn't?" |
 
-1. **Standardize inner padding.** Replace inner `pb-6` / `pb-4` with `pb-10 sm:pb-14` so content never sits inside the last 100 px of the slide. (Container already provides outer reserve; this adds a buffer for the bar's visual weight.)
-2. **Audit each of the 9 dense slides above** by screenshotting at 1373×927 and 1920×1080. For each one that clips:
-   - Reduce row count (e.g. Persona Playbook has 5 personas — convert to 2-column grid of 5 short cards instead of 5 stacked rows).
-   - Promote pinpoint `text-[10px]` / `text-[11px]` text to readable sizes (≥ `text-xs` for body, `text-sm` for headers) per the slide typography contract — these are currently too small to project anyway.
-   - Convert long single-page lists into 2-card grids that fit within ~820 px of vertical body space.
-3. **Verify visually** by capturing post-fix screenshots of each touched slide.
+### What I'd change in the slide component
 
-### Files to touch
+Strictly content edits in `SEDiscoveryCallRunbook.tsx`:
+- Rewrite the four `say:` strings as above.
+- Append the "Avoid jargon" sentence to the Open `do:`.
+- Convert Discover `say:` from a single string with "…" separators to an array of 3 questions; render as `<ul>` with `list-disc` so the rep sees three separate asks.
+- Add a 5th `blocks[]` entry for the pushback row (neutral slate accent so it reads as a fallback, not part of the main arc).
+- Give the Discover row `md:grid-rows-[1.4fr]` or a visible "55% of the call" tag in the time column to signal weight.
+- Keep all DTOP / "loop" language **out** of the Open block; it's fine from Frame onward because the rep has just defined it.
 
-- `src/components/sales-enablement-slides/SEW3SignalsRecap.tsx` — bump `pb-6` → `pb-10`.
-- `src/components/sales-enablement-slides/SEPersonaPlaybook.tsx` — convert 5 stacked rows to 2-col grid; raise text sizes.
-- `src/components/sales-enablement-slides/SEDiscoveryQuestionBank.tsx` — verify grid fits; add bottom buffer.
-- `src/components/sales-enablement-slides/SEUseCaseCheatSheet.tsx` — same.
-- `src/components/sales-enablement-slides/SEFootprintValueLadder.tsx`, `SEFootprintPlaybook.tsx` — verify ladder/play card heights.
-- `src/components/sales-enablement-slides/SECompetitiveCheatSheet.tsx`, `SEObjections.tsx` — same.
-- `src/components/sales-enablement-slides/SEDiscoveryCallRunbook.tsx` — same.
-- `src/components/sales-enablement-slides/SEStrategyVisionSession.tsx` — same.
+No narration script changes needed unless you also want the voiceover updated — flag if so.
 
-### Files for Part A
-
-- `src/pages/SalesEnablement.tsx` — re-order W3 slide entries; remove the `se-w3-capstone-recap` entry; add `se-w3-capstone` at the end.
-- `src/data/salesEnablementNarration.ts` — delete `se-w3-capstone-recap`; update `se-w3-signals-recap` transition; re-sequence narrations to match new order; add `se-w3-capstone` script.
-- `src/components/sales-enablement-slides/SEW3Capstone.tsx` — **new** slide (modeled on `SEW2CapstoneWhiteboard`).
-- `mem://content/sales-enablement/week3-field-kit.md` — update the field-kit memory to reflect the new flow.
-
-## Out of scope
-
-- Week 1 and Week 2 content (only the W2 capstone re-use in W3 is touched).
-- Audio re-generation (text changes only; voices regenerate on next play).
-- The narration bar component itself (size/position stays).
+### Out of scope
+- Audio re-generation
+- Changes to other W3 slides
+- Any backend / data changes
