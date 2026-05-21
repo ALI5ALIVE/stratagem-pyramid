@@ -1,64 +1,26 @@
-## Analysis: Discovery-Call Runbook — language & flow improvements
+## Rewrite narration for "What This Means for Customers" (W3 Customer Outcomes)
 
-### The core issue you flagged
+### Problem with the current narration
+The `se-slide-outcomes` script in `src/data/salesEnablementNarration.ts` (lines 290–296) currently leans on hard customer-count numbers ("five hundred and fifty plus airlines", "two and a half million users", "six continents") and **never walks the four use cases on the slide**. The slide itself shows four detailed Signal → Action → Result mini-cases (Schedule Protection, Revenue Protection, Cost Savings, Customer Loyalty), but the voiceover skips them entirely and pitches social proof instead.
 
-**Open block, "Say this":**
-> "My goal today is to understand where **the loop breaks** for you operationally…"
+### What to change
+Rewrite **only** the `script` field for `slideId: "se-slide-outcomes"`. Same coach-script format used elsewhere in the file (Why it matters → Core message → How to deliver → Walkthrough → Transition). No numbers, no airline counts, no user counts, no continent counts. The body becomes a guided walkthrough of all four cards in order, each in the same Signal → Action → Result rhythm the slide uses.
 
-"The loop" is internal Comply365 jargon (Detect → Trigger → Orchestrate → Prove, "closing the loop"). On a *first* call the customer has no shared definition for it — they'll either nod politely while confused, or mentally translate it as "is he talking about our SMS loop? feedback loop? PDCA?". Either way the rep has burned the opener on a phrase the buyer can't picture.
+### New narration (drop-in script string)
 
-Same problem repeats in the **Discover** block:
-> "…proof your last five actions **closed the loop** — how long?"
+> "This slide matters because by now the buyer has seen the architecture, the use cases and the loop — and the question in their head is 'so what does this actually change for my business?'. Customer outcomes is where you answer that, in their language, not ours. The core message — one sentence, learn it verbatim: when you connect safety signals to the operation, four things move — your schedule holds, your revenue holds, your costs come down, and your customers come back. How to deliver it: walk the four cards in order, slowly, in Signal → Action → Result rhythm. Don't read the cards — narrate them. Pause between each so the buyer can map it onto their own world.
+>
+> First card, Schedule Protection. The signal is a hard-landing trend showing up in operational data — the kind of pattern that, left alone, eventually becomes an aircraft on the ground and a cancelled rotation. The action is targeted retraining for the pilots flying that pattern, generated from the signal itself and pushed to the right crew. The result the buyer feels is fewer surprise maintenance findings, fewer last-minute swaps, and departures that go when the schedule says they go. Anchor it for them: 'this is the difference between finding out at the gate and finding out three weeks earlier.'
+>
+> Second card, Revenue Protection. The signal is a smoke-and-fumes cluster building at a regional hub — small events, none of them disasters, but the shape of something that becomes one. The action is a revised de-icing procedure and a retrained ground crew before the cluster turns into an incident. The result the buyer feels is a hub that keeps running through the season instead of an investigation that takes the hub offline. The frame for them: 'every cancelled rotation here is revenue you don't get back — protection of the schedule is protection of the top line.'
+>
+> Third card, Cost Savings. The signal is a training gap surfaced by performance data — not a failure, a drift, the kind a check airman would have caught eventually but the data caught first. The action is a personalised competency module assigned to exactly the crews who need it, not a fleet-wide refresher that wastes everyone's time. The result the buyer feels shows up in maintenance: less tire wear, fewer landing-gear repairs, less rework on parts that shouldn't have been touched yet. The frame: 'controllable costs are the only kind you can compound — and this is what controllable looks like.'
+>
+> Fourth card, Customer Loyalty. The signal is a pattern of procedure confusion — the same step misinterpreted across multiple crews, multiple bases. The action is a rewritten SOP with the ambiguity removed, and a targeted retrain so the new version actually lands. The result the buyer feels is fewer in-flight incidents that make it into a passenger's day, and an on-time performance number the commercial team can build a brand on. The frame: 'consistency is the product — and consistency is what brings the passenger back.'
+>
+> Close the slide on the cost-centre to revenue-driver arc at the top: safety and compliance stop being a cost line and start being the engine of schedule, revenue, cost and loyalty. Delivery tip — never claim a customer outcome you cannot defend with a named example offline. Walk the four; let the buyer pick which one hurts most; that is your wedge into the next conversation. Next: objections — the eight pushbacks you'll hear, with Acknowledge, Reframe, Bridge, and the proof artifact to send within the hour."
 
-By minute 10–35 the rep has *just* framed DTOP, so "closed the loop" is slightly more defensible — but it's still shorthand. A regulator-facing buyer thinks in words like "evidence", "audit trail", "time-to-close", not "loop".
-
-### Other weaknesses in the runbook
-
-1. **Open is rep-centric, not buyer-centric.** "…then I'll know whether what we do is even relevant" makes the call about *us* qualifying *them*. Better discovery openers frame the value *to the buyer* of the next 30 minutes ("…so you walk away with a clear view of where you'd get leverage, even if it isn't us").
-
-2. **Frame block uses unexplained DTOP acronym in the "Say this".** "Most operators we work with are great at Detect — the signals are there. Where it breaks is between Trigger and Prove." If the rep hasn't drawn DTOP on screen yet, "Trigger" and "Prove" land as empty labels. The script should either (a) name DTOP explicitly with a one-line gloss, or (b) use plain-English verbs ("great at spotting issues … breaks down between deciding what to change and proving it landed").
-
-3. **Discover block stacks three questions in one "Say this" cell** separated by "…". Reps will read it as one breath. The cell should be reformatted as a bulleted list of 3 distinct asks, with the instruction "ask one, then go silent for 10 seconds."
-
-4. **Qualify + Next step is solid** but "this side of [date]" is a UK-ism that confuses US buyers — replace with "before [date]".
-
-5. **No "if they push back" branch.** A first-call runbook should give the rep one fallback line for the two most common derailments: "send me a deck first" and "we already have [competitor]". One extra micro-row would make this genuinely field-ready.
-
-6. **Visual density.** All four rows are equal height, but Discover (25 of the 45 minutes) is the heart of the call. Giving it a visually larger row, or a "← 55% of the call lives here" marker, teaches the shape, not just the script.
-
-### Proposed rewrites (verbatim, drop-in)
-
-**Open → Say this:**
-> "Thanks for the 30 minutes. My goal is simple — by the end of this call you'll know whether what we do is actually relevant to the problems on your plate, even if the answer is no. To get there I'd like to ask a few questions before I show anything. Fair?"
-
-**Open → Do this:** add — *"Avoid jargon in the first 5 minutes. No 'loop', no 'DTOP', no 'closed-loop compliance'. Earn those words later."*
-
-**Frame → Say this:**
-> "Most operators we talk to are strong at *spotting* safety and compliance signals. Where it usually breaks down is the middle bit — deciding what to change, getting that change into manuals and training, and then *proving* to a regulator it actually reached the crew. Does that match what you see?"
-
-**Discover → Say this** (reformat as three bullets, one at a time):
-- "When a safety or compliance signal lands on your desk, what actually triggers a procedure or training change?"
-- "From that decision to the crew flying or operating the new version — how long, realistically?"
-- "If an auditor walked in tomorrow and asked for evidence that your last five corrective actions reached the front line, how long would it take you to produce it?"
-
-**Qualify → Say this:** replace "this side of [date]" with "before [date]".
-
-**New 5th micro-row — "If they push back":**
-| 0 min, anytime | Handle | *Do:* Don't fight it. Trade. *Say:* "Happy to send a tailored deck — what's the one use case I should build it around?" / "Totally fair you have [competitor]. What's the one thing you wish it did that it doesn't?" |
-
-### What I'd change in the slide component
-
-Strictly content edits in `SEDiscoveryCallRunbook.tsx`:
-- Rewrite the four `say:` strings as above.
-- Append the "Avoid jargon" sentence to the Open `do:`.
-- Convert Discover `say:` from a single string with "…" separators to an array of 3 questions; render as `<ul>` with `list-disc` so the rep sees three separate asks.
-- Add a 5th `blocks[]` entry for the pushback row (neutral slate accent so it reads as a fallback, not part of the main arc).
-- Give the Discover row `md:grid-rows-[1.4fr]` or a visible "55% of the call" tag in the time column to signal weight.
-- Keep all DTOP / "loop" language **out** of the Open block; it's fine from Frame onward because the rep has just defined it.
-
-No narration script changes needed unless you also want the voiceover updated — flag if so.
-
-### Out of scope
-- Audio re-generation
-- Changes to other W3 slides
-- Any backend / data changes
+### Scope
+- Edit: `src/data/salesEnablementNarration.ts` — replace the `script` value for the `se-slide-outcomes` entry only.
+- No changes to `CustomerOutcomesSlide.tsx` (slide visuals stay as-is).
+- No changes to other slides, audio re-gen, or the cached audio file for this slide (the narration system will fall back to TTS on next play, or you can re-cache separately — flag if you want me to also touch the audio cache).
