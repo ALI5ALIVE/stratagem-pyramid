@@ -109,7 +109,7 @@ export const dtopSteps: DTOPStep[] = [
     label: "Orchestrate",
     tagline: "From plan to coordinated execution",
     description: "Execute the response across Safety, Content, and Training modules simultaneously — ensuring procedures are updated, distributed, acknowledged, and crew are retrained on the right content at the right time.",
-    dataSources: ["Content authoring workflows", "Distribution & acknowledgment tracking", "LMS assignment engine", "Crew scheduling integration"],
+    dataSources: ["Content authoring workflows", "Distribution & acknowledgment tracking", "TMS assignment engine", "Crew scheduling integration"],
     actions: ["Revise and publish updated procedures", "Push targeted content to affected crews", "Assign scenario-specific training modules", "Track acknowledgment and completion"],
     outputs: ["Updated SOPs in crew hands", "Training completion records", "Acknowledgment confirmations", "Distribution audit trail"],
     color: "text-violet-400",
@@ -258,7 +258,7 @@ export const personaMessages: PersonaMessage[] = [
 
 export const competitorGaps: CompetitorGap[] = [
   { competitor: "Traditional SMS (e.g., IQSMS, Intelex)", canDetect: true, canTrigger: false, canOrchestrate: false, canProve: false },
-  { competitor: "Generic LMS (e.g., SAP SuccessFactors)", canDetect: false, canTrigger: false, canOrchestrate: false, canProve: false },
+  { competitor: "Generic TMS (e.g., SAP SuccessFactors)", canDetect: false, canTrigger: false, canOrchestrate: false, canProve: false },
   { competitor: "Document Management (e.g., SharePoint)", canDetect: false, canTrigger: false, canOrchestrate: false, canProve: false },
   { competitor: "Flight data analytics tools", canDetect: true, canTrigger: false, canOrchestrate: false, canProve: false },
   { competitor: "Comply365 with DTOP", canDetect: true, canTrigger: true, canOrchestrate: true, canProve: true },
@@ -282,9 +282,9 @@ export const objections: DTOPObjection[] = [
     reframe: "SMS is the foundation. DTOP is what makes that foundation actionable.",
   },
   {
-    objection: "Our LMS already handles training assignment and tracking",
-    response: "Your LMS assigns and tracks training — but does it know which training to assign based on operational safety data? DTOP connects your safety signals directly to your training system, so interventions are targeted and measurable.",
-    reframe: "Your LMS executes training. DTOP tells it which training matters and proves it worked.",
+    objection: "Our TMS already handles training assignment and tracking",
+    response: "Your TMS assigns and tracks training — but does it know which training to assign based on operational safety data? DTOP connects your safety signals directly to your training system, so interventions are targeted and measurable.",
+    reframe: "Your TMS executes training. DTOP tells it which training matters and proves it worked.",
   },
   {
     objection: "We use SharePoint/Confluence for document management",

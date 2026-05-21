@@ -166,7 +166,7 @@ export const personaPlaybook: PersonaPlay[] = [
       "How do you prove a training intervention actually moved the operational metric?",
     ],
     metricTheyCareAbout: "Targeted training rate + behaviour-change evidence (not completion %).",
-    landmine: "Don't pitch an LMS replacement. Pitch closed-loop targeting on top of what they own.",
+    landmine: "Don't pitch an TMS replacement. Pitch closed-loop targeting on top of what they own.",
     proofArtifact: "Capstone whiteboard — one use case, every capability, one DTOP loop.",
   },
   {
@@ -214,11 +214,11 @@ export const competitiveCheatSheet: Competitor[] = [
     trapQuestion: "When a regulation changes, how do you trace it to affected procedures, affected crews, and the training they need?",
   },
   {
-    name: "LMS-only (FlightLogger, Cornerstone, in-house)",
+    name: "TMS-only (FlightLogger, Cornerstone, in-house)",
     position: "We are the training system of record.",
     stopsAt: "O",
     reframe: "Assigns training. Doesn't know which training to assign from operational data, and can't prove it changed behaviour.",
-    trapQuestion: "How does your LMS decide who needs retraining when a safety pattern emerges?",
+    trapQuestion: "How does your TMS decide who needs retraining when a safety pattern emerges?",
   },
   {
     name: "Generic AI / ChatGPT / Copilot",
@@ -319,8 +319,8 @@ export const expandedObjections: ExpandedObjection[] = [
   {
     objection: "We just bought a training management system.",
     acknowledge: "Understood — and we're not asking you to replace it.",
-    reframe: "Your LMS executes training. The gap is upstream — knowing which training to assign from operational signals and proving it changed behaviour.",
-    bridge: "Want to see how the loop closes on top of the LMS you already own?",
+    reframe: "Your TMS executes training. The gap is upstream — knowing which training to assign from operational signals and proving it changed behaviour.",
+    bridge: "Want to see how the loop closes on top of the TMS you already own?",
     proofArtifact: "Capstone whiteboard + Recommendations use cases.",
   },
   {

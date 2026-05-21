@@ -1,11 +1,18 @@
 ## Fix
 
-Hide the W3 Use Case Cheat Sheet slide from the Sales Enablement deck without deleting the component or data.
+Global replace **LMS → TMS** across every occurrence in the deck (user confirmed: all of them, including competitor/objection contexts).
 
-**Edits in `src/pages/SalesEnablement.tsx`:**
+**Files to update** (15 occurrences across 8 files):
 
-1. Remove line 168 (`{ id: "se-usecase-cheatsheet", label: "W3 · Use Case Cheat Sheet", component: SEUseCaseCheatSheet },`) from the `slides` array so it no longer renders or appears in the nav.
-2. Remove the now-unused `SEUseCaseCheatSheet` import (line 14) to keep the build clean.
-3. Remove `"Use case cheat sheet"` from the W3 `upNext` list (line 96) so the agenda matches.
+- `src/exporters/pptx/buildTechnicalDeck.ts` (1)
+- `src/data/week3FieldKit.ts` (5)
+- `src/data/salesEnablementNarration.ts` (2)
+- `src/data/practiceSlidePrompts.ts` (3)
+- `src/data/dtopPlaybook.ts` (5)
+- `src/data/insightsPlaybook.ts` (1)
+- `src/data/personaProfiles.ts` (3)
+- `src/components/tech-slides/TechSlide1StrategicShift.tsx` (1)
 
-**Not changed:** the `SEUseCaseCheatSheet.tsx` component, `useCaseCheatSheetRows` data, the `SEW3Capstone` reference to the artifact, or the field-kit memory note (it stays as historic structure; the slide is hidden, not deleted, so it can be reinstated by re-adding the array entry).
+Done via a single `sed -i 's/LMS/TMS/g'` pass over those files, then `rg -n "LMS" src/` to confirm zero remaining.
+
+No other content changes.
