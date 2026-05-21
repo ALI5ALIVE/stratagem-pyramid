@@ -37,6 +37,7 @@ const blocks: Block[] = [
     accent: "border-violet-500/40 bg-violet-500/10 text-violet-300",
     do: "Share one slide only — the DTOP loop. Point at Detect as you say it. No jargon: don't say 'closed-loop' or 'DTOP' out loud yet.",
     say: [
+      '"By signal I just mean anything that should change what your team does next — a new reg, an audit finding, a safety event, an ops change. Could be one a week, could be ten a day."',
       '"Most operators we talk to are strong at spotting safety and compliance signals."',
       '"Where it usually breaks down is the middle bit — deciding what to change, getting that change into manuals and training, and then proving to a regulator it actually reached the crew."',
       '"Does that match what you see?"',
