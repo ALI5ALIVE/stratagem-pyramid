@@ -260,7 +260,16 @@ const SalesEnablement = () => {
             onPlay: () => narration.play(slide.id),
             onPause: () => narration.pause(),
           };
-          const extraProps = slide.id === "se-slide-0" ? { slideCount: slides.length } : {};
+          const extraProps =
+            slide.id === "se-slide-0"
+              ? {
+                  slideCount: slides.length,
+                  onJumpToWeek: (weekId: string) => {
+                    const idx = slides.findIndex((s) => s.id === weekId);
+                    if (idx >= 0) navigateToSlide(idx);
+                  },
+                }
+              : {};
           return (
             <SlideComponent
               key={slide.id}
