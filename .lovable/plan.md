@@ -1,21 +1,25 @@
 ## Problem
 
-On `Frame the Journey — Sell the Vision` (`SEW3RoadmapVisionFrame.tsx`), the "YOU ARE HERE" flag has two issues:
-- The flag polygon spans y=245–275 (only 30px tall), but contains two text lines: "YOU ARE HERE" at y=262 (inside) and "most buyers, honestly" at y=290 (**outside / below** the flag).
-- The result is the subtitle text floating under the flag instead of inside it.
-
-The W1 version (`SERoadmapWhiteboardDrill.tsx`) has the same bug, but the user only flagged the W3 slide — scope stays on W3.
+The `se-w3-whole-vision-whiteboard` narration is ~470 words — roughly 3 minutes at the current voice speed (1.0). Target is **under 90 seconds**, which means ~180–200 words max.
 
 ## Fix
 
-In `src/components/sales-enablement-slides/SEW3RoadmapVisionFrame.tsx`, enlarge the flag polygon so both text lines sit inside it:
+Rewrite the `script` field for `se-w3-whole-vision-whiteboard` in `src/data/salesEnablementNarration.ts` to ~180 words, keeping the same shape but cutting hard:
 
-- Flag polygon: grow vertically from `165,245 255,245 245,260 255,275 165,275` to roughly `165,240 260,240 250,260 260,300 165,300` (taller, ~60px, keeps the notched right edge).
-- Dashed pole line: extend `y2` from `245` to `240` to meet the new top edge.
-- Keep "YOU ARE HERE" at ~y=262 and "most buyers, honestly" at ~y=285 so both are clearly inside the yellow flag fill.
+1. **Hook (1 line)** — "One marker. Ninety seconds. Bottom-up."
+2. **Core line verbatim (1 line)** — "Every layer is a deal on its own. Stacked, they're the only loop that closes itself."
+3. **Four beats (1 short sentence each, ~10 words)** — name the layer + the DTOP step, drop the supporting prose; reps read the on-slide say-it lines themselves.
+   - Core Apps → Detect.
+   - Insights + Intelligence → Trigger. Keep the 90 vs 35 number, one phrase only.
+   - Recommendations → closes Trigger.
+   - Automation + Unified Mobile → Orchestrate + Prove.
+4. **The walk (1 line)** — Madrid unstable approach, Detect day one through Prove day five, one breath.
+5. **Close verbatim + transition (1 line each)** — "One foundation, one intelligence, one loop." then one-sentence handoff to Recap.
 
-No other changes (no narration, no W1 slide, no neighbouring slides).
+Drop: the "pain you're addressing" paragraph, the explicit guardrails paragraph (terminology and accuracy headline are baked into the four beats), and the "what buyers ask next" preamble in the transition.
+
+No changes to the slide component, beats on screen, voice settings, or any other narration.
 
 ## File touched
 
-- `src/components/sales-enablement-slides/SEW3RoadmapVisionFrame.tsx` — single SVG `<g>` block for the flag.
+- `src/data/salesEnablementNarration.ts` — `script` field of the `se-w3-whole-vision-whiteboard` entry only.
