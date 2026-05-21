@@ -29,3 +29,5 @@ New data exports in `week3FieldKit.ts` for the bookend slides: `propensityTiers`
 When extending Week 3: add to `week3FieldKit.ts` so both slides and any future PDF Field Kit exporter share one source. Respect terminology rules (no FOQA/FDM/ASAP; use Operational Data + Generative AI), BrandNumber naming, ~90% vs ~35% headline, no "90-day pilot" framing, locked roadmap dates.
 
 Out of scope (deferred): downloadable Week 3 Field Kit PDF (data is ready in `week3FieldKit.ts`, exporter not yet built).
+
+**Transition accuracy (May 2026):** Every Week 3 narration's closing line now names the actual next slide in order (overview → whiteboard drill → next overview, and Customer Outcomes → Competitive Cheat Sheet → Objections). Whiteboard SVG labels were de-overlapped (intelligence band moved to two lines, X/annotation moved off the arrow line, Safety lane extended, "Circle = the sale" caption shifted left).
