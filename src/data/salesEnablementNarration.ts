@@ -359,7 +359,7 @@ export const salesEnablementNarrations: SESlideNarration[] = [
       },
       {
         voiceId: CUSTOMER_VOICE,
-        text: "It touches our safety tool, then our content system, then the L-M-S. Someone in compliance keeps a spreadsheet of which change maps to which module. When she's on leave, it gets messy.",
+        text: "It touches our safety tool, then our content system, then the T-M-S. Someone in compliance keeps a spreadsheet of which change maps to which module. When she's on leave, it gets messy.",
       },
       {
         voiceId: VOICE,
