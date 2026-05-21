@@ -1,32 +1,52 @@
 ## Goal
 
-Remove three Week 3 slides from the Sales Enablement training: **Why Comply365**, **Practice Center Bridge**, and **Your First 30 Days**. The Strategy & Vision Session becomes the closing slide of Week 3.
+Reduce the Strategy & Vision Session workshop from a 4-hour ("half-day") agenda to a fixed 3-hour agenda, and propagate the wording everywhere it appears.
 
-## Edits
+## New 3-hour agenda
 
-### 1. `src/pages/SalesEnablement.tsx`
-- Delete the three entries from the `slides` array:
-  - `se-slide-why` (W3 · Why Comply365)
-  - `se-practice-center-bridge` (W3 · Practice Center Bridge)
-  - `se-slide-closing` (W3 · Your First 30 Days)
-- Remove `"se-slide-why"` from the `execPitchMapping` object.
-- Update the `weekProps.w3` block:
-  - Drop `"Why Comply365"`, `"Practice Center bridge"`, `"Your first 30 days"` from `upNext`.
-  - Reduce `estimatedMinutes` from 48 to ~38.
+Replace `visionSessionAgenda` in `src/data/week3FieldKit.ts` with seven blocks totalling 3:00:
 
-### 2. `src/data/salesEnablementNarration.ts`
-- Delete narration entries for `se-slide-why`, `se-practice-center-bridge`, and `se-slide-closing`.
-- Rewrite the closing line of `se-deal-stage-language` so its transition leads into the **Strategy & Vision Session** (the new closing slide), instead of "Next: Why Comply365".
+```text
+0:00 – 0:20  Where the industry is going
+0:20 – 0:50  The platform story
+0:50 – 1:25  Capabilities deep-dive
+1:25 – 1:35  Break
+1:35 – 2:05  Operational Performance Roadmap
+2:05 – 2:45  Their DTOP loop, end-to-end
+2:45 – 3:00  Agreed next step
+```
 
-### 3. Sanity sweep
-- `rg` for any other references to those three slide IDs (academy slide registry, exporters, quiz banks, deep-link buttons). If references exist, plan delta:
-  - `src/components/academy/slideRegistry.ts` — drop entries if present.
-  - Anywhere else — remove and report.
+Detail copy for each block stays as-is (still accurate at the new lengths).
 
-### 4. Memory
-- Update `mem/content/sales-enablement/week3-field-kit.md` Week 3 slide order list to reflect the three removed slides and the new ending on Strategy & Vision Session.
+## Wording updates
+
+Change "half-day" / "4-hour" / "four-hour" → "3-hour" (and drop "half-day" framing) in:
+
+- `src/components/sales-enablement-slides/SEStrategyVisionSession.tsx`
+  - Title: "The Strategy & Vision Session — a complimentary 3-hour workshop"
+  - Subtitle: "…Fixed 3-hour agenda, on-site or virtual."
+  - Agenda header chip: "Fixed 3-hour agenda"
+- `src/data/week3FieldKit.ts`
+  - Section comment (line 524)
+  - Persona `nextStep` / `coaching` lines referencing "half-day" (lines 484, 494, 503, 504) → "3-hour Strategy & Vision Session"
+  - `visionSessionRepTalkTrack` "Propose" line → "complimentary 3-hour Strategy & Vision Session"
+- `src/data/salesEnablementNarration.ts`
+  - `se-deal-stage-language` closing line ("complimentary half-day workshop" → "complimentary 3-hour workshop")
+  - `se-strategy-vision-session` script: "complimentary half-day workshop" → "complimentary 3-hour workshop"; "fixed four-hour agenda" → "fixed 3-hour agenda"
+- `src/pages/SalesEnablement.tsx`
+  - Week 3 summary line (83): "complimentary half-day Strategy & Vision Session" → "complimentary 3-hour Strategy & Vision Session"
+- `src/pages/PositioningPlaybook.tsx`
+  - Heading (456): "Strategy & Vision session — 3-hour agenda"
+  - Body (458): "Complimentary, on-site or virtual. Fixed 3-hour agenda…"
+- `src/data/positioningPlaybook.ts`
+  - Objection responses (243, 247): "half-day" → "3-hour"
+  - Discovery question (275): "Who else needs to be in the room for the 3-hour session?"
+  - Email template (292–294): subject "Complimentary 3-hour: Operational Performance Vision"; body "complimentary 3-hour Strategy & Vision session… Fixed 3-hour agenda…"
+  - Tier 1 action (308) unchanged wording
+  - Disclaimer (359) unchanged
 
 ## Out of scope
-- No new slides added.
-- No changes to Week 1, Week 2, or to the Strategy & Vision Session itself.
-- The `SEClosingForReps`, `SEPracticeCenterBridge`, and `TechSlideWhyComply` component files are left in place (still used elsewhere or harmless dead code in the Enablement context) unless the sweep shows they're orphaned and exclusively used here — in which case I'll leave the files anyway, since they may be referenced by other decks.
+
+- No changes to attendees list, leave-behind deliverables, or rep talk-track structure beyond the duration phrasing.
+- No slide additions/removals; no design changes.
+- Memory file `mem/content/sales-enablement/week3-field-kit.md` will be updated to note the 3-hour duration.
