@@ -481,7 +481,7 @@ export const propensityTiers: PropensityTier[] = [
     why: "Highest propensity. They already trust the brand. The renewal is the trojan horse — lift the conversation out of price and into platform.",
     talkTrack:
       "Reframe the renewal as a strategic review. Don't lead with pricing — lead with where they are on the Operational Performance Roadmap.",
-    nextStep: "Offer the half-day Strategy & Vision Session as the renewal conversation.",
+    nextStep: "Offer the 3-hour Strategy & Vision Session as the renewal conversation.",
     accent: "emerald",
   },
   {
@@ -500,7 +500,7 @@ export const propensityTiers: PropensityTier[] = [
     who: "Multi-business-unit or multi-region customer already on the platform — the kind of account where the board is asking about AI and operational performance.",
     why: "The story they need is the roadmap, not the next feature. They're the natural home for the Operational Performance Roadmap conversation.",
     talkTrack:
-      "Lead with the roadmap and the vision. Position the half-day session as a peer-level strategy workshop with their leadership team.",
+      "Lead with the roadmap and the vision. Position the 3-hour session as a peer-level strategy workshop with their leadership team.",
     nextStep: "Book the Strategy & Vision Session as a joint exec workshop — bring our AE + SE, they bring exec + ops + IT.",
     accent: "violet",
   },
@@ -521,7 +521,7 @@ export const whoNotToChaseFirst: string[] = [
 ];
 
 // ---------------------------------------------------------------------------
-// Strategy & Vision Session — complimentary half-day workshop. Fixed agenda
+// Strategy & Vision Session — complimentary 3-hour workshop. Fixed agenda
 // reps can put on the table without scoping.
 // ---------------------------------------------------------------------------
 
@@ -534,38 +534,38 @@ export interface AgendaBlock {
 
 export const visionSessionAgenda: AgendaBlock[] = [
   {
-    time: "0:00 – 0:30",
+    time: "0:00 – 0:20",
     title: "Where the industry is going",
     detail: "The shift from prescriptive compliance to performance-based oversight. DTOP in plain English.",
   },
   {
-    time: "0:30 – 1:15",
+    time: "0:20 – 0:50",
     title: "The platform story",
     detail: "One platform, three Core Apps, one Intelligence Layer, one Unified Mobile — wired together by DTOP.",
   },
   {
-    time: "1:15 – 2:00",
+    time: "0:50 – 1:25",
     title: "Capabilities deep-dive",
     detail: "Tailored to their current footprint. Insights, Recommendations, Automation — anchored on their data shape.",
   },
   {
-    time: "2:00 – 2:15",
+    time: "1:25 – 1:35",
     title: "Break",
     detail: "Coffee. Informal questions. The room usually starts opening up here.",
     isBreak: true,
   },
   {
-    time: "2:15 – 3:00",
+    time: "1:35 – 2:05",
     title: "Operational Performance Roadmap",
     detail: "Where they are today on the L1→L5 curve. What L4 predictive looks like for their operation.",
   },
   {
-    time: "3:00 – 3:45",
+    time: "2:05 – 2:45",
     title: "Their DTOP loop, end-to-end",
     detail: "One of their real use cases walked Detect → Trigger → Orchestrate → Prove on a whiteboard.",
   },
   {
-    time: "3:45 – 4:00",
+    time: "2:45 – 3:00",
     title: "Agreed next step",
     detail: "Scope the focused use-case session, name the exec sponsor, lock the date.",
   },
@@ -597,6 +597,6 @@ export const visionSessionRepTalkTrack: { step: string; line: string }[] = [
   },
   {
     step: "Propose",
-    line: "We run a complimentary half-day Strategy & Vision Session for that — fixed agenda, on-site or virtual, your team plus ours. Want me to send the agenda and propose two dates?",
+    line: "We run a complimentary 3-hour Strategy & Vision Session for that — fixed agenda, on-site or virtual, your team plus ours. Want me to send the agenda and propose two dates?",
   },
 ];
