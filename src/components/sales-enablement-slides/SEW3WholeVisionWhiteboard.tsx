@@ -21,24 +21,15 @@ const beats = [
   },
   {
     n: 2,
-    layer: "Insights",
-    dtop: "powers Detect",
-    dot: "bg-emerald-400",
-    accent: "text-emerald-300",
-    say:
-      "\"On top of that foundation, Insights surfaces the trend the dashboard would have missed — the unstable approach trend at Madrid (MAD) shows itself in 14 days, not after the incident.\"",
-  },
-  {
-    n: 3,
-    layer: "Intelligence Layer",
-    dtop: "owns Trigger",
+    layer: "Insights & Intelligence",
+    dtop: "powers Detect → Trigger",
     dot: "bg-amber-400",
     accent: "text-amber-300",
     say:
-      "\"Then a domain-trained intelligence sits over it — roughly ninety percent accurate on aviation work versus around thirty-five percent for generic AI — so the answer cites the regulation, the procedure and the training, not a guess.\"",
+      "\"On top of that foundation, Insights surfaces the trend the dashboard would have missed — Madrid (MAD) unstable approach shows itself in 14 days — and a domain-trained Intelligence Layer sits over it, ~90% accurate on aviation work versus ~35% for generic AI, citing the regulation, procedure and training.\"",
   },
   {
-    n: 4,
+    n: 3,
     layer: "Recommendations & Prescriptive Actions",
     dtop: "closes Trigger",
     dot: "bg-amber-400",
@@ -47,7 +38,7 @@ const beats = [
       "\"It doesn't just summarise — it tells your team exactly what to do next, with cited evidence and the risk control already drafted. Recommended Actions, not another dashboard.\"",
   },
   {
-    n: 5,
+    n: 4,
     layer: "Automation + Unified Mobile",
     dtop: "delivers Orchestrate & Prove",
     dot: "bg-violet-400",
