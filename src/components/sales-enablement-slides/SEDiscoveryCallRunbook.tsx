@@ -50,7 +50,7 @@ const SEDiscoveryCallRunbook = ({ slideNumber, ...narrationProps }: Props) => (
     showHeader
     {...narrationProps}
   >
-    <div className="h-full flex flex-col gap-2 max-w-7xl mx-auto px-4 pt-2">
+    <div className="h-full flex flex-col gap-2 max-w-7xl mx-auto px-4 pt-2 pb-10">
       {blocks.map((b) => {
         const Icon = b.icon;
         return (

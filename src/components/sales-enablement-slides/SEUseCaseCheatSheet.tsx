@@ -16,7 +16,7 @@ const SEUseCaseCheatSheet = ({ slideNumber, ...narrationProps }: Props) => (
     showHeader
     {...narrationProps}
   >
-    <div className="h-full flex flex-col gap-1.5 max-w-7xl mx-auto px-4 pt-2">
+    <div className="h-full flex flex-col gap-1.5 max-w-7xl mx-auto px-4 pt-2 pb-10">
       {useCaseCheatSheetRows.map((c, i) => (
         <div key={i} className="grid grid-cols-12 gap-2 p-2.5 rounded-lg border border-border bg-card">
           <div className="col-span-12 md:col-span-3 flex items-start gap-2">

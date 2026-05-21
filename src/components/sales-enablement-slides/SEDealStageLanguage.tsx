@@ -16,7 +16,7 @@ const SEDealStageLanguage = ({ slideNumber, ...narrationProps }: Props) => (
     showHeader
     {...narrationProps}
   >
-    <div className="h-full flex flex-col gap-2 max-w-7xl mx-auto px-4 pt-2">
+    <div className="h-full flex flex-col gap-2 max-w-7xl mx-auto px-4 pt-2 pb-10">
       {dealStageLanguage.map((s, i) => (
         <div key={i} className="rounded-lg border border-border bg-card p-3 grid grid-cols-12 gap-3">
           <div className="col-span-12 md:col-span-3 flex items-center gap-2">

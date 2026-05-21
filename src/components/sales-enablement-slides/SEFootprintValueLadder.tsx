@@ -49,7 +49,7 @@ const SEFootprintValueLadder = ({ slideNumber, ...narrationProps }: Props) => (
     showHeader
     {...narrationProps}
   >
-    <div className="h-full flex flex-col gap-4 max-w-7xl mx-auto px-4 pt-2">
+    <div className="h-full flex flex-col gap-4 max-w-7xl mx-auto px-4 pt-2 pb-10">
       <div className="space-y-3">
         {rungs.map((r) => (
           <div key={r.label} className="rounded-lg border border-border/40 bg-card/40 p-3">

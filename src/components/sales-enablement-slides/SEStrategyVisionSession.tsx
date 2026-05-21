@@ -21,7 +21,7 @@ const SEStrategyVisionSession = ({ slideNumber, ...narrationProps }: Props) => (
     showHeader
     {...narrationProps}
   >
-    <div className="h-full flex flex-col gap-3 max-w-7xl mx-auto px-4 pt-2">
+    <div className="h-full flex flex-col gap-3 max-w-7xl mx-auto px-4 pt-2 pb-10">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
         {/* Agenda timeline */}
         <div className="md:col-span-7 p-3 rounded-xl border border-primary/30 bg-primary/5">
