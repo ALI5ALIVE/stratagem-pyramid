@@ -21,30 +21,39 @@ const beats = [
   },
   {
     n: 2,
-    layer: "Insights & Intelligence",
-    dtop: "powers Detect → Trigger",
-    dot: "bg-amber-400",
-    accent: "text-amber-300",
+    layer: "Insights",
+    dtop: "powers Detect",
+    dot: "bg-sky-400",
+    accent: "text-sky-300",
     say:
-      "\"On top of that foundation, Insights surfaces the trend the dashboard would have missed — Madrid (MAD) unstable approach shows itself in 14 days — and a domain-trained Intelligence Layer sits over it, ~90% accurate on aviation work versus ~35% for generic AI, citing the regulation, procedure and training.\"",
+      "\"On top of that foundation, Insights surfaces the trend the dashboard would have missed — Madrid (MAD) unstable approach shows itself in 14 days. Detect, without an analyst pulling a report.\"",
   },
   {
     n: 3,
-    layer: "Recommendations & Prescriptive Actions",
-    dtop: "closes Trigger",
+    layer: "Intelligence Layer",
+    dtop: "powers Trigger",
     dot: "bg-amber-400",
     accent: "text-amber-300",
     say:
-      "\"It doesn't just summarise — it tells your team exactly what to do next, with cited evidence and the risk control already drafted. Recommended Actions, not another dashboard.\"",
+      "\"A domain-trained Intelligence Layer sits over it — ~90% accurate on aviation work versus ~35% for generic AI — and turns the trend into Recommended Actions with the regulation, procedure and training cited.\"",
   },
   {
     n: 4,
     layer: "Automation + Unified Mobile",
-    dtop: "delivers Orchestrate & Prove",
+    dtop: "delivers Orchestrate",
     dot: "bg-violet-400",
     accent: "text-violet-300",
     say:
-      "\"Automation runs the play — drafts the OMA revision, opens the review, assigns the training. Unified Mobile lands it on crew devices in 48 hours. Insights then proves the trend flattened — audit pack already cited. One loop, closed.\"",
+      "\"Automation runs the play — drafts the OMA revision, opens the review, assigns the training. Unified Mobile lands it on crew devices in 48 hours.\"",
+  },
+  {
+    n: 5,
+    layer: "Insights · Prove",
+    dtop: "closes Prove",
+    dot: "bg-emerald-400",
+    accent: "text-emerald-300",
+    say:
+      "\"Insights then proves the trend flattened — audit pack already cited. One loop, closed.\"",
   },
 ];
 
