@@ -30,9 +30,9 @@ const SEFootprintAllThreeWhiteboard = ({ slideNumber, ...narrationProps }: Props
         <svg viewBox="0 0 700 460" className="w-full h-full" style={{ fontFamily: "'Caveat', 'Comic Sans MS', cursive" }}>
           {/* Intelligence band */}
           <g>
-            <rect x="40" y="25" width="620" height="50" rx="8" fill="#ede9fe" stroke="#6d28d9" strokeWidth="3" />
-            <text x="55" y="55" fill="#6d28d9" fontSize="18" fontWeight="700">Intelligence Layer · Insights · Automation · Mobile</text>
-            <text x="450" y="55" fill="#b45309" fontSize="13" fontStyle="italic">— scope, not new features</text>
+            <rect x="40" y="20" width="620" height="60" rx="8" fill="#ede9fe" stroke="#6d28d9" strokeWidth="3" />
+            <text x="55" y="46" fill="#6d28d9" fontSize="17" fontWeight="700">Intelligence Layer · Insights · Automation · Mobile</text>
+            <text x="55" y="68" fill="#b45309" fontSize="12" fontStyle="italic">scope, not new features — they already had these inside their lanes</text>
           </g>
           {/* Cross-lane arrows from band */}
           <g stroke="#6d28d9" strokeWidth="2" fill="none" strokeDasharray="4 3">
