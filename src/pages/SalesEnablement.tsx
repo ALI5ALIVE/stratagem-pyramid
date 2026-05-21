@@ -22,6 +22,7 @@ import SEFootprintAllThree from "@/components/sales-enablement-slides/SEFootprin
 import SEFootprintValueLadder from "@/components/sales-enablement-slides/SEFootprintValueLadder";
 import SEFootprintPlaybook from "@/components/sales-enablement-slides/SEFootprintPlaybook";
 import SEW3WholeVisionWhiteboard from "@/components/sales-enablement-slides/SEW3WholeVisionWhiteboard";
+import SEW3RoadmapVisionFrame from "@/components/sales-enablement-slides/SEW3RoadmapVisionFrame";
 import SEFootprintSingleWhiteboard from "@/components/sales-enablement-slides/SEFootprintSingleWhiteboard";
 import SEFootprintTwoWhiteboard from "@/components/sales-enablement-slides/SEFootprintTwoWhiteboard";
 import SEFootprintAllThreeWhiteboard from "@/components/sales-enablement-slides/SEFootprintAllThreeWhiteboard";
@@ -158,6 +159,7 @@ const slides = [
   { id: "se-footprint-all-whiteboard", label: "W3 · Footprint — All Three Whiteboard", component: SEFootprintAllThreeWhiteboard },
   { id: "se-footprint-ladder", label: "W3 · Footprint — Value Ladder", component: SEFootprintValueLadder },
   { id: "se-footprint-playbook", label: "W3 · Footprint — 3-Move Play", component: SEFootprintPlaybook },
+  { id: "se-w3-roadmap-vision-frame", label: "W3 · Frame the Journey — Roadmap Vision", component: SEW3RoadmapVisionFrame },
   { id: "se-w3-whole-vision-whiteboard", label: "W3 · Sell the Whole Vision — Whiteboard", component: SEW3WholeVisionWhiteboard },
   { id: "se-discovery-to-close", label: "W3 · Discovery → Walkthrough → Close", component: SEDiscoveryToClose },
   { id: "se-discovery-call-runbook", label: "W3 · Discovery-Call Runbook", component: SEDiscoveryCallRunbook },

@@ -11,6 +11,7 @@ Week 3 flow (post-refactor):
 4. Customer Footprint — Intro
 5–11. Footprint variants (One, One Whiteboard, Two, Two Whiteboard, All Three, All Three Whiteboard, Value Ladder)
 12. Footprint — 3-Move Play
+12a. Frame the Journey — Roadmap Vision (opens the Whole Vision arc; reuses W1 roadmap whiteboard reframed for differentiate/up-sell/cross-sell)
 13. Discovery → Walkthrough → Close (the arc)
 14. Discovery-Call Runbook (moved earlier — it is the structural template)
 15. Discovery Question Bank (slots into Runbook's Discover block)
