@@ -21,30 +21,39 @@ const beats = [
   },
   {
     n: 2,
-    layer: "Insights & Intelligence",
-    dtop: "powers Detect → Trigger",
-    dot: "bg-amber-400",
-    accent: "text-amber-300",
+    layer: "Insights",
+    dtop: "powers Detect",
+    dot: "bg-sky-400",
+    accent: "text-sky-300",
     say:
-      "\"On top of that foundation, Insights surfaces the trend the dashboard would have missed — Madrid (MAD) unstable approach shows itself in 14 days — and a domain-trained Intelligence Layer sits over it, ~90% accurate on aviation work versus ~35% for generic AI, citing the regulation, procedure and training.\"",
+      "\"On top of that foundation, Insights surfaces the trend the dashboard would have missed — Madrid (MAD) unstable approach shows itself in 14 days. Detect, without an analyst pulling a report.\"",
   },
   {
     n: 3,
-    layer: "Recommendations & Prescriptive Actions",
-    dtop: "closes Trigger",
+    layer: "Intelligence Layer",
+    dtop: "powers Trigger",
     dot: "bg-amber-400",
     accent: "text-amber-300",
     say:
-      "\"It doesn't just summarise — it tells your team exactly what to do next, with cited evidence and the risk control already drafted. Recommended Actions, not another dashboard.\"",
+      "\"A domain-trained Intelligence Layer sits over it — ~90% accurate on aviation work versus ~35% for generic AI — and turns the trend into Recommended Actions with the regulation, procedure and training cited.\"",
   },
   {
     n: 4,
     layer: "Automation + Unified Mobile",
-    dtop: "delivers Orchestrate & Prove",
+    dtop: "delivers Orchestrate",
     dot: "bg-violet-400",
     accent: "text-violet-300",
     say:
-      "\"Automation runs the play — drafts the OMA revision, opens the review, assigns the training. Unified Mobile lands it on crew devices in 48 hours. Insights then proves the trend flattened — audit pack already cited. One loop, closed.\"",
+      "\"Automation runs the play — drafts the OMA revision, opens the review, assigns the training. Unified Mobile lands it on crew devices in 48 hours.\"",
+  },
+  {
+    n: 5,
+    layer: "Insights · Prove",
+    dtop: "closes Prove",
+    dot: "bg-emerald-400",
+    accent: "text-emerald-300",
+    say:
+      "\"Insights then proves the trend flattened — audit pack already cited. One loop, closed.\"",
   },
 ];
 
@@ -109,32 +118,43 @@ const SEW3WholeVisionWhiteboard = ({
           <g>
             <rect x="30" y="136" width="640" height="186" rx="8" fill="#fffbeb" stroke="#f59e0b" strokeWidth="4" />
             <text x="50" y="162" fill="#7c2d12" fontSize="20" fontWeight="700">Intelligence &amp; Orchestration Layer</text>
-            {/* Insights & Intelligence (merged) */}
+            {/* Insights · Detect (blue) */}
             <g>
-              <rect x="50" y="176" width="220" height="130" rx="8" fill="#ecfdf5" stroke="#10b981" strokeWidth="2.5" />
-              <text x="65" y="200" fill="#047857" fontSize="17" fontWeight="700">Insights &amp; Intelligence</text>
-              <text x="65" y="222" fill="#3a2a1a" fontSize="13">trends surface themselves</text>
-              <text x="65" y="240" fill="#3a2a1a" fontSize="13">domain-trained layer</text>
-              <text x="65" y="258" fill="#3a2a1a" fontSize="13">~90% vs ~35% generic</text>
-              <text x="65" y="276" fill="#3a2a1a" fontSize="13">cited · reg · procedure</text>
+              <rect x="50" y="176" width="148" height="130" rx="8" fill="#dbeafe" stroke="#2563eb" strokeWidth="2.5" />
+              <text x="62" y="198" fill="#1e3a5f" fontSize="15" fontWeight="700">Insights</text>
+              <text x="62" y="214" fill="#2563eb" fontSize="11" fontWeight="700">DETECT</text>
+              <text x="62" y="236" fill="#3a2a1a" fontSize="12">trends surface</text>
+              <text x="62" y="252" fill="#3a2a1a" fontSize="12">themselves</text>
+              <text x="62" y="272" fill="#3a2a1a" fontSize="12">no analyst pulling</text>
+              <text x="62" y="288" fill="#3a2a1a" fontSize="12">the report</text>
             </g>
-            {/* Recommendations & Prescriptive Actions */}
+            {/* Intelligence Layer · Trigger (amber) */}
             <g>
-              <rect x="280" y="176" width="190" height="130" rx="8" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2.5" />
-              <text x="295" y="200" fill="#7c2d12" fontSize="17" fontWeight="700">Recommendations</text>
-              <text x="295" y="218" fill="#7c2d12" fontSize="14" fontWeight="700">+ Prescriptive Actions</text>
-              <text x="295" y="242" fill="#3a2a1a" fontSize="13">tells your team</text>
-              <text x="295" y="260" fill="#3a2a1a" fontSize="13">what to do next</text>
-              <text x="295" y="278" fill="#3a2a1a" fontSize="13">evidence attached</text>
+              <rect x="206" y="176" width="148" height="130" rx="8" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2.5" />
+              <text x="218" y="198" fill="#7c2d12" fontSize="15" fontWeight="700">Intelligence</text>
+              <text x="218" y="214" fill="#f59e0b" fontSize="11" fontWeight="700">TRIGGER</text>
+              <text x="218" y="236" fill="#3a2a1a" fontSize="12">~90% vs ~35%</text>
+              <text x="218" y="252" fill="#3a2a1a" fontSize="12">cited · reg · proc</text>
+              <text x="218" y="272" fill="#3a2a1a" fontSize="12">Recommended</text>
+              <text x="218" y="288" fill="#3a2a1a" fontSize="12">Actions</text>
             </g>
-            {/* Automation (now inside layer) */}
+            {/* Automation · Orchestrate (violet) */}
             <g>
-              <rect x="480" y="176" width="170" height="130" rx="8" fill="#ede9fe" stroke="#8b5cf6" strokeWidth="2.5" />
-              <text x="495" y="200" fill="#4c1d95" fontSize="17" fontWeight="700">Automation</text>
-              <text x="495" y="222" fill="#3a2a1a" fontSize="13">runs the play</text>
-              <text x="495" y="240" fill="#3a2a1a" fontSize="13">draft · review</text>
-              <text x="495" y="258" fill="#3a2a1a" fontSize="13">assign · push</text>
-              <text x="495" y="276" fill="#3a2a1a" fontSize="13">loop closes</text>
+              <rect x="362" y="176" width="148" height="130" rx="8" fill="#ede9fe" stroke="#8b5cf6" strokeWidth="2.5" />
+              <text x="374" y="198" fill="#4c1d95" fontSize="15" fontWeight="700">Automation</text>
+              <text x="374" y="214" fill="#8b5cf6" fontSize="11" fontWeight="700">ORCHESTRATE</text>
+              <text x="374" y="236" fill="#3a2a1a" fontSize="12">runs the play</text>
+              <text x="374" y="252" fill="#3a2a1a" fontSize="12">draft · review</text>
+              <text x="374" y="272" fill="#3a2a1a" fontSize="12">assign · push</text>
+            </g>
+            {/* Insights · Prove (green) */}
+            <g>
+              <rect x="518" y="176" width="132" height="130" rx="8" fill="#d1fae5" stroke="#10b981" strokeWidth="2.5" />
+              <text x="530" y="198" fill="#064e3b" fontSize="15" fontWeight="700">Insights</text>
+              <text x="530" y="214" fill="#10b981" fontSize="11" fontWeight="700">PROVE</text>
+              <text x="530" y="236" fill="#3a2a1a" fontSize="12">trend flattened</text>
+              <text x="530" y="252" fill="#3a2a1a" fontSize="12">audit pack cited</text>
+              <text x="530" y="272" fill="#3a2a1a" fontSize="12">loop closed</text>
             </g>
           </g>
 
