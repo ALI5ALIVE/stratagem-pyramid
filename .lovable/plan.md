@@ -1,28 +1,25 @@
-## Hide Deal-Stage slide & fix W3 transitions
+## Make the three week cards on the title slide clickable
 
-After removing Objections, Competitive Cheat Sheet, and Deal-Stage Next-Step Language, the remaining tail of Week 3 will be:
+Clicking each week card jumps to that week's divider slide (`se-week-1`, `se-week-2`, `se-week-3`).
 
+### 1. `src/pages/SalesEnablement.tsx`
+Pass a navigation callback only to the title slide:
+```tsx
+const extraProps = slide.id === "se-slide-0"
+  ? {
+      slideCount: slides.length,
+      onJumpToWeek: (weekId: string) => {
+        const idx = slides.findIndex((s) => s.id === weekId);
+        if (idx >= 0) navigateToSlide(idx);
+      },
+    }
+  : {};
 ```
-... → Persona Playbook → Customer Outcomes → Strategy & Vision Session → Capstone
-```
 
-### 1. Remove the Deal-Stage slide
-**File:** `src/pages/SalesEnablement.tsx`
-- Delete the slide entry `{ id: "se-deal-stage-language", ... }` (line 165).
-- Delete the now-unused `import SEDealStageLanguage ...` line.
+### 2. `src/components/sales-enablement-slides/SESlide0Title.tsx`
+- Add `weekId: "se-week-1" | "se-week-2" | "se-week-3"` to each entry in the `weeks` array.
+- Add `onJumpToWeek?: (weekId: string) => void` to `Props`.
+- Render each card as a `<button>` instead of a `<div>`, with `onClick={() => onJumpToWeek?.(w.weekId)}`, `type="button"`, `text-left`, and a hover state (e.g. `hover:bg-foreground/5 hover:border-{accent}/60 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50`).
+- Update the footer hint to read: "Click a week to jump in · ↓ / Space to advance · ↑ to go back · Sidebar for jump-to-slide".
 
-### 2. Fix the one broken transition: Customer Outcomes → ?
-The Customer Outcomes narration currently ends with:
-> "Next: objections — the eight pushbacks you'll hear, with Acknowledge, Reframe, Bridge, and the proof artifact to send within the hour."
-
-It needs to lead into **Strategy & Vision Session** instead. New ending:
-> "Next: the Strategy and Vision Session — the complimentary three-hour workshop you can offer in the room, the one that lifts the conversation from features to operating model."
-
-**File:** `src/data/salesEnablementNarration.ts` (slide `se-slide-outcomes`).
-
-### 3. Other transitions — already clean
-- **Persona Playbook** already ends teeing up Customer Outcomes (fixed in the previous turn).
-- **Strategy & Vision Session** already ends with "Next, and last in Week 3 — the capstone…" — matches the new flow.
-- **Capstone** is terminal — no change needed.
-
-No other narrations reference the removed slides.
+No other files affected. Existing keyboard nav, sidebar, and narration continue to work.
