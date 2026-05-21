@@ -83,6 +83,7 @@ const weekProps = {
       "By the end of Week 3 you can pick the right account to chase, run a real discovery call, pull the right questions for the room, read the persona, handle the top 8 objections, position against any competitor in the DTOP loop, end every conversation with the scripted next-step line, and put the complimentary 3-hour Strategy & Vision Session on the table.",
     estimatedMinutes: 38,
     upNext: [
+      "Recap — One Use Case, Every Capability, One DTOP Loop",
       "Who to target (high-propensity accounts)",
       "Discovery → walkthrough → close",
       "Discovery question bank (DTOP)",
@@ -142,6 +143,16 @@ const slides = [
   { id: "se-w2-capstone-whiteboard", label: "W2 · Capstone — One Use Case, Every Capability, One DTOP Loop", component: SEW2CapstoneWhiteboard },
   // WEEK 3
   { id: "se-week-3", label: "▸ Week 3 · Sell & Win", component: SEModuleDivider, dividerProps: weekProps.w3 },
+  {
+    id: "se-w3-capstone-recap",
+    label: "W3 · Recap — One Use Case, Every Capability, One DTOP Loop",
+    component: SEW2CapstoneWhiteboard,
+    componentProps: {
+      id: "se-w3-capstone-recap",
+      title: "Recap — One Use Case, Every Capability, One DTOP Loop",
+      subtitle: "Frame the platform value before you sell it · Madrid (MAD) unstable approach trend · closed in 5 days, end-to-end.",
+    },
+  },
   { id: "se-who-to-target", label: "W3 · Who to Target", component: SEWhoToTarget },
   { id: "se-discovery-to-close", label: "W3 · Discovery → Demo → Close", component: SEDiscoveryToClose },
   { id: "se-discovery-question-bank", label: "W3 · Discovery Question Bank", component: SEDiscoveryQuestionBank },

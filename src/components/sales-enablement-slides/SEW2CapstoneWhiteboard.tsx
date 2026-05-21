@@ -4,6 +4,9 @@ import { Clock, PenLine, Sparkles } from "lucide-react";
 
 interface Props extends SlideNarrationProps {
   slideNumber?: number;
+  id?: string;
+  title?: string;
+  subtitle?: string;
 }
 
 const beats = [
@@ -53,12 +56,18 @@ const legend = [
   { label: "Unified Mobile", color: "border-violet-500/40 text-violet-300 bg-violet-500/5" },
 ];
 
-const SEW2CapstoneWhiteboard = ({ slideNumber, ...narrationProps }: Props) => (
+const SEW2CapstoneWhiteboard = ({
+  slideNumber,
+  id = "se-w2-capstone-whiteboard",
+  title = "W2 Capstone — One Use Case, Every Capability, One DTOP Loop",
+  subtitle = "Unstable approach trend at Madrid (MAD) · closed in 5 days, end-to-end · drill this until you can recite it in 60 seconds.",
+  ...narrationProps
+}: Props) => (
   <PitchSlideContainer
-    id="se-w2-capstone-whiteboard"
+    id={id}
     slideNumber={slideNumber}
-    title="W2 Capstone — One Use Case, Every Capability, One DTOP Loop"
-    subtitle="Unstable approach trend at Madrid (MAD) · closed in 5 days, end-to-end · drill this until you can recite it in 60 seconds."
+    title={title}
+    subtitle={subtitle}
     showHeader
     {...narrationProps}
   >
