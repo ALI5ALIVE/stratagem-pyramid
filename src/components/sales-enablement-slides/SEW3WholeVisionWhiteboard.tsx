@@ -21,24 +21,15 @@ const beats = [
   },
   {
     n: 2,
-    layer: "Insights",
-    dtop: "powers Detect",
-    dot: "bg-emerald-400",
-    accent: "text-emerald-300",
-    say:
-      "\"On top of that foundation, Insights surfaces the trend the dashboard would have missed — the unstable approach trend at Madrid (MAD) shows itself in 14 days, not after the incident.\"",
-  },
-  {
-    n: 3,
-    layer: "Intelligence Layer",
-    dtop: "owns Trigger",
+    layer: "Insights & Intelligence",
+    dtop: "powers Detect → Trigger",
     dot: "bg-amber-400",
     accent: "text-amber-300",
     say:
-      "\"Then a domain-trained intelligence sits over it — roughly ninety percent accurate on aviation work versus around thirty-five percent for generic AI — so the answer cites the regulation, the procedure and the training, not a guess.\"",
+      "\"On top of that foundation, Insights surfaces the trend the dashboard would have missed — Madrid (MAD) unstable approach shows itself in 14 days — and a domain-trained Intelligence Layer sits over it, ~90% accurate on aviation work versus ~35% for generic AI, citing the regulation, procedure and training.\"",
   },
   {
-    n: 4,
+    n: 3,
     layer: "Recommendations & Prescriptive Actions",
     dtop: "closes Trigger",
     dot: "bg-amber-400",
@@ -47,7 +38,7 @@ const beats = [
       "\"It doesn't just summarise — it tells your team exactly what to do next, with cited evidence and the risk control already drafted. Recommended Actions, not another dashboard.\"",
   },
   {
-    n: 5,
+    n: 4,
     layer: "Automation + Unified Mobile",
     dtop: "delivers Orchestrate & Prove",
     dot: "bg-violet-400",
@@ -116,62 +107,59 @@ const SEW3WholeVisionWhiteboard = ({
 
           {/* Intelligence & Orchestration block */}
           <g>
-            <rect x="30" y="136" width="640" height="156" rx="8" fill="#fffbeb" stroke="#f59e0b" strokeWidth="4" />
+            <rect x="30" y="136" width="640" height="186" rx="8" fill="#fffbeb" stroke="#f59e0b" strokeWidth="4" />
             <text x="50" y="162" fill="#7c2d12" fontSize="20" fontWeight="700">Intelligence &amp; Orchestration Layer</text>
-            {/* Insights */}
+            {/* Insights & Intelligence (merged) */}
             <g>
-              <rect x="50" y="176" width="190" height="100" rx="8" fill="#ecfdf5" stroke="#10b981" strokeWidth="2.5" />
-              <text x="65" y="200" fill="#047857" fontSize="17" fontWeight="700">Insights</text>
-              <text x="65" y="222" fill="#3a2a1a" fontSize="13">trends surface</text>
-              <text x="65" y="240" fill="#3a2a1a" fontSize="13">themselves — no</text>
-              <text x="65" y="258" fill="#3a2a1a" fontSize="13">CSV export needed</text>
-            </g>
-            {/* Intelligence Layer */}
-            <g>
-              <rect x="250" y="176" width="190" height="100" rx="8" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2.5" />
-              <text x="265" y="200" fill="#7c2d12" fontSize="17" fontWeight="700">Intelligence</text>
-              <text x="265" y="222" fill="#3a2a1a" fontSize="13">domain-trained</text>
-              <text x="265" y="240" fill="#3a2a1a" fontSize="13">~90% vs ~35%</text>
-              <text x="265" y="258" fill="#3a2a1a" fontSize="13">generic · cited</text>
+              <rect x="50" y="176" width="220" height="130" rx="8" fill="#ecfdf5" stroke="#10b981" strokeWidth="2.5" />
+              <text x="65" y="200" fill="#047857" fontSize="17" fontWeight="700">Insights &amp; Intelligence</text>
+              <text x="65" y="222" fill="#3a2a1a" fontSize="13">trends surface themselves</text>
+              <text x="65" y="240" fill="#3a2a1a" fontSize="13">domain-trained layer</text>
+              <text x="65" y="258" fill="#3a2a1a" fontSize="13">~90% vs ~35% generic</text>
+              <text x="65" y="276" fill="#3a2a1a" fontSize="13">cited · reg · procedure</text>
             </g>
             {/* Recommendations & Prescriptive Actions */}
             <g>
-              <rect x="450" y="176" width="200" height="100" rx="8" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2.5" />
-              <text x="465" y="200" fill="#7c2d12" fontSize="17" fontWeight="700">Recommendations</text>
-              <text x="465" y="218" fill="#7c2d12" fontSize="14" fontWeight="700">+ Prescriptive Actions</text>
-              <text x="465" y="240" fill="#3a2a1a" fontSize="13">tells your team</text>
-              <text x="465" y="258" fill="#3a2a1a" fontSize="13">what to do next</text>
+              <rect x="280" y="176" width="190" height="130" rx="8" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2.5" />
+              <text x="295" y="200" fill="#7c2d12" fontSize="17" fontWeight="700">Recommendations</text>
+              <text x="295" y="218" fill="#7c2d12" fontSize="14" fontWeight="700">+ Prescriptive Actions</text>
+              <text x="295" y="242" fill="#3a2a1a" fontSize="13">tells your team</text>
+              <text x="295" y="260" fill="#3a2a1a" fontSize="13">what to do next</text>
+              <text x="295" y="278" fill="#3a2a1a" fontSize="13">evidence attached</text>
             </g>
-          </g>
-
-          {/* Automation band (sits inside Orchestrate flow) */}
-          <g>
-            <rect x="30" y="302" width="640" height="42" rx="8" fill="#ede9fe" stroke="#8b5cf6" strokeWidth="3" />
-            <text x="50" y="328" fill="#4c1d95" fontSize="18" fontWeight="700">Automation · runs the play · draft · review · assign · push</text>
+            {/* Automation (now inside layer) */}
+            <g>
+              <rect x="480" y="176" width="170" height="130" rx="8" fill="#ede9fe" stroke="#8b5cf6" strokeWidth="2.5" />
+              <text x="495" y="200" fill="#4c1d95" fontSize="17" fontWeight="700">Automation</text>
+              <text x="495" y="222" fill="#3a2a1a" fontSize="13">runs the play</text>
+              <text x="495" y="240" fill="#3a2a1a" fontSize="13">draft · review</text>
+              <text x="495" y="258" fill="#3a2a1a" fontSize="13">assign · push</text>
+              <text x="495" y="276" fill="#3a2a1a" fontSize="13">loop closes</text>
+            </g>
           </g>
 
           {/* Core Apps */}
           <g>
-            <rect x="30" y="354" width="640" height="86" rx="8" fill="#f5f5f4" stroke="#3a2a1a" strokeWidth="3" />
-            <text x="50" y="378" fill="#3a2a1a" fontSize="18" fontWeight="700">Core Apps · one foundation, three systems of record</text>
+            <rect x="30" y="332" width="640" height="86" rx="8" fill="#f5f5f4" stroke="#3a2a1a" strokeWidth="3" />
+            <text x="50" y="356" fill="#3a2a1a" fontSize="18" fontWeight="700">Core Apps · one foundation, three systems of record</text>
             <g>
-              <rect x="50" y="390" width="190" height="38" rx="6" fill="#fff" stroke="#3a2a1a" strokeWidth="2" />
-              <text x="145" y="414" fill="#3a2a1a" fontSize="15" textAnchor="middle" fontWeight="700">SafetyManager365</text>
+              <rect x="50" y="368" width="190" height="38" rx="6" fill="#fff" stroke="#3a2a1a" strokeWidth="2" />
+              <text x="145" y="392" fill="#3a2a1a" fontSize="15" textAnchor="middle" fontWeight="700">SafetyManager365</text>
             </g>
             <g>
-              <rect x="250" y="390" width="200" height="38" rx="6" fill="#fff" stroke="#3a2a1a" strokeWidth="2" />
-              <text x="350" y="414" fill="#3a2a1a" fontSize="15" textAnchor="middle" fontWeight="700">ContentManager365</text>
+              <rect x="250" y="368" width="200" height="38" rx="6" fill="#fff" stroke="#3a2a1a" strokeWidth="2" />
+              <text x="350" y="392" fill="#3a2a1a" fontSize="15" textAnchor="middle" fontWeight="700">ContentManager365</text>
             </g>
             <g>
-              <rect x="460" y="390" width="200" height="38" rx="6" fill="#fff" stroke="#3a2a1a" strokeWidth="2" />
-              <text x="560" y="414" fill="#3a2a1a" fontSize="15" textAnchor="middle" fontWeight="700">TrainingManager365</text>
+              <rect x="460" y="368" width="200" height="38" rx="6" fill="#fff" stroke="#3a2a1a" strokeWidth="2" />
+              <text x="560" y="392" fill="#3a2a1a" fontSize="15" textAnchor="middle" fontWeight="700">TrainingManager365</text>
             </g>
           </g>
 
           {/* Use-case strip */}
           <g>
-            <rect x="30" y="452" width="640" height="36" rx="8" fill="none" stroke="#2563eb" strokeWidth="2.5" strokeDasharray="4 3" />
-            <text x="50" y="476" fill="#1e3a5f" fontSize="15" fontWeight="700">
+            <rect x="30" y="430" width="640" height="36" rx="8" fill="none" stroke="#2563eb" strokeWidth="2.5" strokeDasharray="4 3" />
+            <text x="50" y="454" fill="#1e3a5f" fontSize="15" fontWeight="700">
               use case · Madrid (MAD) unstable approach trend · closed in 5 days
             </text>
           </g>
