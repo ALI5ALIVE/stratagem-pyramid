@@ -5,11 +5,13 @@ import { GraduationCap, TrendingUp, Layers, Workflow } from "lucide-react";
 interface Props extends SlideNarrationProps {
   slideNumber?: number;
   slideCount?: number;
+  onJumpToWeek?: (weekId: string) => void;
 }
 
 const weeks = [
   {
     num: 1,
+    weekId: "se-week-1",
     title: "Foundation",
     desc: "The market shift & plain-English pitch",
     covers: "Modules 1–2",
@@ -18,6 +20,7 @@ const weeks = [
   },
   {
     num: 2,
+    weekId: "se-week-2",
     title: "Capabilities",
     desc: "How the platform fits together",
     covers: "Module 3",
@@ -26,6 +29,7 @@ const weeks = [
   },
   {
     num: 3,
+    weekId: "se-week-3",
     title: "Sell & Win",
     desc: "Discovery → walkthrough → close, use cases, objections",
     covers: "Modules 4–6",
@@ -34,7 +38,7 @@ const weeks = [
   },
 ];
 
-const SESlide0Title = ({ slideNumber, slideCount, ...narrationProps }: Props) => (
+const SESlide0Title = ({ slideNumber, slideCount, onJumpToWeek, ...narrationProps }: Props) => (
   <PitchSlideContainer id="se-title" slideNumber={slideNumber} {...narrationProps}>
     <div className="h-full flex flex-col justify-center max-w-6xl mx-auto px-4">
       <div className="flex items-center gap-2 mb-4">
@@ -58,7 +62,12 @@ const SESlide0Title = ({ slideNumber, slideCount, ...narrationProps }: Props) =>
         {weeks.map((w) => {
           const Icon = w.icon;
           return (
-            <div key={w.num} className={`p-4 rounded-lg border ${w.accent} flex flex-col gap-2`}>
+            <button
+              key={w.num}
+              type="button"
+              onClick={() => onJumpToWeek?.(w.weekId)}
+              className={`p-4 rounded-lg border ${w.accent} flex flex-col gap-2 text-left cursor-pointer transition-all hover:brightness-125 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60`}
+            >
               <div className="flex items-center justify-between">
                 <Icon className="h-5 w-5" />
                 <span className="text-[10px] font-mono opacity-70">WEEK {w.num}</span>
@@ -66,13 +75,13 @@ const SESlide0Title = ({ slideNumber, slideCount, ...narrationProps }: Props) =>
               <div className="text-base font-semibold text-foreground">{w.title}</div>
               <div className="text-xs text-muted-foreground leading-snug">{w.desc}</div>
               <div className="text-[10px] text-foreground/60 mt-auto pt-2 border-t border-border/40">{w.covers}</div>
-            </div>
+            </button>
           );
         })}
       </div>
 
       <p className="text-[11px] text-muted-foreground/70 italic mt-6">
-        Use ↓ / Space to advance · ↑ to go back · Sidebar for jump-to-slide
+        Click a week to jump in · ↓ / Space to advance · ↑ to go back · Sidebar for jump-to-slide
       </p>
     </div>
   </PitchSlideContainer>
