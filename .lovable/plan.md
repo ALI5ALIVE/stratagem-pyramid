@@ -1,59 +1,42 @@
 ## Goal
 
-Open the Week 3 "Sell the Whole Vision" section with the **Operational Performance Roadmap whiteboard** so reps frame the customer journey first, then use the existing Whole Vision whiteboard to show the capabilities that move the customer along that journey. This positions the session as a vision-led, differentiate / upsell / cross-sell conversation.
+Make the "Frame the Journey — Roadmap Vision" slide the **first content slide of Week 3**, immediately after the Week 3 divider, and update narration transitions so the flow reads cleanly.
 
-## Placement in Week 3
+## Reorder in `src/pages/SalesEnablement.tsx`
 
-Insert a new roadmap-framing slide as the **first content slide of the Whole Vision arc**, right before `se-w3-whole-vision-whiteboard` (currently slide 161 in `SalesEnablement.tsx`).
+Move the `se-w3-roadmap-vision-frame` row from its current position (between `se-footprint-playbook` and `se-w3-whole-vision-whiteboard`) to sit directly after the Week 3 divider:
 
 ```text
-... se-footprint-playbook
-NEW  se-w3-roadmap-vision-frame      ← Operational Roadmap, reframed for W3
-     se-w3-whole-vision-whiteboard   ← existing
-     se-discovery-to-close ...
+se-week-3                       (▸ Week 3 · Sell & Win divider)
+se-w3-roadmap-vision-frame      ← NEW POSITION (opener)
+se-w3-signals-recap
+se-who-to-target
+se-footprint-intro
+...
+se-footprint-playbook
+se-w3-whole-vision-whiteboard   ← unchanged
+se-discovery-to-close
+...
 ```
 
-Rationale: the footprint arc ends on the 3-Move Play (where the customer is today). The roadmap then shows where they need to go. The Whole Vision whiteboard then shows the toolset that moves them there. Discovery → Close follows.
+## Narration updates in `src/data/salesEnablementNarration.ts`
 
-## New slide
+Only the transition sentences change; coach-script structure and approved terminology stay intact.
 
-Create `src/components/sales-enablement-slides/SEW3RoadmapVisionFrame.tsx` that **reuses the existing `SERoadmapWhiteboardDrill` visual** (same 6-stroke whiteboard SVG, same color coding) but reframed for the W3 selling motion:
+1. **`se-w3-roadmap-vision-frame`** — rewrite the closing transition. New ending: leads into the Signals → DTOP recap, not the Whole Vision whiteboard. Example: "Transition: with the curve drawn and the destination agreed, let's recap how signals become orchestrated action through DTOP — then we'll pick the right account, draw their footprint, and finish the week by whiteboarding the full platform that walks them up this curve."
 
-- Header: "Frame the Journey — Sell the Vision"
-- Subtitle: "Before you sell capabilities, sell the curve. This is how you differentiate, upsell, and cross-sell."
-- Left: same whiteboard with the curve, 5 stages and YOU ARE HERE flag (visual parity with W1 drill so reps recognise it).
-- Right (replaces the W1 6-stroke script): a **selling-motion panel** with three short blocks:
-  1. **Differentiate** — only platform that runs the whole curve on one connected foundation closed by DTOP.
-  2. **Up-sell** — every stage compounds on the one below; moving up the curve = expanding the same platform.
-  3. **Cross-sell** — each Core App is a foothold; the curve makes the case for the next app and the Intelligence Layer.
-- Footer line: "We give them the tools and the mechanism to walk the curve — that's what the rest of this session covers."
+2. **`se-footprint-playbook`** — rewrite the closing transition so it leads into the Whole Vision whiteboard (which now follows it directly), not into Discovery → Close. New ending: "Transition: next, we put every layer of the platform on one whiteboard — each one a deal on its own, stacked into one compounding loop — so you can show the buyer exactly what walks them up the curve you just framed."
 
-No new visual concepts, no new SVG work — lift the SVG block from `SERoadmapWhiteboardDrill` into the new component so we don't fork the design.
+3. **`se-w3-whole-vision-whiteboard`** — keep as-is; its existing transition already leads into Discovery, Walkthrough and Close.
 
-## Narration
-
-Add one new entry to `src/data/salesEnablementNarration.ts` for `se-w3-roadmap-vision-frame`, following the 5-part Coach Script Standard (WHY → CORE MESSAGE → PAIN→VALUE → HOW TO DELIVER → TRANSITION). Approved terminology only. About 75–90 seconds.
-
-Core beats:
-- Why: Week 3 is about selling the vision. Reps who open with the roadmap win larger, longer deals because the buyer agrees on the destination before anyone debates features.
-- Core message: five-stage journey, one connected platform, one DTOP loop. Differentiation, upsell and cross-sell all live on this single curve.
-- Pain → value: buyers think they're at Stage 3 because they bought tools sold as Stage 3 — they're at one-point-five. The curve gives them permission to admit it and gives you the scope of every follow-up.
-- Delivery: draw the curve, plant YOU ARE HERE, then say "we give you the tools and the mechanism to walk this — that's what the rest of this session covers."
-- Transition: "now let's whiteboard the platform that moves them along the curve" → leads into `se-w3-whole-vision-whiteboard`.
-
-## Registry wiring
-
-`src/pages/SalesEnablement.tsx`:
-- Import `SEW3RoadmapVisionFrame`.
-- Insert one row immediately above the existing `se-w3-whole-vision-whiteboard` entry:
-  `{ id: "se-w3-roadmap-vision-frame", label: "W3 · Frame the Journey — Roadmap Vision", component: SEW3RoadmapVisionFrame },`
+4. **`se-week-3`** (divider script, if present) — if it currently previews the Week 3 order, update one sentence so it mentions the roadmap frame opening the week. Verify during implementation; only edit if it lists slide order.
 
 ## Memory update
 
-Append one line to `mem/content/sales-enablement/week3-field-kit.md` recording the new slide as the opener of the Whole Vision arc, so the W3 flow list stays accurate.
+Update `mem/content/sales-enablement/week3-field-kit.md` so the numbered W3 flow reflects the new opener position (Roadmap Vision becomes slide 1 of Week 3 content, before Signals Recap).
 
 ## Out of scope
 
-- No edits to the existing W1 `SERoadmapWhiteboardDrill` or its narration.
-- No changes to `SEW3WholeVisionWhiteboard` content or its narration.
-- No SVG redesign, no new tokens, no PPTX export changes, no other slides.
+- No visual or copy changes to the slide itself.
+- No edits to W1/W2 slides or narrations.
+- No PPTX export, registry, or styling changes beyond the single row move.
