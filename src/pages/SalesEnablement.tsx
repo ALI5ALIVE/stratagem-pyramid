@@ -143,6 +143,7 @@ const slides = [
   { id: "se-w2-capstone-whiteboard", label: "W2 · Capstone — One Use Case, Every Capability, One DTOP Loop", component: SEW2CapstoneWhiteboard },
   // WEEK 3
   { id: "se-week-3", label: "▸ Week 3 · Sell & Win", component: SEModuleDivider, dividerProps: weekProps.w3 },
+  { id: "se-w3-capstone-recap", label: "W3 · Recap — One Use Case, Every Capability, One DTOP Loop", component: SEW2CapstoneWhiteboard },
   { id: "se-who-to-target", label: "W3 · Who to Target", component: SEWhoToTarget },
   { id: "se-discovery-to-close", label: "W3 · Discovery → Demo → Close", component: SEDiscoveryToClose },
   { id: "se-discovery-question-bank", label: "W3 · Discovery Question Bank", component: SEDiscoveryQuestionBank },
