@@ -11,7 +11,6 @@ import SEObjections from "@/components/sales-enablement-slides/SEObjections";
 import SEClosingForReps from "@/components/sales-enablement-slides/SEClosingForReps";
 import SEPlainEnglishShift from "@/components/sales-enablement-slides/SEPlainEnglishShift";
 import SEDiscoveryToClose from "@/components/sales-enablement-slides/SEDiscoveryToClose";
-import SEUseCaseCheatSheet from "@/components/sales-enablement-slides/SEUseCaseCheatSheet";
 import SEDtopWhiteboardDrill from "@/components/sales-enablement-slides/SEDtopWhiteboardDrill";
 import SEDtopWhiteboardRunbook from "@/components/sales-enablement-slides/SEDtopWhiteboardRunbook";
 import SERoadmapWhiteboardDrill from "@/components/sales-enablement-slides/SERoadmapWhiteboardDrill";
@@ -93,7 +92,6 @@ const weekProps = {
       "Discovery → walkthrough → close",
       "Discovery question bank (DTOP)",
       "Persona playbook",
-      "Use case cheat sheet",
       "Customer footprint scenarios + whiteboards",
       "Customer outcomes",
       "Competitive cheat sheet",
@@ -165,7 +163,6 @@ const slides = [
   { id: "se-discovery-call-runbook", label: "W3 · Discovery-Call Runbook", component: SEDiscoveryCallRunbook },
   { id: "se-discovery-question-bank", label: "W3 · Discovery Question Bank", component: SEDiscoveryQuestionBank },
   { id: "se-persona-playbook", label: "W3 · Persona Playbook", component: SEPersonaPlaybook },
-  { id: "se-usecase-cheatsheet", label: "W3 · Use Case Cheat Sheet", component: SEUseCaseCheatSheet },
   { id: "se-slide-outcomes", label: "W3 · Customer Outcomes", component: CustomerOutcomesSlide },
   { id: "se-slide-objections", label: "W3 · Objections", component: SEObjections },
   { id: "se-competitive-cheatsheet", label: "W3 · Competitive Cheat Sheet", component: SECompetitiveCheatSheet },
