@@ -1,11 +1,13 @@
-## Fix Persona Playbook → Customer Outcomes transition
+## Hide Competitive Cheat Sheet & Objections from Week 3
 
-The Persona Playbook narration currently closes by teeing up "the use case cheat sheet," but the next slide in the Sales Enablement deck order is actually **Customer Outcomes** (`se-slide-outcomes`, labelled "W3 · Customer Outcomes"). That mismatch is what the user is hearing as a broken transition.
+Remove the two slide entries from the Sales Enablement deck registry so they no longer appear in navigation, narration sequence, or PDF/PPTX exports.
 
-**File:** `src/data/salesEnablementNarration.ts` (slide `se-persona-playbook`, line 391)
+**File:** `src/pages/SalesEnablement.tsx`
 
-**Change the closing sentence:**
-- From: *"Next we move into the use case cheat sheet — same discipline, applied to which use case to surface for which buyer."*
-- To: *"Next we move into customer outcomes — what this actually changes for their business, in their language: schedule holds, revenue holds, costs come down, customers come back."*
+Delete these two lines from the `slides` array (lines 167–168):
+- `{ id: "se-slide-objections", label: "W3 · Objections", component: SEObjections }`
+- `{ id: "se-competitive-cheatsheet", label: "W3 · Competitive Cheat Sheet", component: SECompetitiveCheatSheet }`
 
-This keeps the persona framing intact and hands cleanly into the four-card Signal → Action → Result walk on the Customer Outcomes slide. No other narrations need to change (the Customer Outcomes intro already opens on its own terms).
+Also remove the now-unused imports for `SEObjections` and `SECompetitiveCheatSheet` at the top of the file.
+
+The underlying components, narration entries, and use-case-cheatsheet slide remain untouched in case you want to re-enable them later.
