@@ -1,26 +1,21 @@
-## Rewrite narration for "What This Means for Customers" (W3 Customer Outcomes)
+## Problem
 
-### Problem with the current narration
-The `se-slide-outcomes` script in `src/data/salesEnablementNarration.ts` (lines 290–296) currently leans on hard customer-count numbers ("five hundred and fifty plus airlines", "two and a half million users", "six continents") and **never walks the four use cases on the slide**. The slide itself shows four detailed Signal → Action → Result mini-cases (Schedule Protection, Revenue Protection, Cost Savings, Customer Loyalty), but the voiceover skips them entirely and pitches social proof instead.
+The `se-w3-signals-recap` narration (and the slide framing) refers to "the Madrid approach trend" — a second use case from a slide that was removed earlier in the Week 3 refactor. Reps hearing the narration are told "two use cases drilled" when only one is shown, which breaks credibility and the transition into "Who to Target".
 
-### What to change
-Rewrite **only** the `script` field for `slideId: "se-slide-outcomes"`. Same coach-script format used elsewhere in the file (Why it matters → Core message → How to deliver → Walkthrough → Transition). No numbers, no airline counts, no user counts, no continent counts. The body becomes a guided walkthrough of all four cards in order, each in the same Signal → Action → Result rhythm the slide uses.
+The on-screen slide itself is fine — it already shows: 4 signal sources on the left, the DTOP lane on the right, and walks the crew duty-time anomaly through D→T→O→P. Only the **narration script** needs to change.
 
-### New narration (drop-in script string)
+## Change
 
-> "This slide matters because by now the buyer has seen the architecture, the use cases and the loop — and the question in their head is 'so what does this actually change for my business?'. Customer outcomes is where you answer that, in their language, not ours. The core message — one sentence, learn it verbatim: when you connect safety signals to the operation, four things move — your schedule holds, your revenue holds, your costs come down, and your customers come back. How to deliver it: walk the four cards in order, slowly, in Signal → Action → Result rhythm. Don't read the cards — narrate them. Pause between each so the buyer can map it onto their own world.
->
-> First card, Schedule Protection. The signal is a hard-landing trend showing up in operational data — the kind of pattern that, left alone, eventually becomes an aircraft on the ground and a cancelled rotation. The action is targeted retraining for the pilots flying that pattern, generated from the signal itself and pushed to the right crew. The result the buyer feels is fewer surprise maintenance findings, fewer last-minute swaps, and departures that go when the schedule says they go. Anchor it for them: 'this is the difference between finding out at the gate and finding out three weeks earlier.'
->
-> Second card, Revenue Protection. The signal is a smoke-and-fumes cluster building at a regional hub — small events, none of them disasters, but the shape of something that becomes one. The action is a revised de-icing procedure and a retrained ground crew before the cluster turns into an incident. The result the buyer feels is a hub that keeps running through the season instead of an investigation that takes the hub offline. The frame for them: 'every cancelled rotation here is revenue you don't get back — protection of the schedule is protection of the top line.'
->
-> Third card, Cost Savings. The signal is a training gap surfaced by performance data — not a failure, a drift, the kind a check airman would have caught eventually but the data caught first. The action is a personalised competency module assigned to exactly the crews who need it, not a fleet-wide refresher that wastes everyone's time. The result the buyer feels shows up in maintenance: less tire wear, fewer landing-gear repairs, less rework on parts that shouldn't have been touched yet. The frame: 'controllable costs are the only kind you can compound — and this is what controllable looks like.'
->
-> Fourth card, Customer Loyalty. The signal is a pattern of procedure confusion — the same step misinterpreted across multiple crews, multiple bases. The action is a rewritten SOP with the ambiguity removed, and a targeted retrain so the new version actually lands. The result the buyer feels is fewer in-flight incidents that make it into a passenger's day, and an on-time performance number the commercial team can build a brand on. The frame: 'consistency is the product — and consistency is what brings the passenger back.'
->
-> Close the slide on the cost-centre to revenue-driver arc at the top: safety and compliance stop being a cost line and start being the engine of schedule, revenue, cost and loyalty. Delivery tip — never claim a customer outcome you cannot defend with a named example offline. Walk the four; let the buyer pick which one hurts most; that is your wedge into the next conversation. Next: objections — the eight pushbacks you'll hear, with Acknowledge, Reframe, Bridge, and the proof artifact to send within the hour."
+Single-file edit to `src/data/salesEnablementNarration.ts`, `se-w3-signals-recap.script` only.
 
-### Scope
-- Edit: `src/data/salesEnablementNarration.ts` — replace the `script` value for the `se-slide-outcomes` entry only.
-- No changes to `CustomerOutcomesSlide.tsx` (slide visuals stay as-is).
-- No changes to other slides, audio re-gen, or the cached audio file for this slide (the narration system will fall back to TTS on next play, or you can re-cache separately — flag if you want me to also touch the audio cache).
+New script structure (coach-script standard, ~same length):
+
+1. **Why this slide matters** — first-call question: "where does Detect come from?" Reps who can name the 4 sources and walk one through DTOP in 30 seconds keep selling.
+2. **Recap — what a signal is** — anything that should change what the team does next. Name the four sources on the slide (Regulation, Anomalies, Operational Change, Macro/Geopolitical) with a one-line example each.
+3. **Recap — what DTOP is** — the closed loop every signal runs through: **Detect** (see it without an analyst pulling a report), **Trigger** (Intelligence Layer recommends the next action with evidence), **Orchestrate** (Automation + Unified Mobile push the change to the people who execute), **Prove** (Insights shows the signal flat, audit pack one click). Point: point solutions stop at Detect; only we do all four.
+4. **Walk the one use case on screen** — crew duty-time anomaly, end-to-end, one step at a time (D → T → O → P), exactly as the slide shows.
+5. **Pain / value lever** — today the regulation, safety, ops and planning teams each see their own signal in their own tool and nothing joins up; we are the only platform that connects the four signal worlds into one loop.
+6. **How to deliver it** — name the four sources, point at the anomaly, narrate the loop one step at a time, end on Prove, then pause. Don't list capabilities — the use case names them.
+7. **Transition** — drop the "two use cases drilled / Madrid" line entirely. End with: one signal, walked end-to-end, is enough to earn the next conversation — which is *who* to walk it to. → Next: Who to Target.
+
+No other files touched. No audio regeneration logic changes — the cache will refetch on next play because the script string changed.
