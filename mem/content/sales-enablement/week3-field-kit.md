@@ -6,18 +6,19 @@ type: feature
 Week 3 (Sell & Win) was upgraded May 2026 to be a "world-class" sales enablement week. All Week 3 content shares one data file: `src/data/week3FieldKit.ts` (discoveryQuestionBank, personaPlaybook, competitiveCheatSheet, dealStageLanguage, expandedObjections, useCaseCheatSheetRows, thirtyDayCalendar + stepColor/stepName for DTOP chips).
 
 Week 3 slide order in `src/pages/SalesEnablement.tsx`:
-1. se-who-to-target (NEW · propensityTiers + tier1Signals + whoNotToChaseFirst; anchored on existing Comply365 footprint)
-2. se-discovery-to-close
-3. se-discovery-question-bank (12 questions grouped by DTOP step, good vs red-flag answers)
-4. se-persona-playbook (5 personas × pain/questions/metric/landmine/proof)
-5. se-usecase-cheatsheet (7 rows + Listen-for + DTOP chip + Proof artifact)
-6. footprint intro → single → two → all → ladder → playbook
-7. se-slide-outcomes
-8. se-competitive-cheatsheet (6 competitor categories, stops-at-DTOP-step, reframe, trap question)
-9. se-slide-objections (8 objections, Acknowledge/Reframe/Bridge + Proof)
-10. se-discovery-call-runbook (4 blocks for a 45-min first call with verbatim scripts)
-11. se-deal-stage-language (4 deal-stage transitions with scripted next-step lines)
-12. se-strategy-vision-session (CLOSING slide · complimentary 3-hour workshop offer; fixed 3-hour agenda + attendees + leave-behind + rep talk track)
+1. se-w3-capstone-recap (NEW · reuses SEW2CapstoneWhiteboard with W3 title/subtitle override · frames platform value & DTOP loop before the sell-and-win playbook opens)
+2. se-who-to-target (propensityTiers + tier1Signals + whoNotToChaseFirst; anchored on existing Comply365 footprint)
+3. se-discovery-to-close
+4. se-discovery-question-bank (12 questions grouped by DTOP step, good vs red-flag answers)
+5. se-persona-playbook (5 personas × pain/questions/metric/landmine/proof)
+6. se-usecase-cheatsheet (7 rows + Listen-for + DTOP chip + Proof artifact)
+7. footprint intro → single → two → all → ladder → playbook
+8. se-slide-outcomes
+9. se-competitive-cheatsheet (6 competitor categories, stops-at-DTOP-step, reframe, trap question)
+10. se-slide-objections (8 objections, Acknowledge/Reframe/Bridge + Proof)
+11. se-discovery-call-runbook (4 blocks for a 45-min first call with verbatim scripts)
+12. se-deal-stage-language (4 deal-stage transitions with scripted next-step lines)
+13. se-strategy-vision-session (CLOSING slide · complimentary 3-hour workshop offer; fixed 3-hour agenda + attendees + leave-behind + rep talk track)
 
 Removed Nov 2026: `se-slide-why` (Why Comply365), `se-practice-center-bridge`, `se-slide-closing` (Your First 30 Days) — Week 3 now ends on the Strategy & Vision Session offer. Components remain in `src/components/...` and `slideRegistry.ts` for academy/other deck reuse, but no longer appear in the Sales Enablement deck. `se-deal-stage-language` narration now transitions directly into the Strategy & Vision Session.
 
