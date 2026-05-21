@@ -1,46 +1,86 @@
 ## Goal
 
-Rewrite the `se-discovery-question-bank` narration so it plays as a **two-voice walkthrough of the actual cards on the slide** — rep voice asks a question from the bank, customer voice gives a realistic answer (sometimes a "good" answer, more often a "red-flag" answer), rep briefly names what they just heard, then moves on.
+Add **one new Week 3 whiteboard slide** that lets a rep sell the **complete platform vision** in a single picture — building from Core Apps up through the Intelligence & Orchestration layer (Insights → Intelligence → Recommendations & Prescriptive Actions → Automation), then anchoring the whole stack to **one DTOP use case** with a per-layer "say this to the customer" script.
 
-Same two-voice pattern we just shipped on `se-discovery-call-runbook` (George = rep, Charlotte = customer). No infrastructure changes — the segments pipeline already supports this.
+Same hand-drawn whiteboard aesthetic as `SEW2CapstoneWhiteboard` (cream board, brown frame, Caveat marker font, DTOP color coding).
 
-## Scope
+## Placement
 
-One file, narration-only. No slide visual changes, no other slides touched.
+Insert in Week 3 immediately **after `se-footprint-playbook`** and **before `se-discovery-to-close`**:
 
-### `src/data/salesEnablementNarration.ts` — replace the `se-discovery-question-bank` entry
+```
+… se-footprint-playbook                      (3-Move Play — closes the footprint arc)
+   se-w3-whole-vision-whiteboard   ← NEW    (sell the whole vision in one picture)
+   se-discovery-to-close                    (then drill the discovery motion)
+…
+```
 
-- Keep `slideId`, `title`, `voiceId` (George) as-is.
-- Rewrite `script` (used by the speaker-notes panel) as the same dialogue, prefixed `Rep:` / `Customer:`, so the transcript and audio match.
-- Add a `segments` array alternating George (rep) and Charlotte (customer).
+Rationale: by this point the rep has learned what to sell into one, two, or all three apps. The next teaching beat — before discovery mechanics — is **how to lift the conversation to the full platform vision** as a single board-ready story. It is the W3 analogue of the W2 capstone, but pitched at "complete vision" rather than "every capability in one use case".
 
-### Walkthrough structure (~2 min audio, 14–18 segments)
+## Slide design
 
-1. **Rep open** (George, one segment) — frame what the slide is and what we're about to do: "Let me walk you through how this plays in a real room. I'll pull one question per DTOP step, and you'll hear what a useful answer sounds like versus a red flag."
-2. **Detect (D)** — Rep asks one question verbatim from the D card → Customer gives a red-flag style answer → Rep one-line read ("That's the red flag — they can't name where the signal lands. That's the wedge.").
-3. **Trigger (T)** — Rep asks one T question → Customer gives a realistic answer with a number that exposes the gap ("Honestly, three to four weeks…") → Rep one-line read.
-4. **Orchestrate (O)** — Rep asks one O question → Customer describes the manual stack ("Safety tool, then content, then the LMS — and a spreadsheet that someone owns…") → Rep one-line read.
-5. **Prove (P)** — Rep asks the audit-evidence question → Customer admits it's a multi-day project → Rep one-line read (this is the "cheapest yes" line from the slide intent).
-6. **Rep close** (George, one segment) — close the loop: "Four questions. Four red-flag answers. That's not a coincidence — that's the shape of the problem DTOP is built for. Pick four before every call, ask one, then shut up."
+Single h-screen `PitchSlideContainer`, header on, no horizontal scroll. Layout:
 
-### Question selection (from `discoveryQuestionBank` in `src/data/week3FieldKit.ts`)
+```text
+┌──────────────────────────────────────────────────────────────────────┐
+│  Header: "Sell the Whole Vision — One Whiteboard"                    │
+│  Subtitle: "Draw the stack bottom-up, anchor it to one use case,     │
+│  give the customer one line per layer. 90 seconds, one marker."      │
+├──────────────────────────────┬───────────────────────────────────────┤
+│                              │  Say-it script · 90 seconds           │
+│   WHITEBOARD (col-span 7)    │  (col-span 5)                         │
+│                              │                                       │
+│  Bottom-up build, SVG:       │  Five numbered beats, one per layer,  │
+│                              │  in the same order the rep draws:     │
+│   ┌────────────────────────┐ │                                       │
+│   │  DTOP loop band (top)  │ │  1. Core Apps — "Today your safety,  │
+│   │  D · T · O · P chips   │ │     content and training live in     │
+│   ├────────────────────────┤ │     three tools that don't talk."    │
+│   │  Unified Mobile band   │ │                                       │
+│   ├────────────────────────┤ │  2. Insights — "First, we put your   │
+│   │  Automation            │ │     operational data on one          │
+│   │  Recommendations & Px  │ │     foundation so trends surface     │
+│   │  Intelligence          │ │     themselves."                     │
+│   │  Insights              │ │                                       │
+│   ├────────────────────────┤ │  3. Intelligence — "Then we sit a    │
+│   │  Core Apps (3 cards)   │ │     domain-trained intelligence on   │
+│   │  SafetyManager365      │ │     top — ~90% on aviation work vs   │
+│   │  ContentManager365     │ │     ~35% for generic AI."            │
+│   │  TrainingManager365    │ │                                       │
+│   ├────────────────────────┤ │  4. Recommendations & Prescriptive   │
+│   │  USE-CASE STRIP:       │ │     Actions — "It doesn't just       │
+│   │  Madrid (MAD) unstable │ │     summarise — it tells you what to │
+│   │  approach trend → D-T- │ │     do next, with cited evidence."   │
+│   │  O-P chips             │ │                                       │
+│   └────────────────────────┘ │  5. Automation — "Then Automation     │
+│                              │     does it: drafts the revision,   │
+│                              │     opens the review, pushes it to  │
+│                              │     crew. One loop, closed."        │
+│                              │                                       │
+│                              │  Close: "That's the whole vision —  │
+│                              │  start with one app, the stack lifts │
+│                              │  the rest as you grow."             │
+└──────────────────────────────┴───────────────────────────────────────┘
+```
 
-Use the questions already on the slide so the audio matches what the viewer is looking at:
+DTOP color tokens stay canonical: D blue · T amber · O violet · P emerald. Intelligence layer band uses amber (Intelligence Layer brand colour). Core Apps band uses muted neutral so the layers above can do the visual lifting.
 
-- **D**: "When something goes wrong operationally, where is the very first place it's logged?"
-- **T**: "How long, on average, from signal to a procedure update reaching the crew?"
-- **O**: "Walk me through how a procedure change today reaches the right crew and gets paired with the right training."
-- **P**: "If a regulator asked for proof your last five safety actions actually closed the loop, how long would that take?"
+## Files
 
-Customer answers map deliberately to the **red-flag** descriptor on each card so the rep's debrief line lands.
+### New
+- `src/components/sales-enablement-slides/SEW3WholeVisionWhiteboard.tsx` — the slide. Built from the same primitives as `SEW2CapstoneWhiteboard` (PitchSlideContainer, hand-drawn SVG on cream board, Caveat font, say-it script column).
+
+### Edited
+- `src/pages/SalesEnablement.tsx` — import the new component and insert one entry into the `slides` array directly after `se-footprint-playbook` with id `se-w3-whole-vision-whiteboard` and label `W3 · Sell the Whole Vision — Whiteboard`.
+- `src/data/salesEnablementNarration.ts` — add a coach-script narration entry for `se-w3-whole-vision-whiteboard` following the existing 5-part coach standard (WHY → CORE MESSAGE → PAIN→VALUE → HOW TO DELIVER → TRANSITION). Single voice (George), no segments. Respects locked terminology (no FOQA/FDM/ASAP, ~90% vs ~35% headline, BrandNumber naming, DTOP wording).
 
 ## Out of scope
 
-- Slide visuals / card layout
-- Any other slide's narration
-- New voices, new TTS settings
-- Edge function or hook changes (segments path already shipped)
+- Two-voice walkthrough (this is a coach explainer, not a customer simulation).
+- Touching W2 capstone or any existing W3 slide.
+- New design tokens, fonts, or animations beyond the existing Caveat-on-cream whiteboard look.
+- PPTX export changes.
 
 ## Risk
 
-Same minor MP3-seam risk between segments as the runbook. Acceptable.
+Minimal — additive slide, same patterns as the W2 capstone whiteboard, slots cleanly into the existing slide registry and narration map.
