@@ -22,7 +22,7 @@ const SEWhoToTarget = ({ slideNumber, ...narrationProps }: Props) => (
     showHeader
     {...narrationProps}
   >
-    <div className="h-full flex flex-col gap-3 max-w-7xl mx-auto px-4 pt-2">
+    <div className="h-full flex flex-col gap-3 max-w-7xl mx-auto px-4 pt-2 pb-10">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         {propensityTiers.map((t) => (
           <div key={t.tier} className={`rounded-lg border p-3 flex flex-col gap-2 ${accentMap[t.accent]}`}>

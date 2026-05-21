@@ -54,7 +54,7 @@ const SEFootprintPlaybook = ({ slideNumber, ...narrationProps }: Props) => (
     showHeader
     {...narrationProps}
   >
-    <div className="h-full flex flex-col gap-3 max-w-7xl mx-auto px-4 pt-2">
+    <div className="h-full flex flex-col gap-3 max-w-7xl mx-auto px-4 pt-2 pb-10">
       {moves.map((m) => {
         const Icon = m.icon;
         return (
