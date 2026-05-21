@@ -22,6 +22,7 @@ import SEFootprintAllThree from "@/components/sales-enablement-slides/SEFootprin
 import SEFootprintValueLadder from "@/components/sales-enablement-slides/SEFootprintValueLadder";
 import SEFootprintPlaybook from "@/components/sales-enablement-slides/SEFootprintPlaybook";
 import SEW3WholeVisionWhiteboard from "@/components/sales-enablement-slides/SEW3WholeVisionWhiteboard";
+import SEW3RoadmapVisionFrame from "@/components/sales-enablement-slides/SEW3RoadmapVisionFrame";
 import SEFootprintSingleWhiteboard from "@/components/sales-enablement-slides/SEFootprintSingleWhiteboard";
 import SEFootprintTwoWhiteboard from "@/components/sales-enablement-slides/SEFootprintTwoWhiteboard";
 import SEFootprintAllThreeWhiteboard from "@/components/sales-enablement-slides/SEFootprintAllThreeWhiteboard";
