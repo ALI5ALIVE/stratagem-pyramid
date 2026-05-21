@@ -46,7 +46,7 @@ const steps = [
     letter: "D",
     name: "Detect",
     color: "blue",
-    capability: "Operational Data + Generative AI",
+    capability: "Operational Data + Insights",
     line: "Duty-time anomaly surfaces across two bases — no analyst pulled a report.",
   },
   {
