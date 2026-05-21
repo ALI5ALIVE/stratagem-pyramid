@@ -30,9 +30,9 @@ const SEFootprintTwoWhiteboard = ({ slideNumber, ...narrationProps }: Props) => 
         <svg viewBox="0 0 700 460" className="w-full h-full" style={{ fontFamily: "'Caveat', 'Comic Sans MS', cursive" }}>
           {/* Intelligence band */}
           <g>
-            <rect x="40" y="30" width="420" height="40" rx="8" fill="#ede9fe" stroke="#6d28d9" strokeWidth="3" />
-            <text x="55" y="56" fill="#6d28d9" fontSize="15" fontWeight="700">Intelligence Layer · Insights · Automation</text>
-            <text x="305" y="56" fill="#b45309" fontSize="12" fontStyle="italic">— across 2 lanes</text>
+            <rect x="40" y="20" width="620" height="55" rx="8" fill="#ede9fe" stroke="#6d28d9" strokeWidth="3" />
+            <text x="55" y="44" fill="#6d28d9" fontSize="15" fontWeight="700">Intelligence Layer · Insights · Automation</text>
+            <text x="55" y="64" fill="#b45309" fontSize="12" fontStyle="italic">across 2 lanes — still confined</text>
           </g>
           {/* Lit Safety */}
           <g>
@@ -57,22 +57,22 @@ const SEFootprintTwoWhiteboard = ({ slideNumber, ...narrationProps }: Props) => 
           </g>
           {/* Half-loop arrow */}
           <g stroke="#f59e0b" strokeWidth="3" fill="none">
-            <line x1="60" y1="245" x2="460" y2="245" />
+            <line x1="60" y1="250" x2="460" y2="250" />
           </g>
-          <text x="60" y="238" fill="#b45309" fontSize="13" fontWeight="700">Detect → Trigger → Orchestrate (procedures)</text>
-          <text x="475" y="250" fill="#dc2626" fontSize="22" fontWeight="700">✗</text>
-          <text x="500" y="248" fill="#dc2626" fontSize="13" fontStyle="italic">no Training → Prove partial</text>
+          <text x="60" y="240" fill="#b45309" fontSize="13" fontWeight="700">Detect → Trigger → Orchestrate (procedures only)</text>
+          <text x="475" y="255" fill="#dc2626" fontSize="20" fontWeight="700">✗</text>
+          <text x="60" y="272" fill="#dc2626" fontSize="13" fontStyle="italic">no Training reach → Prove partial</text>
           {/* Discovery question */}
           <g>
-            <rect x="40" y="285" width="620" height="65" rx="8" fill="#fef3c7" stroke="#b45309" strokeWidth="2" />
-            <text x="55" y="310" fill="#b45309" fontSize="14" fontWeight="700">Ask:</text>
-            <text x="55" y="335" fill="#3a2a1a" fontSize="15" fontStyle="italic">"When a procedure changes, how do you know every crew is trained on it before the next shift?"</text>
+            <rect x="40" y="295" width="620" height="65" rx="8" fill="#fef3c7" stroke="#b45309" strokeWidth="2" />
+            <text x="55" y="320" fill="#b45309" fontSize="14" fontWeight="700">Ask:</text>
+            <text x="55" y="345" fill="#3a2a1a" fontSize="14" fontStyle="italic">"When a procedure changes, how do you know every crew is trained before the next shift?"</text>
           </g>
           {/* Circle the missing lane */}
           <g stroke="#10b981" strokeWidth="3" fill="none">
             <ellipse cx="570" cy="150" rx="100" ry="75" />
           </g>
-          <text x="380" y="395" fill="#047857" fontSize="14" fontWeight="700">Circle = the loop-close (the cheapest path)</text>
+          <text x="280" y="385" fill="#047857" fontSize="14" fontWeight="700">Circle = the loop-close (cheapest path)</text>
         </svg>
       </div>
       <div className="col-span-5 flex flex-col gap-2">

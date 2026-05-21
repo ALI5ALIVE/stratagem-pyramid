@@ -30,13 +30,13 @@ const SEFootprintSingleWhiteboard = ({ slideNumber, ...narrationProps }: Props) 
         <svg viewBox="0 0 700 460" className="w-full h-full" style={{ fontFamily: "'Caveat', 'Comic Sans MS', cursive" }}>
           {/* Lit Safety lane */}
           <g>
-            <rect x="40" y="50" width="200" height="160" rx="8" fill="#dbeafe" stroke="#2563eb" strokeWidth="4" />
+            <rect x="40" y="50" width="200" height="175" rx="8" fill="#dbeafe" stroke="#2563eb" strokeWidth="4" />
             <text x="60" y="85" fill="#2563eb" fontSize="26" fontWeight="700">Safety</text>
             <text x="60" y="110" fill="#1e3a5f" fontSize="14">(LIT — they own this)</text>
             <text x="60" y="145" fill="#1e3a5f" fontSize="13">+ Intelligence Layer</text>
             <text x="60" y="165" fill="#1e3a5f" fontSize="13">+ Insights</text>
             <text x="60" y="185" fill="#1e3a5f" fontSize="13">+ Automation</text>
-            <text x="60" y="205" fill="#b45309" fontSize="12" fontStyle="italic">confined to this lane</text>
+            <text x="60" y="215" fill="#b45309" fontSize="11" fontStyle="italic">confined to this lane</text>
           </g>
           {/* Dark Content lane */}
           <g>
@@ -56,19 +56,19 @@ const SEFootprintSingleWhiteboard = ({ slideNumber, ...narrationProps }: Props) 
             <polyline points="420,233 432,240 420,247" />
           </g>
           <text x="280" y="232" fill="#b45309" fontSize="14" fontWeight="700">Detect → Trigger →</text>
-          <text x="440" y="270" fill="#dc2626" fontSize="22" fontWeight="700">✗</text>
-          <text x="465" y="268" fill="#dc2626" fontSize="14" fontStyle="italic">Orchestrate has nowhere to go</text>
+          <text x="280" y="270" fill="#dc2626" fontSize="20" fontWeight="700">✗</text>
+          <text x="305" y="268" fill="#dc2626" fontSize="13" fontStyle="italic">Orchestrate has nowhere to go</text>
           {/* Discovery question */}
           <g>
-            <rect x="40" y="300" width="620" height="60" rx="8" fill="#fef3c7" stroke="#b45309" strokeWidth="2" />
+            <rect x="40" y="295" width="620" height="60" rx="8" fill="#fef3c7" stroke="#b45309" strokeWidth="2" />
             <text x="55" y="325" fill="#b45309" fontSize="14" fontWeight="700">Ask:</text>
-            <text x="55" y="348" fill="#3a2a1a" fontSize="16" fontStyle="italic">"When Safety flags a risk, who owns the procedure and training change?"</text>
+            <text x="55" y="345" fill="#3a2a1a" fontSize="15" fontStyle="italic">"When Safety flags a risk, who owns the procedure and training change?"</text>
           </g>
           {/* Circle the gap */}
           <g stroke="#10b981" strokeWidth="3" fill="none">
             <ellipse cx="465" cy="100" rx="220" ry="70" />
           </g>
-          <text x="380" y="395" fill="#047857" fontSize="14" fontWeight="700">Circle = the sale (close one dark lane)</text>
+          <text x="300" y="380" fill="#047857" fontSize="14" fontWeight="700">Circle = the sale (close one dark lane)</text>
         </svg>
       </div>
       <div className="col-span-5 flex flex-col gap-2">
