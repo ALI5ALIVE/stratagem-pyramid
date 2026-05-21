@@ -17,12 +17,11 @@ Week 3 slide order in `src/pages/SalesEnablement.tsx`:
 9. se-slide-objections (8 objections, Acknowledge/Reframe/Bridge + Proof)
 10. se-discovery-call-runbook (4 blocks for a 45-min first call with verbatim scripts)
 11. se-deal-stage-language (4 deal-stage transitions with scripted next-step lines)
-12. se-slide-why
-13. se-practice-center-bridge (links 3 Practice Center scenarios to Week 3)
-14. se-slide-closing (30-day calendar Read/Shadow/Practice/Lead, Day-30 readiness checklist)
-15. se-strategy-vision-session (NEW · complimentary half-day workshop offer; fixed 4-hour agenda + attendees + leave-behind + rep talk track. The CLOSING slide of Week 3 — every rep ends the week with the offer they're meant to put in market.)
+12. se-strategy-vision-session (CLOSING slide · complimentary half-day workshop offer; fixed 4-hour agenda + attendees + leave-behind + rep talk track)
 
-Narration entries follow the Coach Script Standard (5-part teaching format) in `src/data/salesEnablementNarration.ts`. Week 3 divider script + use-case + objections + closing scripts were rewritten to match the new content. estimatedMinutes for w3 is 48.
+Removed Nov 2026: `se-slide-why` (Why Comply365), `se-practice-center-bridge`, `se-slide-closing` (Your First 30 Days) — Week 3 now ends on the Strategy & Vision Session offer. Components remain in `src/components/...` and `slideRegistry.ts` for academy/other deck reuse, but no longer appear in the Sales Enablement deck. `se-deal-stage-language` narration now transitions directly into the Strategy & Vision Session.
+
+Narration entries follow the Coach Script Standard (5-part teaching format) in `src/data/salesEnablementNarration.ts`. estimatedMinutes for w3 is 38.
 
 New data exports in `week3FieldKit.ts` for the bookend slides: `propensityTiers`, `tier1Signals`, `whoNotToChaseFirst`, `visionSessionAgenda`, `visionSessionAttendees`, `visionSessionLeaveBehind`, `visionSessionRepTalkTrack`.
 

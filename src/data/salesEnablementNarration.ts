@@ -302,20 +302,6 @@ export const salesEnablementNarrations: SESlideNarration[] = [
       "Objections cheat sheet — read this slide aloud, every line, and practise the responses until they sound like yours, not ours. The core message: every objection follows the same four-step pattern — Acknowledge, Reframe, Bridge, then send the proof artifact within the hour. Eight objections here, covering SMS, legacy content, AI governance, regulator approval, an existing LMS, locked budget, prior failed attempts, and 'we're too small'. The pain you're addressing: most reps argue with objections instead of using them as discovery. The value lever: a well-handled objection is a faster path to the next conversation than no objection at all, and the proof artifact you send afterwards is what keeps the conversation alive between meetings. Delivery tip — never escalate. The customer's objection is information, not opposition. Send the proof artifact within sixty minutes of the call ending. Next: the discovery-call runbook — how to put all of this together inside a real 45-minute first call.",
   },
   {
-    slideId: "se-slide-why",
-    title: "Week 3 · Why Comply365",
-    voiceId: VOICE,
-    script:
-      "Why Comply365 is your closing argument. The core message — three differentiators, in this order: connected foundation, the intelligence layer with approximately ninety percent domain accuracy, and proven scale at five hundred and fifty plus airlines and around two and a half million users across six continents. The pain it addresses: at the close, the customer is choosing between feeling safe and feeling visionary — this slide lets them feel both. The value lever: foundation gives them the safe choice, intelligence gives them the visionary choice, scale removes the career risk. Delivery tip — pick the one differentiator that matches the room and lead with it — don't read all three with equal weight. Then ask the close: can we set up a focused walkthrough on your highest-cost use case? Silence after that question is your friend. Next: the Practice Center bridge — three featured Week 3 role-plays you run before any real meeting with that persona.",
-  },
-  {
-    slideId: "se-slide-closing",
-    title: "Week 3 · Your First 7 Days",
-    voiceId: VOICE,
-    script:
-      "This slide is the rep's commitment, not the customer's — and it is now a 30-day calendar, not a checklist. Days 1 to 7 you read. The Enablement deck end-to-end, then Executive Pitch 3 alongside it. Days 8 to 14 you shadow. Two live calls minimum, one discovery and one walkthrough. Days 15 to 21 you practise. Three Practice Center sessions — VP Safety, VP Ops, CIO — using Acknowledge, Reframe, Bridge on every objection. Days 22 to 30 you lead. A real discovery call, using the runbook on a second monitor, ending with the scripted deal-stage line that books the next session. The pain this addresses: most new reps wait to be pulled into deals; the ones who win ramp themselves. The value lever: by day 30 you've booked your first focused use-case session, with the right two people in the room. Final delivery tip — the closing line of this academy is the same line you carry into every customer meeting: you're not selling software, you're selling the first connected operating model in aviation. Next, and last in Week 3 — the Strategy and Vision Session — the complimentary half-day workshop you walk into every customer meeting ready to offer.",
-  },
-  {
     slideId: "se-w2-capstone-whiteboard",
     title: "Week 2 · Capstone Whiteboard",
     voiceId: VOICE,
@@ -355,14 +341,7 @@ export const salesEnablementNarrations: SESlideNarration[] = [
     title: "Week 3 · Deal-Stage Next-Step Language",
     voiceId: VOICE,
     script:
-      "This slide matters because deals stall between stages, not inside them — and the unlock is a scripted line, said out loud, with a date and a name. The core message — four transitions: first call to working session, working session to focused use-case session, use-case session to executive readout, readout to commercial scoping. For each, a goal, the right person to bring next, and a scripted line. The pain you're naming: reps over-rely on email and under-rely on a verbal commitment in the room. The value lever: when you propose the next step before you hang up, with the two people you need in it, you close 60 percent more often. How to deliver it: pick the line, customise the date and the names, say it before the call wraps. Avoid generic phrases like 'let's circle back'. Always include who else needs to be in the next room, and why — that's what advances the deal organisationally, not just in your CRM. Next: Why Comply365, our closing argument.",
-  },
-  {
-    slideId: "se-practice-center-bridge",
-    title: "Week 3 · Practice Center Bridge",
-    voiceId: VOICE,
-    script:
-      "This slide matters because reading about objections does not make you good at handling them — only reps do. The core message: run a Practice Center role-play before you take a real meeting with that persona. Three featured Week 3 scenarios: VP Safety, VP Ops, CIO — voice-driven, scored, repeatable. The pain you're naming: most reps practise on customers; the ones who win practise on the AI first. The value lever: every scenario uses the same narration scripts you've just studied, and scores you against the key messages — so you know which message you're under-landing before it costs you a deal. How to deliver it as a coach: rule of thumb — don't run a real first call with a persona until you can score green on the matching role-play. Run it twice on friendly, once on skeptical, once on hostile, and only then book the real meeting. Next: your first 30 days as a Comply365 seller — read, shadow, practise, lead.",
+      "This slide matters because deals stall between stages, not inside them — and the unlock is a scripted line, said out loud, with a date and a name. The core message — four transitions: first call to working session, working session to focused use-case session, use-case session to executive readout, readout to commercial scoping. For each, a goal, the right person to bring next, and a scripted line. The pain you're naming: reps over-rely on email and under-rely on a verbal commitment in the room. The value lever: when you propose the next step before you hang up, with the two people you need in it, you close 60 percent more often. How to deliver it: pick the line, customise the date and the names, say it before the call wraps. Avoid generic phrases like 'let's circle back'. Always include who else needs to be in the next room, and why — that's what advances the deal organisationally, not just in your CRM. Next, and last in Week 3 — the Strategy and Vision Session — the complimentary half-day workshop you walk into every customer meeting ready to offer.",
   },
   {
     slideId: "se-who-to-target",
