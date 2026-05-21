@@ -207,13 +207,6 @@ export const competitiveCheatSheet: Competitor[] = [
     trapQuestion: "How does your content system know which procedure to revise when a safety signal lands?",
   },
   {
-    name: "Vistair",
-    position: "Document management for aviation.",
-    stopsAt: "O",
-    reframe: "Documents only. Doesn't unify safety + training, no intelligence layer, no proof of loop closure.",
-    trapQuestion: "When a regulation changes, how do you trace it to affected procedures, affected crews, and the training they need?",
-  },
-  {
     name: "TMS-only (FlightLogger, Cornerstone, in-house)",
     position: "We are the training system of record.",
     stopsAt: "O",
@@ -296,7 +289,7 @@ export const expandedObjections: ExpandedObjection[] = [
     proofArtifact: "DTOP whiteboard + Intelligence Layer slide.",
   },
   {
-    objection: "We have Vistair / legacy Comply365 for content.",
+    objection: "We have legacy Comply365 for content.",
     acknowledge: "Understood — content distribution is solved.",
     reframe: "Documents move; the loop doesn't close. There's no Trigger from operational signals and no Prove that the change altered behaviour.",
     bridge: "Can I show you the same content flow, but wired to live safety signals?",
