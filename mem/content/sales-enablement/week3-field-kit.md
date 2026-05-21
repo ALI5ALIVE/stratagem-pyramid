@@ -6,13 +6,13 @@ type: feature
 Week 3 flow (post-refactor):
 
 1. W3 Divider · Sell & Win
-2. Frame the Journey — Roadmap Vision (opener; reuses W1 roadmap whiteboard reframed for differentiate / up-sell / cross-sell)
-3. Recap — Signals → DTOP (animated)
-4. Who to Target
-5. Customer Footprint — Intro
-6–12. Footprint variants (One, One Whiteboard, Two, Two Whiteboard, All Three, All Three Whiteboard, Value Ladder)
-13. Footprint — 3-Move Play
-14. Sell the Whole Vision — Whiteboard
+2. Frame the Journey — Roadmap Vision (opener)
+3. Sell the Whole Vision — Whiteboard (paired with roadmap; both whiteboards up front)
+4. Recap — Signals → DTOP (animated)
+5. Who to Target
+6. Customer Footprint — Intro
+7–13. Footprint variants (One, One Whiteboard, Two, Two Whiteboard, All Three, All Three Whiteboard, Value Ladder)
+14. Footprint — 3-Move Play
 15. Discovery → Walkthrough → Close (the arc)
 14. Discovery-Call Runbook (moved earlier — it is the structural template)
 15. Discovery Question Bank (slots into Runbook's Discover block)
