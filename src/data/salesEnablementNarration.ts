@@ -9,9 +9,11 @@ export interface SESlideNarration {
   title: string;
   script: string;
   voiceId: string;
+  segments?: Array<{ voiceId: string; text: string }>;
 }
 
 const VOICE = "JBFqnCBsd6RMkjVDRZzb"; // George — warm trainer tone
+const CUSTOMER_VOICE = "XB0fDUnXU5powFXDhCwa"; // Charlotte — distinct customer voice
 
 export const salesEnablementNarrations: SESlideNarration[] = [
   {
