@@ -1,28 +1,26 @@
-## Recolor Insights & Intelligence and add a Prove box
+## Move the MAD use case to the top, mapped under each DTOP step
 
-You're right — the Insights & Intelligence box currently reads green (Prove) but it actually powers **Detect**. And Insights re-appears later for **Prove** (the audit pack), so it deserves its own green box.
+Right now the Madrid (MAD) unstable-approach use case is a one-liner stuck at the bottom of the whiteboard. Lift it to the top so the viewer sees the worked example *before* they read the stack — and split it across Detect / Trigger / Orchestrate / Prove so each pill carries its own MAD beat.
 
 ### Edits in `src/components/sales-enablement-slides/SEW3WholeVisionWhiteboard.tsx`
 
-**SVG — restructure the "Intelligence & Orchestration Layer" into 4 columns** (currently 3) across width 640:
+**1. New use-case header band at the top of the SVG** (above the DTOP loop)
+- Title strip: `use case · Madrid (MAD) unstable approach trend · closed in 5 days` (blue dashed border, like today's bottom strip)
+- Just below it, a 4-column row of micro-cards aligned with the four DTOP pills:
+  - **Detect (blue)** — "14-day MAD unstable-approach trend surfaces"
+  - **Trigger (amber)** — "Recommended Actions: revise OMA, retrain 4 crews — cited"
+  - **Orchestrate (violet)** — "OMA draft + reviews + training assigned · pushed to devices in 48h"
+  - **Prove (green)** — "MAD trend flat in 5 days · audit pack one click"
 
-1. **Insights** (Detect · blue) — fill `#dbeafe`, stroke `#2563eb`, header `#1e3a5f`
-   - "trends surface themselves" · "domain-trained for ops"
-2. **Intelligence** (Trigger · amber) — fill `#fef3c7`, stroke `#f59e0b`, header `#7c2d12`
-   - "~90% vs ~35% generic" · "cited · reg · procedure" · "Recommended Actions"
-   - Merges what was the standalone "Recommendations" box, since Recommendations = the output of the Intelligence Layer
-3. **Automation** (Orchestrate · violet) — unchanged colors, keep `#ede9fe` / `#8b5cf6`
-   - "runs the play" · "draft · review · assign · push"
-4. **Insights · Prove** (Prove · green) — fill `#d1fae5`, stroke `#10b981`, header `#064e3b`
-   - "trend flattened" · "audit pack cited" · "loop closed"
+**2. Reorder the SVG vertically** (viewBox stays `0 0 700 500`):
+  - `y 30–66` — Use-case title strip
+  - `y 70–126` — 4 MAD micro-cards (one per DTOP step), each ~150px wide
+  - `y 132–178` — DTOP loop band (existing, shifted down)
+  - `y 184–224` — Unified Mobile band
+  - `y 230–406` — Intelligence & Orchestration Layer (4 sub-boxes, slightly shorter to fit)
+  - `y 412–490` — Core Apps band
+  - Remove the old bottom use-case strip
 
-Each box ~150px wide with 10px gaps. Layer header stays.
+**3. Visual link** — under each DTOP pill add a small downward connector tick into its matching MAD micro-card, so the eye reads "Detect → this is what Detect does for MAD" immediately.
 
-**Say-it script (right column) — re-color and re-label the beats** to match:
-- Beat 2 split into **2a · Insights** (blue dot `bg-sky-400`, accent `text-sky-300`, "powers Detect") and **2b · Intelligence** (amber dot, "powers Trigger — Recommended Actions with citations, ~90% vs ~35%"). The standalone Recommendations beat is folded into 2b.
-- Beat 4 split into **3 · Automation** (violet, "delivers Orchestrate") and **4 · Insights · Prove** (green dot `bg-emerald-400`, accent `text-emerald-300`, "closes Prove — trend flat, audit pack cited").
-- Result: 5 numbered beats (Core Apps · Insights · Intelligence · Automation · Insights·Prove) in DTOP-color order, matching the whiteboard left-to-right.
-
-**DTOP loop band at top stays as-is** (Detect blue, Trigger amber, Orchestrate violet, Prove green) — now the box colors below mirror it cleanly.
-
-No narration text changes needed (the `salesEnablementNarration.ts` script for this slide already walks Detect → Trigger → Orchestrate → Prove); only the visual + on-slide beat chips change.
+No changes to the right-column say-it script or the narration file — the right column already walks the same MAD beat top-to-bottom and now mirrors the use-case row on the board.
