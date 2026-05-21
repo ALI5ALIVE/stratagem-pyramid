@@ -146,22 +146,8 @@ const slides = [
   { id: "se-w2-capstone-whiteboard", label: "W2 · Capstone — One Use Case, Every Capability, One DTOP Loop", component: SEW2CapstoneWhiteboard },
   // WEEK 3
   { id: "se-week-3", label: "▸ Week 3 · Sell & Win", component: SEModuleDivider, dividerProps: weekProps.w3 },
-  {
-    id: "se-w3-capstone-recap",
-    label: "W3 · Recap — One Use Case, Every Capability, One DTOP Loop",
-    component: SEW2CapstoneWhiteboard,
-    componentProps: {
-      id: "se-w3-capstone-recap",
-      title: "Recap — One Use Case, Every Capability, One DTOP Loop",
-      subtitle: "Frame the platform value before you sell it · Madrid (MAD) unstable approach trend · closed in 5 days, end-to-end.",
-    },
-  },
   { id: "se-w3-signals-recap", label: "W3 · Recap — Signals → DTOP (animated)", component: SEW3SignalsRecap },
   { id: "se-who-to-target", label: "W3 · Who to Target", component: SEWhoToTarget },
-  { id: "se-discovery-to-close", label: "W3 · Discovery → Demo → Close", component: SEDiscoveryToClose },
-  { id: "se-discovery-question-bank", label: "W3 · Discovery Question Bank", component: SEDiscoveryQuestionBank },
-  { id: "se-persona-playbook", label: "W3 · Persona Playbook", component: SEPersonaPlaybook },
-  { id: "se-usecase-cheatsheet", label: "W3 · Use Case Cheat Sheet", component: SEUseCaseCheatSheet },
   { id: "se-footprint-intro", label: "W3 · Customer Footprint — Intro", component: SEFootprintIntro },
   { id: "se-footprint-single", label: "W3 · Footprint — One App", component: SEFootprintSingleApp },
   { id: "se-footprint-single-whiteboard", label: "W3 · Footprint — One App Whiteboard", component: SEFootprintSingleWhiteboard },
@@ -171,12 +157,17 @@ const slides = [
   { id: "se-footprint-all-whiteboard", label: "W3 · Footprint — All Three Whiteboard", component: SEFootprintAllThreeWhiteboard },
   { id: "se-footprint-ladder", label: "W3 · Footprint — Value Ladder", component: SEFootprintValueLadder },
   { id: "se-footprint-playbook", label: "W3 · Footprint — 3-Move Play", component: SEFootprintPlaybook },
-  { id: "se-slide-outcomes", label: "W3 · Customer Outcomes", component: CustomerOutcomesSlide },
-  { id: "se-competitive-cheatsheet", label: "W3 · Competitive Cheat Sheet", component: SECompetitiveCheatSheet },
-  { id: "se-slide-objections", label: "W3 · Objections", component: SEObjections },
+  { id: "se-discovery-to-close", label: "W3 · Discovery → Walkthrough → Close", component: SEDiscoveryToClose },
   { id: "se-discovery-call-runbook", label: "W3 · Discovery-Call Runbook", component: SEDiscoveryCallRunbook },
+  { id: "se-discovery-question-bank", label: "W3 · Discovery Question Bank", component: SEDiscoveryQuestionBank },
+  { id: "se-persona-playbook", label: "W3 · Persona Playbook", component: SEPersonaPlaybook },
+  { id: "se-usecase-cheatsheet", label: "W3 · Use Case Cheat Sheet", component: SEUseCaseCheatSheet },
+  { id: "se-slide-outcomes", label: "W3 · Customer Outcomes", component: CustomerOutcomesSlide },
+  { id: "se-slide-objections", label: "W3 · Objections", component: SEObjections },
+  { id: "se-competitive-cheatsheet", label: "W3 · Competitive Cheat Sheet", component: SECompetitiveCheatSheet },
   { id: "se-deal-stage-language", label: "W3 · Deal-Stage Next-Step Language", component: SEDealStageLanguage },
   { id: "se-strategy-vision-session", label: "W3 · Strategy & Vision Session", component: SEStrategyVisionSession },
+  { id: "se-w3-capstone", label: "W3 · Capstone — Your First 30 Days", component: SEW3Capstone },
 ];
 
 // Inject Week 1 divider right after the title slide.
