@@ -86,102 +86,137 @@ const SEW3WholeVisionWhiteboard = ({
           className="w-full h-full"
           style={{ fontFamily: "'Caveat', 'Comic Sans MS', cursive" }}
         >
-          {/* DTOP loop band — top */}
+          {/* Use-case header — title strip */}
           <g>
-            <rect x="30" y="30" width="640" height="46" rx="8" fill="none" stroke="#3a2a1a" strokeWidth="3" strokeDasharray="6 4" />
-            <text x="50" y="58" fill="#3a2a1a" fontSize="20" fontWeight="700">DTOP loop</text>
+            <rect x="30" y="22" width="640" height="30" rx="8" fill="none" stroke="#2563eb" strokeWidth="2.5" strokeDasharray="4 3" />
+            <text x="50" y="42" fill="#1e3a5f" fontSize="15" fontWeight="700">
+              use case · Madrid (MAD) unstable approach trend · closed in 5 days
+            </text>
+          </g>
+
+          {/* MAD micro-cards — one per DTOP step */}
+          <g>
+            {/* Detect (blue) */}
+            <rect x="30" y="60" width="152" height="58" rx="6" fill="#dbeafe" stroke="#2563eb" strokeWidth="2" />
+            <text x="38" y="76" fill="#2563eb" fontSize="11" fontWeight="700">DETECT · MAD</text>
+            <text x="38" y="94" fill="#3a2a1a" fontSize="12">14-day unstable</text>
+            <text x="38" y="110" fill="#3a2a1a" fontSize="12">approach trend surfaces</text>
+
+            {/* Trigger (amber) */}
+            <rect x="192" y="60" width="152" height="58" rx="6" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2" />
+            <text x="200" y="76" fill="#b45309" fontSize="11" fontWeight="700">TRIGGER · MAD</text>
+            <text x="200" y="94" fill="#3a2a1a" fontSize="12">revise OMA · retrain</text>
+            <text x="200" y="110" fill="#3a2a1a" fontSize="12">4 crews · cited</text>
+
+            {/* Orchestrate (violet) */}
+            <rect x="354" y="60" width="152" height="58" rx="6" fill="#ede9fe" stroke="#8b5cf6" strokeWidth="2" />
+            <text x="362" y="76" fill="#6d28d9" fontSize="11" fontWeight="700">ORCHESTRATE · MAD</text>
+            <text x="362" y="94" fill="#3a2a1a" fontSize="12">draft · review · assign</text>
+            <text x="362" y="110" fill="#3a2a1a" fontSize="12">pushed to devices · 48h</text>
+
+            {/* Prove (green) */}
+            <rect x="516" y="60" width="152" height="58" rx="6" fill="#d1fae5" stroke="#10b981" strokeWidth="2" />
+            <text x="524" y="76" fill="#047857" fontSize="11" fontWeight="700">PROVE · MAD</text>
+            <text x="524" y="94" fill="#3a2a1a" fontSize="12">trend flat in 5 days</text>
+            <text x="524" y="110" fill="#3a2a1a" fontSize="12">audit pack · one click</text>
+          </g>
+
+          {/* Connector ticks from MAD cards into DTOP pills below */}
+          <g stroke="#3a2a1a" strokeWidth="1.5" strokeDasharray="2 2" opacity="0.5">
+            <line x1="106" y1="118" x2="106" y2="132" />
+            <line x1="268" y1="118" x2="268" y2="132" />
+            <line x1="430" y1="118" x2="430" y2="132" />
+            <line x1="592" y1="118" x2="592" y2="132" />
+          </g>
+
+          {/* DTOP loop band */}
+          <g>
+            <rect x="30" y="132" width="640" height="40" rx="8" fill="none" stroke="#3a2a1a" strokeWidth="3" strokeDasharray="6 4" />
+            <text x="38" y="156" fill="#3a2a1a" fontSize="14" fontWeight="700">DTOP</text>
             <g>
-              <rect x="220" y="38" width="80" height="30" rx="15" fill="#dbeafe" stroke="#2563eb" strokeWidth="2" />
-              <text x="260" y="58" fill="#1e3a5f" fontSize="16" textAnchor="middle" fontWeight="700">Detect</text>
+              <rect x="76" y="140" width="60" height="24" rx="12" fill="#dbeafe" stroke="#2563eb" strokeWidth="2" />
+              <text x="106" y="157" fill="#1e3a5f" fontSize="13" textAnchor="middle" fontWeight="700">Detect</text>
             </g>
             <g>
-              <rect x="320" y="38" width="80" height="30" rx="15" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2" />
-              <text x="360" y="58" fill="#7c2d12" fontSize="16" textAnchor="middle" fontWeight="700">Trigger</text>
+              <rect x="238" y="140" width="60" height="24" rx="12" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2" />
+              <text x="268" y="157" fill="#7c2d12" fontSize="13" textAnchor="middle" fontWeight="700">Trigger</text>
             </g>
             <g>
-              <rect x="420" y="38" width="110" height="30" rx="15" fill="#ede9fe" stroke="#8b5cf6" strokeWidth="2" />
-              <text x="475" y="58" fill="#4c1d95" fontSize="16" textAnchor="middle" fontWeight="700">Orchestrate</text>
+              <rect x="382" y="140" width="96" height="24" rx="12" fill="#ede9fe" stroke="#8b5cf6" strokeWidth="2" />
+              <text x="430" y="157" fill="#4c1d95" fontSize="13" textAnchor="middle" fontWeight="700">Orchestrate</text>
             </g>
             <g>
-              <rect x="550" y="38" width="80" height="30" rx="15" fill="#d1fae5" stroke="#10b981" strokeWidth="2" />
-              <text x="590" y="58" fill="#064e3b" fontSize="16" textAnchor="middle" fontWeight="700">Prove</text>
+              <rect x="562" y="140" width="60" height="24" rx="12" fill="#d1fae5" stroke="#10b981" strokeWidth="2" />
+              <text x="592" y="157" fill="#064e3b" fontSize="13" textAnchor="middle" fontWeight="700">Prove</text>
             </g>
           </g>
 
           {/* Unified Mobile band */}
           <g>
-            <rect x="30" y="86" width="640" height="40" rx="8" fill="none" stroke="#8b5cf6" strokeWidth="3" />
-            <text x="50" y="112" fill="#4c1d95" fontSize="18" fontWeight="700">Unified Mobile · device-side close of the loop</text>
+            <rect x="30" y="180" width="640" height="34" rx="8" fill="none" stroke="#8b5cf6" strokeWidth="3" />
+            <text x="50" y="202" fill="#4c1d95" fontSize="16" fontWeight="700">Unified Mobile · device-side close of the loop</text>
           </g>
 
           {/* Intelligence & Orchestration block */}
           <g>
-            <rect x="30" y="136" width="640" height="186" rx="8" fill="#fffbeb" stroke="#f59e0b" strokeWidth="4" />
-            <text x="50" y="162" fill="#7c2d12" fontSize="20" fontWeight="700">Intelligence &amp; Orchestration Layer</text>
+            <rect x="30" y="222" width="640" height="158" rx="8" fill="#fffbeb" stroke="#f59e0b" strokeWidth="4" />
+            <text x="50" y="244" fill="#7c2d12" fontSize="17" fontWeight="700">Intelligence &amp; Orchestration Layer</text>
             {/* Insights · Detect (blue) */}
             <g>
-              <rect x="50" y="176" width="148" height="130" rx="8" fill="#dbeafe" stroke="#2563eb" strokeWidth="2.5" />
-              <text x="62" y="198" fill="#1e3a5f" fontSize="15" fontWeight="700">Insights</text>
-              <text x="62" y="214" fill="#2563eb" fontSize="11" fontWeight="700">DETECT</text>
-              <text x="62" y="236" fill="#3a2a1a" fontSize="12">trends surface</text>
-              <text x="62" y="252" fill="#3a2a1a" fontSize="12">themselves</text>
-              <text x="62" y="272" fill="#3a2a1a" fontSize="12">no analyst pulling</text>
-              <text x="62" y="288" fill="#3a2a1a" fontSize="12">the report</text>
+              <rect x="50" y="256" width="148" height="114" rx="8" fill="#dbeafe" stroke="#2563eb" strokeWidth="2.5" />
+              <text x="62" y="276" fill="#1e3a5f" fontSize="14" fontWeight="700">Insights</text>
+              <text x="62" y="291" fill="#2563eb" fontSize="10" fontWeight="700">DETECT</text>
+              <text x="62" y="312" fill="#3a2a1a" fontSize="12">trends surface</text>
+              <text x="62" y="328" fill="#3a2a1a" fontSize="12">themselves</text>
+              <text x="62" y="348" fill="#3a2a1a" fontSize="12">no analyst</text>
+              <text x="62" y="364" fill="#3a2a1a" fontSize="12">pulling reports</text>
             </g>
             {/* Intelligence Layer · Trigger (amber) */}
             <g>
-              <rect x="206" y="176" width="148" height="130" rx="8" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2.5" />
-              <text x="218" y="198" fill="#7c2d12" fontSize="15" fontWeight="700">Intelligence</text>
-              <text x="218" y="214" fill="#f59e0b" fontSize="11" fontWeight="700">TRIGGER</text>
-              <text x="218" y="236" fill="#3a2a1a" fontSize="12">~90% vs ~35%</text>
-              <text x="218" y="252" fill="#3a2a1a" fontSize="12">cited · reg · proc</text>
-              <text x="218" y="272" fill="#3a2a1a" fontSize="12">Recommended</text>
-              <text x="218" y="288" fill="#3a2a1a" fontSize="12">Actions</text>
+              <rect x="206" y="256" width="148" height="114" rx="8" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2.5" />
+              <text x="218" y="276" fill="#7c2d12" fontSize="14" fontWeight="700">Intelligence</text>
+              <text x="218" y="291" fill="#b45309" fontSize="10" fontWeight="700">TRIGGER</text>
+              <text x="218" y="312" fill="#3a2a1a" fontSize="12">~90% vs ~35%</text>
+              <text x="218" y="328" fill="#3a2a1a" fontSize="12">cited · reg · proc</text>
+              <text x="218" y="348" fill="#3a2a1a" fontSize="12">Recommended</text>
+              <text x="218" y="364" fill="#3a2a1a" fontSize="12">Actions</text>
             </g>
             {/* Automation · Orchestrate (violet) */}
             <g>
-              <rect x="362" y="176" width="148" height="130" rx="8" fill="#ede9fe" stroke="#8b5cf6" strokeWidth="2.5" />
-              <text x="374" y="198" fill="#4c1d95" fontSize="15" fontWeight="700">Automation</text>
-              <text x="374" y="214" fill="#8b5cf6" fontSize="11" fontWeight="700">ORCHESTRATE</text>
-              <text x="374" y="236" fill="#3a2a1a" fontSize="12">runs the play</text>
-              <text x="374" y="252" fill="#3a2a1a" fontSize="12">draft · review</text>
-              <text x="374" y="272" fill="#3a2a1a" fontSize="12">assign · push</text>
+              <rect x="362" y="256" width="148" height="114" rx="8" fill="#ede9fe" stroke="#8b5cf6" strokeWidth="2.5" />
+              <text x="374" y="276" fill="#4c1d95" fontSize="14" fontWeight="700">Automation</text>
+              <text x="374" y="291" fill="#6d28d9" fontSize="10" fontWeight="700">ORCHESTRATE</text>
+              <text x="374" y="312" fill="#3a2a1a" fontSize="12">runs the play</text>
+              <text x="374" y="328" fill="#3a2a1a" fontSize="12">draft · review</text>
+              <text x="374" y="348" fill="#3a2a1a" fontSize="12">assign · push</text>
             </g>
             {/* Insights · Prove (green) */}
             <g>
-              <rect x="518" y="176" width="132" height="130" rx="8" fill="#d1fae5" stroke="#10b981" strokeWidth="2.5" />
-              <text x="530" y="198" fill="#064e3b" fontSize="15" fontWeight="700">Insights</text>
-              <text x="530" y="214" fill="#10b981" fontSize="11" fontWeight="700">PROVE</text>
-              <text x="530" y="236" fill="#3a2a1a" fontSize="12">trend flattened</text>
-              <text x="530" y="252" fill="#3a2a1a" fontSize="12">audit pack cited</text>
-              <text x="530" y="272" fill="#3a2a1a" fontSize="12">loop closed</text>
+              <rect x="518" y="256" width="132" height="114" rx="8" fill="#d1fae5" stroke="#10b981" strokeWidth="2.5" />
+              <text x="530" y="276" fill="#064e3b" fontSize="14" fontWeight="700">Insights</text>
+              <text x="530" y="291" fill="#047857" fontSize="10" fontWeight="700">PROVE</text>
+              <text x="530" y="312" fill="#3a2a1a" fontSize="12">trend flattened</text>
+              <text x="530" y="328" fill="#3a2a1a" fontSize="12">audit pack cited</text>
+              <text x="530" y="348" fill="#3a2a1a" fontSize="12">loop closed</text>
             </g>
           </g>
 
           {/* Core Apps */}
           <g>
-            <rect x="30" y="332" width="640" height="86" rx="8" fill="#f5f5f4" stroke="#3a2a1a" strokeWidth="3" />
-            <text x="50" y="356" fill="#3a2a1a" fontSize="18" fontWeight="700">Core Apps · one foundation, three systems of record</text>
+            <rect x="30" y="390" width="640" height="86" rx="8" fill="#f5f5f4" stroke="#3a2a1a" strokeWidth="3" />
+            <text x="50" y="414" fill="#3a2a1a" fontSize="17" fontWeight="700">Core Apps · one foundation, three systems of record</text>
             <g>
-              <rect x="50" y="368" width="190" height="38" rx="6" fill="#fff" stroke="#3a2a1a" strokeWidth="2" />
-              <text x="145" y="392" fill="#3a2a1a" fontSize="15" textAnchor="middle" fontWeight="700">SafetyManager365</text>
+              <rect x="50" y="426" width="190" height="38" rx="6" fill="#fff" stroke="#3a2a1a" strokeWidth="2" />
+              <text x="145" y="450" fill="#3a2a1a" fontSize="15" textAnchor="middle" fontWeight="700">SafetyManager365</text>
             </g>
             <g>
-              <rect x="250" y="368" width="200" height="38" rx="6" fill="#fff" stroke="#3a2a1a" strokeWidth="2" />
-              <text x="350" y="392" fill="#3a2a1a" fontSize="15" textAnchor="middle" fontWeight="700">ContentManager365</text>
+              <rect x="250" y="426" width="200" height="38" rx="6" fill="#fff" stroke="#3a2a1a" strokeWidth="2" />
+              <text x="350" y="450" fill="#3a2a1a" fontSize="15" textAnchor="middle" fontWeight="700">ContentManager365</text>
             </g>
             <g>
-              <rect x="460" y="368" width="200" height="38" rx="6" fill="#fff" stroke="#3a2a1a" strokeWidth="2" />
-              <text x="560" y="392" fill="#3a2a1a" fontSize="15" textAnchor="middle" fontWeight="700">TrainingManager365</text>
+              <rect x="460" y="426" width="200" height="38" rx="6" fill="#fff" stroke="#3a2a1a" strokeWidth="2" />
+              <text x="560" y="450" fill="#3a2a1a" fontSize="15" textAnchor="middle" fontWeight="700">TrainingManager365</text>
             </g>
-          </g>
-
-          {/* Use-case strip */}
-          <g>
-            <rect x="30" y="430" width="640" height="36" rx="8" fill="none" stroke="#2563eb" strokeWidth="2.5" strokeDasharray="4 3" />
-            <text x="50" y="454" fill="#1e3a5f" fontSize="15" fontWeight="700">
-              use case · Madrid (MAD) unstable approach trend · closed in 5 days
-            </text>
           </g>
         </svg>
       </div>
