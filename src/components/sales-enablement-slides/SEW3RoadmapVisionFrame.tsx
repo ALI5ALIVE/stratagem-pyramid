@@ -73,10 +73,10 @@ const SEW3RoadmapVisionFrame = ({ slideNumber, ...narrationProps }: Props) => (
           <text x="190" y="378" fill="#2563eb" fontSize="18" fontWeight="700">2. Managed</text>
 
           <g>
-            <line x1="165" y1="355" x2="165" y2="245" stroke="#b45309" strokeWidth="2.5" strokeDasharray="5 4" />
-            <polygon points="165,245 255,245 245,260 255,275 165,275" fill="#fde68a" stroke="#b45309" strokeWidth="2.5" />
+            <line x1="165" y1="355" x2="165" y2="240" stroke="#b45309" strokeWidth="2.5" strokeDasharray="5 4" />
+            <polygon points="165,240 260,240 250,270 260,300 165,300" fill="#fde68a" stroke="#b45309" strokeWidth="2.5" />
             <text x="172" y="262" fill="#7c2d12" fontSize="14" fontWeight="700">YOU ARE HERE</text>
-            <text x="172" y="290" fill="#7c2d12" fontSize="12" fontStyle="italic">most buyers, honestly</text>
+            <text x="172" y="288" fill="#7c2d12" fontSize="12" fontStyle="italic">most buyers, honestly</text>
             <circle cx="165" cy="355" r="5" fill="#b45309" />
           </g>
 
