@@ -16,8 +16,8 @@ const SEStrategyVisionSession = ({ slideNumber, ...narrationProps }: Props) => (
   <PitchSlideContainer
     id="se-strategy-vision-session"
     slideNumber={slideNumber}
-    title="The Strategy & Vision Session — a complimentary half-day workshop"
-    subtitle="Lift the conversation out of tickets and renewals. Put the roadmap on the table. Fixed 4-hour agenda, on-site or virtual."
+    title="The Strategy & Vision Session — a complimentary 3-hour workshop"
+    subtitle="Lift the conversation out of tickets and renewals. Put the roadmap on the table. Fixed 3-hour agenda, on-site or virtual."
     showHeader
     {...narrationProps}
   >
@@ -26,7 +26,7 @@ const SEStrategyVisionSession = ({ slideNumber, ...narrationProps }: Props) => (
         {/* Agenda timeline */}
         <div className="md:col-span-7 p-3 rounded-xl border border-primary/30 bg-primary/5">
           <div className="text-[11px] uppercase tracking-wider text-primary font-semibold mb-2 flex items-center gap-1.5">
-            <Clock className="h-3.5 w-3.5" /> Fixed 4-hour agenda
+            <Clock className="h-3.5 w-3.5" /> Fixed 3-hour agenda
           </div>
           <div className="space-y-1.5">
             {visionSessionAgenda.map((b) => (

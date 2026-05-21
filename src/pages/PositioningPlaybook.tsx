@@ -453,9 +453,9 @@ export default function PositioningPlaybook() {
               ))}
             </div>
 
-            <h3 className="font-display text-lg font-semibold text-foreground mb-4">Strategy & Vision session — half-day agenda</h3>
+            <h3 className="font-display text-lg font-semibold text-foreground mb-4">Strategy & Vision session — 3-hour agenda</h3>
             <div className="rounded-xl border border-primary/30 bg-primary/5 p-6">
-              <p className="text-sm text-foreground/85 mb-4">Complimentary, on-site or virtual. Fixed 4-hour agenda — your educational entry point with prospects and customers.</p>
+              <p className="text-sm text-foreground/85 mb-4">Complimentary, on-site or virtual. Fixed 3-hour agenda — your educational entry point with prospects and customers.</p>
               <div className="space-y-2">
                 {visionSessionAgenda.map((a) => (
                   <div key={a.time} className="grid grid-cols-[80px_1fr] gap-4 text-sm border-b border-border/30 pb-2 last:border-0">

@@ -240,11 +240,11 @@ export const objections = [
   { q: "We can build this ourselves.", r: "Two-year build to L3 — we're at L4–L5 with the evidence chain. You'd be rebuilding what's already running.", p: "Roadmap dates locked for Insights, Automation and Mobile.", c: "Compare your in-house plan to a 90-day DTOP loop in production." },
   { q: "Too many vendors already.", r: "We consolidate three to five. Content, Training, Safety and Mobile on one record.", p: "TCO model in the Line of Sight calculator.", c: "Map your current stack — we'll show what collapses." },
   { q: "ROI is hard to prove.", r: "DTOP makes outcomes measurable — controllable cost, recovery time, repeat findings. ROI modelling is illustrative, validated in the loop.", p: "Line of Sight ROI calculator with industry benchmarks.", c: "Run the calculator together on your numbers." },
-  { q: "Change management will kill it.", r: "We start with one loop, one team, one outcome. The platform earns the next one.", p: "Half-day Strategy & Vision session as the entry point.", c: "Book the complimentary workshop." },
+  { q: "Change management will kill it.", r: "We start with one loop, one team, one outcome. The platform earns the next one.", p: "3-hour Strategy & Vision session as the entry point.", c: "Book the complimentary workshop." },
   { q: "Integration with our existing systems.", r: "Documented data contracts, established connectors, no rip-and-replace required.", p: "Architecture footprint in the Technical Deep Dive.", c: "Run an integration scoping in week one." },
   { q: "What's different from your competitors?", r: "Domain intelligence, one operational record, the DTOP loop. Three things, none of them generic.", p: "Competitive matrix in this playbook.", c: "Side-by-side on a real use case." },
   { q: "We need this approved by the regulator.", r: "Evidence chain on every Recommended Action is the regulator-grade story. Operator-in-the-loop, not autonomous.", p: "Customer references in regulated environments.", c: "Bring your compliance lead to the next session." },
-  { q: "Pricing feels high.", r: "Compare against the controllable cost of disruption, not the line items on your current stack.", p: "Line of Sight calculator shows the gap.", c: "Build the business case in the half-day session." },
+  { q: "Pricing feels high.", r: "Compare against the controllable cost of disruption, not the line items on your current stack.", p: "Line of Sight calculator shows the gap.", c: "Build the business case in the 3-hour session." },
 ];
 
 export const discoveryByStage = {
@@ -272,7 +272,7 @@ export const discoveryByStage = {
   ],
   Close: [
     "What stops us starting the 90-day loop next month?",
-    "Who else needs to be in the room for the half-day session?",
+    "Who else needs to be in the room for the 3-hour session?",
     "What's the renewal/contract trigger we should align to?",
   ],
 };
@@ -290,8 +290,8 @@ export const emailTemplates = [
   },
   {
     name: "Strategy & Vision invite",
-    subject: "Complimentary half-day: Operational Performance Vision",
-    body: `Hi {{first}},\n\nWe run a complimentary half-day Strategy & Vision session for operators thinking about the next three years of operational performance. Fixed 4-hour agenda — your operation today, the platform story, DTOP deep dive, the roadmap, and an agreed next step.\n\nOn-site or virtual, your call. Pick a date and I'll send the prep brief.\n\n{{sig}}`,
+    subject: "Complimentary 3-hour: Operational Performance Vision",
+    body: `Hi {{first}},\n\nWe run a complimentary 3-hour Strategy & Vision session for operators thinking about the next three years of operational performance. Fixed 3-hour agenda — your operation today, the platform story, DTOP deep dive, the roadmap, and an agreed next step.\n\nOn-site or virtual, your call. Pick a date and I'll send the prep brief.\n\n{{sig}}`,
   },
 ];
 
