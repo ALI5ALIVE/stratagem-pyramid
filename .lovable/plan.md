@@ -1,10 +1,11 @@
-## Fix LMS → TMS in narration
+## Fix Persona Playbook → Customer Outcomes transition
 
-One remaining mention of "L-M-S" in the sales enablement narration segments needs to be changed to "T-M-S" so the spoken audio matches the rest of the deck (which uses TMS throughout).
+The Persona Playbook narration currently closes by teeing up "the use case cheat sheet," but the next slide in the Sales Enablement deck order is actually **Customer Outcomes** (`se-slide-outcomes`, labelled "W3 · Customer Outcomes"). That mismatch is what the user is hearing as a broken transition.
 
-**File:** `src/data/salesEnablementNarration.ts` (line 362)
+**File:** `src/data/salesEnablementNarration.ts` (slide `se-persona-playbook`, line 391)
 
-**Change:**
-- `"...then our content system, then the L-M-S..."` → `"...then our content system, then the T-M-S..."`
+**Change the closing sentence:**
+- From: *"Next we move into the use case cheat sheet — same discipline, applied to which use case to surface for which buyer."*
+- To: *"Next we move into customer outcomes — what this actually changes for their business, in their language: schedule holds, revenue holds, costs come down, customers come back."*
 
-Note: the parent narration script on line 332 already says "TMS" — only the per-voice customer segment on line 362 still says L-M-S. After this fix, no other LMS/learning-management references remain in `src/`.
+This keeps the persona framing intact and hands cleanly into the four-card Signal → Action → Result walk on the Customer Outcomes slide. No other narrations need to change (the Customer Outcomes intro already opens on its own terms).
