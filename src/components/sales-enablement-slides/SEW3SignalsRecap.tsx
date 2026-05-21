@@ -14,20 +14,20 @@ const sources = [
     example: "EASA Part-FCL amendment published",
   },
   {
-    name: "Anomalies",
+    name: "Anomaly Signals",
     icon: AlertTriangle,
     tone: "amber",
     example: "Crew duty-time anomaly trending up",
     active: true,
   },
   {
-    name: "Operational Change",
+    name: "Operational Change Signals",
     icon: GitBranch,
     tone: "violet",
     example: "New base opening · roster re-baseline",
   },
   {
-    name: "Macro / Geopolitical",
+    name: "Macro / Geopolitical Signals",
     icon: Globe2,
     tone: "emerald",
     example: "Airspace closure forces re-route",
