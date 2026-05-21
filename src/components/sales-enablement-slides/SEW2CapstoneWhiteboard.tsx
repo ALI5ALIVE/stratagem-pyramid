@@ -15,7 +15,7 @@ const beats = [
     step: "Detect",
     color: "text-blue-400",
     dot: "bg-blue-400",
-    capability: "Operational Data + Generative AI",
+    capability: "Operational Data + Insights",
     say:
       "Day 1 — the platform spots a rising trend of unstable approaches at Madrid (MAD) over the last 14 days. No analyst exported a CSV; the signal surfaced itself.",
   },
@@ -78,7 +78,7 @@ const SEW2CapstoneWhiteboard = ({
           whiteboard · one use case · 5 days
         </div>
         <div className="absolute top-2 right-3 text-[10px] uppercase tracking-widest text-[#3a2a1a]/60 font-mono flex items-center gap-1">
-          <Sparkles className="h-3 w-3" /> every W2 capability
+          <Sparkles className="h-3 w-3" /> every capability
         </div>
         <svg
           viewBox="0 0 700 460"
@@ -93,7 +93,7 @@ const SEW2CapstoneWhiteboard = ({
             <text x="50" y="134" fill="#1e3a5f" fontSize="16">spotted at Madrid (MAD) · 14d</text>
             <rect x="50" y="150" width="240" height="32" rx="16" fill="#dbeafe" stroke="#2563eb" strokeWidth="1.5" />
             <text x="170" y="172" fill="#1e3a5f" fontSize="13" textAnchor="middle" fontWeight="700">
-              Op Data + Generative AI
+              Op Data + Insights
             </text>
           </g>
           {/* arrow → Trigger */}
@@ -181,7 +181,7 @@ const SEW2CapstoneWhiteboard = ({
         {/* Capability legend */}
         <div className="mt-1">
           <div className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
-            Every W2 capability accounted for
+            Every capability accounted for
           </div>
           <div className="flex flex-wrap gap-1.5">
             {legend.map((l) => (
@@ -197,7 +197,7 @@ const SEW2CapstoneWhiteboard = ({
 
         <div className="mt-auto flex items-center gap-2 px-3 py-2 rounded-lg bg-primary/10 border border-primary/30 text-xs text-foreground">
           <Clock className="h-3.5 w-3.5 text-primary" />
-          Drill this 3× — it's the Week 2 capstone. One use case, every capability, one DTOP loop.
+          Drill this 3× — one use case, every capability, one DTOP loop.
         </div>
       </div>
     </div>
