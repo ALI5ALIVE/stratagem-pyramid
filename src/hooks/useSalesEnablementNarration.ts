@@ -32,6 +32,9 @@ export const useSalesEnablementNarration = () => {
     if (!narration) {
       throw new Error(`No SE narration found for slide ${slideId}`);
     }
+    const payload = narration.segments && narration.segments.length > 0
+      ? { segments: narration.segments }
+      : { text: narration.script, voiceId: narration.voiceId };
     const response = await fetch(`${SUPABASE_URL}/functions/v1/elevenlabs-tts`, {
       method: "POST",
       headers: {
@@ -39,7 +42,7 @@ export const useSalesEnablementNarration = () => {
         apikey: SUPABASE_ANON_KEY,
         Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
       },
-      body: JSON.stringify({ text: narration.script, voiceId: narration.voiceId }),
+      body: JSON.stringify(payload),
     });
     if (!response.ok) throw new Error(`TTS request failed: ${response.status}`);
     const audioBlob = await response.blob();
