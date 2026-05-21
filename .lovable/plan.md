@@ -1,21 +1,47 @@
 ## Change
 
-Single-file edit to `src/data/salesEnablementNarration.ts`, `se-w3-signals-recap.script` only.
+Single-file edit to `src/components/sales-enablement-slides/SEDiscoveryCallRunbook.tsx`.
 
-Reframe the opening so the slide is explicitly answering the two questions customers ask on the first call:
+## Problem
 
-1. **"What are signals?"**
-2. **"What is DTOP?"**
+Current slide reads like a runbook *description* — "Do this: thank them, state the agenda, ask permission". The rep gets the shape of the call but no live script. User wants a **simulation**: drop into the call at minute 0 and read it out loud.
 
-New script shape:
+## New structure (same 5 time-boxed blocks, rewritten)
 
-- **Open with the customer's voice**: "Two questions every customer asks on the first call: *what do you mean by signals?* and *what is this DTOP loop you keep talking about?* This slide answers both, in that order, in under a minute."
-- **Why it matters**: reps who can answer both questions cleanly in 30 seconds earn the right to keep selling.
-- **Answer 1 — What are signals?** A signal is anything that should change what your team does next — not a dashboard, not an alert that sits there. Four sources: Regulation, Anomalies, Operational Change, Macro/Geopolitical, each with the on-screen example.
-- **Answer 2 — What is DTOP?** The closed loop every signal runs through. Detect → Trigger → Orchestrate → Prove, each in one line. Point: point solutions stop at Detect. Only we do all four.
-- **Prove both answers with one walkthrough** — crew duty-time anomaly, end-to-end (D→T→O→P), exactly as the slide shows.
-- **Pain / value lever** — four teams, four tools, the loop never closes; we're the only platform that joins the four signal worlds into one loop.
-- **How to deliver it** — say the two questions out loud first, then answer them in order, then walk the anomaly. End on Prove, pause.
-- **Transition** — one signal walked end-to-end earns the next conversation. → Next: Who to Target.
+Each block keeps `minutes / title / icon / accent`. Rewrite the two columns so they are a moment-by-moment script, not an overview:
 
-No other files touched. No visual changes.
+- **Do (left column) → "Move"**: the physical/tactical action in 1 short imperative sentence ("Camera on. Notebook visible. No deck shared yet."). No meta-commentary about why.
+- **Say (right column) → "Script"**: verbatim words in quotes, in the **actual order they come out of the rep's mouth**, including the pauses and the follow-up question. Multi-line where the call has multiple beats.
+
+### Block-by-block rewrite
+
+1. **0–2 min · Open**
+   - Move: "Camera on. Smile. Don't share screen yet."
+   - Script: greeting → one-line agenda → permission-to-ask → silent pause.
+
+2. **2–10 min · Frame**
+   - Move: "Share one slide only — the DTOP loop. Point at Detect."
+   - Script: plain-English framing of prescriptive→performance shift, ending with "Does that match what you see?" then **stop talking**.
+
+3. **10–35 min · Discover** (55% of the call)
+   - Move: "Stop sharing. Open notebook. Ask one question, then count to ten before speaking."
+   - Script: three discovery questions delivered in order, each with the **silence instruction** between them ("…wait. Don't fill the gap.").
+
+4. **35–45 min · Qualify + Next step**
+   - Move: "Reflect back the use case that hurt most. Put the calendar on screen."
+   - Script: the playback line ("Based on what you said…") → the named next step → the calendar ask, with the date in brackets.
+
+5. **Anytime · If they push back**
+   - Move: "Don't defend. Trade."
+   - Script: 2–3 verbatim objection→response pairs as they would actually be spoken back, not bullet summaries.
+
+## Keep
+
+- Slide id, title, subtitle, container, layout grid, icons, accent colors, narration props.
+- Header labels can change from "Do this / Say this" to **"Move" / "Script"** to reinforce the simulation framing.
+
+## Out of scope
+
+- No narration script changes.
+- No other slides touched.
+- No visual / layout / color changes beyond the two header labels.

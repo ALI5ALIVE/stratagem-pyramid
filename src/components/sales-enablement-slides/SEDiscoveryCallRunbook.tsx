@@ -22,16 +22,26 @@ const blocks: Block[] = [
     minutes: "0–2 min",
     title: "Open",
     accent: "border-sky-500/40 bg-sky-500/10 text-sky-300",
-    do: "Thank them for the time. State the agenda in one sentence. Ask permission to ask questions before pitching. Avoid jargon in the first 5 minutes — no 'loop', no 'DTOP', no 'closed-loop compliance'. Earn those words later.",
-    say: '"Thanks for the 30 minutes. My goal is simple — by the end of this call you\'ll know whether what we do is actually relevant to the problems on your plate, even if the answer is no. To get there I\'d like to ask a few questions before I show anything. Fair?"',
+    do: "Camera on. Smile. Notebook visible. Do not share your screen yet.",
+    say: [
+      '"Thanks for the 30 minutes."',
+      '"My goal is simple — by the end of this call you\'ll know whether what we do is actually relevant to the problems on your plate, even if the answer is no."',
+      '"To get there I\'d like to ask a few questions before I show you anything. Fair?"',
+      "→ Stop. Wait for the yes. Do not fill the silence.",
+    ],
   },
   {
     icon: MapIcon,
     minutes: "2–10 min",
     title: "Frame",
     accent: "border-violet-500/40 bg-violet-500/10 text-violet-300",
-    do: "Set the DTOP frame in plain English — Detect, Trigger, Orchestrate, Prove. Anchor on the shift from prescriptive compliance to performance-based oversight.",
-    say: '"Most operators we talk to are strong at spotting safety and compliance signals. Where it usually breaks down is the middle bit — deciding what to change, getting that change into manuals and training, and then proving to a regulator it actually reached the crew. Does that match what you see?"',
+    do: "Share one slide only — the DTOP loop. Point at Detect as you say it. No jargon: don't say 'closed-loop' or 'DTOP' out loud yet.",
+    say: [
+      '"Most operators we talk to are strong at spotting safety and compliance signals."',
+      '"Where it usually breaks down is the middle bit — deciding what to change, getting that change into manuals and training, and then proving to a regulator it actually reached the crew."',
+      '"Does that match what you see?"',
+      "→ Stop sharing the slide. Listen.",
+    ],
   },
   {
     icon: Search,
@@ -39,11 +49,14 @@ const blocks: Block[] = [
     title: "Discover",
     weight: "55% of the call lives here",
     accent: "border-emerald-500/40 bg-emerald-500/10 text-emerald-300",
-    do: "Pull 4–6 questions from the Discovery Question Bank — one per DTOP step minimum. Ask one, then go silent for 10 seconds. Take real notes.",
+    do: "Screen off. Notebook open. Ask one question. Count to ten in your head before you speak again. Write down what they say verbatim.",
     say: [
       '"When a safety or compliance signal lands on your desk, what actually triggers a procedure or training change?"',
+      "→ …wait. Don't fill the gap.",
       '"From that decision to the crew flying or operating the new version — how long, realistically?"',
+      "→ …wait. Let them give you the real number, not the brochure number.",
       '"If an auditor walked in tomorrow and asked for evidence that your last five corrective actions reached the front line, how long would it take you to produce it?"',
+      "→ …wait. This is the one that hurts. Don't rescue them.",
     ],
   },
   {
@@ -51,18 +64,28 @@ const blocks: Block[] = [
     minutes: "35–45 min",
     title: "Qualify + Next step",
     accent: "border-amber-500/40 bg-amber-500/10 text-amber-300",
-    do: "Reflect back the one use case that hurt most. Name the persona who must be in the next room. Book the next step before you hang up.",
-    say: '"Based on what you said, the highest-cost use case sounds like [X]. The next step is a 60-minute focused walkthrough on that, with you and [persona]. Can we put it on the calendar before [date]?"',
+    do: "Pull up your calendar before you start talking. Reflect back the one use case that hurt most. Name the persona who has to be in the next room.",
+    say: [
+      '"Let me play back what I heard…"',
+      '"The highest-cost use case for you sounds like [the one they flinched at]."',
+      '"The next step I\'d suggest is a 60-minute focused walkthrough on exactly that — with you and [persona]."',
+      '"I\'ve got my calendar open — can we put something on before [date]?"',
+      "→ Don't hang up without a date on the calendar.",
+    ],
   },
   {
     icon: Shield,
     minutes: "Anytime",
     title: "If they push back",
     accent: "border-slate-500/40 bg-slate-500/10 text-slate-300",
-    do: "Don't fight it. Trade. Every pushback is a chance to learn the one thing that would make the next conversation worth booking.",
+    do: "Don't defend. Trade. Every pushback is one more thing they just told you about their world.",
     say: [
-      '"Send me a deck first" → "Happy to — what\'s the one use case I should build it around so it\'s not generic?"',
-      '"We already have [competitor]" → "Totally fair. What\'s the one thing you wish it did that it doesn\'t?"',
+      'They say: "Just send me a deck first."',
+      'You say: "Happy to — what\'s the one use case I should build it around so it isn\'t generic?"',
+      'They say: "We already have [competitor]."',
+      'You say: "Totally fair. What\'s the one thing you wish it did that it doesn\'t?"',
+      'They say: "Not the right time."',
+      'You say: "Understood. What would have to be true for it to be the right time?"',
     ],
   },
 ];
@@ -92,12 +115,12 @@ const SEDiscoveryCallRunbook = ({ slideNumber, ...narrationProps }: Props) => (
               </div>
             </div>
             <div className="col-span-12 md:col-span-5 border-l border-border/40 md:pl-3">
-              <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Do this</div>
+              <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Move</div>
               <p className="text-xs text-foreground leading-snug">{b.do}</p>
             </div>
             <div className="col-span-12 md:col-span-5 border-l border-border/40 md:pl-3">
               <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 flex items-center gap-1">
-                Say this <ArrowRight className="h-3 w-3" />
+                Script <ArrowRight className="h-3 w-3" />
               </div>
               {Array.isArray(b.say) ? (
                 <ul className="text-xs italic text-foreground leading-snug list-disc pl-4 space-y-1">
