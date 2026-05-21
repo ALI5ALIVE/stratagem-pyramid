@@ -36,6 +36,7 @@ import SEDealStageLanguage from "@/components/sales-enablement-slides/SEDealStag
 import SEPracticeCenterBridge from "@/components/sales-enablement-slides/SEPracticeCenterBridge";
 import SEWhoToTarget from "@/components/sales-enablement-slides/SEWhoToTarget";
 import SEStrategyVisionSession from "@/components/sales-enablement-slides/SEStrategyVisionSession";
+import SEW3SignalsRecap from "@/components/sales-enablement-slides/SEW3SignalsRecap";
 
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
 import PFSlide9Value from "@/components/platform-slides/PFSlide9Value";
@@ -84,6 +85,7 @@ const weekProps = {
     estimatedMinutes: 38,
     upNext: [
       "Recap — One Use Case, Every Capability, One DTOP Loop",
+      "Recap — Signals are the fuel; DTOP is the engine",
       "Who to target (high-propensity accounts)",
       "Discovery → walkthrough → close",
       "Discovery question bank (DTOP)",
@@ -153,6 +155,7 @@ const slides = [
       subtitle: "Frame the platform value before you sell it · Madrid (MAD) unstable approach trend · closed in 5 days, end-to-end.",
     },
   },
+  { id: "se-w3-signals-recap", label: "W3 · Recap — Signals → DTOP (animated)", component: SEW3SignalsRecap },
   { id: "se-who-to-target", label: "W3 · Who to Target", component: SEWhoToTarget },
   { id: "se-discovery-to-close", label: "W3 · Discovery → Demo → Close", component: SEDiscoveryToClose },
   { id: "se-discovery-question-bank", label: "W3 · Discovery Question Bank", component: SEDiscoveryQuestionBank },

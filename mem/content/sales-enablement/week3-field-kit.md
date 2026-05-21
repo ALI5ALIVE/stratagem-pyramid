@@ -7,7 +7,8 @@ Week 3 (Sell & Win) was upgraded May 2026 to be a "world-class" sales enablement
 
 Week 3 slide order in `src/pages/SalesEnablement.tsx`:
 1. se-w3-capstone-recap (NEW · reuses SEW2CapstoneWhiteboard with W3 title/subtitle override · frames platform value & DTOP loop before the sell-and-win playbook opens)
-2. se-who-to-target (propensityTiers + tier1Signals + whoNotToChaseFirst; anchored on existing Comply365 footprint)
+2. se-w3-signals-recap (NEW · animated DTOP lane · 4 signal sources feed Detect; walks a second use case — crew duty-time anomaly — end-to-end through D/T/O/P with CSS keyframe animation)
+3. se-who-to-target (propensityTiers + tier1Signals + whoNotToChaseFirst; anchored on existing Comply365 footprint)
 3. se-discovery-to-close
 4. se-discovery-question-bank (12 questions grouped by DTOP step, good vs red-flag answers)
 5. se-persona-playbook (5 personas × pain/questions/metric/landmine/proof)
