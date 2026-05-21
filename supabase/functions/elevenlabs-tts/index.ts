@@ -12,54 +12,78 @@ serve(async (req) => {
   }
 
   try {
-    const { text, voiceId } = await req.json();
+    const body = await req.json();
+    const { text, voiceId, segments } = body as {
+      text?: string;
+      voiceId?: string;
+      segments?: Array<{ voiceId: string; text: string }>;
+    };
     const ELEVENLABS_API_KEY = Deno.env.get("ELEVENLABS_API_KEY");
 
     if (!ELEVENLABS_API_KEY) {
       throw new Error("ELEVENLABS_API_KEY is not configured");
     }
 
-    if (!text || !voiceId) {
-      throw new Error("Missing required parameters: text and voiceId");
-    }
+    const preprocess = (t: string) =>
+      t.replace(/\bDTOP\b/g, "D-T-O-P").replace(/\bFOQA\b/g, "Foe-kuh");
 
-    // Pronounce brand acronym letter-by-letter (e.g. "DTOP" -> "D-T-O-P")
-    // Pronounce "FOQA" as one word (rhymes with "Oprah"), not F-O-Q-A
-    const processedText = text
-      .replace(/\bDTOP\b/g, "D-T-O-P")
-      .replace(/\bFOQA\b/g, "Foe-kuh");
-
-    console.log(`Generating TTS for text length: ${processedText.length}, voice: ${voiceId}`);
-
-    const response = await fetch(
-      `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=mp3_44100_128`,
-      {
-        method: "POST",
-        headers: {
-          "xi-api-key": ELEVENLABS_API_KEY,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          text: processedText,
-          model_id: "eleven_turbo_v2_5",
-          voice_settings: {
-            stability: 0.6,
-            similarity_boost: 0.75,
-            style: 0.3,
-            use_speaker_boost: true,
-            speed: 0.95,
+    const synthesize = async (segText: string, segVoice: string): Promise<ArrayBuffer> => {
+      const processed = preprocess(segText);
+      const resp = await fetch(
+        `https://api.elevenlabs.io/v1/text-to-speech/${segVoice}?output_format=mp3_44100_128`,
+        {
+          method: "POST",
+          headers: {
+            "xi-api-key": ELEVENLABS_API_KEY,
+            "Content-Type": "application/json",
           },
-        }),
+          body: JSON.stringify({
+            text: processed,
+            model_id: "eleven_turbo_v2_5",
+            voice_settings: {
+              stability: 0.6,
+              similarity_boost: 0.75,
+              style: 0.3,
+              use_speaker_boost: true,
+              speed: 0.95,
+            },
+          }),
+        }
+      );
+      if (!resp.ok) {
+        const errorText = await resp.text();
+        console.error("ElevenLabs API error:", errorText);
+        throw new Error(`ElevenLabs API error: ${resp.status} - ${errorText}`);
       }
-    );
+      return resp.arrayBuffer();
+    };
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("ElevenLabs API error:", errorText);
-      throw new Error(`ElevenLabs API error: ${response.status} - ${errorText}`);
+    let audioBuffer: ArrayBuffer;
+
+    if (Array.isArray(segments) && segments.length > 0) {
+      console.log(`Generating multi-voice TTS: ${segments.length} segments`);
+      const buffers: ArrayBuffer[] = [];
+      for (const seg of segments) {
+        if (!seg?.text || !seg?.voiceId) {
+          throw new Error("Each segment requires text and voiceId");
+        }
+        buffers.push(await synthesize(seg.text, seg.voiceId));
+      }
+      const totalLen = buffers.reduce((n, b) => n + b.byteLength, 0);
+      const merged = new Uint8Array(totalLen);
+      let offset = 0;
+      for (const b of buffers) {
+        merged.set(new Uint8Array(b), offset);
+        offset += b.byteLength;
+      }
+      audioBuffer = merged.buffer;
+    } else {
+      if (!text || !voiceId) {
+        throw new Error("Missing required parameters: text and voiceId (or segments)");
+      }
+      console.log(`Generating TTS for text length: ${text.length}, voice: ${voiceId}`);
+      audioBuffer = await synthesize(text, voiceId);
     }
-
-    const audioBuffer = await response.arrayBuffer();
 
     return new Response(audioBuffer, {
       headers: {
