@@ -395,7 +395,7 @@ export const competitiveContrast: CompetitiveContrast[] = [
     intelligence: "Generic",
   },
   {
-    approach: "Point safety / LMS analytics",
+    approach: "Point safety / TMS analytics",
     isUs: false,
     insight: "Domain-specific only",
     speed: "Reactive reports",

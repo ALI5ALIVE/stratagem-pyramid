@@ -620,7 +620,7 @@ export const practiceSlidePrompts: Record<string, Record<string, SlidePrompts>> 
         "Thanks for the time. I want to spend twenty minutes on how training stops being the last team to find out — and starts driving demonstrable competency, not just completion.",
       talkingPoints: [
         "Frame this as closing the safety→training loop.",
-        "Be honest: this isn't about replacing your LMS, it's about connecting it.",
+        "Be honest: this isn't about replacing your TMS, it's about connecting it.",
         "Anchor on competency and adoption, not features.",
       ],
       buyerQuestions: [
@@ -639,7 +639,7 @@ export const practiceSlidePrompts: Record<string, Record<string, SlidePrompts>> 
       ],
       buyerQuestions: [
         "When was the last time a safety event triggered a training change in days, not months?",
-        "How much of your team's time is spent reconciling LMS records with operational reality?",
+        "How much of your team's time is spent reconciling TMS records with operational reality?",
         "What does 'competency' look like in your audit responses today?",
       ],
     },
@@ -799,7 +799,7 @@ export const practiceSlidePrompts: Record<string, Record<string, SlidePrompts>> 
     },
     "exec3-slide-why": {
       opener:
-        "Three things to remember — and they're the reasons Training Directors pick us over their LMS upgrade path.",
+        "Three things to remember — and they're the reasons Training Directors pick us over their TMS upgrade path.",
       talkingPoints: [
         "Closed-loop safety→training in days, not months.",
         "Competency evidence, not just completion records — audit-grade.",

@@ -327,7 +327,7 @@ export const personaProfiles: PersonaProfile[] = [
     borderColor: "border-orange-400/30",
     reportsTo: "VP Operations / VP Safety / COO",
     orgContext: "Responsible for all crew training (flight crew, cabin crew), ground staff training, compliance training, and competency management across the airline",
-    budgetInfluence: "Direct budget authority for training technology and LMS ($150K–$1.5M+); influences simulator and training facility investments",
+    budgetInfluence: "Direct budget authority for training technology and TMS ($150K–$1.5M+); influences simulator and training facility investments",
     seniority: "VP / Director",
     profileSummary: "The Training Director is responsible for ensuring every crew member and ground staff employee is competent, current, and compliant. They manage complex training matrices across multiple fleet types, regulatory requirements (Part 121/135, EASA ORO.FC), and recurrent training cycles. Their biggest challenge is that training is often disconnected from operational reality — training programs are built on regulatory minimums rather than data-driven insights about where performance gaps actually exist. They want to move from 'training what the regulation says' to 'training what the data shows we need.'",
     strategicPriorities: [
@@ -370,8 +370,8 @@ export const personaProfiles: PersonaProfile[] = [
     ],
     objections: [
       {
-        objection: "We already have an LMS.",
-        response: "Your LMS delivers and tracks training. We provide the intelligence layer that tells you what training to deliver based on actual safety and operational data, plus the content management backbone that keeps your training materials current. We complement your LMS, not replace it."
+        objection: "We already have an TMS.",
+        response: "Your TMS delivers and tracks training. We provide the intelligence layer that tells you what training to deliver based on actual safety and operational data, plus the content management backbone that keeps your training materials current. We complement your TMS, not replace it."
       },
       {
         objection: "Our training programs are driven by regulatory requirements — we don't have flexibility.",

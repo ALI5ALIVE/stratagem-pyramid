@@ -765,7 +765,7 @@ export const slideSpecs: SlideSpec[] = [
       const before = [
         "Standalone SMS for safety reporting",
         "Separate document management for procedures",
-        "Disconnected LMS for training records",
+        "Disconnected TMS for training records",
         "Manual compliance evidence collection",
         "Siloed data — no cross-functional intelligence",
       ];
