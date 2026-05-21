@@ -123,6 +123,24 @@ export default function HomePage() {
 
       {/* Content */}
       <div className="max-w-7xl mx-auto px-6 pb-16 space-y-12">
+        {/* Positioning & Messaging */}
+        <section>
+          <SectionHeader
+            title="Positioning & Messaging"
+            subtitle="The canonical playbook for the whole GTM org"
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <DeckCardComponent card={{
+              title: "Positioning & Messaging Playbook",
+              description: "Category, master narrative, pillars × personas, competitive frame, objections, sales kit and brand rules — one canonical reference.",
+              href: "/positioning-playbook",
+              icon: BookOpen,
+              badge: "New · 13 sections",
+              accent: "from-primary to-comply-plum",
+            }} />
+          </div>
+        </section>
+
         {/* Target Audience */}
         <section>
           <SectionHeader 
