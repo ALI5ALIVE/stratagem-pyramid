@@ -315,7 +315,59 @@ export const salesEnablementNarrations: SESlideNarration[] = [
     title: "Week 3 · Discovery Question Bank",
     voiceId: VOICE,
     script:
-      "This slide matters because discovery is where deals are won or lost — and most reps wing it. The core message: every great discovery call pulls four to six questions from the bank, one per DTOP step minimum. The pain you're naming: reps default to pitching when they get nervous; this gives you a script you can fall back to in any room. The value lever: each question comes with what a good answer sounds like, and what a red-flag answer sounds like — so you're listening for the wedge, not just talking. How to deliver it: never read these out loud as a list. Pick four. Ask one. Shut up. Take notes. The red-flag answers are the ones you want — they are the gaps DTOP closes. Avoid stacking questions back-to-back; let silence do the work. Next: the persona playbook — because the same question lands differently depending on the room.",
+      "Rep: Let me walk you through how this slide actually plays in a real room. I'll pull one question per DTOP step — Detect, Trigger, Orchestrate, Prove — and you'll hear what a red-flag answer sounds like. Red flags are the ones you want — they are the gaps DTOP closes. Rep: Detect first. When something goes wrong operationally, where is the very first place it's logged? Customer: Honestly? It depends. Usually email. Sometimes it lands in our safety tool, sometimes in a WhatsApp group, sometimes a duty manager just writes it in a notebook. Rep: That right there is the red flag — they can't name where the signal lands, or who owns it. That's your wedge into Detect. Rep: Now Trigger. How long, on average, from signal to a procedure update reaching the crew? Customer: I'd have to ask. Weeks, probably. It has to go through the safety review meeting, then content rebuilds the section, then it's published with the next manual revision. Rep: Weeks. That's the Trigger gap — there's no defined workflow with a name and a cadence, so every signal queues behind a meeting. Rep: Orchestrate. Walk me through how a procedure change today reaches the right crew, and gets paired with the right training. Customer: It touches our safety tool, then our content system, then the LMS. Someone in compliance keeps a spreadsheet of which change maps to which module. When she's on leave, it gets messy. Rep: Three tools, one human, one spreadsheet. That's exactly the Orchestrate pain — the platform is the spreadsheet, except it doesn't go on leave. Rep: Last one — Prove. If a regulator asked for proof your last five safety actions actually closed the loop, how long would that take? Customer: That's a project. Days of work. We'd need the safety team to pull the occurrences, content to pull the manual revisions, training to pull completion records, and someone to stitch it into a pack. Rep: Days, four teams, manual stitching. That's the cheapest yes you'll ever get — Prove is where the audit pain is loudest and the buy decision is easiest. Rep: Four questions, four red-flag answers. That's not a coincidence — that's the shape of the problem DTOP is built for. Your job in the room: pick four before the call, ask one, then shut up. Take notes. The silence does the work.",
+    segments: [
+      {
+        voiceId: VOICE,
+        text: "Let me walk you through how this slide actually plays in a real room. I'll pull one question per D-T-O-P step — Detect, Trigger, Orchestrate, Prove — and you'll hear what a red-flag answer sounds like. Red flags are the ones you want — they are the gaps D-T-O-P closes.",
+      },
+      { voiceId: VOICE, text: "Detect first. When something goes wrong operationally, where is the very first place it's logged?" },
+      {
+        voiceId: CUSTOMER_VOICE,
+        text: "Honestly? It depends. Usually email. Sometimes it lands in our safety tool, sometimes in a WhatsApp group, sometimes a duty manager just writes it in a notebook.",
+      },
+      {
+        voiceId: VOICE,
+        text: "That right there is the red flag — they can't name where the signal lands, or who owns it. That's your wedge into Detect.",
+      },
+      { voiceId: VOICE, text: "Now Trigger. How long, on average, from signal to a procedure update reaching the crew?" },
+      {
+        voiceId: CUSTOMER_VOICE,
+        text: "I'd have to ask. Weeks, probably. It has to go through the safety review meeting, then content rebuilds the section, then it's published with the next manual revision.",
+      },
+      {
+        voiceId: VOICE,
+        text: "Weeks. That's the Trigger gap — there's no defined workflow with a name and a cadence, so every signal queues behind a meeting.",
+      },
+      {
+        voiceId: VOICE,
+        text: "Orchestrate. Walk me through how a procedure change today reaches the right crew, and gets paired with the right training.",
+      },
+      {
+        voiceId: CUSTOMER_VOICE,
+        text: "It touches our safety tool, then our content system, then the L-M-S. Someone in compliance keeps a spreadsheet of which change maps to which module. When she's on leave, it gets messy.",
+      },
+      {
+        voiceId: VOICE,
+        text: "Three tools, one human, one spreadsheet. That's exactly the Orchestrate pain — the platform is the spreadsheet, except it doesn't go on leave.",
+      },
+      {
+        voiceId: VOICE,
+        text: "Last one — Prove. If a regulator asked for proof your last five safety actions actually closed the loop, how long would that take?",
+      },
+      {
+        voiceId: CUSTOMER_VOICE,
+        text: "That's a project. Days of work. We'd need the safety team to pull the occurrences, content to pull the manual revisions, training to pull completion records, and someone to stitch it into a pack.",
+      },
+      {
+        voiceId: VOICE,
+        text: "Days, four teams, manual stitching. That's the cheapest yes you'll ever get — Prove is where the audit pain is loudest and the buy decision is easiest.",
+      },
+      {
+        voiceId: VOICE,
+        text: "Four questions, four red-flag answers. That's not a coincidence — that's the shape of the problem D-T-O-P is built for. Your job in the room: pick four before the call, ask one, then shut up. Take notes. The silence does the work.",
+      },
+    ],
   },
   {
     slideId: "se-persona-playbook",
