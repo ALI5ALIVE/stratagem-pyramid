@@ -83,6 +83,7 @@ const weekProps = {
       "By the end of Week 3 you can pick the right account to chase, run a real discovery call, pull the right questions for the room, read the persona, handle the top 8 objections, position against any competitor in the DTOP loop, end every conversation with the scripted next-step line, and put the complimentary 3-hour Strategy & Vision Session on the table.",
     estimatedMinutes: 38,
     upNext: [
+      "Recap — One Use Case, Every Capability, One DTOP Loop",
       "Who to target (high-propensity accounts)",
       "Discovery → walkthrough → close",
       "Discovery question bank (DTOP)",
