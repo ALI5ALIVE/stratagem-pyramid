@@ -1,46 +1,46 @@
-# Rewrite discovery-runbook narration as a two-voice played-out discovery session
+## Goal
 
-Goal: turn the `se-discovery-call-runbook` narration from a coach explainer into a **dramatised, two-voice discovery call** — rep voice + customer voice, no timing references ("0–2 minutes", "10–35 minutes" etc.), compressed to ~2–3 minutes of audio.
+Rewrite the `se-discovery-question-bank` narration so it plays as a **two-voice walkthrough of the actual cards on the slide** — rep voice asks a question from the bank, customer voice gives a realistic answer (sometimes a "good" answer, more often a "red-flag" answer), rep briefly names what they just heard, then moves on.
+
+Same two-voice pattern we just shipped on `se-discovery-call-runbook` (George = rep, Charlotte = customer). No infrastructure changes — the segments pipeline already supports this.
 
 ## Scope
 
-Three files. No UI/visual changes. No other slides touched.
+One file, narration-only. No slide visual changes, no other slides touched.
 
-### 1. `supabase/functions/elevenlabs-tts/index.ts`
+### `src/data/salesEnablementNarration.ts` — replace the `se-discovery-question-bank` entry
 
-Extend the existing endpoint to optionally accept a multi-voice script while keeping the current single-voice contract fully backward-compatible.
+- Keep `slideId`, `title`, `voiceId` (George) as-is.
+- Rewrite `script` (used by the speaker-notes panel) as the same dialogue, prefixed `Rep:` / `Customer:`, so the transcript and audio match.
+- Add a `segments` array alternating George (rep) and Charlotte (customer).
 
-- Accept an optional `segments: Array<{ voiceId: string; text: string }>` in the request body **in addition to** the existing `{ text, voiceId }`.
-- If `segments` is present: call ElevenLabs once per segment in sequence (same model + voice_settings as today), then concatenate the returned MP3 byte buffers into a single response body. MP3 frames concatenate losslessly, which is fine for our usage (manual-start playback bar, single `<audio>` element).
-- Apply the same `DTOP` / `FOQA` text preprocessing per segment.
-- If `segments` is absent, behave exactly as today.
-- Return one `audio/mpeg` response either way.
+### Walkthrough structure (~2 min audio, 14–18 segments)
 
-### 2. `src/data/salesEnablementNarration.ts`
+1. **Rep open** (George, one segment) — frame what the slide is and what we're about to do: "Let me walk you through how this plays in a real room. I'll pull one question per DTOP step, and you'll hear what a useful answer sounds like versus a red flag."
+2. **Detect (D)** — Rep asks one question verbatim from the D card → Customer gives a red-flag style answer → Rep one-line read ("That's the red flag — they can't name where the signal lands. That's the wedge.").
+3. **Trigger (T)** — Rep asks one T question → Customer gives a realistic answer with a number that exposes the gap ("Honestly, three to four weeks…") → Rep one-line read.
+4. **Orchestrate (O)** — Rep asks one O question → Customer describes the manual stack ("Safety tool, then content, then the LMS — and a spreadsheet that someone owns…") → Rep one-line read.
+5. **Prove (P)** — Rep asks the audit-evidence question → Customer admits it's a multi-day project → Rep one-line read (this is the "cheapest yes" line from the slide intent).
+6. **Rep close** (George, one segment) — close the loop: "Four questions. Four red-flag answers. That's not a coincidence — that's the shape of the problem DTOP is built for. Pick four before every call, ask one, then shut up."
 
-Extend the data shape and add a customer voice constant, then rewrite only the `se-discovery-call-runbook` entry to use segments.
+### Question selection (from `discoveryQuestionBank` in `src/data/week3FieldKit.ts`)
 
-- Add `CUSTOMER_VOICE` constant: ElevenLabs voice `XB0fDUnXU5powFXDhCwa` (Charlotte — distinct female voice, clear contrast with George).
-- Extend `SESlideNarration` interface with an optional `segments?: Array<{ voiceId: string; text: string }>`. Keep `script` + `voiceId` required so nothing else breaks (used as fallback / for the speaker-notes panel display).
-- For the discovery runbook entry:
-  - Keep `script` as a single readable transcript (used by the speaker-notes panel) — but rewrite it as a played-out dialogue with `Rep:` / `Customer:` line prefixes, **no timings**, ending on a clear next step on the calendar.
-  - Add `segments` mirroring that dialogue, alternating George (rep) and Charlotte (customer).
+Use the questions already on the slide so the audio matches what the viewer is looking at:
 
-The dialogue compresses the runbook's five blocks into a single believable ~2-min call: open → frame (with the new "what's a signal?" definition baked in) → three discovery questions with realistic customer answers (decision lag, audit-evidence pain) → one objection ("just send a deck first") handled by trading → close with a named next step and date. No stage directions in audio, no "block headers", no minute markers.
+- **D**: "When something goes wrong operationally, where is the very first place it's logged?"
+- **T**: "How long, on average, from signal to a procedure update reaching the crew?"
+- **O**: "Walk me through how a procedure change today reaches the right crew and gets paired with the right training."
+- **P**: "If a regulator asked for proof your last five safety actions actually closed the loop, how long would that take?"
 
-### 3. `src/hooks/useSalesEnablementNarration.ts`
-
-Update `fetchAudio` so that when the narration entry has `segments`, it posts `{ segments }` instead of `{ text, voiceId }`. Existing single-voice path unchanged.
+Customer answers map deliberately to the **red-flag** descriptor on each card so the rep's debrief line lands.
 
 ## Out of scope
 
-- Slide visuals / layout / the on-screen runbook itself
+- Slide visuals / card layout
 - Any other slide's narration
-- Voice settings tuning
-- Caching / streaming changes beyond what already exists
-- New UI affordance for the dual-voice indicator
+- New voices, new TTS settings
+- Edge function or hook changes (segments path already shipped)
 
-## Risk notes
+## Risk
 
-- MP3 concat across separate ElevenLabs requests can leave a faint seam between speakers. Acceptable for this teaching context; if it sounds bad, fallback is to fold the dialogue into one voice with `Customer says:` framing — but we try the real two-voice version first.
-- Total request latency scales with segment count (sequential calls). Dialogue is ~10–14 segments, so expect first-play to take a few extra seconds; cached thereafter via existing `cacheRef`.
+Same minor MP3-seam risk between segments as the runbook. Acceptable.
