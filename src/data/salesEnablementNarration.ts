@@ -9,9 +9,11 @@ export interface SESlideNarration {
   title: string;
   script: string;
   voiceId: string;
+  segments?: Array<{ voiceId: string; text: string }>;
 }
 
 const VOICE = "JBFqnCBsd6RMkjVDRZzb"; // George — warm trainer tone
+const CUSTOMER_VOICE = "XB0fDUnXU5powFXDhCwa"; // Charlotte — distinct customer voice
 
 export const salesEnablementNarrations: SESlideNarration[] = [
   {
@@ -334,7 +336,26 @@ export const salesEnablementNarrations: SESlideNarration[] = [
     title: "Week 3 · Discovery-Call Runbook",
     voiceId: VOICE,
     script:
-      "This slide matters because a 45-minute first call has a shape, and reps who improvise the shape lose the room. The core message — four blocks: 0 to 2 minutes Open, 2 to 10 minutes Frame, 10 to 35 minutes Discover, 35 to 45 minutes Qualify and book the next step. The pain you're naming: most first calls die in the Discover block because the rep either pitches too early or asks too many soft questions. The value lever: this runbook is verbatim — opener, transition, close — and you keep it open on a second monitor during real calls. How to deliver it as a coach: practise the opener until it sounds conversational, not scripted. Practise the silence after the discovery questions — silence is what makes a customer fill in the gap. Practise the close line out loud, with a date and a name, before the call so it isn't the first time you say it. Never let a discovery call end without a calendar invite proposed. Next: the discovery question bank — twelve questions grouped by DTOP step that you slot straight into the Discover block of this runbook.",
+      "Here is what a discovery call sounds like when you run this runbook. Rep: Thanks for the time today — quick check, are you good for 45 minutes? Customer: Yes, that works. Rep: Great. I'd love to spend most of this hearing how your team actually runs safety, content and training day to day — and I'll only put a slide up if you ask for one. Sound fair? Customer: Sounds fair. Rep: Before I ask anything, one quick frame. By signal I just mean anything that should change what your team does next — a new regulation, an audit finding, a safety event, an operations change. Most carriers we work with are not short on data — they're short on signals they can act on, and proof the action actually worked. Where does that land for you? Customer: Honestly that's the story of our last audit. We had the data — we just couldn't show the action and the proof joined up. Rep: That's exactly where I'd love to dig. First question — when a regulation change or a safety signal lands today, how long before it reaches the people who actually have to do something about it? Customer: Realistically, two to three weeks. It goes through compliance, then ops, then training builds the module. By the time it reaches a crew briefing we've already missed two cycles. Rep: And when the auditor asks you to prove the change closed the loop end-to-end, how long does that pack take to assemble? Customer: Days. It's manual — four different systems, screenshots, spreadsheets. Rep: Last one — of those four worlds I mentioned, regulation, anomalies, operational change and macro events, which one is hardest for your team to act on today? Customer: Anomalies, easily. We see them, we just can't connect them to a training fix or a procedure update fast enough. Customer: Look, this all sounds interesting — could you just send me the deck so I can share it internally? Rep: Happy to — and the deck makes a lot more sense after a 30-minute working session where I show you the anomaly use case end to end on your kind of data. That's the version your team will actually engage with. Could we get your head of safety and your training lead in a room next Thursday at 2? Customer: Thursday works. I'll bring both. Rep: Perfect. I'll send the invite in the next hour with a one-page pre-read so nobody walks in cold. Thanks for the honesty today — that anomaly point is exactly where we land fastest.",
+    segments: [
+      { voiceId: VOICE, text: "Here is what a discovery call sounds like when you run this runbook." },
+      { voiceId: VOICE, text: "Thanks for the time today. Quick check — are you good for forty-five minutes?" },
+      { voiceId: CUSTOMER_VOICE, text: "Yes, that works." },
+      { voiceId: VOICE, text: "Great. I'd love to spend most of this hearing how your team actually runs safety, content and training day to day — and I'll only put a slide up if you ask for one. Sound fair?" },
+      { voiceId: CUSTOMER_VOICE, text: "Sounds fair." },
+      { voiceId: VOICE, text: "Before I ask anything, one quick frame. By signal I just mean anything that should change what your team does next — a new regulation, an audit finding, a safety event, an operations change. Most carriers we work with are not short on data. They're short on signals they can act on, and proof the action actually worked. Where does that land for you?" },
+      { voiceId: CUSTOMER_VOICE, text: "Honestly, that's the story of our last audit. We had the data — we just couldn't show the action and the proof joined up." },
+      { voiceId: VOICE, text: "That's exactly where I'd love to dig. First question — when a regulation change or a safety signal lands today, how long before it reaches the people who actually have to do something about it?" },
+      { voiceId: CUSTOMER_VOICE, text: "Realistically, two to three weeks. It goes through compliance, then ops, then training builds the module. By the time it reaches a crew briefing we've already missed two cycles." },
+      { voiceId: VOICE, text: "And when the auditor asks you to prove the change closed the loop end to end, how long does that pack take to assemble?" },
+      { voiceId: CUSTOMER_VOICE, text: "Days. It's manual — four different systems, screenshots, spreadsheets." },
+      { voiceId: VOICE, text: "Last one — of those four worlds I mentioned, regulation, anomalies, operational change and macro events, which one is hardest for your team to act on today?" },
+      { voiceId: CUSTOMER_VOICE, text: "Anomalies, easily. We see them — we just can't connect them to a training fix or a procedure update fast enough." },
+      { voiceId: CUSTOMER_VOICE, text: "Look, this all sounds interesting. Could you just send me the deck so I can share it internally?" },
+      { voiceId: VOICE, text: "Happy to — and the deck makes a lot more sense after a thirty-minute working session where I show you the anomaly use case end to end on your kind of data. That's the version your team will actually engage with. Could we get your head of safety and your training lead in a room next Thursday at two?" },
+      { voiceId: CUSTOMER_VOICE, text: "Thursday works. I'll bring both." },
+      { voiceId: VOICE, text: "Perfect. I'll send the invite in the next hour with a one-page pre-read so nobody walks in cold. Thanks for the honesty today — that anomaly point is exactly where we land fastest." },
+    ],
   },
   {
     slideId: "se-deal-stage-language",
