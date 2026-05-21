@@ -7,7 +7,6 @@ import SESlide0Title from "@/components/sales-enablement-slides/SESlide0Title";
 import SEModuleDivider from "@/components/sales-enablement-slides/SEModuleDivider";
 import SERecapSlide from "@/components/sales-enablement-slides/SERecapSlide";
 import SELayerTalkTrack from "@/components/sales-enablement-slides/SELayerTalkTrack";
-import SEObjections from "@/components/sales-enablement-slides/SEObjections";
 import SEClosingForReps from "@/components/sales-enablement-slides/SEClosingForReps";
 import SEPlainEnglishShift from "@/components/sales-enablement-slides/SEPlainEnglishShift";
 import SEDiscoveryToClose from "@/components/sales-enablement-slides/SEDiscoveryToClose";
@@ -31,7 +30,6 @@ import SEPlatformWideIntelligenceUseCases from "@/components/sales-enablement-sl
 import SEW2CapstoneWhiteboard from "@/components/sales-enablement-slides/SEW2CapstoneWhiteboard";
 import SEDiscoveryQuestionBank from "@/components/sales-enablement-slides/SEDiscoveryQuestionBank";
 import SEPersonaPlaybook from "@/components/sales-enablement-slides/SEPersonaPlaybook";
-import SECompetitiveCheatSheet from "@/components/sales-enablement-slides/SECompetitiveCheatSheet";
 import SEDiscoveryCallRunbook from "@/components/sales-enablement-slides/SEDiscoveryCallRunbook";
 import SEDealStageLanguage from "@/components/sales-enablement-slides/SEDealStageLanguage";
 import SEPracticeCenterBridge from "@/components/sales-enablement-slides/SEPracticeCenterBridge";
@@ -164,8 +162,6 @@ const slides = [
   { id: "se-discovery-question-bank", label: "W3 · Discovery Question Bank", component: SEDiscoveryQuestionBank },
   { id: "se-persona-playbook", label: "W3 · Persona Playbook", component: SEPersonaPlaybook },
   { id: "se-slide-outcomes", label: "W3 · Customer Outcomes", component: CustomerOutcomesSlide },
-  { id: "se-slide-objections", label: "W3 · Objections", component: SEObjections },
-  { id: "se-competitive-cheatsheet", label: "W3 · Competitive Cheat Sheet", component: SECompetitiveCheatSheet },
   { id: "se-deal-stage-language", label: "W3 · Deal-Stage Next-Step Language", component: SEDealStageLanguage },
   { id: "se-strategy-vision-session", label: "W3 · Strategy & Vision Session", component: SEStrategyVisionSession },
   { id: "se-w3-capstone", label: "W3 · Capstone — Your First 30 Days", component: SEW3Capstone },
