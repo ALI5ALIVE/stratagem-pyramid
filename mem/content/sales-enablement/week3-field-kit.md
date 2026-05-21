@@ -17,7 +17,7 @@ Week 3 slide order in `src/pages/SalesEnablement.tsx`:
 9. se-slide-objections (8 objections, Acknowledge/Reframe/Bridge + Proof)
 10. se-discovery-call-runbook (4 blocks for a 45-min first call with verbatim scripts)
 11. se-deal-stage-language (4 deal-stage transitions with scripted next-step lines)
-12. se-strategy-vision-session (CLOSING slide · complimentary half-day workshop offer; fixed 4-hour agenda + attendees + leave-behind + rep talk track)
+12. se-strategy-vision-session (CLOSING slide · complimentary 3-hour workshop offer; fixed 3-hour agenda + attendees + leave-behind + rep talk track)
 
 Removed Nov 2026: `se-slide-why` (Why Comply365), `se-practice-center-bridge`, `se-slide-closing` (Your First 30 Days) — Week 3 now ends on the Strategy & Vision Session offer. Components remain in `src/components/...` and `slideRegistry.ts` for academy/other deck reuse, but no longer appear in the Sales Enablement deck. `se-deal-stage-language` narration now transitions directly into the Strategy & Vision Session.
 
