@@ -148,6 +148,7 @@ const slides = [
   { id: "se-w2-capstone-whiteboard", label: "W2 · Capstone — One Use Case, Every Capability, One DTOP Loop", component: SEW2CapstoneWhiteboard },
   // WEEK 3
   { id: "se-week-3", label: "▸ Week 3 · Sell & Win", component: SEModuleDivider, dividerProps: weekProps.w3 },
+  { id: "se-w3-roadmap-vision-frame", label: "W3 · Frame the Journey — Roadmap Vision", component: SEW3RoadmapVisionFrame },
   { id: "se-w3-signals-recap", label: "W3 · Recap — Signals → DTOP (animated)", component: SEW3SignalsRecap },
   { id: "se-who-to-target", label: "W3 · Who to Target", component: SEWhoToTarget },
   { id: "se-footprint-intro", label: "W3 · Customer Footprint — Intro", component: SEFootprintIntro },
@@ -159,7 +160,6 @@ const slides = [
   { id: "se-footprint-all-whiteboard", label: "W3 · Footprint — All Three Whiteboard", component: SEFootprintAllThreeWhiteboard },
   { id: "se-footprint-ladder", label: "W3 · Footprint — Value Ladder", component: SEFootprintValueLadder },
   { id: "se-footprint-playbook", label: "W3 · Footprint — 3-Move Play", component: SEFootprintPlaybook },
-  { id: "se-w3-roadmap-vision-frame", label: "W3 · Frame the Journey — Roadmap Vision", component: SEW3RoadmapVisionFrame },
   { id: "se-w3-whole-vision-whiteboard", label: "W3 · Sell the Whole Vision — Whiteboard", component: SEW3WholeVisionWhiteboard },
   { id: "se-discovery-to-close", label: "W3 · Discovery → Walkthrough → Close", component: SEDiscoveryToClose },
   { id: "se-discovery-call-runbook", label: "W3 · Discovery-Call Runbook", component: SEDiscoveryCallRunbook },

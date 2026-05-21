@@ -6,13 +6,14 @@ type: feature
 Week 3 flow (post-refactor):
 
 1. W3 Divider · Sell & Win
-2. Recap — Signals → DTOP (animated) — only opening recap (W2-capstone re-use was removed for redundancy)
-3. Who to Target
-4. Customer Footprint — Intro
-5–11. Footprint variants (One, One Whiteboard, Two, Two Whiteboard, All Three, All Three Whiteboard, Value Ladder)
-12. Footprint — 3-Move Play
-12a. Frame the Journey — Roadmap Vision (opens the Whole Vision arc; reuses W1 roadmap whiteboard reframed for differentiate/up-sell/cross-sell)
-13. Discovery → Walkthrough → Close (the arc)
+2. Frame the Journey — Roadmap Vision (opener; reuses W1 roadmap whiteboard reframed for differentiate / up-sell / cross-sell)
+3. Recap — Signals → DTOP (animated)
+4. Who to Target
+5. Customer Footprint — Intro
+6–12. Footprint variants (One, One Whiteboard, Two, Two Whiteboard, All Three, All Three Whiteboard, Value Ladder)
+13. Footprint — 3-Move Play
+14. Sell the Whole Vision — Whiteboard
+15. Discovery → Walkthrough → Close (the arc)
 14. Discovery-Call Runbook (moved earlier — it is the structural template)
 15. Discovery Question Bank (slots into Runbook's Discover block)
 16. Persona Playbook
