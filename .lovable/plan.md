@@ -1,10 +1,12 @@
-## Fix
+## Fix "YOU ARE HERE" flag sizing
 
-Remove the Vistair row from the W3 Competitive Cheat Sheet, and clean up the Vistair mention in the Objections cheat sheet so the deck no longer names Vistair anywhere.
+The flag polygon in `SEW3RoadmapVisionFrame.tsx` (lines 75–81) is too narrow — the "YOU ARE HERE" and "most buyers, honestly" text overflows the right edge of the yellow banner.
 
-**Edits — `src/data/week3FieldKit.ts` only:**
+### Change
 
-1. Delete the Vistair object in `competitiveCheatSheet` (lines 209–215). The remaining rows (Standalone SMS, Web Manuals / legacy Comply365, TMS-only, Generic AI, Build-our-own) stay in their current order.
-2. In the Objections cheat sheet entry on line 299, change `"We have Vistair / legacy Comply365 for content."` to `"We have legacy Comply365 for content."` so the Vistair name is dropped without losing the objection. Acknowledge / reframe / bridge / proofArtifact stay as-is.
+In `src/components/sales-enablement-slides/SEW3RoadmapVisionFrame.tsx`, widen the flag polygon and notch so both text lines sit comfortably inside:
 
-No component changes — `SECompetitiveCheatSheet` and `SEObjections` render from this data, so they update automatically. Narration scripts don't mention Vistair, so no narration edits needed.
+- Polygon: extend right edge from `260` → `310`, adjust notch points accordingly (`300,270 310,300`).
+- Keep text x positions (`172`) and left edge (`165`) unchanged.
+
+Result: flag becomes ~145px wide instead of ~95px, fully containing both labels with padding.
