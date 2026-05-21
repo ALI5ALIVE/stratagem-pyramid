@@ -1,69 +1,47 @@
+## Comply365 Positioning & Messaging Playbook — Plan
 
-# Week 3 — Frame the Audience, End with the Offer
+A new **canonical-grade, additive** interactive web playbook at `/positioning-playbook` that consolidates the strategic story for the whole GTM org (sales, marketing, product marketing, CS, exec). Existing playbooks remain untouched — this asset links to them as deep-dives.
 
-Two new slides bookend Week 3 so reps open by knowing **who** to walk in on, and close with a **concrete, complimentary offer** they can put on the table.
+### Approach
 
-## What changes
+- **Single-page, long-scroll** experience with a sticky left nav (anchor links per section), section-jump shortcuts, "On this page" mini-TOC, and copy-to-clipboard on every messaging block (one-liners, talk tracks, boilerplate).
+- **Dark Comply365 theme**, Space Grotesk / Inter, semantic tokens. Each section gets a numbered hero band so it reads like a published playbook, not a wiki dump.
+- **Print-friendly CSS** so the same page can be exported to PDF later without rework.
+- **Data-driven**: all messaging lives in `src/data/positioningPlaybook.ts` so it can be reused by other decks/exports later.
 
-### 1. NEW opener — "Who to Target: High-Propensity Accounts"
-First slide of Week 3, immediately after the Week 3 divider (before *Discovery → Demo → Close*).
+### Sections (12)
 
-Anchored on a single targeting axis: **existing Comply365 footprint**. The easiest, fastest, highest-win-rate motion is expanding inside customers who already trust one of the apps.
+1. **How to Use This Playbook** — audience map (sales / marketing / CS / exec), what to grab where, "30-second pitch" callout.
+2. **Category & POV** — the category we're creating ("Operational Performance Platform"), the manifesto, the enemy (fragmentation + generic AI), the shift we stand for.
+3. **Master Narrative** — Today → Tomorrow, the one-paragraph story, the 30-sec / 2-min / 10-min versions, master message ("From event to control").
+4. **Positioning Architecture** — market category, target customer, alternatives, unique value, proof, single positioning statement (Moore-style).
+5. **Messaging Pillars × Personas** — 4 pillars (Operational Control · Domain Intelligence · DTOP Loop · Unified Platform) × 5 personas (CEO/COO, Safety, Ops, IT, Frontline) grid with one-liner, value prop, proof point per cell.
+6. **Platform & Product Story** — Apps · Data Foundation · Intelligence Layer · Mobile · DTOP, each as a "what it is / why it matters / one-liner / link to deep-dive playbook".
+7. **The DTOP Operating Model** — Detect→Trigger→Orchestrate→Prove summary with the canonical D/T/O/P color tokens and "when to use this frame" guidance.
+8. **Intelligence Layer Positioning** — ~90% domain vs ~35% generic AI headline, why-it's-defensible, evidence chain, what to say / never say.
+9. **Competitive Frame** — leader matrix, win themes vs (generic platforms, point solutions, in-house AI, status quo), trap-setting questions.
+10. **Top 12 Objections** — objection · reframe · proof · close (cards, copyable).
+11. **Sales Kit** — discovery question bank by stage, 3 email templates (cold/warm/exec), demo flow, half-day Strategy & Vision session offer summary, "who to target" tiers.
+12. **Brand & Terminology Rules** — approved/forbidden words, product naming (Comply365/SafetyManager365/ContentManager365), trust signals, boilerplate (short/medium/long), citation stack for the $25–35B figure, ROI disclaimer language.
 
-Slide content:
-- **Headline:** "Start where we already have permission to talk."
-- **Three propensity tiers** (visual ladder, reuses DTOP color tokens):
-  - **Tier 1 — One app live, renewal in <12 months.** Highest propensity. Talk track: lift them out of the renewal conversation into the platform story.
-  - **Tier 2 — Two apps live.** Already proved value twice. Talk track: show what the third app + Intelligence Layer unlocks.
-  - **Tier 3 — Strategic / multi-BU customer.** Talk track: introduce the Operational Performance Roadmap and the half-day vision session (see closing slide).
-- **"How to spot a Tier 1 today" checklist** (4–5 signals): renewal in window, named exec sponsor, recent audit/incident chatter, mobile/training gap, no AI vendor locked in yet.
-- **What NOT to chase first** (small muted footer): cold prospects with no footprint, RFPs we didn't shape, single-app POCs against incumbents.
-- **One-line bridge to next slide:** "Once you've picked the account, here's how the call runs →"
+Plus an **Appendix**: changelog, owners, version, "where this came from" links to existing playbooks (DTOP, Intelligence Layer, Platform, Signals 101, Personas, Sales Enablement Academy, Practice Center).
 
-Narration follows the 5-part Coach Script Standard.
+### New files
 
-### 2. NEW closing offer — "The Strategy & Vision Session" (half-day, complimentary)
-Replaces the *current* final slide position. The existing "Your First 30 Days" (`se-slide-closing`) stays in the deck but moves **one position earlier**, so the very last thing a rep sees in Week 3 is the offer they're meant to put in market.
+- `src/pages/PositioningPlaybook.tsx` — page shell + sticky nav + sections.
+- `src/components/positioning/` — `SectionHero.tsx`, `CopyableBlock.tsx`, `PillarPersonaMatrix.tsx`, `ObjectionCard.tsx`, `MessageStack.tsx` (30s/2m/10m tabs), `TerminologyTable.tsx`, `CompetitiveMatrix.tsx`, `DiscoveryAccordion.tsx`.
+- `src/data/positioningPlaybook.ts` — all copy (pillars, personas, objections, terminology, boilerplate, win themes, discovery, emails).
+- Route added in `src/App.tsx`.
+- Card added to `src/pages/HomePage.tsx` under a new top section **"Positioning & Messaging"** above "Customer Pitch Decks" (or as a featured single card).
+- Memory: new entry `mem://content/positioning-playbook` + index line.
 
-Slide content:
-- **Headline:** "The Strategy & Vision Session — a complimentary half-day workshop."
-- **Positioning line:** "Lift the conversation out of tickets and renewals. Put the roadmap on the table."
-- **Fixed 4-hour agenda** (visual timeline, on-site or virtual):
-  - 0:00–0:30 — Where the industry is going (the shift, DTOP in plain English)
-  - 0:30–1:15 — The platform story (one platform, three apps, Intelligence Layer)
-  - 1:15–2:00 — Capabilities deep-dive tailored to their footprint
-  - 2:00–2:15 — Break
-  - 2:15–3:00 — The Operational Performance Roadmap — what L1→L5 looks like for them
-  - 3:00–3:45 — Their DTOP loop — one of their real use cases walked end-to-end
-  - 3:45–4:00 — Agreed next step
-- **Who should be in the room** (chips): Exec sponsor, VP Safety/Ops, Training lead, IT/Data lead, our AE + SE.
-- **What they leave with:** a one-page maturity snapshot, a candidate first DTOP use case, a 90-day "what's possible" view.
-- **How to offer it (rep talk track, 3 lines):** acknowledge the day-to-day request → reframe to the strategic question → propose the session as the right venue.
-- **CTA strip:** "Book it. Then go run your 30-day plan."
+### Out of scope (this turn)
 
-Narration follows the 5-part Coach Script Standard, ending on: *"This is the meeting that changes the conversation. Earn the right to run it, then run it."*
+- PDF / PPTX export (page will be print-styled and exportable later).
+- Editing/refactoring existing playbooks.
+- Net-new copy that contradicts memory — all messaging pulled from existing canonical memory (DTOP, Intelligence Layer 90/35, terminology rules, trust signals, roadmap dates, product naming).
+- Auth gating (open route, like other playbooks).
 
-## Technical details
+### Guardrails honored
 
-- **New components:**
-  - `src/components/sales-enablement-slides/SEWhoToTarget.tsx`
-  - `src/components/sales-enablement-slides/SEStrategyVisionSession.tsx`
-  - Both wrap `PitchSlideContainer`, follow h-screen + asymmetrical padding, use semantic tokens only, and accept the standard `slideNarrationProps`.
-- **Data:** extend `src/data/week3FieldKit.ts` with two new exports — `propensityTiers` and `visionSessionAgenda` — so future PDF/exporter work has one source.
-- **Slide order in `src/pages/SalesEnablement.tsx`** (Week 3 only, changes shown):
-  1. `se-week-3` (divider, unchanged)
-  2. **`se-who-to-target` (NEW)** ← inserted here
-  3. `se-discovery-to-close`
-  4. … (rest of Week 3 unchanged through `se-practice-center-bridge`)
-  5. `se-slide-closing` (Your First 30 Days — moved up one position)
-  6. **`se-strategy-vision-session` (NEW — final slide)**
-- **`weekProps.w3.upNext`** updated to list both new slides at the right positions; `estimatedMinutes` bumped from 42 → ~48.
-- **Narration:** add two entries to `src/data/salesEnablementNarration.ts` keyed by the new slide IDs, both in 5-part Coach Script format.
-- **Memory:** update `mem/content/sales-enablement/week3-field-kit.md` with new slide IDs, the new data exports, and the new slide-order list.
-- **Constraints respected:** no FOQA/FDM/ASAP, BrandNumber naming, ~90% vs ~35% headline only where relevant, DTOP color tokens, locked roadmap dates, manual-start narration.
-
-## Out of scope (deferred)
-
-- Tier 2/Tier 3 targeting axes (industry triggers, AI mandates, trigger events) — can be a second targeting slide later if needed.
-- Downloadable "Strategy & Vision Session" leave-behind PDF — data will be structured so an exporter can be added later.
-- Re-recording Week 1/2 narration.
+Dark theme + semantic tokens · Space Grotesk/Inter · BrandNumber naming · DTOP color tokens (D blue · T amber · O violet · P emerald) · "Generative AI / Recommended Actions / Operational Data" only (no FOQA/FDM/ASAP) · Intelligence Layer never called "CoAnalyst" in user-facing copy · 90% vs 35% framing exact · ROI disclaimer language present · $25–35B figure carries citation chip.
