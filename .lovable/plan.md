@@ -1,18 +1,10 @@
 ## Fix
 
-Global replace **LMS → TMS** across every occurrence in the deck (user confirmed: all of them, including competitor/objection contexts).
+Remove the Vistair row from the W3 Competitive Cheat Sheet, and clean up the Vistair mention in the Objections cheat sheet so the deck no longer names Vistair anywhere.
 
-**Files to update** (15 occurrences across 8 files):
+**Edits — `src/data/week3FieldKit.ts` only:**
 
-- `src/exporters/pptx/buildTechnicalDeck.ts` (1)
-- `src/data/week3FieldKit.ts` (5)
-- `src/data/salesEnablementNarration.ts` (2)
-- `src/data/practiceSlidePrompts.ts` (3)
-- `src/data/dtopPlaybook.ts` (5)
-- `src/data/insightsPlaybook.ts` (1)
-- `src/data/personaProfiles.ts` (3)
-- `src/components/tech-slides/TechSlide1StrategicShift.tsx` (1)
+1. Delete the Vistair object in `competitiveCheatSheet` (lines 209–215). The remaining rows (Standalone SMS, Web Manuals / legacy Comply365, TMS-only, Generic AI, Build-our-own) stay in their current order.
+2. In the Objections cheat sheet entry on line 299, change `"We have Vistair / legacy Comply365 for content."` to `"We have legacy Comply365 for content."` so the Vistair name is dropped without losing the objection. Acknowledge / reframe / bridge / proofArtifact stay as-is.
 
-Done via a single `sed -i 's/LMS/TMS/g'` pass over those files, then `rg -n "LMS" src/` to confirm zero remaining.
-
-No other content changes.
+No component changes — `SECompetitiveCheatSheet` and `SEObjections` render from this data, so they update automatically. Narration scripts don't mention Vistair, so no narration edits needed.
