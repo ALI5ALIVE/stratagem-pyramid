@@ -31,7 +31,6 @@ import SEW2CapstoneWhiteboard from "@/components/sales-enablement-slides/SEW2Cap
 import SEDiscoveryQuestionBank from "@/components/sales-enablement-slides/SEDiscoveryQuestionBank";
 import SEPersonaPlaybook from "@/components/sales-enablement-slides/SEPersonaPlaybook";
 import SEDiscoveryCallRunbook from "@/components/sales-enablement-slides/SEDiscoveryCallRunbook";
-import SEDealStageLanguage from "@/components/sales-enablement-slides/SEDealStageLanguage";
 import SEPracticeCenterBridge from "@/components/sales-enablement-slides/SEPracticeCenterBridge";
 import SEWhoToTarget from "@/components/sales-enablement-slides/SEWhoToTarget";
 import SEStrategyVisionSession from "@/components/sales-enablement-slides/SEStrategyVisionSession";
@@ -162,7 +161,6 @@ const slides = [
   { id: "se-discovery-question-bank", label: "W3 · Discovery Question Bank", component: SEDiscoveryQuestionBank },
   { id: "se-persona-playbook", label: "W3 · Persona Playbook", component: SEPersonaPlaybook },
   { id: "se-slide-outcomes", label: "W3 · Customer Outcomes", component: CustomerOutcomesSlide },
-  { id: "se-deal-stage-language", label: "W3 · Deal-Stage Next-Step Language", component: SEDealStageLanguage },
   { id: "se-strategy-vision-session", label: "W3 · Strategy & Vision Session", component: SEStrategyVisionSession },
   { id: "se-w3-capstone", label: "W3 · Capstone — Your First 30 Days", component: SEW3Capstone },
 ];
