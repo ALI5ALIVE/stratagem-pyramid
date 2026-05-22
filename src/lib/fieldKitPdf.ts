@@ -490,68 +490,147 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     const narration = getSalesEnablementNarration(slideId);
     const title = narration?.title ?? slideId;
     const coreLine = extractCoreLine(slideId);
+    const summary = narration ? paraphraseNarration(narration.script) : "";
+    const listenFor = narration ? extractListenFor(narration.script, week.id) : [];
 
-    pdf.addPage();
-    drawHeader(`Week ${week.number} · ${week.title}  ·  Slide ${idx + 1} of ${week.slideIds.length}`);
+    // Landscape page for slide cards
+    pdf.addPage("a4", "landscape");
+    const lPageW = pdf.internal.pageSize.getWidth();
+    const lPageH = pdf.internal.pageSize.getHeight();
+    const lMargin = 36;
+    const lContentW = lPageW - lMargin * 2;
 
-    // Title block with brand bar
-    const tbY = 64;
-    setFill(pdf, C.navyDeep);
-    pdf.rect(margin, tbY, contentW, 64, "F");
-    setFill(pdf, C.brand);
-    pdf.rect(margin, tbY, 4, 64, "F");
-
-    // Slide number chip
+    // Header (landscape variant)
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(8);
-    setText(pdf, [140, 175, 230]);
-    pdf.text(`SLIDE ${String(idx + 1).padStart(2, "0")}`, margin + 18, tbY + 22);
-
-    // Title
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(16);
-    setText(pdf, C.white);
-    const tLines = pdf.splitTextToSize(title, contentW - 36);
-    pdf.text(tLines.slice(0, 2), margin + 18, tbY + 42);
-
-    let cy = tbY + 64 + 22;
-
-    // Core idea (italic-ish via tone)
-    if (coreLine) {
-      pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(8);
-      setText(pdf, C.brand);
-      pdf.text("THE CORE IDEA", margin, cy);
-      cy += 14;
-      pdf.setFont("helvetica", "normal");
-      pdf.setFontSize(12);
-      setText(pdf, C.slate);
-      const coreLines = pdf.splitTextToSize(coreLine, contentW);
-      pdf.text(coreLines, margin, cy);
-      cy += coreLines.length * 15 + 14;
-    }
-
+    setText(pdf, C.subtle);
+    pdf.text("COMPLY365 · SALES ENABLEMENT ACADEMY", lMargin, 22);
+    pdf.setFont("helvetica", "normal");
+    setText(pdf, C.muted);
+    pdf.text(
+      `Week ${week.number} · ${week.title}  ·  Slide ${idx + 1} of ${week.slideIds.length}`,
+      lPageW - lMargin,
+      22,
+      { align: "right" },
+    );
     setStroke(pdf, C.hairline);
     pdf.setLineWidth(0.5);
-    pdf.line(margin, cy, pageW - margin, cy);
-    cy += 18;
+    pdf.line(lMargin, 30, lPageW - lMargin, 30);
 
-    // 2x2 grid of field panels
+    // ── LEFT COLUMN ──────────────────────────────────────────────────────────
+    const leftX = lMargin;
+    const colGap = 18;
+    const leftW = lContentW * 0.46;
+    const rightX = leftX + leftW + colGap;
+    const rightW = lContentW - leftW - colGap;
+
+    // Title block (compact)
+    const tbY = 42;
+    const tbH = 52;
+    setFill(pdf, C.navyDeep);
+    pdf.rect(leftX, tbY, leftW, tbH, "F");
+    setFill(pdf, C.brand);
+    pdf.rect(leftX, tbY, 3, tbH, "F");
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(7.5);
+    setText(pdf, [140, 175, 230]);
+    pdf.text(`SLIDE ${String(idx + 1).padStart(2, "0")}`, leftX + 14, tbY + 17);
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(13);
+    setText(pdf, C.white);
+    const tLines = clipLines(pdf.splitTextToSize(title, leftW - 28), 2);
+    pdf.text(tLines, leftX + 14, tbY + 34);
+
+    let ly = tbY + tbH + 16;
+
+    // Core idea
+    if (coreLine) {
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(7.5);
+      setText(pdf, C.brand);
+      pdf.text("THE CORE IDEA", leftX, ly);
+      ly += 12;
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(10);
+      setText(pdf, C.ink);
+      const coreLines = clipLines(pdf.splitTextToSize(coreLine, leftW), 2);
+      pdf.text(coreLines, leftX, ly);
+      ly += coreLines.length * 12 + 14;
+    }
+
+    // Teaching summary
+    if (summary) {
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(7.5);
+      setText(pdf, C.muted);
+      pdf.text("TEACHING SUMMARY", leftX, ly);
+      ly += 12;
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(9);
+      setText(pdf, C.slate);
+      // Auto-shrink: estimate available
+      const availableH = lPageH - 60 - ly - 92 /* listen-for + footer */;
+      const maxLines = Math.max(6, Math.floor(availableH / 11.5));
+      const sumLines = clipLines(pdf.splitTextToSize(summary, leftW), maxLines);
+      pdf.text(sumLines, leftX, ly, { lineHeightFactor: 1.35 });
+      ly += sumLines.length * 11.5 + 14;
+    }
+
+    // What to listen for
+    if (listenFor.length) {
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(7.5);
+      setText(pdf, C.muted);
+      pdf.text("WHAT TO LISTEN FOR", leftX, ly);
+      ly += 12;
+      listenFor.forEach((l) => {
+        // ear bullet
+        setFill(pdf, C.brand);
+        pdf.circle(leftX + 3, ly - 3, 1.6, "F");
+        pdf.setFont("helvetica", "italic");
+        pdf.setFontSize(8.5);
+        setText(pdf, C.muted);
+        const lines = clipLines(pdf.splitTextToSize(l, leftW - 14), 2);
+        pdf.text(lines, leftX + 12, ly);
+        ly += lines.length * 10.5 + 4;
+      });
+    }
+
+    // ── RIGHT COLUMN: 2x2 panels ─────────────────────────────────────────────
     const fields: FieldKey[] = ["remember", "sayItLikeThis", "watchOutFor", "bridge"];
-    const gap = 14;
-    const colWidth = (contentW - gap) / 2;
-    const remaining = pageH - 60 - cy;
-    const rowHeight = Math.max(110, (remaining - gap) / 2);
+    const gap = 10;
+    const panelW = (rightW - gap) / 2;
+    const gridTop = tbY;
+    const gridBottom = lPageH - 50;
+    const panelH = (gridBottom - gridTop - gap) / 2;
 
     fields.forEach((key, i) => {
       const row = Math.floor(i / 2);
       const col = i % 2;
-      const x = margin + col * (colWidth + gap);
-      const yPos = cy + row * (rowHeight + gap);
-      drawFieldPanel(pdf, x, yPos, colWidth, rowHeight, key, cc[key]);
+      const x = rightX + col * (panelW + gap);
+      const yPos = gridTop + row * (panelH + gap);
+      drawFieldPanelCompact(pdf, x, yPos, panelW, panelH, key, cc[key]);
     });
 
-    drawFooter();
+    // Micro footer strip
+    const mfY = lPageH - 38;
+    setStroke(pdf, C.hairline);
+    pdf.setLineWidth(0.5);
+    pdf.line(lMargin, mfY, lPageW - lMargin, mfY);
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(7.5);
+    setText(pdf, C.subtle);
+    pdf.text(
+      `Comply365 · Week ${week.number} Field Kit · ${week.title}`,
+      lMargin,
+      mfY + 14,
+    );
+    pdf.text(
+      "Time on slide ~60–90s   ·   Drill rating: ☐ 1  ☐ 2  ☐ 3  ☐ 4  ☐ 5",
+      lPageW - lMargin,
+      mfY + 14,
+      { align: "right" },
+    );
   });
 
   // ── 4. CLOSING PAGE ────────────────────────────────────────────────────────
