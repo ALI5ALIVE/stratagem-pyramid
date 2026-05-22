@@ -174,7 +174,7 @@ const FILLER_SENTENCES = [
 ];
 
 /** Deterministic paraphrase of a teaching script → coaching summary. */
-const paraphraseNarration = (script: string): string => {
+const paraphraseNarration = (script: string, maxChars = 540): string => {
   let s = script.trim();
   FILLER_OPENERS.forEach((re) => { s = s.replace(re, ""); });
   FILLER_SENTENCES.forEach((re) => { s = s.replace(re, ""); });
@@ -215,7 +215,7 @@ const paraphraseNarration = (script: string): string => {
 
   let out = "";
   for (const sent of ranked) {
-    if ((out + " " + sent).length > 540) break;
+    if ((out + " " + sent).length > maxChars) break;
     out = out ? `${out} ${sent}` : sent;
   }
   // Tidy spacing
@@ -223,6 +223,17 @@ const paraphraseNarration = (script: string): string => {
   // Ensure ends with .
   if (out && !/[.!?]$/.test(out)) out += ".";
   return out;
+};
+
+/** Pull a representative "verbatim lift" — first quoted sentence, or first
+ *  declarative line after stripping filler. */
+const extractVerbatimLift = (script: string): string | undefined => {
+  const q = script.match(/['"]([^'"\n]{20,180}[.!?])['"]/);
+  if (q) return q[1].trim();
+  // pull the first sentence anchored to "Core message"
+  const core = script.match(/core message[^.:]*[:.]\s*([^.]{20,160}[.!?])/i);
+  if (core) return core[1].trim();
+  return undefined;
 };
 
 /** Pull customer-signal cues from narration; fallback to generic per-week. */
