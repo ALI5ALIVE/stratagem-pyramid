@@ -859,6 +859,71 @@ function drawFieldPanelCompact(
   pdfInner.text(lines, x + 10, yPos + 28, { lineHeightFactor: 1.3 });
 }
 
+function drawCoachChip(
+  pdfInner: jsPDF,
+  x: number,
+  yPos: number,
+  w: number,
+  h: number,
+  key: FieldKey,
+  label: string,
+  text: string,
+) {
+  const style = FIELD_STYLES[key];
+  setFill(pdfInner, style.soft);
+  pdfInner.roundedRect(x, yPos, w, h, 4, 4, "F");
+  setFill(pdfInner, style.accent);
+  pdfInner.rect(x, yPos, w, 2, "F");
+  pdfInner.setFont("helvetica", "bold");
+  pdfInner.setFontSize(6.5);
+  setText(pdfInner, style.accent);
+  pdfInner.text(label, x + 6, yPos + 12);
+  pdfInner.setFont("helvetica", "normal");
+  pdfInner.setFontSize(7.5);
+  setText(pdfInner, C.slate);
+  const lines = clipLines(pdfInner.splitTextToSize(text, w - 12), 3);
+  pdfInner.text(lines, x + 6, yPos + 22, { lineHeightFactor: 1.25 });
+}
+
+function drawObjectionBlock(
+  pdfInner: jsPDF,
+  x: number,
+  yPos: number,
+  w: number,
+  h: number,
+  o: { pushback: string; response: string },
+) {
+  // Container
+  setFill(pdfInner, [253, 242, 245]);
+  pdfInner.roundedRect(x, yPos, w, h, 4, 4, "F");
+  setFill(pdfInner, C.rose);
+  pdfInner.rect(x, yPos, 3, h, "F");
+
+  // Pushback row
+  pdfInner.setFont("helvetica", "bold");
+  pdfInner.setFontSize(8);
+  setText(pdfInner, C.rose);
+  pdfInner.text("\u25B8", x + 10, yPos + 12);
+  pdfInner.setFont("helvetica", "bold");
+  pdfInner.setFontSize(8.5);
+  setText(pdfInner, C.ink);
+  const pLines = clipLines(pdfInner.splitTextToSize(o.pushback, w - 26), 2);
+  pdfInner.text(pLines, x + 20, yPos + 12);
+  const afterPushY = yPos + 12 + pLines.length * 10 + 4;
+
+  // Response row
+  pdfInner.setFont("helvetica", "bold");
+  pdfInner.setFontSize(8);
+  setText(pdfInner, C.emerald);
+  pdfInner.text("\u21B3", x + 10, afterPushY);
+  pdfInner.setFont("helvetica", "normal");
+  pdfInner.setFontSize(8);
+  setText(pdfInner, C.slate);
+  const maxRespLines = Math.max(2, Math.floor((h - (afterPushY - yPos) - 6) / 10));
+  const rLines = clipLines(pdfInner.splitTextToSize(o.response, w - 26), maxRespLines);
+  pdfInner.text(rLines, x + 20, afterPushY, { lineHeightFactor: 1.3 });
+}
+
 export const downloadWeekFieldKit = (week: CoachCardWeek) => {
   const pdf = buildWeekFieldKitPdf(week);
   pdf.save(`Comply365-Week-${week.number}-${week.title.replace(/\s+/g, "-")}-Field-Kit.pdf`);
