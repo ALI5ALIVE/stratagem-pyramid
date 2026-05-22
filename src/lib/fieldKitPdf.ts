@@ -1308,7 +1308,7 @@ function renderSlidePagePortrait(
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(7.5);
   setText(pdf, C.subtle);
-  pdf.text("COMPLY365 · SALES ENABLEMENT ACADEMY", margin, topMargin - 14);
+  pdf.text("Comply365 · Sales Enablement Academy", margin, topMargin - 14);
 
   const headRight: string[] = [];
   headRight.push(`W${week.number} · Slide ${String(slideIndex + 1).padStart(2, "0")} / ${slideCount}`);
@@ -1340,7 +1340,7 @@ function renderSlidePagePortrait(
   pdf.setFontSize(14);
   setText(pdf, C.ink);
   const titleX = margin + numW + 22;
-  const titleLines = clipLines(pdf.splitTextToSize(title.toUpperCase(), contentW - (titleX - margin)), 2);
+  const titleLines = clipLines(pdf.splitTextToSize(sanitize(title), contentW - (titleX - margin)), 2);
   pdf.text(titleLines, titleX, y - 2, { lineHeightFactor: 1.15 });
   y += Math.max(8, (titleLines.length - 1) * 16) + 12;
 
@@ -1348,10 +1348,41 @@ function renderSlidePagePortrait(
   pdf.rect(margin, y, 28, 2, "F");
   y += 14;
 
+  // ─── Check-yourself strip (lifted to top so reps see it before the fold) ──
+  const checkH = 32;
+  const checkY = y;
+  const questions = (studyNote.checkYourself ?? []).slice(0, 3).map(sanitize);
+  setStroke(pdf, C.hairline);
+  pdf.setLineWidth(0.5);
+  pdf.line(margin, checkY, pageW - margin, checkY);
+  pdf.line(margin, checkY + checkH, pageW - margin, checkY + checkH);
+
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7);
+  setText(pdf, C.brand);
+  pdf.text("Check yourself", margin, checkY + 12);
+
+  if (questions.length) {
+    const labelW = pdf.getTextWidth("Check yourself") + 18;
+    const qAvail = contentW - labelW;
+    const qSlot = qAvail / questions.length;
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(8);
+    setText(pdf, C.slate);
+    questions.forEach((q, i) => {
+      const qx = margin + labelW + i * qSlot;
+      setStroke(pdf, C.muted);
+      pdf.setLineWidth(0.6);
+      pdf.rect(qx, checkY + 10, 7, 7, "S");
+      const lines = clipLines(pdf.splitTextToSize(q, qSlot - 14), 2);
+      pdf.text(lines, qx + 11, checkY + 15, { lineHeightFactor: 1.2 });
+    });
+  }
+  y = checkY + checkH + 14;
+
   // ─── Two-column body ──────────────────────────────────────────────────────
-  const checkH = 30;
   const bodyTop = y;
-  const bodyBottom = footerY - checkH - 14;
+  const bodyBottom = footerY - 12;
   const bodyH = bodyBottom - bodyTop;
 
   const railW = Math.floor(contentW * 0.38);
@@ -1372,28 +1403,28 @@ function renderSlidePagePortrait(
 
   const railBlocks: Array<{ label: string; accent: [number, number, number]; body: (yy: number) => number; }> = [
     {
-      label: "TAKEAWAY",
+      label: "Takeaway",
       accent: C.brand,
       body: (yy) => drawParagraph(pdf, railX, yy, railW, sanitize(studyNote.inOneSentence), {
         font: "bold", size: 11, color: C.ink, leading: 13,
       }),
     },
     {
-      label: "WHY A BUYER CARES",
+      label: "Why the buyer cares",
       accent: C.navy,
       body: (yy) => drawParagraph(pdf, railX, yy, railW, sanitize(studyNote.whyItMatters), {
         font: "normal", size: 9, color: C.slate, leading: 11.5,
       }),
     },
     {
-      label: "WATCH-OUT",
+      label: "Watch-out",
       accent: C.rose,
       body: (yy) => drawParagraph(pdf, railX, yy, railW, sanitize(studyNote.watchOut), {
         font: "normal", size: 9, color: C.slate, leading: 11.5,
       }),
     },
     ...(connects.length ? [{
-      label: "CONNECTS",
+      label: "Connects",
       accent: C.sky,
       body: (yy: number) => drawBulletList(pdf, railX, yy, railW, connects, {
         size: 9, color: C.slate, leading: 11, bulletChar: ">",
@@ -1425,7 +1456,7 @@ function renderSlidePagePortrait(
 
   // What's on the slide
   if (whatsOn.length) {
-    colY += drawRailLabel(pdf, colX, colY, "WHAT'S ON THE SLIDE", C.brand);
+    colY += drawRailLabel(pdf, colX, colY, "What's on screen", C.brand);
     colY += drawAtY(pdf, colY, (yy) =>
       drawBulletList(pdf, colX, yy, colW, whatsOn, {
         size: 9.5, color: C.slate, leading: 12, bulletChar: "·",
@@ -1436,7 +1467,7 @@ function renderSlidePagePortrait(
 
   // Ideas you must own (numbered)
   if (ideas.length && colY < bodyBottom - 60) {
-    colY += drawRailLabel(pdf, colX, colY, "THE IDEAS YOU MUST OWN", C.brand);
+    colY += drawRailLabel(pdf, colX, colY, "Ideas to own", C.brand);
     colY += drawAtY(pdf, colY, (yy) =>
       drawNumberedList(pdf, colX, yy, colW, ideas, {
         size: 9.5, color: C.slate, leading: 12, numberColor: C.brand,
@@ -1447,7 +1478,7 @@ function renderSlidePagePortrait(
 
   // Key terms (label · def)
   if (terms.length && colY < bodyBottom - 40) {
-    colY += drawRailLabel(pdf, colX, colY, "KEY TERMS", C.brand);
+    colY += drawRailLabel(pdf, colX, colY, "Key terms", C.brand);
     colY += drawAtY(pdf, colY, (yy) =>
       drawLabelledList(pdf, colX, yy, colW, terms, {
         size: 8.5, color: C.slate, labelColor: C.ink, leading: 11,
@@ -1459,44 +1490,13 @@ function renderSlidePagePortrait(
   // Defensible facts
   if (facts.length && colY < bodyBottom - 30) {
     // Trim facts to fit remaining space.
-    colY += drawRailLabel(pdf, colX, colY, "DEFENSIBLE FACTS", C.emerald);
+    colY += drawRailLabel(pdf, colX, colY, "Proof points", C.emerald);
     colY += drawAtY(pdf, colY, (yy) =>
       drawBulletList(pdf, colX, yy, colW, facts, {
         size: 9, color: C.slate, leading: 11.5, bulletChar: "·",
         bulletColor: C.emerald, maxBottom: bodyBottom,
       })
     );
-  }
-
-  // ─── Check-yourself strip ─────────────────────────────────────────────────
-  const checkY = footerY - checkH - 6;
-  setFill(pdf, C.offwhite);
-  pdf.roundedRect(margin, checkY, contentW, checkH, 4, 4, "F");
-  setFill(pdf, C.brand);
-  pdf.rect(margin, checkY, 2.5, checkH, "F");
-
-  pdf.setFont("helvetica", "bold");
-  pdf.setFontSize(7);
-  setText(pdf, C.brand);
-  pdf.text("CHECK YOURSELF", margin + 10, checkY + 12);
-
-  const questions = (studyNote.checkYourself ?? []).slice(0, 3).map(sanitize);
-  if (questions.length) {
-    const labelW = pdf.getTextWidth("CHECK YOURSELF") + 18;
-    const qAvail = contentW - labelW - 10;
-    const qSlot = qAvail / questions.length;
-    pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(8);
-    setText(pdf, C.slate);
-    questions.forEach((q, i) => {
-      const qx = margin + labelW + i * qSlot;
-      // checkbox
-      setStroke(pdf, C.muted);
-      pdf.setLineWidth(0.6);
-      pdf.rect(qx, checkY + 11, 7, 7, "S");
-      const lines = clipLines(pdf.splitTextToSize(q, qSlot - 14), 2);
-      pdf.text(lines, qx + 11, checkY + 16, { lineHeightFactor: 1.2 });
-    });
   }
 
   // ─── Footer ───────────────────────────────────────────────────────────────
@@ -1507,7 +1507,7 @@ function renderSlidePagePortrait(
   pdf.setFontSize(7);
   setText(pdf, C.subtle);
   pdf.text(`Week ${week.number} · ${sanitize(week.title)} · Study sheet`, margin, footerY + 14);
-  pdf.text("Rep-facing · Not for customer distribution", pageW - margin, footerY + 14, { align: "right" });
+  pdf.text("Rep-facing · not for customer distribution", pageW - margin, footerY + 14, { align: "right" });
 }
 
 // ─── Rail / column helpers ────────────────────────────────────────────────
