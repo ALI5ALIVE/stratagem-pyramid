@@ -707,7 +707,7 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     if (!cc) return;
     const narration = getSalesEnablementNarration(slideId);
     const title = sanitize(narration?.title ?? slideId);
-    const learning = buildSlideLearningFromCoachCard(slideId, week.id, cc);
+    const onePager = buildSlideOnePager(slideId, week.id, narration?.script, cc);
     const questions = buildDiscoveryQuestionsRotated(narration?.script, slideId, week.id, idx).map(sanitize);
     const objections = buildObjectionsRotated(slideId, week.id, idx).map((o) => ({
       pushback: sanitize(o.pushback),
@@ -720,7 +720,7 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
       slideIndex: idx,
       slideCount: week.slideIds.length,
       title,
-      learning,
+      onePager,
       questions,
       objections,
       meta: sMeta,
