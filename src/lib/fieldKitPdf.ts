@@ -27,6 +27,12 @@ import {
   buildSlideOnePager,
   type SlideOnePager,
 } from "@/data/salesEnablementLearningOutcomes";
+import {
+  buildStudyNote,
+  collectWeekGlossary,
+  type SlideOnePager as StudyNote,
+  type StudyTerm,
+} from "@/data/salesEnablementStudyNotes";
 
 // ─── Glyph sanitiser ─────────────────────────────────────────────────────────
 // helvetica core (jsPDF default) is Latin-1 only. Smart quotes, em-dashes,
