@@ -44,6 +44,7 @@ const salesEnablementItems: NavItem[] = [
 
 const capabilityItems: NavItem[] = [
   { title: "Platform Playbook", url: "/platform-playbook", icon: Layers, badge: "Master" },
+  { title: "AI Capabilities Infographic", url: "/ai-infographic", icon: Sparkles, badge: "New" },
   { title: "Signals 101", url: "/signals-playbook", icon: Radio },
   { title: "Intelligence Layer Playbook", url: "/coanalyst", icon: Brain },
   { title: "Regulation Management", url: "/regulation-management", icon: ScrollText },
