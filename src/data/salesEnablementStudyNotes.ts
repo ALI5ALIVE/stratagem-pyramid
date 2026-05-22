@@ -584,154 +584,154 @@ export const STUDY_NOTES: Record<string, SlideOnePager> = {
 
   "se-slide-coanalyst-usecases": {
     inOneSentence:
-      "The same Intelligence Layer that answers board-level questions also clears the day-to-day chores inside each Core App.",
+      "The same Intelligence Layer that answers board-level questions also clears the daily chores inside each Core App.",
     whyItMatters:
-      "Prospects buy capabilities they can picture themselves using on Monday morning. This slide is the Monday-morning picture — one card per Core App, each a spreadsheet job replaced by one prompt.",
+      "Buyers buy what they can picture themselves using on Monday morning. This slide is the Monday-morning picture. One card per Core App. Each one is a spreadsheet job replaced by one prompt.",
     keyIdeas: [
       "Safety: pull safety reports for a tail number, formatted to a lessor's spec, sent on a schedule.",
-      "Content: list crew who haven't synched their mobile device in 30 days; pass to fleet captains.",
+      "Content: list crew who have not synced their mobile in 30 days. Pass it to fleet captains.",
       "Training: list crew with upcoming training renewals for a base, ready to schedule.",
-      "Same engine, two audiences — board and coordinator.",
+      "Same engine, two audiences. Board and coordinator.",
     ],
     terms: [T.coreApps, T.intelligenceLayer],
     facts: [
-      "Today these are spreadsheet jobs that consume a coordinator's week.",
-      "Pick the one card that matches the prospect's role and stop talking.",
+      "Today these are spreadsheet jobs that eat a coordinator's week.",
+      "Pick the one card that matches the buyer's role. Then stop talking.",
     ],
-    watchOut: "Don't walk all three cards. Pick the one that matches the prospect's day-to-day.",
+    watchOut: "Do not walk all three cards. Pick the one that matches the buyer's day.",
     connectsTo: ["Intelligence Layer", "Insights"],
     checkYourself: [
       "Can I name one example per Core App from this slide?",
-      "Why is 'same engine, two audiences' the framing that wins?",
-      "What's the discovery question that comes off this slide?",
+      "Why does 'same engine, two audiences' win the room?",
+      "What discovery question comes off this slide?",
     ],
   },
 
   "se-slide-insights": {
     inOneSentence:
-      "Insights watches connected Operational Data continuously, surfaces patterns and emerging risk, and presents what changed with the evidence attached — no action without a human in the loop.",
+      "Insights watches connected Operational Data all the time. It surfaces patterns and new risk and shows what changed, with evidence attached. No action runs without a human in the loop.",
     whyItMatters:
-      "Insights is where the Intelligence Layer stops being reactive and starts surfacing what matters on its own. It earns trust before the platform ever recommends or automates anything — evidence-with-every-insight is the trust currency.",
+      "Insights is where the Intelligence Layer stops reacting and starts surfacing what matters on its own. It earns trust before the platform ever recommends or automates anything. Evidence with every insight is the trust currency.",
     keyIdeas: [
-      "Continuous watch — pattern detection runs over connected data, not on request.",
-      "Every insight carries its evidence; that's the difference between Insights and a dashboard.",
-      "Analyst's role shifts from report-builder to decision-maker once the system writes the first draft.",
-      "POC vs production distinction: Insights POC H1 2026 (internal prototype only), production rollout H2 2026.",
+      "Always-on watch. Pattern spotting runs over connected data, not on request.",
+      "Every insight carries its evidence. That is the gap between Insights and a dashboard.",
+      "The analyst's job shifts from report-builder to decision-maker once the system writes the first draft.",
+      "POC vs production: Insights POC H1 2026 (internal prototype only). Production rollout H2 2026.",
     ],
     terms: [T.insights, T.operationalData, T.recommendedActions],
     facts: [
       "POC: H1 2026 (internal). Production: H2 2026.",
-      "Insights routes a Recommended Action into the loop — not a slide.",
+      "Insights routes a Recommended Action into the loop. Not a slide.",
       "Trust currency = evidence attached to every insight.",
     ],
-    watchOut: "Don't conflate Insights with dashboards. Don't promise Recommendations on this slide — that's the next capability up.",
+    watchOut: "Do not mix Insights with dashboards. Do not promise Recommendations on this slide. That is the next capability up.",
     connectsTo: ["Intelligence Layer", "Recommendations Use Cases", "Automation"],
     checkYourself: [
-      "Can I name what Insights does that a dashboard cannot — in one sentence?",
-      "What are the exact roadmap dates for POC vs production?",
+      "Can I say in one sentence what Insights does that a dashboard cannot?",
+      "What are the exact roadmap dates for POC and for production?",
       "Why is evidence-with-every-insight described as 'the trust currency'?",
     ],
   },
 
   "se-slide-insights-usecases": {
     inOneSentence:
-      "Recommendations turn Insights into prioritised next actions, with cited evidence, at both the coordinator level and the executive level.",
+      "Recommendations turn Insights into ranked next actions, each with cited evidence, for both the coordinator and the exec.",
     whyItMatters:
-      "Recommendations is the capability that draws the most enthusiasm and the most scepticism in the same meeting. Use cases ground both — and honest roadmap framing keeps the conversation credible.",
+      "Recommendations is the capability that draws the most excitement and the most scepticism in the same meeting. Use cases ground both. An honest roadmap keeps the talk credible.",
     keyIdeas: [
-      "Per-solution (left column): Safety — recommend risk controls for unstable approach at location X. Content — recommend OMA search updates based on user behaviour. Training — recommend DG training updates to improve engagement.",
-      "Platform (right column): where should attention focus today; how successful was our Just Culture campaign; if audited today, where would attention focus.",
-      "Every recommendation cites its evidence; every recommendation closes a step in DTOP.",
-      "Roadmap: Recommendations & Prescriptive Actions are 2027+. Sell direction, not next quarter.",
+      "Per-app (left column). Safety: recommend risk controls for unstable approach at location X. Content: recommend OMA search updates based on user behaviour. Training: recommend DG training updates to lift engagement.",
+      "Platform (right column). Where should attention focus today? How well did our Just Culture campaign work? If audited today, where would attention focus?",
+      "Every recommendation shows its evidence. Every recommendation closes a step in DTOP.",
+      "Roadmap: Recommendations and Prescriptive Actions are 2027+. Sell direction, not next quarter.",
     ],
     terms: [T.recommendedActions, T.dtop, T.insights],
     facts: [
       "Roadmap: 2027+ for Recommendations & Prescriptive Actions.",
-      "Prioritised list + evidence + DTOP-step closure on every recommendation.",
+      "Every recommendation has a rank, the evidence, and the DTOP step it closes.",
     ],
-    watchOut: "Don't oversell — this is direction-of-travel, not in this quarter's invoice. Be precise about the year.",
+    watchOut: "Do not oversell. This is direction of travel, not this quarter's invoice. Be precise about the year.",
     connectsTo: ["Insights", "Automation"],
     checkYourself: [
-      "Can I list one per-solution and one platform-level example?",
-      "What's the exact roadmap window for Recommendations?",
-      "How does this differ from Insights in one sentence?",
+      "Can I list one per-app and one platform-level example?",
+      "What is the exact roadmap window for Recommendations?",
+      "How is this different from Insights, in one sentence?",
     ],
   },
 
   "se-slide-automation": {
     inOneSentence:
-      "Automation closes the loop: once Insights earns trust and Recommendations proves judgement, the platform automates safe deterministic routines — with a human in the loop on anything that changes a procedure or training plan.",
+      "Automation closes the loop. Once Insights earns trust and Recommendations proves judgement, the platform automates safe, routine work. A human stays in the loop on anything that changes a procedure or a training plan.",
     whyItMatters:
-      "Automation is the controlled second step. Customers fear runaway automation; the way you defuse that is to make the guardrails the headline, not the speed.",
+      "Automation is the careful second step. Customers fear runaway automation. The way to kill that fear is to lead with the guardrails, not the speed.",
     keyIdeas: [
-      "Sequence: Insights earns trust → Recommendations proves judgement → Automation closes the loop.",
-      "Automated: routing, assignment, notifications, evidence assembly — the deterministic handoffs.",
-      "Human-in-the-loop on anything that changes procedure or training. Always.",
-      "Roadmap: Automation POC April 2026 (internal); platform-wide rollout H2 2026.",
+      "Trust order: Insights earns trust, Recommendations proves judgement, Automation closes the loop.",
+      "What gets automated: routing, assignment, notifications, evidence assembly. The safe, repeatable handoffs.",
+      "Human in the loop on anything that changes a procedure or training. Always.",
+      "Roadmap: Automation POC April 2026 (internal). Platform-wide rollout H2 2026.",
     ],
     terms: [T.automation, T.orchestrate, T.dtop],
     facts: [
       "Automation POC: April 2026. Platform rollout: H2 2026.",
-      "Every automated step leaves auditable evidence behind it.",
-      "Best people get hours back; judgement stays with humans.",
+      "Every automated step leaves audit-ready evidence behind it.",
+      "The best people get hours back. Judgement stays with humans.",
     ],
-    watchOut: "Don't say automation replaces SMEs. Frame guardrails as the headline, not the speed.",
+    watchOut: "Do not say automation replaces SMEs. Lead with guardrails, not speed.",
     connectsTo: ["Insights", "Automation Use Cases", "Unified Mobile"],
     checkYourself: [
-      "Can I name the trust sequence (Insights → Recommendations → Automation)?",
-      "What are the four kinds of work the platform automates?",
-      "How do I defuse the 'runaway automation' fear in one sentence?",
+      "Can I name the trust order (Insights, then Recommendations, then Automation)?",
+      "What four kinds of work does the platform automate?",
+      "How do I kill the 'runaway automation' fear in one sentence?",
     ],
   },
 
   "se-slide-automation-usecases": {
     inOneSentence:
-      "Platform-layer Automation closes loops across all three Core Apps — only the platform layer can do this; per-solution automation cannot.",
+      "Platform-layer Automation closes loops across all three Core Apps. Only the platform layer can do this. Per-app automation cannot.",
     whyItMatters:
-      "Automation is the capability prospects struggle to picture without examples. The real value sits at the platform layer because only the platform layer can close a loop across SafetyManager365, ContentManager365 and TrainingManager365 in one DTOP cycle.",
+      "Automation is hard for buyers to picture without examples. The real value sits at the platform layer. Only the platform layer can close a loop across SafetyManager365, ContentManager365 and TrainingManager365 in one DTOP cycle.",
     keyIdeas: [
-      "Card 1: new procedure revision → notify training-module owners + create review-and-update task in TrainingManager365.",
-      "Card 2: regulation revision → draft updated procedures with AI-generated content for document-owner review.",
-      "Card 3: training evaluations below threshold → trigger SafetyManager365 risk-control review for the linked controls.",
+      "Card 1: new procedure revision. Notify training-module owners and create a review-and-update task in TrainingManager365.",
+      "Card 2: regulation change. Draft updated procedures with AI-built content for the document owner to review.",
+      "Card 3: training scores below threshold. Trigger a SafetyManager365 risk-control review for the linked controls.",
       "Each card = one stroke of the DTOP cycle made automatic, with a human in the loop on the change itself.",
     ],
     terms: [T.automation, T.dtop, T.coreApps],
     facts: [
-      "Per-solution automation is NOT universally available — say so up front.",
+      "Per-app automation is NOT everywhere yet. Say so up front.",
       "Today these handoffs happen by email, weeks later, with no audit trail.",
     ],
-    watchOut: "Don't oversell per-solution automation. The platform-layer cards are where it lands.",
+    watchOut: "Do not oversell per-app automation. The platform-layer cards are where it lands.",
     connectsTo: ["Automation", "Tiers vs Generic AI"],
     checkYourself: [
       "Can I name all three platform-layer cards in order?",
-      "Why does platform-layer automation differ from per-solution?",
-      "What's the verbatim line about human-in-the-loop?",
+      "Why does platform-layer automation differ from per-app?",
+      "What is the exact line about human in the loop?",
     ],
   },
 
   "se-slide-tiers-vs-ai": {
     inOneSentence:
-      "The Intelligence Layer is grounded in aviation Operational Data and the customer's own schema; generic AI is grounded in the public internet. That single difference shows up as ~90% vs ~35% accuracy on the same questions.",
+      "The Intelligence Layer is grounded in aviation Operational Data and the customer's own schema. Generic AI is grounded in the public internet. That one difference shows up as ~90% vs ~35% accuracy on the same questions.",
     whyItMatters:
-      "This is the defensive slide that wins deals where the prospect is already running a generic-AI pilot. The pilot returned plausible-sounding answers that didn't survive scrutiny; the team is sceptical of anything called AI.",
+      "This is the defensive slide that wins deals where the buyer is already running a generic-AI trial. The trial gave plausible answers that did not hold up under scrutiny. The team is now sceptical of anything called AI.",
     keyIdeas: [
-      "Grounding difference: aviation operational data + customer schema vs the public internet.",
-      "The difference shows in one number — ~90% domain accuracy at L4-5 vs ~35% for generic AI on the same data.",
-      "Land the line: 'the difference between a chat assistant and an analyst is whether it knows your operation.'",
-      "Don't bash competitors by name — say 'general-purpose tools' or 'chat assistants'.",
+      "Grounding gap: aviation operational data plus the customer's schema vs the public internet.",
+      "It shows in one number: ~90% domain accuracy at L4-5 vs ~35% for generic AI on the same data.",
+      "Land the line: 'the gap between a chat assistant and an analyst is whether it knows your operation.'",
+      "Do not bash competitors by name. Say 'general-purpose tools' or 'chat assistants'.",
     ],
     terms: [T.intelligenceLayer, T.operationalData],
     facts: [
-      "~90% domain accuracy at L4-5 maturity vs ~35% for generic AI on the same data.",
-      "Benchmark methodology available under NDA in the Strategy & Vision Session.",
-      "Customer's Operational Data stays in their tenancy — the layer runs against it, not on it.",
+      "About 90% domain accuracy at L4-5 maturity vs about 35% for generic AI on the same data.",
+      "Benchmark method is available under NDA in the Strategy & Vision Session.",
+      "The customer's Operational Data stays in their tenant. The layer runs against it, not on it.",
     ],
-    watchOut: "Don't name competitors. Say 'general-purpose tools' or 'chat assistants'. Don't say 'our AI is better' — anchor the number.",
+    watchOut: "Do not name competitors. Say 'general-purpose tools' or 'chat assistants'. Do not say 'our AI is better'. Anchor the number instead.",
     connectsTo: ["Intelligence Layer", "Regulation Management"],
     checkYourself: [
-      "Can I anchor the 90% vs 35% headline correctly (aviation domain, L4-5, same data)?",
-      "What's the approved language for competitors?",
-      "Where does the methodology become available?",
+      "Can I land the ~90% vs ~35% headline with the right anchor (aviation domain, L4-5, same data)?",
+      "What are the approved words for competitors?",
+      "Where does the benchmark method become available?",
     ],
   },
 
