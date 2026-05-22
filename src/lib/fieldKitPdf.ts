@@ -22,6 +22,7 @@ import {
 } from "@/data/salesEnablementSlideAids";
 import {
   buildSlideLearning,
+  buildSlideLearningFromCoachCard,
   type SlideLearning,
 } from "@/data/salesEnablementLearningOutcomes";
 
@@ -704,7 +705,7 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     if (!cc) return;
     const narration = getSalesEnablementNarration(slideId);
     const title = sanitize(narration?.title ?? slideId);
-    const learning = buildSlideLearning(slideId, week.id);
+    const learning = buildSlideLearningFromCoachCard(slideId, week.id, cc);
     const questions = buildDiscoveryQuestionsRotated(narration?.script, slideId, week.id, idx).map(sanitize);
     const objections = buildObjectionsRotated(slideId, week.id, idx).map((o) => ({
       pushback: sanitize(o.pushback),
