@@ -1,126 +1,135 @@
 ## Goal
 
-Reframe the slide one-pagers as **study notes**, not delivery scripts. These are internal Academy slides — the reader is a sales rep building knowledge. Each page should leave them genuinely smarter on the topic: what it is, why it matters, how it connects to the rest of the platform story, the facts and terminology they must own, and a self-check to prove they know it.
+The study notes today read like a generic concept brief — they don't track the actual narration a rep hears in the Academy. Rebuild the one-pager so that **each page is a structured breakdown of that slide's narration**: the script, parsed into ordered bullets, with the supporting facts, terminology, and proof attached to each beat.
 
-## What changes vs. the previous direction
+A rep should be able to read the page and say: "this is exactly what I just listened to, expanded into the points I need to remember, with the proof points underneath."
 
-| Was (delivery-focused) | Now (knowledge-focused) |
-|---|---|
-| "How to deliver in 4 steps" | "What you need to know" — concept explainer |
-| Verbatim `say >` lines | Plain-English explanation in the rep's own voice |
-| Discovery questions / objections on every page | Moved to a Week 3 sell-and-win appendix only |
-| Anchor line ("say it like this") | Mental model / one-sentence definition |
-| Whiteboard cue prominent | Optional, only on slides where the visual matters |
-
-## New one-pager spec (single A4 portrait, study-note format)
+## New one-pager shape (single A4 portrait)
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
-│ COMPLY365 · SALES ENABLEMENT ACADEMY    Wk N · Slide nn/NN  │
-│                                          Topic · Module     │
-│                                                             │
+│ COMPLY365 · ACADEMY            Week N · Slide nn/NN         │
 │ 01 / SLIDE TITLE                                            │
 │ ───                                                         │
-│ IN ONE SENTENCE                                             │
-│ The concept defined in plain English. The thing you must    │
-│ be able to explain back from memory.                        │
+│ THE NARRATION IN ONE LINE                                   │
+│ Single sentence summary of the script (what this slide is   │
+│ teaching the rep).                                          │
 │                                                             │
-│ WHY IT MATTERS                                              │
-│ 2–3 sentences: where this sits in the platform story, what  │
-│ problem it solves, why a buyer cares.                       │
-│                                                             │
-│ ── LEFT 60% ──────────────  ── RIGHT 40% ─────────────────  │
-│                                                             │
-│ THE KEY IDEAS (3–4)          TERMS TO KNOW                  │
-│ • Idea 1 — short paragraph    Term · short definition       │
-│ • Idea 2 — short paragraph    Term · short definition       │
-│ • Idea 3 — short paragraph    Term · short definition       │
-│                                                             │
-│ FACTS & PROOF                 WATCH-OUT                     │
-│ • stat + source               Forbidden language / common   │
-│ • stat + source               misconceptions for this topic │
-│ • stat + source                                             │
-│                              HOW THIS CONNECTS              │
-│                              Prev slide < … > Next slide    │
-│                              Links to: DTOP step, Core App  │
+│ KEY POINTS FROM THE NARRATION                               │
+│ Ordered bullets that follow the 5-part script structure:    │
+│   1. Why this slide matters                                 │
+│      ↳ supporting detail (1–2 lines from the script)        │
+│      ↳ proof / stat (with source) if the script cites one   │
+│   2. The core message (verbatim line the rep must own)      │
+│      ↳ supporting detail                                    │
+│   3. Pain → Value pivot                                     │
+│      ↳ the pain named                                       │
+│      ↳ the value lever pulled                               │
+│   4. How to deliver it (tone / what to point at / landmines)│
+│      ↳ supporting detail                                    │
+│   5. Transition into the next slide                         │
 │                                                             │
 │ ── hairline ──                                              │
-│ CHECK YOURSELF                                              │
-│ Three questions a rep must answer out loud before moving    │
-│ on. No verbatim talk track — just diagnostic questions.     │
+│ TERMS ON THIS SLIDE       │  WATCH-OUT                      │
+│ Term · short def          │  Forbidden language / common    │
+│ Term · short def          │  misconception for this topic   │
+│                           │                                 │
+│ SUPPORTING FACTS          │  HOW THIS CONNECTS              │
+│ • stat + source           │  Prev < … > Next                │
+│ • stat + source           │  DTOP step · Core App           │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-Hierarchy: **In one sentence → Why it matters → Key ideas → Terms / Facts / Watch-out → How it connects → Check yourself.** That's the learning arc.
+The page is dominated by **Key points from the narration** — that's the study material. Everything else (terms, facts, watch-out, connections) is supporting matter pinned underneath.
 
-## Data model (`src/data/salesEnablementLearningOutcomes.ts`)
+## Data model (`src/data/salesEnablementStudyNotes.ts`)
 
-Replace `SlideOnePager` with a study-note shape:
+Replace `SlideOnePager` with a narration-derived shape:
 
 ```ts
-export interface StudyTerm { term: string; definition: string; }
+export interface KeyPoint {
+  /** The beat from the 5-part script — e.g. "Why this matters" */
+  beat: "Why this matters" | "Core message" | "Pain → Value" | "How to deliver" | "Transition";
+  /** The headline takeaway for this beat (≤ 18 words). */
+  point: string;
+  /** Supporting bullets — 1–3 lines of detail / verbatim phrasing / nuance. */
+  support: string[];
+  /** Optional proof line tied to this beat (with source in parens). */
+  proof?: string;
+}
 
 export interface SlideOnePager {
-  inOneSentence: string;        // the definition the rep must own
-  whyItMatters: string;         // 2–3 sentences of context
-  keyIdeas: string[];           // 3–4 concept paragraphs (≤ 30 words each)
-  terms: StudyTerm[];           // 3–5 glossary entries scoped to this slide
-  facts: string[];              // up to 3, each with source in parens
-  watchOut: string;             // misconception or forbidden terminology
-  connectsTo: string[];         // e.g. "DTOP · Detect", "Core App · SafetyManager365"
-  checkYourself: string[];      // 3 diagnostic questions
+  /** Single-sentence digest of the full narration. */
+  narrationInOneLine: string;
+  /** Ordered breakdown of the 5-part script. 3–5 entries. */
+  keyPoints: KeyPoint[];
+  /** Glossary entries scoped to this slide. */
+  terms: StudyTerm[];
+  /** Defensible facts not already attached to a beat. */
+  facts: string[];
+  /** Forbidden language or common misconception. */
+  watchOut: string;
+  /** Where this slide sits — DTOP step, Core App, prev/next slide. */
+  connectsTo: string[];
 }
 ```
 
-Builder logic:
+`whyItMatters`, `keyIdeas`, `inOneSentence`, `checkYourself` are removed — they're either folded into `keyPoints[]` or dropped (the self-test wasn't what the user asked for; the narration breakdown replaces it).
 
-- `fromCurated(slideId)` — hand-written for every W1 / W2 / W3 slide. The narration script is the source of truth for `whyItMatters` and `keyIdeas`; coach-card and existing `SLIDE_LEARNING` data feed `inOneSentence` and `checkYourself`; `SLIDE_PROOFS` feeds `facts`; banned-terms / `repMistake` feed `watchOut`.
-- `fromNarration(script, coachCard, week)` — only used as a safety net. Parses the narration for definitional sentences and numeric proof sentences; falls back to a week-level study note if a slide has neither curated nor narration data.
-- Hard dedupe: a sentence used in `inOneSentence` or `whyItMatters` cannot reappear in `keyIdeas` or `facts`. Terms cannot duplicate sentences elsewhere on the page.
+## Builder logic
+
+1. **`fromCurated(slideId)`** — hand-written for every W1/W2/W3 slide. The narration script in `salesEnablementNarration.ts` is the source of truth. Each script is already written in the 5-part Coach Script Standard (Why matters → Core message → Pain→Value → How to deliver → Transition), so the parser maps 1:1 onto `keyPoints[]`.
+2. **`fromNarration(script, week)`** — safety-net fallback. Splits the script on signpost phrases ("Why this matters", "The core message", "The pain", "Deliver", "Transition" / "Next") and assigns each segment to the matching beat. Headline = first sentence; support = remaining sentences in that segment.
+3. **Proof attachment** — facts from `SLIDE_PROOFS` are matched into beats where the topic overlaps (e.g. an accuracy stat lands on the "Core message" of the Intelligence Layer slide); leftovers land in the standalone `facts[]` block.
+4. **Hard dedupe** — a sentence used in `narrationInOneLine` or a `point` cannot reappear in `support` or `facts`.
+
+## Curation pass
+
+Hand-write a `SlideOnePager` for **every slide** in W1/W2/W3. For each slide:
+
+- Read the matching script in `salesEnablementNarration.ts`.
+- Split it into the 5 beats; lift the headline sentence for each `point`; pull the remaining detail into `support[]`.
+- Attach matching proofs from `SLIDE_PROOFS`; keep "How to deliver" beats verbatim where the script gives stage directions ("slow down", "point at the foundation first", "don't say AI").
+- Pull terms from the shared `T` atom library; add slide-specific terms inline.
+- Watch-out = banned terms or common reps' mistakes pulled from `salesEnablementCoachCards`.
 
 ## Renderer changes (`src/lib/fieldKitPdf.ts`)
 
-Rewrite `renderSlidePagePortrait` for the study-note layout above:
+Rewrite `renderSlidePagePortrait`:
 
-- Header keeps numeral-led title and metadata strip, but the strip carries **Topic** and **Module** instead of DTOP/Persona (those move into "How this connects").
-- Drop the `say >` quote rule, the discovery column, and the "If they push back" block. Those are sell-and-win artefacts and don't belong on a knowledge-building page.
-- Right column carries `TERMS TO KNOW`, `HOW THIS CONNECTS`, and `WATCH-OUT`.
-- Left column carries `KEY IDEAS` (numbered) and `FACTS & PROOF` underneath.
-- Footer becomes a hairline + `CHECK YOURSELF` row with three numbered questions (so the rep finishes the page on a self-test, not a marketing line).
-- Restricted palette: `ink`, `brand`, `slate`, `muted`, `hairline`, `rose` for watch-out only.
+- Header: numeral-led title + Week/Slide chip (unchanged).
+- New dominant block: **KEY POINTS FROM THE NARRATION**. Each `KeyPoint` rendered as a numbered card:
+  - Beat label (small, brand-coloured uppercase) + headline `point` (semibold).
+  - `support[]` as indented hairline-prefixed lines.
+  - `proof` (if present) rendered with a tiny "PROOF" tag and source in parens.
+- Below a hairline: 2×2 grid — `TERMS` / `WATCH-OUT` on top row, `SUPPORTING FACTS` / `HOW THIS CONNECTS` underneath.
+- Palette: `ink`, `brand`, `slate`, `muted`, `hairline`, `rose` for watch-out only.
+- Drop the standalone "In one sentence", "Why it matters", "Key ideas", "Check yourself" blocks from the previous spec.
 
-## Appendix pages (per week)
+## Appendix pages
 
-- **Glossary appendix** — aggregates every `terms[]` entry across the week into a single A–Z reference, deduped.
-- **Sell-and-win appendix (Week 3 only)** — moves the discovery questions + objection responses (currently on every page) into one consolidated page, since they only become relevant once a rep is selling, not while studying.
-- Drop the current Coach's Sidebar and Whiteboard appendix; their data either moves on-page (watch-out, key ideas) or into the sell-and-win appendix (whiteboard cue).
-
-## Per-week curation
-
-Hand-write a `SlideOnePager` for every slide in `week1` / `week2` / `week3` of `salesEnablementCoachCards`. Source order:
-
-1. Narration script → `inOneSentence`, `whyItMatters`, `keyIdeas`
-2. Coach card `remember` / `watchOutFor` → `watchOut`, `checkYourself`
-3. `SLIDE_PROOFS` / `SLIDE_META` → `facts`, `connectsTo`
-4. Project terminology rules → `terms` (e.g. DTOP, Operational Data, Generative AI, BrandNumber names)
+- **Glossary appendix** — same as before, aggregates `terms[]` across the week, deduped.
+- **Sell-and-win appendix (W3 only)** — unchanged; consolidates discovery questions + objections.
+- Coach's Sidebar and Whiteboard appendix stay dropped.
 
 ## QA pass
 
-Generate W1, W2, W3 PDFs via `scripts/genpdf.ts`, render each page to JPEG with `pdftoppm -jpeg -r 150`, and inspect every page for:
+Regenerate W1/W2/W3 PDFs with `scripts/genpdf.ts`, render each page to JPEG with `pdftoppm -jpeg -r 150`, and check every page for:
 
-1. **No echo** — `inOneSentence`, `whyItMatters`, each `keyIdeas` entry, each `facts` entry are textually distinct.
-2. **Teaches something** — every block adds new information; no paraphrase loops.
-3. **Voice rules** — BrandNumber spelling intact; no FOQA / FDM / ASAP / "CoAnalyst"; ROI figures only from approved proof set; `$25–35B` cited with Eurocontrol / IATA / SITA when used.
-4. **Self-sufficient** — a rep who has never seen the slide could read the page and explain the concept.
-5. **Layout** — A4 portrait, two-column balance holds, "Check yourself" never gets orphaned to a second page, no clipped text.
-6. **Visual QA** — fix any issue, regenerate, re-inspect. Summarise issues found and fixes applied.
+1. **Tracks the script** — bullets are in the same order as the narration and faithfully cover all 5 beats.
+2. **No echo** — no sentence appears twice on the page.
+3. **Voice rules** — BrandNumber spelling, no FOQA/FDM/ASAP/"CoAnalyst", approved proof figures only, `$25–35B` cited with Eurocontrol/IATA/SITA when used.
+4. **Layout** — A4 portrait holds; no orphaned beats; no clipped text; key-points block stays the visual centrepiece.
+5. **Self-sufficient** — a rep who hears the script once can read the page and have the entire breakdown plus supporting facts.
+
+Fix, regenerate, re-inspect; summarise issues found and fixes applied.
 
 ## Files to edit
 
-- `src/data/salesEnablementLearningOutcomes.ts` — new study-note shape, curated entries for all W1–W3 slides, narration fallback.
-- `src/lib/fieldKitPdf.ts` — rewrite `renderSlidePagePortrait`, replace appendix pages with Glossary (all weeks) + Sell-and-Win (W3 only).
-- `scripts/genpdf.ts` — unchanged; confirm it still emits the three weekly PDFs for QA.
+- `src/data/salesEnablementStudyNotes.ts` — new `KeyPoint` + `SlideOnePager` shape, curated entries for all W1–W3 slides, narration-based fallback.
+- `src/lib/fieldKitPdf.ts` — rewrite `renderSlidePagePortrait` for the key-points layout; keep Glossary + Sell-and-Win appendices.
+- `scripts/genpdf.ts` — unchanged; used to drive QA.
 
 ## Out of scope
 
-- No changes to in-app Academy UI, narration audio, or coach card data. Field Kit PDF only.
+In-app Academy UI, narration audio, coach card data. Field Kit PDF only.

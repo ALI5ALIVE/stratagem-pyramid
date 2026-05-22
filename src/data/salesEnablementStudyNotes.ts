@@ -15,6 +15,21 @@ export interface StudyTerm {
   definition: string;
 }
 
+export type BeatLabel =
+  | "Why this matters"
+  | "Core message"
+  | "Pain & value"
+  | "How to deliver"
+  | "Transition";
+
+export interface KeyPoint {
+  beat: BeatLabel;
+  /** Headline takeaway for this beat (≤ ~30 words). */
+  point: string;
+  /** Supporting bullets — 0–3 lines of detail / verbatim phrasing / nuance. */
+  support: string[];
+}
+
 export interface SlideOnePager {
   /** The concept defined in one sentence — the thing the rep must own. */
   inOneSentence: string;
@@ -32,6 +47,10 @@ export interface SlideOnePager {
   connectsTo: string[];
   /** 3 diagnostic questions a rep must answer out loud before moving on. */
   checkYourself: string[];
+  /** Single-sentence digest of the narration (auto-derived from script when available). */
+  narrationInOneLine?: string;
+  /** Narration parsed into 5-part beats (auto-derived from script when available). */
+  keyPoints?: KeyPoint[];
 }
 
 export type WeekId = "w1" | "w2" | "w3";
@@ -1412,8 +1431,123 @@ const WEEK_FALLBACK: Record<WeekId, SlideOnePager> = {
   },
 };
 
-export const buildStudyNote = (slideId: string, weekId: WeekId): SlideOnePager => {
-  return STUDY_NOTES[slideId] ?? WEEK_FALLBACK[weekId];
+// ─── Narration parser ───────────────────────────────────────────────────────
+// Splits a teaching narration script (5-part Coach Script Standard) into
+// ordered key points. Source of truth is salesEnablementNarration.ts; this
+// function never alters wording, only segments and labels it.
+
+const BEAT_ORDER: BeatLabel[] = [
+  "Why this matters",
+  "Core message",
+  "Pain & value",
+  "How to deliver",
+  "Transition",
+];
+
+const BEAT_MARKERS: Array<{ beat: BeatLabel; re: RegExp; strip?: RegExp }> = [
+  {
+    beat: "Why this matters",
+    re: /^(why this (slide|drill|matters|is|exists|stretch|page)|this is the (single )?most important|this slide matters|here is what|open week|this slide is)/i,
+    strip: /^(why this (slide|drill|matters|is|exists|stretch|page)[^.:,]*[:.,]\s*)/i,
+  },
+  {
+    beat: "Core message",
+    re: /^(the core message|core message|core line[,:]?\s*verbatim|core line[,:]?)/i,
+    strip: /^((the )?core message[^.:]*[:.]\s*|core line[,:]?\s*verbatim[.,]?\s*|core line[,:]?\s*)/i,
+  },
+  {
+    beat: "Pain & value",
+    re: /^(the pain|pain you|pain it|the value lever|value lever)/i,
+    strip: /^((the )?(pain|value lever)[^.:]*[:.]\s*)/i,
+  },
+  {
+    beat: "How to deliver",
+    re: /^(how to deliver|delivery tip|when you deliver|deliver each|deliver it|deliver this|how to deliver it|to deliver)/i,
+    strip: /^(how to deliver( it)?[^.:,]*[:.,—-]\s*|delivery tip[^.:,]*[:.,—-]\s*|when you deliver[^.,]*,\s*)/i,
+  },
+  {
+    beat: "Transition",
+    re: /^(transition|next slide|next we|next:|next,|now we|hand straight|hand off|then we|once you)/i,
+    strip: /^(transition[^.:,]*[:.,—-]\s*|next[,:]?\s*)/i,
+  },
+];
+
+const classify = (sentence: string): BeatLabel | null => {
+  for (const m of BEAT_MARKERS) {
+    if (m.re.test(sentence)) return m.beat;
+  }
+  return null;
+};
+
+const stripBeatPrefix = (sentence: string, beat: BeatLabel): string => {
+  for (const m of BEAT_MARKERS) {
+    if (m.beat === beat && m.strip) {
+      const out = sentence.replace(m.strip, "");
+      // Capitalise leading character after strip.
+      return out.charAt(0).toUpperCase() + out.slice(1);
+    }
+  }
+  return sentence;
+};
+
+const splitSentences = (script: string): string[] =>
+  script
+    .trim()
+    .replace(/\s+/g, " ")
+    .split(/(?<=[.!?])\s+(?=[A-Z'"(])/)
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
+
+export const buildKeyPointsFromScript = (
+  script: string,
+): { narrationInOneLine: string; keyPoints: KeyPoint[] } => {
+  const sentences = splitSentences(script);
+  const buckets: Record<BeatLabel, string[]> = {
+    "Why this matters": [],
+    "Core message": [],
+    "Pain & value": [],
+    "How to deliver": [],
+    "Transition": [],
+  };
+  let current: BeatLabel = "Why this matters";
+  for (const sent of sentences) {
+    const c = classify(sent);
+    if (c) current = c;
+    buckets[current].push(sent);
+  }
+
+  const keyPoints: KeyPoint[] = [];
+  for (const beat of BEAT_ORDER) {
+    const list = buckets[beat];
+    if (!list.length) continue;
+    const head = stripBeatPrefix(list[0], beat).trim();
+    if (!head) continue;
+    const support = list.slice(1, 4).map((s) => s.trim());
+    keyPoints.push({ beat, point: head, support });
+  }
+
+  // narrationInOneLine: prefer Core message head; else first sentence overall.
+  let oneLine =
+    (buckets["Core message"][0] && stripBeatPrefix(buckets["Core message"][0], "Core message")) ||
+    sentences[0] ||
+    "";
+  oneLine = oneLine.trim();
+  if (oneLine.length > 240) {
+    oneLine = oneLine.slice(0, 237).replace(/\s+\S*$/, "") + "...";
+  }
+
+  return { narrationInOneLine: oneLine, keyPoints };
+};
+
+export const buildStudyNote = (
+  slideId: string,
+  weekId: WeekId,
+  script?: string,
+): SlideOnePager => {
+  const base = STUDY_NOTES[slideId] ?? WEEK_FALLBACK[weekId];
+  if (!script) return base;
+  const derived = buildKeyPointsFromScript(script);
+  return { ...base, ...derived };
 };
 
 // Glossary helper — collect every unique term across a week, ordered A-Z.
