@@ -1483,11 +1483,6 @@ function drawBottomBlock(
     }
   }
 }
-,
-) {
-  const { week, slideIndex, slideCount, title, onePager, questions, objections, meta } = opts;
-
-  pdf.addPage("a4", "portrait");
   const pageW = pdf.internal.pageSize.getWidth();
   const pageH = pdf.internal.pageSize.getHeight();
   const margin = 56;
