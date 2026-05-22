@@ -532,7 +532,8 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     const title = narration?.title ?? slideId;
     const coreLine = extractCoreLine(slideId);
     const summary = narration ? paraphraseNarration(narration.script) : "";
-    const listenFor = narration ? extractListenFor(narration.script, week.id) : [];
+    const questions = buildDiscoveryQuestions(narration?.script, slideId, week.id);
+    const objections = buildObjections(slideId, week.id);
 
     // Landscape page for slide cards
     pdf.addPage("a4", "landscape");
@@ -561,7 +562,7 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     // ── LEFT COLUMN ──────────────────────────────────────────────────────────
     const leftX = lMargin;
     const colGap = 18;
-    const leftW = lContentW * 0.46;
+    const leftW = lContentW * 0.5;
     const rightX = leftX + leftW + colGap;
     const rightW = lContentW - leftW - colGap;
 
@@ -607,50 +608,92 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
       pdf.text("TEACHING SUMMARY", leftX, ly);
       ly += 12;
       pdf.setFont("helvetica", "normal");
-      pdf.setFontSize(9);
+      pdf.setFontSize(8.5);
       setText(pdf, C.slate);
-      // Auto-shrink: estimate available
-      const availableH = lPageH - 60 - ly - 92 /* listen-for + footer */;
-      const maxLines = Math.max(6, Math.floor(availableH / 11.5));
+      // Reserve room for the coach chip strip at bottom of left col
+      const chipStripH = 44;
+      const availableH = lPageH - 60 - ly - chipStripH - 10;
+      const maxLines = Math.max(6, Math.floor(availableH / 11));
       const sumLines = clipLines(pdf.splitTextToSize(summary, leftW), maxLines);
       pdf.text(sumLines, leftX, ly, { lineHeightFactor: 1.35 });
-      ly += sumLines.length * 11.5 + 14;
+      ly += sumLines.length * 11 + 12;
     }
 
-    // What to listen for
-    if (listenFor.length) {
+    // ── Coach chip strip (bottom of left column) ─────────────────────────────
+    const chipY = lPageH - 50 - 44;
+    const chipDefs: Array<{ key: FieldKey; label: string; text: string }> = [
+      { key: "remember", label: "REMEMBER", text: cc.remember },
+      { key: "sayItLikeThis", label: "SAY IT", text: cc.sayItLikeThis },
+      { key: "watchOutFor", label: "WATCH OUT", text: cc.watchOutFor },
+      { key: "bridge", label: "BRIDGE", text: cc.bridge },
+    ];
+    const chipGap = 6;
+    const chipW = (leftW - chipGap * 3) / 4;
+    chipDefs.forEach((chip, i) => {
+      drawCoachChip(
+        pdf,
+        leftX + i * (chipW + chipGap),
+        chipY,
+        chipW,
+        44,
+        chip.key,
+        chip.label,
+        chip.text,
+      );
+    });
+
+    // ── RIGHT COLUMN: Questions + Objections ─────────────────────────────────
+    let ry = tbY;
+
+    // KEY QUESTIONS TO ASK
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(8);
+    setText(pdf, C.brand);
+    pdf.text("KEY QUESTIONS TO ASK", rightX, ry + 8);
+    setFill(pdf, C.brand);
+    pdf.rect(rightX, ry + 12, 18, 2, "F");
+    ry += 24;
+
+    questions.forEach((q, i) => {
+      // Numbered chip
+      setFill(pdf, C.brand);
+      pdf.circle(rightX + 7, ry + 3, 7, "F");
       pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(7.5);
-      setText(pdf, C.muted);
-      pdf.text("WHAT TO LISTEN FOR", leftX, ly);
-      ly += 12;
-      listenFor.forEach((l) => {
-        // ear bullet
-        setFill(pdf, C.brand);
-        pdf.circle(leftX + 3, ly - 3, 1.6, "F");
-        pdf.setFont("helvetica", "italic");
-        pdf.setFontSize(8.5);
-        setText(pdf, C.muted);
-        const lines = clipLines(pdf.splitTextToSize(l, leftW - 14), 2);
-        pdf.text(lines, leftX + 12, ly);
-        ly += lines.length * 10.5 + 4;
-      });
-    }
+      pdf.setFontSize(8);
+      setText(pdf, C.white);
+      pdf.text(String(i + 1), rightX + 7, ry + 5.5, { align: "center" });
+      // Question text
+      pdf.setFont("helvetica", "italic");
+      pdf.setFontSize(9);
+      setText(pdf, C.slate);
+      const lines = clipLines(
+        pdf.splitTextToSize(`\u201C${q}\u201D`, rightW - 24),
+        3,
+      );
+      pdf.text(lines, rightX + 20, ry + 6, { lineHeightFactor: 1.3 });
+      ry += lines.length * 11 + 8;
+    });
 
-    // ── RIGHT COLUMN: 2x2 panels ─────────────────────────────────────────────
-    const fields: FieldKey[] = ["remember", "sayItLikeThis", "watchOutFor", "bridge"];
-    const gap = 10;
-    const panelW = (rightW - gap) / 2;
-    const gridTop = tbY;
-    const gridBottom = lPageH - 50;
-    const panelH = (gridBottom - gridTop - gap) / 2;
+    ry += 8;
+    setStroke(pdf, C.hairline);
+    pdf.setLineWidth(0.5);
+    pdf.line(rightX, ry, rightX + rightW, ry);
+    ry += 14;
 
-    fields.forEach((key, i) => {
-      const row = Math.floor(i / 2);
-      const col = i % 2;
-      const x = rightX + col * (panelW + gap);
-      const yPos = gridTop + row * (panelH + gap);
-      drawFieldPanelCompact(pdf, x, yPos, panelW, panelH, key, cc[key]);
+    // OBJECTIONS YOU'LL HEAR
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(8);
+    setText(pdf, C.rose);
+    pdf.text("OBJECTIONS YOU'LL HEAR — AND THE APPROVED ANSWER", rightX, ry);
+    setFill(pdf, C.rose);
+    pdf.rect(rightX, ry + 4, 18, 2, "F");
+    ry += 18;
+
+    const objAvail = lPageH - 60 - ry;
+    const objH = Math.min(76, (objAvail - 8) / objections.length);
+    objections.forEach((o) => {
+      drawObjectionBlock(pdf, rightX, ry, rightW, objH, o);
+      ry += objH + 8;
     });
 
     // Micro footer strip
