@@ -1256,9 +1256,10 @@ function renderLearningColumn(
     const firstFit = pdf.splitTextToSize(b.text, firstSlotW);
     const firstChunk = firstFit[0] ?? "";
     const remaining = b.text.slice(firstChunk.length).trim();
-    const wrapLines = remaining
-      ? clipLines(pdf.splitTextToSize(remaining, w - indent), wrapCap)
-      : [];
+    const wrapLines =
+      remaining && wrapCap > 0
+        ? clipLines(pdf.splitTextToSize(remaining, w - indent), wrapCap)
+        : [];
     return { labelW, firstChunk, wrapLines };
   };
   let wrapCap = 2;
