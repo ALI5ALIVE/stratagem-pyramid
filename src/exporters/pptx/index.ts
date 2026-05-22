@@ -6,7 +6,8 @@ export type DeckId =
   | "tech-deep-dive"
   | "executive-pitch"
   | "executive-pitch-3"
-  | "customer-overview";
+  | "customer-overview"
+  | "ai-infographic";
 
 export interface DeckBuilder {
   filename: string;
@@ -51,6 +52,14 @@ export const DECK_BUILDERS: Record<DeckId, DeckBuilder> = {
     build: async (opts) => {
       const { buildCustomerOverviewDeck } = await import("./buildCustomerOverviewDeck");
       return buildCustomerOverviewDeck(opts);
+    },
+  },
+  "ai-infographic": {
+    filename: "Comply365-AI-Capabilities.pptx",
+    label: "AI Capabilities Infographic",
+    build: async (opts) => {
+      const { buildAIInfographicDeck } = await import("./buildAIInfographicDeck");
+      return buildAIInfographicDeck(opts);
     },
   },
 };
