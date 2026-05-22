@@ -1666,6 +1666,24 @@ function renderSlideTranscriptPage(
   const wordCount = script.split(/\s+/).filter(Boolean).length;
   const mins = Math.max(1, Math.round(wordCount / 150));
 
+  // Coach-cue eyebrows: detect script section openers and convert to section labels.
+  const CUE_LABELS: Array<[RegExp, string]> = [
+    [/^why this matters[^.:]*[:.]\s*/i, "Why this matters"],
+    [/^core message[^.:]*[:.]\s*/i, "Core message"],
+    [/^the pain[^.:]*[:.]\s*/i, "The pain"],
+    [/^the value lever[^.:]*[:.]\s*/i, "The value lever"],
+    [/^say it like this[^.:]*[:.]\s*/i, "Say it like this"],
+    [/^watch out for[^.:]*[:.]\s*/i, "Watch out for"],
+    [/^bridge to next[^.:]*[:.]\s*/i, "Bridge to next"],
+    [/^delivery tip[^.:]*[:.]\s*/i, "Delivery tip"],
+  ];
+  const cueFor = (p: string): { eyebrow?: string; body: string } => {
+    for (const [re, label] of CUE_LABELS) {
+      if (re.test(p)) return { eyebrow: label, body: p.replace(re, "") };
+    }
+    return { body: p };
+  };
+
   let isFirstPage = true;
 
   const startPage = (continued: boolean) => {
@@ -1677,11 +1695,11 @@ function renderSlideTranscriptPage(
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(7.5);
     setText(pdf, C.subtle);
-    pdf.text("COMPLY365 · SALES ENABLEMENT ACADEMY", margin, topMargin - 14);
+    pdf.text("Comply365 · Sales Enablement Academy", margin, topMargin - 14);
     pdf.setFont("helvetica", "normal");
     setText(pdf, C.muted);
     pdf.text(
-      `W${week.number} · Slide ${String(slideIndex + 1).padStart(2, "0")} / ${slideCount}   ·   Transcript${continued ? " · continued" : " · 2 of 2"}`,
+      `W${week.number} · Slide ${String(slideIndex + 1).padStart(2, "0")} / ${slideCount}   ·   Coach transcript${continued ? " · continued" : " · 2 of 2"}`,
       pageW - margin,
       topMargin - 14,
       { align: "right" },
@@ -1709,7 +1727,7 @@ function renderSlideTranscriptPage(
       setText(pdf, C.ink);
       const titleX = margin + numW + 18;
       const titleLines = clipLines(
-        pdf.splitTextToSize(title.toUpperCase(), contentW - (titleX - margin)),
+        pdf.splitTextToSize(sanitize(title), contentW - (titleX - margin)),
         2,
       );
       pdf.text(titleLines, titleX, y - 1, { lineHeightFactor: 1.15 });
@@ -1719,7 +1737,7 @@ function renderSlideTranscriptPage(
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(7);
       setText(pdf, C.brand);
-      pdf.text("TRANSCRIPT · COACH NARRATION (VERBATIM)", margin, y);
+      pdf.text("Coach transcript · verbatim", margin, y);
       pdf.setFont("helvetica", "normal");
       pdf.setFontSize(8);
       setText(pdf, C.muted);
@@ -1732,7 +1750,7 @@ function renderSlideTranscriptPage(
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(11);
       setText(pdf, C.ink);
-      pdf.text(`${sanitize(title.toUpperCase())} — transcript continued`, margin, y);
+      pdf.text(`${sanitize(title)} — coach transcript continued`, margin, y);
       y += 14;
       setFill(pdf, C.brand);
       pdf.rect(margin, y, 28, 1.5, "F");
@@ -1745,13 +1763,15 @@ function renderSlideTranscriptPage(
   let pageW = pdf.internal.pageSize.getWidth();
   let pageH = pdf.internal.pageSize.getHeight();
   let footerY = pageH - 44;
-  let contentW = pageW - margin * 2;
+  // Narrower reading measure for better line length (~70 chars).
+  const colW = Math.min(440, pageW - margin * 2);
+  let colX = (pageW - colW) / 2;
 
   let y = startPage(false);
   pageW = pdf.internal.pageSize.getWidth();
   pageH = pdf.internal.pageSize.getHeight();
   footerY = pageH - 44;
-  contentW = pageW - margin * 2;
+  colX = (pageW - colW) / 2;
 
   pdf.setFont("helvetica", "normal");
   pdf.setFontSize(10);
@@ -1766,24 +1786,66 @@ function renderSlideTranscriptPage(
     pdf.setFontSize(7);
     setText(pdf, C.subtle);
     pdf.text(
-      `Week ${week.number} · ${sanitize(week.title)} · Transcript${continued ? " (cont.)" : ""}`,
+      `Week ${week.number} · ${sanitize(week.title)} · Coach transcript${continued ? " (cont.)" : ""}`,
       margin,
       footerY + 14,
     );
     pdf.text(
-      "Read once to memorise · do not read live on a call",
+      "Read once to memorise — do not read live on a call",
       pageW - margin,
       footerY + 14,
       { align: "right" },
     );
   };
 
+  // Pull-quote helper (returns consumed height).
+  const drawPullQuote = (yy: number, text: string): number => {
+    const padX = 10;
+    pdf.setFont("helvetica", "italic");
+    pdf.setFontSize(11.5);
+    setText(pdf, C.ink);
+    const qLines = pdf.splitTextToSize(text, colW - padX - 10);
+    const h = qLines.length * 14 + 6;
+    setFill(pdf, C.brand);
+    pdf.rect(colX, yy, 2, h, "F");
+    pdf.text(qLines, colX + padX, yy + 12, { lineHeightFactor: 14 / 11.5 });
+    return h + 8;
+  };
+
   for (let pi = 0; pi < paragraphs.length; pi++) {
-    const para = paragraphs[pi];
+    const raw = paragraphs[pi];
+    const { eyebrow, body } = cueFor(raw);
+
+    if (eyebrow) {
+      if (y + 24 > footerY - 8) {
+        drawFooter(!isFirstPage);
+        isFirstPage = false;
+        y = startPage(true);
+      }
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(7);
+      setText(pdf, C.brand);
+      pdf.text(eyebrow, colX, y);
+      y += 12;
+    }
+
+    // Pull-quote at paragraphs 3 and 7 — first sentence only.
+    if ((pi === 3 || pi === 7) && body.length > 60) {
+      const firstSent = body.split(/(?<=[.!?])\s/)[0];
+      if (firstSent && firstSent.length > 30 && firstSent.length < 220) {
+        if (y + 70 > footerY - 8) {
+          drawFooter(!isFirstPage);
+          isFirstPage = false;
+          y = startPage(true);
+        }
+        y += drawPullQuote(y, firstSent);
+      }
+    }
+
     pdf.setFont("helvetica", "normal");
     pdf.setFontSize(10);
     setText(pdf, C.slate);
-    const lines = pdf.splitTextToSize(para, contentW);
+    const lines = pdf.splitTextToSize(body, colW);
     let i = 0;
     while (i < lines.length) {
       const remaining = (footerY - 8 - y) / leading;
@@ -1798,11 +1860,11 @@ function renderSlideTranscriptPage(
         continue;
       }
       const slice = lines.slice(i, i + take);
-      pdf.text(slice, margin, y, { lineHeightFactor: leading / 10 });
+      pdf.text(slice, colX, y, { lineHeightFactor: leading / 10 });
       y += slice.length * leading;
       i += slice.length;
     }
-    y += 6; // paragraph gap
+    y += 10; // paragraph air
   }
 
   drawFooter(!isFirstPage);
