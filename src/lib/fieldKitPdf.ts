@@ -1849,9 +1849,12 @@ function renderSlideTranscriptPage(
     const wc = body.split(/\s+/).filter(Boolean).length;
     const durationSec = Math.max(6, Math.round(wc / 2.5));
     if (group === "coach") {
+      // Coach beats used to hide the body inside the small LISTEN FOR
+      // footer, leaving the card visually empty above it. Render the body
+      // as the main prose so the card has real content.
       return {
         n: i + 1, label, group, accent: ACCENT[group],
-        point, listenFor: body, durationSec,
+        point, sayLines: splitToSentences(body), durationSec,
       };
     }
     // If there's a quoted phrase, treat it as the verbatim Say.
