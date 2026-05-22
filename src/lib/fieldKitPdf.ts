@@ -10,6 +10,15 @@ import {
   WEEK_DISCOVERY_FALLBACK,
   WEEK_OBJECTION_FALLBACK,
   type SlideObjection,
+  SLIDE_PROOFS,
+  WEEK_PROOF_FALLBACK,
+  SLIDE_WHITEBOARD,
+  WEEK_WHITEBOARD_FALLBACK,
+  SLIDE_MISTAKE,
+  WEEK_MISTAKE_FALLBACK,
+  SLIDE_META,
+  WEEK_META_FALLBACK,
+  type SlideMeta,
 } from "@/data/salesEnablementSlideAids";
 
 // ─── Brand tokens (RGB tuples for jsPDF) ─────────────────────────────────────
