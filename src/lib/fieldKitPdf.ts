@@ -729,6 +729,17 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
       studyNote,
       meta: sMeta,
     });
+
+    if (narration?.script) {
+      renderSlideTranscriptPage(pdf, {
+        week,
+        slideIndex: idx,
+        slideCount: week.slideIds.length,
+        title,
+        script: narration.script,
+        durationSec: (narration as { durationSec?: number }).durationSec,
+      });
+    }
   });
 
   // ── 3b. APPENDIX: GLOSSARY (every term across the week, A-Z) ───────────────
