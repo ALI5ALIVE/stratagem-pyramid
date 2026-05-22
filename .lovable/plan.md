@@ -1,32 +1,34 @@
 ## Goal
-Make the AI Solutions column and its 6 solution chips visually dominant in the downloadable PPTX so they read as the hero of the slide.
+Dial back the AI Solutions treatment: keep chips prominent and colored, but harmonize with the dark slide and restore proper sizing/spacing so nothing overflows.
 
 ## Changes (PPTX only — `src/exporters/pptx/buildAIInfographicDeck.ts`)
 
-### 1. Promote the AI Solutions column container
-- Give the solutions column a distinct treatment vs. the three product columns:
-  - Fill with `C.primarySoft` (subtle blue tint) instead of plain `C.surface`.
-  - Thicker border in `C.primary` (1.5pt) with larger radius (0.2).
-  - Add a soft glow effect via a slightly larger offset rectangle behind the card (faux shadow using a `C.primary` rect at low-alpha-like darker tone).
-- Replace the flat blue header bar with a bolder header: taller (0.6), `C.primary` fill, white uppercase tracked title "AI SOLUTIONS" at 16pt bold, with a small white underline accent.
+### 1. Container — prominent but on-theme
+- Remove the bright `C.primary` glow rectangle behind the column (too loud).
+- Solutions column fill: back to `C.surface` (matches product columns) with a thicker `C.primary` border (1.5pt) and slightly larger radius (0.18). This keeps it on the dark slide while still reading as the hero.
+- Header bar: keep `C.primary` fill + white "AI SOLUTIONS" title at 14pt (down from 16, with charSpacing 3), height 0.5 (down from 0.6). Keep the white underline accent but thinner (0.03).
 
-### 2. Make the 6 solution chips pop
-- Increase chip height from 0.46 → 0.6 and reduce gap so column still fits.
-- Switch chip background from `C.surfaceAlt` to white (`FFFFFF`) for maximum contrast against the tinted column.
-- Widen the colored accent bar from 0.09 → 0.18 and add a small filled circle/dot (solution color) to the left of the label.
-- Label: bump font from 11 → 13, bold, color `C.bg` (dark) so it reads strongly on white.
-- Add subtle drop-shadow effect via a 1px offset duplicate rect behind each chip in `C.border`.
+### 2. Chips — colored, prominent, dark-mode native
+- Drop the white chip background and the black shadow rect (they fight the dark slide).
+- New chip style:
+  - Fill: solution color at full saturation (`solutionColors[id].pptx`).
+  - No border, radius 0.1.
+  - Label: white (`FFFFFF`), 12pt bold, left-aligned with 0.2 inset.
+  - Small white circle dot (0.18) on the left as a visual anchor.
+- Restore original sizing so all 6 chips + "No AI" fit:
+  - `solChipH = 0.5`, `solChipGap = 0.12`.
+- "No AI" chip: `C.surfaceAlt` fill with dashed `C.muted` border, muted label — already contrasts, just resize to match new dims.
 
-### 3. De-emphasize product columns slightly (relative contrast)
-- Keep product column headers but switch their header fill from `C.primary` to `C.surfaceAlt` with `C.muted` text, so the only blue headers on the slide belong to AI Solutions.
-- Product capability rows: keep current style but drop label weight to regular (non-bold) so solution chips dominate.
+### 3. Product columns — restore original prominence parity
+- Revert product column headers to `C.primary` fill with white 13pt bold title (undo the muted treatment from last round). They should look like peers of the solutions header but without the thick border + underline that mark Solutions as primary.
+- Capability row labels: keep current size; restore bold weight for AI-enabled rows for readability.
 
-### 4. Keep unchanged
-- Layout grid, 4-column structure, column widths, arrow logic (`drawArrow` with flipH/flipV), legend, "No AI" chip placement, data, web route, and `AICapabilitiesMatrix` component.
+### 4. Layout safety
+- Recompute `cy` start (`gridTop + 0.15 + solHeaderH + 0.25`) and verify 6 chips at 0.5 + 0.12 gap + No-AI chip fit within `gridH` without overlap. If tight, reduce top padding after header to 0.2.
+
+### 5. Keep unchanged
+- 4-column grid, widths, arrow logic, legend, data, web route, `AICapabilitiesMatrix` component.
 
 ## QA
-After build, render the single slide to JPG via LibreOffice + pdftoppm and visually confirm:
-- AI Solutions column is the clear focal point.
-- All 6 chip labels are legible with strong contrast.
-- Arrows still land on the correct ContentManager365 rows.
-- Nothing clips at column bottom (chip height increase fits within `gridH`).
+- Build PPTX → render slide to JPG via LibreOffice + pdftoppm.
+- Verify: chips are colored and clearly the focal point against the dark slide; product columns still legible; nothing clips at column bottom; arrows still land on correct rows.
