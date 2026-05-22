@@ -737,102 +737,102 @@ export const STUDY_NOTES: Record<string, SlideOnePager> = {
 
   "se-slide-regmgmt": {
     inOneSentence:
-      "Regulation Management is the cleanest end-to-end demonstration of the full capability stack: Intelligence + Insights + Recommendations + Automation, closed by DTOP.",
+      "Regulation Management is the cleanest end-to-end demo of the full capability stack: Intelligence, Insights, Recommendations and Automation, closed by DTOP.",
     whyItMatters:
-      "This is the highest-conviction use case for compliance and quality leaders. When a regulator publishes a change, the platform identifies every affected procedure and training module, drafts redlines for human review, and pushes updates to the right crew with auditable proof of receipt.",
+      "This is the strongest use case for compliance and quality leaders. When a regulator posts a change, the platform finds every affected procedure and training module, drafts redlines for a human to review, and pushes updates to the right crew with audit-ready proof of receipt.",
     keyIdeas: [
-      "End-to-end flow: regulation change → impact identification → AI-drafted redlines → human review → routed updates → crew receipt with proof.",
-      "Weeks of manual work across 4-5 teams compress into days, and the audit trail assembles itself.",
-      "Always anchor on a real recent regulatory change relevant to the prospect — that's the difference between a walkthrough and a proof.",
-      "Map each step of the use case onto the capability that runs it as you walk.",
+      "End-to-end flow: regulation change, impact spotted, AI-drafted redlines, human review, routed updates, crew receipt with proof.",
+      "Weeks of manual work across 4-5 teams collapses into days. The audit trail builds itself.",
+      "Always anchor on a real recent regulation change that matters to this buyer. That is the gap between a walkthrough and a proof.",
+      "As you walk, name the capability that runs each step.",
     ],
     terms: [T.intelligenceLayer, T.recommendedActions, T.automation, T.dtop],
     facts: [
-      "Today: many-week manual exercise across 4-5 teams.",
-      "With the platform: weeks compress to days; audit trail self-assembles.",
+      "Today: many-week manual job across 4-5 teams.",
+      "With the platform: weeks collapse to days. The audit trail builds itself.",
     ],
-    watchOut: "Don't walk a generic example. Anchor on a real recent regulatory change relevant to THIS prospect.",
+    watchOut: "Do not walk a generic example. Anchor on a real recent regulation change that matters to THIS buyer.",
     connectsTo: ["Intelligence Layer", "Automation", "Unified Mobile"],
     checkYourself: [
-      "Can I walk the end-to-end flow naming each capability as I go?",
-      "Why is anchoring on a recent regulation change essential?",
-      "How do I prove 'audit trail assembles itself' in one sentence?",
+      "Can I walk the end-to-end flow and name each capability as I go?",
+      "Why is anchoring on a recent regulation change so important?",
+      "How do I prove 'audit trail builds itself' in one sentence?",
     ],
   },
 
   "se-slide-mobile": {
     inOneSentence:
-      "Unified Mobile is one frontline app — content, training and safety reporting in one shell, one login, offline-first — and every tap from the line becomes a signal back into DTOP.",
+      "Unified Mobile is one frontline app. Content, training and safety reporting in one shell. One login. Offline-first. Every tap from the line becomes a signal back into DTOP.",
     whyItMatters:
-      "Mobile is where the platform stops being abstract and lands in a crew member's hands. It is the last mile of DTOP, not another EFB reader. When the operations leader is in the room, this slide changes the conversation.",
+      "Mobile is where the platform stops being abstract and lands in a crew member's hands. It is the last mile of DTOP, not another EFB reader. When the operations leader is in the room, this slide changes the talk.",
     keyIdeas: [
-      "One shell — content + training + safety reporting — one login, one offline behaviour.",
+      "One shell. Content, training and safety reporting. One login. One offline behaviour.",
       "Every tap from the line becomes a signal back into the Detect layer.",
-      "Phased rollout: Phase 1 Training screens (H1 2026) → Phase 2 Safety Reporting (H2 2026) → Phase 3 fully unified shell (2027+).",
-      "Revision-to-device window: under 48 hours, offline-first, read-receipt and training context attached.",
+      "Phased rollout. Phase 1 Training screens (H1 2026). Phase 2 Safety Reporting (H2 2026). Phase 3 fully unified shell (2027+).",
+      "Revision-to-device window: under 48 hours, offline-first, with read receipt and training context attached.",
     ],
     terms: [T.unifiedMobile, T.prove, T.dtop],
     facts: [
       "Phase 1 (Training screens): H1 2026. Phase 2 (Safety Reporting): H2 2026. Phase 3 (full shell): 2027+.",
       "Revision-to-device: under 48 hours, offline-first.",
-      "Crews today juggle 3-5 separate apps; adoption suffers.",
+      "Crews today juggle 3-5 separate apps. Adoption suffers.",
     ],
-    watchOut: "Don't position as another EFB or reader app. Don't promise the fully unified shell next year — be precise on the phasing.",
+    watchOut: "Do not position this as another EFB or reader app. Do not promise the fully unified shell next year. Be precise on the phasing.",
     connectsTo: ["DTOP · Prove", "Automation"],
     checkYourself: [
       "Can I quote the exact phase dates without checking?",
-      "What's the 48-hour window for, and what else lands with it?",
+      "What is the 48-hour window for, and what else lands with it?",
       "Why does positioning this as 'EFB' break the loop story?",
     ],
   },
 
   "se-slide-talktrack": {
     inOneSentence:
-      "The capability talk track: one plain-English line and one discovery question per capability — five rows, memorised, delivered from memory in a real call.",
+      "The capability talk track. One plain-English line and one discovery question per capability. Five rows, learned by heart, delivered from memory in a real call.",
     whyItMatters:
-      "Most reps walk out of Week 2 able to recognise capabilities but not able to talk through them cold. This slide is the rehearsal page — read it before every call for the first month.",
+      "Most reps walk out of Week 2 able to spot capabilities but not able to talk through them cold. This slide is the rehearsal page. Read it before every call for the first month.",
     keyIdeas: [
-      "Five rows: Intelligence Layer · Insights · Recommendations · Automation · Mobile.",
-      "Per row: one plain-English line + one discovery question.",
+      "Five rows: Intelligence Layer, Insights, Recommendations, Automation, Mobile.",
+      "Per row: one plain-English line and one discovery question.",
       "Discovery questions are how the rep stops pitching and starts listening.",
-      "In a real call the rep delivers the lines from memory, never reads them off the slide.",
+      "In a real call the rep says the lines from memory, never reads them off the slide.",
     ],
     terms: [T.intelligenceLayer, T.insights, T.recommendedActions, T.automation, T.unifiedMobile],
     facts: [
-      "Five capability rows — read out loud daily for the first month.",
+      "Five capability rows. Read out loud daily for the first month.",
       "The discovery question is the unlock; the line is the setup.",
     ],
-    watchOut: "This is a study page, not a customer slide. Don't walk a customer through this verbatim.",
+    watchOut: "This is a study page, not a customer slide. Do not read it to a customer.",
     connectsTo: ["Each capability slide", "Capstone Whiteboard"],
     checkYourself: [
-      "Can I deliver each of the five lines from memory?",
+      "Can I say each of the five lines from memory?",
       "Can I ask the matching discovery question without a prompt?",
-      "What's the difference between the line and the question — what role does each play?",
+      "What is the gap between the line and the question, and what role does each play?",
     ],
   },
 
   "se-w2-capstone-whiteboard": {
     inOneSentence:
-      "The Week 2 capstone: one use case, every capability, one DTOP loop — drawn on a whiteboard in 60 seconds without looking at the slide.",
+      "The Week 2 capstone. One use case. Every capability. One DTOP loop. Drawn on a whiteboard in 60 seconds without looking at the slide.",
     whyItMatters:
       "This is the proof the rep owns Week 2. If you can tell the Madrid unstable-approach story end-to-end in a minute, you can walk any room through the full capability stack.",
     keyIdeas: [
       "Use case: Madrid unstable-approach trend, closed in five days.",
-      "Timeline: Detect day 1 → Trigger day 2 → Orchestrate day 3 → Prove day 5.",
-      "Don't list capabilities — let the use case name them.",
+      "Timeline: Detect day 1, Trigger day 2, Orchestrate day 3, Prove day 5.",
+      "Do not list capabilities. Let the use case name them.",
       "End on Prove, then pause.",
     ],
     terms: [T.detect, T.trigger, T.orchestrate, T.prove],
     facts: [
       "Target: 60 seconds, one use case, full DTOP loop.",
-      "Madrid example is the canonical thread across Week 2 and Week 3.",
+      "Madrid is the running example across Week 2 and Week 3.",
     ],
-    watchOut: "Don't list capabilities. Let the use case name them. End on Prove and PAUSE.",
+    watchOut: "Do not list capabilities. Let the use case name them. End on Prove and PAUSE.",
     connectsTo: ["DTOP loop", "Week 3 · Sell & Win"],
     checkYourself: [
       "Can I tell the Madrid story end-to-end in 60 seconds?",
       "Can I name the day-by-day DTOP timeline?",
-      "Why does the use case name the capabilities, not the other way round?",
+      "Why does the use case name the capabilities, not the other way around?",
     ],
   },
 
