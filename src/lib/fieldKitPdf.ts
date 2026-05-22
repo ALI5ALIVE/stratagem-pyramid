@@ -1665,29 +1665,58 @@ function renderSlideTranscriptPage(
   // Estimate ~150 words per minute spoken.
   const wordCount = script.split(/\s+/).filter(Boolean).length;
   const mins = Math.max(1, Math.round(wordCount / 150));
+  const wpm = Math.round(wordCount / Math.max(1, mins));
+  const paceLabel =
+    wpm <= 120 ? "Pace: deliberate" : wpm <= 160 ? "Pace: conversational" : "Pace: brisk — slow down";
 
-  // Coach-cue eyebrows: detect script section openers and convert to section labels.
-  const CUE_LABELS: Array<[RegExp, string]> = [
-    [/^why this matters[^.:]*[:.]\s*/i, "Why this matters"],
-    [/^core message[^.:]*[:.]\s*/i, "Core message"],
-    [/^the pain[^.:]*[:.]\s*/i, "The pain"],
-    [/^the value lever[^.:]*[:.]\s*/i, "The value lever"],
-    [/^say it like this[^.:]*[:.]\s*/i, "Say it like this"],
-    [/^watch out for[^.:]*[:.]\s*/i, "Watch out for"],
-    [/^bridge to next[^.:]*[:.]\s*/i, "Bridge to next"],
-    [/^delivery tip[^.:]*[:.]\s*/i, "Delivery tip"],
+  // Coach-cue chips: detect script section openers, colour-coded by intent.
+  type CueGroup = "anchor" | "risk" | "value" | "bridge";
+  const CUE_LABELS: Array<[RegExp, string, CueGroup]> = [
+    [/^why this matters[^.:]*[:.]\s*/i, "Why this matters", "anchor"],
+    [/^core message[^.:]*[:.]\s*/i, "Core message", "anchor"],
+    [/^the pain[^.:]*[:.]\s*/i, "The pain", "risk"],
+    [/^watch out for[^.:]*[:.]\s*/i, "Watch out for", "risk"],
+    [/^the value lever[^.:]*[:.]\s*/i, "The value lever", "value"],
+    [/^say it like this[^.:]*[:.]\s*/i, "Say it like this", "value"],
+    [/^bridge to next[^.:]*[:.]\s*/i, "Bridge to next", "bridge"],
+    [/^delivery tip[^.:]*[:.]\s*/i, "Delivery tip", "bridge"],
   ];
-  const cueFor = (p: string): { eyebrow?: string; body: string } => {
-    for (const [re, label] of CUE_LABELS) {
-      if (re.test(p)) return { eyebrow: label, body: p.replace(re, "") };
+  const GROUP_ACCENT: Record<CueGroup, [number, number, number]> = {
+    anchor: C.brand,
+    risk: C.amber,
+    value: C.emerald,
+    bridge: C.muted,
+  };
+  const cueFor = (p: string): { eyebrow?: string; group?: CueGroup; body: string } => {
+    for (const [re, label, group] of CUE_LABELS) {
+      if (re.test(p)) return { eyebrow: label, group, body: p.replace(re, "") };
     }
     return { body: p };
   };
 
+  // Pre-parse for TL;DR + money line.
+  type Parsed = { eyebrow?: string; group?: CueGroup; body: string };
+  const parsed: Parsed[] = paragraphs.map(cueFor);
+  const findByLabel = (re: RegExp) => parsed.find((p) => p.eyebrow && re.test(p.eyebrow));
+  const firstSentence = (s: string) => (s.split(/(?<=[.!?])\s+/)[0] || s).trim();
+  const coreP = findByLabel(/core|why this matters/i) ?? parsed[0];
+  const sayP = findByLabel(/say it like this|value lever/i);
+  const bridgeP = findByLabel(/bridge/i) ?? parsed[parsed.length - 1];
+  const tldr = {
+    core: coreP ? firstSentence(coreP.body) : "",
+    say: sayP ? firstSentence(sayP.body) : "",
+    bridge: bridgeP ? firstSentence(bridgeP.body) : "",
+  };
+  // Money line: prefer first quoted phrase in script, else 'Say it like this' first sentence.
+  const quoteMatch = script.match(/[""]([^""]{30,200})[""]/) || script.match(/"([^"]{30,200})"/);
+  const moneyLine = (quoteMatch ? quoteMatch[1] : sayP ? firstSentence(sayP.body) : "").trim();
+
   let isFirstPage = true;
+  let pageCount = 0;
 
   const startPage = (continued: boolean) => {
     pdf.addPage("a4", "portrait");
+    pageCount += 1;
     const pageW = pdf.internal.pageSize.getWidth();
     const contentW = pageW - margin * 2;
 
@@ -1741,11 +1770,16 @@ function renderSlideTranscriptPage(
       pdf.setFont("helvetica", "normal");
       pdf.setFontSize(8);
       setText(pdf, C.muted);
-      pdf.text(`~${mins} min spoken · ${wordCount} words`, pageW - margin, y, { align: "right" });
+      pdf.text(
+        `~${mins} min spoken · ${wordCount} words · ${paceLabel}`,
+        pageW - margin,
+        y,
+        { align: "right" },
+      );
       y += 6;
       setFill(pdf, C.brand);
       pdf.rect(margin, y, 28, 1.5, "F");
-      y += 16;
+      y += 18;
     } else {
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(11);
@@ -1773,10 +1807,8 @@ function renderSlideTranscriptPage(
   footerY = pageH - 44;
   colX = (pageW - colW) / 2;
 
-  pdf.setFont("helvetica", "normal");
-  pdf.setFontSize(10);
-  setText(pdf, C.slate);
-  const leading = 14;
+  const leading = 15;
+  const bodySize = 10.5;
 
   const drawFooter = (continued: boolean) => {
     setStroke(pdf, C.hairline);
@@ -1790,81 +1822,200 @@ function renderSlideTranscriptPage(
       margin,
       footerY + 14,
     );
-    pdf.text(
-      "Read once to memorise — do not read live on a call",
-      pageW - margin,
-      footerY + 14,
-      { align: "right" },
-    );
+    const tip =
+      pageCount <= 1
+        ? "Read aloud once. Mark the breath points with a slash."
+        : "Record yourself. Play back at 1.25× — does it still land?";
+    pdf.text(tip, pageW - margin, footerY + 14, { align: "right" });
   };
 
-  // Pull-quote helper (returns consumed height).
-  const drawPullQuote = (yy: number, text: string): number => {
-    const padX = 10;
+  const ensureSpace = (need: number, continuedTitle = true) => {
+    if (y + need > footerY - 10) {
+      drawFooter(!isFirstPage);
+      isFirstPage = false;
+      y = startPage(continuedTitle);
+    }
+  };
+
+  // ── TL;DR strip ────────────────────────────────────────────────────────
+  const drawTldr = () => {
+    const items: Array<[string, string, [number, number, number]]> = [];
+    if (tldr.core) items.push(["Core message", tldr.core, C.brand]);
+    if (tldr.say) items.push(["Say it like this", tldr.say, C.emerald]);
+    if (tldr.bridge) items.push(["Bridge", tldr.bridge, C.muted]);
+    if (items.length === 0) return;
+
+    const padX = 12;
+    const padY = 10;
+    const innerW = colW - padX * 2;
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(9);
+    // measure
+    let bodyH = 0;
+    const wrapped: Array<{ label: string; lines: string[]; accent: [number, number, number] }> = [];
+    for (const [label, text, accent] of items) {
+      const lines = pdf.splitTextToSize(text, innerW);
+      wrapped.push({ label, lines, accent });
+      bodyH += 11 /* label */ + lines.length * 12 + 6 /* item gap */;
+    }
+    const boxH = padY * 2 + 14 /* header */ + bodyH - 6;
+
+    // tinted bg
+    setFill(pdf, [245, 248, 253]);
+    pdf.roundedRect(colX, y, colW, boxH, 4, 4, "F");
+    setStroke(pdf, C.hairline);
+    pdf.setLineWidth(0.5);
+    pdf.roundedRect(colX, y, colW, boxH, 4, 4, "S");
+
+    // header
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(7.5);
+    setText(pdf, C.brand);
+    pdf.text("Read this in 60 seconds", colX + padX, y + padY + 6);
+
+    let yy = y + padY + 22;
+    for (const w of wrapped) {
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(7.5);
+      setText(pdf, w.accent);
+      pdf.text(w.label, colX + padX, yy);
+      yy += 11;
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(9);
+      setText(pdf, C.ink);
+      pdf.text(w.lines, colX + padX, yy, { lineHeightFactor: 12 / 9 });
+      yy += w.lines.length * 12 + 6;
+    }
+
+    y += boxH + 14;
+  };
+  drawTldr();
+
+  // ── Money-line callout (single) ────────────────────────────────────────
+  const drawMoneyLine = () => {
+    if (!moneyLine || moneyLine.length < 30 || moneyLine.length > 220) return;
+    const padX = 12;
     pdf.setFont("helvetica", "italic");
     pdf.setFontSize(11.5);
-    setText(pdf, C.ink);
-    const qLines = pdf.splitTextToSize(text, colW - padX - 10);
-    const h = qLines.length * 14 + 6;
+    const lines = pdf.splitTextToSize(`"${moneyLine}"`, colW - padX - 10);
+    const h = lines.length * 14 + 16;
+    ensureSpace(h + 12);
+    setFill(pdf, [245, 248, 253]);
+    pdf.roundedRect(colX, y, colW, h, 3, 3, "F");
     setFill(pdf, C.brand);
-    pdf.rect(colX, yy, 2, h, "F");
-    pdf.text(qLines, colX + padX, yy + 12, { lineHeightFactor: 14 / 11.5 });
-    return h + 8;
+    pdf.rect(colX, y, 3, h, "F");
+    setText(pdf, C.brand);
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(6.5);
+    pdf.text("Money line", colX + padX, y + 11);
+    setText(pdf, C.ink);
+    pdf.setFont("helvetica", "italic");
+    pdf.setFontSize(11.5);
+    pdf.text(lines, colX + padX, y + 24, { lineHeightFactor: 14 / 11.5 });
+    y += h + 14;
   };
 
-  for (let pi = 0; pi < paragraphs.length; pi++) {
-    const raw = paragraphs[pi];
-    const { eyebrow, body } = cueFor(raw);
+  // ── Chip helper ────────────────────────────────────────────────────────
+  const drawChip = (label: string, accent: [number, number, number]) => {
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(8);
+    const w = pdf.getTextWidth(label) + 14;
+    const h = 14;
+    const soft: [number, number, number] = [
+      Math.round(accent[0] * 0.12 + 255 * 0.88),
+      Math.round(accent[1] * 0.12 + 255 * 0.88),
+      Math.round(accent[2] * 0.12 + 255 * 0.88),
+    ];
+    setFill(pdf, soft);
+    pdf.roundedRect(colX, y - 10, w, h, 3, 3, "F");
+    setText(pdf, accent);
+    pdf.text(label, colX + 7, y);
+    y += 12;
+  };
+
+  // ── Paragraph renderer: bold first sentence, normal tail ───────────────
+  let sectionIdx = 0;
+  const renderParagraph = (body: string, accent: [number, number, number]) => {
+    sectionIdx += 1;
+    const sentences = body.split(/(?<=[.!?])\s+/);
+    const stem = (sentences[0] || body).trim();
+    const tail = sentences.slice(1).join(" ").trim();
+
+    // numbered tick in left margin
+    const tickY = y;
+    const drawTick = () => {
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(6.5);
+      setText(pdf, accent);
+      pdf.text(String(sectionIdx).padStart(2, "0"), colX - 22, tickY);
+    };
+
+    // stem
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(bodySize);
+    setText(pdf, C.ink);
+    const stemLines = pdf.splitTextToSize(stem, colW);
+    let tickDrawn = false;
+    for (const line of stemLines) {
+      ensureSpace(leading);
+      if (!tickDrawn) {
+        // redraw tick at current y in case of page break
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(6.5);
+        setText(pdf, accent);
+        pdf.text(String(sectionIdx).padStart(2, "0"), colX - 22, y);
+        tickDrawn = true;
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(bodySize);
+        setText(pdf, C.ink);
+      }
+      pdf.text(line, colX, y);
+      y += leading;
+    }
+    void drawTick;
+
+    // tail
+    if (tail) {
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(bodySize);
+      setText(pdf, C.slate);
+      const tailLines = pdf.splitTextToSize(tail, colW);
+      for (const line of tailLines) {
+        ensureSpace(leading);
+        pdf.text(line, colX, y);
+        y += leading;
+      }
+    }
+  };
+
+  // ── Walk parsed paragraphs ─────────────────────────────────────────────
+  const moneyAfter = Math.min(2, parsed.length - 1); // after the second paragraph
+  let moneyDrawn = false;
+
+  for (let pi = 0; pi < parsed.length; pi++) {
+    const { eyebrow, group, body } = parsed[pi];
+    const accent = group ? GROUP_ACCENT[group] : C.brand;
 
     if (eyebrow) {
-      if (y + 24 > footerY - 8) {
-        drawFooter(!isFirstPage);
-        isFirstPage = false;
-        y = startPage(true);
-      }
-      pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(7);
-      setText(pdf, C.brand);
-      pdf.text(eyebrow, colX, y);
+      ensureSpace(28);
+      drawChip(eyebrow, accent);
+    }
+
+    renderParagraph(body, accent);
+
+    // section divider
+    if (pi < parsed.length - 1) {
+      y += 6;
+      setStroke(pdf, C.hairline);
+      pdf.setLineWidth(0.4);
+      pdf.line(colX, y, colX + colW, y);
       y += 12;
     }
 
-    // Pull-quote at paragraphs 3 and 7 — first sentence only.
-    if ((pi === 3 || pi === 7) && body.length > 60) {
-      const firstSent = body.split(/(?<=[.!?])\s/)[0];
-      if (firstSent && firstSent.length > 30 && firstSent.length < 220) {
-        if (y + 70 > footerY - 8) {
-          drawFooter(!isFirstPage);
-          isFirstPage = false;
-          y = startPage(true);
-        }
-        y += drawPullQuote(y, firstSent);
-      }
+    if (!moneyDrawn && pi === moneyAfter) {
+      drawMoneyLine();
+      moneyDrawn = true;
     }
-
-    pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(10);
-    setText(pdf, C.slate);
-    const lines = pdf.splitTextToSize(body, colW);
-    let i = 0;
-    while (i < lines.length) {
-      const remaining = (footerY - 8 - y) / leading;
-      const take = Math.max(1, Math.floor(remaining));
-      if (take <= 0 || y + leading > footerY - 8) {
-        drawFooter(!isFirstPage);
-        isFirstPage = false;
-        y = startPage(true);
-        pdf.setFont("helvetica", "normal");
-        pdf.setFontSize(10);
-        setText(pdf, C.slate);
-        continue;
-      }
-      const slice = lines.slice(i, i + take);
-      pdf.text(slice, colX, y, { lineHeightFactor: leading / 10 });
-      y += slice.length * leading;
-      i += slice.length;
-    }
-    y += 10; // paragraph air
   }
 
   drawFooter(!isFirstPage);
