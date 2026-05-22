@@ -403,3 +403,206 @@ export const buildSlideLearningFromCoachCard = (
     checkYourself: weekFallback.checkYourself,
   };
 };
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SlideOnePager — what the rewritten Field Kit one-pager actually renders.
+//
+// Distinct from SlideLearning (kept for the appendices). This shape exists
+// because the previous slide page repeated the same idea across outcome /
+// coreIdea / teachBeats / sayLikeThis. The one-pager now shows four blocks
+// only, each with a different job:
+//
+//   summary       — 2-3 sentence digest of what the slide actually says
+//   keyMessages   — the 3 buyer-facing takeaways
+//   sayLikeThis   — one speakable line for the rep
+//   (discovery + objections come from SLIDE_DISCOVERY / SLIDE_OBJECTIONS)
+// ─────────────────────────────────────────────────────────────────────────────
+
+export interface SlideOnePager {
+  summary: string;
+  keyMessages: [string, string, string];
+  sayLikeThis: string;
+}
+
+// Phrases inside narration scripts we want to strip when summarising.
+const SUMMARY_OPENERS: RegExp[] = [
+  /^this slide matters because[^.]*\.\s*/i,
+  /^why this slide matters[:.]?\s*/i,
+  /^why this matters[:.]?\s*/i,
+  /^why this drill exists[:.]?\s*/i,
+  /^this slide is[^.]*\.\s*/i,
+  /^this is the[^.]*and it does the heavy lifting[^.]*\.\s*/i,
+];
+
+const norm = (s: string) => s.replace(/\s+/g, " ").trim();
+
+const stripOpeners = (s: string): string => {
+  let out = s;
+  SUMMARY_OPENERS.forEach((re) => { out = out.replace(re, ""); });
+  return out.trim();
+};
+
+const splitSentences = (s: string): string[] => {
+  // Split on sentence terminators, keep terminator.
+  const parts = s.match(/[^.!?]+[.!?]+/g);
+  return (parts ?? [s]).map(norm).filter(Boolean);
+};
+
+const takeAfter = (script: string, marker: RegExp): string | undefined => {
+  const m = script.match(marker);
+  if (!m || m.index === undefined) return undefined;
+  const tail = script.slice(m.index + m[0].length);
+  const sent = tail.match(/^[^.!?]+[.!?]/);
+  return sent ? norm(sent[0]) : undefined;
+};
+
+const dedupePreserving = (items: string[]): string[] => {
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const raw of items) {
+    const k = norm(raw).toLowerCase().replace(/[^a-z0-9]+/g, " ").trim().slice(0, 90);
+    if (!k || seen.has(k)) continue;
+    seen.add(k);
+    out.push(norm(raw));
+  }
+  return out;
+};
+
+// Convert a curated SlideLearning entry into the new SlideOnePager shape.
+// summary = coreIdea (it's already the one-sentence-to-own).
+// keyMessages = the 3 teach beats, trimmed of stage directions.
+// sayLikeThis = unchanged.
+const fromLearning = (l: SlideLearning): SlideOnePager => ({
+  summary: l.coreIdea,
+  keyMessages: [l.teachBeats[0].text, l.teachBeats[1].text, l.teachBeats[2].text],
+  sayLikeThis: l.sayLikeThis,
+});
+
+// Derive a one-pager from the narration script + coach card when no curated
+// SlideLearning entry exists. Pulls the substantive sentence after each
+// signposted block ("core message:", "pain", "value lever:") in the script,
+// then falls back to coach-card fields. Dedupes so blocks never repeat.
+const fromNarration = (
+  script: string,
+  cc: { remember: string; sayItLikeThis: string; watchOutFor: string; bridge: string },
+  weekFallback: SlideOnePager,
+): SlideOnePager => {
+  const clean = stripOpeners(script);
+
+  const core =
+    takeAfter(script, /core message[^.:]*[:.]\s*/i) ??
+    takeAfter(script, /the core message[^.:]*[:.]\s*/i);
+  const pain =
+    takeAfter(script, /pain (?:you'?re |you are )?(?:addressing|naming|solving)[^.:]*[:.]\s*/i) ??
+    takeAfter(script, /the pain[^.:]*[:.]\s*/i);
+  const value =
+    takeAfter(script, /value lever(?:[^.:]*[:.])\s*/i) ??
+    takeAfter(script, /the value[^.:]*[:.]\s*/i);
+
+  // Summary: first two non-filler sentences if no "core message:" anchor.
+  let summary: string;
+  if (core) {
+    summary = core;
+    if (pain && norm(pain).toLowerCase() !== norm(core).toLowerCase()) {
+      summary = `${core} ${pain}`;
+    }
+  } else {
+    const sentences = splitSentences(clean).slice(0, 2);
+    summary = sentences.join(" ") || weekFallback.summary;
+  }
+
+  const candidates = dedupePreserving([
+    core ?? cc.remember,
+    value ?? pain ?? cc.bridge,
+    pain && value ? cc.remember : (cc.bridge !== cc.remember ? cc.bridge : cc.watchOutFor),
+  ].filter((x): x is string => !!x));
+
+  // Pad to exactly 3 from coach card fields, skipping anything that duplicates
+  // sayLikeThis or summary.
+  const blockers = [cc.sayItLikeThis, summary].map((s) =>
+    norm(s).toLowerCase().slice(0, 60),
+  );
+  const isDup = (s: string) =>
+    blockers.some((b) => b && norm(s).toLowerCase().slice(0, 60) === b);
+
+  const pool = [
+    ...candidates,
+    cc.remember,
+    cc.bridge,
+    cc.watchOutFor,
+    ...weekFallback.keyMessages,
+  ];
+  const finalMessages: string[] = [];
+  for (const m of pool) {
+    if (finalMessages.length === 3) break;
+    if (!m || isDup(m)) continue;
+    const key = norm(m).toLowerCase().slice(0, 60);
+    if (finalMessages.some((x) => norm(x).toLowerCase().slice(0, 60) === key)) continue;
+    finalMessages.push(norm(m));
+  }
+  while (finalMessages.length < 3) {
+    finalMessages.push(weekFallback.keyMessages[finalMessages.length] ?? cc.remember);
+  }
+
+  return {
+    summary: norm(summary),
+    keyMessages: [finalMessages[0], finalMessages[1], finalMessages[2]],
+    sayLikeThis: cc.sayItLikeThis,
+  };
+};
+
+const WEEK_ONE_PAGER_FALLBACK: Record<WeekId, SlideOnePager> = {
+  w1: {
+    summary:
+      "Foundation slide. Anchor the conversation to the regulator's shift from prescriptive compliance to outcome evidence, then ground the platform in plain English before naming any feature.",
+    keyMessages: [
+      "Regulators now ask for outcome evidence on demand; record-keeping tools cannot produce it.",
+      "One Operational Data foundation, three Core Apps, an intelligence layer on top, Unified Mobile as the last mile.",
+      "DTOP is the loop that makes the platform worth buying: Detect, Trigger, Orchestrate, Prove.",
+    ],
+    sayLikeThis:
+      "One platform, three Core Apps, intelligence on top, mobile on the device. DTOP wraps it into a loop with both a Detect and a Prove step.",
+  },
+  w2: {
+    summary:
+      "Capability slide. Place the capability on the DTOP loop the buyer already understands, anchor it to a use case they own, and end on the Operational Data foundation underneath.",
+    keyMessages: [
+      "Three tiers on one foundation: Insights see, Intelligence reasons, Automation acts.",
+      "Domain-trained Generative AI on connected Operational Data lands near 90% accuracy at L4-5; generic AI on disconnected data tops near 35%.",
+      "Every capability inherits the foundation; without the connected data underneath it would be another point tool.",
+    ],
+    sayLikeThis:
+      "Insights see the signal, Intelligence reasons about it cited to source, Automation moves the work, Unified Mobile lands it on the device. One foundation underneath all four.",
+  },
+  w3: {
+    summary:
+      "Sell-and-win slide. Move the conversation toward the Strategy & Vision Session as the next step, not procurement. Use footprint patterns and the three differentiators as the anchor.",
+    keyMessages: [
+      "Diagnose the footprint: single Core App, two, or all three. Single is a wedge, not a smaller deal.",
+      "The three differentiators that anchor every close: connected data, cited AI, closed loop.",
+      "The next step is the Strategy & Vision Session: three hours, fixed agenda, complimentary, on their operating model.",
+    ],
+    sayLikeThis:
+      "It is not a workshop and it is not a demo. Three hours, fixed agenda, on your operating model. Our domain team, your leadership. The outcome is clarity on what to do next.",
+  },
+};
+
+export const buildSlideOnePager = (
+  slideId: string,
+  weekId: WeekId,
+  narrationScript: string | undefined,
+  cc: { remember: string; sayItLikeThis: string; watchOutFor: string; bridge: string } | undefined,
+): SlideOnePager => {
+  const curated = SLIDE_LEARNING[slideId];
+  if (curated) return fromLearning(curated);
+  const weekFb = WEEK_ONE_PAGER_FALLBACK[weekId];
+  if (narrationScript && cc) return fromNarration(narrationScript, cc, weekFb);
+  if (cc) {
+    return {
+      summary: weekFb.summary,
+      keyMessages: [cc.remember, cc.bridge, cc.watchOutFor] as [string, string, string],
+      sayLikeThis: cc.sayItLikeThis,
+    };
+  }
+  return weekFb;
+};
