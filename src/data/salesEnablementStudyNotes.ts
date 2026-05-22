@@ -1371,55 +1371,55 @@ export const STUDY_NOTES: Record<string, SlideOnePager> = {
 const WEEK_FALLBACK: Record<WeekId, SlideOnePager> = {
   w1: {
     inOneSentence:
-      "This Week 1 slide builds the rep's foundation: the regulator shift, the platform in plain English, and the DTOP loop.",
+      "This Week 1 slide builds the rep's foundation. The regulator shift. The platform in plain English. The DTOP loop.",
     whyItMatters:
-      "Every Week 1 slide earns the right to the operating-model conversation. Without the foundation, every later pitch sounds like another point tool.",
+      "Every Week 1 slide earns the right to the operating-model talk. Without the foundation, every later pitch sounds like another point tool.",
     keyIdeas: [
       "Anchor every Week 1 idea back to DTOP: Detect, Trigger, Orchestrate, Prove.",
-      "Use plain English: one foundation, three Core Apps, intelligence on top, mobile on the device.",
+      "Use plain English: one base, three Core Apps, intelligence on top, mobile on the device.",
       "End every Week 1 idea on the DTOP loop, not on a feature.",
     ],
     terms: [T.dtop, T.operationalData, T.coreApps],
     facts: [
       "Industry exposure: $25-35B controllable cost (Eurocontrol, IATA, SITA).",
-      "Most operators run 5-7 disconnected tools today.",
+      "Most operators run 5-7 separate tools today.",
     ],
-    watchOut: "Don't pitch features in Week 1. Earn the right with the operating model first.",
+    watchOut: "Do not pitch features in Week 1. Earn the right with the operating model first.",
     connectsTo: ["DTOP loop", "Strategic Shift"],
     checkYourself: [
       "Can I tie this slide back to DTOP without naming a feature?",
-      "What's the regulator shift in one sentence?",
-      "What's the one-sentence platform pitch?",
+      "What is the regulator shift in one sentence?",
+      "What is the one-line platform pitch?",
     ],
   },
   w2: {
     inOneSentence:
-      "This Week 2 slide anchors a capability to a DTOP step and a customer use case.",
+      "This Week 2 slide ties a capability to a DTOP step and a customer use case.",
     whyItMatters:
-      "Capabilities only matter when anchored to a use case the customer already owns. Touring features flat loses the room.",
+      "Capabilities only matter when tied to a use case the customer already owns. Touring features flat loses the room.",
     keyIdeas: [
-      "Anchor every capability to a DTOP step.",
-      "Anchor every capability to a use case the customer named in discovery.",
-      "Use approved terminology only: Generative AI, Recommended Actions, Operational Data.",
+      "Tie every capability to a DTOP step.",
+      "Tie every capability to a use case the customer named in discovery.",
+      "Use approved words only: Generative AI, Recommended Actions, Operational Data.",
     ],
     terms: [T.intelligenceLayer, T.insights, T.automation, T.unifiedMobile],
     facts: [
-      "~90% domain vs ~35% generic accuracy on the same questions.",
-      "Every answer cited to regulation, procedure and training source.",
+      "About 90% domain vs about 35% generic accuracy on the same questions.",
+      "Every answer tied to a regulation, procedure or training source.",
     ],
-    watchOut: "Don't tour capabilities flat. Anchor each to a use case.",
+    watchOut: "Do not tour capabilities flat. Tie each one to a use case.",
     connectsTo: ["DTOP loop", "Capability Talk Track"],
     checkYourself: [
       "Which DTOP step does this capability strengthen?",
       "Which customer use case anchors it?",
-      "What's the approved language to use here?",
+      "What are the approved words to use here?",
     ],
   },
   w3: {
     inOneSentence:
-      "This Week 3 slide moves the conversation toward the Strategy & Vision Session.",
+      "This Week 3 slide moves the talk toward the Strategy & Vision Session.",
     whyItMatters:
-      "Every Week 3 slide is part of the close motion. Don't accept procurement as a next step — always anchor on the SVS.",
+      "Every Week 3 slide is part of the close motion. Do not accept procurement as a next step. Always anchor on the SVS.",
     keyIdeas: [
       "Map the buyer to a footprint pattern: single, two, or all three Core Apps.",
       "Use the three differentiators as the anchor: connected data, cited AI, closed loop.",
@@ -1427,13 +1427,13 @@ const WEEK_FALLBACK: Record<WeekId, SlideOnePager> = {
     ],
     terms: [T.svs, T.coreApps, T.walkthrough],
     facts: [
-      "SVS: 3 hours, complimentary, fixed agenda.",
+      "SVS: 3 hours, free, fixed agenda.",
       "Approved replacement for 'demo' is 'walkthrough'. Never 'pilot'.",
     ],
-    watchOut: "Don't close on procurement. Don't say 'pilot' or 'demo'.",
+    watchOut: "Do not close on procurement. Do not say 'pilot' or 'demo'.",
     connectsTo: ["Strategy & Vision Session", "Discovery Playbook"],
     checkYourself: [
-      "What's the only next step I close on?",
+      "What is the only next step I close on?",
       "What are the three differentiators?",
       "Which Week 3 footprint pattern does this slide serve?",
     ],
