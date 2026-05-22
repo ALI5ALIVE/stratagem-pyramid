@@ -737,7 +737,6 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
         slideCount: week.slideIds.length,
         title,
         script: narration.script,
-        durationSec: (narration as { durationSec?: number }).durationSec,
       });
     }
   });
