@@ -1657,10 +1657,18 @@ function renderSlideTranscriptPage(
   const margin = 40;
   const topMargin = 44;
 
+  // Split source script into beat-sized paragraphs. Authors sometimes use
+  // blank-line separators, sometimes a single block of prose. Always try
+  // an inline split on canonical cue phrases too so a wall of text becomes
+  // multiple labelled beats.
+  // Canonical cue starts. Splitting BEFORE each cue turns one block of
+  // prose into multiple labelled beats.
+  const INLINE_CUE = /(?=(?:Why this matters|Core message|The pain|The value lever|Say it like this|Watch out for|Bridge to next|Delivery tip|When you deliver this|Next we go|Next,)\b)/g;
   const paragraphs = sanitize(script)
     .split(/\n\s*\n/)
+    .flatMap((block) => block.split(INLINE_CUE))
     .map((p) => p.trim())
-    .filter(Boolean);
+    .filter((p) => p.length > 20);
 
   // Estimate ~150 words per minute spoken.
   const wordCount = script.split(/\s+/).filter(Boolean).length;
@@ -1673,52 +1681,75 @@ function renderSlideTranscriptPage(
   type BeatGroup = "anchor" | "risk" | "value" | "bridge" | "coach";
   type Beat = {
     n: number;
-    label?: string;
+    label: string;        // category chip text e.g. "ANCHOR"
     group: BeatGroup;
     accent: [number, number, number];
-    intent: string;
-    say?: string;
-    watchFor?: string;
+    point: string;        // "what this part is trying to land"
+    sayLines?: string[];  // phrase-per-line, already broken
+    listenFor?: string;   // small side coaching note
     durationSec: number;
   };
 
-  const CUES: Array<[RegExp, string, BeatGroup]> = [
-    [/^why this matters[^.:]*[:.]\s*/i, "Why this matters", "anchor"],
-    [/^core message[^.:]*[:.]\s*/i, "Core message", "anchor"],
-    [/^the pain[^.:]*[:.]\s*/i, "The pain", "risk"],
-    [/^watch out for[^.:]*[:.]\s*/i, "Watch out for", "coach"],
-    [/^the value lever[^.:]*[:.]\s*/i, "The value lever", "value"],
-    [/^say it like this[^.:]*[:.]\s*/i, "Say it like this", "value"],
-    [/^bridge to next[^.:]*[:.]\s*/i, "Bridge to next", "bridge"],
-    [/^delivery tip[^.:]*[:.]\s*/i, "Delivery tip", "coach"],
+  const CUES: Array<[RegExp, string, BeatGroup, string]> = [
+    [/^why this matters[^.:]*[:.]\s*/i, "ANCHOR", "anchor", "Set the stakes."],
+    [/^core message[^.:]*[:.]\s*/i, "ANCHOR", "anchor", "The headline they remember."],
+    [/^the pain[^.:]*[:.]\s*/i, "PAIN", "risk", "Name what hurts today."],
+    [/^watch out for[^.:]*[:.]\s*/i, "COACH", "coach", "Don't do this on the call."],
+    [/^the value lever[^.:]*[:.]\s*/i, "VALUE", "value", "What changes with Comply365."],
+    [/^say it like this[^.:]*[:.]\s*/i, "VALUE", "value", "Use these exact words."],
+    [/^bridge to next[^.:]*[:.]\s*/i, "BRIDGE", "bridge", "Hand off to the next slide."],
+    [/^delivery tip[^.:]*[:.]\s*/i, "COACH", "coach", "How to land it."],
   ];
   const ACCENT: Record<BeatGroup, [number, number, number]> = {
     anchor: C.brand,
     risk: C.amber,
     value: C.emerald,
-    bridge: C.muted,
-    coach: C.amber,
-  };
-  const INTENT_HINT: Record<string, string> = {
-    "Why this matters": "Set the stakes.",
-    "Core message": "The headline they walk away with.",
-    "The pain": "Name the pain they feel today.",
-    "The value lever": "What changes with Comply365.",
-    "Say it like this": "Use these exact words.",
-    "Watch out for": "Avoid this on the call.",
-    "Bridge to next": "Hand off to the next slide.",
-    "Delivery tip": "How to land it.",
+    bridge: C.sky,
+    coach: C.rose,
   };
 
-  const firstSentence = (s: string) => (s.split(/(?<=[.!?])\s+/)[0] || s).trim();
+  // Split prose into rehearsal-sized phrase lines.
+  // Rules: split on sentence boundaries, then split long sentences on
+  // commas / em-dashes / colons so no line is a "wall".
+  const PHRASE_TARGET = 64; // chars; soft cap per line
+  const splitToPhrases = (text: string): string[] => {
+    const sentences = text
+      .split(/(?<=[.!?])\s+/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+    const out: string[] = [];
+    for (const sent of sentences) {
+      if (sent.length <= PHRASE_TARGET) { out.push(sent); continue; }
+      // soft-split on natural pause punctuation
+      const parts = sent
+        .split(/(?<=[,;:])\s+|\s+-\s+/)
+        .map((p) => p.trim())
+        .filter(Boolean);
+      let buf = "";
+      for (const p of parts) {
+        if (!buf) { buf = p; continue; }
+        if ((buf + " " + p).length <= PHRASE_TARGET) {
+          buf = buf + " " + p;
+        } else {
+          out.push(buf);
+          buf = p;
+        }
+      }
+      if (buf) out.push(buf);
+    }
+    return out;
+  };
+
   const beats: Beat[] = paragraphs.map((p, i) => {
-    let label: string | undefined;
+    let label = "BEAT";
     let group: BeatGroup = "anchor";
+    let point = "Say this.";
     let body = p;
-    for (const [re, lab, g] of CUES) {
+    for (const [re, lab, g, hint] of CUES) {
       if (re.test(p)) {
         label = lab;
         group = g;
+        point = hint;
         body = p.replace(re, "").trim();
         break;
       }
@@ -1727,26 +1758,17 @@ function renderSlideTranscriptPage(
     const durationSec = Math.max(6, Math.round(wc / 2.5));
     if (group === "coach") {
       return {
-        n: i + 1,
-        label,
-        group,
-        accent: ACCENT[group],
-        intent: label ? INTENT_HINT[label] : "Coaching note.",
-        watchFor: body,
-        durationSec,
+        n: i + 1, label, group, accent: ACCENT[group],
+        point, listenFor: body, durationSec,
       };
     }
+    // If there's a quoted phrase, treat it as the verbatim Say.
     const qm = body.match(/[\u201C\u201D"]([^\u201C\u201D"]{20,260})[\u201C\u201D"]/);
-    let intent: string;
-    let say: string;
-    if (qm) {
-      say = qm[1];
-      intent = label ? INTENT_HINT[label] : firstSentence(body);
-    } else {
-      say = body;
-      intent = label ? INTENT_HINT[label] : "Say this.";
-    }
-    return { n: i + 1, label, group, accent: ACCENT[group], intent, say, durationSec };
+    const sayText = qm ? qm[1] : body;
+    return {
+      n: i + 1, label, group, accent: ACCENT[group],
+      point, sayLines: splitToPhrases(sayText), durationSec,
+    };
   });
 
   // ── Token highlighter for SAY blocks ─────────────────────────────────
@@ -1869,7 +1891,7 @@ function renderSlideTranscriptPage(
   let pageW = pdf.internal.pageSize.getWidth();
   let pageH = pdf.internal.pageSize.getHeight();
   let footerY = pageH - 44;
-  const colW = Math.min(460, pageW - margin * 2);
+  const colW = Math.min(515, pageW - margin * 2);
   let colX = (pageW - colW) / 2;
 
   let y = startPage(false);
@@ -1896,159 +1918,184 @@ function renderSlideTranscriptPage(
     );
     const tip =
       pageCount <= 1
-        ? "Rehearse one beat at a time. Bold tokens are the words your customer will remember."
-        : "Record yourself. Play back at 1.25× — does it still land?";
+        ? "One card = one beat. Read down line by line — each line is a breath."
+        : "Record yourself. Play back at 1.25x — does it still land?";
     pdf.text(tip, pageW - margin, footerY + 14, { align: "right" });
     void continued;
   };
 
-  // ── Beat layout constants ────────────────────────────────────────────
-  const sayPadX = 12;
-  const sayPadY = 10;
-  const sayLeading = 15;
-  const saySize = 10.5;
-  const intentSize = 9;
-  const intentLeading = 12;
-  const watchSize = 8.5;
-  const watchLeading = 11;
+  // ── Cue card layout constants ────────────────────────────────────────
+  // Layout = left rail (number + chip) | card body (point + say lines + listen for)
+  const railW = 64;        // left rail width
+  const cardPadX = 16;
+  const cardPadY = 14;
+  const pointSize = 9;
+  const pointLeading = 12;
+  const sayPhraseSize = 12;     // big and readable
+  const sayPhraseLeading = 18;  // generous breathing room
+  const sayPhraseGap = 4;       // extra space between phrase lines
+  const listenSize = 8.5;
+  const listenLeading = 11;
+  const cardGap = 14;
 
-  // Manual token-aware wrapping that preserves bold widths.
-  const wrapTokens = (tokens: Tok[], maxW: number): Tok[][] => {
-    pdf.setFontSize(saySize);
-    const lines: Tok[][] = [[]];
-    let cx = 0;
+  const bodyX = () => colX + railW;
+  const bodyW = () => colW - railW;
+
+  // Render a single phrase line with bold highlight tokens, no wrap — we
+  // assume phrases are short enough; if a phrase still overflows, fall back
+  // to splitTextToSize on the plain string.
+  const drawPhraseLine = (text: string, x: number, baseline: number, maxW: number) => {
+    const tokens = tokenize(text);
+    // measure
+    let total = 0;
     for (const tok of tokens) {
-      const isSpace = /^\s+$/.test(tok.text);
       pdf.setFont("helvetica", tok.bold ? "bold" : "normal");
-      const w = pdf.getTextWidth(tok.text);
-      if (isSpace) {
-        if (cx === 0) continue;
-        lines[lines.length - 1].push(tok);
-        cx += w;
-        continue;
-      }
-      if (cx + w > maxW && cx > 0) {
-        lines.push([tok]);
-        cx = w;
-      } else {
-        lines[lines.length - 1].push(tok);
-        cx += w;
-      }
+      pdf.setFontSize(sayPhraseSize);
+      total += pdf.getTextWidth(tok.text);
     }
-    return lines;
+    if (total <= maxW) {
+      let cx = x;
+      for (const tok of tokens) {
+        const isSpace = /^\s+$/.test(tok.text);
+        pdf.setFont("helvetica", tok.bold ? "bold" : "normal");
+        pdf.setFontSize(sayPhraseSize);
+        setText(pdf, tok.bold ? C.ink : C.slate);
+        if (!isSpace) pdf.text(tok.text, cx, baseline);
+        cx += pdf.getTextWidth(tok.text);
+      }
+      return 1;
+    }
+    // Fallback wrap (rare): plain wrap, no inline bold.
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(sayPhraseSize);
+    setText(pdf, C.slate);
+    const wrapped = pdf.splitTextToSize(text, maxW);
+    let by = baseline;
+    for (const ln of wrapped) {
+      pdf.text(ln, x, by);
+      by += sayPhraseLeading;
+    }
+    return wrapped.length;
+  };
+
+  // Phrase line count after fallback wrapping.
+  const phraseLineCount = (text: string, maxW: number): number => {
+    const tokens = tokenize(text);
+    let total = 0;
+    for (const tok of tokens) {
+      pdf.setFont("helvetica", tok.bold ? "bold" : "normal");
+      pdf.setFontSize(sayPhraseSize);
+      total += pdf.getTextWidth(tok.text);
+    }
+    if (total <= maxW) return 1;
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(sayPhraseSize);
+    return pdf.splitTextToSize(text, maxW).length;
   };
 
   const measureBeat = (b: Beat): number => {
-    let h = 20; // rail header + hairline
-    pdf.setFont("helvetica", "italic");
-    pdf.setFontSize(intentSize);
-    const iLines = pdf.splitTextToSize(b.intent, colW);
-    h += iLines.length * intentLeading + 4;
-    if (b.say) {
-      const tokens = tokenize(b.say);
-      const innerW = colW - sayPadX * 2;
-      const lines = wrapTokens(tokens, innerW);
-      h += sayPadY * 2 + lines.length * sayLeading + 8;
+    let h = cardPadY; // top padding
+    // point
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(pointSize);
+    const pLines = pdf.splitTextToSize(b.point, bodyW() - cardPadX * 2);
+    h += pLines.length * pointLeading + 6;
+    // say lines
+    if (b.sayLines && b.sayLines.length) {
+      const innerW = bodyW() - cardPadX * 2;
+      for (const ph of b.sayLines) {
+        const n = phraseLineCount(ph, innerW);
+        h += n * sayPhraseLeading + sayPhraseGap;
+      }
+      h += 4;
     }
-    if (b.watchFor) {
+    // listen for
+    if (b.listenFor) {
       pdf.setFont("helvetica", "normal");
-      pdf.setFontSize(watchSize);
-      const wLines = pdf.splitTextToSize(`Watch for · ${b.watchFor}`, colW - 14);
-      h += 4 + wLines.length * watchLeading + 4;
+      pdf.setFontSize(listenSize);
+      const wLines = pdf.splitTextToSize(b.listenFor, bodyW() - cardPadX * 2 - 12);
+      h += 8 + wLines.length * listenLeading;
     }
-    return h + 12; // gap to next
+    h += cardPadY; // bottom padding
+    // ensure the rail content fits too
+    const railMin = 48;
+    return Math.max(h, railMin);
   };
 
   const drawBeat = (b: Beat) => {
-    // Rail header
+    const cardH = measureBeat(b);
+
+    // Card body background (subtle paper tint)
+    setFill(pdf, [250, 251, 253]);
+    pdf.roundedRect(bodyX(), y, bodyW(), cardH, 4, 4, "F");
+    // Accent edge along the rail/body seam
+    setFill(pdf, b.accent);
+    pdf.rect(bodyX(), y, 2.5, cardH, "F");
+
+    // ── Left rail ──
+    // Big beat number
     pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(7.5);
+    pdf.setFontSize(26);
     setText(pdf, b.accent);
-    const numStr = String(b.n).padStart(2, "0");
-    pdf.text(numStr, colX, y);
-    const numW = pdf.getTextWidth(numStr);
-    if (b.label) {
-      pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(7.5);
-      setText(pdf, b.accent);
-      pdf.text(b.label, colX + numW + 8, y);
-    }
+    pdf.text(String(b.n).padStart(2, "0"), colX, y + 24);
+    // Category chip
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(6.8);
+    setText(pdf, b.accent);
+    pdf.text(b.label, colX, y + 38);
+    // Duration
     pdf.setFont("helvetica", "normal");
     pdf.setFontSize(7);
     setText(pdf, C.subtle);
-    pdf.text(`~${b.durationSec}s`, colX + colW, y, { align: "right" });
-    y += 5;
-    setStroke(pdf, b.accent);
-    pdf.setLineWidth(0.6);
-    pdf.line(colX, y, colX + colW, y);
-    y += 11;
+    pdf.text(`~${b.durationSec}s`, colX, y + 50);
 
-    // Intent
-    pdf.setFont("helvetica", "italic");
-    pdf.setFontSize(intentSize);
+    // ── Card body ──
+    const bx = bodyX() + cardPadX;
+    const innerW = bodyW() - cardPadX * 2;
+    let cy = y + cardPadY + pointSize;
+
+    // Point
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(pointSize);
     setText(pdf, C.muted);
-    const iLines = pdf.splitTextToSize(b.intent, colW);
-    for (const line of iLines) {
-      pdf.text(line, colX, y);
-      y += intentLeading;
+    const pLines = pdf.splitTextToSize(b.point, innerW);
+    for (const ln of pLines) {
+      pdf.text(ln.toUpperCase(), bx, cy);
+      cy += pointLeading;
     }
-    y += 2;
+    cy += 4;
 
-    // SAY block
-    if (b.say) {
-      const tokens = tokenize(b.say);
-      const innerW = colW - sayPadX * 2;
-      const lines = wrapTokens(tokens, innerW);
-      const blockH = sayPadY * 2 + lines.length * sayLeading;
+    // Say lines — each on its own line, bigger type, lots of air
+    if (b.sayLines && b.sayLines.length) {
+      cy += 2;
+      for (const ph of b.sayLines) {
+        const n = drawPhraseLine(ph, bx, cy, innerW);
+        cy += n * sayPhraseLeading + sayPhraseGap;
+      }
+    }
 
-      setFill(pdf, [245, 248, 253]);
-      pdf.roundedRect(colX, y, colW, blockH, 3, 3, "F");
+    // Listen for — small side note with leading dot
+    if (b.listenFor) {
+      cy += 4;
       setFill(pdf, b.accent);
-      pdf.rect(colX, y, 3, blockH, "F");
-
-      // tiny SAY tag (top-right)
+      pdf.circle(bx + 2, cy - 3, 1.4, "F");
       pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(6.5);
+      pdf.setFontSize(listenSize);
       setText(pdf, b.accent);
-      pdf.text("SAY", colX + colW - sayPadX, y + 10, { align: "right" });
-
-      // render tokens line by line
-      let cy = y + sayPadY + saySize;
-      for (const line of lines) {
-        let cx = colX + sayPadX;
-        // drop trailing whitespace token on each line
-        const trimmed = [...line];
-        while (trimmed.length && /^\s+$/.test(trimmed[trimmed.length - 1].text)) trimmed.pop();
-        for (const tok of trimmed) {
-          pdf.setFont("helvetica", tok.bold ? "bold" : "normal");
-          pdf.setFontSize(saySize);
-          setText(pdf, tok.bold ? C.ink : C.slate);
-          pdf.text(tok.text, cx, cy);
-          cx += pdf.getTextWidth(tok.text);
-        }
-        cy += sayLeading;
-      }
-      y += blockH + 8;
-    }
-
-    // Watch for
-    if (b.watchFor) {
-      pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(8);
-      setText(pdf, C.amber);
-      pdf.text("!", colX, y);
+      pdf.text("Listen for", bx + 8, cy);
+      const labelW = pdf.getTextWidth("Listen for") + 4;
       pdf.setFont("helvetica", "normal");
-      pdf.setFontSize(watchSize);
       setText(pdf, C.muted);
-      const wLines = pdf.splitTextToSize(`Watch for · ${b.watchFor}`, colW - 14);
-      for (const line of wLines) {
-        pdf.text(line, colX + 12, y);
-        y += watchLeading;
-      }
-      y += 4;
+      const wLines = pdf.splitTextToSize(b.listenFor, innerW - 8 - labelW);
+      let lcy = cy;
+      wLines.forEach((ln: string, idx: number) => {
+        const lx = idx === 0 ? bx + 8 + labelW : bx + 8;
+        pdf.text(ln, lx, lcy);
+        lcy += listenLeading;
+      });
     }
 
-    y += 8; // gap to next beat
+    y += cardH + cardGap;
   };
 
   // ── Place beats with page-break-on-overflow ──────────────────────────
