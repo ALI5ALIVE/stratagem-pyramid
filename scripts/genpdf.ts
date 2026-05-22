@@ -1,7 +1,4 @@
-import jsPDFMod from "jspdf";
-// @ts-ignore
-globalThis.jsPDF = jsPDFMod;
-const { buildWeekFieldKitPdf } = await import("../src/lib/fieldKitPdf");
+import { buildWeekFieldKitPdf } from "../src/lib/fieldKitPdf";
 import { coachCardWeeks } from "../src/data/salesEnablementCoachCards";
 import { writeFileSync, mkdirSync } from "fs";
 mkdirSync("/tmp/pdfqa", { recursive: true });
