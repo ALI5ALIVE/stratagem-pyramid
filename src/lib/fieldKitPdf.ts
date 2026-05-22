@@ -1693,9 +1693,41 @@ function drawLabelledList(
     pdf.setFont("helvetica", "normal");
     pdf.setFontSize(opts.size);
     setText(pdf, opts.color);
-    const lines = clipLines(pdf.splitTextToSize(it.text, w - lw), 2);
-    pdf.text(lines, x + lw, cy, { lineHeightFactor: opts.leading / opts.size });
-    cy += lines.length * opts.leading + 2;
+    // Try to fit value on the same line as the label; otherwise wrap the
+    // value as a paragraph under the label so continuation lines start at
+    // the column's left margin (with a small indent) instead of hanging
+    // past where the label ended — which used to push text past the right
+    // margin on long definitions.
+    const inlineW = w - lw;
+    const valueFitsInline = pdf.getTextWidth(it.text) <= inlineW;
+    if (valueFitsInline) {
+      pdf.text(it.text, x + lw, cy);
+      cy += opts.leading + 2;
+    } else {
+      // First line tries to consume the inline space; remainder wraps below.
+      const indent = 8;
+      // Greedy fit of words onto the label line.
+      const words = it.text.split(/\s+/);
+      let inline = "";
+      let i = 0;
+      while (i < words.length) {
+        const candidate = inline ? inline + " " + words[i] : words[i];
+        if (pdf.getTextWidth(candidate) > inlineW) break;
+        inline = candidate;
+        i++;
+      }
+      if (inline) pdf.text(inline, x + lw, cy);
+      cy += opts.leading;
+      const rest = words.slice(i).join(" ").trim();
+      if (rest) {
+        const wrapped = clipLines(pdf.splitTextToSize(rest, w - indent), 3);
+        for (const ln of wrapped) {
+          pdf.text(ln, x + indent, cy);
+          cy += opts.leading;
+        }
+      }
+      cy += 2;
+    }
   }
   return cy - y;
 }
