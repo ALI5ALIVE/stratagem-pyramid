@@ -15,6 +15,21 @@ export interface StudyTerm {
   definition: string;
 }
 
+export type BeatLabel =
+  | "Why this matters"
+  | "Core message"
+  | "Pain & value"
+  | "How to deliver"
+  | "Transition";
+
+export interface KeyPoint {
+  beat: BeatLabel;
+  /** Headline takeaway for this beat (≤ ~30 words). */
+  point: string;
+  /** Supporting bullets — 0–3 lines of detail / verbatim phrasing / nuance. */
+  support: string[];
+}
+
 export interface SlideOnePager {
   /** The concept defined in one sentence — the thing the rep must own. */
   inOneSentence: string;
@@ -32,6 +47,10 @@ export interface SlideOnePager {
   connectsTo: string[];
   /** 3 diagnostic questions a rep must answer out loud before moving on. */
   checkYourself: string[];
+  /** Single-sentence digest of the narration (auto-derived from script when available). */
+  narrationInOneLine?: string;
+  /** Narration parsed into 5-part beats (auto-derived from script when available). */
+  keyPoints?: KeyPoint[];
 }
 
 export type WeekId = "w1" | "w2" | "w3";
