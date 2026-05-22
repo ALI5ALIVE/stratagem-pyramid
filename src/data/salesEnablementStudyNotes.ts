@@ -39,6 +39,11 @@ export interface SlideOnePager {
   inOneSentence: string;
   /** Where this sits in the platform story; why a buyer cares. 2-3 sentences. */
   whyItMatters: string;
+  /** 3-5 short bullets describing the visual on the slide itself: shapes,
+   *  diagrams, columns, numbers, colour story — what the rep is actually
+   *  looking at. Optional on STUDY_NOTES entries; supplied via the
+   *  WHATS_ON_SLIDE map at the bottom of this file when absent. */
+  whatsOnSlide?: string[];
   /** 3-4 concept paragraphs (each ~15-30 words). No paraphrase loops. */
   keyIdeas: string[];
   /** 3-5 glossary entries scoped to this slide. */
@@ -1579,9 +1584,18 @@ export const buildStudyNote = (
   script?: string,
 ): SlideOnePager => {
   const base = STUDY_NOTES[slideId] ?? WEEK_FALLBACK[weekId];
-  if (!script) return base;
-  const derived = buildKeyPointsFromScript(script);
-  return { ...base, ...derived };
+  const whatsOnSlide =
+    base.whatsOnSlide ?? WHATS_ON_SLIDE[slideId] ?? WEEK_WHATS_ON[weekId];
+  const merged: SlideOnePager = { ...base, whatsOnSlide };
+  if (script) {
+    // Narration extracts live ONLY in their own fields — they must never
+    // overwrite curated study material (this was the bug that made the
+    // PDF feel like paraphrased narration).
+    const derived = buildKeyPointsFromScript(script);
+    merged.narrationInOneLine = derived.narrationInOneLine;
+    merged.keyPoints = derived.keyPoints;
+  }
+  return merged;
 };
 
 // Glossary helper — collect every unique term across a week, ordered A-Z.
