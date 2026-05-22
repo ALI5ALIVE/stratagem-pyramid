@@ -1191,7 +1191,7 @@ function renderLearningColumn(
   let y = yTop;
 
   // 1. LEARNING OUTCOME — accent band, navy fill, light text
-  const outH = 50;
+  const outH = 46;
   setFill(pdf, [11, 26, 74]); // navy
   pdf.roundedRect(x, y, w, outH, 5, 5, "F");
   setFill(pdf, [0, 102, 255]); // brand
@@ -1205,7 +1205,7 @@ function renderLearningColumn(
   pdf.setTextColor(255, 255, 255);
   const outLines = clipLines(pdf.splitTextToSize(L.outcome, w - 20), 3);
   pdf.text(outLines, x + 10, y + 26, { lineHeightFactor: 1.3 });
-  y += outH + 10;
+  y += outH + 8;
 
   // 2. CORE IDEA — single bold sentence, no chrome
   pdf.setFont("helvetica", "bold");
@@ -1218,9 +1218,9 @@ function renderLearningColumn(
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(10.5);
   pdf.setTextColor(11, 18, 32);
-  const coreLines = clipLines(pdf.splitTextToSize(L.coreIdea, w), 3);
+  const coreLines = clipLines(pdf.splitTextToSize(L.coreIdea, w), 2);
   pdf.text(coreLines, x, y, { lineHeightFactor: 1.25 });
-  y += coreLines.length * 13 + 12;
+  y += coreLines.length * 13 + 10;
 
   // 3. HOW TO TEACH IT — three numbered beats (Hook / Frame / Proof)
   pdf.setFont("helvetica", "bold");
@@ -1229,12 +1229,12 @@ function renderLearningColumn(
   pdf.text("HOW TO TEACH IT  -  3 BEATS", x, y);
   setFill(pdf, [91, 103, 118]);
   pdf.rect(x, y + 3, 18, 1.5, "F");
-  y += 14;
+  y += 12;
 
   // 4 + 5 are anchored to bottom; reserve their space now so beats height-fit
-  const wbH = 56;
-  const sayH = 50;
-  const beatsBottom = yBottom - wbH - 10 - sayH - 10;
+  const wbH = 50;
+  const sayH = 44;
+  const beatsBottom = yBottom - wbH - 6 - sayH - 6;
 
   const indent = 18;
   const beatGap = 8;
@@ -1299,7 +1299,7 @@ function renderLearningColumn(
   });
 
   // 4. SAY IT LIKE THIS — emerald accent block (anchored above whiteboard)
-  const sayY = yBottom - wbH - 10 - sayH;
+  const sayY = yBottom - wbH - 6 - sayH;
   drawAccentBlock(
     pdf,
     x,
