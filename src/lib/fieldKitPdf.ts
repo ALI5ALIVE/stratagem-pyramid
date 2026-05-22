@@ -1876,14 +1876,31 @@ function renderSlideTranscriptPage(
       pdf.rect(margin, y, 28, 1.5, "F");
       y += 18;
     } else {
+      // Continuation page header — keep it slim but informative.
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(11);
       setText(pdf, C.ink);
-      pdf.text(`${sanitize(title)} — beats continued`, margin, y);
-      y += 14;
+      pdf.text(`${sanitize(title)}`, margin, y);
+      const titleW2 = pdf.getTextWidth(sanitize(title));
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(9);
+      setText(pdf, C.muted);
+      pdf.text(` — continued`, margin + titleW2, y);
+      // Right-aligned progress meta
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(8);
+      setText(pdf, C.muted);
+      const remaining = Math.max(0, beats.length - pageBeatStart + 1);
+      pdf.text(
+        `Beat ${pageBeatStart} of ${beats.length} · ${remaining} remaining`,
+        pageW - margin,
+        y,
+        { align: "right" },
+      );
+      y += 8;
       setFill(pdf, C.brand);
       pdf.rect(margin, y, 28, 1.5, "F");
-      y += 16;
+      y += 18;
     }
 
     return y;
