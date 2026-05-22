@@ -1298,8 +1298,6 @@ function renderLearningColumn(
   });
 
   // 4. SAY IT LIKE THIS — emerald accent block (anchored above whiteboard)
-  const wbH = 56;
-  const sayH = 50;
   const sayY = yBottom - wbH - 10 - sayH;
   drawAccentBlock(
     pdf,
