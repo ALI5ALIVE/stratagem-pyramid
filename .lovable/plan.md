@@ -1,34 +1,28 @@
-## Goal
-Dial back the AI Solutions treatment: keep chips prominent and colored, but harmonize with the dark slide and restore proper sizing/spacing so nothing overflows.
+## Root cause
+In `src/exporters/pptx/buildAIInfographicDeck.ts`, the 6 AI solution chips at 0.5" each + 0.12" gaps exactly fill the column's inner height (3.6"). The "No AI" chip is then placed near the bottom and **overlaps** the last 1–2 colored chips. That's the squashing/overlay you're seeing.
 
-## Changes (PPTX only — `src/exporters/pptx/buildAIInfographicDeck.ts`)
+## Fix
 
-### 1. Container — prominent but on-theme
-- Remove the bright `C.primary` glow rectangle behind the column (too loud).
-- Solutions column fill: back to `C.surface` (matches product columns) with a thicker `C.primary` border (1.5pt) and slightly larger radius (0.18). This keeps it on the dark slide while still reading as the hero.
-- Header bar: keep `C.primary` fill + white "AI SOLUTIONS" title at 14pt (down from 16, with charSpacing 3), height 0.5 (down from 0.6). Keep the white underline accent but thinner (0.03).
+### Render all 7 chips in one pass (no separate bottom placement)
+- Build `const allChips = [...aiSolutions, noAISolution]` and render them in a single loop.
+- Compute chip height dynamically so all 7 fit cleanly:
+  - `available = gridBottom - (gridTop + 0.15 + solHeaderH + 0.25)` (≈ 3.6")
+  - `solChipGap = 0.1`
+  - `solChipH = (available - solChipGap * 6) / 7` (≈ 0.43")
+- For `tier === "noai"`: render with `C.surfaceAlt` fill + dashed `C.muted` border + muted center label (current "No AI" treatment), no white dot.
+- For `tier === "ai"`: keep filled colored chip + white dot + white bold label.
 
-### 2. Chips — colored, prominent, dark-mode native
-- Drop the white chip background and the black shadow rect (they fight the dark slide).
-- New chip style:
-  - Fill: solution color at full saturation (`solutionColors[id].pptx`).
-  - No border, radius 0.1.
-  - Label: white (`FFFFFF`), 12pt bold, left-aligned with 0.2 inset.
-  - Small white circle dot (0.18) on the left as a visual anchor.
-- Restore original sizing so all 6 chips + "No AI" fit:
-  - `solChipH = 0.5`, `solChipGap = 0.12`.
-- "No AI" chip: `C.surfaceAlt` fill with dashed `C.muted` border, muted label — already contrasts, just resize to match new dims.
+### Spacing safety
+- Drop label font from 12 → 11.5 (still bold) so it never clips the smaller chip height. Keep dot at 0.16 to match.
+- Keep "AI SOLUTIONS" header at 14pt and the 0.5" header bar.
 
-### 3. Product columns — restore original prominence parity
-- Revert product column headers to `C.primary` fill with white 13pt bold title (undo the muted treatment from last round). They should look like peers of the solutions header but without the thick border + underline that mark Solutions as primary.
-- Capability row labels: keep current size; restore bold weight for AI-enabled rows for readability.
+### Remove dead code
+- Delete the standalone "No AI chip near bottom" block entirely.
+- `solCenters["noai"]` is now populated inside the unified loop, so arrows still resolve.
 
-### 4. Layout safety
-- Recompute `cy` start (`gridTop + 0.15 + solHeaderH + 0.25`) and verify 6 chips at 0.5 + 0.12 gap + No-AI chip fit within `gridH` without overlap. If tight, reduce top padding after header to 0.2.
+## Verification
+1. Build the PPTX via the existing route, convert to PDF/JPG with LibreOffice + pdftoppm, and inspect slide-01.
+2. Confirm: 7 chips evenly spaced, no overlap, no element extends past the column bottom, "No AI" visually distinct from AI chips, arrows still land on correct product rows.
 
-### 5. Keep unchanged
-- 4-column grid, widths, arrow logic, legend, data, web route, `AICapabilitiesMatrix` component.
-
-## QA
-- Build PPTX → render slide to JPG via LibreOffice + pdftoppm.
-- Verify: chips are colored and clearly the focal point against the dark slide; product columns still legible; nothing clips at column bottom; arrows still land on correct rows.
+## Out of scope
+Web component, data, product columns, arrows, legend, header — unchanged.
