@@ -703,19 +703,16 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     const cc = salesEnablementCoachCards[slideId];
     if (!cc) return;
     const narration = getSalesEnablementNarration(slideId);
-    const title = narration?.title ?? slideId;
-    const coreLine = extractCoreLine(slideId);
-    const summary = narration ? paraphraseNarration(narration.script, 1100) : "";
-    const summaryBullets = narration ? paraphraseNarrationBullets(narration.script, 7) : [];
-    const verbatim = narration ? extractVerbatimLift(narration.script) : undefined;
-    const questions = buildDiscoveryQuestionsRotated(narration?.script, slideId, week.id, idx);
-    const objections = buildObjectionsRotated(slideId, week.id, idx);
-    const proofs = buildProofs(slideId, week.id, idx).map((p) =>
-      // sanitize non-Latin-1 glyphs that helvetica core can't render
-      p.replace(/\u2192/g, " · ").replace(/\u2013/g, "-").replace(/[\u201C\u201D]/g, '"'),
-    );
-    const whiteboard = buildWhiteboard(slideId, week.id);
-    const mistake = buildMistake(slideId, week.id);
+    const title = sanitize(narration?.title ?? slideId);
+    const learning = buildSlideLearning(slideId, week.id);
+    const questions = buildDiscoveryQuestionsRotated(narration?.script, slideId, week.id, idx).map(sanitize);
+    const objections = buildObjectionsRotated(slideId, week.id, idx).map((o) => ({
+      pushback: sanitize(o.pushback),
+      response: sanitize(o.response),
+    }));
+    const proofs = buildProofs(slideId, week.id, idx).map(sanitize);
+    const whiteboard = sanitize(buildWhiteboard(slideId, week.id));
+    const mistake = sanitize(buildMistake(slideId, week.id));
     const sMeta = buildMeta(slideId, week.id);
 
     // Landscape page for slide cards
@@ -756,7 +753,10 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     const microFooterY = lPageH - 30;
     const chipStripH = 56;
     const chipStripY = microFooterY - chipStripH - 10;
-    const colBottomY = chipStripY - 10;
+    // Check-yourself band sits above the coach-chip strip
+    const checkBandH = 26;
+    const checkBandY = chipStripY - checkBandH - 8;
+    const colBottomY = checkBandY - 10;
 
     // Title hero (compact, full content width across BOTH columns)
     const tbH = 46;
@@ -776,132 +776,16 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
 
     const bodyTopY = topY + tbH + 14;
 
-    // ── LEFT COLUMN: Core Idea · Teaching Summary · Whiteboard Recipe ──────
-    let ly = bodyTopY;
-    // Core idea
-    if (coreLine) {
-      drawSectionLabel(pdf, leftX, ly, "THE CORE IDEA", C.brand);
-      ly += 12;
-      pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(10.5);
-      setText(pdf, C.ink);
-      const coreLines = clipLines(pdf.splitTextToSize(coreLine, leftW), 2);
-      pdf.text(coreLines, leftX, ly);
-      ly += coreLines.length * 12 + 12;
-    }
-
-    // Reserve room for the two bottom-left blocks: whiteboard + verbatim lift.
-    // When there's no verbatim, expand whiteboard to consume the space.
-    const baseWbH = 64;
-    const liftBlockH = verbatim ? 58 : 0;
-    const wbBlockH = verbatim ? baseWbH : baseWbH + 58 + 8;
-    const bottomLeftStackH = wbBlockH + (liftBlockH ? liftBlockH + 8 : 0);
-    const summaryBottom = colBottomY - bottomLeftStackH - 14;
-
-    // Teaching summary — rendered as scannable bullet beats with optional
-    // bold Core/Pain/Value lead-ins. Height-fits to the reserved column band.
-    if (summaryBullets.length || summary) {
-      drawSectionLabel(pdf, leftX, ly, "TEACHING SUMMARY — KEY BEATS", C.muted);
-      ly += 12;
-      const fontSize = 9.5;
-      const lineH = 12;
-      const bulletGap = 5;
-      const indent = 10;
-      const textW = leftW - indent;
-      const availH = Math.max(0, summaryBottom - ly);
-
-      // Measure each bullet, dropping the lowest-priority bullets until they fit
-      const bullets = summaryBullets.length
-        ? summaryBullets.slice()
-        : [{ text: summary } as TeachingBullet];
-      pdf.setFont("helvetica", "normal");
-      pdf.setFontSize(fontSize);
-
-      type Measured = { b: TeachingBullet; lines: string[]; h: number };
-      const measure = (b: TeachingBullet): Measured => {
-        const prefix = b.lead ? `${b.lead} — ` : "";
-        const lines = clipLines(
-          pdf.splitTextToSize(prefix + b.text, textW),
-          2,
-        );
-        return { b, lines, h: lines.length * lineH };
-      };
-
-      let measured = bullets.map(measure);
-      const totalH = () =>
-        measured.reduce((acc, m) => acc + m.h, 0) +
-        Math.max(0, measured.length - 1) * bulletGap;
-      while (measured.length > 2 && totalH() > availH) measured.pop();
-
-      // Distribute any leftover space evenly between bullets so the block
-      // reaches summaryBottom without dead air.
-      const leftover = availH - totalH();
-      const extraGap =
-        measured.length > 1 && leftover > 0
-          ? Math.min(8, leftover / (measured.length - 1))
-          : 0;
-
-      let by = ly;
-      measured.forEach(({ b, lines }, i) => {
-        // bullet marker — small filled square in brand colour
-        setFill(pdf, C.brand);
-        pdf.rect(leftX + 1, by - fontSize + 3.5, 2.6, 2.6, "F");
-
-        // First line: bold lead-in (if any) + normal body text
-        const firstLine = lines[0] ?? "";
-        if (b.lead && firstLine.startsWith(`${b.lead} — `)) {
-          const body = firstLine.slice(b.lead.length + 3);
-          pdf.setFont("helvetica", "bold");
-          setText(pdf, C.ink);
-          pdf.text(b.lead, leftX + indent, by);
-          const leadW = pdf.getTextWidth(b.lead);
-          pdf.setFont("helvetica", "normal");
-          setText(pdf, C.slate);
-          pdf.text(` — ${body}`, leftX + indent + leadW, by);
-        } else {
-          pdf.setFont("helvetica", "normal");
-          setText(pdf, C.slate);
-          pdf.text(firstLine, leftX + indent, by);
-        }
-        // Wrap line(s)
-        if (lines.length > 1) {
-          pdf.setFont("helvetica", "normal");
-          setText(pdf, C.slate);
-          pdf.text(lines.slice(1), leftX + indent, by + lineH);
-        }
-        by += lines.length * lineH + bulletGap + extraGap;
-      });
-      ly = by;
-    }
-
-    // Whiteboard recipe (anchored to bottom of left column)
-    const wbY = colBottomY - bottomLeftStackH;
-    drawAccentBlock(
-      pdf,
-      leftX,
-      wbY,
-      leftW,
-      wbBlockH,
-      "WHITEBOARD RECIPE / WHERE TO POINT",
+    // ── LEFT COLUMN: Learning Outcome -> Core Idea -> Teach Beats ->
+    //                Say It Like This -> Whiteboard ────────────────────────
+    renderLearningColumn(pdf, {
+      x: leftX,
+      yTop: bodyTopY,
+      yBottom: colBottomY,
+      w: leftW,
+      learning,
       whiteboard,
-      C.oViolet,
-      [243, 240, 253],
-    );
-
-    // Verbatim lift (right under whiteboard, anchored to col bottom)
-    if (verbatim) {
-      drawAccentBlock(
-        pdf,
-        leftX,
-        colBottomY - liftBlockH,
-        leftW,
-        liftBlockH,
-        "VERBATIM LIFT — SAY THIS NEAR-EXACTLY",
-        `"${verbatim}"`,
-        C.emerald,
-        C.emeraldSoft,
-      );
-    }
+    });
 
     // ── RIGHT COLUMN: Questions · Objections · Proofs · Mistake ────────────
     let ry = bodyTopY;
