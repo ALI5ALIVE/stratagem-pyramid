@@ -517,12 +517,20 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
 
   const stampPageNumbers = () => {
     const total = pdf.getNumberOfPages();
+    const chipText = (i: number) => `W${week.number} · ${i} / ${total}`;
     for (let i = 1; i <= total; i++) {
       pdf.setPage(i);
-      pdf.setFont("helvetica", "normal");
+      pdf.setFont("helvetica", "bold");
       pdf.setFontSize(7.5);
-      setText(pdf, C.subtle);
-      pdf.text(`${i} / ${total}`, pageW / 2, pageH - 18, { align: "center" });
+      const txt = chipText(i);
+      const w = pdf.getTextWidth(txt) + 14;
+      const h = 14;
+      const cx = pageW / 2 - w / 2;
+      const cy = pageH - 24;
+      setFill(pdf, C.brand);
+      pdf.roundedRect(cx, cy, w, h, h / 2, h / 2, "F");
+      setText(pdf, C.white);
+      pdf.text(txt, pageW / 2, cy + 9.5, { align: "center" });
     }
   };
 
@@ -1741,9 +1749,10 @@ function renderSlideTranscriptPage(
   };
 
   const beats: Beat[] = paragraphs.map((p, i) => {
-    let label = "BEAT";
+    // First beat with no explicit cue is the opening — label it OPEN, not BEAT.
+    let label = i === 0 ? "OPEN" : "BEAT";
     let group: BeatGroup = "anchor";
-    let point = "Say this.";
+    let point = i === 0 ? "Land the opening line." : "Say this.";
     let body = p;
     for (const [re, lab, g, hint] of CUES) {
       if (re.test(p)) {
@@ -1875,14 +1884,31 @@ function renderSlideTranscriptPage(
       pdf.rect(margin, y, 28, 1.5, "F");
       y += 18;
     } else {
+      // Continuation page header — keep it slim but informative.
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(11);
       setText(pdf, C.ink);
-      pdf.text(`${sanitize(title)} — beats continued`, margin, y);
-      y += 14;
+      pdf.text(`${sanitize(title)}`, margin, y);
+      const titleW2 = pdf.getTextWidth(sanitize(title));
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(9);
+      setText(pdf, C.muted);
+      pdf.text(` — continued`, margin + titleW2, y);
+      // Right-aligned progress meta
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(8);
+      setText(pdf, C.muted);
+      const remaining = Math.max(0, beats.length - pageBeatStart + 1);
+      pdf.text(
+        `Beat ${pageBeatStart} of ${beats.length} · ${remaining} remaining`,
+        pageW - margin,
+        y,
+        { align: "right" },
+      );
+      y += 8;
       setFill(pdf, C.brand);
       pdf.rect(margin, y, 28, 1.5, "F");
-      y += 16;
+      y += 18;
     }
 
     return y;
@@ -2009,12 +2035,12 @@ function renderSlideTranscriptPage(
       }
       h += 4;
     }
-    // listen for
+    // listen for: divider + label row + body lines
     if (b.listenFor) {
       pdf.setFont("helvetica", "normal");
       pdf.setFontSize(listenSize);
-      const wLines = pdf.splitTextToSize(b.listenFor, bodyW() - cardPadX * 2 - 12);
-      h += 8 + wLines.length * listenLeading;
+      const wLines = pdf.splitTextToSize(b.listenFor, bodyW() - cardPadX * 2);
+      h += 12 + listenLeading + wLines.length * listenLeading;
     }
     h += cardPadY; // bottom padding
     // ensure the rail content fits too
@@ -2028,9 +2054,6 @@ function renderSlideTranscriptPage(
     // Card body background (subtle paper tint)
     setFill(pdf, [250, 251, 253]);
     pdf.roundedRect(bodyX(), y, bodyW(), cardH, 4, 4, "F");
-    // Accent edge along the rail/body seam
-    setFill(pdf, b.accent);
-    pdf.rect(bodyX(), y, 2.5, cardH, "F");
 
     // ── Left rail ──
     // Big beat number
@@ -2074,25 +2097,29 @@ function renderSlideTranscriptPage(
       }
     }
 
-    // Listen for — small side note with leading dot
+    // Listen for — proper footer row: divider, label on its own line, body underneath
     if (b.listenFor) {
+      cy += 8;
+      // hairline divider across the card body
+      setStroke(pdf, C.hairline);
+      pdf.setLineWidth(0.4);
+      pdf.line(bx, cy - 4, bx + innerW, cy - 4);
       cy += 4;
-      setFill(pdf, b.accent);
-      pdf.circle(bx + 2, cy - 3, 1.4, "F");
+      // Label (own line)
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(listenSize);
       setText(pdf, b.accent);
-      pdf.text("Listen for", bx + 8, cy);
-      const labelW = pdf.getTextWidth("Listen for") + 4;
+      pdf.text("LISTEN FOR", bx, cy);
+      cy += listenLeading;
+      // Body (own block, full width)
       pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(listenSize);
       setText(pdf, C.muted);
-      const wLines = pdf.splitTextToSize(b.listenFor, innerW - 8 - labelW);
-      let lcy = cy;
-      wLines.forEach((ln: string, idx: number) => {
-        const lx = idx === 0 ? bx + 8 + labelW : bx + 8;
-        pdf.text(ln, lx, lcy);
-        lcy += listenLeading;
-      });
+      const wLines = pdf.splitTextToSize(b.listenFor, innerW);
+      for (const ln of wLines) {
+        pdf.text(ln, bx, cy);
+        cy += listenLeading;
+      }
     }
 
     y += cardH + cardGap;
@@ -2108,8 +2135,8 @@ function renderSlideTranscriptPage(
     if (i > 0 && y + h > footerY - 14) {
       drawFooter(!isFirstPage);
       isFirstPage = false;
-      y = startPage(true);
       pageBeatStart = b.n;
+      y = startPage(true);
     }
     drawBeat(b);
     pageBeatEnd = b.n;
