@@ -454,130 +454,130 @@ export const STUDY_NOTES: Record<string, SlideOnePager> = {
   // ============= Week 2 · Capabilities =============
   "se-week-2": {
     inOneSentence:
-      "Week 2 trains the rep to give a 60-second walkthrough of every capability and tell the whole story as one DTOP loop without notes.",
+      "Week 2 trains the rep to give a 60-second walkthrough of every capability and tell the whole story as one DTOP loop, with no notes.",
     whyItMatters:
-      "Week 2 is the longest week because the walkthrough lives here. The order of slides matches the customer deck exactly; reps who learn the order learn the story.",
+      "Week 2 is the longest week because the walkthrough lives here. The slide order matches the customer deck exactly. Learn the order and you learn the story.",
     keyIdeas: [
-      "One platform, three Core Apps, one Intelligence Layer, one Unified Mobile, all wired by DTOP.",
-      "Every capability ties back to a customer outcome AND a step in the DTOP loop. Never tour features flat.",
-      "Approved terminology only: Generative AI, Recommended Actions, Operational Data. Never FOQA, FDM, ASAP.",
+      "One platform. Three Core Apps. One Intelligence Layer. One Unified Mobile. All wired by DTOP.",
+      "Tie every capability to a customer outcome AND a step in the DTOP loop. Never tour features flat.",
+      "Approved words only: Generative AI, Recommended Actions, Operational Data. Never FOQA, FDM, ASAP.",
       "The Week 2 capstone is a 60-second whiteboard: one use case, every capability, one DTOP loop.",
     ],
     terms: [T.intelligenceLayer, T.insights, T.recommendedActions, T.automation, T.unifiedMobile],
     facts: [
-      "15 slides in Week 2 — order matches the customer deck.",
-      "Capability stack: Intelligence Layer · Insights · Recommendations · Automation · Mobile.",
+      "15 slides in Week 2. The order matches the customer deck.",
+      "Capability stack: Intelligence Layer, Insights, Recommendations, Automation, Mobile.",
     ],
-    watchOut: "Don't list features. Tie every capability back to a use case and a DTOP step. No raw acronyms.",
+    watchOut: "Do not list features. Tie every capability to a use case and a DTOP step. No raw acronyms.",
     connectsTo: ["Week 1 · Foundation", "Platform Map"],
     checkYourself: [
       "Can I list the 15 slides in the correct order?",
-      "What are the five elements of the capability stack?",
-      "Which terms are banned in customer-facing conversation?",
+      "What are the five parts of the capability stack?",
+      "Which words are banned in customer talks?",
     ],
   },
 
   "se-week-2-overview": {
     inOneSentence:
-      "Comply365 is one Operational Performance Platform — three Core Apps, an Intelligence and Orchestration layer, one Unified Mobile shell, all wired by DTOP.",
+      "Comply365 is one Operational Performance Platform. Three Core Apps. One Intelligence and Orchestration layer. One Unified Mobile shell. All wired by DTOP.",
     whyItMatters:
-      "Before drilling into any single capability, the rep needs the whole-platform picture in their head. Without it, each capability sounds like a feature in a list rather than part of one system.",
+      "Before drilling into any one capability, the rep needs the whole-platform picture in their head. Without it, each capability sounds like a feature in a list, not part of one system.",
     keyIdeas: [
-      "Point at the diagram in this order: Core Apps · Intelligence Layer on top · Mobile as the frontline shell · DTOP wrapping all.",
-      "The differentiation only shows at the foundation — that's why the foundation comes first.",
-      "Say 'one platform' — never 'modules' or 'suite'.",
-      "Don't use FOQA/FDM/ASAP: say 'flight data signals' and 'crew-reported events'.",
+      "Point at the diagram in this order. Core Apps. Intelligence Layer on top. Mobile as the frontline shell. DTOP wrapping all of it.",
+      "Our edge only shows at the base. That is why the base comes first.",
+      "Say 'one platform'. Never 'modules' or 'suite'.",
+      "Do not use FOQA, FDM or ASAP. Say 'flight data signals' and 'crew-reported events'.",
     ],
     terms: [T.operationalData, T.coreApps, T.intelligenceLayer, T.unifiedMobile, T.dtop],
     facts: [
-      "Five visible elements: 3 Core Apps · Intelligence Layer · Unified Mobile.",
-      "Most prospects today run 5-7 disconnected tools — this slide reframes around one foundation.",
+      "Five visible parts: 3 Core Apps, Intelligence Layer, Unified Mobile.",
+      "Most buyers today run 5-7 separate tools. This slide moves the talk to one base.",
     ],
-    watchOut: "Don't say 'modules' or 'suite'. Don't use raw acronyms. Don't dive into any one box.",
+    watchOut: "Do not say 'modules' or 'suite'. Do not use raw acronyms. Do not dive into any one box.",
     connectsTo: ["Platform Insights & Intelligence", "DTOP"],
     checkYourself: [
-      "Can I point at the diagram in the right order, naming each element correctly?",
+      "Can I point at the diagram in the right order and name each part?",
       "Why does saying 'modules' or 'suite' damage the story?",
-      "What's the approved replacement for FOQA, FDM, ASAP?",
+      "What are the approved replacements for FOQA, FDM and ASAP?",
     ],
   },
 
   "se-platform-insights-intelligence": {
     inOneSentence:
-      "Any user asks an operational question in plain English; the platform returns a cross-domain answer with Recommended Actions in seconds — grounded in their connected Operational Data and a 4,000+ aviation knowledge graph.",
+      "Any user asks an operational question in plain English. The platform returns a cross-stack answer with Recommended Actions in seconds. It is grounded in their Operational Data and a 4,000+ aviation knowledge graph.",
     whyItMatters:
-      "This is the single most powerful capability story in the deck — and the moat. A director's two-week BI exercise collapses into seconds, with answers cited to source. The 90% vs 35% accuracy story lives here.",
+      "This is the strongest capability story in the deck, and the moat. A two-week BI job for a director collapses into seconds, with answers tied to source. The ~90% vs ~35% accuracy story lives here.",
     keyIdeas: [
-      "Not a chatbot bolted onto a dashboard — a domain-trained Intelligence Layer over connected Operational Data.",
-      "Slide example: three stations show DG handling spikes; all three correlate with overdue DG recurrent training; Recommended Actions are generated automatically.",
-      "Six stages: plain-English question → connected data → domain knowledge graph → domain-trained reasoning → guardrails/audit trail → cited answer + Recommended Actions.",
-      "Tenant isolation + source citations defuse the security objection before it's asked.",
+      "Not a chatbot bolted onto a dashboard. An aviation-trained Intelligence Layer that reads connected Operational Data.",
+      "Slide example: three stations show DG handling spikes. All three line up with overdue DG recurrent training. Recommended Actions are built on the spot.",
+      "Six steps: plain-English question, connected data, domain knowledge graph, domain-trained reasoning, guardrails and audit trail, cited answer with Recommended Actions.",
+      "Tenant isolation and source citations kill the security objection before it gets asked.",
     ],
     terms: [T.intelligenceLayer, T.operationalData, T.recommendedActions],
     facts: [
-      "~90% domain accuracy on aviation operational questions at L4-5 maturity vs ~35% for generic AI on the same data.",
+      "About 90% domain accuracy on aviation operational questions at L4-5 maturity vs about 35% for generic AI on the same data.",
       "Knowledge graph: 4,000+ aviation concepts across five maturity levels.",
-      "Every answer cited to regulation, procedure and training source.",
+      "Every answer tied back to a regulation, procedure or training source.",
     ],
     watchOut:
-      "Never call it a chatbot — call it an analyst that lives inside the apps the team already uses. Never use legacy 'CoAnalyst' in user-facing copy.",
+      "Never call it a chatbot. Call it an analyst that lives inside the apps the team already uses. Never use the legacy name 'CoAnalyst' in customer copy.",
     connectsTo: ["Intelligence Layer slide", "Insights", "Automation"],
     checkYourself: [
-      "Can I name the 90% vs 35% accuracy headline and where the number comes from?",
-      "Can I walk the six stages of the Intelligence Layer in order?",
-      "How do I defuse the data-security objection in one sentence?",
+      "Can I say the ~90% vs ~35% headline and where the number comes from?",
+      "Can I walk the six steps of the Intelligence Layer in order?",
+      "How do I kill the data-security objection in one sentence?",
     ],
   },
 
   "se-platform-wide-intelligence-usecases": {
     inOneSentence:
-      "Three cross-domain questions only the platform-wide Intelligence Layer can answer: safety-to-training correlation, the Dangerous Goods manual loop, and Part 145 audit readiness.",
+      "Three cross-stack questions only the platform-wide Intelligence Layer can answer. Safety to training links. The Dangerous Goods manual loop. Part 145 audit readiness.",
     whyItMatters:
-      "This is where the Intelligence Layer stops being a feature pitch and becomes a board-level capability. Each card is a real question that today takes weeks of BI tickets — and still comes back ambiguous.",
+      "This is where the Intelligence Layer stops being a feature pitch and becomes a board-level capability. Each card is a real question that today takes weeks of BI tickets, and the answer is still fuzzy.",
     keyIdeas: [
-      "Card 1 — Safety × Training: joins safety occurrences with competency and recurrency records; surfaces where rising hazard reports overlap with overdue training.",
-      "Card 2 — DG Manual Loop: traces a procedure revision through training assignments and back into safety occurrence trends, closing content-change to operational-outcome.",
-      "Card 3 — Part 145 Audit Readiness: cross-references audit scope against open findings, procedure currency, training compliance and recent safety signals; flags gaps and recommends actions.",
-      "Pick the ONE card that fits the room — Safety-and-Training for a Director of Safety, DG manual for a Head of Training, Part 145 for Quality.",
+      "Card 1 — Safety × Training: joins safety events with competency and recurrent records. Shows where rising hazard reports overlap with overdue training.",
+      "Card 2 — DG Manual Loop: traces a procedure change through training assignments and back into safety event trends. It closes the loop from content change to operational outcome.",
+      "Card 3 — Part 145 Audit Readiness: checks audit scope against open findings, procedure currency, training compliance and recent safety signals. It flags gaps and recommends actions.",
+      "Pick the ONE card that fits the room. Safety × Training for a Director of Safety. DG manual for a Head of Training. Part 145 for Quality.",
     ],
     terms: [T.intelligenceLayer, T.recommendedActions],
     facts: [
-      "No single Core App can answer these — they require the unified data substrate plus the Intelligence Layer.",
-      "Each card maps onto DTOP chips; cited evidence on every answer.",
+      "No single Core App can answer these. They need the joined data base plus the Intelligence Layer.",
+      "Each card maps onto DTOP chips. Every answer carries cited evidence.",
     ],
     watchOut:
-      "Don't walk all three cards. Pick the one that matches the room and walk it end to end.",
+      "Do not walk all three cards. Pick the one that matches the room and walk it end to end.",
     connectsTo: ["Platform Insights & Intelligence", "Intelligence Layer deep-dive"],
     checkYourself: [
       "Can I name the three cards and which persona each one fits?",
-      "Why doesn't a single Core App answer these questions today?",
-      "What does 'cited evidence on every answer' actually mean in practice?",
+      "Why can no single Core App answer these today?",
+      "What does 'cited evidence on every answer' mean in practice?",
     ],
   },
 
   "se-slide-coanalyst": {
     inOneSentence:
-      "One Intelligence Layer, three doorways: live today inside SafetyManager365, coming next inside ContentManager365 and TrainingManager365 — same engine, scoped to the app the user is in.",
+      "One Intelligence Layer, three doorways. Live today inside SafetyManager365. Coming next inside ContentManager365 and TrainingManager365. Same engine, scoped to the app the user is in.",
     whyItMatters:
-      "Once a rep shows the platform-wide intelligence story, every prospect asks 'does it also work inside the app my team already uses?' This slide proves yes, with a three-by-three grid and an honest roadmap.",
+      "Once a rep shows the platform-wide story, every buyer asks 'does it also work inside the app my team already uses?' This slide proves yes, with a three-by-three grid and an honest roadmap.",
     keyIdeas: [
-      "Three columns = Core Apps with rollout chips (SafetyManager365 now, Content & Training next).",
-      "Three rows = the capability each app gets: ask in plain English, cross-domain insight & root cause, cited answer + single next step.",
-      "Honest limitation: in-product, the layer reasons over that app's own data (single-domain). Platform-wide is when it reasons across all three.",
-      "Same engine, different scope — this framing defuses the 'is this real or roadmap?' objection.",
+      "Three columns = Core Apps with rollout chips. SafetyManager365 now. Content and Training next.",
+      "Three rows = what each app gets: ask in plain English; cross-stack insight and root cause; cited answer with a single next step.",
+      "Honest limit: in-product, the layer reasons over that app's own data. Platform-wide is when it reasons across all three.",
+      "Same engine, different scope. This framing kills the 'is this real or roadmap?' objection.",
     ],
     terms: [T.intelligenceLayer, T.coreApps],
     facts: [
-      "SafetyManager365: Intelligence Layer live today.",
-      "ContentManager365 + TrainingManager365: sequenced rollout.",
-      "Answer arrives where the work happens — never autonomous, always a human-confirmed next step.",
+      "SafetyManager365: Intelligence Layer is live today.",
+      "ContentManager365 and TrainingManager365: phased rollout.",
+      "The answer lands where the work happens. Never on its own. A human always confirms the next step.",
     ],
     watchOut:
-      "Don't quote the 90% vs 35% stat here — that lives on the Intelligence Layer vs Generic AI slide. Don't call it a chatbot.",
+      "Do not quote the ~90% vs ~35% stat here. That lives on the Intelligence Layer vs Generic AI slide. Do not call it a chatbot.",
     connectsTo: ["Platform Insights & Intelligence", "Tiers vs AI"],
     checkYourself: [
-      "Can I name what's live today vs sequenced rollout?",
-      "What's the honest difference between in-product and platform-wide intelligence?",
+      "Can I name what is live today vs phased rollout?",
+      "What is the honest gap between in-product and platform-wide intelligence?",
       "Why is 'same engine, different scope' the right framing?",
     ],
   },
