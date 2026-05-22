@@ -1,50 +1,74 @@
-## Field Kit PDF — page-by-page fix plan
+# Plain-English Rewrite — All Study Sheets (W1 + W2 + W3)
 
-After regenerating W1, W2 and W3 kits and inspecting all 120 pages, four real layout bugs are causing the "copy overruns the page" feel. Everything else (cover, study-sheet, glossary, closing drill) is rendering cleanly.
+## Goal
 
-All fixes are in `src/lib/fieldKitPdf.ts`. No data or React changes.
+Make every study sheet (the first page of each one-pager) read like a plain-English explainer a smart 11-year-old could follow. Short sentences. Everyday words. Same meaning, less jargon. Locked brand and proof terms stay exact.
 
-### Bug 1 — Bold tokens add visible gaps inside words
+## Scope
 
-Most visible. Every bolded token in transcript and study-sheet body copy renders with extra whitespace around it, e.g.
+One file: `src/data/salesEnablementStudyNotes.ts`. 53 slide entries. For each entry I rewrite every prose field:
 
-- `Comply365` → `Com p ly365`
-- `DTOP` → `D T O P`
-- `Unified Mobile` → `U n i fied M o b i le`
-- header `Comply365 · Sales Enablement Academy` → `Com p ly365 · Sales Enab lem ent Academ y`
+- `inOneSentence` — Takeaway
+- `whyItMatters` — Why the buyer cares
+- `keyIdeas[]` — Ideas to own
+- `terms[].definition` — Key terms (definitions only, term labels untouched)
+- `facts[]` — Proof points
+- `watchOut` — Watch-out
+- `connectsTo[]` — left alone (these are slide titles, not prose)
+- `checkYourself[]` — three questions per slide, simplified
 
-Cause: token-aware drawer (`drawSentence` / `wrapSentenceTokens` and the equivalent study-sheet helper) measures one token's width with the regular font, then switches to bold to draw the next, then measures the following whitespace with the new font. Width drift accumulates and the cursor advances past where the previous glyph actually ended.
+No edits to the PDF renderer, the React app, narration scripts, or any other data file.
 
-Fix: in the token drawer, measure **each token's width using the font it will be drawn in** (set font, then call `getTextWidth`, then `pdf.text` at the current cursor, then advance cursor by exactly that width). Drop any added padding around bold runs. Apply the same fix to the header/footer drawers that bold the brand name.
+## Writing rules I will follow
 
-### Bug 2 — Key terms wrap at the wrong indent
+1. Sentences ≤ 18 words. Aim for 10–14.
+2. One idea per sentence. Break compound sentences with periods, not semicolons or em-dashes.
+3. Active voice. Concrete nouns. No "leverage", "unlock", "drive", "enable", "robust", "holistic", "stack-agnostic".
+4. Replace abstractions with what a buyer actually sees or does. ("Outcome evidence" → "proof the fix worked".)
+5. Keep locked terms verbatim and unbolded by me (renderer handles bolding): Comply365, SafetyManager365, ContentManager365, TrainingManager365, DTOP, Detect, Trigger, Orchestrate, Prove, Operational Data, Intelligence Layer, Unified Mobile, Core Apps, Generative AI, Recommended Actions, Line-of-Sight, BrandNumber, Practice Center, ~90% / ~35%, $25–35B, Eurocontrol / IATA / SITA, FAA / EASA / CAA / CASA.
+6. Never re-introduce forbidden words: FOQA, FDM, ASAP, CoAnalyst, "modules", "suite", "digital transformation".
+7. Keep every fact, number and citation exactly as it stands today. Plain English ≠ softer claims.
+8. `checkYourself` stays as three questions, each answerable in one breath.
+9. Term definitions: one short sentence, no nested clauses.
 
-On study-sheet pages (e.g. W1 p5, W1 p13, W2 p15) the right column "Key terms" block renders each entry as `Term · definition…`. When the definition wraps, line 2 starts at the x-position right after `Term · `, producing a deep hanging indent that pushes text into / past the right margin (`…aviation knowledge graph…` ellipsis clip).
+## Approach
 
-Fix: in the key-terms renderer, after drawing the bold term and the `·` separator, wrap the definition with `splitTextToSize(def, columnWidth)` and draw every wrapped line at the column's left margin (not at the post-term x). Optional: put a 4pt left-pad on continuation lines to visually tie them to the term, but never indent past the term itself.
+1. Read the full file once, group entries by week.
+2. Rewrite in four passes so I keep voice consistent:
+   - Pass A: Week 1 (≈10 slides)
+   - Pass B: Week 2 (≈18 slides)
+   - Pass C: Week 3 (≈25 slides)
+   - Pass D: Final read-through for tone drift and locked-term checks.
+3. Each rewrite is a targeted patch — same keys, same shape, only string values change. No structural edits, no new fields, no field removals.
+4. After the rewrites, regenerate W1/W2/W3 PDFs with the existing script and rasterise a sample of pages per week to confirm:
+   - No overflow regression (lines fit the rail and column widths the renderer was tuned for).
+   - Locked terms still appear verbatim.
+   - Page counts within ±2 of current (W1=31, W2=37, W3=52).
 
-### Bug 3 — Cover "Locked terminology" card overflows
+## Before / after example (illustrative)
 
-Page 1 of every kit: the second column's `BrandNumber names · Comply365, SafetyManager365 (no spaces)` line runs off the right edge of the card and past the page-safe margin.
+Current `se-slide-shift.whyItMatters`:
+> "This is the only reason prospects take the meeting. Leadership is being asked for outcome evidence their record-keeping tools cannot produce, and the gap is structural — not a matter of effort or budget."
 
-Fix: shorten the value to `Comply365, SafetyManager365` and move `(no spaces)` either onto a second line (small muted text) or drop it — the rule is already in the term. Also recompute the two-column split using `(cardWidth - gutter) / 2` and wrap each value with `splitTextToSize` so any future entry can't overflow.
+Rewritten:
+> "This is why buyers take the meeting. Their bosses now want proof the fix worked, not just records that it was logged. Their old tools cannot produce that proof. It is a tool problem, not a team problem."
 
-### Bug 4 — Empty coach-beat bodies
+Current `se-slide-dtop.keyIdeas[0]`:
+> "Detect: fuses four signal sources (operational, safety, regulatory, training) into one Detect layer."
 
-W2 p16 beat 05 "How to land it." has only the LISTEN FOR footer and no body copy, leaving a card with a label and nothing else. A handful of other beats look the same.
+Rewritten:
+> "Detect pulls four signals into one place: operations, safety, rules, and training."
 
-Fix in `drawBeat`: if `beat.body` is empty/whitespace, fall back to the listen-for line as the body (and drop the LISTEN FOR footer), or skip the empty body entirely and tighten the card height in `measureBeat`. Don't render a card with no prose between the point and the footer.
+## Out of scope
 
-### Validation
+- No copy changes to React components, slide titles, narration scripts, or PDF layout code.
+- No changes to `connectsTo` strings (they are slide titles used as links).
+- No new slides, no removed slides, no re-ordering.
 
-1. Re-run `bun run scripts/genpdf.ts`.
-2. Rasterize W1/W2/W3 at 100dpi and inspect:
-   - W1 pages 1, 5, 6, 13, 16, 30
-   - W2 pages 1, 15, 16
-   - W3 pages 1, 52
-3. Confirm: no bold-token gaps, no key-terms text crossing the right margin, cover terminology fully inside the card, no empty beat bodies.
-4. Page count within ±2 of current (W1 = 31, W2 = 37, W3 = 52).
+## Risk and rollback
 
-### Out of scope
+Single-file change. If a rewrite reads worse than the original or trips the renderer, revert that one entry from git history. Locked-term verbatim list above is the gate for tone drift.
 
-No copywriting changes, no font swap, no React/app changes, no narration script edits.
+## Deliverable
+
+Updated `src/data/salesEnablementStudyNotes.ts` and three regenerated PDFs (W1, W2, W3) confirmed visually clean.
