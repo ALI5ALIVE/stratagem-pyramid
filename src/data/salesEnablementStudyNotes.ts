@@ -17,9 +17,13 @@ export interface StudyTerm {
 
 export type BeatLabel =
   | "Why this matters"
+  | "What's on the slide"
   | "Core message"
-  | "Pain & value"
+  | "The pain"
+  | "The value lever"
   | "How to deliver"
+  | "Roadmap honesty"
+  | "Discovery question"
   | "Transition";
 
 export interface KeyPoint {
