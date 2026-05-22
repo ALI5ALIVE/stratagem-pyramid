@@ -743,6 +743,38 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
   }
 };
 
+function drawFieldPanelCompact(
+  pdfInner: jsPDF,
+  x: number,
+  yPos: number,
+  w: number,
+  h: number,
+  key: FieldKey,
+  text: string,
+) {
+  const style = FIELD_STYLES[key];
+  setFill(pdfInner, style.soft);
+  pdfInner.roundedRect(x, yPos, w, h, 5, 5, "F");
+  setFill(pdfInner, style.accent);
+  pdfInner.rect(x, yPos, 3, h, "F");
+  setStroke(pdfInner, C.hairline);
+  pdfInner.setLineWidth(0.4);
+  pdfInner.roundedRect(x, yPos, w, h, 5, 5, "S");
+
+  pdfInner.setFont("helvetica", "bold");
+  pdfInner.setFontSize(7);
+  setText(pdfInner, style.accent);
+  pdfInner.text(style.label, x + 10, yPos + 14);
+
+  const isQuote = key === "sayItLikeThis";
+  pdfInner.setFont("helvetica", isQuote ? "bolditalic" : "normal");
+  pdfInner.setFontSize(9);
+  setText(pdfInner, C.slate);
+  const body = isQuote ? `\u201C${text}\u201D` : text;
+  const lines = clipLines(pdfInner.splitTextToSize(body, w - 22), Math.floor((h - 24) / 11));
+  pdfInner.text(lines, x + 10, yPos + 28, { lineHeightFactor: 1.3 });
+}
+
 export const downloadWeekFieldKit = (week: CoachCardWeek) => {
   const pdf = buildWeekFieldKitPdf(week);
   pdf.save(`Comply365-Week-${week.number}-${week.title.replace(/\s+/g, "-")}-Field-Kit.pdf`);
