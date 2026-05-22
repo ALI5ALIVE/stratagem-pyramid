@@ -1,16 +1,14 @@
 import { useMemo, useState } from "react";
 import { ChevronRight, Download, GraduationCap, Lightbulb, MessageSquareQuote, AlertTriangle, ArrowRightCircle, Loader2 } from "lucide-react";
-import jsPDF from "jspdf";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
   coachCardWeeks,
   getCoachCard,
-  salesEnablementCoachCards,
   type CoachCardWeek,
 } from "@/data/salesEnablementCoachCards";
-import { getSalesEnablementNarration } from "@/data/salesEnablementNarration";
+import { downloadWeekFieldKit } from "@/lib/fieldKitPdf";
 
 interface CoachCardPanelProps {
   activeSlideId: string | undefined;
@@ -41,113 +39,7 @@ const CoachCardPanel = ({ activeSlideId, activeSlideNumber }: CoachCardPanelProp
     setDownloading(target.id);
     const toastId = toast.loading(`Building Week ${target.number} Field Kit…`);
     try {
-      const pdf = new jsPDF({ unit: "pt", format: "a4" });
-      const pageW = pdf.internal.pageSize.getWidth();
-      const pageH = pdf.internal.pageSize.getHeight();
-      const margin = 48;
-      const contentW = pageW - margin * 2;
-      let y = margin;
-
-      const ensureSpace = (needed: number) => {
-        if (y + needed > pageH - margin) {
-          pdf.addPage();
-          y = margin;
-        }
-      };
-
-      // Cover
-      pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(10);
-      pdf.setTextColor(120);
-      pdf.text("COMPLY365 · SALES ENABLEMENT ACADEMY", margin, y);
-      y += 28;
-      pdf.setFontSize(28);
-      pdf.setTextColor(20);
-      pdf.text(`Week ${target.number} Field Kit`, margin, y);
-      y += 26;
-      pdf.setFont("helvetica", "normal");
-      pdf.setFontSize(14);
-      pdf.setTextColor(80);
-      pdf.text(target.title, margin, y);
-      y += 22;
-      pdf.setFontSize(10);
-      pdf.setTextColor(120);
-      pdf.text(
-        "Coach Cards — what to remember, what to say, what to avoid, how to bridge.",
-        margin,
-        y,
-      );
-      y += 14;
-      pdf.text("Rep-facing reference. Not for customer distribution.", margin, y);
-      y += 24;
-      pdf.setDrawColor(220);
-      pdf.line(margin, y, pageW - margin, y);
-      y += 18;
-
-      target.slideIds.forEach((slideId, idx) => {
-        const cc = salesEnablementCoachCards[slideId];
-        if (!cc) return;
-        const narration = getSalesEnablementNarration(slideId);
-        const title = narration?.title ?? slideId;
-
-        ensureSpace(160);
-
-        // Slide header
-        pdf.setFont("helvetica", "bold");
-        pdf.setFontSize(11);
-        pdf.setTextColor(120);
-        pdf.text(`${String(idx + 1).padStart(2, "0")}`, margin, y);
-        pdf.setFontSize(13);
-        pdf.setTextColor(20);
-        const titleLines = pdf.splitTextToSize(title, contentW - 30);
-        pdf.text(titleLines, margin + 28, y);
-        y += titleLines.length * 16 + 4;
-
-        const rows: Array<[string, string]> = [
-          ["Remember", cc.remember],
-          ["Say it", cc.sayItLikeThis],
-          ["Watch out", cc.watchOutFor],
-          ["Bridge", cc.bridge],
-        ];
-
-        pdf.setFont("helvetica", "normal");
-        rows.forEach(([label, text]) => {
-          const lines = pdf.splitTextToSize(text, contentW - 90);
-          const blockH = Math.max(14, lines.length * 12) + 4;
-          ensureSpace(blockH + 4);
-          pdf.setFont("helvetica", "bold");
-          pdf.setFontSize(9);
-          pdf.setTextColor(120);
-          pdf.text(label.toUpperCase(), margin + 4, y + 10);
-          pdf.setFont("helvetica", "normal");
-          pdf.setFontSize(10);
-          pdf.setTextColor(30);
-          pdf.text(lines, margin + 88, y + 10);
-          y += blockH;
-        });
-
-        y += 6;
-        pdf.setDrawColor(235);
-        pdf.line(margin, y, pageW - margin, y);
-        y += 14;
-      });
-
-      // Footer page numbers
-      const total = pdf.getNumberOfPages();
-      for (let i = 1; i <= total; i++) {
-        pdf.setPage(i);
-        pdf.setFont("helvetica", "normal");
-        pdf.setFontSize(8);
-        pdf.setTextColor(160);
-        pdf.text(
-          `Comply365 · Week ${target.number} Field Kit · ${target.title}`,
-          margin,
-          pageH - 18,
-        );
-        pdf.text(`${i} / ${total}`, pageW - margin, pageH - 18, { align: "right" });
-      }
-
-      pdf.save(`Comply365-Week-${target.number}-Field-Kit.pdf`);
+      downloadWeekFieldKit(target);
       toast.success(`Week ${target.number} Field Kit downloaded`, { id: toastId });
     } catch (err) {
       console.error(err);
