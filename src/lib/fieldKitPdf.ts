@@ -1238,13 +1238,13 @@ function renderSlidePagePortrait(
     slideIndex: number;
     slideCount: number;
     title: string;
-    learning: SlideLearning;
+    onePager: SlideOnePager;
     questions: string[];
     objections: Array<{ pushback: string; response: string }>;
     meta: SlideMeta;
   },
 ) {
-  const { week, slideIndex, slideCount, title, learning, questions, objections, meta } = opts;
+  const { week, slideIndex, slideCount, title, onePager, questions, objections, meta } = opts;
 
   pdf.addPage("a4", "portrait");
   const pageW = pdf.internal.pageSize.getWidth();
@@ -1293,18 +1293,18 @@ function renderSlidePagePortrait(
   pdf.line(margin, y, margin + 32, y);
   y += 28;
 
-  // ── Outcome — full width opening paragraph ─────────────────────────────────
+  // ── Summary — what this slide does (full-width briefing paragraph) ────────
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(7);
   setText(pdf, C.muted);
-  pdf.text("OUTCOME · WHAT THE REP CAN DO AFTER THIS SLIDE", margin, y);
+  pdf.text("WHAT THIS SLIDE DOES", margin, y);
   y += 14;
   pdf.setFont("helvetica", "normal");
-  pdf.setFontSize(12);
+  pdf.setFontSize(11);
   setText(pdf, C.slate);
-  const oLines = pdf.splitTextToSize(sanitize(learning.outcome), contentW);
-  pdf.text(oLines, margin, y, { lineHeightFactor: 1.35 });
-  y += oLines.length * 15 + 22;
+  const sLines = pdf.splitTextToSize(sanitize(onePager.summary), contentW);
+  pdf.text(sLines, margin, y, { lineHeightFactor: 1.4 });
+  y += sLines.length * 14 + 22;
 
   // Section rule
   setStroke(pdf, C.hairline);
@@ -1319,53 +1319,32 @@ function renderSlidePagePortrait(
   const rightW = contentW - leftW - colGap;
   const colTopY = y;
   const footerY = pageH - 56;
-  const colBottomY = footerY - 20;
 
-  // ── LEFT: Core idea → 3 beats → Say it like this ───────────────────────────
+  // ── LEFT: 3 key messages → Say it like this ───────────────────────────────
   let ly = colTopY;
 
-  // Core idea
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(7);
   setText(pdf, C.brand);
-  pdf.text("THE CORE IDEA", margin, ly);
-  ly += 14;
-  pdf.setFont("helvetica", "bold");
-  pdf.setFontSize(13);
-  setText(pdf, C.ink);
-  const coreLines = pdf.splitTextToSize(sanitize(learning.coreIdea), leftW);
-  pdf.text(coreLines, margin, ly, { lineHeightFactor: 1.3 });
-  ly += coreLines.length * 16 + 24;
-
-  // Teach beats (Hook / Frame / Proof) as numbered prose
-  pdf.setFont("helvetica", "bold");
-  pdf.setFontSize(7);
-  setText(pdf, C.muted);
-  pdf.text("HOW TO TEACH IT  ·  HOOK · FRAME · PROOF", margin, ly);
+  pdf.text("THE 3 KEY MESSAGES", margin, ly);
   ly += 16;
 
-  learning.teachBeats.forEach((b, i) => {
+  onePager.keyMessages.forEach((msg, i) => {
     const numStrB = String(i + 1).padStart(2, "0");
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(10);
     setText(pdf, C.brand);
     pdf.text(numStrB, margin, ly);
 
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(9);
-    setText(pdf, C.ink);
-    const labelText = b.label.toUpperCase();
-    pdf.text(labelText, margin + 22, ly);
-
     pdf.setFont("helvetica", "normal");
     pdf.setFontSize(10);
-    setText(pdf, C.slate);
-    const bodyLines = pdf.splitTextToSize(sanitize(b.text), leftW - 22);
-    pdf.text(bodyLines, margin + 22, ly + 14, { lineHeightFactor: 1.35 });
-    ly += 14 + bodyLines.length * 13 + 14;
+    setText(pdf, C.ink);
+    const bodyLines = pdf.splitTextToSize(sanitize(msg), leftW - 22);
+    pdf.text(bodyLines, margin + 22, ly, { lineHeightFactor: 1.4 });
+    ly += bodyLines.length * 13 + 12;
   });
 
-  ly += 8;
+  ly += 12;
 
   // Say it like this — pull quote with left rule, no fill
   pdf.setFont("helvetica", "bold");
@@ -1379,45 +1358,34 @@ function renderSlidePagePortrait(
   pdf.setFont("helvetica", "italic");
   pdf.setFontSize(11);
   setText(pdf, C.ink);
-  const qLines = pdf.splitTextToSize(`"${sanitize(learning.sayLikeThis)}"`, quoteW);
+  const qLines = pdf.splitTextToSize(`"${sanitize(onePager.sayLikeThis)}"`, quoteW);
   const quoteH = qLines.length * 14 + 6;
   setFill(pdf, C.brand);
   pdf.rect(margin, ly - 10, 2, quoteH, "F");
   pdf.text(qLines, quoteX, ly, { lineHeightFactor: 1.4 });
 
-  // ── RIGHT: Discovery wedge → Objections ────────────────────────────────────
+  // ── RIGHT: Discovery questions → Objections ───────────────────────────────
   let ry = colTopY;
 
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(7);
   setText(pdf, C.brand);
-  pdf.text("DISCOVERY WEDGE", rightX, ry);
+  pdf.text("DISCOVERY QUESTIONS", rightX, ry);
   ry += 14;
-  const wedge = questions[0] ? sanitize(questions[0]) : "";
-  if (wedge) {
-    pdf.setFont("helvetica", "italic");
-    pdf.setFontSize(11);
-    setText(pdf, C.ink);
-    const wLines = pdf.splitTextToSize(`"${wedge}"`, rightW);
-    pdf.text(wLines, rightX, ry, { lineHeightFactor: 1.35 });
-    ry += wLines.length * 14 + 6;
-  }
-
-  if (questions[1]) {
-    pdf.setFont("helvetica", "normal");
+  questions.slice(0, 3).forEach((q, i) => {
+    pdf.setFont("helvetica", "bold");
     pdf.setFontSize(9);
-    setText(pdf, C.muted);
-    const altLabel = "Follow-up: ";
-    pdf.text(altLabel, rightX, ry + 2);
-    const altW = pdf.getTextWidth(altLabel);
+    setText(pdf, C.brand);
+    pdf.text(`Q${i + 1}`, rightX, ry);
     pdf.setFont("helvetica", "italic");
-    setText(pdf, C.slate);
-    const altLines = pdf.splitTextToSize(sanitize(questions[1]), rightW - altW);
-    pdf.text(altLines, rightX + altW, ry + 2, { lineHeightFactor: 1.35 });
-    ry += altLines.length * 12 + 10;
-  }
+    pdf.setFontSize(10);
+    setText(pdf, C.ink);
+    const qLs = pdf.splitTextToSize(`"${sanitize(q)}"`, rightW - 22);
+    pdf.text(qLs, rightX + 22, ry, { lineHeightFactor: 1.4 });
+    ry += qLs.length * 13 + 8;
+  });
 
-  ry += 14;
+  ry += 8;
   setStroke(pdf, C.hairline);
   pdf.setLineWidth(0.5);
   pdf.line(rightX, ry, rightX + rightW, ry);
@@ -1438,23 +1406,23 @@ function renderSlidePagePortrait(
     }
     // Pushback in bold
     pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(10);
+    pdf.setFontSize(9.5);
     setText(pdf, C.ink);
     const pLines = pdf.splitTextToSize(sanitize(o.pushback), rightW);
     pdf.text(pLines, rightX, ry, { lineHeightFactor: 1.3 });
-    ry += pLines.length * 13 + 6;
+    ry += pLines.length * 12 + 6;
 
     // Response with chevron prefix
     pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(10);
+    pdf.setFontSize(9.5);
     setText(pdf, C.brand);
     pdf.text(">", rightX, ry);
     pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(10);
+    pdf.setFontSize(9.5);
     setText(pdf, C.slate);
     const rLines = pdf.splitTextToSize(sanitize(o.response), rightW - 12);
-    pdf.text(rLines, rightX + 12, ry, { lineHeightFactor: 1.35 });
-    ry += rLines.length * 13 + 14;
+    pdf.text(rLines, rightX + 12, ry, { lineHeightFactor: 1.4 });
+    ry += rLines.length * 12 + 14;
   });
 
   // ── Footer ─────────────────────────────────────────────────────────────────
