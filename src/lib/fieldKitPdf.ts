@@ -699,9 +699,11 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
       ly += coreLines.length * 12 + 12;
     }
 
-    // Reserve room for the two bottom-left blocks: whiteboard + verbatim lift
-    const wbBlockH = 64;
+    // Reserve room for the two bottom-left blocks: whiteboard + verbatim lift.
+    // When there's no verbatim, expand whiteboard to consume the space.
+    const baseWbH = 64;
     const liftBlockH = verbatim ? 58 : 0;
+    const wbBlockH = verbatim ? baseWbH : baseWbH + 58 + 8;
     const bottomLeftStackH = wbBlockH + (liftBlockH ? liftBlockH + 8 : 0);
     const summaryBottom = colBottomY - bottomLeftStackH - 14;
 
