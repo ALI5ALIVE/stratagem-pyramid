@@ -1,49 +1,30 @@
-## AI Infographic Page
+## Fix PPTX arrows
 
-Add a new route `/ai-infographic` that recreates the uploaded Comply365 AI Solutions infographic as a polished, dark-themed web page, with a button to download the original 1-slide PPTX.
+The downloaded PPTX shows arrows that don't match the source slide. Two issues:
 
-### Content (from the uploaded slide)
+### 1. Wrong arrow targets
 
-Four columns mapped left-to-right with arrows from AI Solutions into the matching capability rows:
+The source slide only draws one short arrow per AI solution, pointing right into the ContentManager365 column. My data file added cross-column targets (Training Records, Safety Reports, etc.) that aren't visible in the source.
 
-- **AI Solutions** — CoAnalyst, CoAuthor, Qvery BI & Dashboards, AI Assistant, CoTrainer, AI Agents, plus a "No AI" tier at the bottom
-- **ContentManager365** — Forms, Authoring, Reporting, Distribution
-- **TrainingManager365** — Training Records, Reporting, Scheduling, Learning Manager, Qualifications
-- **SafetyManager365** — Safety Reports, Quality Management, Risk Management, Change Management
-
-Mapping arrows (preserved from source):
-- CoAnalyst → Forms / Training Records / Safety Reports
+Correct source mapping (1 arrow each):
+- CoAnalyst → Forms
 - CoAuthor → Authoring
-- Qvery BI & Dashboards → Reporting (both)
+- Qvery BI & Dashboards → Reporting (ContentManager365)
 - AI Assistant → Distribution
-- CoTrainer → Scheduling
-- AI Agents → Learning Manager
+- CoTrainer → (no target — arrow stub only)
+- AI Agents → (no target — arrow stub only)
+- No AI → (no arrow)
 
-"No AI" tier groups: Qualifications, Quality Management, Risk Management, Change Management.
+### 2. pptxgenjs line bug
 
-Names kept exactly as in the source PPTX per your answer (overriding the usual memory rule for this page only).
+`slide.addShape("line", { w: dx, h: dy })` fails when `dx` or `dy` is negative — the arrow renders backwards or invisibly. Fix by using absolute `w`/`h` plus `flipH` / `flipV` based on direction sign.
 
-### Page structure
+### Changes
 
-1. Header: kicker "Comply365 Platform", H1 "AI Capabilities", short subtitle, and a `Download PPTX` button (top right).
-2. Four-column responsive grid recreating the infographic with SVG connector arrows between AI Solutions and each product column. Collapses to a stacked accordion on mobile.
-3. Footer with Comply365 logo and small legend (AI tiers vs No AI).
-
-### PPTX export
-
-Clicking `Download PPTX` triggers a `pptxgenjs` build (`src/exporters/pptx/buildAIInfographicDeck.ts`) that renders a single 16:9 slide matching the source layout — same four columns, same labels, same arrow connectors, same Comply365 footer. Registered as a new `DeckId` (`"ai-infographic"`) in `src/exporters/pptx/index.ts` and downloaded via the existing `DeckPPTXExportButton`.
-
-### Files
-
-- `src/pages/AIInfographic.tsx` — new page
-- `src/components/ai-infographic/AICapabilitiesMatrix.tsx` — the 4-column visual
-- `src/exporters/pptx/buildAIInfographicDeck.ts` — PPTX builder
-- `src/exporters/pptx/index.ts` — register new `DeckId`
-- `src/App.tsx` — add `<Route path="/ai-infographic" element={<AIInfographic />} />`
-- `src/components/AppSidebar.tsx` — add nav link (if sidebar lists similar pages)
+- `src/data/aiInfographic.ts` — reduce each solution's `targets` to the single matching ContentManager365 row; CoTrainer / AI Agents / No AI get `targets: []`.
+- `src/exporters/pptx/buildAIInfographicDeck.ts` — rewrite arrow drawing helper to use abs dimensions + `flipH`/`flipV`. Also draw a short "stub" arrow for solutions with no target (matches source visual).
+- `src/components/ai-infographic/AICapabilitiesMatrix.tsx` — web matrix already uses SVG paths so it will update automatically from the data change. No other code edits needed.
 
 ### Out of scope
 
-- Per-solution detail pages
-- Narration / audio
-- Editing or rewriting the source labels (kept verbatim)
+Visual styling of the page; only the arrow mapping + PPTX rendering bug.

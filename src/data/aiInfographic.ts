@@ -15,19 +15,19 @@ export interface ProductColumn {
 }
 
 export const aiSolutions: AISolution[] = [
-  { id: "coanalyst", label: "CoAnalyst", tier: "ai", targets: ["c-forms", "t-records", "s-reports"] },
+  { id: "coanalyst", label: "CoAnalyst", tier: "ai", targets: ["c-forms"] },
   { id: "coauthor", label: "CoAuthor", tier: "ai", targets: ["c-authoring"] },
-  { id: "qvery", label: "Qvery BI & Dashboards", tier: "ai", targets: ["c-reporting", "t-reporting"] },
+  { id: "qvery", label: "Qvery BI & Dashboards", tier: "ai", targets: ["c-reporting"] },
   { id: "assistant", label: "AI Assistant", tier: "ai", targets: ["c-distribution"] },
-  { id: "cotrainer", label: "CoTrainer", tier: "ai", targets: ["t-scheduling"] },
-  { id: "agents", label: "AI Agents", tier: "ai", targets: ["t-learning"] },
+  { id: "cotrainer", label: "CoTrainer", tier: "ai", targets: [] },
+  { id: "agents", label: "AI Agents", tier: "ai", targets: [] },
 ];
 
 export const noAISolution: AISolution = {
   id: "noai",
   label: "No AI",
   tier: "noai",
-  targets: ["t-qualifications", "s-quality", "s-risk", "s-change"],
+  targets: [],
 };
 
 export const productColumns: ProductColumn[] = [
