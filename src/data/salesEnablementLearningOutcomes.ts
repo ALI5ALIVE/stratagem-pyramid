@@ -499,45 +499,55 @@ const fromNarration = (
     takeAfter(script, /value lever(?:[^.:]*[:.])\s*/i) ??
     takeAfter(script, /the value[^.:]*[:.]\s*/i);
 
-  // Summary: first two non-filler sentences if no "core message:" anchor.
+  const capFirst = (s: string) => (s ? s[0].toUpperCase() + s.slice(1) : s);
+
+  // Build the summary first, then exclude every sentence used by the summary
+  // from the keyMessages pool so the two blocks never echo each other.
   let summary: string;
+  const usedInSummary = new Set<string>();
+  const markUsed = (s: string) =>
+    usedInSummary.add(norm(s).toLowerCase().slice(0, 60));
+
   if (core) {
-    summary = core;
+    const parts: string[] = [capFirst(core)];
+    markUsed(core);
     if (pain && norm(pain).toLowerCase() !== norm(core).toLowerCase()) {
-      summary = `${core} ${pain}`;
+      parts.push(capFirst(pain));
+      markUsed(pain);
     }
+    summary = parts.join(" ");
   } else {
     const sentences = splitSentences(clean).slice(0, 2);
+    sentences.forEach(markUsed);
     summary = sentences.join(" ") || weekFallback.summary;
   }
 
-  const candidates = dedupePreserving([
-    core ?? cc.remember,
-    value ?? pain ?? cc.bridge,
-    pain && value ? cc.remember : (cc.bridge !== cc.remember ? cc.bridge : cc.watchOutFor),
-  ].filter((x): x is string => !!x));
-
-  // Pad to exactly 3 from coach card fields, skipping anything that duplicates
-  // sayLikeThis or summary.
-  const blockers = [cc.sayItLikeThis, summary].map((s) =>
+  const blockers = [cc.sayItLikeThis, ...usedInSummary, summary].map((s) =>
     norm(s).toLowerCase().slice(0, 60),
   );
-  const isDup = (s: string) =>
-    blockers.some((b) => b && norm(s).toLowerCase().slice(0, 60) === b);
+  const isDup = (s: string) => {
+    const k = norm(s).toLowerCase().slice(0, 60);
+    return !k || blockers.includes(k);
+  };
 
+  // KeyMessages pool: prefer coach-card lines (clean, complete sentences) and
+  // value-lever from script if it wasn't pulled into the summary.
   const pool = [
-    ...candidates,
     cc.remember,
+    value && norm(value).toLowerCase() !== norm(cc.remember).toLowerCase()
+      ? capFirst(value)
+      : null,
     cc.bridge,
     cc.watchOutFor,
     ...weekFallback.keyMessages,
-  ];
+  ].filter((x): x is string => !!x);
+
   const finalMessages: string[] = [];
   for (const m of pool) {
     if (finalMessages.length === 3) break;
-    if (!m || isDup(m)) continue;
-    const key = norm(m).toLowerCase().slice(0, 60);
-    if (finalMessages.some((x) => norm(x).toLowerCase().slice(0, 60) === key)) continue;
+    if (isDup(m)) continue;
+    const k = norm(m).toLowerCase().slice(0, 60);
+    if (finalMessages.some((x) => norm(x).toLowerCase().slice(0, 60) === k)) continue;
     finalMessages.push(norm(m));
   }
   while (finalMessages.length < 3) {
