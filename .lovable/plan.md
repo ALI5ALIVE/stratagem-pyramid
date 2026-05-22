@@ -1,127 +1,104 @@
-## Goals
+## Goal
 
-Polish the Sales Enablement Field Kit PDF on four specific issues:
-1. Stop shouting — fix copy that is wrongly upper-cased.
-2. Move "Check Yourself" higher on the study sheet so reps see it before the fold.
-3. Reformat the Contents ("Week at a glance") page so it's scannable, not a flat list.
-4. Reformat each transcript page so it reads as structured paragraphs, not a wall of text.
+Reformat the three week intro slides (W1/W2/W3) so the "What you'll learn" block reads as a scannable, outcome-led checklist instead of a 70+ word run-on sentence. Visual hierarchy: title → tight intent line → 4–6 measurable outcomes → existing "up next" chips.
 
-Scope is `src/lib/fieldKitPdf.ts` only. No data files change.
+Affects only the week divider slides at the start of each week — not the per-slide narration or PDFs.
 
 ---
 
-## 1. Copy casing pass
+## Visual layout
 
-Today, every slide title is force-`toUpperCase()`'d on both the study sheet (line 1310) and the transcript page (line 1679, 1702). Section labels are also forced caps. That looks like shouting and breaks BrandNumber casing rules (e.g. "Comply365").
+```text
+┌────────────────────────────────────────────────────────────┐
+│ [Week 2] [Capabilities] [~16 min]                          │
+│                                                            │
+│ How the capabilities fit together                          │
+│ The intent line — one sentence, the spine of the week.     │
+│                                                            │
+│ ┌── What you'll be able to do by the end of Week 2 ──────┐ │
+│ │ ✓  Walk the Platform map end to end                    │ │
+│ │ ✓  Position Insights & Intelligence as platform-wide   │ │
+│ │ ✓  Defend ~90% domain vs ~35% generic AI               │ │
+│ │ ✓  Anchor Regulation Management as end-to-end proof    │ │
+│ │ ✓  Close the loop with Unified Mobile on-device        │ │
+│ │ ✓  Tell the whole story as one DTOP loop in 60s        │ │
+│ └────────────────────────────────────────────────────────┘ │
+│                                                            │
+│ Up next  [chip] [chip] [chip] …                            │
+└────────────────────────────────────────────────────────────┘
+```
 
-Changes:
-- **Slide titles** — render in Title Case as authored (drop `title.toUpperCase()` in `renderSlidePagePortrait` and `renderSlideTranscriptPage`). Keep the numeral big and brand-blue; title goes 14pt bold ink, sentence case as written.
-- **Header strip** — replace `"COMPLY365 · SALES ENABLEMENT ACADEMY"` (line 1278, 1647) with `"Comply365 · Sales Enablement Academy"` at 7.5pt tracked (use letter-spacing illusion via spaced separator, not real caps).
-- **Section labels** (`TAKEAWAY`, `WHY A BUYER CARES`, `WATCH-OUT`, `CONNECTS`, `WHAT'S ON THE SLIDE`, `THE IDEAS YOU MUST OWN`, `KEY TERMS`, `DEFENSIBLE FACTS`, `CHECK YOURSELF`, `TRANSCRIPT · COACH NARRATION (VERBATIM)`) — keep as small-caps style (these are intentional eyebrow labels) BUT shorten and soften:
-  - `THE IDEAS YOU MUST OWN` → `Ideas to own`
-  - `WHAT'S ON THE SLIDE` → `What's on screen`
-  - `WHY A BUYER CARES` → `Why the buyer cares`
-  - `DEFENSIBLE FACTS` → `Proof points`
-  - `TRANSCRIPT · COACH NARRATION (VERBATIM)` → `Coach transcript · verbatim`
-  - `CHECK YOURSELF` → `Check yourself`
-  - All rendered at 7pt bold, 0.6pt letter spacing via the existing `drawRailLabel`, no `.toUpperCase()` on the underlying string.
-- **Footer lines** — change `"Rep-facing · Not for customer distribution"` and `"Read once to memorise · do not read live on a call"` to sentence case (already are). Audit `Week ${n} · Study sheet` etc. — already fine.
-- **Cover page** — change `WEEK ${n}  ·  FIELD KIT` (line 550) and `HOW TO USE THIS KIT` (line 575), `CARD LEGEND` (line 603), `LOCKED TERMINOLOGY — USE THESE, NEVER THE OTHERS` (line 628) to softer Title/sentence case eyebrows. Keep "Comply365" cased correctly (line 541 currently `"COMPLY365"`).
-
-Acceptance: zero `.toUpperCase()` calls applied to user-authored copy (titles, body, narration). The only caps that remain are intentional 7pt eyebrow labels via the helper.
-
----
-
-## 2. Lift "Check Yourself" up the page
-
-Today, Check Yourself is pinned to `footerY - checkH - 6` — bottom of page, below the entire 2-column body (lines 1438–1467). On a short slide, it floats far below the content; on a dense slide, reps don't see it until they finish reading.
-
-Change in `renderSlidePagePortrait`:
-- Promote Check Yourself to sit **immediately under the title rule** (after the brand 28×2 underline, before the 2-column body).
-- New stack: header → numeral + title → brand rule → **Check Yourself strip (compact, 26pt)** → 2-column body (rail + right column) → footer.
-- The strip is one row: small "Check yourself" eyebrow, then 3 inline checkboxes with truncated question text (max 2 lines, clipped). Background switches from `C.offwhite` panel to a hairline-bordered light rule (`0.5pt` top + bottom, no fill) so it doesn't dominate above the body.
-- `bodyTop` becomes `y + checkH + 12`. `bodyBottom = footerY - 12` (the bottom reserve is freed because Check Yourself moved up). Body now uses the full vertical span.
-- Keep the same 3-question slot logic; recompute `labelW` against the new shorter eyebrow.
-
-Acceptance: Check Yourself sits in the top ~25% of every page directly under the title, never below the rail/column content.
+Each outcome is verb-led, ≤ 9 words, one line. Six outcomes max per week so nothing wraps.
 
 ---
 
-## 3. Contents page reformat ("Week at a glance")
+## Changes
 
-Today (lines 654–711) it's a flat vertical list of 18 rows, each row: 2-digit index + title + 2-line `remember` line + hairline. By slide 12+ it pages over and looks like a spreadsheet.
+### 1. `src/components/sales-enablement-slides/SEModuleDivider.tsx`
 
-Change to a **two-column scannable index** with grouping:
-- Header unchanged: "Week at a glance" + brand rule.
-- Intro line stays.
-- Body splits into 2 columns. Each entry becomes a compact tile (no fill, hairline left rule in brand colour 2pt wide):
-  - Top row: `01` (8pt subtle) · slide title (10.5pt bold ink, Title Case, clipped to 2 lines)
-  - Below: one-line takeaway (9pt muted, 1 line clipped, ellipsis)
-  - Bottom-right of tile: a tiny DTOP/footprint chip when `meta.dtop` exists (7pt brand chip)
-- Tile height ~52pt. 2 columns × ~9 tiles = 18 slides on one A4 page. W2 (8 slides) and W3 (15 slides) also fit.
-- If a week ever exceeds 18, second contents page is added with the same grid.
-- One-liner takeaway sourced from `studyNote.inOneSentence` (preferred) falling back to `cc.remember`, sanitised and clipped.
+- Add `intent?: string` (one-line spine) and `outcomes?: string[]` props alongside the existing `learningGoal`. Keep `learningGoal` as a fallback so any caller that hasn't migrated still renders.
+- Replace the single-paragraph "What you'll learn" block with:
+  - An eyebrow `What you'll be able to do by the end of Week N`
+  - A 2-column grid (md+) of outcomes, each with a small emerald `CheckCircle2` icon
+  - On `<md`, collapses to a single column
+  - Optional `intent` sentence sits between the title and the outcomes box at 16pt muted-foreground
+- Keep the emerald border + soft fill so it still reads as the learning panel.
+- If `outcomes` is empty, fall back to rendering `learningGoal` as today (no regression for other callers).
 
-Acceptance: contents page reads as a 2-column scannable grid, every slide visible on a single page for W1 (18), W2 (8), W3 (15).
+### 2. `src/pages/SalesEnablement.tsx` — `weekProps`
 
----
+Replace the wall-of-text `learningGoal` for w1/w2/w3 with a short `intent` and an `outcomes` array. Proposed copy (mirrors today's content, broken into measurable verbs):
 
-## 4. Transcript page — break up the wall of text
+**W1 — Foundation**
+- intent: `Set the scene, put the platform in plain English, and learn the operating loop that makes everything land.`
+- outcomes:
+  - `Explain why the market is shifting in one minute`
+  - `Deliver the one-sentence platform pitch from memory`
+  - `Walk the DTOP loop on a whiteboard, in order`
+  - `Name the four signal sources behind Detect`
+  - `Name the four capability bands in canonical order`
+  - `Run the Week 1 recap as a talk track, not a slide read`
 
-Today (lines 1748–onwards) paragraphs are dumped at 10pt with 14pt leading, full content width (~515pt). Long paragraphs become wall-of-text blocks.
+**W2 — Capabilities**
+- intent: `Walk the platform map and prove why the Intelligence Layer beats generic AI.`
+- outcomes:
+  - `Walk the Platform map end to end`
+  - `Position Insights & Intelligence as platform-wide`
+  - `Tell the Intelligence stack: Insights → Recommendations → Automation`
+  - `Defend the ~90% domain vs ~35% generic AI headline`
+  - `Anchor Regulation Management as end-to-end proof`
+  - `Close the loop with Unified Mobile on-device`
+  - `Tell the whole story as one DTOP loop in 60 seconds`
 
-Changes in `renderSlideTranscriptPage`:
-- **Narrower measure for readability** — use a single column constrained to ~440pt (centered) instead of full ~515pt. Better reading line length (~70 chars).
-- **Paragraph break sweetener** — after each paragraph add 8pt vertical air (currently only line leading carries over).
-- **Drop cap for paragraph 1** — first paragraph gets a 2-line drop initial in brand blue (16pt bold), rest of body at 10pt slate. Visually anchors the start.
-- **Pull quote every ~4 paragraphs** — extract the first sentence of paragraph index 3 (and 7 if present) and render it as a 12pt italic ink pull-quote with a 2pt brand left bar, 10pt padding either side. Pulls air into the page and breaks the grey block.
-- **Section dividers** — when a paragraph starts with a coach-script cue word (the existing `CUE_OPENERS` like `"core message:"`, `"say it like this:"`, `"watch out for:"`, `"bridge to next:"`, `"why this matters:"`), strip the cue and render a one-line eyebrow above the paragraph (`Core message`, `Say it like this`, etc.) in 7pt brand. This converts the 5-part coach format into visible sections instead of running prose.
-- **Justification** — left-aligned (current). Do NOT justify, that creates rivers at this width.
-- **Continuation page** — already supported; header eyebrow becomes "Coach transcript · continued" (sentence case).
+**W3 — Sell & Win**
+- intent: `Pick the account, run the call, handle the objections, book the Strategy & Vision Session.`
+- outcomes:
+  - `Pick high-propensity accounts to chase`
+  - `Run a discovery call that surfaces the wedge`
+  - `Pull the right discovery questions for the room`
+  - `Read the persona and adapt on the fly`
+  - `Handle the top 8 objections without flinching`
+  - `Position against any competitor in the DTOP loop`
+  - `Land the scripted next-step language every time`
+  - `Put the 3-hour Strategy & Vision Session on the table`
 
-Acceptance: a typical 350-word transcript page now reads as a narrow column with a drop cap, 1–2 eyebrow section labels, and at most one pull quote; no paragraph runs more than ~6 lines without visual relief.
+(W3 has 8 outcomes — render in 2 columns so it still fits without a wall.)
 
----
+### 3. Out of scope
 
-## Technical changes
-
-`src/lib/fieldKitPdf.ts` only. No data files touched.
-
-1. **`renderSlidePagePortrait`**
-   - Remove `title.toUpperCase()`; render title as-is.
-   - Move Check Yourself block above the body; replace `roundedRect` fill with hairline rule-only style.
-   - Recompute `bodyTop` / `bodyBottom`; drop the bottom reserve.
-   - Rename eyebrow labels per §1.
-
-2. **`renderSlideTranscriptPage`**
-   - Remove `title.toUpperCase()` (two places).
-   - Switch body to a centered ~440pt column.
-   - Add `drawDropCap(pdf, x, y, char)` helper; apply to paragraph 0.
-   - Add `drawPullQuote(pdf, x, y, w, text)` helper; apply on para 3 (and 7 if exists).
-   - Detect cue-opener paragraphs (reuse the existing `CUE_OPENERS` regex set), strip the cue, prepend a 7pt brand eyebrow.
-   - Add 8pt paragraph spacing.
-
-3. **Week at a glance (lines 651–713)**
-   - Rewrite as a 2-column tile grid (`tileW = contentW/2 - 8`, `tileH ≈ 52`).
-   - Use `studyNote.inOneSentence` (already imported via `buildStudyNote`) as the takeaway line per tile.
-   - Add a small DTOP/footprint chip when `meta.dtop` is set (reuse existing `SLIDE_META` lookup — already loaded for slide pages).
-
-4. **Cover page (lines 540–648)**
-   - Re-case the brand wordmark, eyebrow chips, and section labels per §1 (`Comply365`, `Week ${n} · Field Kit`, `How to use this kit`, `Card legend`, `Locked terminology — use these, never the others`).
-
-5. **Out of scope**
-   - `salesEnablementStudyNotes.ts`, `salesEnablementNarration.ts`, `salesEnablementCoachCards.ts`, `salesEnablementSlideAids.ts` — untouched.
-   - Glossary appendix, Sell & Win appendix — untouched.
-   - PPTX exporters, slide React components — untouched.
+- `salesEnablementNarration.ts` weekly narration scripts — untouched (those are spoken, paragraph form is fine there).
+- `salesEnablementStudyNotes.ts` — untouched.
+- Field-kit PDF — untouched.
+- Per-slide divider props for any non-week modules — untouched (they use `learningGoal` and will keep working via the fallback path).
 
 ---
 
 ## Validation
 
-1. Generate W1, W2, W3 PDFs via `scripts/genpdf.ts` (or the UI download buttons on `/sales-enablement`).
-2. Render each page to PNG at 150 dpi and inspect:
-   - No accidental ALL-CAPS in titles or body copy on any page.
-   - Check Yourself sits directly under the title strip on every slide page.
-   - Contents page fits on one A4 for W1/W2/W3 with no overflow.
-   - Transcript pages have a drop cap, visible section eyebrows where cues exist, no paragraph blob exceeds ~6 lines.
-3. Spot-check Comply365 / SafetyManager365 / ContentManager365 casing in titles and contents.
+1. Open `/sales-enablement` and step through the W1, W2, W3 divider slides at 1141×786 (current viewport) and at a narrower mobile width.
+2. Confirm:
+   - No paragraph wider than ~10 words on any outcome row.
+   - No outcome wraps to a third line.
+   - Title + intent + outcome panel + Up-next chips all fit on one screen without scrolling.
+   - Emerald checklist icons render and align to the first line of each outcome.
+3. Confirm any other module dividers that still pass `learningGoal` keep rendering exactly as before.
