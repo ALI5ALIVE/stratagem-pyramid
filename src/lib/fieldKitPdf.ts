@@ -4,6 +4,13 @@ import {
   type CoachCardWeek,
 } from "@/data/salesEnablementCoachCards";
 import { getSalesEnablementNarration } from "@/data/salesEnablementNarration";
+import {
+  SLIDE_DISCOVERY,
+  SLIDE_OBJECTIONS,
+  WEEK_DISCOVERY_FALLBACK,
+  WEEK_OBJECTION_FALLBACK,
+  type SlideObjection,
+} from "@/data/salesEnablementSlideAids";
 
 // ─── Brand tokens (RGB tuples for jsPDF) ─────────────────────────────────────
 const C = {
@@ -248,6 +255,40 @@ const clipLines = (lines: string[], max: number): string[] => {
   const last = kept[max - 1];
   kept[max - 1] = last.replace(/[\s,.;:]*$/, "") + "…";
   return kept;
+};
+
+/** Merge narration-extracted + curated discovery questions, dedupe, cap 3. */
+const buildDiscoveryQuestions = (
+  script: string | undefined,
+  slideId: string,
+  weekId: CoachCardWeek["id"],
+): string[] => {
+  const fromScript: string[] = [];
+  if (script) {
+    const qMatch = script.match(/['"]([^'".?]{15,140}\?)['"]/g);
+    if (qMatch) {
+      qMatch.forEach((q) => fromScript.push(q.replace(/^['"]|['"]$/g, "").trim()));
+    }
+  }
+  const curated = SLIDE_DISCOVERY[slideId] ?? [];
+  const merged: string[] = [];
+  const seen = new Set<string>();
+  [...curated, ...fromScript].forEach((q) => {
+    const norm = q.toLowerCase().replace(/[^a-z0-9? ]/g, "").trim();
+    if (!seen.has(norm) && q.length <= 160) {
+      seen.add(norm);
+      merged.push(q);
+    }
+  });
+  if (merged.length === 0) merged.push(...WEEK_DISCOVERY_FALLBACK[weekId]);
+  return merged.slice(0, 3);
+};
+
+/** Per-slide objections with per-week fallback. */
+const buildObjections = (slideId: string, weekId: CoachCardWeek["id"]): SlideObjection[] => {
+  const curated = SLIDE_OBJECTIONS[slideId];
+  if (curated && curated.length) return curated.slice(0, 2);
+  return WEEK_OBJECTION_FALLBACK[weekId].slice(0, 2);
 };
 
 // ─── PDF Builder ─────────────────────────────────────────────────────────────
