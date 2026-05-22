@@ -968,24 +968,24 @@ export const STUDY_NOTES: Record<string, SlideOnePager> = {
 
   "se-footprint-intro": {
     inOneSentence:
-      "Almost no conversation is greenfield — map what the customer already owns, then sell the loop they can't yet close.",
+      "Almost no talk is greenfield. Map what the customer already owns. Then sell the loop they cannot yet close.",
     whyItMatters:
-      "Reps default to pitching what they know best. This slide enforces a discipline: map the footprint first, then anchor the next purchase to the loop the missing app would close.",
+      "Reps default to pitching what they know best. This slide forces a discipline. Map the footprint first. Then anchor the next purchase to the loop the missing app would close.",
     keyIdeas: [
-      "Three footprint patterns exist: single Core App, two, all three.",
-      "Each pattern has its own selling motion — same platform, different conversation.",
-      "Never sell what they already have. Sell what they're missing and the loop closing it would unlock.",
-      "Loop language beats SKU language in every single conversation.",
+      "Three footprint patterns: single Core App, two, or all three.",
+      "Each pattern has its own selling motion. Same platform, different talk.",
+      "Never sell what they already have. Sell what they are missing and the loop closing it would unlock.",
+      "Loop language beats SKU language in every single talk.",
     ],
     terms: [T.coreApps, T.dtop],
     facts: [
-      "Seven distinct footprint scenarios across the three patterns.",
-      "Default rep mistake: pitching what's familiar instead of what's missing.",
+      "Seven different footprint scenarios across the three patterns.",
+      "Default rep mistake: pitching what is familiar instead of what is missing.",
     ],
-    watchOut: "Don't pitch what they already have. Don't sell SKUs — sell the missing loop.",
+    watchOut: "Do not pitch what they already have. Do not sell SKUs. Sell the missing loop.",
     connectsTo: ["Footprint Single", "Footprint Two", "Footprint All"],
     checkYourself: [
-      "What's the discovery move BEFORE the product pitch?",
+      "What is the discovery move BEFORE the product pitch?",
       "Why is loop language stronger than SKU language?",
       "How many distinct footprint scenarios should the rep recognise?",
     ],
@@ -993,94 +993,94 @@ export const STUDY_NOTES: Record<string, SlideOnePager> = {
 
   "se-footprint-single": {
     inOneSentence:
-      "Single-app customers already have the Intelligence Layer, Insights and Automation — they're confined to one lane. Scope is what's gated, not capability.",
+      "Single-app customers already have the Intelligence Layer, Insights and Automation. They are just stuck in one lane. Scope is what is gated, not capability.",
     whyItMatters:
-      "Never tell single-app customers they get 'nothing intelligent' until they buy more. The truthful framing — 'you have intelligence, but it's confined to one lane' — is what unlocks the next app.",
+      "Never tell single-app customers they get 'nothing smart' until they buy more. The honest framing — 'you have intelligence, but it is stuck in one lane' — is what unlocks the next app.",
     keyIdeas: [
-      "Intelligence Layer + Insights + Automation already operate inside whatever single app they own.",
-      "What's missing: scope. The lane is narrower than the operational problem.",
-      "Single-app is a wedge, not a smaller deal. The foundation makes app two and three land in weeks.",
+      "Intelligence Layer, Insights and Automation already run inside whatever single app they own.",
+      "What is missing is scope. The lane is narrower than the operational problem.",
+      "Single-app is a wedge, not a smaller deal. The base makes apps two and three land in weeks.",
       "Sell the loop the missing app would close, never the SKU.",
     ],
     terms: [T.coreApps, T.intelligenceLayer],
     facts: [
       "Most customers start with one Core App.",
-      "Second and third Core Apps land in weeks because the foundation is already in place.",
+      "Second and third Core Apps land in weeks because the base is already in place.",
     ],
-    watchOut: "Never claim single-app customers get nothing intelligent. The capability is there — the scope is gated.",
+    watchOut: "Never claim single-app customers get nothing smart. The capability is there. The scope is gated.",
     connectsTo: ["Footprint Single Whiteboard", "Footprint Ladder"],
     checkYourself: [
-      "What's actually missing when a customer has only one app — capability or scope?",
+      "What is really missing when a customer has only one app — capability or scope?",
       "Why is single-app a wedge rather than a small deal?",
-      "What's the honest framing for single-app customers?",
+      "What is the honest framing for single-app customers?",
     ],
   },
 
   "se-footprint-single-whiteboard": {
     inOneSentence:
-      "Six strokes: one lit lane, two dark, intelligence band labelled 'confined to this lane', broken DTOP arrow.",
+      "Six strokes. One lit lane. Two dark. Intelligence band labelled 'stuck in this lane'. Broken DTOP arrow.",
     whyItMatters:
-      "The buyer only feels the gap when it's drawn. Words alone don't move single-app customers; the whiteboard does.",
+      "The buyer only feels the gap when it is drawn. Words alone do not move single-app customers. The whiteboard does.",
     keyIdeas: [
-      "Draw the foundation as a base, three Core App lanes above it — one lit, two dark.",
-      "Draw the intelligence band stretching across all three lanes, labelled 'confined to this lane'.",
+      "Draw the base, then three Core App lanes above it. One lit. Two dark.",
+      "Draw the intelligence band stretching across all three lanes, labelled 'stuck in this lane'.",
       "Draw a DTOP arrow that breaks where the dark lanes start.",
       "Discovery question: 'when Safety flags a risk, who owns the procedure and training change?'",
     ],
     terms: [T.dtop, T.coreApps],
     facts: [
-      "Six strokes is the target — same as DTOP, same as maturity.",
+      "Six strokes is the target. Same as DTOP, same as maturity.",
       "The broken arrow is the visual that converts.",
     ],
-    watchOut: "When you write the discovery question — STOP TALKING. The silence is the unlock.",
+    watchOut: "When you ask the discovery question, STOP TALKING. The silence is the unlock.",
     connectsTo: ["Footprint Single", "Footprint Two"],
     checkYourself: [
       "Can I draw all six strokes from memory?",
-      "What's the verbatim discovery question after the drawing?",
+      "What is the exact discovery question after the drawing?",
       "What do I do the moment I've finished asking it?",
     ],
   },
 
   "se-footprint-two": {
     inOneSentence:
-      "Two Core Apps = a half-loop. The Intelligence Layer already operates across both — what they're buying with the third app is scope, not new features.",
+      "Two Core Apps = a half-loop. The Intelligence Layer already runs across both. What they buy with the third app is scope, not new features.",
     whyItMatters:
-      "Two-app customers are the highest-velocity cross-sell. The half-loop is the most powerful selling moment in the academy because the buyer can FEEL the gap closing.",
+      "Two-app customers are the fastest cross-sell. The half-loop is the most powerful selling moment in the academy because the buyer can FEEL the gap closing.",
     keyIdeas: [
-      "Two apps = intelligence already crosses both lanes; the loop just doesn't close.",
+      "Two apps = intelligence already crosses both lanes. The loop just does not close.",
       "Name the missing app by the loop it would close, never by the SKU.",
-      "Don't claim intelligence arrives with the third app — they already have it.",
+      "Do not claim intelligence arrives with the third app. They already have it.",
       "Discovery question: 'when a procedure changes, how do you know every crew is trained on it before the next shift?'",
     ],
     terms: [T.coreApps, T.intelligenceLayer, T.dtop],
     facts: [
       "Two-app footprint = a half-loop visible on the whiteboard.",
-      "Third app closes the loop; capability is constant, scope expands.",
+      "Third app closes the loop. Capability stays the same. Scope grows.",
     ],
-    watchOut: "Don't claim intelligence is brand new at this stage — they already have it. The buyer will catch you.",
+    watchOut: "Do not claim intelligence is brand new at this stage. They already have it. The buyer will catch you.",
     connectsTo: ["Footprint Two Whiteboard", "Footprint All"],
     checkYourself: [
-      "What's the difference between 'new capability' and 'new scope' in this conversation?",
-      "What's the discovery question for two-app customers?",
-      "Why is two-app the highest-velocity cross-sell?",
+      "What is the gap between 'new capability' and 'new scope' here?",
+      "What is the discovery question for two-app customers?",
+      "Why is two-app the fastest cross-sell?",
     ],
   },
 
   "se-footprint-two-whiteboard": {
     inOneSentence:
-      "Draw the half-loop: two lit lanes, intelligence band crossing both, DTOP arrow visibly broken at the third lane.",
+      "Draw the half-loop. Two lit lanes. Intelligence band crossing both. DTOP arrow clearly broken at the third lane.",
     whyItMatters:
-      "This is the moment the buyer names the missing app themselves. When they say it first, the third app sells itself — no procurement objection.",
+      "This is the moment the buyer names the missing app themselves. When they say it first, the third app sells itself. No procurement objection.",
     keyIdeas: [
-      "Two lit lanes, one dark lane, intelligence band crossing the lit two.",
-      "DTOP arrow visibly broken where the third lane should be.",
-      "Let the buyer name the missing lane — don't fill it in for them.",
+      "Two lit lanes. One dark lane. Intelligence band crossing the lit two.",
+      "DTOP arrow clearly broken where the third lane should be.",
+      "Let the buyer name the missing lane. Do not fill it in for them.",
       "Discovery question lands the gap; silence converts it.",
     ],
     terms: [T.dtop, T.coreApps],
     facts: [
       "Highest-leverage drawing in the academy.",
-      "Buyer naming the missing lane = the third app sells itself.",
+      "When the buyer names the missing lane, the third app sells itself.",
     ],
     watchOut: "Let the buyer name the missing lane. If you say it first, the cross-sell stalls.",
     connectsTo: ["Footprint Two", "Footprint All Whiteboard"],
@@ -1093,96 +1093,96 @@ export const STUDY_NOTES: Record<string, SlideOnePager> = {
 
   "se-footprint-all": {
     inOneSentence:
-      "Three Core Apps closes the loop. What changes isn't whether intelligence exists — it's the scope it reasons across.",
+      "Three Core Apps closes the loop. What changes is not whether intelligence exists. It is the scope it reasons across.",
     whyItMatters:
-      "Three-app customers are the reference accounts that close future deals. The right framing — 'you've bought the instruments; the Intelligence Layer is the conductor' — is what unlocks the platform-wide expansion.",
+      "Three-app customers are the reference accounts that close future deals. The right framing — 'you have bought the instruments. The Intelligence Layer is the conductor' — is what unlocks the platform-wide expansion.",
     keyIdeas: [
-      "Three apps = full loop; intelligence reasons across all three lanes.",
-      "Capability is constant — scope changes. Be precise on this.",
-      "Three apps land on one foundation in one rollout — less change than three point tools + integration.",
+      "Three apps = full loop. Intelligence reasons across all three lanes.",
+      "Capability stays the same. Scope changes. Be precise on this.",
+      "Three apps land on one base in one rollout. Less change than three point tools and the integration after.",
       "Sell the conductor (Intelligence Layer), not the apps they already have.",
     ],
     terms: [T.intelligenceLayer, T.coreApps, T.dtop],
     facts: [
-      "Three apps on one foundation = one rollout, not three.",
-      "Less change than buying three point solutions and integrating them later.",
+      "Three apps on one base = one rollout, not three.",
+      "Less change than buying three point tools and integrating them later.",
     ],
-    watchOut: "Never claim Intelligence is brand new at this stage. Be precise: scope changes, capability doesn't.",
+    watchOut: "Never claim Intelligence is brand new at this stage. Be precise: scope changes, capability does not.",
     connectsTo: ["Footprint All Whiteboard", "Footprint Ladder"],
     checkYourself: [
       "What changes when a customer goes from two apps to three?",
       "How do I reframe 'three apps at once' as less change, not more?",
-      "What's the 'conductor' analogy and when do I use it?",
+      "What is the 'conductor' analogy and when do I use it?",
     ],
   },
 
   "se-footprint-all-whiteboard": {
     inOneSentence:
-      "Six strokes: three lit lanes, closed DTOP loop, intelligence band reaching across all three.",
+      "Six strokes. Three lit lanes. Closed DTOP loop. Intelligence band reaching across all three.",
     whyItMatters:
-      "This is the only drawing that shows the full platform working as one. When you ask the question at the end, whoever speaks first loses — usually the buyer commits to the next step.",
+      "This is the only drawing that shows the full platform working as one. When you ask the question at the end, whoever speaks first loses. Usually the buyer commits to the next step.",
     keyIdeas: [
-      "Three lit lanes, closed DTOP loop, intelligence band crossing all three.",
+      "Three lit lanes. Closed DTOP loop. Intelligence band crossing all three.",
       "Discovery question: 'which decisions in your operation still rely on a human stitching three systems together?'",
       "Stop talking after the question. Silence converts.",
-      "Be precise: scope changes, capabilities don't.",
+      "Be precise: scope changes, capabilities do not.",
     ],
     terms: [T.dtop, T.intelligenceLayer, T.coreApps],
     facts: [
-      "Six strokes, full loop, intelligence band across all lanes.",
-      "Closes the footprint trilogy (single → two → all three).",
+      "Six strokes. Full loop. Intelligence band across all lanes.",
+      "Closes the footprint trilogy (single, two, all three).",
     ],
-    watchOut: "Be precise: scope changes, capabilities don't. Then stop talking.",
+    watchOut: "Be precise: scope changes, capabilities do not. Then stop talking.",
     connectsTo: ["Footprint All", "Footprint Ladder"],
     checkYourself: [
-      "What's the discovery question after the drawing?",
+      "What is the discovery question after the drawing?",
       "Why does this drawing matter even for accounts that already have all three?",
-      "What's the rule about who speaks first after the question?",
+      "What is the rule about who speaks first after the question?",
     ],
   },
 
   "se-footprint-ladder": {
     inOneSentence:
-      "Platform value compounds, not adds: 1 app ~25%, 2 apps ~55%, 3 apps ~75%, 3 + Intelligence Layer = 100%.",
+      "Platform value compounds, it does not just add. 1 app ~25%. 2 apps ~55%. 3 apps ~75%. 3 apps with the Intelligence Layer = 100%.",
     whyItMatters:
-      "Account reviews and renewals only — never bring this to a first meeting. Customers fixate on what they already paid for; the ladder shows them what they haven't.",
+      "Account reviews and renewals only. Never bring this to a first meeting. Customers fixate on what they already paid for. The ladder shows them what they have not.",
     keyIdeas: [
-      "1 app ~25%: foundation in one lane plus capabilities confined to that lane.",
-      "2 apps ~55%: half-loop plus capabilities operating across two lanes.",
-      "3 apps ~75%: full DTOP loop closes; capabilities reason across all three.",
-      "3 apps + Intelligence Layer = 100%: loop closes AND learns; cross-lane reasoning + automated orchestration.",
+      "1 app ~25%: the base in one lane plus capabilities stuck in that lane.",
+      "2 apps ~55%: half-loop plus capabilities running across two lanes.",
+      "3 apps ~75%: full DTOP loop closes. Capabilities reason across all three.",
+      "3 apps with the Intelligence Layer = 100%: the loop closes AND learns. Cross-lane reasoning plus automated orchestration.",
     ],
     terms: [T.intelligenceLayer, T.dtop, T.lineOfSight],
     facts: [
-      "Percentages are directional sales modelling, not contractual commitments — say so out loud if pushed.",
-      "Customer-specific value is modelled in Line-of-Sight before any commercial conversation.",
+      "These percentages are directional sales modelling, not contract commitments. Say so out loud if pushed.",
+      "Customer-specific value is sized in Line-of-Sight before any commercial talk.",
     ],
-    watchOut: "Account reviews and renewals only. Never present as 'you're missing X percent' — present as 'here's the loop you can't close yet'.",
+    watchOut: "Account reviews and renewals only. Never present as 'you are missing X percent'. Present as 'here is the loop you cannot close yet'.",
     connectsTo: ["Footprint All", "Line-of-Sight"],
     checkYourself: [
-      "Can I name each percentage and what it represents?",
-      "What's the verbatim disclaimer if a customer pushes on the numbers?",
+      "Can I name each percentage and what it stands for?",
+      "What is the exact disclaimer if a customer pushes on the numbers?",
       "When is it inappropriate to show this ladder?",
     ],
   },
 
   "se-footprint-playbook": {
     inOneSentence:
-      "Three moves, in order: audit the footprint, name the broken loop, anchor the next purchase to closing it.",
+      "Three moves, in order. Audit the footprint. Name the broken loop. Anchor the next purchase to closing it.",
     whyItMatters:
-      "This is THE playbook of Week 3. Cross-sells stall at procurement because reps go straight to the product pitch and miss the loop framing entirely.",
+      "This is THE playbook of Week 3. Cross-sells stall at procurement because reps jump straight to the product pitch and skip the loop framing.",
     keyIdeas: [
       "Move 1 — Audit: three discovery questions to find which of S, C, T they own and where the loop stops.",
-      "Move 2 — Name: use their words from Move 1, draw the half-loop, show where it stops + what that costs them.",
+      "Move 2 — Name: use their words from Move 1, draw the half-loop, show where it stops and what that costs them.",
       "Move 3 — Anchor: never sell the SKU. Sell the loop the missing app would close.",
-      "When the loop is named, the next purchase scopes itself — the customer becomes your champion.",
+      "When the loop is named, the next purchase scopes itself. The customer becomes your champion.",
     ],
     terms: [T.dtop, T.svs],
     facts: [
-      "Recite this from memory by Friday — it's the playbook of the section.",
-      "Loop language beats SKU language in every single conversation.",
+      "Recite this from memory by Friday. It is the playbook of the section.",
+      "Loop language beats SKU language in every single talk.",
     ],
-    watchOut: "Don't go straight to product pitch. That's why cross-sells stall at procurement.",
+    watchOut: "Do not jump to product pitch. That is why cross-sells stall at procurement.",
     connectsTo: ["Footprint Whiteboards", "Discovery to Close"],
     checkYourself: [
       "Can I recite the three moves in order from memory?",
