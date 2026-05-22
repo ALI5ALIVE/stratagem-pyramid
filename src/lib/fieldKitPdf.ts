@@ -4,6 +4,13 @@ import {
   type CoachCardWeek,
 } from "@/data/salesEnablementCoachCards";
 import { getSalesEnablementNarration } from "@/data/salesEnablementNarration";
+import {
+  SLIDE_DISCOVERY,
+  SLIDE_OBJECTIONS,
+  WEEK_DISCOVERY_FALLBACK,
+  WEEK_OBJECTION_FALLBACK,
+  type SlideObjection,
+} from "@/data/salesEnablementSlideAids";
 
 // ─── Brand tokens (RGB tuples for jsPDF) ─────────────────────────────────────
 const C = {
@@ -250,6 +257,40 @@ const clipLines = (lines: string[], max: number): string[] => {
   return kept;
 };
 
+/** Merge narration-extracted + curated discovery questions, dedupe, cap 3. */
+const buildDiscoveryQuestions = (
+  script: string | undefined,
+  slideId: string,
+  weekId: CoachCardWeek["id"],
+): string[] => {
+  const fromScript: string[] = [];
+  if (script) {
+    const qMatch = script.match(/['"]([^'".?]{15,140}\?)['"]/g);
+    if (qMatch) {
+      qMatch.forEach((q) => fromScript.push(q.replace(/^['"]|['"]$/g, "").trim()));
+    }
+  }
+  const curated = SLIDE_DISCOVERY[slideId] ?? [];
+  const merged: string[] = [];
+  const seen = new Set<string>();
+  [...curated, ...fromScript].forEach((q) => {
+    const norm = q.toLowerCase().replace(/[^a-z0-9? ]/g, "").trim();
+    if (!seen.has(norm) && q.length <= 160) {
+      seen.add(norm);
+      merged.push(q);
+    }
+  });
+  if (merged.length === 0) merged.push(...WEEK_DISCOVERY_FALLBACK[weekId]);
+  return merged.slice(0, 3);
+};
+
+/** Per-slide objections with per-week fallback. */
+const buildObjections = (slideId: string, weekId: CoachCardWeek["id"]): SlideObjection[] => {
+  const curated = SLIDE_OBJECTIONS[slideId];
+  if (curated && curated.length) return curated.slice(0, 2);
+  return WEEK_OBJECTION_FALLBACK[weekId].slice(0, 2);
+};
+
 // ─── PDF Builder ─────────────────────────────────────────────────────────────
 export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
   const pdf = new jsPDF({ unit: "pt", format: "a4" });
@@ -491,7 +532,8 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     const title = narration?.title ?? slideId;
     const coreLine = extractCoreLine(slideId);
     const summary = narration ? paraphraseNarration(narration.script) : "";
-    const listenFor = narration ? extractListenFor(narration.script, week.id) : [];
+    const questions = buildDiscoveryQuestions(narration?.script, slideId, week.id);
+    const objections = buildObjections(slideId, week.id);
 
     // Landscape page for slide cards
     pdf.addPage("a4", "landscape");
@@ -520,7 +562,7 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     // ── LEFT COLUMN ──────────────────────────────────────────────────────────
     const leftX = lMargin;
     const colGap = 18;
-    const leftW = lContentW * 0.46;
+    const leftW = lContentW * 0.5;
     const rightX = leftX + leftW + colGap;
     const rightW = lContentW - leftW - colGap;
 
@@ -566,50 +608,92 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
       pdf.text("TEACHING SUMMARY", leftX, ly);
       ly += 12;
       pdf.setFont("helvetica", "normal");
-      pdf.setFontSize(9);
+      pdf.setFontSize(8.5);
       setText(pdf, C.slate);
-      // Auto-shrink: estimate available
-      const availableH = lPageH - 60 - ly - 92 /* listen-for + footer */;
-      const maxLines = Math.max(6, Math.floor(availableH / 11.5));
+      // Reserve room for the coach chip strip at bottom of left col
+      const chipStripH = 44;
+      const availableH = lPageH - 60 - ly - chipStripH - 10;
+      const maxLines = Math.max(6, Math.floor(availableH / 11));
       const sumLines = clipLines(pdf.splitTextToSize(summary, leftW), maxLines);
       pdf.text(sumLines, leftX, ly, { lineHeightFactor: 1.35 });
-      ly += sumLines.length * 11.5 + 14;
+      ly += sumLines.length * 11 + 12;
     }
 
-    // What to listen for
-    if (listenFor.length) {
+    // ── Coach chip strip (bottom of left column) ─────────────────────────────
+    const chipY = lPageH - 50 - 44;
+    const chipDefs: Array<{ key: FieldKey; label: string; text: string }> = [
+      { key: "remember", label: "REMEMBER", text: cc.remember },
+      { key: "sayItLikeThis", label: "SAY IT", text: cc.sayItLikeThis },
+      { key: "watchOutFor", label: "WATCH OUT", text: cc.watchOutFor },
+      { key: "bridge", label: "BRIDGE", text: cc.bridge },
+    ];
+    const chipGap = 6;
+    const chipW = (leftW - chipGap * 3) / 4;
+    chipDefs.forEach((chip, i) => {
+      drawCoachChip(
+        pdf,
+        leftX + i * (chipW + chipGap),
+        chipY,
+        chipW,
+        44,
+        chip.key,
+        chip.label,
+        chip.text,
+      );
+    });
+
+    // ── RIGHT COLUMN: Questions + Objections ─────────────────────────────────
+    let ry = tbY;
+
+    // KEY QUESTIONS TO ASK
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(8);
+    setText(pdf, C.brand);
+    pdf.text("KEY QUESTIONS TO ASK", rightX, ry + 8);
+    setFill(pdf, C.brand);
+    pdf.rect(rightX, ry + 12, 18, 2, "F");
+    ry += 24;
+
+    questions.forEach((q, i) => {
+      // Numbered chip
+      setFill(pdf, C.brand);
+      pdf.circle(rightX + 7, ry + 3, 7, "F");
       pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(7.5);
-      setText(pdf, C.muted);
-      pdf.text("WHAT TO LISTEN FOR", leftX, ly);
-      ly += 12;
-      listenFor.forEach((l) => {
-        // ear bullet
-        setFill(pdf, C.brand);
-        pdf.circle(leftX + 3, ly - 3, 1.6, "F");
-        pdf.setFont("helvetica", "italic");
-        pdf.setFontSize(8.5);
-        setText(pdf, C.muted);
-        const lines = clipLines(pdf.splitTextToSize(l, leftW - 14), 2);
-        pdf.text(lines, leftX + 12, ly);
-        ly += lines.length * 10.5 + 4;
-      });
-    }
+      pdf.setFontSize(8);
+      setText(pdf, C.white);
+      pdf.text(String(i + 1), rightX + 7, ry + 5.5, { align: "center" });
+      // Question text
+      pdf.setFont("helvetica", "italic");
+      pdf.setFontSize(9);
+      setText(pdf, C.slate);
+      const lines = clipLines(
+        pdf.splitTextToSize(`\u201C${q}\u201D`, rightW - 24),
+        3,
+      );
+      pdf.text(lines, rightX + 20, ry + 6, { lineHeightFactor: 1.3 });
+      ry += lines.length * 11 + 8;
+    });
 
-    // ── RIGHT COLUMN: 2x2 panels ─────────────────────────────────────────────
-    const fields: FieldKey[] = ["remember", "sayItLikeThis", "watchOutFor", "bridge"];
-    const gap = 10;
-    const panelW = (rightW - gap) / 2;
-    const gridTop = tbY;
-    const gridBottom = lPageH - 50;
-    const panelH = (gridBottom - gridTop - gap) / 2;
+    ry += 8;
+    setStroke(pdf, C.hairline);
+    pdf.setLineWidth(0.5);
+    pdf.line(rightX, ry, rightX + rightW, ry);
+    ry += 14;
 
-    fields.forEach((key, i) => {
-      const row = Math.floor(i / 2);
-      const col = i % 2;
-      const x = rightX + col * (panelW + gap);
-      const yPos = gridTop + row * (panelH + gap);
-      drawFieldPanelCompact(pdf, x, yPos, panelW, panelH, key, cc[key]);
+    // OBJECTIONS YOU'LL HEAR
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(8);
+    setText(pdf, C.rose);
+    pdf.text("OBJECTIONS YOU'LL HEAR — AND THE APPROVED ANSWER", rightX, ry);
+    setFill(pdf, C.rose);
+    pdf.rect(rightX, ry + 4, 18, 2, "F");
+    ry += 18;
+
+    const objAvail = lPageH - 60 - ry;
+    const objH = Math.min(76, (objAvail - 8) / objections.length);
+    objections.forEach((o) => {
+      drawObjectionBlock(pdf, rightX, ry, rightW, objH, o);
+      ry += objH + 8;
     });
 
     // Micro footer strip
@@ -773,6 +857,71 @@ function drawFieldPanelCompact(
   const body = isQuote ? `\u201C${text}\u201D` : text;
   const lines = clipLines(pdfInner.splitTextToSize(body, w - 22), Math.floor((h - 24) / 11));
   pdfInner.text(lines, x + 10, yPos + 28, { lineHeightFactor: 1.3 });
+}
+
+function drawCoachChip(
+  pdfInner: jsPDF,
+  x: number,
+  yPos: number,
+  w: number,
+  h: number,
+  key: FieldKey,
+  label: string,
+  text: string,
+) {
+  const style = FIELD_STYLES[key];
+  setFill(pdfInner, style.soft);
+  pdfInner.roundedRect(x, yPos, w, h, 4, 4, "F");
+  setFill(pdfInner, style.accent);
+  pdfInner.rect(x, yPos, w, 2, "F");
+  pdfInner.setFont("helvetica", "bold");
+  pdfInner.setFontSize(6.5);
+  setText(pdfInner, style.accent);
+  pdfInner.text(label, x + 6, yPos + 12);
+  pdfInner.setFont("helvetica", "normal");
+  pdfInner.setFontSize(7.5);
+  setText(pdfInner, C.slate);
+  const lines = clipLines(pdfInner.splitTextToSize(text, w - 12), 3);
+  pdfInner.text(lines, x + 6, yPos + 22, { lineHeightFactor: 1.25 });
+}
+
+function drawObjectionBlock(
+  pdfInner: jsPDF,
+  x: number,
+  yPos: number,
+  w: number,
+  h: number,
+  o: { pushback: string; response: string },
+) {
+  // Container
+  setFill(pdfInner, [253, 242, 245]);
+  pdfInner.roundedRect(x, yPos, w, h, 4, 4, "F");
+  setFill(pdfInner, C.rose);
+  pdfInner.rect(x, yPos, 3, h, "F");
+
+  // Pushback row
+  pdfInner.setFont("helvetica", "bold");
+  pdfInner.setFontSize(8);
+  setText(pdfInner, C.rose);
+  pdfInner.text("\u25B8", x + 10, yPos + 12);
+  pdfInner.setFont("helvetica", "bold");
+  pdfInner.setFontSize(8.5);
+  setText(pdfInner, C.ink);
+  const pLines = clipLines(pdfInner.splitTextToSize(o.pushback, w - 26), 2);
+  pdfInner.text(pLines, x + 20, yPos + 12);
+  const afterPushY = yPos + 12 + pLines.length * 10 + 4;
+
+  // Response row
+  pdfInner.setFont("helvetica", "bold");
+  pdfInner.setFontSize(8);
+  setText(pdfInner, C.emerald);
+  pdfInner.text("\u21B3", x + 10, afterPushY);
+  pdfInner.setFont("helvetica", "normal");
+  pdfInner.setFontSize(8);
+  setText(pdfInner, C.slate);
+  const maxRespLines = Math.max(2, Math.floor((h - (afterPushY - yPos) - 6) / 10));
+  const rLines = clipLines(pdfInner.splitTextToSize(o.response, w - 26), maxRespLines);
+  pdfInner.text(rLines, x + 20, afterPushY, { lineHeightFactor: 1.3 });
 }
 
 export const downloadWeekFieldKit = (week: CoachCardWeek) => {

@@ -1,47 +1,71 @@
 ## Goal
 
-Make every slide card in the Field Kit PDF (a) richer for learning and (b) strictly one page.
+Reshape every slide one-pager so the three things the user asked for are the page — paraphrased transcript summary, the key questions to ask, and the objections they'll need to answer — while keeping the coach-card takeaways visible but secondary.
 
-## Two changes
+## New one-pager layout (A4 landscape, single page)
 
-### 1. Add a paraphrased "Teaching Summary" + learning aids to each slide
+```text
+┌─────────────────────────────────────────────────────────────────┐
+│ Header: Comply365 · Sales Enablement Academy · Wk N / Slide X   │
+├──────────────────────────────────────┬──────────────────────────┤
+│  TITLE BAR (navy, slide # + title)   │  KEY QUESTIONS TO ASK    │
+│  ─────────────────────────────────   │   1.  "….?"              │
+│  THE CORE IDEA  (1 line)             │   2.  "….?"              │
+│                                      │   3.  "….?"  (optional)  │
+│  TEACHING SUMMARY                    │                          │
+│   Paraphrased narration, 6–8 lines,  │  OBJECTIONS YOU'LL HEAR  │
+│   tightened. The "study" anchor.     │   ▸ Pushback line        │
+│                                      │     ↳ Approved response  │
+│  COACH CHIPS (one-line, 4 across):   │   ▸ Pushback line        │
+│   [Remember]·[Say]·[Watch]·[Bridge]  │     ↳ Approved response  │
+├──────────────────────────────────────┴──────────────────────────┤
+│ Footer: Time ~60–90s · Drill ☐☐☐☐☐ · Rep-facing                 │
+└─────────────────────────────────────────────────────────────────┘
+```
 
-Per-slide section order (top to bottom on one page):
+Why this shape:
+- Left = **study side** (read once, internalise). Summary is the hero block, ~8.5pt, ~520 chars.
+- Right = **in-meeting side** (glance at during a call). Questions on top, objections below — the two moves a rep actually does live.
+- The original Remember/Say/Watch/Bridge cards stay as a colour-coded chip strip at the bottom of the left column, not a 2×2 — 4 short one-liners, one per chip, same accent colours so the existing colour story still reads.
 
-1. **Header bar** — slide number + title (shrunk vs today)
-2. **The core idea** — 1 line, brand-blue eyebrow (kept, tightened)
-3. **Teaching Summary** *(new)* — 3–5 sentence paraphrase of the narration. Not verbatim. Written for the rep, explains *why this slide matters in the meeting* in plain coaching voice. Generated programmatically from the narration script with a deterministic paraphraser (rewrite first-person teaching cues like "you must internalise" → "the rep should internalise", strip filler, cap at ~520 chars, end on the value lever sentence).
-4. **What to listen for** *(new, 2 micro-bullets)* — customer signals that mean this slide just landed (e.g. "they ask 'how does this connect to our SMS?'") — derived from the discovery question or pain in the narration when present; falls back to a generic per-week prompt if not.
-5. **2×2 coach panels** — shrunk (see below)
-6. **Footer micro-strip** *(new)* — "Time on slide: ~60–90s · Drill rating: ___/5" so the rep can self-score in the margin
+## Content sourcing
 
-### 2. Force single-page layout
+**Teaching Summary** — already implemented via `paraphraseNarration()`. Expand its target length from 540 → ~620 chars now that the right column is doing the heavy lifting. Drop the "What to listen for" block (its job is now done by Key Questions).
 
-- Page format: switch to **A4 landscape** so the 2×2 grid breathes and the summary block fits above it without overflow.
-- Cap card body text at a deterministic max-line count and clip with an ellipsis (coach card fields are already capped at ~320 chars total, but render-side we'll enforce a max of 4 lines per panel).
-- Auto font-size step-down: if a slide's title + summary block exceeds the available header zone, drop summary font from 10.5pt → 9.5pt and reduce line height before clipping.
-- Recalculate panel height from *remaining* page height after header + summary + listen-for block — no fixed `Math.max(110, …)` floor; instead compute exactly so the 2×2 always lands above the footer with 24pt of breathing room.
-- Page numbers + footer chrome stay the same.
+**Key Questions to Ask** — new helper `extractDiscoveryQuestions(script, slideId)`:
+1. Pull all quoted questions from the narration (`/['"]([^'".?]{15,140}\?)['"]/g`)
+2. Also pull bare questions following "ask" / "discovery question" cues
+3. Fall back to a small curated `SLIDE_DISCOVERY` map for ~15 slides where narration has none (already known: Week 3 discovery slides, Week 2 capability slides, persona playbook)
+4. Cap at 3 questions, each ≤120 chars
 
-## Helper additions in `src/lib/fieldKitPdf.ts`
+**Objections + Responses** — new helper `getSlideObjections(slideId, weekId)`:
+- Curated `SLIDE_OBJECTIONS` map for the slides where canonical pushback is known:
+  - DTOP slides → "isn't this just workflow?" / "we have a CMS already"
+  - Intelligence Layer slides → "we'll build it internally with GPT" / "how is this different from a generic LLM"
+  - CoAnalyst / accuracy slides → "90% — prove it" / "what about data security & training on our data"
+  - Mobile / Unified Mobile → "our crews already have iPads with X"
+  - Strategy & Vision Session → "we're not ready for a workshop"
+  - Footprint / pricing → "we only need one app today"
+- Fallback to per-week generic objection (2 items) so every slide has something
+- Each entry: `{ pushback: string, response: string }`, response always uses approved language, no banned terms, anchors to ~90% vs ~35%, locked customer outcomes, or "Operational Data" where relevant
 
-- `paraphraseNarration(script: string): string` — deterministic rewrite:
-  - drop opening "This slide matters because…" / "Why this matters:" / "The core message:" prefixes
-  - convert second-person teaching ("you must", "your job") → third-person reference ("reps should", "the goal is")
-  - strip filler ("when you deliver this", "slow down", "next slide")
-  - join 3 most informative sentences (core message + pain + value lever), cap at 520 chars
-- `extractListenFor(script: string, weekId): string[]` — pull the discovery question and the customer-signal sentence; fallback to per-week defaults if absent
-- `drawSlideCard(...)` rewritten to layout: title bar (48pt) → core idea (38pt) → summary (variable) → listen-for (38pt) → 2×2 (remaining) → micro footer (16pt)
-- Switch `new jsPDF({ unit: "pt", format: "a4", orientation: "landscape" })`
+Both new datasets live in a new file `src/data/salesEnablementSlideAids.ts` so they're easy to edit without touching the PDF renderer.
 
-## Files touched
+## Visual treatment
 
-- `src/lib/fieldKitPdf.ts` — only file changed
-- No data files touched
-- No UI changes outside the PDF
+- Questions: brand-blue numbered chips (●1 ●2 ●3), question text in italic slate
+- Objections: rose-tinted micro-card per item, pushback in bold slate prefixed with `▸`, response below prefixed with `↳` in emerald-tinted strip
+- Coach chips strip: 4 colour-coded pills (amber / emerald / rose / sky) sized to fit one short line each
+- Locked-term mini reminder removed from slide pages (lives on cover); foot rule kept
+
+## Files to change
+
+- `src/lib/fieldKitPdf.ts` — replace the slide-card layout; new helpers; remove the 2×2 + listen-for blocks; add Questions and Objections renderers; chip-strip renderer for coach cards
+- `src/data/salesEnablementSlideAids.ts` *(new)* — `SLIDE_DISCOVERY: Record<string, string[]>` and `SLIDE_OBJECTIONS: Record<string, Array<{pushback, response}>>` plus per-week fallback sets
+- Cover, week-at-a-glance, closing pages stay unchanged (already polished)
 
 ## Out of scope
 
-- Editing narration content itself
-- Adding new content to coach cards
-- Changing cover / week-at-a-glance / closing pages (they already fit one page each)
+- Editing narration scripts
+- New per-slide content beyond questions + objections (no proof points, no persona chips this round — can be added later if needed)
+- Per-slide PDFs
