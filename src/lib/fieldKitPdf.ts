@@ -1023,29 +1023,120 @@ function drawObjectionBlock(
   setFill(pdfInner, C.rose);
   pdfInner.rect(x, yPos, 3, h, "F");
 
-  // Pushback row
-  pdfInner.setFont("helvetica", "bold");
-  pdfInner.setFontSize(8);
-  setText(pdfInner, C.rose);
-  pdfInner.text("\u25B8", x + 10, yPos + 12);
+  // Pushback row — draw a filled rose triangle (helvetica core lacks U+25B8)
+  setFill(pdfInner, C.rose);
+  pdfInner.triangle(x + 9, yPos + 8, x + 9, yPos + 16, x + 16, yPos + 12, "F");
   pdfInner.setFont("helvetica", "bold");
   pdfInner.setFontSize(8.5);
   setText(pdfInner, C.ink);
   const pLines = clipLines(pdfInner.splitTextToSize(o.pushback, w - 26), 2);
-  pdfInner.text(pLines, x + 20, yPos + 12);
+  pdfInner.text(pLines, x + 22, yPos + 12);
   const afterPushY = yPos + 12 + pLines.length * 10 + 4;
 
-  // Response row
-  pdfInner.setFont("helvetica", "bold");
-  pdfInner.setFontSize(8);
-  setText(pdfInner, C.emerald);
-  pdfInner.text("\u21B3", x + 10, afterPushY);
+  // Response row — draw an emerald right-arrow (avoid U+21B3)
+  setStroke(pdfInner, C.emerald);
+  pdfInner.setLineWidth(1.2);
+  pdfInner.line(x + 9, afterPushY - 3, x + 18, afterPushY - 3);
+  pdfInner.line(x + 14, afterPushY - 6, x + 18, afterPushY - 3);
+  pdfInner.line(x + 14, afterPushY, x + 18, afterPushY - 3);
   pdfInner.setFont("helvetica", "normal");
   pdfInner.setFontSize(8);
   setText(pdfInner, C.slate);
   const maxRespLines = Math.max(2, Math.floor((h - (afterPushY - yPos) - 6) / 10));
   const rLines = clipLines(pdfInner.splitTextToSize(o.response, w - 26), maxRespLines);
-  pdfInner.text(rLines, x + 20, afterPushY, { lineHeightFactor: 1.3 });
+  pdfInner.text(rLines, x + 22, afterPushY, { lineHeightFactor: 1.3 });
+}
+
+// ─── New rendering helpers ──────────────────────────────────────────────────
+function drawSectionLabel(pdf: jsPDF, x: number, y: number, label: string, color: [number, number, number]) {
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7.5);
+  setText(pdf, color);
+  pdf.text(label, x, y);
+  setFill(pdf, color);
+  pdf.rect(x, y + 3, 18, 1.5, "F");
+}
+
+function drawAccentBlock(
+  pdf: jsPDF,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  label: string,
+  body: string,
+  accent: [number, number, number],
+  soft: [number, number, number],
+) {
+  setFill(pdf, soft);
+  pdf.roundedRect(x, y, w, h, 5, 5, "F");
+  setFill(pdf, accent);
+  pdf.rect(x, y, 3, h, "F");
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7.5);
+  setText(pdf, accent);
+  pdf.text(label, x + 10, y + 14);
+  pdf.setFont("helvetica", "normal");
+  pdf.setFontSize(9);
+  setText(pdf, C.slate);
+  const lines = clipLines(
+    pdf.splitTextToSize(body, w - 18),
+    Math.max(1, Math.floor((h - 22) / 11)),
+  );
+  pdf.text(lines, x + 10, y + 26, { lineHeightFactor: 1.3 });
+}
+
+function drawMetaStrip(pdf: jsPDF, x: number, y: number, w: number, meta: SlideMeta) {
+  // DTOP chip
+  let cx = x;
+  if (meta.dtop) {
+    const dtopColor: Record<NonNullable<SlideMeta["dtop"]>, [number, number, number]> = {
+      D: C.dBlue,
+      T: C.tAmber,
+      O: C.oViolet,
+      P: C.pEmerald,
+    };
+    const col = dtopColor[meta.dtop];
+    setFill(pdf, col);
+    pdf.roundedRect(cx, y - 8, 14, 14, 3, 3, "F");
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(9);
+    setText(pdf, C.white);
+    pdf.text(meta.dtop, cx + 7, y + 2, { align: "center" });
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(7);
+    setText(pdf, C.muted);
+    pdf.text("DTOP STAGE", cx + 20, y + 2);
+    cx += 86;
+  }
+
+  // Persona chips
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7);
+  setText(pdf, C.muted);
+  pdf.text("PERSONA FIT:", cx, y + 2);
+  cx += 64;
+  meta.persona.forEach((p) => {
+    const pw = pdf.getTextWidth(p) + 12;
+    setFill(pdf, C.offwhite);
+    setStroke(pdf, C.hairline);
+    pdf.setLineWidth(0.5);
+    pdf.roundedRect(cx, y - 7, pw, 13, 3, 3, "FD");
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(7.5);
+    setText(pdf, C.slate);
+    pdf.text(p, cx + 6, y + 2);
+    cx += pw + 5;
+  });
+
+  // Time-on-slide pinned right
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7);
+  setText(pdf, C.muted);
+  pdf.text("TIME ON SLIDE:", x + w - 96, y + 2);
+  pdf.setFont("helvetica", "normal");
+  setText(pdf, C.slate);
+  pdf.text("60–90s", x + w - 36, y + 2);
 }
 
 export const downloadWeekFieldKit = (week: CoachCardWeek) => {
