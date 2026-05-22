@@ -145,19 +145,41 @@ export async function buildAIInfographicDeck(opts: BuildOpts = {}): Promise<Blob
     });
   });
 
-  // Connector arrows: from each solution to each target row
+  // Connector arrows: pptxgenjs "line" shapes require non-negative w/h,
+  // so we compute absolute dimensions and use flipH/flipV when the
+  // target is left of / above the source.
+  const drawArrow = (
+    from: { x: number; y: number },
+    to: { x: number; y: number },
+    color: string,
+  ) => {
+    const dx = to.x - from.x;
+    const dy = to.y - from.y;
+    slide.addShape("line", {
+      x: Math.min(from.x, to.x),
+      y: Math.min(from.y, to.y),
+      w: Math.max(Math.abs(dx), 0.01),
+      h: Math.max(Math.abs(dy), 0.01),
+      flipH: dx < 0,
+      flipV: dy < 0,
+      line: { color, width: 1.25, endArrowType: "triangle" },
+    });
+  };
+
   const allSolutions = [...aiSolutions, noAISolution];
   allSolutions.forEach((sol) => {
     const from = solCenters[sol.id];
     if (!from) return;
     const color = sol.tier === "ai" ? "3B82F6" : "94A3B8";
+    if (sol.targets.length === 0) {
+      // Short stub arrow pointing right (mirrors the source slide)
+      drawArrow(from, { x: from.x + 0.45, y: from.y }, color);
+      return;
+    }
     sol.targets.forEach((tid) => {
       const to = rowCenters[tid];
       if (!to) return;
-      slide.addShape("line", {
-        x: from.x, y: from.y, w: to.x - from.x, h: to.y - from.y,
-        line: { color, width: 1, endArrowType: "triangle" },
-      });
+      drawArrow(from, to, color);
     });
   });
 
