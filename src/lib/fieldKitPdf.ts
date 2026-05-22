@@ -236,6 +236,69 @@ const extractVerbatimLift = (script: string): string | undefined => {
   return undefined;
 };
 
+/** Bullet-form of the teaching summary. Splits into prioritized beats,
+ *  promoting Core/Pain/Value-labelled sentences with a bold lead-in. */
+type TeachingBullet = { lead?: string; text: string };
+const paraphraseNarrationBullets = (
+  script: string,
+  maxBullets = 7,
+): TeachingBullet[] => {
+  let s = script.trim();
+  FILLER_OPENERS.forEach((re) => { s = s.replace(re, ""); });
+  FILLER_SENTENCES.forEach((re) => { s = s.replace(re, ""); });
+  const subs: Array<[RegExp, string]> = [
+    [/\byou must internalise\b/gi, "reps should internalise"],
+    [/\byou must\b/gi, "reps need to"],
+    [/\byour job is\b/gi, "the rep's job is"],
+    [/\byour job\b/gi, "the rep's job"],
+    [/\byou're addressing\b/gi, "this addresses"],
+    [/\byou are\b/gi, "the rep is"],
+    [/\byou'll\b/gi, "reps will"],
+    [/\byou can\b/gi, "reps can"],
+    [/\byou\b/gi, "the rep"],
+    [/\byour\b/gi, "the rep's"],
+    [/\bthe core message[^.:]*[:.]\s*/gi, "Core message: "],
+    [/\bthe pain[^.:]*[:.]\s*/gi, "Pain: "],
+    [/\bthe value lever[^.:]*[:.]\s*/gi, "Value lever: "],
+  ];
+  subs.forEach(([re, repl]) => { s = s.replace(re, repl); });
+
+  const sentences = s
+    .split(/(?<=[.!?])\s+/)
+    .map((x) => x.trim())
+    .filter((x) => x.length > 25 && !/^next[\s,]/i.test(x) && !/^then\s/i.test(x));
+
+  const seen = new Set<string>();
+  const tagged: TeachingBullet[] = [];
+  const push = (lead: string | undefined, text: string) => {
+    const key = text.toLowerCase().replace(/[^a-z0-9 ]/g, "").slice(0, 60);
+    if (!key || seen.has(key)) return;
+    seen.add(key);
+    let t = text.trim();
+    if (t.length > 180) t = t.slice(0, 177).replace(/[,;:\s]+\S*$/, "") + "…";
+    if (!/[.!?…]$/.test(t)) t += ".";
+    tagged.push({ lead, text: t });
+  };
+
+  const labelMap: Array<[RegExp, string]> = [
+    [/^Core message:\s*/i, "Core"],
+    [/^Pain:\s*/i, "Pain"],
+    [/^Value lever:\s*/i, "Value"],
+  ];
+  // Priority pass: labelled
+  for (const [re, lead] of labelMap) {
+    sentences
+      .filter((x) => re.test(x))
+      .forEach((x) => push(lead, x.replace(re, "")));
+  }
+  // Then unlabelled
+  sentences
+    .filter((x) => !labelMap.some(([re]) => re.test(x)))
+    .forEach((x) => push(undefined, x));
+
+  return tagged.slice(0, maxBullets);
+};
+
 /** Pull customer-signal cues from narration; fallback to generic per-week. */
 const extractListenFor = (script: string, weekId: CoachCardWeek["id"]): string[] => {
   const out: string[] = [];
