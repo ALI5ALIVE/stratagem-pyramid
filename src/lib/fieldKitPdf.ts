@@ -626,34 +626,84 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     pdf.text(label, x + 22, legY + 14);
   });
 
-  // Locked terminology mini-ref
+  // Locked terminology mini-ref — two columns inside a padded card. Each
+  // cell wraps its value if the label + value won't fit on one line, so
+  // long entries (e.g. product names) can never run past the card edge.
   const termY = legY + 38;
-  setFill(pdf, C.offwhite);
-  pdf.roundedRect(margin, termY, contentW, 78, 6, 6, "F");
-  pdf.setFont("helvetica", "bold");
-  pdf.setFontSize(8);
-  setText(pdf, C.muted);
-  pdf.text("Locked terminology — use these, never the others", margin + 16, termY + 18);
+  const termPadX = 16;
+  const termPadY = 18;
+  const termGutter = 18;
+  const termColW = (contentW - termPadX * 2 - termGutter) / 2;
   const terms: Array<[string, string]> = [
     ["Operational Data", "not FOQA / FDM / ASAP"],
     ["Generative AI", "not 'the AI' / LLM"],
     ["Recommended Actions", "not 'suggestions'"],
-    ["BrandNumber names", "Comply365, SafetyManager365 (no spaces)"],
+    ["BrandNumber names", "Comply365, SafetyManager365"],
   ];
-  const tColW = contentW / 2;
-  terms.forEach((t, i) => {
-    const row = Math.floor(i / 2);
-    const col = i % 2;
-    const x = margin + 16 + col * tColW;
-    const y = termY + 38 + row * 18;
+  // Pre-measure each row's height so the card stretches to fit.
+  const termRowGap = 8;
+  const labelSize = 9.5;
+  const valueSize = 9;
+  const labelLeading = 12;
+  const valueLeading = 11.5;
+  type TermRow = { left: typeof terms[number]; right?: typeof terms[number]; h: number };
+  const wrapVal = (label: string, value: string): { onSameLine: boolean; lines: string[]; labelW: number } => {
     pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(9.5);
-    setText(pdf, C.slate);
-    pdf.text(t[0], x, y);
+    pdf.setFontSize(labelSize);
+    const labelW = pdf.getTextWidth(label + "  ");
     pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(valueSize);
+    const sameLineW = termColW - labelW;
+    if (sameLineW > 60 && pdf.getTextWidth(value) <= sameLineW) {
+      return { onSameLine: true, lines: [value], labelW };
+    }
+    const lines = pdf.splitTextToSize(value, termColW);
+    return { onSameLine: false, lines, labelW };
+  };
+  const rows: TermRow[] = [];
+  for (let i = 0; i < terms.length; i += 2) {
+    const left = terms[i];
+    const right = terms[i + 1];
+    const lw = wrapVal(left[0], left[1]);
+    const rw = right ? wrapVal(right[0], right[1]) : undefined;
+    const lh = lw.onSameLine ? labelLeading : labelLeading + lw.lines.length * valueLeading;
+    const rh = rw ? (rw.onSameLine ? labelLeading : labelLeading + rw.lines.length * valueLeading) : 0;
+    rows.push({ left, right, h: Math.max(lh, rh) });
+  }
+  const cardHeaderH = 24; // label row
+  const cardBodyH = rows.reduce((acc, r) => acc + r.h, 0) + (rows.length - 1) * termRowGap;
+  const cardTotalH = termPadY + cardHeaderH + cardBodyH + termPadY;
+  setFill(pdf, C.offwhite);
+  pdf.roundedRect(margin, termY, contentW, cardTotalH, 6, 6, "F");
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(8);
+  setText(pdf, C.muted);
+  pdf.text("Locked terminology — use these, never the others", margin + termPadX, termY + 18);
+  let trY = termY + termPadY + cardHeaderH;
+  const drawCell = (cell: typeof terms[number], cx: number, cy: number) => {
+    const w = wrapVal(cell[0], cell[1]);
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(labelSize);
+    setText(pdf, C.slate);
+    pdf.text(cell[0], cx, cy);
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(valueSize);
     setText(pdf, C.muted);
-    pdf.text(t[1], x + pdf.getTextWidth(t[0]) + 6, y);
-  });
+    if (w.onSameLine) {
+      pdf.text(w.lines[0], cx + w.labelW, cy);
+    } else {
+      let vy = cy + valueLeading;
+      for (const ln of w.lines) {
+        pdf.text(ln, cx, vy);
+        vy += valueLeading;
+      }
+    }
+  };
+  for (const r of rows) {
+    drawCell(r.left, margin + termPadX, trY);
+    if (r.right) drawCell(r.right, margin + termPadX + termColW + termGutter, trY);
+    trY += r.h + termRowGap;
+  }
 
   // ── 2. WEEK AT A GLANCE ────────────────────────────────────────────────────
   pdf.addPage();
