@@ -20,6 +20,33 @@ import {
   WEEK_META_FALLBACK,
   type SlideMeta,
 } from "@/data/salesEnablementSlideAids";
+import {
+  buildSlideLearning,
+  type SlideLearning,
+} from "@/data/salesEnablementLearningOutcomes";
+
+// ─── Glyph sanitiser ─────────────────────────────────────────────────────────
+// helvetica core (jsPDF default) is Latin-1 only. Smart quotes, em-dashes,
+// bullets, arrows etc. render as boxes or wrong glyphs. Sanitise at the
+// write site so data files can stay readable.
+const GLYPH_MAP: Array<[RegExp, string]> = [
+  [/[\u2018\u2019\u02BC]/g, "'"],   // smart single quotes
+  [/[\u201C\u201D]/g, '"'],         // smart double quotes
+  [/[\u2013\u2014]/g, "-"],         // en/em dash
+  [/\u2026/g, "..."],               // ellipsis
+  [/[\u2022\u25CF\u25AA\u25A0]/g, "·"], // bullets to middle dot (Latin-1 safe)
+  [/[\u2192\u27A1]/g, ">"],         // right arrows
+  [/\u21B3/g, ">"],                 // turn arrow
+  [/\u00A0/g, " "],                 // nbsp
+];
+const sanitize = (s: string | undefined): string => {
+  if (!s) return "";
+  let out = s;
+  GLYPH_MAP.forEach(([re, rep]) => { out = out.replace(re, rep); });
+  // strip anything still outside Latin-1
+  out = out.replace(/[^\x00-\xFF]/g, "");
+  return out;
+};
 
 // ─── Brand tokens (RGB tuples for jsPDF) ─────────────────────────────────────
 const C = {
@@ -676,19 +703,16 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     const cc = salesEnablementCoachCards[slideId];
     if (!cc) return;
     const narration = getSalesEnablementNarration(slideId);
-    const title = narration?.title ?? slideId;
-    const coreLine = extractCoreLine(slideId);
-    const summary = narration ? paraphraseNarration(narration.script, 1100) : "";
-    const summaryBullets = narration ? paraphraseNarrationBullets(narration.script, 7) : [];
-    const verbatim = narration ? extractVerbatimLift(narration.script) : undefined;
-    const questions = buildDiscoveryQuestionsRotated(narration?.script, slideId, week.id, idx);
-    const objections = buildObjectionsRotated(slideId, week.id, idx);
-    const proofs = buildProofs(slideId, week.id, idx).map((p) =>
-      // sanitize non-Latin-1 glyphs that helvetica core can't render
-      p.replace(/\u2192/g, " · ").replace(/\u2013/g, "-").replace(/[\u201C\u201D]/g, '"'),
-    );
-    const whiteboard = buildWhiteboard(slideId, week.id);
-    const mistake = buildMistake(slideId, week.id);
+    const title = sanitize(narration?.title ?? slideId);
+    const learning = buildSlideLearning(slideId, week.id);
+    const questions = buildDiscoveryQuestionsRotated(narration?.script, slideId, week.id, idx).map(sanitize);
+    const objections = buildObjectionsRotated(slideId, week.id, idx).map((o) => ({
+      pushback: sanitize(o.pushback),
+      response: sanitize(o.response),
+    }));
+    const proofs = buildProofs(slideId, week.id, idx).map(sanitize);
+    const whiteboard = sanitize(buildWhiteboard(slideId, week.id));
+    const mistake = sanitize(buildMistake(slideId, week.id));
     const sMeta = buildMeta(slideId, week.id);
 
     // Landscape page for slide cards
@@ -729,7 +753,10 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     const microFooterY = lPageH - 30;
     const chipStripH = 56;
     const chipStripY = microFooterY - chipStripH - 10;
-    const colBottomY = chipStripY - 10;
+    // Check-yourself band sits above the coach-chip strip
+    const checkBandH = 26;
+    const checkBandY = chipStripY - checkBandH - 8;
+    const colBottomY = checkBandY - 10;
 
     // Title hero (compact, full content width across BOTH columns)
     const tbH = 46;
@@ -749,132 +776,16 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
 
     const bodyTopY = topY + tbH + 14;
 
-    // ── LEFT COLUMN: Core Idea · Teaching Summary · Whiteboard Recipe ──────
-    let ly = bodyTopY;
-    // Core idea
-    if (coreLine) {
-      drawSectionLabel(pdf, leftX, ly, "THE CORE IDEA", C.brand);
-      ly += 12;
-      pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(10.5);
-      setText(pdf, C.ink);
-      const coreLines = clipLines(pdf.splitTextToSize(coreLine, leftW), 2);
-      pdf.text(coreLines, leftX, ly);
-      ly += coreLines.length * 12 + 12;
-    }
-
-    // Reserve room for the two bottom-left blocks: whiteboard + verbatim lift.
-    // When there's no verbatim, expand whiteboard to consume the space.
-    const baseWbH = 64;
-    const liftBlockH = verbatim ? 58 : 0;
-    const wbBlockH = verbatim ? baseWbH : baseWbH + 58 + 8;
-    const bottomLeftStackH = wbBlockH + (liftBlockH ? liftBlockH + 8 : 0);
-    const summaryBottom = colBottomY - bottomLeftStackH - 14;
-
-    // Teaching summary — rendered as scannable bullet beats with optional
-    // bold Core/Pain/Value lead-ins. Height-fits to the reserved column band.
-    if (summaryBullets.length || summary) {
-      drawSectionLabel(pdf, leftX, ly, "TEACHING SUMMARY — KEY BEATS", C.muted);
-      ly += 12;
-      const fontSize = 9.5;
-      const lineH = 12;
-      const bulletGap = 5;
-      const indent = 10;
-      const textW = leftW - indent;
-      const availH = Math.max(0, summaryBottom - ly);
-
-      // Measure each bullet, dropping the lowest-priority bullets until they fit
-      const bullets = summaryBullets.length
-        ? summaryBullets.slice()
-        : [{ text: summary } as TeachingBullet];
-      pdf.setFont("helvetica", "normal");
-      pdf.setFontSize(fontSize);
-
-      type Measured = { b: TeachingBullet; lines: string[]; h: number };
-      const measure = (b: TeachingBullet): Measured => {
-        const prefix = b.lead ? `${b.lead} — ` : "";
-        const lines = clipLines(
-          pdf.splitTextToSize(prefix + b.text, textW),
-          2,
-        );
-        return { b, lines, h: lines.length * lineH };
-      };
-
-      let measured = bullets.map(measure);
-      const totalH = () =>
-        measured.reduce((acc, m) => acc + m.h, 0) +
-        Math.max(0, measured.length - 1) * bulletGap;
-      while (measured.length > 2 && totalH() > availH) measured.pop();
-
-      // Distribute any leftover space evenly between bullets so the block
-      // reaches summaryBottom without dead air.
-      const leftover = availH - totalH();
-      const extraGap =
-        measured.length > 1 && leftover > 0
-          ? Math.min(8, leftover / (measured.length - 1))
-          : 0;
-
-      let by = ly;
-      measured.forEach(({ b, lines }, i) => {
-        // bullet marker — small filled square in brand colour
-        setFill(pdf, C.brand);
-        pdf.rect(leftX + 1, by - fontSize + 3.5, 2.6, 2.6, "F");
-
-        // First line: bold lead-in (if any) + normal body text
-        const firstLine = lines[0] ?? "";
-        if (b.lead && firstLine.startsWith(`${b.lead} — `)) {
-          const body = firstLine.slice(b.lead.length + 3);
-          pdf.setFont("helvetica", "bold");
-          setText(pdf, C.ink);
-          pdf.text(b.lead, leftX + indent, by);
-          const leadW = pdf.getTextWidth(b.lead);
-          pdf.setFont("helvetica", "normal");
-          setText(pdf, C.slate);
-          pdf.text(` — ${body}`, leftX + indent + leadW, by);
-        } else {
-          pdf.setFont("helvetica", "normal");
-          setText(pdf, C.slate);
-          pdf.text(firstLine, leftX + indent, by);
-        }
-        // Wrap line(s)
-        if (lines.length > 1) {
-          pdf.setFont("helvetica", "normal");
-          setText(pdf, C.slate);
-          pdf.text(lines.slice(1), leftX + indent, by + lineH);
-        }
-        by += lines.length * lineH + bulletGap + extraGap;
-      });
-      ly = by;
-    }
-
-    // Whiteboard recipe (anchored to bottom of left column)
-    const wbY = colBottomY - bottomLeftStackH;
-    drawAccentBlock(
-      pdf,
-      leftX,
-      wbY,
-      leftW,
-      wbBlockH,
-      "WHITEBOARD RECIPE / WHERE TO POINT",
+    // ── LEFT COLUMN: Learning Outcome -> Core Idea -> Teach Beats ->
+    //                Say It Like This -> Whiteboard ────────────────────────
+    renderLearningColumn(pdf, {
+      x: leftX,
+      yTop: bodyTopY,
+      yBottom: colBottomY,
+      w: leftW,
+      learning,
       whiteboard,
-      C.oViolet,
-      [243, 240, 253],
-    );
-
-    // Verbatim lift (right under whiteboard, anchored to col bottom)
-    if (verbatim) {
-      drawAccentBlock(
-        pdf,
-        leftX,
-        colBottomY - liftBlockH,
-        leftW,
-        liftBlockH,
-        "VERBATIM LIFT — SAY THIS NEAR-EXACTLY",
-        `"${verbatim}"`,
-        C.emerald,
-        C.emeraldSoft,
-      );
-    }
+    });
 
     // ── RIGHT COLUMN: Questions · Objections · Proofs · Mistake ────────────
     let ry = bodyTopY;
@@ -951,12 +862,22 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
       [253, 242, 245],
     );
 
+    // ── CHECK YOURSELF band (full width, gates moving on) ────────────────
+    renderCheckYourselfBand(
+      pdf,
+      leftX,
+      checkBandY,
+      lContentW,
+      checkBandH,
+      sanitize(learning.checkYourself),
+    );
+
     // ── Coach chip strip (full width, taller) ─────────────────────────────
     const chipDefs: Array<{ key: FieldKey; label: string; text: string }> = [
-      { key: "remember", label: "REMEMBER", text: cc.remember },
-      { key: "sayItLikeThis", label: "SAY IT", text: cc.sayItLikeThis },
-      { key: "watchOutFor", label: "WATCH OUT", text: cc.watchOutFor },
-      { key: "bridge", label: "BRIDGE", text: cc.bridge },
+      { key: "remember", label: "REMEMBER", text: sanitize(cc.remember) },
+      { key: "sayItLikeThis", label: "SAY IT", text: sanitize(cc.sayItLikeThis) },
+      { key: "watchOutFor", label: "WATCH OUT", text: sanitize(cc.watchOutFor) },
+      { key: "bridge", label: "BRIDGE", text: sanitize(cc.bridge) },
     ];
     const chipGap = 8;
     const chipW = (lContentW - chipGap * 3) / 4;
@@ -983,7 +904,7 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     pdf.text("CONNECTS TO:", lMargin, microFooterY + 12);
     pdf.setFont("helvetica", "normal");
     setText(pdf, C.slate);
-    const ctx = sMeta.connectsTo?.length ? sMeta.connectsTo.join("  ·  ") : "—";
+    const ctx = sMeta.connectsTo?.length ? sanitize(sMeta.connectsTo.join("  ·  ")) : "-";
     pdf.text(clipLines(pdf.splitTextToSize(ctx, lContentW * 0.45), 1), lMargin + 60, microFooterY + 12);
 
     pdf.setFont("helvetica", "bold");
@@ -993,7 +914,7 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     pdf.text(bannedLabel, bannedLabelX, microFooterY + 12);
     pdf.setFont("helvetica", "normal");
     setText(pdf, C.slate);
-    const banned = sMeta.bannedHere?.length ? sMeta.bannedHere.join("  ·  ") : "—";
+    const banned = sMeta.bannedHere?.length ? sanitize(sMeta.bannedHere.join("  ·  ")) : "-";
     pdf.text(
       clipLines(pdf.splitTextToSize(banned, lContentW * 0.4), 1),
       bannedLabelX + 64,
@@ -1244,6 +1165,193 @@ function drawAccentBlock(
     Math.max(1, Math.floor((h - 22) / 11)),
   );
   pdf.text(lines, x + 10, y + 26, { lineHeightFactor: 1.3 });
+}
+
+// ─── Learning-outcome column renderer ──────────────────────────────────────
+function renderLearningColumn(
+  pdf: jsPDF,
+  opts: {
+    x: number;
+    yTop: number;
+    yBottom: number;
+    w: number;
+    learning: SlideLearning;
+    whiteboard: string;
+  },
+) {
+  const { x, yTop, yBottom, w, learning, whiteboard } = opts;
+  const L = {
+    outcome: sanitize(learning.outcome),
+    coreIdea: sanitize(learning.coreIdea),
+    beats: learning.teachBeats.map((b) => ({ label: b.label, text: sanitize(b.text) })),
+    sayLikeThis: sanitize(learning.sayLikeThis),
+    whiteboard: sanitize(whiteboard),
+  };
+
+  let y = yTop;
+
+  // 1. LEARNING OUTCOME — accent band, navy fill, light text
+  const outH = 46;
+  setFill(pdf, [11, 26, 74]); // navy
+  pdf.roundedRect(x, y, w, outH, 5, 5, "F");
+  setFill(pdf, [0, 102, 255]); // brand
+  pdf.rect(x, y, 3, outH, "F");
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7);
+  pdf.setTextColor(140, 175, 230);
+  pdf.text("LEARNING OUTCOME  -  BY THE END THE REP CAN", x + 10, y + 13);
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(9.5);
+  pdf.setTextColor(255, 255, 255);
+  const outLines = clipLines(pdf.splitTextToSize(L.outcome, w - 20), 3);
+  pdf.text(outLines, x + 10, y + 26, { lineHeightFactor: 1.3 });
+  y += outH + 8;
+
+  // 2. CORE IDEA — single bold sentence, no chrome
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7.5);
+  pdf.setTextColor(0, 102, 255);
+  pdf.text("THE CORE IDEA", x, y);
+  setFill(pdf, [0, 102, 255]);
+  pdf.rect(x, y + 3, 18, 1.5, "F");
+  y += 14;
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(10.5);
+  pdf.setTextColor(11, 18, 32);
+  const coreLines = clipLines(pdf.splitTextToSize(L.coreIdea, w), 2);
+  pdf.text(coreLines, x, y, { lineHeightFactor: 1.25 });
+  y += coreLines.length * 13 + 10;
+
+  // 3. HOW TO TEACH IT — three numbered beats (Hook / Frame / Proof)
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7.5);
+  pdf.setTextColor(91, 103, 118);
+  pdf.text("HOW TO TEACH IT  -  3 BEATS", x, y);
+  setFill(pdf, [91, 103, 118]);
+  pdf.rect(x, y + 3, 18, 1.5, "F");
+  y += 12;
+
+  // 4 + 5 are anchored to bottom; reserve their space now so beats height-fit
+  const wbH = 50;
+  const sayH = 44;
+  const beatsBottom = yBottom - wbH - 6 - sayH - 6;
+
+  const indent = 18;
+  const beatGap = 8;
+  const lineH = 11;
+
+  // Pre-measure each beat at progressively tighter wrap caps until the
+  // stack fits between y and beatsBottom. Always keep all 3 beats; reduce
+  // wrap lines first, then drop characters via clipLines truncation.
+  pdf.setFont("helvetica", "normal");
+  pdf.setFontSize(9);
+  const measureBeat = (b: { label: string; text: string }, wrapCap: number) => {
+    const labelW = (() => {
+      pdf.setFont("helvetica", "bold");
+      const wL = pdf.getTextWidth(b.label);
+      pdf.setFont("helvetica", "normal");
+      return wL;
+    })();
+    const firstSlotW = Math.max(40, w - indent - labelW - 5);
+    const firstFit = pdf.splitTextToSize(b.text, firstSlotW);
+    const firstChunk = firstFit[0] ?? "";
+    const remaining = b.text.slice(firstChunk.length).trim();
+    const wrapLines =
+      remaining && wrapCap > 0
+        ? clipLines(pdf.splitTextToSize(remaining, w - indent), wrapCap)
+        : [];
+    return { labelW, firstChunk, wrapLines };
+  };
+  let wrapCap = 2;
+  let prepared = L.beats.map((b) => measureBeat(b, wrapCap));
+  const stackH = (p: typeof prepared) =>
+    p.reduce((acc, m) => acc + lineH + m.wrapLines.length * lineH, 0) +
+    (p.length - 1) * beatGap;
+  while (wrapCap > 0 && y + stackH(prepared) > beatsBottom) {
+    wrapCap -= 1;
+    prepared = L.beats.map((b) => measureBeat(b, wrapCap));
+  }
+
+  L.beats.forEach((b, i) => {
+    const m = prepared[i];
+    // Number chip
+    setFill(pdf, [0, 102, 255]);
+    pdf.circle(x + 6, y + 3, 6, "F");
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(7.5);
+    pdf.setTextColor(255, 255, 255);
+    pdf.text(String(i + 1), x + 6, y + 5.5, { align: "center" });
+    // Label (bold)
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(9);
+    pdf.setTextColor(11, 18, 32);
+    pdf.text(b.label, x + indent, y + 4);
+    // First chunk of body on the same line
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(9);
+    pdf.setTextColor(31, 41, 55);
+    pdf.text(m.firstChunk, x + indent + m.labelW + 5, y + 4);
+    // Wrap lines aligned to indent
+    if (m.wrapLines.length) {
+      pdf.text(m.wrapLines, x + indent, y + 4 + lineH, { lineHeightFactor: 1.3 });
+    }
+    y += 4 + lineH + m.wrapLines.length * lineH + beatGap;
+  });
+
+  // 4. SAY IT LIKE THIS — emerald accent block (anchored above whiteboard)
+  const sayY = yBottom - wbH - 6 - sayH;
+  drawAccentBlock(
+    pdf,
+    x,
+    sayY,
+    w,
+    sayH,
+    "SAY IT LIKE THIS",
+    `"${L.sayLikeThis}"`,
+    [5, 150, 105],
+    [209, 250, 229],
+  );
+
+  // 5. WHITEBOARD / WHERE TO POINT — violet accent (anchored to col bottom)
+  drawAccentBlock(
+    pdf,
+    x,
+    yBottom - wbH,
+    w,
+    wbH,
+    "WHITEBOARD  /  WHERE TO POINT",
+    L.whiteboard,
+    [139, 92, 246],
+    [243, 240, 253],
+  );
+}
+
+// ─── Check-yourself band renderer ──────────────────────────────────────────
+function renderCheckYourselfBand(
+  pdf: jsPDF,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  question: string,
+) {
+  setFill(pdf, [250, 251, 253]);
+  pdf.roundedRect(x, y, w, h, 4, 4, "F");
+  setFill(pdf, [0, 102, 255]);
+  pdf.rect(x, y, 3, h, "F");
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7.5);
+  pdf.setTextColor(0, 102, 255);
+  pdf.text("CHECK YOURSELF  -  TICK BEFORE MOVING ON", x + 10, y + 11);
+  pdf.setFont("helvetica", "italic");
+  pdf.setFontSize(10);
+  pdf.setTextColor(11, 18, 32);
+  const lines = clipLines(pdf.splitTextToSize(question, w - 28), 1);
+  pdf.text(lines, x + 10, y + 22);
+  // tick box on the far right
+  pdf.setDrawColor(91, 103, 118);
+  pdf.setLineWidth(0.8);
+  pdf.rect(x + w - 18, y + h / 2 - 5.5, 11, 11, "S");
 }
 
 function drawMetaStrip(pdf: jsPDF, x: number, y: number, w: number, meta: SlideMeta) {
