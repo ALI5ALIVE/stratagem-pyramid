@@ -1716,27 +1716,28 @@ function renderSlideTranscriptPage(
     coach: C.rose,
   };
 
-  // Split prose into rehearsal-sized phrase lines.
-  // Rules: split on sentence boundaries, then split long sentences on
-  // commas / em-dashes / colons so no line is a "wall".
-  const PHRASE_TARGET = 64; // chars; soft cap per line
-  const splitToPhrases = (text: string): string[] => {
+  // Split prose into flowing sentence paragraphs. Each sentence wraps
+  // naturally on word boundaries inside the card — we only break a
+  // sentence apart if it's very long (>180 chars), and only on strong
+  // punctuation (`;`, ` — `, `: `). Commas are left alone so the prose
+  // still reads as continuous speech.
+  const SENTENCE_SOFT_MAX = 180;
+  const splitToSentences = (text: string): string[] => {
     const sentences = text
       .split(/(?<=[.!?])\s+/)
       .map((s) => s.trim())
       .filter(Boolean);
     const out: string[] = [];
     for (const sent of sentences) {
-      if (sent.length <= PHRASE_TARGET) { out.push(sent); continue; }
-      // soft-split on natural pause punctuation
+      if (sent.length <= SENTENCE_SOFT_MAX) { out.push(sent); continue; }
       const parts = sent
-        .split(/(?<=[,;:])\s+|\s+-\s+/)
+        .split(/(?<=;)\s+|\s+—\s+|\s+-\s+|(?<=:)\s+/)
         .map((p) => p.trim())
         .filter(Boolean);
       let buf = "";
       for (const p of parts) {
         if (!buf) { buf = p; continue; }
-        if ((buf + " " + p).length <= PHRASE_TARGET) {
+        if ((buf + " " + p).length <= SENTENCE_SOFT_MAX) {
           buf = buf + " " + p;
         } else {
           out.push(buf);
@@ -1776,7 +1777,7 @@ function renderSlideTranscriptPage(
     const sayText = qm ? qm[1] : body;
     return {
       n: i + 1, label, group, accent: ACCENT[group],
-      point, sayLines: splitToPhrases(sayText), durationSec,
+      point, sayLines: splitToSentences(sayText), durationSec,
     };
   });
 
