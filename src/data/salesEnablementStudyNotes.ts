@@ -1614,3 +1614,278 @@ export const collectWeekGlossary = (slideIds: string[]): StudyTerm[] => {
   }
   return out.sort((a, b) => a.term.localeCompare(b.term));
 };
+
+// ─── WHAT'S ON THE SLIDE ─────────────────────────────────────────────────────
+// One short bullet list per slide describing what the rep is visually looking
+// at. Read as: shapes / numbers / columns / colour story on screen. Keep each
+// bullet under ~80 chars so it fits the PDF "What's on the slide" column.
+export const WHATS_ON_SLIDE: Record<string, string[]> = {
+  // ── Week 1 · Foundation ────────────────────────────────────────────────────
+  "se-slide-0": [
+    "Academy cover: three-week journey panel (Foundation, Capabilities, Sell & Win).",
+    "Comply365 wordmark, badge of authorship for rep-facing use only.",
+    "Top-line outcome: 'sell the operating model, not the software'.",
+  ],
+  "se-week-1": [
+    "Week banner with 'Foundation' tag and the W1 slide-count.",
+    "Three artefacts called out: one-sentence pitch, DTOP loop, four signal sources.",
+    "Capability-band map: Core Apps · Intelligence & Orchestration · Mobile · DTOP.",
+  ],
+  "se-slide-shift": [
+    "Before/after split: 'Did you tick the box?' versus 'Can you prove the loop closed?'.",
+    "Industry exposure stat in headline size: $25-35B controllable cost.",
+    "Source stack chip: Eurocontrol · IATA · SITA.",
+  ],
+  "se-plain-english-shift": [
+    "Three silo columns labelled Safety, Content, Training — each in its own box.",
+    "Disconnected signals shown as broken arrows between the three stacks.",
+    "Platform overlay on top with the Intelligence Layer label.",
+  ],
+  "se-slide-whatis": [
+    "Five visible boxes: 3 Core Apps row, Intelligence Layer band above, Unified Mobile shell.",
+    "One Operational Data foundation drawn underneath all five.",
+    "DTOP wrapper arrow around the whole stack.",
+  ],
+  "se-slide-dtop": [
+    "Four DTOP stages in colour order: D blue · T amber · O violet · P emerald.",
+    "Closed-loop arrow returning Prove back to Detect.",
+    "Four signal chips feeding Detect (Regulation, Anomalies, OCRs, Macro/Geopolitical).",
+  ],
+  "se-slide-dtop-whiteboard": [
+    "Marker-drawing reference of the DTOP loop, six strokes called out by number.",
+    "Stroke colours match the DTOP slide (D blue → T amber → O violet → P emerald).",
+    "Sentence-per-stage callout on the right of the diagram.",
+  ],
+  "se-slide-dtop-whiteboard-runbook": [
+    "Three-column runbook: Pre-line · Run · Recover.",
+    "Verbatim phrases the rep speaks aloud during the drill.",
+    "Wedge question quoted in pull-quote treatment after the diagram.",
+  ],
+  "se-slide-signals": [
+    "Four signal-source cards in canonical order with a one-line definition under each.",
+    "Detect layer chip pulling all four sources into one stream.",
+    "Wedge question called out below the four cards.",
+  ],
+  "se-slide-value": [
+    "Three outcome columns: procedure cycle time, investigation cost, audit evidence.",
+    "Persona chips above each column (Safety / Ops / CFO) — pick one for the room.",
+    "Line-of-Sight callout linking to the customer-specific value model.",
+  ],
+  "se-slide-maturity-roadmap": [
+    "Five-stage curve climbing left-to-right: Fragmented → Managed → Connected → Proactive → Predictive.",
+    "Stage 3 inflection labelled 'the platform shift'.",
+    "Comply365 trajectory line walking the full curve on one foundation.",
+  ],
+  "se-slide-maturity-whiteboard": [
+    "Marker-drawing reference of the maturity curve with the six strokes numbered.",
+    "'YOU ARE HERE' flag planted between Stage 1 and Stage 2.",
+    "Stage-3 inflection circled as 'the platform shift'.",
+  ],
+  "se-slide-recap-m2": [
+    "Three Q&A rehearsal cards: What is it? · How is it different? · One thing to remember.",
+    "Each card holds the verbatim answer in bold for read-aloud rehearsal.",
+    "Week 1 → Week 2 progress chevron at the bottom.",
+  ],
+
+  // ── Week 2 · Capabilities ──────────────────────────────────────────────────
+  "se-week-2": [
+    "Week banner with 'Capabilities' tag and the 15-slide running order.",
+    "Capability stack callout: Intelligence Layer · Insights · Recommendations · Automation · Mobile.",
+    "Approved-terminology chip strip (Generative AI, Recommended Actions, Operational Data).",
+  ],
+  "se-week-2-overview": [
+    "The full platform diagram: 3 Core Apps, Intelligence Layer band, Unified Mobile shell.",
+    "Operational Data foundation underneath all five.",
+    "DTOP wrapper arrow around the whole platform.",
+  ],
+  "se-platform-insights-intelligence": [
+    "Worked example: three station bars showing DG handling spikes correlated to overdue DG training.",
+    "Six-stage Intelligence Layer pipeline (question → data → graph → reasoning → guardrails → cited answer).",
+    "90% vs 35% accuracy comparison and tenant-isolation security chip.",
+  ],
+  "se-platform-wide-intelligence-usecases": [
+    "Three use-case cards: Safety × Training, DG Manual Loop, Part 145 Audit Readiness.",
+    "Each card maps onto DTOP chips with cited-evidence badges.",
+    "Persona tag on each card (Safety / Training / Quality) so the rep picks ONE for the room.",
+  ],
+  "se-slide-coanalyst": [
+    "Three-by-three grid: columns are Core Apps, rows are the capability each gets.",
+    "Rollout chips: SafetyManager365 'Live today', Content & Training 'Next'.",
+    "Footer line: 'same engine, different scope'.",
+  ],
+  "se-slide-coanalyst-usecases": [
+    "Three day-to-day cards, one per Core App (Safety / Content / Training).",
+    "Each card frames a spreadsheet chore replaced by a single plain-English prompt.",
+    "'Same engine, two audiences' tagline anchoring board-level and coordinator value.",
+  ],
+  "se-slide-insights": [
+    "Continuous-watch diagram: data substrate → pattern detection → evidence-attached insight card.",
+    "Sample insight card with cited sources stacked beneath it.",
+    "Roadmap chip: POC H1 2026 · Production H2 2026.",
+  ],
+  "se-slide-insights-usecases": [
+    "Two columns: Per-solution (Safety/Content/Training) and Platform-level recommendation examples.",
+    "Cited-evidence badge on every recommendation card.",
+    "Roadmap honesty chip: Recommendations & Prescriptive Actions 2027+.",
+  ],
+  "se-slide-automation": [
+    "Trust sequence shown left-to-right: Insights → Recommendations → Automation.",
+    "Four bands of automated work (routing, assignment, notifications, evidence assembly).",
+    "Human-in-the-loop chip on procedure/training changes; roadmap chip POC April 2026 / H2 2026 rollout.",
+  ],
+  "se-slide-automation-usecases": [
+    "Three platform-layer cards, each closing a DTOP loop across all three Core Apps.",
+    "Today vs With-platform comparison (email-and-weeks vs automatic-with-audit).",
+    "Human-in-the-loop badge on every card.",
+  ],
+  "se-slide-tiers-vs-ai": [
+    "Two columns side by side: Intelligence Layer (aviation-grounded) vs Generic AI (internet-grounded).",
+    "Headline gauge: ~90% domain accuracy at L4-5 vs ~35% generic, on the same data.",
+    "Methodology footnote chip (available under NDA in the SVS).",
+  ],
+  "se-slide-regmgmt": [
+    "End-to-end flow strip: regulation change → impact ID → AI redlines → human review → routed updates → crew receipt.",
+    "Each step badged with the capability that runs it (Intelligence / Insights / Recommendations / Automation).",
+    "Today vs With-platform timeline: many weeks across 4-5 teams compresses to days.",
+  ],
+  "se-slide-mobile": [
+    "One frontline-shell mock: content, training, safety reporting tabs in a single app.",
+    "Phased rollout strip: Phase 1 Training H1 2026 · Phase 2 Safety H2 2026 · Phase 3 unified 2027+.",
+    "<48 hour revision-to-device chip with offline-first badge.",
+  ],
+  "se-slide-talktrack": [
+    "Five rows — one per capability — with two columns: plain-English line · discovery question.",
+    "Rows in the same order as the customer deck (Intelligence → Insights → Recommendations → Automation → Mobile).",
+    "Rehearsal label at the top: 'study page, not a customer slide'.",
+  ],
+  "se-w2-capstone-whiteboard": [
+    "Madrid use-case timeline strip: Detect d1 · Trigger d2 · Orchestrate d3 · Prove d5.",
+    "Capability badges land on each day to show the loop assembling itself.",
+    "60-second target with one marker callout.",
+  ],
+
+  // ── Week 3 · Sell & Win ────────────────────────────────────────────────────
+  "se-week-3": [
+    "Week banner with 'Sell & Win' tag and the 22-slide running order.",
+    "Three-move close motion called out: Discover · Walk · Close.",
+    "Approved-language chip strip: walkthrough, focused session — never 'demo' or 'pilot'.",
+  ],
+  "se-w3-roadmap-vision-frame": [
+    "Maturity curve redrawn for the Week 3 opening, with stage labels.",
+    "Three callouts on the curve: differentiate · up-sell · cross-sell.",
+    "Honesty chip on Stage 5: direction of travel, not a feature for sale today.",
+  ],
+  "se-w3-whole-vision-whiteboard": [
+    "Top strip: Madrid use case with four DTOP micro-cards (D d1, T d2, O d3, P d5).",
+    "Bottom-up five-stage stack mapping each platform layer to a DTOP role and colour.",
+    "Closing verbatim line: 'one foundation, one intelligence, one loop'.",
+  ],
+  "se-w3-signals-recap": [
+    "Signals layer above the DTOP engine, both drawn one-minute style.",
+    "One anomaly walked end-to-end through Detect → Trigger → Orchestrate → Prove.",
+    "Point-solution comparison line: 'they stop at Detect — we do all four'.",
+  ],
+  "se-who-to-target": [
+    "Three tier blocks stacked: Tier 1 (highest conviction) → Tier 2 → Tier 3.",
+    "Qualifying criteria called out per tier (app live, renewal window, sponsor).",
+    "Renewal 'trojan horse' label on the Tier 1 block.",
+  ],
+  "se-footprint-intro": [
+    "Three footprint pattern cards: single app · two apps · all three apps.",
+    "Same foundation drawn under every card — different conversation above it.",
+    "Loop language vs SKU language pull-quote.",
+  ],
+  "se-footprint-single": [
+    "One lit lane and two dark lanes drawn above a shared foundation.",
+    "Intelligence Layer band drawn across only the lit lane, labelled 'confined to this lane'.",
+    "Broken DTOP arrow where the dark lanes start.",
+  ],
+  "se-footprint-single-whiteboard": [
+    "Marker-drawing reference: one lit lane, two dark, intelligence band, broken DTOP arrow.",
+    "Six numbered strokes called out beside the diagram.",
+    "Verbatim discovery question quoted below the diagram.",
+  ],
+  "se-footprint-two": [
+    "Two lit lanes, one dark lane drawn above the shared foundation.",
+    "Intelligence Layer band drawn across both lit lanes — labelled 'already crossing'.",
+    "Half-loop DTOP arrow that visibly breaks at the dark lane.",
+  ],
+  "se-footprint-two-whiteboard": [
+    "Marker-drawing reference of the half-loop with the missing lane shown empty.",
+    "Six numbered strokes called out beside the diagram.",
+    "Discovery question + 'STOP TALKING' coaching cue beneath the drawing.",
+  ],
+  "se-footprint-all": [
+    "Three lit lanes above the foundation, intelligence band spanning all three.",
+    "Closed DTOP loop drawn around the stack.",
+    "'Conductor vs instruments' analogy called out beside the diagram.",
+  ],
+  "se-footprint-all-whiteboard": [
+    "Marker-drawing reference of the full closed loop, three lit lanes, intelligence band.",
+    "Six numbered strokes called out beside the diagram.",
+    "Discovery question quoted below with the 'whoever speaks first loses' coaching cue.",
+  ],
+  "se-footprint-ladder": [
+    "Four ladder rungs ascending: 1 app ~25% → 2 apps ~55% → 3 apps ~75% → 3 + Intelligence Layer 100%.",
+    "Directional-modelling disclaimer chip at the bottom.",
+    "Account-review/renewal usage badge (never use cold).",
+  ],
+  "se-footprint-playbook": [
+    "Three numbered moves stacked: Audit · Name · Anchor.",
+    "Per move: discovery question on the left, coaching note on the right.",
+    "Loop-language vs SKU-language reminder strip at the foot.",
+  ],
+  "se-discovery-to-close": [
+    "Three-word motion banner: Discover · Walk · Close.",
+    "Time-box guidance under each word (listen / show / close on SVS).",
+    "Banned-language strip: never 'demo', never 'pilot'.",
+  ],
+  "se-discovery-call-runbook": [
+    "45-minute call broken into three time-boxes: 5 min frame · 30 min ask · 10 min recap.",
+    "Opening-line pull-quote on signals not data.",
+    "Counter-offer script for 'just send the deck' requests.",
+  ],
+  "se-discovery-question-bank": [
+    "Four DTOP columns (D / T / O / P), three questions in each column.",
+    "Red-flag answer chips on the right of each question.",
+    "Coaching note: pick four (one per step), ask one at a time.",
+  ],
+  "se-persona-playbook": [
+    "Five persona rows: Director of Safety, Head of Training, VP Operations, Chief Compliance Officer, IT/Tech.",
+    "Columns per row: lead-in slide · mirror metric · proof artifact.",
+    "Language warnings strip (no FOQA/FDM/ASAP with Safety; never pitch SMS replacement).",
+  ],
+  "se-slide-outcomes": [
+    "Four outcome blocks in buyer language: Schedule · Revenue · Cost · Customers.",
+    "Each block told in Signal → Action → Result rhythm.",
+    "Line-of-Sight callout linking to customer-specific modelling.",
+  ],
+  "se-strategy-vision-session": [
+    "Three boxes on a whiteboard: their operating model · our domain team · outcome (clarity).",
+    "Format chip: 3 hours · fixed agenda · complimentary · run by domain team.",
+    "What-it-isn't strip: not a workshop, not a demo, not a sales process.",
+  ],
+  "se-w3-capstone": [
+    "Six numbered moves stacked: pick account · run call · pick use case · handle objection · close · book SVS.",
+    "60-second self-test footer.",
+    "Practice Center handoff badge for any move that breaks.",
+  ],
+};
+
+export const WEEK_WHATS_ON: Record<WeekId, string[]> = {
+  w1: [
+    "Week 1 slide — anchored on the operating model, not on product features.",
+    "Expect a foundation visual: capability bands, DTOP loop, or the maturity curve.",
+    "Read every diagram as 'one foundation, three Core Apps, intelligence on top'.",
+  ],
+  w2: [
+    "Week 2 slide — one capability tied to a DTOP step and a customer use case.",
+    "Expect a capability diagram, a worked example or a roadmap honesty chip.",
+    "Approved terminology only: Generative AI, Recommended Actions, Operational Data.",
+  ],
+  w3: [
+    "Week 3 slide — part of the close motion toward the Strategy & Vision Session.",
+    "Expect a footprint diagram, a discovery aid, or a persona/outcome map.",
+    "Loop language beats SKU language — read every diagram for the broken loop.",
+  ],
+};
