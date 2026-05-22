@@ -1,6 +1,8 @@
 import pptxgen from "pptxgenjs";
-import { PPTX_BRAND, paintBackground, loadImageAsBase64 } from "@/lib/pptxBrand";
-import logoUrl from "@/assets/comply365-logo-white.png";
+import { PPTX_BRAND, addCard, loadImageAsBase64 } from "@/lib/pptxBrand";
+import logoUrlDark from "@/assets/comply365-logo-white.png";
+import logoUrlLight from "@/assets/comply365-logo.png";
+import { chrome, header, CONTENT_TOP, CONTENT_BOTTOM } from "./buildTechnicalDeck";
 import {
   aiSolutions,
   noAISolution,
@@ -22,23 +24,24 @@ export async function buildAIInfographicDeck(opts: BuildOpts = {}): Promise<Blob
 
   opts.onProgress?.(0, 1, "AI Capabilities");
 
+  const [logo, logoLight] = await Promise.all([
+    loadImageAsBase64(logoUrlDark).catch(() => ""),
+    loadImageAsBase64(logoUrlLight).catch(() => ""),
+  ]);
+
   const slide = pptx.addSlide();
-  paintBackground(slide, "light");
+  chrome(slide, { logo, logoLight, index: 0, total: 1 }, "dark");
+  header(
+    slide,
+    "Platform",
+    "AI Capabilities",
+    "AI Solutions mapped to ContentManager365, TrainingManager365 and SafetyManager365 capabilities.",
+  );
 
-  // Title
-  slide.addText("Comply365 — AI Capabilities", {
-    x: 0.5, y: 0.35, w: W - 1, h: 0.45,
-    fontFace: PPTX_BRAND.font.display, fontSize: 22, bold: true,
-    color: C.bg, align: "left",
-  });
-  slide.addText("AI Solutions mapped to ContentManager365, TrainingManager365 and SafetyManager365 capabilities.", {
-    x: 0.5, y: 0.8, w: W - 1, h: 0.3,
-    fontFace: PPTX_BRAND.font.body, fontSize: 11, color: C.subtle, align: "left",
-  });
-
-  // Layout grid: 4 columns
-  const gridTop = 1.4;
-  const gridBottom = H - 0.7;
+  // Layout grid: 4 columns, leave room at bottom for legend
+  const legendH = 0.35;
+  const gridTop = CONTENT_TOP;
+  const gridBottom = CONTENT_BOTTOM - legendH - 0.15;
   const gridH = gridBottom - gridTop;
   const colGap = 0.25;
   const margin = 0.5;
@@ -46,26 +49,20 @@ export async function buildAIInfographicDeck(opts: BuildOpts = {}): Promise<Blob
 
   const columnsX: Record<string, number> = {};
   const headerH = 0.45;
-  const cellH = 0.5;
-  const cellGap = 0.18;
+  const cellH = 0.46;
+  const cellGap = 0.14;
 
   // 1) AI Solutions column (left)
   const solX = margin;
   columnsX["solutions"] = solX;
-  // outer panel
-  slide.addShape("roundRect", {
-    x: solX, y: gridTop, w: colW, h: gridH,
-    fill: { color: "EFF6FF" }, line: { color: "BFDBFE", width: 1 },
-    rectRadius: 0.15,
-  });
-  // header
+  addCard(slide, solX, gridTop, colW, gridH, { fill: C.surface, border: C.primarySoft, radius: 0.15 });
   slide.addShape("roundRect", {
     x: solX + 0.15, y: gridTop + 0.15, w: colW - 0.3, h: headerH,
     fill: { color: C.primary }, line: { type: "none" }, rectRadius: 0.1,
   });
   slide.addText("AI Solutions", {
     x: solX + 0.15, y: gridTop + 0.15, w: colW - 0.3, h: headerH,
-    fontFace: PPTX_BRAND.font.body, fontSize: 12, bold: true,
+    fontFace: PPTX_BRAND.font.display, fontSize: 13, bold: true,
     color: "FFFFFF", align: "center", valign: "middle",
   });
 
@@ -75,15 +72,21 @@ export async function buildAIInfographicDeck(opts: BuildOpts = {}): Promise<Blob
   aiSolutions.forEach((sol) => {
     const chipX = solX + 0.2;
     const chipW = colW - 0.4;
+    const accent = solutionColors[sol.id].pptx;
+    // Dark chip with colored left accent bar
     slide.addShape("roundRect", {
       x: chipX, y: cy, w: chipW, h: cellH,
-      fill: { color: solutionColors[sol.id].pptx },
-      line: { type: "none" }, rectRadius: 0.08,
+      fill: { color: C.surfaceAlt },
+      line: { color: accent, width: 1 }, rectRadius: 0.08,
+    });
+    slide.addShape("rect", {
+      x: chipX, y: cy, w: 0.09, h: cellH,
+      fill: { color: accent }, line: { type: "none" },
     });
     slide.addText(sol.label, {
-      x: chipX, y: cy, w: chipW, h: cellH,
+      x: chipX + 0.18, y: cy, w: chipW - 0.2, h: cellH,
       fontFace: PPTX_BRAND.font.body, fontSize: 11, bold: true,
-      color: "FFFFFF", align: "center", valign: "middle",
+      color: C.ink, align: "left", valign: "middle",
     });
     solCenters[sol.id] = { x: chipX + chipW, y: cy + cellH / 2 };
     cy += cellH + cellGap;
@@ -95,13 +98,17 @@ export async function buildAIInfographicDeck(opts: BuildOpts = {}): Promise<Blob
   const chipW = colW - 0.4;
   slide.addShape("roundRect", {
     x: chipX, y: noAiY, w: chipW, h: cellH,
-    fill: { color: solutionColors.noai.pptx },
-    line: { type: "none" }, rectRadius: 0.08,
+    fill: { color: C.surfaceAlt },
+    line: { color: C.muted, width: 1, dashType: "dash" }, rectRadius: 0.08,
+  });
+  slide.addShape("rect", {
+    x: chipX, y: noAiY, w: 0.09, h: cellH,
+    fill: { color: C.muted }, line: { type: "none" },
   });
   slide.addText("No AI", {
-    x: chipX, y: noAiY, w: chipW, h: cellH,
+    x: chipX + 0.18, y: noAiY, w: chipW - 0.2, h: cellH,
     fontFace: PPTX_BRAND.font.body, fontSize: 11, bold: true,
-    color: "FFFFFF", align: "center", valign: "middle",
+    color: C.muted, align: "left", valign: "middle",
   });
   solCenters["noai"] = { x: chipX + chipW, y: noAiY + cellH / 2 };
 
@@ -110,18 +117,14 @@ export async function buildAIInfographicDeck(opts: BuildOpts = {}): Promise<Blob
   productColumns.forEach((col, idx) => {
     const colX = margin + (idx + 1) * (colW + colGap);
     columnsX[col.id] = colX;
-    slide.addShape("roundRect", {
-      x: colX, y: gridTop, w: colW, h: gridH,
-      fill: { color: "F8FAFC" }, line: { color: "E2E8F0", width: 1 },
-      rectRadius: 0.15,
-    });
+    addCard(slide, colX, gridTop, colW, gridH, { fill: C.surface, radius: 0.15 });
     slide.addShape("roundRect", {
       x: colX + 0.15, y: gridTop + 0.15, w: colW - 0.3, h: headerH,
       fill: { color: C.primary }, line: { type: "none" }, rectRadius: 0.1,
     });
     slide.addText(col.product, {
       x: colX + 0.15, y: gridTop + 0.15, w: colW - 0.3, h: headerH,
-      fontFace: PPTX_BRAND.font.body, fontSize: 12, bold: true,
+      fontFace: PPTX_BRAND.font.display, fontSize: 13, bold: true,
       color: "FFFFFF", align: "center", valign: "middle",
     });
 
@@ -131,14 +134,14 @@ export async function buildAIInfographicDeck(opts: BuildOpts = {}): Promise<Blob
       const rW = colW - 0.4;
       slide.addShape("roundRect", {
         x: rX, y: ry, w: rW, h: cellH,
-        fill: { color: row.ai ? "DBEAFE" : "E2E8F0" },
-        line: { color: row.ai ? "93C5FD" : "CBD5E1", width: 0.75 },
+        fill: { color: C.surfaceAlt },
+        line: { color: row.ai ? C.primary : C.muted, width: 0.75, dashType: row.ai ? "solid" : "dash" },
         rectRadius: 0.08,
       });
       slide.addText(row.label, {
         x: rX, y: ry, w: rW, h: cellH,
         fontFace: PPTX_BRAND.font.body, fontSize: 11, bold: true,
-        color: row.ai ? "1E3A8A" : "475569", align: "center", valign: "middle",
+        color: row.ai ? C.ink : C.muted, align: "center", valign: "middle",
       });
       rowCenters[row.id] = { x: rX, y: ry + cellH / 2 };
       ry += cellH + cellGap;
@@ -170,7 +173,7 @@ export async function buildAIInfographicDeck(opts: BuildOpts = {}): Promise<Blob
   allSolutions.forEach((sol) => {
     const from = solCenters[sol.id];
     if (!from) return;
-    const color = sol.tier === "ai" ? "3B82F6" : "94A3B8";
+    const color = sol.tier === "ai" ? C.primary : C.muted;
     if (sol.targets.length === 0) {
       // Short stub arrow pointing right (mirrors the source slide)
       drawArrow(from, { x: from.x + 0.45, y: from.y }, color);
@@ -183,17 +186,20 @@ export async function buildAIInfographicDeck(opts: BuildOpts = {}): Promise<Blob
     });
   });
 
-  // Footer: logo + page number
-  try {
-    const logo = await loadImageAsBase64(logoUrl);
-    slide.addImage({ data: logo, x: 0.5, y: H - 0.55, w: 1.1, h: 0.32 });
-  } catch {
-    /* ignore */
-  }
-  slide.addText("1", {
-    x: W - 0.7, y: H - 0.5, w: 0.4, h: 0.3,
-    fontFace: PPTX_BRAND.font.body, fontSize: 10, color: C.subtle, align: "right",
-  });
+  // Legend row above brand footer
+  const legY = gridBottom + 0.15;
+  const drawSwatch = (x: number, color: string, label: string) => {
+    slide.addShape("rect", {
+      x, y: legY + 0.06, w: 0.18, h: 0.18,
+      fill: { color }, line: { type: "none" },
+    });
+    slide.addText(label, {
+      x: x + 0.26, y: legY, w: 2.5, h: 0.3,
+      fontFace: PPTX_BRAND.font.body, fontSize: 10, color: C.muted, valign: "middle",
+    });
+  };
+  drawSwatch(margin, C.primary, "AI-enabled capability");
+  drawSwatch(margin + 2.4, C.muted, "Standard (no AI) capability");
 
   opts.onProgress?.(1, 1, "AI Capabilities");
 

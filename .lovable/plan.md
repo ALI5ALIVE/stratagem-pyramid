@@ -1,30 +1,40 @@
-## Fix PPTX arrows
+## Goal
 
-The downloaded PPTX shows arrows that don't match the source slide. Two issues:
+Restyle the AI Infographic PPTX export so it visually matches the **Executive Pitch · Medium** deck (the dark-themed branded look used across `buildTechnicalDeck` / `buildExecutivePitch3Deck`), instead of the current standalone light layout.
 
-### 1. Wrong arrow targets
+## What changes
 
-The source slide only draws one short arrow per AI solution, pointing right into the ContentManager365 column. My data file added cross-column targets (Training Records, Safety Reports, etc.) that aren't visible in the source.
+Only `src/exporters/pptx/buildAIInfographicDeck.ts` is rewritten. Data, web route, and the `AICapabilitiesMatrix` component stay as-is.
 
-Correct source mapping (1 arrow each):
-- CoAnalyst → Forms
-- CoAuthor → Authoring
-- Qvery BI & Dashboards → Reporting (ContentManager365)
-- AI Assistant → Distribution
-- CoTrainer → (no target — arrow stub only)
-- AI Agents → (no target — arrow stub only)
-- No AI → (no arrow)
+### Adopt the shared deck chrome
 
-### 2. pptxgenjs line bug
+- Import `chrome`, `header`, `CONTENT_TOP`, `CONTENT_BOTTOM` from `./buildTechnicalDeck` and `PPTX_BRAND`, `addCard`, `addEyebrow` helpers from `@/lib/pptxBrand`.
+- Replace the hand-rolled background / title / footer with:
+  - `paintBackground(slide, "dark")` via `chrome()` (dark brand master with grid, logo, page count, deck label).
+  - `header(slide, "Platform", "AI Capabilities", "AI Solutions mapped to ContentManager365, TrainingManager365 and SafetyManager365 capabilities.")`.
+- Pass `{ logo, logoLight, index: 0, total: 1 }` into `chrome()` after loading both logos (mirrors Exec3 builder).
+- Deck label constant `"AI Capabilities"` so the footer label matches.
 
-`slide.addShape("line", { w: dx, h: dy })` fails when `dx` or `dy` is negative — the arrow renders backwards or invisibly. Fix by using absolute `w`/`h` plus `flipH` / `flipV` based on direction sign.
+### Re-skin the 4-column matrix to dark brand
 
-### Changes
+Same 4-column grid (AI Solutions + 3 product columns), but using brand tokens from `PPTX_BRAND.color` (`C.bg`, `C.surface`, `C.surfaceAlt`, `C.primary`, `C.ink`, `C.muted`, `C.border`):
 
-- `src/data/aiInfographic.ts` — reduce each solution's `targets` to the single matching ContentManager365 row; CoTrainer / AI Agents / No AI get `targets: []`.
-- `src/exporters/pptx/buildAIInfographicDeck.ts` — rewrite arrow drawing helper to use abs dimensions + `flipH`/`flipV`. Also draw a short "stub" arrow for solutions with no target (matches source visual).
-- `src/components/ai-infographic/AICapabilitiesMatrix.tsx` — web matrix already uses SVG paths so it will update automatically from the data change. No other code edits needed.
+- Column panels: `addCard(...)` with `fill: C.surface`, `border: C.border`, `radius` matching other decks.
+- Column headers: filled pill in `C.primary` with white text (kept) but using `PPTX_BRAND.font.display` and the medium-deck font sizes (`fontSize: 13, bold`).
+- AI solution chips: keep per-solution accent colors from `solutionColors[*].pptx` but render as `addCard` with a colored left border + dark fill (`C.surfaceAlt`) and white label, matching the "stat block" style used elsewhere in Exec3.
+- Capability rows: `addCard` with `fill: C.surfaceAlt`, label in `C.ink` for AI rows and `C.muted` for non-AI rows; non-AI rows get a dashed/lighter border (`C.border`).
+- Connector arrows: keep the existing `drawArrow` logic (with `flipH`/`flipV` fix) but recolor — AI arrows use `C.primary`, "No AI" stub uses `C.muted`.
 
-### Out of scope
+### Legend + footnote
 
-Visual styling of the page; only the arrow mapping + PPTX rendering bug.
+- Add a small legend row just above `CONTENT_BOTTOM`: two swatches ("AI-enabled capability" in `C.primary`, "Standard capability" in `C.muted`) — matches the web page footer and the medium-deck legend pattern.
+
+### No behavior changes
+
+- Still a single-slide deck, still registered as `"ai-infographic"` in `DECK_BUILDERS`, filename unchanged.
+- `onProgress` calls unchanged.
+- Web route and matrix component untouched.
+
+## File touched
+
+- `src/exporters/pptx/buildAIInfographicDeck.ts` — full rewrite to use shared dark chrome + brand tokens.
