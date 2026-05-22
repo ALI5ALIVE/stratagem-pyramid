@@ -8,6 +8,13 @@ export interface SlideObjection {
   response: string;
 }
 
+export interface SlideMeta {
+  dtop?: "D" | "T" | "O" | "P";
+  persona: Array<"Exec" | "Ops" | "Tech">;
+  connectsTo?: string[]; // human label, e.g. "Slide 03 · DTOP"
+  bannedHere?: string[]; // slide-specific landmine phrases
+}
+
 /** Hand-curated discovery questions per slide. Used in addition to anything
  *  the paraphraser pulls out of narration quotes. Cap 3 per slide. */
 export const SLIDE_DISCOVERY: Record<string, string[]> = {
