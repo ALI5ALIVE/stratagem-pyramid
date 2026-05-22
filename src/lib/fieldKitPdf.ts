@@ -1168,6 +1168,168 @@ function drawAccentBlock(
 }
 
 function drawMetaStrip(pdf: jsPDF, x: number, y: number, w: number, meta: SlideMeta) {
+}
+
+// ─── Learning-outcome column renderer ──────────────────────────────────────
+function renderLearningColumn(
+  pdf: jsPDF,
+  opts: {
+    x: number;
+    yTop: number;
+    yBottom: number;
+    w: number;
+    learning: SlideLearning;
+    whiteboard: string;
+  },
+) {
+  const { x, yTop, yBottom, w, learning, whiteboard } = opts;
+  const L = {
+    outcome: sanitize(learning.outcome),
+    coreIdea: sanitize(learning.coreIdea),
+    beats: learning.teachBeats.map((b) => ({ label: b.label, text: sanitize(b.text) })),
+    sayLikeThis: sanitize(learning.sayLikeThis),
+    whiteboard: sanitize(whiteboard),
+  };
+
+  let y = yTop;
+
+  // 1. LEARNING OUTCOME — accent band, navy fill, light text
+  const outH = 50;
+  setFill(pdf, [11, 26, 74]); // navy
+  pdf.roundedRect(x, y, w, outH, 5, 5, "F");
+  setFill(pdf, [0, 102, 255]); // brand
+  pdf.rect(x, y, 3, outH, "F");
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7);
+  pdf.setTextColor(140, 175, 230);
+  pdf.text("LEARNING OUTCOME  -  BY THE END THE REP CAN", x + 10, y + 13);
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(9.5);
+  pdf.setTextColor(255, 255, 255);
+  const outLines = clipLines(pdf.splitTextToSize(L.outcome, w - 20), 3);
+  pdf.text(outLines, x + 10, y + 26, { lineHeightFactor: 1.3 });
+  y += outH + 10;
+
+  // 2. CORE IDEA — single bold sentence, no chrome
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7.5);
+  pdf.setTextColor(0, 102, 255);
+  pdf.text("THE CORE IDEA", x, y);
+  setFill(pdf, [0, 102, 255]);
+  pdf.rect(x, y + 3, 18, 1.5, "F");
+  y += 14;
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(10.5);
+  pdf.setTextColor(11, 18, 32);
+  const coreLines = clipLines(pdf.splitTextToSize(L.coreIdea, w), 3);
+  pdf.text(coreLines, x, y, { lineHeightFactor: 1.25 });
+  y += coreLines.length * 13 + 12;
+
+  // 3. HOW TO TEACH IT — three numbered beats (Hook / Frame / Proof)
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7.5);
+  pdf.setTextColor(91, 103, 118);
+  pdf.text("HOW TO TEACH IT  -  3 BEATS", x, y);
+  setFill(pdf, [91, 103, 118]);
+  pdf.rect(x, y + 3, 18, 1.5, "F");
+  y += 14;
+
+  const indent = 18;
+  const beatGap = 8;
+  L.beats.forEach((b, i) => {
+    // Number chip
+    setFill(pdf, [0, 102, 255]);
+    pdf.circle(x + 6, y + 3, 6, "F");
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(7.5);
+    pdf.setTextColor(255, 255, 255);
+    pdf.text(String(i + 1), x + 6, y + 5.5, { align: "center" });
+    // Label (bold) + body (normal) — drawn separately to avoid em-dash splits
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(9);
+    pdf.setTextColor(11, 18, 32);
+    pdf.text(b.label, x + indent, y + 4);
+    const labelW = pdf.getTextWidth(b.label);
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(9);
+    pdf.setTextColor(31, 41, 55);
+    // first line slot after label; subsequent wrap aligns to indent
+    const firstSlotW = w - indent - labelW - 8;
+    const allLines = pdf.splitTextToSize(b.text, w - indent);
+    // Try to fit first chunk after the label
+    const firstFit = pdf.splitTextToSize(b.text, firstSlotW);
+    const firstChunk = firstFit[0] ?? "";
+    pdf.text(firstChunk, x + indent + labelW + 5, y + 4);
+    // Remaining text wraps under, aligned to indent, max 2 wrapped lines
+    const remaining = b.text.slice(firstChunk.length).trim();
+    let wrapH = 0;
+    if (remaining) {
+      const wrapLines = clipLines(pdf.splitTextToSize(remaining, w - indent), 2);
+      pdf.text(wrapLines, x + indent, y + 4 + 11, { lineHeightFactor: 1.3 });
+      wrapH = wrapLines.length * 11;
+    }
+    y += 4 + 11 + wrapH + beatGap;
+  });
+
+  // 4. SAY IT LIKE THIS — emerald accent block (anchored above whiteboard)
+  const wbH = 56;
+  const sayH = 50;
+  const sayY = yBottom - wbH - 10 - sayH;
+  drawAccentBlock(
+    pdf,
+    x,
+    sayY,
+    w,
+    sayH,
+    "SAY IT LIKE THIS",
+    `"${L.sayLikeThis}"`,
+    [5, 150, 105],
+    [209, 250, 229],
+  );
+
+  // 5. WHITEBOARD / WHERE TO POINT — violet accent (anchored to col bottom)
+  drawAccentBlock(
+    pdf,
+    x,
+    yBottom - wbH,
+    w,
+    wbH,
+    "WHITEBOARD  /  WHERE TO POINT",
+    L.whiteboard,
+    [139, 92, 246],
+    [243, 240, 253],
+  );
+}
+
+// ─── Check-yourself band renderer ──────────────────────────────────────────
+function renderCheckYourselfBand(
+  pdf: jsPDF,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  question: string,
+) {
+  setFill(pdf, [250, 251, 253]);
+  pdf.roundedRect(x, y, w, h, 4, 4, "F");
+  setFill(pdf, [0, 102, 255]);
+  pdf.rect(x, y, 3, h, "F");
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7.5);
+  pdf.setTextColor(0, 102, 255);
+  pdf.text("CHECK YOURSELF  -  TICK BEFORE MOVING ON", x + 10, y + 11);
+  pdf.setFont("helvetica", "italic");
+  pdf.setFontSize(10);
+  pdf.setTextColor(11, 18, 32);
+  const lines = clipLines(pdf.splitTextToSize(question, w - 28), 1);
+  pdf.text(lines, x + 10, y + 22);
+  // tick box on the far right
+  pdf.setDrawColor(91, 103, 118);
+  pdf.setLineWidth(0.8);
+  pdf.rect(x + w - 18, y + h / 2 - 5.5, 11, 11, "S");
+}
+
+function _drawMetaStripStub(pdf: jsPDF, x: number, y: number, w: number, meta: SlideMeta) {
   // DTOP chip
   let cx = x;
   if (meta.dtop) {
