@@ -1,91 +1,126 @@
-## Why the current pages don't work
+## Goal
 
-Looking at `renderSlidePagePortrait` and the data feeding it, three problems compound:
+Reframe the slide one-pagers as **study notes**, not delivery scripts. These are internal Academy slides — the reader is a sales rep building knowledge. Each page should leave them genuinely smarter on the topic: what it is, why it matters, how it connects to the rest of the platform story, the facts and terminology they must own, and a self-check to prove they know it.
 
-1. **There is no transcript summary anywhere.** The page shows Outcome → Core Idea → 3 Beats → Say-it-like-this. None of these tell the rep what the slide actually says when it plays. The rep can't walk into a call having "read the one-pager" and know the story.
-2. **Blocks are synonyms of each other.** For slides without a hand-written `SLIDE_LEARNING` entry, `buildSlideLearningFromCoachCard` sets `outcome = cc.remember`, `coreIdea = cc.sayItLikeThis`, `sayLikeThis = cc.sayItLikeThis`. So Outcome, Core Idea and Say-it-like-this all read the same. That's most W2/W3 pages.
-3. **No real "key takeaways".** The three teach-beats are written as instructional stage directions ("Put the pen in your hand…"), not as messages the buyer should walk away with.
+## What changes vs. the previous direction
 
-## What the one-pager needs to be
+| Was (delivery-focused) | Now (knowledge-focused) |
+|---|---|
+| "How to deliver in 4 steps" | "What you need to know" — concept explainer |
+| Verbatim `say >` lines | Plain-English explanation in the rep's own voice |
+| Discovery questions / objections on every page | Moved to a Week 3 sell-and-win appendix only |
+| Anchor line ("say it like this") | Mental model / one-sentence definition |
+| Whiteboard cue prominent | Optional, only on slides where the visual matters |
 
-A single page that lets a rep, five minutes before a call, get:
-
-- The **slide in one breath** (what it says, what it shows).
-- The **3 key messages** the buyer must hear.
-- The **exact line** to say (one, not three).
-- **Discovery questions** to ask after the slide.
-- **Objections + responses** if they push back.
-- A quiet footer with DTOP stage, persona, what it connects to, banned terms.
-
-Everything that's coaching-about-coaching (rep mistakes, self-check tickboxes, whiteboard recipes, proof-point tables) stays in the two appendix pages already at the back. Slide pages stop trying to be both teaching guide and reference.
-
-## New page structure (portrait A4, two columns)
+## New one-pager spec (single A4 portrait, study-note format)
 
 ```text
-COMPLY365 · SALES ENABLEMENT ACADEMY        Week N · Slide NN of NN · DTOP · Persona
-─────────────────────────────────────────────────────────────────────────────────────
-01 / SLIDE TITLE IN CAPS
-──── (rule)
-
-WHAT THIS SLIDE DOES                          (full width, 12pt, slate)
-2–3 sentence plain-English digest of the
-narration. Reads like a teammate explaining
-the slide, not transcript prose.
-
-──────────────────────────────  (hairline)
-
-LEFT COLUMN (60%)                             RIGHT COLUMN (40%)
-
-THE 3 KEY MESSAGES                            DISCOVERY QUESTIONS
-01  message one (10pt ink, 1 line title +     "Q1 verbatim…"
-    1 short supporting clause)                "Q2 verbatim…"
-02  message two                               "Q3 verbatim…"
-03  message three
-                                              ─────── (hairline)
-SAY IT LIKE THIS
-│ "One short, speakable line."  (pull-quote   IF THEY PUSH BACK
-│ italic, 11pt, brand left rule)              Pushback 1 (bold)
-                                              > Response 1
-                                              Pushback 2 (bold)
-                                              > Response 2
-─────────────────────────────────────────────────────────────────────────────────────
-CONNECTS TO  ...    BANNED HERE  ...                          (footer, 7pt muted)
+┌─────────────────────────────────────────────────────────────┐
+│ COMPLY365 · SALES ENABLEMENT ACADEMY    Wk N · Slide nn/NN  │
+│                                          Topic · Module     │
+│                                                             │
+│ 01 / SLIDE TITLE                                            │
+│ ───                                                         │
+│ IN ONE SENTENCE                                             │
+│ The concept defined in plain English. The thing you must    │
+│ be able to explain back from memory.                        │
+│                                                             │
+│ WHY IT MATTERS                                              │
+│ 2–3 sentences: where this sits in the platform story, what  │
+│ problem it solves, why a buyer cares.                       │
+│                                                             │
+│ ── LEFT 60% ──────────────  ── RIGHT 40% ─────────────────  │
+│                                                             │
+│ THE KEY IDEAS (3–4)          TERMS TO KNOW                  │
+│ • Idea 1 — short paragraph    Term · short definition       │
+│ • Idea 2 — short paragraph    Term · short definition       │
+│ • Idea 3 — short paragraph    Term · short definition       │
+│                                                             │
+│ FACTS & PROOF                 WATCH-OUT                     │
+│ • stat + source               Forbidden language / common   │
+│ • stat + source               misconceptions for this topic │
+│ • stat + source                                             │
+│                              HOW THIS CONNECTS              │
+│                              Prev slide < … > Next slide    │
+│                              Links to: DTOP step, Core App  │
+│                                                             │
+│ ── hairline ──                                              │
+│ CHECK YOURSELF                                              │
+│ Three questions a rep must answer out loud before moving    │
+│ on. No verbatim talk track — just diagnostic questions.     │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-## Data model changes — `salesEnablementLearningOutcomes.ts`
+Hierarchy: **In one sentence → Why it matters → Key ideas → Terms / Facts / Watch-out → How it connects → Check yourself.** That's the learning arc.
 
-Rename and reshape `SlideLearning` to match what the new page renders. Drop fields that drove duplication; add the two fields the page is actually missing.
+## Data model (`src/data/salesEnablementLearningOutcomes.ts`)
+
+Replace `SlideOnePager` with a study-note shape:
 
 ```ts
+export interface StudyTerm { term: string; definition: string; }
+
 export interface SlideOnePager {
-  summary: string;          // 2–3 sentences. "What this slide does."
-  keyMessages: [string, string, string];  // 3 takeaways, buyer-facing
-  sayLikeThis: string;      // one speakable line
+  inOneSentence: string;        // the definition the rep must own
+  whyItMatters: string;         // 2–3 sentences of context
+  keyIdeas: string[];           // 3–4 concept paragraphs (≤ 30 words each)
+  terms: StudyTerm[];           // 3–5 glossary entries scoped to this slide
+  facts: string[];              // up to 3, each with source in parens
+  watchOut: string;             // misconception or forbidden terminology
+  connectsTo: string[];         // e.g. "DTOP · Detect", "Core App · SafetyManager365"
+  checkYourself: string[];      // 3 diagnostic questions
 }
 ```
 
-- `outcome`, `coreIdea`, `teachBeats`, `repMistake`, `checkYourself` are removed from the slide-page data path. `repMistake` and `checkYourself` are kept where they still belong — in the existing Coach's Sidebar appendix (already reads from `SLIDE_MISTAKE` / its own data, no change needed).
-- Curate `SLIDE_ONE_PAGER` entries for every slide in W1/W2/W3. Each `summary` is written fresh from the narration script (already in `salesEnablementNarration`) so it actually summarises what plays. Each `keyMessages[i]` is a distinct idea — no synonyms, no repeats of `sayLikeThis`.
-- Replace `buildSlideLearningFromCoachCard` with `buildSlideOnePager(slideId, weekId, narration, coachCard)`. When a curated entry is missing, the fallback derives `summary` from the first 2 sentences of `narration.script` (sanitised, trimmed), `keyMessages` from `[coachCard.remember, coachCard.bridge, coachCard.watchOutFor]` deduped against `sayLikeThis`, and `sayLikeThis` from `coachCard.sayItLikeThis`. The dedup step is the fix for "every block says the same thing".
+Builder logic:
 
-## Renderer changes — `fieldKitPdf.ts`
+- `fromCurated(slideId)` — hand-written for every W1 / W2 / W3 slide. The narration script is the source of truth for `whyItMatters` and `keyIdeas`; coach-card and existing `SLIDE_LEARNING` data feed `inOneSentence` and `checkYourself`; `SLIDE_PROOFS` feeds `facts`; banned-terms / `repMistake` feed `watchOut`.
+- `fromNarration(script, coachCard, week)` — only used as a safety net. Parses the narration for definitional sentences and numeric proof sentences; falls back to a week-level study note if a slide has neither curated nor narration data.
+- Hard dedupe: a sentence used in `inOneSentence` or `whyItMatters` cannot reappear in `keyIdeas` or `facts`. Terms cannot duplicate sentences elsewhere on the page.
 
-- Rewrite `renderSlidePagePortrait` to consume `SlideOnePager` and render the structure above. Same margins, same numeral-led title, same footer — the existing visual tokens are good, only the middle of the page changes.
-- Drop the "Discovery Wedge / Follow-up" treatment on the right column. Render all available discovery questions as a clean list (up to 3), each as an italic quoted line.
-- Drop the per-slide "Core Idea" header and the "Hook · Frame · Proof" stack.
-- Footer, header, two appendix pages (`renderCoachSidebarPage`, `renderWhiteboardAppendixPage`) and Week-at-a-glance / Closing pages stay as they are. The Coach's Sidebar appendix continues to carry rep mistakes and self-check questions, so nothing is lost from the kit — it just moves off the per-slide page.
-- Update the call site at line 703-726 to call `buildSlideOnePager(...)` and pass the new shape.
+## Renderer changes (`src/lib/fieldKitPdf.ts`)
 
-## Quality bar before delivery
+Rewrite `renderSlidePagePortrait` for the study-note layout above:
 
-- Generate a sample PDF for Week 1, 2, 3 via `scripts/genpdf.ts`, render with `pdftoppm`, and inspect every slide page to confirm: (a) the summary reads like a human briefing, not transcript scraps; (b) the 3 key messages are genuinely distinct from each other and from `sayLikeThis`; (c) discovery questions and objections fit the right column without clipping; (d) no Latin-1 boxes from stray glyphs.
+- Header keeps numeral-led title and metadata strip, but the strip carries **Topic** and **Module** instead of DTOP/Persona (those move into "How this connects").
+- Drop the `say >` quote rule, the discovery column, and the "If they push back" block. Those are sell-and-win artefacts and don't belong on a knowledge-building page.
+- Right column carries `TERMS TO KNOW`, `HOW THIS CONNECTS`, and `WATCH-OUT`.
+- Left column carries `KEY IDEAS` (numbered) and `FACTS & PROOF` underneath.
+- Footer becomes a hairline + `CHECK YOURSELF` row with three numbered questions (so the rep finishes the page on a self-test, not a marketing line).
+- Restricted palette: `ink`, `brand`, `slate`, `muted`, `hairline`, `rose` for watch-out only.
 
-## Files touched
+## Appendix pages (per week)
 
-- `src/data/salesEnablementLearningOutcomes.ts` — new `SlideOnePager` type, curated `SLIDE_ONE_PAGER` map, new fallback builder. Legacy exports removed.
-- `src/lib/fieldKitPdf.ts` — rewrite `renderSlidePagePortrait`, update call site, remove now-unused imports.
-- `scripts/genpdf.ts` — only if it needs the new export name.
+- **Glossary appendix** — aggregates every `terms[]` entry across the week into a single A–Z reference, deduped.
+- **Sell-and-win appendix (Week 3 only)** — moves the discovery questions + objection responses (currently on every page) into one consolidated page, since they only become relevant once a rep is selling, not while studying.
+- Drop the current Coach's Sidebar and Whiteboard appendix; their data either moves on-page (watch-out, key ideas) or into the sell-and-win appendix (whiteboard cue).
 
-## Open question
+## Per-week curation
 
-Curated `SLIDE_ONE_PAGER` entries for all ~30 slides is the work that makes this land. I'll write them from the existing narration scripts. **Do you want me to write all three weeks in one pass, or land Week 1 first for you to review the tone before I commit to W2 + W3?**
+Hand-write a `SlideOnePager` for every slide in `week1` / `week2` / `week3` of `salesEnablementCoachCards`. Source order:
+
+1. Narration script → `inOneSentence`, `whyItMatters`, `keyIdeas`
+2. Coach card `remember` / `watchOutFor` → `watchOut`, `checkYourself`
+3. `SLIDE_PROOFS` / `SLIDE_META` → `facts`, `connectsTo`
+4. Project terminology rules → `terms` (e.g. DTOP, Operational Data, Generative AI, BrandNumber names)
+
+## QA pass
+
+Generate W1, W2, W3 PDFs via `scripts/genpdf.ts`, render each page to JPEG with `pdftoppm -jpeg -r 150`, and inspect every page for:
+
+1. **No echo** — `inOneSentence`, `whyItMatters`, each `keyIdeas` entry, each `facts` entry are textually distinct.
+2. **Teaches something** — every block adds new information; no paraphrase loops.
+3. **Voice rules** — BrandNumber spelling intact; no FOQA / FDM / ASAP / "CoAnalyst"; ROI figures only from approved proof set; `$25–35B` cited with Eurocontrol / IATA / SITA when used.
+4. **Self-sufficient** — a rep who has never seen the slide could read the page and explain the concept.
+5. **Layout** — A4 portrait, two-column balance holds, "Check yourself" never gets orphaned to a second page, no clipped text.
+6. **Visual QA** — fix any issue, regenerate, re-inspect. Summarise issues found and fixes applied.
+
+## Files to edit
+
+- `src/data/salesEnablementLearningOutcomes.ts` — new study-note shape, curated entries for all W1–W3 slides, narration fallback.
+- `src/lib/fieldKitPdf.ts` — rewrite `renderSlidePagePortrait`, replace appendix pages with Glossary (all weeks) + Sell-and-Win (W3 only).
+- `scripts/genpdf.ts` — unchanged; confirm it still emits the three weekly PDFs for QA.
+
+## Out of scope
+
+- No changes to in-app Academy UI, narration audio, or coach card data. Field Kit PDF only.
