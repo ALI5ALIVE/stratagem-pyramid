@@ -615,10 +615,14 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     const narration = getSalesEnablementNarration(slideId);
     const title = narration?.title ?? slideId;
     const coreLine = extractCoreLine(slideId);
-    const summary = narration ? paraphraseNarration(narration.script) : "";
+    const summary = narration ? paraphraseNarration(narration.script, 1100) : "";
+    const verbatim = narration ? extractVerbatimLift(narration.script) : undefined;
     const questions = buildDiscoveryQuestionsRotated(narration?.script, slideId, week.id, idx);
     const objections = buildObjectionsRotated(slideId, week.id, idx);
-    const proofs = buildProofs(slideId, week.id, idx);
+    const proofs = buildProofs(slideId, week.id, idx).map((p) =>
+      // sanitize non-Latin-1 glyphs that helvetica core can't render
+      p.replace(/\u2192/g, " · ").replace(/\u2013/g, "-").replace(/[\u201C\u201D]/g, '"'),
+    );
     const whiteboard = buildWhiteboard(slideId, week.id);
     const mistake = buildMistake(slideId, week.id);
     const sMeta = buildMeta(slideId, week.id);
@@ -695,9 +699,11 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
       ly += coreLines.length * 12 + 12;
     }
 
-    // Reserve room for whiteboard recipe at the bottom of the left column
-    const wbBlockH = 70;
-    const summaryBottom = colBottomY - wbBlockH - 14;
+    // Reserve room for the two bottom-left blocks: whiteboard + verbatim lift
+    const wbBlockH = 64;
+    const liftBlockH = verbatim ? 58 : 0;
+    const bottomLeftStackH = wbBlockH + (liftBlockH ? liftBlockH + 8 : 0);
+    const summaryBottom = colBottomY - bottomLeftStackH - 14;
 
     // Teaching summary (justified to fill available left height)
     if (summary) {
@@ -715,10 +721,11 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     }
 
     // Whiteboard recipe (anchored to bottom of left column)
+    const wbY = colBottomY - bottomLeftStackH;
     drawAccentBlock(
       pdf,
       leftX,
-      colBottomY - wbBlockH,
+      wbY,
       leftW,
       wbBlockH,
       "WHITEBOARD RECIPE / WHERE TO POINT",
@@ -726,6 +733,21 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
       C.oViolet,
       [243, 240, 253],
     );
+
+    // Verbatim lift (right under whiteboard, anchored to col bottom)
+    if (verbatim) {
+      drawAccentBlock(
+        pdf,
+        leftX,
+        colBottomY - liftBlockH,
+        leftW,
+        liftBlockH,
+        "VERBATIM LIFT — SAY THIS NEAR-EXACTLY",
+        `"${verbatim}"`,
+        C.emerald,
+        C.emeraldSoft,
+      );
+    }
 
     // ── RIGHT COLUMN: Questions · Objections · Proofs · Mistake ────────────
     let ry = bodyTopY;
