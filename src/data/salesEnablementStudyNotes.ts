@@ -69,39 +69,39 @@ const T = {
   dtop: {
     term: "DTOP",
     definition:
-      "Detect, Trigger, Orchestrate, Prove — Comply365's operating loop. The only loop that includes both a Detect and a Prove step.",
+      "Comply365's loop: Detect, Trigger, Orchestrate, Prove. The only loop with both a Detect step and a Prove step.",
   },
-  detect: { term: "Detect", definition: "The signals layer. Fuses operational, safety, regulatory and training signals into one stream." },
-  trigger: { term: "Trigger", definition: "Turns a detected signal into the right next action, cited to source." },
-  orchestrate: { term: "Orchestrate", definition: "Moves the work across the systems that already exist — routing, review, training, device sync." },
-  prove: { term: "Prove", definition: "Closes the loop with auditable evidence a regulator accepts." },
+  detect: { term: "Detect", definition: "The signals layer. It pulls four signals into one stream: operations, safety, rules, training." },
+  trigger: { term: "Trigger", definition: "Turns the signal into the right next action. Every action shows its source." },
+  orchestrate: { term: "Orchestrate", definition: "Moves the work through the systems the team already uses. Routing, review, training, device sync." },
+  prove: { term: "Prove", definition: "Closes the loop with audit-ready evidence a regulator will accept." },
   operationalData: {
     term: "Operational Data",
     definition:
-      "The connected substrate beneath the platform — safety events, procedures, training records, regulatory change, in the customer's tenancy.",
+      "The connected base under the platform. Safety events, procedures, training records and rule changes, all kept in the customer's own tenant.",
   },
   intelligenceLayer: {
     term: "Intelligence Layer",
     definition:
-      "Domain-trained Generative AI grounded in the customer's Operational Data and a 4,000+ aviation knowledge graph. Every answer cited.",
+      "Aviation-trained Generative AI. It reads the customer's Operational Data and a 4,000+ aviation knowledge graph. Every answer shows its source.",
   },
-  insights: { term: "Insights", definition: "Continuously watches connected data, surfaces patterns and emerging risk with evidence attached." },
-  automation: { term: "Automation", definition: "Moves deterministic busywork between systems. Human-in-the-loop on any change to procedure or training." },
-  unifiedMobile: { term: "Unified Mobile", definition: "One frontline app — content, training and safety reporting in one shell. The last mile of DTOP." },
-  coreApps: { term: "Core Apps", definition: "SafetyManager365, ContentManager365, TrainingManager365 — the three apps on the Operational Data foundation." },
-  recommendedActions: { term: "Recommended Actions", definition: "Prioritised next steps with cited evidence. Approved replacement for 'suggestions'." },
+  insights: { term: "Insights", definition: "Always-on watcher. It spots patterns and new risk in connected data, with evidence attached to each one." },
+  automation: { term: "Automation", definition: "Handles the safe, routine busywork between systems. A human still checks any change to a procedure or training." },
+  unifiedMobile: { term: "Unified Mobile", definition: "One app for the crew. Content, training and safety reporting in a single shell. The last mile of DTOP." },
+  coreApps: { term: "Core Apps", definition: "The three apps on the Operational Data base: SafetyManager365, ContentManager365, TrainingManager365." },
+  recommendedActions: { term: "Recommended Actions", definition: "Ranked next steps, each one with its evidence. The approved word — not 'suggestions'." },
   svs: {
     term: "Strategy & Vision Session",
     definition:
-      "Three-hour, fixed-agenda, complimentary session run by the domain team on the buyer's operating model. The next step we close on.",
+      "A free three-hour session with a fixed agenda. The domain team runs it on the buyer's own operating model. This is the next step we close on.",
   },
   walkthrough: {
     term: "Walkthrough",
-    definition: "Focused session on the prospect's highest-cost use case. Approved replacement for 'demo' or 'pilot'.",
+    definition: "A focused session on the buyer's highest-cost use case. The approved word — not 'demo' or 'pilot'.",
   },
   lineOfSight: {
     term: "Line-of-Sight",
-    definition: "The model that quantifies controllable cost, systemic risk and operational performance against the buyer's own footprint.",
+    definition: "Our model that sizes controllable cost, systemic risk and performance against the buyer's own footprint.",
   },
 };
 
