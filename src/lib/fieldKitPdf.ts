@@ -1326,7 +1326,7 @@ function renderCheckYourselfBand(
   pdf.rect(x + w - 18, y + h / 2 - 5.5, 11, 11, "S");
 }
 
-function _drawMetaStripStub(pdf: jsPDF, x: number, y: number, w: number, meta: SlideMeta) {
+function drawMetaStrip(pdf: jsPDF, x: number, y: number, w: number, meta: SlideMeta) {
   // DTOP chip
   let cx = x;
   if (meta.dtop) {
