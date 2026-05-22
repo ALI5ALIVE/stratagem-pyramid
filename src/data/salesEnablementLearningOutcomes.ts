@@ -380,3 +380,26 @@ export const buildSlideLearning = (
   slideId: string,
   weekId: WeekId,
 ): SlideLearning => SLIDE_LEARNING[slideId] ?? WEEK_LEARNING_FALLBACK[weekId];
+
+// Per-slide fallback derived from the curated coach-card. Used when a slide
+// has no hand-written SLIDE_LEARNING entry — keeps every page distinct
+// rather than repeating the same week-level fallback across 10 slides.
+export const buildSlideLearningFromCoachCard = (
+  slideId: string,
+  weekId: WeekId,
+  cc: { remember: string; sayItLikeThis: string; watchOutFor: string; bridge: string } | undefined,
+): SlideLearning => {
+  const curated = SLIDE_LEARNING[slideId];
+  if (curated) return curated;
+  if (!cc) return WEEK_LEARNING_FALLBACK[weekId];
+
+  const weekFallback = WEEK_LEARNING_FALLBACK[weekId];
+  return {
+    outcome: cc.remember,
+    coreIdea: cc.sayItLikeThis,
+    teachBeats: weekFallback.teachBeats,
+    sayLikeThis: cc.sayItLikeThis,
+    repMistake: cc.watchOutFor,
+    checkYourself: weekFallback.checkYourself,
+  };
+};
