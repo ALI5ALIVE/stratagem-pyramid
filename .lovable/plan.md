@@ -1,80 +1,47 @@
 ## Goal
 
-Upgrade the per-week **Field Kit PDF** download from a plain helvetica list into a polished, branded, content-rich coaching guide reps actually want to print.
+Make every slide card in the Field Kit PDF (a) richer for learning and (b) strictly one page.
 
-## What's wrong today
+## Two changes
 
-- Plain helvetica throughout, no brand styling
-- Tiny gray labels left of paragraph text — visually flat, hard to scan
-- Only the 4 coach card fields per slide — narration, talk-track, terminology rules are missing
-- No cover page beyond a header, no week overview, no closing checklist
-- No visual hierarchy between sections (Foundation vs Capabilities), no color coding for the 4 field types
-- No page header/footer brand, no anchor "say-it" callout, no objection/terminology callouts
+### 1. Add a paraphrased "Teaching Summary" + learning aids to each slide
 
-## New PDF structure (per week)
+Per-slide section order (top to bottom on one page):
 
-**1. Cover page**
-- Dark navy hero block, Comply365 wordmark, "Week N Field Kit" title, week subtitle, one-line learning outcome
-- "What you'll be able to do by Friday" — 3 bullet outcomes pulled from the week intro narration
-- Color legend: the 4 coach card field types (Remember / Say / Watch out / Bridge) with their accent colors
-- Locked-terminology mini reference (Generative AI, Recommended Actions, Operational Data, BrandNumber rule, no FOQA/FDM/ASAP)
+1. **Header bar** — slide number + title (shrunk vs today)
+2. **The core idea** — 1 line, brand-blue eyebrow (kept, tightened)
+3. **Teaching Summary** *(new)* — 3–5 sentence paraphrase of the narration. Not verbatim. Written for the rep, explains *why this slide matters in the meeting* in plain coaching voice. Generated programmatically from the narration script with a deterministic paraphraser (rewrite first-person teaching cues like "you must internalise" → "the rep should internalise", strip filler, cap at ~520 chars, end on the value lever sentence).
+4. **What to listen for** *(new, 2 micro-bullets)* — customer signals that mean this slide just landed (e.g. "they ask 'how does this connect to our SMS?'") — derived from the discovery question or pain in the narration when present; falls back to a generic per-week prompt if not.
+5. **2×2 coach panels** — shrunk (see below)
+6. **Footer micro-strip** *(new)* — "Time on slide: ~60–90s · Drill rating: ___/5" so the rep can self-score in the margin
 
-**2. Week-at-a-glance spread**
-- Numbered list of every slide in the week with its title and a one-line "what this teaches"
-- DTOP color dots next to relevant slides (D blue / T amber / O violet / P emerald) so reps see the loop structure
+### 2. Force single-page layout
 
-**3. Slide cards (one per slide, 1–2 pages)**
-For each slide:
-- Slide number chip + title (brand blue header bar)
-- **The core idea** — 2-line distilled takeaway derived from the narration's "core message" beat
-- 4 color-coded coach card panels in a 2x2 grid (not a label-left list):
-  - Amber — Remember this
-  - Emerald — Say it like this (rendered as a quote block with quote glyphs)
-  - Rose — Watch out for
-  - Sky — Bridge to next slide
-- Bottom strip: "Time to drill" suggestion + the slide's transition cue
+- Page format: switch to **A4 landscape** so the 2×2 grid breathes and the summary block fits above it without overflow.
+- Cap card body text at a deterministic max-line count and clip with an ellipsis (coach card fields are already capped at ~320 chars total, but render-side we'll enforce a max of 4 lines per panel).
+- Auto font-size step-down: if a slide's title + summary block exceeds the available header zone, drop summary font from 10.5pt → 9.5pt and reduce line height before clipping.
+- Recalculate panel height from *remaining* page height after header + summary + listen-for block — no fixed `Math.max(110, …)` floor; instead compute exactly so the 2×2 always lands above the footer with 24pt of breathing room.
+- Page numbers + footer chrome stay the same.
 
-**4. Closing page**
-- 60-second elevator drill (week's core line)
-- Self-check: 5 yes/no questions a rep should be able to answer
-- Cross-reference: "Practice this in the Practice Center with persona X"
-- Footer: rep-only, do not distribute to customers
+## Helper additions in `src/lib/fieldKitPdf.ts`
 
-## Visual system
+- `paraphraseNarration(script: string): string` — deterministic rewrite:
+  - drop opening "This slide matters because…" / "Why this matters:" / "The core message:" prefixes
+  - convert second-person teaching ("you must", "your job") → third-person reference ("reps should", "the goal is")
+  - strip filler ("when you deliver this", "slow down", "next slide")
+  - join 3 most informative sentences (core message + pain + value lever), cap at 520 chars
+- `extractListenFor(script: string, weekId): string[]` — pull the discovery question and the customer-signal sentence; fallback to per-week defaults if absent
+- `drawSlideCard(...)` rewritten to layout: title bar (48pt) → core idea (38pt) → summary (variable) → listen-for (38pt) → 2×2 (remaining) → micro footer (16pt)
+- Switch `new jsPDF({ unit: "pt", format: "a4", orientation: "landscape" })`
 
-- Brand palette pulled from `printBrand` where possible: dark navy paper, off-white text on covers, white pages for slide cards
-- Typography: bold display sizes on cover/section dividers, clear body text with proper leading
-- Field type accents using fixed hex tokens that match the on-screen panel ring colors (amber 500, emerald 500, rose 500, sky 500)
-- Page header (every interior page): small Comply365 mark + "Week N · {Week title}" left, slide range right
-- Page footer: page X of Y centered, "Rep-facing · Not for customer distribution" right
-- Soft horizontal rules instead of hard black lines
-- Generous margins (56pt), comfortable line height, no run-on paragraphs
+## Files touched
 
-## Technical approach
-
-- Keep `jsPDF` (no new heavy deps)
-- Add a `buildWeekFieldKitPdf(week)` helper inside `CoachCardPanel.tsx` (or extract to `src/lib/fieldKitPdf.ts` for cleanliness)
-- Introduce small drawing helpers:
-  - `drawCoverPage(pdf, week)`
-  - `drawWeekOverview(pdf, week, slides)`
-  - `drawSlideCard(pdf, slide, card, narrationCoreLine)`
-  - `drawClosingPage(pdf, week)`
-  - `drawPageChrome(pdf, week, pageNumberInfo)` — header + footer
-  - `drawFieldPanel(pdf, x, y, w, h, kind, text)` — rounded rect + colored side bar + label + body
-- Auto page-break helper that re-draws chrome on every new page
-- Extract the "core line" per slide from `salesEnablementNarrations[].script` (first sentence after `core message:` or first sentence of the script as fallback) so we surface real content, not just coach card text
-- Add a small `WEEK_OUTCOMES` map (Week 1/2/3 → 3 bullets) — short, hand-curated so it reads well
-- Add a small `WEEK_DRILLS` map (closing self-check questions per week)
-
-## Files
-
-- `src/components/sales-enablement-slides/CoachCardPanel.tsx` — rewrite the `downloadWeekKit` body
-- `src/lib/fieldKitPdf.ts` — new, all drawing logic
-- `src/data/salesEnablementCoachCards.ts` — extend `CoachCardWeek` (or a sibling const) with `outcomes: string[]`, `drillQuestions: string[]`, `closingLine: string`
-- No changes to narration, no changes to on-screen UI
+- `src/lib/fieldKitPdf.ts` — only file changed
+- No data files touched
+- No UI changes outside the PDF
 
 ## Out of scope
 
-- Per-slide individual PDF downloads (we agreed weekly is the right unit)
-- Replacing jsPDF with html2canvas/react renderer (overkill for a text-led document)
-- Coaching content rewrites — only formatting and density change
+- Editing narration content itself
+- Adding new content to coach cards
+- Changing cover / week-at-a-glance / closing pages (they already fit one page each)
