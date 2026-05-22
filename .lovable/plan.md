@@ -1,39 +1,50 @@
-## Make the transcript read like a story, not a list of fragments
+## Field Kit PDF — page-by-page fix plan
 
-**Problem:** The current beat cards split every sentence into short phrase chunks (~64 chars) on their own lines with extra leading. This was meant to aid scanning, but it chops natural prose into staccato fragments — the opposite of a smooth, easy-to-read teaching script.
+After regenerating W1, W2 and W3 kits and inspecting all 120 pages, four real layout bugs are causing the "copy overruns the page" feel. Everything else (cover, study-sheet, glossary, closing drill) is rendering cleanly.
 
-**Fix:** Rewrite the "Say" body of each beat as flowing paragraphs — short, plain sentences set in comfortable body type with normal wrapping. Think children's-book pacing: simple sentences, generous line-height, gentle bolding for the words that matter, no visible breaks mid-thought.
+All fixes are in `src/lib/fieldKitPdf.ts`. No data or React changes.
 
-### Changes (all in `src/lib/fieldKitPdf.ts`, transcript renderer)
+### Bug 1 — Bold tokens add visible gaps inside words
 
-1. **Replace `splitToPhrases` with `splitToSentences`**
-   - Output is sentence-level paragraphs, not 64-char fragments.
-   - Long sentences are gently rewritten as two sentences by splitting on `; ` / ` — ` / `: ` only when the sentence exceeds ~180 chars; commas are left alone so prose still breathes.
-   - Each "paragraph" is one sentence that gets wrapped naturally to the card width.
+Most visible. Every bolded token in transcript and study-sheet body copy renders with extra whitespace around it, e.g.
 
-2. **Rewrite the SAY rendering loop in `drawBeat`**
-   - Use `pdf.splitTextToSize(sentence, innerW)` so each sentence flows across as many lines as it needs, wrapped on word boundaries.
-   - Set body type to 10.5pt with 14pt leading (was 9.5/13 in phrase mode) — calm, readable, paragraph-style.
-   - Add a 6pt gap between sentences (not between every line) so the eye sees paragraphs, not a list.
-   - Keep token-aware bolding (`drawPhraseLine`) but apply it per wrapped line of the sentence, not per phrase, so highlights survive without breaking flow.
+- `Comply365` → `Com p ly365`
+- `DTOP` → `D T O P`
+- `Unified Mobile` → `U n i fied M o b i le`
+- header `Comply365 · Sales Enablement Academy` → `Com p ly365 · Sales Enab lem ent Academ y`
 
-3. **Update `measureBeat`** to match: height is now `sentences.reduce((h, s) => h + wrapped(s).length * 14 + 6, 0)` instead of `phrases × phraseLeading + gap`.
+Cause: token-aware drawer (`drawSentence` / `wrapSentenceTokens` and the equivalent study-sheet helper) measures one token's width with the regular font, then switches to bold to draw the next, then measures the following whitespace with the new font. Width drift accumulates and the cursor advances past where the previous glyph actually ended.
 
-4. **Soften the "point" line**
-   - Drop the ALL-CAPS treatment (currently `.toUpperCase()`) — it shouts. Render the intent in sentence case, 9.5pt bold, muted color. Reads like a chapter subtitle, not a label.
+Fix: in the token drawer, measure **each token's width using the font it will be drawn in** (set font, then call `getTextWidth`, then `pdf.text` at the current cursor, then advance cursor by exactly that width). Drop any added padding around bold runs. Apply the same fix to the header/footer drawers that bold the brand name.
 
-5. **First-line lead-in (subtle)**
-   - When a beat has a `quoted` verbatim line, render it as a single italicized opening sentence above the body ("*Say this:* "Real opening words.""), then continue with normal prose. Gives the rep an obvious anchor without a fragment-stack.
+### Bug 2 — Key terms wrap at the wrong indent
 
-6. **Listen-for** stays as-is (already a clean footer row after the previous pass).
+On study-sheet pages (e.g. W1 p5, W1 p13, W2 p15) the right column "Key terms" block renders each entry as `Term · definition…`. When the definition wraps, line 2 starts at the x-position right after `Term · `, producing a deep hanging indent that pushes text into / past the right margin (`…aviation knowledge graph…` ellipsis clip).
 
-### Out of scope
-- No changes to source narration scripts, the React app, study sheets, glossary, or closing drill.
-- No font swap; just type scale + wrapping behavior.
+Fix: in the key-terms renderer, after drawing the bold term and the `·` separator, wrap the definition with `splitTextToSize(def, columnWidth)` and draw every wrapped line at the column's left margin (not at the post-term x). Optional: put a 4pt left-pad on continuation lines to visually tie them to the term, but never indent past the term itself.
+
+### Bug 3 — Cover "Locked terminology" card overflows
+
+Page 1 of every kit: the second column's `BrandNumber names · Comply365, SafetyManager365 (no spaces)` line runs off the right edge of the card and past the page-safe margin.
+
+Fix: shorten the value to `Comply365, SafetyManager365` and move `(no spaces)` either onto a second line (small muted text) or drop it — the rule is already in the term. Also recompute the two-column split using `(cardWidth - gutter) / 2` and wrap each value with `splitTextToSize` so any future entry can't overflow.
+
+### Bug 4 — Empty coach-beat bodies
+
+W2 p16 beat 05 "How to land it." has only the LISTEN FOR footer and no body copy, leaving a card with a label and nothing else. A handful of other beats look the same.
+
+Fix in `drawBeat`: if `beat.body` is empty/whitespace, fall back to the listen-for line as the body (and drop the LISTEN FOR footer), or skip the empty body entirely and tighten the card height in `measureBeat`. Don't render a card with no prose between the point and the footer.
 
 ### Validation
-Regenerate the W1 kit, rasterize pages 4, 6, 8, 9, 12, 13, 16, 17 at 110dpi, and confirm:
-- No sentence breaks mid-clause
-- No card overflow / no clipped lines
-- Paragraph rhythm visible (gaps between sentences > gaps within sentences)
-- Page count within ±2 of current (35 pages)
+
+1. Re-run `bun run scripts/genpdf.ts`.
+2. Rasterize W1/W2/W3 at 100dpi and inspect:
+   - W1 pages 1, 5, 6, 13, 16, 30
+   - W2 pages 1, 15, 16
+   - W3 pages 1, 52
+3. Confirm: no bold-token gaps, no key-terms text crossing the right margin, cover terminology fully inside the card, no empty beat bodies.
+4. Page count within ±2 of current (W1 = 31, W2 = 37, W3 = 52).
+
+### Out of scope
+
+No copywriting changes, no font swap, no React/app changes, no narration script edits.
