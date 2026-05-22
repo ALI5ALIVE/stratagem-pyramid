@@ -1945,7 +1945,7 @@ function renderSlideTranscriptPage(
     );
     const tip =
       pageCount <= 1
-        ? "One card = one beat. Read down line by line — each line is a breath."
+        ? "Read it like a story. Slow, simple, one thought at a time."
         : "Record yourself. Play back at 1.25x — does it still land?";
     pdf.text(tip, pageW - margin, footerY + 14, { align: "right" });
     void continued;
