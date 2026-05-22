@@ -150,7 +150,7 @@ export async function buildAIInfographicDeck(opts: BuildOpts = {}): Promise<Blob
     addCard(slide, colX, gridTop, colW, gridH, { fill: C.surface, radius: 0.15 });
     slide.addShape("roundRect", {
       x: colX + 0.15, y: gridTop + 0.15, w: colW - 0.3, h: headerH,
-      fill: { color: C.surfaceAlt }, line: { color: C.border, width: 0.75 }, rectRadius: 0.1,
+      fill: { color: C.surfaceAlt }, line: { color: C.hairline, width: 0.75 }, rectRadius: 0.1,
     });
     slide.addText(col.product, {
       x: colX + 0.15, y: gridTop + 0.15, w: colW - 0.3, h: headerH,
