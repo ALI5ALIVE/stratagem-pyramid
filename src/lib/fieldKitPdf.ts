@@ -1741,9 +1741,10 @@ function renderSlideTranscriptPage(
   };
 
   const beats: Beat[] = paragraphs.map((p, i) => {
-    let label = "BEAT";
+    // First beat with no explicit cue is the opening — label it OPEN, not BEAT.
+    let label = i === 0 ? "OPEN" : "BEAT";
     let group: BeatGroup = "anchor";
-    let point = "Say this.";
+    let point = i === 0 ? "Land the opening line." : "Say this.";
     let body = p;
     for (const [re, lab, g, hint] of CUES) {
       if (re.test(p)) {
