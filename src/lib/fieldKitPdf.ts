@@ -1337,32 +1337,32 @@ function renderSlidePagePortrait(
     .slice(0, 4)
     .map(sanitize);
 
-  const railBlocks: Array<{ label: string; accent: [number, number, number]; body: () => number; }> = [
+  const railBlocks: Array<{ label: string; accent: [number, number, number]; body: (yy: number) => number; }> = [
     {
       label: "TAKEAWAY",
       accent: C.brand,
-      body: () => drawParagraph(pdf, railX, 0, railW, sanitize(studyNote.inOneSentence), {
+      body: (yy) => drawParagraph(pdf, railX, yy, railW, sanitize(studyNote.inOneSentence), {
         font: "bold", size: 11, color: C.ink, leading: 13,
       }),
     },
     {
       label: "WHY A BUYER CARES",
       accent: C.navy,
-      body: () => drawParagraph(pdf, railX, 0, railW, sanitize(studyNote.whyItMatters), {
+      body: (yy) => drawParagraph(pdf, railX, yy, railW, sanitize(studyNote.whyItMatters), {
         font: "normal", size: 9, color: C.slate, leading: 11.5,
       }),
     },
     {
       label: "WATCH-OUT",
       accent: C.rose,
-      body: () => drawParagraph(pdf, railX, 0, railW, sanitize(studyNote.watchOut), {
+      body: (yy) => drawParagraph(pdf, railX, yy, railW, sanitize(studyNote.watchOut), {
         font: "normal", size: 9, color: C.slate, leading: 11.5,
       }),
     },
     ...(connects.length ? [{
       label: "CONNECTS",
       accent: C.sky,
-      body: () => drawBulletList(pdf, railX, 0, railW, connects, {
+      body: (yy: number) => drawBulletList(pdf, railX, yy, railW, connects, {
         size: 9, color: C.slate, leading: 11, bulletChar: ">",
       }),
     }] : []),
