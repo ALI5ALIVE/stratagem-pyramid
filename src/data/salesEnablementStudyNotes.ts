@@ -110,50 +110,50 @@ export const STUDY_NOTES: Record<string, SlideOnePager> = {
   // ============= Week 1 · Foundation =============
   "se-slide-0": {
     inOneSentence:
-      "A sales rep at Comply365 sells the first connected operating model in aviation — not the software underneath it.",
+      "A rep at Comply365 sells the first connected operating model in aviation. They do not sell the software underneath.",
     whyItMatters:
-      "Every slide in the Academy serves one outcome: the rep can hold an operating-model conversation before they touch a product feature. If you skip the model, the deck collapses into another point-tool tour and the differentiator disappears.",
+      "The whole Academy points to one outcome. The rep can hold an operating-model talk before they show a single feature. Skip the model and the meeting turns into another tool tour, and our edge is gone.",
     keyIdeas: [
-      "The platform is the proof, the operating model is the story, and DTOP is the loop that makes the story real to a buyer.",
-      "The Academy is three weeks: Foundation (W1), Capabilities (W2), Sell & Win (W3). Each week builds on the last — do not skip.",
-      "Every recap slide is a rehearsal, not content. Read it out loud until it sounds natural before moving on.",
+      "The platform is the proof. The operating model is the story. DTOP is the loop that makes the story real to a buyer.",
+      "The Academy is three weeks. Week 1 Foundation, Week 2 Capabilities, Week 3 Sell & Win. Each week builds on the last. Do not skip.",
+      "Every recap slide is a rehearsal, not new content. Read it out loud until it sounds natural before you move on.",
     ],
     terms: [T.dtop, T.coreApps, T.intelligenceLayer, T.svs],
     facts: [
-      "Three weeks of study; ~50 slides total across Foundation, Capabilities and Sell & Win.",
-      "Rep-facing material only — not designed for customer distribution.",
+      "Three weeks of study. About 50 slides across Foundation, Capabilities and Sell & Win.",
+      "For reps only. Not built to share with customers.",
     ],
     watchOut:
-      "Don't pitch features in Week 1 territory. Earn the right to talk product by anchoring on the operating model first.",
+      "Do not pitch features in Week 1. Earn the right to talk product by anchoring on the operating model first.",
     connectsTo: ["Week 1 · Foundation", "Practice Center"],
     checkYourself: [
-      "Can I explain what 'operating model' means in this context in one sentence?",
-      "Can I list the three weeks of the Academy and what each one teaches?",
-      "Why is DTOP the centre of the story, not the platform diagram?",
+      "Can I say what 'operating model' means here in one sentence?",
+      "Can I name the three weeks and what each one teaches?",
+      "Why is DTOP the heart of the story, not the platform diagram?",
     ],
   },
 
   "se-week-1": {
     inOneSentence:
-      "Week 1 hands the rep three artefacts: the one-sentence platform pitch, the DTOP loop on a whiteboard, and the four signal sources from memory.",
+      "Week 1 gives the rep three tools: a one-line platform pitch, the DTOP loop on a whiteboard, and the four signal sources from memory.",
     whyItMatters:
-      "Without these three artefacts, every later conversation drifts into feature comparison. With them, the rep can run a 20-minute discovery on operating-model alone and earn the right to walk capabilities.",
+      "Without these three tools, the talk slides into a feature compare. With them, the rep can run a 20-minute discovery on operating model alone, then earn the right to show capabilities.",
     keyIdeas: [
-      "Four capability bands to memorise: Core Apps, Intelligence and Orchestration, Unified Mobile, and DTOP wrapping all three.",
-      "The platform diagram and the DTOP loop are the only two visuals the rep must be able to draw cold.",
-      "The recap slide at end of week is a rehearsal — repeat until it sounds natural before opening Week 2.",
+      "Four bands to learn by heart: Core Apps, Intelligence and Orchestration, Unified Mobile, and DTOP wrapping all three.",
+      "Two pictures the rep must draw cold: the platform diagram and the DTOP loop.",
+      "The end-of-week recap is a rehearsal. Repeat it until it sounds natural before you open Week 2.",
     ],
     terms: [T.coreApps, T.intelligenceLayer, T.unifiedMobile, T.dtop],
     facts: [
-      "Five visible boxes: three Core Apps, one Intelligence Layer, one Unified Mobile — all on the Operational Data foundation.",
-      "DTOP loop drawing target: 90 seconds, six strokes, in colour.",
+      "Five visible boxes: three Core Apps, one Intelligence Layer, one Unified Mobile. All on the Operational Data base.",
+      "DTOP drawing target: 90 seconds, six strokes, in colour.",
     ],
-    watchOut: "Don't move into Week 2 until the recap talk track sounds natural without notes.",
+    watchOut: "Do not move into Week 2 until the recap sounds natural without notes.",
     connectsTo: ["Strategic Shift", "DTOP loop", "Signal Sources"],
     checkYourself: [
-      "Can I name the four capability bands in order?",
+      "Can I name the four bands in order?",
       "Can I draw DTOP from memory, in colour, in under 90 seconds?",
-      "Can I deliver the one-sentence platform pitch without reading?",
+      "Can I say the one-line platform pitch without reading it?",
     ],
   },
 
