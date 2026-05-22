@@ -36,6 +36,7 @@ import SEWhoToTarget from "@/components/sales-enablement-slides/SEWhoToTarget";
 import SEStrategyVisionSession from "@/components/sales-enablement-slides/SEStrategyVisionSession";
 import SEW3SignalsRecap from "@/components/sales-enablement-slides/SEW3SignalsRecap";
 import SEW3Capstone from "@/components/sales-enablement-slides/SEW3Capstone";
+import CoachCardPanel from "@/components/sales-enablement-slides/CoachCardPanel";
 
 import TechSlide1StrategicShift from "@/components/tech-slides/TechSlide1StrategicShift";
 import PFSlide9Value from "@/components/platform-slides/PFSlide9Value";
@@ -283,6 +284,10 @@ const SalesEnablement = () => {
           );
         })}
       </div>
+      <CoachCardPanel
+        activeSlideId={slides[currentSlide]?.id}
+        activeSlideNumber={currentSlide + 1}
+      />
     </div>
   );
 };
