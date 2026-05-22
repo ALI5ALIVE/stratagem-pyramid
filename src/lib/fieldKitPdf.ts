@@ -572,9 +572,14 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(8);
   setText(pdf, C.brand);
-  pdf.text("WHAT YOU'LL BE ABLE TO DO BY FRIDAY", cardX + 20, cardY + 26);
+  pdf.text("HOW TO USE THIS KIT", cardX + 20, cardY + 26);
   let oy = cardY + 50;
-  meta.outcomes.forEach((o, i) => {
+  const usageGuide = [
+    "One slide per page. Each page is a self-contained study sheet — read it cold and you can walk the slide without the audio.",
+    "Top half: the one-sentence takeaway, what's on the slide, why a buyer cares, and the ideas you must own.",
+    "Bottom half: key terms, defensible facts, the watch-out to avoid, what this connects to, and three self-test questions.",
+  ];
+  usageGuide.forEach((o, i) => {
     // Number chip
     setFill(pdf, C.brand);
     pdf.circle(cardX + 26, oy - 4, 9, "F");
@@ -1225,12 +1230,15 @@ export const downloadWeekFieldKit = (week: CoachCardWeek) => {
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Portrait editorial slide page — one slide per page, six blocks, no fills.
-// Top: meta line. Title rule. Outcome paragraph. Then 60/40 split:
-//   LEFT  — Core idea, three numbered teach beats, pull-quote (Say it like this)
-//   RIGHT — Discovery wedge, two objections (Q&A typography)
-// Bottom: hairline + connects-to / banned-here footer.
-// Palette restricted to ink, brand, slate, muted, hairline.
+// Portrait study-note page — one slide per page, designed so a rep can learn
+// the slide WITHOUT the narration audio. Layout:
+//   01. Numbered title
+//   02. THE ONE-SENTENCE TAKEAWAY (curated `inOneSentence`)
+//   03. Two-column row: WHAT'S ON THE SLIDE  |  WHY A BUYER CARES
+//   04. THE IDEAS YOU MUST OWN (numbered curated keyIdeas)
+//   05. 2x2 grid: KEY TERMS · DEFENSIBLE FACTS · WATCH-OUT · HOW THIS CONNECTS
+//   06. CHECK YOURSELF (3 self-test questions, checkboxes)
+//   07. Footer · optional one-line narration echo
 // ─────────────────────────────────────────────────────────────────────────────
 function renderSlidePagePortrait(
   pdf: jsPDF,
@@ -1292,99 +1300,104 @@ function renderSlidePagePortrait(
   pdf.line(margin, y, margin + 32, y);
   y += 22;
 
-  // Narration in one line
-  const oneLine = sanitize(studyNote.narrationInOneLine ?? studyNote.inOneSentence);
-  if (oneLine) {
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(7);
-    setText(pdf, C.muted);
-    pdf.text("THE NARRATION IN ONE LINE", margin, y);
-    y += 12;
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(10.5);
-    setText(pdf, C.ink);
-    const oneLineLines = clipLines(pdf.splitTextToSize(oneLine, contentW), 3);
-    pdf.text(oneLineLines, margin, y, { lineHeightFactor: 1.35 });
-    y += oneLineLines.length * 12 + 14;
-  }
-
-  setStroke(pdf, C.hairline);
-  pdf.setLineWidth(0.5);
-  pdf.line(margin, y, pageW - margin, y);
-  y += 16;
-
-  // Key points
+  // ── 02. THE ONE-SENTENCE TAKEAWAY ──────────────────────────────────────────
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(7);
   setText(pdf, C.brand);
-  pdf.text("KEY POINTS FROM THE NARRATION", margin, y);
+  pdf.text("THE ONE-SENTENCE TAKEAWAY", margin, y);
+  setFill(pdf, C.brand);
+  pdf.rect(margin, y + 3, 22, 1.5, "F");
+  y += 14;
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(11);
+  setText(pdf, C.ink);
+  const oneSent = sanitize(studyNote.inOneSentence);
+  const oneSentLines = clipLines(pdf.splitTextToSize(oneSent, contentW), 3);
+  pdf.text(oneSentLines, margin, y, { lineHeightFactor: 1.35 });
+  y += oneSentLines.length * 13 + 14;
+
+  // ── 03. WHAT'S ON THE SLIDE  |  WHY A BUYER CARES ──────────────────────────
+  const splitGap = 16;
+  const splitW = (contentW - splitGap) / 2;
+  const splitBlockH = 116;
+  const whatsOn = (studyNote.whatsOnSlide ?? []).slice(0, 4).map(sanitize);
+  drawStudyBlock(
+    pdf,
+    margin,
+    y,
+    splitW,
+    splitBlockH,
+    "WHAT'S ON THE SLIDE",
+    C.brand,
+    [243, 247, 255],
+    whatsOn.map((b) => ({ bullet: true, text: b })),
+  );
+  drawStudyBlock(
+    pdf,
+    margin + splitW + splitGap,
+    y,
+    splitW,
+    splitBlockH,
+    "WHY A BUYER CARES",
+    [11, 26, 74],
+    [241, 244, 252],
+    [{ bullet: false, text: sanitize(studyNote.whyItMatters) }],
+  );
+  y += splitBlockH + 16;
+
+  // ── 04. THE IDEAS YOU MUST OWN ─────────────────────────────────────────────
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7);
+  setText(pdf, C.brand);
+  pdf.text("THE IDEAS YOU MUST OWN", margin, y);
+  setFill(pdf, C.brand);
+  pdf.rect(margin, y + 3, 22, 1.5, "F");
   y += 14;
 
-  const bottomGridH = 150;
-  const keyPointsMaxY = footerY - bottomGridH - 16;
+  // Reserve bottom space for the 2x2 grid + check-yourself + footer first.
+  const checkBandH = 60;
+  const gridH = 138;
+  const ideasMaxY = footerY - 14 - checkBandH - 12 - gridH - 16;
 
-  const keyPoints = studyNote.keyPoints ?? [];
-  if (keyPoints.length === 0) {
+  const ideas = (studyNote.keyIdeas ?? []).slice(0, 4).map(sanitize);
+  if (ideas.length === 0) {
     pdf.setFont("helvetica", "italic");
     pdf.setFontSize(9.5);
     setText(pdf, C.muted);
-    pdf.text("(No narration parsed for this slide.)", margin, y);
-    y += 14;
+    pdf.text("(No curated ideas for this slide.)", margin, y);
   } else {
-    const bodyX = margin + 32;
-    const bodyW = contentW - 32;
-
-    for (let i = 0; i < keyPoints.length; i++) {
-      if (y > keyPointsMaxY - 26) break;
-      const kp = keyPoints[i];
-      const stepNum = String(i + 1).padStart(2, "0");
-
+    const numW2 = 22;
+    const ideaX = margin + numW2;
+    const ideaW = contentW - numW2;
+    // Available vertical budget per idea.
+    const budget = Math.max(28, (ideasMaxY - y) / ideas.length);
+    const maxLines = Math.max(1, Math.floor((budget - 6) / 12));
+    ideas.forEach((idea, i) => {
       pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(10);
+      pdf.setFontSize(11);
       setText(pdf, C.brand);
-      pdf.text(stepNum, margin, y + 6);
+      pdf.text(String(i + 1).padStart(2, "0"), margin, y + 9);
 
-      pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(6.5);
-      setText(pdf, C.brand);
-      pdf.text(kp.beat.toUpperCase(), bodyX, y);
-
-      pdf.setFont("helvetica", "bold");
+      pdf.setFont("helvetica", "normal");
       pdf.setFontSize(9.5);
-      setText(pdf, C.ink);
-      const pointLines = clipLines(pdf.splitTextToSize(sanitize(kp.point), bodyW), 3);
-      pdf.text(pointLines, bodyX, y + 10, { lineHeightFactor: 1.35 });
-      let lineY = y + 10 + pointLines.length * 11;
-
-      // Render every supporting sentence — only stop when the page runs out.
-      for (let s = 0; s < kp.support.length; s++) {
-        if (lineY > keyPointsMaxY - 12) break;
-        const supportText = sanitize(kp.support[s]);
-        pdf.setFont("helvetica", "normal");
-        pdf.setFontSize(8.5);
-        setText(pdf, C.subtle);
-        pdf.text("·", bodyX, lineY + 8);
-        setText(pdf, C.slate);
-        const supLines = clipLines(pdf.splitTextToSize(supportText, bodyW - 12), 3);
-        pdf.text(supLines, bodyX + 10, lineY + 8, { lineHeightFactor: 1.35 });
-        lineY += supLines.length * 10 + 3;
-      }
-
-      y = lineY + 10;
-    }
+      setText(pdf, C.slate);
+      const lines = clipLines(pdf.splitTextToSize(idea, ideaW), maxLines);
+      pdf.text(lines, ideaX, y + 9, { lineHeightFactor: 1.35 });
+      y += Math.max(20, lines.length * 12 + 8);
+    });
   }
 
-  // Bottom grid
-  const gridTop = footerY - bottomGridH;
+  // ── 05. 2x2 GRID — Terms · Facts · Watch-out · How this connects ──────────
+  const gridTop = footerY - 14 - checkBandH - 12 - gridH;
   setStroke(pdf, C.hairline);
   pdf.setLineWidth(0.5);
   pdf.line(margin, gridTop - 10, pageW - margin, gridTop - 10);
 
-  const colGap = 24;
+  const colGap = 16;
   const colW = (contentW - colGap) / 2;
   const leftX = margin;
   const rightX = margin + colW + colGap;
-  const rowH = bottomGridH / 2 - 6;
+  const rowH = gridH / 2 - 6;
 
   drawBottomBlock(
     pdf,
@@ -1392,7 +1405,7 @@ function renderSlidePagePortrait(
     gridTop,
     colW,
     rowH,
-    "TERMS ON THIS SLIDE",
+    "KEY TERMS",
     C.brand,
     studyNote.terms.slice(0, 4).map((t) => ({ label: sanitize(t.term), text: sanitize(t.definition) })),
   );
@@ -1402,9 +1415,9 @@ function renderSlidePagePortrait(
     gridTop,
     colW,
     rowH,
-    "WATCH-OUT",
-    C.rose,
-    [{ label: "", text: sanitize(studyNote.watchOut) }],
+    "DEFENSIBLE FACTS",
+    C.emerald,
+    studyNote.facts.slice(0, 3).map((f) => ({ label: "", text: sanitize(f) })),
   );
   drawBottomBlock(
     pdf,
@@ -1412,9 +1425,9 @@ function renderSlidePagePortrait(
     gridTop + rowH + 12,
     colW,
     rowH,
-    "SUPPORTING FACTS",
-    C.emerald,
-    studyNote.facts.slice(0, 3).map((f) => ({ label: "", text: sanitize(f) })),
+    "WATCH-OUT",
+    C.rose,
+    [{ label: "", text: sanitize(studyNote.watchOut) }],
   );
   const connectsItems = (studyNote.connectsTo.length ? studyNote.connectsTo : meta.connectsTo ?? []).slice(0, 4);
   drawBottomBlock(
@@ -1428,7 +1441,34 @@ function renderSlidePagePortrait(
     connectsItems.map((c) => ({ label: "", text: sanitize(c) })),
   );
 
-  // Footer
+  // ── 06. CHECK YOURSELF — three checkboxes ──────────────────────────────────
+  const checkY = gridTop + gridH + 12;
+  setFill(pdf, C.offwhite);
+  pdf.roundedRect(margin, checkY, contentW, checkBandH, 5, 5, "F");
+  setFill(pdf, C.brand);
+  pdf.rect(margin, checkY, 3, checkBandH, "F");
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7);
+  setText(pdf, C.brand);
+  pdf.text("CHECK YOURSELF · ANSWER ALOUD BEFORE TURNING THE PAGE", margin + 10, checkY + 12);
+
+  const questions = (studyNote.checkYourself ?? []).slice(0, 3).map(sanitize);
+  const qInner = contentW - 36;
+  let qy = checkY + 22;
+  const qBudget = (checkBandH - 26) / Math.max(questions.length, 1);
+  questions.forEach((q) => {
+    setStroke(pdf, C.muted);
+    pdf.setLineWidth(0.7);
+    pdf.rect(margin + 10, qy + 2, 8, 8, "S");
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(8.5);
+    setText(pdf, C.slate);
+    const lines = clipLines(pdf.splitTextToSize(q, qInner), Math.max(1, Math.floor((qBudget - 2) / 10)));
+    pdf.text(lines, margin + 24, qy + 9, { lineHeightFactor: 1.3 });
+    qy += qBudget;
+  });
+
+  // ── 07. Footer ─────────────────────────────────────────────────────────────
   setStroke(pdf, C.hairline);
   pdf.setLineWidth(0.5);
   pdf.line(margin, footerY, pageW - margin, footerY);
@@ -1437,6 +1477,75 @@ function renderSlidePagePortrait(
   setText(pdf, C.subtle);
   pdf.text(`Week ${week.number} · ${sanitize(week.title)} · Study Notes`, margin, footerY + 14);
   pdf.text("Rep-facing · Not for customer distribution", pageW - margin, footerY + 14, { align: "right" });
+
+  // Optional narration echo, single italic line just above footer line.
+  const echo = sanitize(studyNote.narrationInOneLine ?? "");
+  if (echo) {
+    pdf.setFont("helvetica", "italic");
+    pdf.setFontSize(7.5);
+    setText(pdf, C.subtle);
+    const echoLines = clipLines(
+      pdf.splitTextToSize(`From the coach narration: "${echo}"`, contentW),
+      1,
+    );
+    pdf.text(echoLines, margin, footerY - 6);
+  }
+}
+
+// Two-column study block used at the top of the page (What's on slide / Why
+// a buyer cares). Supports either bullet list or paragraph body.
+function drawStudyBlock(
+  pdf: jsPDF,
+  x: number,
+  yTop: number,
+  w: number,
+  h: number,
+  heading: string,
+  accent: [number, number, number],
+  soft: [number, number, number],
+  items: Array<{ bullet: boolean; text: string }>,
+) {
+  setFill(pdf, soft);
+  pdf.roundedRect(x, yTop, w, h, 5, 5, "F");
+  setFill(pdf, accent);
+  pdf.rect(x, yTop, 3, h, "F");
+
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7);
+  setText(pdf, accent);
+  pdf.text(heading, x + 10, yTop + 13);
+
+  const innerX = x + 12;
+  const innerW = w - 22;
+  let cy = yTop + 26;
+  const bottom = yTop + h - 4;
+
+  for (const item of items) {
+    if (cy > bottom - 6) break;
+    if (item.bullet) {
+      const remH = bottom - cy;
+      const maxLines = Math.max(1, Math.floor(remH / 10));
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(8);
+      setText(pdf, accent);
+      pdf.text("·", innerX, cy + 4);
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(8.5);
+      setText(pdf, C.slate);
+      const lines = clipLines(pdf.splitTextToSize(item.text, innerW - 10), Math.min(maxLines, 3));
+      pdf.text(lines, innerX + 8, cy + 4, { lineHeightFactor: 1.3 });
+      cy += lines.length * 10 + 4;
+    } else {
+      const remH = bottom - cy;
+      const maxLines = Math.max(1, Math.floor(remH / 11));
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(9);
+      setText(pdf, C.slate);
+      const lines = clipLines(pdf.splitTextToSize(item.text, innerW), maxLines);
+      pdf.text(lines, innerX, cy + 4, { lineHeightFactor: 1.35 });
+      cy += lines.length * 11 + 4;
+    }
+  }
 }
 
 function drawBottomBlock(
