@@ -679,6 +679,7 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     const title = narration?.title ?? slideId;
     const coreLine = extractCoreLine(slideId);
     const summary = narration ? paraphraseNarration(narration.script, 1100) : "";
+    const summaryBullets = narration ? paraphraseNarrationBullets(narration.script, 7) : [];
     const verbatim = narration ? extractVerbatimLift(narration.script) : undefined;
     const questions = buildDiscoveryQuestionsRotated(narration?.script, slideId, week.id, idx);
     const objections = buildObjectionsRotated(slideId, week.id, idx);
@@ -770,19 +771,80 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     const bottomLeftStackH = wbBlockH + (liftBlockH ? liftBlockH + 8 : 0);
     const summaryBottom = colBottomY - bottomLeftStackH - 14;
 
-    // Teaching summary (justified to fill available left height)
-    if (summary) {
-      drawSectionLabel(pdf, leftX, ly, "TEACHING SUMMARY", C.muted);
+    // Teaching summary — rendered as scannable bullet beats with optional
+    // bold Core/Pain/Value lead-ins. Height-fits to the reserved column band.
+    if (summaryBullets.length || summary) {
+      drawSectionLabel(pdf, leftX, ly, "TEACHING SUMMARY — KEY BEATS", C.muted);
       ly += 12;
+      const fontSize = 9.5;
+      const lineH = 12;
+      const bulletGap = 5;
+      const indent = 10;
+      const textW = leftW - indent;
+      const availH = Math.max(0, summaryBottom - ly);
+
+      // Measure each bullet, dropping the lowest-priority bullets until they fit
+      const bullets = summaryBullets.length
+        ? summaryBullets.slice()
+        : [{ text: summary } as TeachingBullet];
       pdf.setFont("helvetica", "normal");
-      pdf.setFontSize(9);
-      setText(pdf, C.slate);
-      const availH = summaryBottom - ly;
-      const lineH = 11.5;
-      const maxLines = Math.max(6, Math.floor(availH / lineH));
-      const sumLines = clipLines(pdf.splitTextToSize(summary, leftW), maxLines);
-      pdf.text(sumLines, leftX, ly, { lineHeightFactor: 1.35 });
-      ly += sumLines.length * lineH + 6;
+      pdf.setFontSize(fontSize);
+
+      type Measured = { b: TeachingBullet; lines: string[]; h: number };
+      const measure = (b: TeachingBullet): Measured => {
+        const prefix = b.lead ? `${b.lead} — ` : "";
+        const lines = clipLines(
+          pdf.splitTextToSize(prefix + b.text, textW),
+          2,
+        );
+        return { b, lines, h: lines.length * lineH };
+      };
+
+      let measured = bullets.map(measure);
+      const totalH = () =>
+        measured.reduce((acc, m) => acc + m.h, 0) +
+        Math.max(0, measured.length - 1) * bulletGap;
+      while (measured.length > 2 && totalH() > availH) measured.pop();
+
+      // Distribute any leftover space evenly between bullets so the block
+      // reaches summaryBottom without dead air.
+      const leftover = availH - totalH();
+      const extraGap =
+        measured.length > 1 && leftover > 0
+          ? Math.min(8, leftover / (measured.length - 1))
+          : 0;
+
+      let by = ly;
+      measured.forEach(({ b, lines }, i) => {
+        // bullet marker — small filled square in brand colour
+        setFill(pdf, C.brand);
+        pdf.rect(leftX + 1, by - fontSize + 3.5, 2.6, 2.6, "F");
+
+        // First line: bold lead-in (if any) + normal body text
+        const firstLine = lines[0] ?? "";
+        if (b.lead && firstLine.startsWith(`${b.lead} — `)) {
+          const body = firstLine.slice(b.lead.length + 3);
+          pdf.setFont("helvetica", "bold");
+          setText(pdf, C.ink);
+          pdf.text(b.lead, leftX + indent, by);
+          const leadW = pdf.getTextWidth(b.lead);
+          pdf.setFont("helvetica", "normal");
+          setText(pdf, C.slate);
+          pdf.text(` — ${body}`, leftX + indent + leadW, by);
+        } else {
+          pdf.setFont("helvetica", "normal");
+          setText(pdf, C.slate);
+          pdf.text(firstLine, leftX + indent, by);
+        }
+        // Wrap line(s)
+        if (lines.length > 1) {
+          pdf.setFont("helvetica", "normal");
+          setText(pdf, C.slate);
+          pdf.text(lines.slice(1), leftX + indent, by + lineH);
+        }
+        by += lines.length * lineH + bulletGap + extraGap;
+      });
+      ly = by;
     }
 
     // Whiteboard recipe (anchored to bottom of left column)
