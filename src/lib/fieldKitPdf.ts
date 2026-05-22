@@ -572,9 +572,14 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(8);
   setText(pdf, C.brand);
-  pdf.text("WHAT YOU'LL BE ABLE TO DO BY FRIDAY", cardX + 20, cardY + 26);
+  pdf.text("HOW TO USE THIS KIT", cardX + 20, cardY + 26);
   let oy = cardY + 50;
-  meta.outcomes.forEach((o, i) => {
+  const usageGuide = [
+    "One slide per page. Each page is a self-contained study sheet — read it cold and you can walk the slide without the audio.",
+    "Top half: the one-sentence takeaway, what's on the slide, why a buyer cares, and the ideas you must own.",
+    "Bottom half: key terms, defensible facts, the watch-out to avoid, what this connects to, and three self-test questions.",
+  ];
+  usageGuide.forEach((o, i) => {
     // Number chip
     setFill(pdf, C.brand);
     pdf.circle(cardX + 26, oy - 4, 9, "F");
