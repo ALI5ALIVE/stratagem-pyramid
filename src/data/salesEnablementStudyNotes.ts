@@ -839,130 +839,130 @@ export const STUDY_NOTES: Record<string, SlideOnePager> = {
   // ============= Week 3 · Sell & Win =============
   "se-week-3": {
     inOneSentence:
-      "Week 3 turns the rep from a presenter into a seller: run a real discovery, handle any objection, book the next step in the room.",
+      "Week 3 turns the rep from a presenter into a seller. Run a real discovery. Handle any objection. Book the next step in the room.",
     whyItMatters:
-      "By the end of Week 3 the rep can map any account to a footprint pattern, run a discovery that surfaces the wedge in under 20 minutes, and close on the Strategy & Vision Session — not on procurement.",
+      "By the end of Week 3 the rep can map any account to a footprint pattern, run a discovery that finds the wedge in under 20 minutes, and close on the Strategy & Vision Session. Not on procurement.",
     keyIdeas: [
-      "We say 'walkthrough', not 'demo'. Never 'pilot' — use 'focused use-case session'.",
+      "We say 'walkthrough', not 'demo'. Never 'pilot'. Use 'focused use-case session'.",
       "The next step we close on is the Strategy & Vision Session.",
-      "Discovery questions are organised by D, T, O, P — pick four before the call.",
-      "Footprint patterns: single Core App, two, or all three — same foundation underneath.",
+      "Discovery questions are grouped by D, T, O, P. Pick four before the call.",
+      "Footprint patterns: single Core App, two, or all three. Same base under all of them.",
     ],
     terms: [T.svs, T.walkthrough, T.coreApps],
     facts: [
-      "Never use 'pilot' — banned term. Use 'focused walkthrough' or 'focused use-case session'.",
-      "22 slides in Week 3 — covers footprint, discovery, personas, close.",
+      "Never use 'pilot'. Banned word. Use 'focused walkthrough' or 'focused use-case session'.",
+      "22 slides in Week 3. Covers footprint, discovery, personas and the close.",
     ],
     watchOut: "Never say 'pilot'. Never close on procurement. Close on the Strategy & Vision Session.",
     connectsTo: ["Week 2 Capstone", "Strategy & Vision Session"],
     checkYourself: [
-      "What's the approved replacement for 'demo' and 'pilot'?",
-      "What's the only next step we close on?",
+      "What is the approved replacement for 'demo' and 'pilot'?",
+      "What is the only next step we close on?",
       "What does the rep need to be able to do by Friday of Week 3?",
     ],
   },
 
   "se-w3-roadmap-vision-frame": {
     inOneSentence:
-      "Open Week 3 every time by drawing the five-stage maturity curve — buyers who agree on the destination first buy bigger and longer.",
+      "Open Week 3 every time by drawing the five-stage maturity curve. Buyers who agree on the destination first buy bigger and longer.",
     whyItMatters:
-      "Skip this frame and the rest of the week collapses into a feature checklist. The curve gives buyers permission to admit they're at 1.5, and that admission unlocks the rest of the session.",
+      "Skip this frame and the rest of the week becomes a feature checklist. The curve lets buyers admit they are at 1.5. That admission unlocks the rest of the session.",
     keyIdeas: [
-      "Differentiation: point tools live on one stage; Comply365 walks customers across all five on the same foundation.",
-      "Up-sell: each stage compounds on the one below — moving up is the same platform getting deeper, not a re-buy.",
-      "Cross-sell: each Core App is a foothold; the curve makes the case for the next app and the Intelligence Layer.",
-      "Be honest about Stage 5: Predictive is direction of travel, not a feature you can sell today.",
+      "Differentiation: point tools sit on one stage. Comply365 walks customers across all five on the same base.",
+      "Up-sell: each stage builds on the one below. Moving up is the same platform getting deeper, not a re-buy.",
+      "Cross-sell: each Core App is a foothold. The curve makes the case for the next app and the Intelligence Layer.",
+      "Be honest about Stage 5. Predictive is direction of travel, not a feature you can sell today.",
     ],
     terms: [
-      { term: "The platform shift", definition: "The Stage 3 inflection where the operating model becomes possible." },
+      { term: "The platform shift", definition: "The Stage 3 turning point where the operating model becomes possible." },
       T.intelligenceLayer,
       T.svs,
     ],
     facts: [
       "Buyers who agree on the destination first buy bigger and longer.",
-      "Most buyers self-rate at Stage 3 because they were sold tools as Stage 3; honestly they're at 1.5.",
+      "Most buyers say they are at Stage 3 because they were sold tools as Stage 3. They are really at 1.5.",
     ],
-    watchOut: "Don't skip this frame. Don't sell Stage 5. Use approved terminology only.",
+    watchOut: "Do not skip this frame. Do not sell Stage 5. Use approved words only.",
     connectsTo: ["Maturity Roadmap", "Whole-Vision Whiteboard"],
     checkYourself: [
       "Can I draw the curve in 90 seconds with one marker?",
       "Why is planting the flag at 1.5 the unlock?",
-      "What are the three moves the curve enables (differentiate, up-sell, cross-sell)?",
+      "What are the three moves the curve unlocks (differentiate, up-sell, cross-sell)?",
     ],
   },
 
   "se-w3-whole-vision-whiteboard": {
     inOneSentence:
-      "On one whiteboard, in 90 seconds: every layer of the platform mapped to a DTOP step, with Madrid as the worked example threaded the whole way down.",
+      "On one whiteboard, in 90 seconds. Every layer of the platform mapped to a DTOP step, with Madrid as the running example threaded the whole way down.",
     whyItMatters:
-      "This is the highest-leverage whiteboard in the academy. It proves to the buyer that every layer is a deal on its own — and stacked, they're the only loop that closes itself.",
+      "This is the highest-leverage whiteboard in the academy. It proves to the buyer that every layer is a deal on its own. Stacked, they are the only loop that closes itself.",
     keyIdeas: [
       "Top of the board: Madrid use-case strip with the four DTOP micro-cards (Detect d1, Trigger d2, Orchestrate d3, Prove d5).",
-      "Bottom-up, five stages — call each one by number, layer and DTOP role.",
-      "Stage 1: Core Apps as foundation. Stage 2: Insights as Detect (blue). Stage 3: Intelligence Layer as Trigger (amber). Stage 4: Automation+Mobile as Orchestrate (violet). Stage 5: Insights as Prove (green).",
-      "Close verbatim: 'one foundation, one intelligence, one loop — every layer a deal on its own.'",
+      "Bottom-up, five stages. Call each one by number, layer and DTOP role.",
+      "Stage 1: Core Apps as the base. Stage 2: Insights as Detect (blue). Stage 3: Intelligence Layer as Trigger (amber). Stage 4: Automation and Mobile as Orchestrate (violet). Stage 5: Insights as Prove (green).",
+      "Close, word for word: 'one base, one intelligence, one loop. Every layer a deal on its own.'",
     ],
     terms: [T.dtop, T.insights, T.intelligenceLayer, T.automation, T.unifiedMobile],
     facts: [
       "Target: 90 seconds, one marker, top-to-bottom.",
-      "Madrid trend: detected day 1, flat by day 5, audit pack one click.",
+      "Madrid trend: spotted day 1, flat by day 5, audit pack one click away.",
     ],
-    watchOut: "Don't switch use cases mid-flow. Madrid threads top to bottom.",
+    watchOut: "Do not switch use cases mid-flow. Madrid runs top to bottom.",
     connectsTo: ["Roadmap Vision Frame", "DTOP loop"],
     checkYourself: [
       "Can I map each of the five stages to a DTOP role and a colour?",
-      "What's the Madrid timeline by day?",
-      "What's the verbatim close line?",
+      "What is the Madrid timeline by day?",
+      "What is the exact close line?",
     ],
   },
 
   "se-w3-signals-recap": {
     inOneSentence:
-      "Signals are the fuel; DTOP is the engine. Both must be answerable in under a minute, with one anomaly walked end-to-end.",
+      "Signals are the fuel. DTOP is the engine. I must be able to explain both in under a minute, with one anomaly walked end-to-end.",
     whyItMatters:
-      "Buyers test the rep on 'what data?' and 'how does it actually close?' This recap is the rep's one-minute answer to both — walked through one anomaly, not listed as capabilities.",
+      "Buyers test the rep on 'what data?' and 'how does it actually close?' This recap is the one-minute answer to both. Walk through one anomaly. Do not list capabilities.",
     keyIdeas: [
-      "Signals layer: four canonical sources (Regulation, Anomalies, OCRs, Macro/Geopolitical).",
-      "DTOP engine: Detect → Trigger → Orchestrate → Prove.",
-      "Walk ONE anomaly end-to-end. Don't list capabilities — the use case names them.",
-      "Point-solution comparison: they stop at Detect. We do all four.",
+      "Signals layer: four sources (Regulation, Anomalies, OCRs, Macro / Geopolitical).",
+      "DTOP engine: Detect, Trigger, Orchestrate, Prove.",
+      "Walk ONE anomaly end-to-end. Do not list capabilities. The use case names them.",
+      "Point-tool compare: they stop at Detect. We do all four.",
     ],
     terms: [T.detect, T.dtop],
     facts: [
-      "Four signal sources fused at Detect.",
+      "Four signal sources joined at Detect.",
       "Point tools cover one source at best.",
     ],
-    watchOut: "Don't list capabilities. Walk one anomaly end-to-end and let it name them.",
+    watchOut: "Do not list capabilities. Walk one anomaly end-to-end and let it name them.",
     connectsTo: ["DTOP", "Signal Sources", "Who To Target"],
     checkYourself: [
       "Can I answer 'what data do you use?' in under 30 seconds?",
       "Can I walk one anomaly through all four DTOP steps?",
-      "What's the one-line comparison to point solutions?",
+      "What is the one-line compare to point tools?",
     ],
   },
 
   "se-who-to-target": {
     inOneSentence:
-      "Pipeline dies on the wrong accounts. Start where Comply365 already has permission to talk — Tier 1 accounts with one app live and a renewal in 12 months.",
+      "Pipeline dies on the wrong accounts. Start where Comply365 already has the right to talk. Tier 1 accounts with one app live and a renewal in the next 12 months.",
     whyItMatters:
-      "Reps default to greenfield prospecting; this slide overrides that instinct. The renewal is the trojan horse — every Tier 1 conversation should anchor on the loop the customer can't yet close.",
+      "Reps default to greenfield prospecting. This slide overrides that. The renewal is the trojan horse. Every Tier 1 talk should anchor on the loop the customer cannot yet close.",
     keyIdeas: [
-      "Tier 1: one app live, renewal in 12 months. Highest conviction.",
-      "Tier 2: customer in adjacent vertical, exec sponsor exists.",
+      "Tier 1: one app live, renewal in 12 months. Strongest conviction.",
+      "Tier 2: customer in an adjacent vertical, exec sponsor exists.",
       "Tier 3: cold but on a maturity curve we can defend.",
-      "If it isn't Tier 1/2/3 on this slide, deprioritise it.",
+      "If it does not fit Tier 1, 2 or 3 on this slide, drop it down the list.",
     ],
     terms: [T.svs],
     facts: [
       "Tier 1 = renewal trojan horse.",
-      "Pipeline dies on accounts that don't match Tier 1/2/3.",
+      "Pipeline dies on accounts that do not match Tier 1, 2 or 3.",
     ],
-    watchOut: "Don't chase non-Tier accounts. Be disciplined on the qualification.",
+    watchOut: "Do not chase non-Tier accounts. Be strict on qualifying.",
     connectsTo: ["Persona Playbook", "Footprint Intro"],
     checkYourself: [
-      "Can I name the three tiers and their qualifying criteria?",
+      "Can I name the three tiers and what qualifies an account for each?",
       "What makes a renewal a 'trojan horse'?",
-      "Which tier do most successful conversations start in?",
+      "Which tier do most winning talks start in?",
     ],
   },
 
