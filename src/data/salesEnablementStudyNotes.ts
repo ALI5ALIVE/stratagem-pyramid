@@ -264,107 +264,107 @@ export const STUDY_NOTES: Record<string, SlideOnePager> = {
 
   "se-slide-dtop-whiteboard": {
     inOneSentence:
-      "The DTOP whiteboard drill: six strokes, 90 seconds, in colour, without looking at the deck.",
+      "The DTOP whiteboard drill. Six strokes, 90 seconds, in colour, without looking at the deck.",
     whyItMatters:
-      "Drawing the loop earns more trust than the same loop on a slide. The room shifts from 'pitch' to 'working session' the moment the rep picks up the pen. This is the single highest-conviction artefact in the academy.",
+      "Drawing the loop earns more trust than the same loop on a slide. The room shifts from pitch to working session the moment the rep picks up the pen. This is the single strongest artefact in the academy.",
     keyIdeas: [
-      "Stroke order: D (blue), T (amber), O (violet), P (emerald), closing loop arrow, four signal chips below Detect.",
-      "Each stroke has one sentence — the line on the right of the slide is the line you say out loud.",
-      "The colour story matches every diagram in the deck — your whiteboard then matches the slides.",
-      "Pause after each letter for the buyer to react; the pause after Detect is where discovery starts.",
+      "Stroke order: D blue, T amber, O violet, P emerald, then the loop arrow, then four signal chips under Detect.",
+      "Each stroke has one line. The line on the right of the slide is the line you say out loud.",
+      "The colours match every diagram in the deck. Your whiteboard then matches your slides.",
+      "Pause after each letter so the buyer can react. The pause after Detect is where discovery starts.",
     ],
     terms: [T.detect, T.trigger, T.orchestrate, T.prove],
     facts: [
       "Target time: 90 seconds, six strokes.",
-      "Four signal chips: Regulation, Anomalies, Operational Change Requests, Macro/Geopolitical.",
+      "Four signal chips: Regulation, Anomalies, Operational Change Requests, Macro / Geopolitical.",
     ],
     watchOut:
-      "Don't draw silently. Don't draw out of order. Don't keep drawing through the pause — that pause IS the discovery.",
+      "Do not draw in silence. Do not draw out of order. Do not draw through the pause. The pause IS the discovery.",
     connectsTo: ["DTOP slide", "Whiteboard Runbook"],
     checkYourself: [
       "Can I draw all six strokes in 90 seconds without looking at the deck?",
-      "What colour is each DTOP letter?",
-      "Why does the colour story matter?",
+      "What colour goes with each DTOP letter?",
+      "Why do the colours matter?",
     ],
   },
 
   "se-slide-dtop-whiteboard-runbook": {
     inOneSentence:
-      "Use the whiteboard the moment a customer says 'show me' or 'I don't get how this connects'.",
+      "Pick up the pen the moment a customer says 'show me' or 'I do not see how this connects'.",
     whyItMatters:
-      "Knowing the drawing isn't enough — the rep needs the runbook for using it in a live meeting. The pre-line earns the right to draw; the post-question converts the drawing into discovery.",
+      "Knowing the drawing is not enough. The rep needs the runbook for using it live. The pre-line earns the right to draw. The post-question turns the drawing into discovery.",
     keyIdeas: [
-      "Pre-line: 'Can I take ninety seconds at the board — it'll save us an hour of slides.' Customers always say yes.",
+      "Pre-line: 'Can I take ninety seconds at the board? It will save us an hour of slides.' Customers always say yes.",
       "Run: draw the loop, then stop and ask 'which of these four steps breaks first for you today?'",
-      "Recover: if you blank, redraw Detect and restart from the signal — it looks deliberate, not lost.",
-      "Recover: if they push for technical depth, hand off to the Signals Specialist Playbook.",
+      "Recover: if you blank, redraw Detect and restart from the signal. It looks deliberate, not lost.",
+      "Recover: if they push for deep tech, hand off to the Signals Specialist Playbook.",
     ],
     terms: [T.detect, T.prove],
     facts: [
-      "Wedge question: 'which of these four steps is actually closed today with auditable proof?'",
-      "Almost no operator can answer 'Prove' honestly — that's the wedge.",
+      "Wedge question: 'which of these four steps do you close today with audit-ready proof?'",
+      "Almost no operator can answer Prove honestly. That is the wedge.",
     ],
     watchOut:
-      "After you ask the wedge question — shut up. Whoever speaks first loses. Don't fill the silence.",
+      "After the wedge question, stop talking. Whoever speaks first loses. Do not fill the silence.",
     connectsTo: ["DTOP Whiteboard Drill", "Signal Sources"],
     checkYourself: [
-      "What's the pre-line I use to earn the right to draw?",
-      "What's the question I ask after drawing the loop?",
+      "What pre-line do I use to earn the right to draw?",
+      "What question do I ask after drawing the loop?",
       "What do I do if I blank in the middle of the drill?",
     ],
   },
 
   "se-slide-signals": {
     inOneSentence:
-      "Detect fuses four canonical signal sources — Regulation, Anomalies, Operational Change Requests, and Micro/Macro/Geopolitical Influences — into one stream.",
+      "Detect joins four signal sources into one stream: Regulation, Anomalies, Operational Change Requests, and Micro / Macro / Geopolitical Influences.",
     whyItMatters:
-      "Every prospect will eventually ask 'what data do you actually use?' This slide is the answer. Point solutions cover one of these sources at best; only the platform fuses all four into a single Detect layer.",
+      "Every buyer asks 'what data do you actually use?' This slide is the answer. Point tools cover one source at best. Only the platform joins all four into one Detect layer.",
     keyIdeas: [
       "Regulation Signals: feeds from rulemakers and authority publications.",
-      "Anomalies: operational and safety events — the signal most operators see in dashboards but cannot act on.",
-      "Operational Change Requests: internal changes that should trigger procedure or training updates.",
-      "Micro, Macro and Geopolitical Influences: contextual signals (fuel, geopolitics, supply chain) that shift risk.",
+      "Anomalies: operational and safety events. Most operators see them in a dashboard but cannot act on them.",
+      "Operational Change Requests: internal changes that should kick off a procedure or training update.",
+      "Micro, Macro and Geopolitical Influences: context signals like fuel, geopolitics and supply chain that shift risk.",
     ],
     terms: [
       T.detect,
-      { term: "Anomalies", definition: "Operational and safety events surfaced in the customer's own data." },
-      { term: "Operational Change Requests", definition: "Internal change items that should trigger procedure or training updates." },
+      { term: "Anomalies", definition: "Operational and safety events found inside the customer's own data." },
+      { term: "Operational Change Requests", definition: "Internal change items that should kick off a procedure or training update." },
     ],
     facts: [
-      "Four signal sources fused into one Detect layer — only this platform does all four.",
-      "Wedge question: 'which of these four is hardest for you to act on today?' — almost always Anomalies or OCRs.",
+      "Four signal sources joined into one Detect layer. Only this platform does all four.",
+      "Wedge question: 'which of these four is hardest for you to act on today?' The answer is almost always Anomalies or OCRs.",
     ],
-    watchOut: "Don't list the four sources flat. Anchor each to a system the customer already runs. Never use FOQA, FDM or ASAP.",
+    watchOut: "Do not list the four sources flat. Tie each one to a system the customer already runs. Never use FOQA, FDM or ASAP.",
     connectsTo: ["DTOP · Detect", "Value Unlocked"],
     checkYourself: [
-      "Can I name the four signal sources in canonical order?",
-      "Can I convert any one of them into a discovery question?",
-      "What's the approved language for flight-data signals (not FOQA/FDM)?",
+      "Can I name the four signal sources in order?",
+      "Can I turn any one of them into a discovery question?",
+      "What is the approved phrase for flight-data signals (not FOQA or FDM)?",
     ],
   },
 
   "se-slide-value": {
     inOneSentence:
-      "Closing the loop on one shared foundation compounds value: faster procedure cycles, lower investigation cost, and audit evidence that assembles itself.",
+      "Closing the loop on one shared base compounds value. Faster procedure cycles. Lower investigation cost. Audit evidence that builds itself.",
     whyItMatters:
-      "Finance teams have stopped believing point-tool ROI claims because every tool sells in isolation. Platform value is different — it compounds because every workflow shares the same foundation.",
+      "Finance teams no longer believe point-tool ROI claims because each tool sells alone. Platform value is different. It compounds because every workflow shares the same base.",
     keyIdeas: [
-      "Procedure cycle time falls because Orchestrate is automated end-to-end.",
-      "Investigation cost falls because Detect surfaces patterns before they become incidents.",
-      "Audit evidence assembles itself because Prove is built into every step.",
-      "Pick ONE number that fits the room — safety-led, ops-led, or CFO-led. Don't list every metric.",
+      "Procedure cycle time drops because Orchestrate runs end-to-end on its own.",
+      "Investigation cost drops because Detect spots patterns before they become incidents.",
+      "Audit evidence builds itself because Prove is baked into every step.",
+      "Pick ONE number that fits the room. Safety-led, ops-led, or CFO-led. Do not list every metric.",
     ],
     terms: [T.dtop, T.lineOfSight],
     facts: [
-      "Platform value compounds — one shared foundation, closed by DTOP, lifts every workflow on top of it.",
-      "Customer-specific value is modelled in Line-of-Sight before any commercial conversation.",
+      "Platform value compounds. One shared base, closed by DTOP, lifts every workflow on top of it.",
+      "Customer-specific value is sized in Line-of-Sight before any commercial talk.",
     ],
-    watchOut: "Don't use ROI numbers that aren't in the approved proof set. Don't list every metric — pick one for the room.",
+    watchOut: "Do not use ROI numbers that are not in the approved proof set. Do not list every metric. Pick one for the room.",
     connectsTo: ["DTOP loop", "Maturity Roadmap"],
     checkYourself: [
       "Which number do I use for a safety-led buyer? An ops-led buyer? A CFO-led buyer?",
-      "Why does platform value compound while point-tool value adds?",
-      "What is Line-of-Sight and when does it come into the conversation?",
+      "Why does platform value compound while point-tool value only adds?",
+      "What is Line-of-Sight and when does it come into the talk?",
     ],
   },
 
@@ -372,82 +372,82 @@ export const STUDY_NOTES: Record<string, SlideOnePager> = {
     inOneSentence:
       "Operational performance maturity is a five-stage journey: Fragmented & Reactive, Managed, Connected, Proactive, and Predictive & Self-Healing.",
     whyItMatters:
-      "Every prospect already lives somewhere on this curve. The fastest way to make a conversation real is to let them point at where they are — and then sell the next stage, not Stage 5.",
+      "Every buyer already sits somewhere on this curve. The fastest way to make a talk real is to let them point at where they are. Then sell the next stage, not Stage 5.",
     keyIdeas: [
-      "Most operators self-rate at Connected (Stage 3) and operate at Managed (Stage 2). Plant the flag at 1.5.",
-      "Each stage compounds on the one below — you cannot leap to Predictive without first being Connected.",
-      "Comply365 is the only platform built to walk customers across the entire curve on one connected foundation.",
-      "Stage 5 (Predictive & Self-Healing) is the direction of travel, not a feature you can sell today — be honest.",
+      "Most operators say they are at Connected (Stage 3). They actually run at Managed (Stage 2). Plant the flag at 1.5.",
+      "Each stage builds on the one below. You cannot leap to Predictive without being Connected first.",
+      "Comply365 is the only platform built to walk customers across the whole curve on one connected base.",
+      "Stage 5 is the direction of travel, not something you can sell today. Be honest about that.",
     ],
     terms: [
-      { term: "Fragmented & Reactive", definition: "Stage 1. Point tools, no shared foundation, work driven by incident." },
-      { term: "Managed", definition: "Stage 2. Tools in place, processes defined, but stacks still siloed." },
-      { term: "Connected", definition: "Stage 3. Foundation linked across safety, content, training." },
-      { term: "Proactive", definition: "Stage 4. Insights and Recommended Actions in the loop." },
-      { term: "Predictive & Self-Healing", definition: "Stage 5. Direction of travel — Automation closes loops with human-in-the-loop." },
+      { term: "Fragmented & Reactive", definition: "Stage 1. Point tools. No shared base. Work driven by incident." },
+      { term: "Managed", definition: "Stage 2. Tools in place. Processes defined. Stacks still cut off from each other." },
+      { term: "Connected", definition: "Stage 3. The base is linked across safety, content and training." },
+      { term: "Proactive", definition: "Stage 4. Insights and Recommended Actions are in the loop." },
+      { term: "Predictive & Self-Healing", definition: "Stage 5. Direction of travel. Automation closes loops with a human in the loop." },
     ],
     facts: [
-      "Most operators self-describe at Connected; operate at Managed.",
-      "Intelligence Layer outcomes anchor at L4-5 maturity.",
+      "Most operators say they are at Connected. They actually run at Managed.",
+      "Intelligence Layer outcomes land at L4-5 maturity.",
     ],
     watchOut:
-      "Don't let the buyer self-rate without pressure-testing. Don't sell Stage 5 — sell the next stage.",
+      "Do not let the buyer self-rate without testing it. Do not sell Stage 5. Sell the next stage.",
     connectsTo: ["Strategy & Vision Session", "Maturity Whiteboard"],
     checkYourself: [
       "Can I name the five stages in order?",
-      "Why is it dangerous to accept 'we're at Connected' at face value?",
-      "What's the one question that surfaces the gap between self-rating and reality?",
+      "Why is it risky to accept 'we are at Connected' at face value?",
+      "What one question shows the gap between self-rating and reality?",
     ],
   },
 
   "se-slide-maturity-whiteboard": {
     inOneSentence:
-      "Six strokes, ninety seconds: draw the five-stage maturity curve and plant the YOU ARE HERE flag between Fragmented and Managed.",
+      "Six strokes, ninety seconds. Draw the five-stage curve and plant the YOU ARE HERE flag between Fragmented and Managed.",
     whyItMatters:
-      "Executives buy when you draw it. Sketching the curve pulls the buyer into the conversation; planting the flag at 1.5 gives them permission to admit where they actually are.",
+      "Execs buy when you draw it. Sketching the curve pulls the buyer into the talk. Planting the flag at 1.5 gives them room to admit where they really are.",
     keyIdeas: [
-      "Stroke order: axes, stages 1-2 flat, flag at 1.5, bend up at Stage 3, climb to Stage 4, cap at Stage 5.",
-      "Stage 3 is where you label 'the platform shift'.",
-      "Final move: tap the flag, ask 'does that feel about right for where you are today?' Then stop talking.",
+      "Stroke order: axes, Stages 1-2 flat, flag at 1.5, bend up at Stage 3, climb to Stage 4, cap at Stage 5.",
+      "Label Stage 3 'the platform shift'.",
+      "Final move: tap the flag and ask 'does that feel about right for where you are today?' Then stop talking.",
     ],
     terms: [
-      { term: "The platform shift", definition: "The inflection at Stage 3 — when the operating model becomes possible." },
-      { term: "YOU ARE HERE flag", definition: "The honest placement of the buyer between Stage 1 and Stage 2." },
+      { term: "The platform shift", definition: "The turning point at Stage 3 when the operating model becomes possible." },
+      { term: "YOU ARE HERE flag", definition: "Honest placement of the buyer between Stage 1 and Stage 2." },
     ],
     facts: [
       "Target: 90 seconds, six strokes, no slides behind you.",
-      "Most buyers think they're at Stage 3; honestly they're at 1.5.",
+      "Most buyers think they are at Stage 3. They are really at 1.5.",
     ],
-    watchOut: "Whoever speaks first after the flag question loses. Don't fill the silence with features.",
+    watchOut: "Whoever speaks first after the flag question loses. Do not fill the silence with features.",
     connectsTo: ["Maturity Roadmap", "Strategy & Vision Session"],
     checkYourself: [
       "Can I draw the curve in 90 seconds with just six strokes?",
       "Where exactly does the flag go, and why between Stages 1 and 2?",
-      "What's the verbatim question after I tap the flag?",
+      "What is the exact question I ask after I tap the flag?",
     ],
   },
 
   "se-slide-recap-m2": {
     inOneSentence:
-      "Three rehearsal answers to memorise: What is it? How is it different? What's the one thing to remember?",
+      "Three rehearsal answers to learn by heart: What is it? How is it different? What is the one thing to remember?",
     whyItMatters:
-      "Every prospect asks these three questions. Stumbling on any one of them costs the room. This slide is a rehearsal, not content — repeat each answer out loud until it sounds natural.",
+      "Every buyer asks these three. Stumble on any one and you lose the room. This slide is a rehearsal, not new content. Say each answer out loud until it sounds natural.",
     keyIdeas: [
       "What is it: the first connected operating platform for safety, content and training.",
-      "How is it different: one foundation instead of five-to-seven disconnected tools.",
-      "What's the one thing to remember: point solutions can Detect — only Comply365 can Detect, Trigger, Orchestrate, AND Prove.",
+      "How is it different: one base instead of five-to-seven separate tools.",
+      "One thing to remember: point tools can Detect. Only Comply365 can Detect, Trigger, Orchestrate AND Prove.",
     ],
     terms: [T.dtop, T.coreApps],
     facts: [
-      "Most operators today run 5-7 disconnected tools across safety, content and training.",
-      "Four signal sources at Detect — the answer to 'what data do you use?'",
+      "Most operators today run 5-7 separate tools across safety, content and training.",
+      "Four signal sources at Detect. That is the answer to 'what data do you use?'",
     ],
-    watchOut: "Don't move to Week 2 until all three answers sound natural without notes.",
+    watchOut: "Do not move to Week 2 until all three answers sound natural without notes.",
     connectsTo: ["Week 1 outcomes", "Week 2 · Capabilities"],
     checkYourself: [
-      "Can I deliver each of the three answers in one sentence?",
+      "Can I say each of the three answers in one sentence?",
       "What are the four signal sources?",
-      "What's the line that makes us defensible vs point solutions?",
+      "What line makes us defensible against point tools?",
     ],
   },
 
