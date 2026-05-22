@@ -1,104 +1,62 @@
 ## Goal
+Make the Coach transcript pages in the Field Kit PDF easy to scan, chunk, and rehearse — instead of dense, intimidating prose.
 
-Reformat the three week intro slides (W1/W2/W3) so the "What you'll learn" block reads as a scannable, outcome-led checklist instead of a 70+ word run-on sentence. Visual hierarchy: title → tight intent line → 4–6 measurable outcomes → existing "up next" chips.
+## What changes (all in `src/lib/fieldKitPdf.ts`, `renderSlideTranscriptPage`)
 
-Affects only the week divider slides at the start of each week — not the per-slide narration or PDFs.
+### 1. Add a "Read this in 60 seconds" TL;DR strip
+Above the transcript body, render a 3-bullet summary derived from the script:
+- **Core message** — first sentence of paragraph tagged "Core message" (or paragraph 1 fallback)
+- **Say it like this** — sentence from the matching cue (or first quoted phrase in the script)
+- **Bridge** — sentence from "Bridge to next" cue (or last sentence)
 
----
+Compact 3-column or stacked block with brand-tinted background, ~55pt tall. Lets the rep grok the slide before reading the full script.
 
-## Visual layout
+### 2. Restructure cues as visual section cards, not eyebrows
+Currently cues render as a tiny 7pt label above flowing prose. Upgrade to:
+- A left-aligned **chip** (rounded rect, brand-tinted fill, 8pt bold caps-free label)
+- Followed by the body paragraph in standard prose
+- A 6pt vertical gap between sections plus a faint hairline divider so each cue reads as a self-contained "beat"
 
-```text
-┌────────────────────────────────────────────────────────────┐
-│ [Week 2] [Capabilities] [~16 min]                          │
-│                                                            │
-│ How the capabilities fit together                          │
-│ The intent line — one sentence, the spine of the week.     │
-│                                                            │
-│ ┌── What you'll be able to do by the end of Week 2 ──────┐ │
-│ │ ✓  Walk the Platform map end to end                    │ │
-│ │ ✓  Position Insights & Intelligence as platform-wide   │ │
-│ │ ✓  Defend ~90% domain vs ~35% generic AI               │ │
-│ │ ✓  Anchor Regulation Management as end-to-end proof    │ │
-│ │ ✓  Close the loop with Unified Mobile on-device        │ │
-│ │ ✓  Tell the whole story as one DTOP loop in 60s        │ │
-│ └────────────────────────────────────────────────────────┘ │
-│                                                            │
-│ Up next  [chip] [chip] [chip] …                            │
-└────────────────────────────────────────────────────────────┘
-```
+Cue chips get color-coded by intent:
+- Why this matters / Core message → brand blue
+- The pain / Watch out for → amber
+- The value lever / Say it like this → emerald
+- Bridge to next / Delivery tip → muted slate
 
-Each outcome is verb-led, ≤ 9 words, one line. Six outcomes max per week so nothing wraps.
+### 3. Bold the key phrase in each paragraph
+After splitting a paragraph into lines, detect the first quoted phrase (`"…"`) or the first em-dash clause and render it in **bold ink** inline. This gives the eye an anchor per paragraph without re-writing copy.
 
----
+If no natural anchor exists, bold the first 4–6 words of the paragraph (sentence stem) — same effect as a lead-in.
 
-## Changes
+### 4. Replace big pull-quotes with a single "Money line" callout
+Drop the auto pull-quotes at paragraphs 3 and 7 (often arbitrary). Instead, pick **one** money line: the sentence from the "Say it like this" cue, or the longest quoted phrase in the script. Render once, near the middle of page 1, as a branded italic callout with a left brand bar. Skip if none found.
 
-### 1. `src/components/sales-enablement-slides/SEModuleDivider.tsx`
+### 5. Tighter, more rhythmic typography
+- Body: 10.5pt / 15pt leading (was 10/14) — easier on the eye
+- Paragraph air: 12pt (was 10)
+- Measure: keep ~440pt column
+- First-line indent removed; rely on whitespace + cue chips for chunking
+- Add a thin numbered tick (`01`, `02`, …) in the left margin next to each cue section so reps can reference "section 3" while rehearsing
 
-- Add `intent?: string` (one-line spine) and `outcomes?: string[]` props alongside the existing `learningGoal`. Keep `learningGoal` as a fallback so any caller that hasn't migrated still renders.
-- Replace the single-paragraph "What you'll learn" block with:
-  - An eyebrow `What you'll be able to do by the end of Week N`
-  - A 2-column grid (md+) of outcomes, each with a small emerald `CheckCircle2` icon
-  - On `<md`, collapses to a single column
-  - Optional `intent` sentence sits between the title and the outcomes box at 16pt muted-foreground
-- Keep the emerald border + soft fill so it still reads as the learning panel.
-- If `outcomes` is empty, fall back to rendering `learningGoal` as today (no regression for other callers).
+### 6. Footer micro-coaching
+Replace the static "Read once to memorise…" with a rotating one-line tip per page:
+- Page 1: "Read aloud once. Mark the breath points with a slash."
+- Page 2+: "Record yourself. Play back at 1.25× — does it still land?"
 
-### 2. `src/pages/SalesEnablement.tsx` — `weekProps`
+### 7. Header meta upgrade
+Add a small "Difficulty / pacing" indicator next to `~X min spoken · Y words`:
+- ≤120 wpm target → "Pace: deliberate"
+- 120–160 → "Pace: conversational"
+- >160 → "Pace: brisk — slow down"
+Computed from word count vs. estimated minutes.
 
-Replace the wall-of-text `learningGoal` for w1/w2/w3 with a short `intent` and an `outcomes` array. Proposed copy (mirrors today's content, broken into measurable verbs):
+## Out of scope
+- Study-sheet (page 1) layout — already refined last pass
+- Narration audio, slide content, or `salesEnablementNarration.ts` copy
+- Field-kit cover, contents page, week dividers in the PDF
 
-**W1 — Foundation**
-- intent: `Set the scene, put the platform in plain English, and learn the operating loop that makes everything land.`
-- outcomes:
-  - `Explain why the market is shifting in one minute`
-  - `Deliver the one-sentence platform pitch from memory`
-  - `Walk the DTOP loop on a whiteboard, in order`
-  - `Name the four signal sources behind Detect`
-  - `Name the four capability bands in canonical order`
-  - `Run the Week 1 recap as a talk track, not a slide read`
+## Files touched
+- `src/lib/fieldKitPdf.ts` only (function `renderSlideTranscriptPage` + a couple of small helpers nearby)
 
-**W2 — Capabilities**
-- intent: `Walk the platform map and prove why the Intelligence Layer beats generic AI.`
-- outcomes:
-  - `Walk the Platform map end to end`
-  - `Position Insights & Intelligence as platform-wide`
-  - `Tell the Intelligence stack: Insights → Recommendations → Automation`
-  - `Defend the ~90% domain vs ~35% generic AI headline`
-  - `Anchor Regulation Management as end-to-end proof`
-  - `Close the loop with Unified Mobile on-device`
-  - `Tell the whole story as one DTOP loop in 60 seconds`
-
-**W3 — Sell & Win**
-- intent: `Pick the account, run the call, handle the objections, book the Strategy & Vision Session.`
-- outcomes:
-  - `Pick high-propensity accounts to chase`
-  - `Run a discovery call that surfaces the wedge`
-  - `Pull the right discovery questions for the room`
-  - `Read the persona and adapt on the fly`
-  - `Handle the top 8 objections without flinching`
-  - `Position against any competitor in the DTOP loop`
-  - `Land the scripted next-step language every time`
-  - `Put the 3-hour Strategy & Vision Session on the table`
-
-(W3 has 8 outcomes — render in 2 columns so it still fits without a wall.)
-
-### 3. Out of scope
-
-- `salesEnablementNarration.ts` weekly narration scripts — untouched (those are spoken, paragraph form is fine there).
-- `salesEnablementStudyNotes.ts` — untouched.
-- Field-kit PDF — untouched.
-- Per-slide divider props for any non-week modules — untouched (they use `learningGoal` and will keep working via the fallback path).
-
----
-
-## Validation
-
-1. Open `/sales-enablement` and step through the W1, W2, W3 divider slides at 1141×786 (current viewport) and at a narrower mobile width.
-2. Confirm:
-   - No paragraph wider than ~10 words on any outcome row.
-   - No outcome wraps to a third line.
-   - Title + intent + outcome panel + Up-next chips all fit on one screen without scrolling.
-   - Emerald checklist icons render and align to the first line of each outcome.
-3. Confirm any other module dividers that still pass `learningGoal` keep rendering exactly as before.
+## QA
+After implementation: regenerate the kit, convert pages 4, 6, 8 (transcript pages) to images at 150dpi, and check: chip alignment, money-line placement, no orphaned cue chips at page bottom, no clipped text, footer tip rotation works.
