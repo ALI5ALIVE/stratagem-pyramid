@@ -2029,9 +2029,6 @@ function renderSlideTranscriptPage(
     // Card body background (subtle paper tint)
     setFill(pdf, [250, 251, 253]);
     pdf.roundedRect(bodyX(), y, bodyW(), cardH, 4, 4, "F");
-    // Accent edge along the rail/body seam
-    setFill(pdf, b.accent);
-    pdf.rect(bodyX(), y, 2.5, cardH, "F");
 
     // ── Left rail ──
     // Big beat number
