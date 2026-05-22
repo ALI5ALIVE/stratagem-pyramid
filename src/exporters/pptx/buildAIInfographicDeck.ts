@@ -55,68 +55,53 @@ export async function buildAIInfographicDeck(opts: BuildOpts = {}): Promise<Blob
   // 1) AI Solutions column (left)
   const solX = margin;
   columnsX["solutions"] = solX;
-  // Faux glow / shadow behind the solutions card
-  slide.addShape("roundRect", {
-    x: solX - 0.06, y: gridTop - 0.06, w: colW + 0.12, h: gridH + 0.12,
-    fill: { color: C.primary }, line: { type: "none" }, rectRadius: 0.22,
-  });
+  // Solutions column container — matches product columns but with primary border
+  addCard(slide, solX, gridTop, colW, gridH, { fill: C.surface, radius: 0.18 });
   slide.addShape("roundRect", {
     x: solX, y: gridTop, w: colW, h: gridH,
-    fill: { color: C.primarySoft },
-    line: { color: C.primary, width: 1.5 }, rectRadius: 0.2,
+    fill: { type: "none" }, line: { color: C.primary, width: 1.5 }, rectRadius: 0.18,
   });
-  // Bolder header
-  const solHeaderH = 0.6;
+  // Header bar
+  const solHeaderH = 0.5;
   slide.addShape("roundRect", {
     x: solX + 0.15, y: gridTop + 0.15, w: colW - 0.3, h: solHeaderH,
     fill: { color: C.primary }, line: { type: "none" }, rectRadius: 0.12,
   });
   slide.addText("AI SOLUTIONS", {
     x: solX + 0.15, y: gridTop + 0.15, w: colW - 0.3, h: solHeaderH,
-    fontFace: PPTX_BRAND.font.display, fontSize: 16, bold: true, charSpacing: 4,
+    fontFace: PPTX_BRAND.font.display, fontSize: 14, bold: true, charSpacing: 3,
     color: "FFFFFF", align: "center", valign: "middle",
   });
   // White underline accent
   slide.addShape("rect", {
-    x: solX + colW / 2 - 0.3, y: gridTop + 0.15 + solHeaderH - 0.08,
-    w: 0.6, h: 0.04,
+    x: solX + colW / 2 - 0.3, y: gridTop + 0.15 + solHeaderH - 0.07,
+    w: 0.6, h: 0.03,
     fill: { color: "FFFFFF" }, line: { type: "none" },
   });
 
   // Solution chips
   const solCenters: Record<string, { x: number; y: number }> = {};
-  const solChipH = 0.6;
+  const solChipH = 0.5;
   const solChipGap = 0.12;
-  let cy = gridTop + 0.15 + solHeaderH + 0.3;
+  let cy = gridTop + 0.15 + solHeaderH + 0.25;
   aiSolutions.forEach((sol) => {
     const chipX = solX + 0.2;
     const chipW = colW - 0.4;
     const accent = solutionColors[sol.id].pptx;
-    // Shadow
-    slide.addShape("roundRect", {
-      x: chipX + 0.04, y: cy + 0.05, w: chipW, h: solChipH,
-      fill: { color: "000000" }, line: { type: "none" }, rectRadius: 0.1,
-    });
-    // White chip
+    // Filled colored chip
     slide.addShape("roundRect", {
       x: chipX, y: cy, w: chipW, h: solChipH,
-      fill: { color: "FFFFFF" },
-      line: { color: accent, width: 1.25 }, rectRadius: 0.1,
+      fill: { color: accent }, line: { type: "none" }, rectRadius: 0.1,
     });
-    // Wider colored accent bar
-    slide.addShape("rect", {
-      x: chipX, y: cy, w: 0.18, h: solChipH,
-      fill: { color: accent }, line: { type: "none" },
-    });
-    // Colored dot
+    // White dot anchor
     slide.addShape("ellipse", {
-      x: chipX + 0.3, y: cy + solChipH / 2 - 0.1, w: 0.2, h: 0.2,
-      fill: { color: accent }, line: { type: "none" },
+      x: chipX + 0.18, y: cy + solChipH / 2 - 0.09, w: 0.18, h: 0.18,
+      fill: { color: "FFFFFF" }, line: { type: "none" },
     });
     slide.addText(sol.label, {
-      x: chipX + 0.58, y: cy, w: chipW - 0.62, h: solChipH,
-      fontFace: PPTX_BRAND.font.body, fontSize: 13, bold: true,
-      color: C.bg, align: "left", valign: "middle",
+      x: chipX + 0.45, y: cy, w: chipW - 0.5, h: solChipH,
+      fontFace: PPTX_BRAND.font.body, fontSize: 12, bold: true,
+      color: "FFFFFF", align: "left", valign: "middle",
     });
     solCenters[sol.id] = { x: chipX + chipW, y: cy + solChipH / 2 };
     cy += solChipH + solChipGap;
@@ -128,17 +113,13 @@ export async function buildAIInfographicDeck(opts: BuildOpts = {}): Promise<Blob
   const chipW = colW - 0.4;
   slide.addShape("roundRect", {
     x: chipX, y: noAiY, w: chipW, h: solChipH,
-    fill: { color: "FFFFFF" },
+    fill: { color: C.surfaceAlt },
     line: { color: C.muted, width: 1, dashType: "dash" }, rectRadius: 0.1,
   });
-  slide.addShape("rect", {
-    x: chipX, y: noAiY, w: 0.18, h: solChipH,
-    fill: { color: C.muted }, line: { type: "none" },
-  });
   slide.addText("No AI", {
-    x: chipX + 0.3, y: noAiY, w: chipW - 0.32, h: solChipH,
-    fontFace: PPTX_BRAND.font.body, fontSize: 13, bold: true,
-    color: C.muted, align: "left", valign: "middle",
+    x: chipX, y: noAiY, w: chipW, h: solChipH,
+    fontFace: PPTX_BRAND.font.body, fontSize: 12, bold: true,
+    color: C.muted, align: "center", valign: "middle",
   });
   solCenters["noai"] = { x: chipX + chipW, y: noAiY + solChipH / 2 };
 
@@ -150,12 +131,12 @@ export async function buildAIInfographicDeck(opts: BuildOpts = {}): Promise<Blob
     addCard(slide, colX, gridTop, colW, gridH, { fill: C.surface, radius: 0.15 });
     slide.addShape("roundRect", {
       x: colX + 0.15, y: gridTop + 0.15, w: colW - 0.3, h: headerH,
-      fill: { color: C.surfaceAlt }, line: { color: C.hairline, width: 0.75 }, rectRadius: 0.1,
+      fill: { color: C.primary }, line: { type: "none" }, rectRadius: 0.1,
     });
     slide.addText(col.product, {
       x: colX + 0.15, y: gridTop + 0.15, w: colW - 0.3, h: headerH,
-      fontFace: PPTX_BRAND.font.display, fontSize: 12, bold: true,
-      color: C.muted, align: "center", valign: "middle",
+      fontFace: PPTX_BRAND.font.display, fontSize: 13, bold: true,
+      color: "FFFFFF", align: "center", valign: "middle",
     });
 
     let ry = gridTop + 0.15 + headerH + 0.25;
@@ -170,7 +151,7 @@ export async function buildAIInfographicDeck(opts: BuildOpts = {}): Promise<Blob
       });
       slide.addText(row.label, {
         x: rX, y: ry, w: rW, h: cellH,
-        fontFace: PPTX_BRAND.font.body, fontSize: 11,
+        fontFace: PPTX_BRAND.font.body, fontSize: 11, bold: row.ai,
         color: row.ai ? C.ink : C.muted, align: "center", valign: "middle",
       });
       rowCenters[row.id] = { x: rX, y: ry + cellH / 2 };
