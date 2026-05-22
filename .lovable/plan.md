@@ -1,62 +1,102 @@
 ## Goal
-Make the Coach transcript pages in the Field Kit PDF easy to scan, chunk, and rehearse — instead of dense, intimidating prose.
+Rebuild the Coach transcript page as a **Beat Sheet** — what a rep actually wants when memorising a slide. Stop pretending it's a document. It's a script broken into bite-sized, self-contained beats they can rehearse one at a time.
 
-## What changes (all in `src/lib/fieldKitPdf.ts`, `renderSlideTranscriptPage`)
+## The mental model (think like a rep)
+A rep doesn't read the transcript top-to-bottom. They:
+1. Skim it once to get the shape of the argument
+2. Rehearse it in chunks until each chunk lands
+3. Glance down mid-call only to grab a phrase, a stat, or a question to ask
+4. Want exact words for the hard bits; a paraphrase is fine for the rest
 
-### 1. Add a "Read this in 60 seconds" TL;DR strip
-Above the transcript body, render a 3-bullet summary derived from the script:
-- **Core message** — first sentence of paragraph tagged "Core message" (or paragraph 1 fallback)
-- **Say it like this** — sentence from the matching cue (or first quoted phrase in the script)
-- **Bridge** — sentence from "Bridge to next" cue (or last sentence)
+The current page (chips + bold first sentence + dividers) is still document-shaped. The Beat Sheet flips it into rehearsal-shaped.
 
-Compact 3-column or stacked block with brand-tinted background, ~55pt tall. Lets the rep grok the slide before reading the full script.
+## Anatomy of a Beat
+Each beat is a self-contained card stacked vertically down the page:
 
-### 2. Restructure cues as visual section cards, not eyebrows
-Currently cues render as a tiny 7pt label above flowing prose. Upgrade to:
-- A left-aligned **chip** (rounded rect, brand-tinted fill, 8pt bold caps-free label)
-- Followed by the body paragraph in standard prose
-- A 6pt vertical gap between sections plus a faint hairline divider so each cue reads as a self-contained "beat"
+```text
+┌──────────────────────────────────────────────────────────┐
+│ 03   THE PAIN · ~25s · amber rail                        │
+│ ──────────────────────────────────────────────────────── │
+│ Intent · One line: why this beat exists.                 │
+│                                                          │
+│ ▸ SAY                                                    │
+│   "The verbatim words to say, with stats like 90%       │
+│   and product names like Comply365 highlighted          │
+│   so the eye catches them."                              │
+│                                                          │
+│ Watch for · One short coaching note. Pause cue if any.   │
+└──────────────────────────────────────────────────────────┘
+```
 
-Cue chips get color-coded by intent:
-- Why this matters / Core message → brand blue
-- The pain / Watch out for → amber
-- The value lever / Say it like this → emerald
-- Bridge to next / Delivery tip → muted slate
+Five fixed parts per beat — same order every time, so the rep's eye learns the rhythm:
+1. **Number + label + duration** in a coloured rail header (so they know where they are)
+2. **Intent** — one muted line: *why* this beat exists in the argument
+3. **SAY block** — the verbatim words, tinted background, larger type (10.5pt), stats/numbers/product names auto-bolded in ink
+4. **Watch for** — one line of coaching: objection, pause, pitfall, or bridge cue (only if present)
+5. Hairline gap to the next beat
 
-### 3. Bold the key phrase in each paragraph
-After splitting a paragraph into lines, detect the first quoted phrase (`"…"`) or the first em-dash clause and render it in **bold ink** inline. This gives the eye an anchor per paragraph without re-writing copy.
+## How beats are derived from the existing script
+No copy changes required. The script's existing cue prefixes drive the split:
+- `Why this matters:` / `Core message:` → **anchor** beats (brand blue rail)
+- `The pain:` / `Watch out for:` → **risk** beats (amber rail)
+- `The value lever:` / `Say it like this:` → **value** beats (emerald rail)
+- `Bridge to next:` / `Delivery tip:` → **bridge** beats (slate rail)
+- Untagged paragraphs become unlabelled beats with no header rail, just a number
 
-If no natural anchor exists, bold the first 4–6 words of the paragraph (sentence stem) — same effect as a lead-in.
+The first sentence after the cue becomes the **Intent** line. The remainder becomes the **SAY block**. If the paragraph contains a quoted phrase (`"…"`), that quoted phrase becomes the SAY block verbatim and the prose around it becomes Intent. `Watch out for` and `Delivery tip` paragraphs render their body as the **Watch for** line (no SAY block — they're coaching, not script).
 
-### 4. Replace big pull-quotes with a single "Money line" callout
-Drop the auto pull-quotes at paragraphs 3 and 7 (often arbitrary). Instead, pick **one** money line: the sentence from the "Say it like this" cue, or the longest quoted phrase in the script. Render once, near the middle of page 1, as a branded italic callout with a left brand bar. Skip if none found.
+Per-beat duration estimate = `Math.max(8, round(words / 2.5))` seconds at ~150 wpm. Shown in the rail header so the rep can pace.
 
-### 5. Tighter, more rhythmic typography
-- Body: 10.5pt / 15pt leading (was 10/14) — easier on the eye
-- Paragraph air: 12pt (was 10)
-- Measure: keep ~440pt column
-- First-line indent removed; rely on whitespace + cue chips for chunking
-- Add a thin numbered tick (`01`, `02`, …) in the left margin next to each cue section so reps can reference "section 3" while rehearsing
+## Auto-highlighting inside the SAY block
+The SAY block draws as wrapped lines, but specific tokens render in **bold ink** instead of slate so they jump off the page:
+- Percentages and ratios: `90%`, `~35%`, `2.5×`
+- Whole-number stats: `$25–35B`, `40 hours`
+- Product/brand names: `Comply365`, `SafetyManager365`, `ContentManager365`, `DTOP`, `Insights & Intelligence`, `Regulation Management`, `Unified Mobile`
+- Quoted phrases: anything inside `"…"` or `"…"`
 
-### 6. Footer micro-coaching
-Replace the static "Read once to memorise…" with a rotating one-line tip per page:
-- Page 1: "Read aloud once. Mark the breath points with a slash."
-- Page 2+: "Record yourself. Play back at 1.25× — does it still land?"
+Implementation: split the SAY string into tokens, render token-by-token with `getTextWidth` for x-advance, switching font weight on matches. Line-wrap manually (track current x, break when next token would exceed `colW`).
 
-### 7. Header meta upgrade
-Add a small "Difficulty / pacing" indicator next to `~X min spoken · Y words`:
-- ≤120 wpm target → "Pace: deliberate"
-- 120–160 → "Pace: conversational"
-- >160 → "Pace: brisk — slow down"
-Computed from word count vs. estimated minutes.
+## Page-level structure
+- **Header** stays as-is (week · slide · "Coach transcript · 2 of 2"), but the meta line becomes: `~X min · Y words · N beats · Pace: conversational`.
+- **Drop the TL;DR strip and money line** — they were trying to solve the same problem the Beat Sheet now solves natively. The first 1–2 beats *are* the TL;DR.
+- **Beats stack** down the page in script order. Each beat is its own visual block, never split mid-block across pages — if it won't fit, push to the next page.
+- **Footer** keeps the rotating coaching tip but adds the beat range: `Beats 1–4 of 8` on page 1, `Beats 5–8` on continuation.
+
+## Typography & rhythm
+- Intent: 9pt italic, muted
+- SAY block: 10.5pt / 15pt leading, slate body with bold-ink highlights, on a `#F5F8FD` tint with a 3pt left rail in the beat's accent colour
+- Watch for: 8.5pt, amber if risk-derived, muted otherwise, with a small `!` glyph
+- Rail header: 7pt bold caps-free label + 7pt muted duration on the right
+- Beat-to-beat gap: 14pt
+
+## What gets deleted from the current code
+Inside `renderSlideTranscriptPage` in `src/lib/fieldKitPdf.ts`:
+- `drawTldr` and its parsed/coreP/sayP/bridgeP scaffolding
+- `drawMoneyLine` and the `moneyLine` regex extraction
+- `drawChip` (replaced by rail header inside each beat)
+- `renderParagraph` with its first-sentence-bold logic
+- The numbered tick in the left margin (number now lives in the rail header)
+
+## What gets added
+- `type Beat = { n; label?; group?; accent; intent; say?; watchFor?; durationSec }`
+- `parseBeats(paragraphs): Beat[]` — applies the cue regexes, slices intent/say/watchFor as described
+- `HIGHLIGHT_TERMS` array (product names) + regexes for stats/percentages
+- `drawHighlightedLine(tokens, x, y, maxW)` — token-walker that switches weight per token and returns next y
+- `drawBeat(beat): height` — renders one self-contained block, measures first so we can page-break cleanly
+- `measureBeat(beat): number` — pure measurement pass for the page-break decision
 
 ## Out of scope
-- Study-sheet (page 1) layout — already refined last pass
-- Narration audio, slide content, or `salesEnablementNarration.ts` copy
-- Field-kit cover, contents page, week dividers in the PDF
+- Study sheet (page 1 of each slide pair) — already good
+- Narration copy, cover, contents, week dividers
+- Adding new highlight terms beyond the list above (extend later if needed)
 
 ## Files touched
-- `src/lib/fieldKitPdf.ts` only (function `renderSlideTranscriptPage` + a couple of small helpers nearby)
+- `src/lib/fieldKitPdf.ts` only
 
 ## QA
-After implementation: regenerate the kit, convert pages 4, 6, 8 (transcript pages) to images at 150dpi, and check: chip alignment, money-line placement, no orphaned cue chips at page bottom, no clipped text, footer tip rotation works.
+Regenerate the kit, rasterise pages 4, 6, 8, 10 at 150dpi, and check:
+- No beat is split across a page break
+- Highlights actually hit on a slide that mentions `Comply365`, `90%`, `~35%`
+- A slide whose script has no cue prefixes still renders cleanly as unlabelled beats
+- Beat duration sums roughly match the header `~X min` value
+- Continuation page footer shows correct beat range
