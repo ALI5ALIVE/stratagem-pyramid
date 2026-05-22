@@ -1219,3 +1219,467 @@ export const downloadWeekFieldKit = (week: CoachCardWeek) => {
   const pdf = buildWeekFieldKitPdf(week);
   pdf.save(`Comply365-Week-${week.number}-${week.title.replace(/\s+/g, "-")}-Field-Kit.pdf`);
 };
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Portrait editorial slide page — one slide per page, six blocks, no fills.
+// Top: meta line. Title rule. Outcome paragraph. Then 60/40 split:
+//   LEFT  — Core idea, three numbered teach beats, pull-quote (Say it like this)
+//   RIGHT — Discovery wedge, two objections (Q&A typography)
+// Bottom: hairline + connects-to / banned-here footer.
+// Palette restricted to ink, brand, slate, muted, hairline.
+// ─────────────────────────────────────────────────────────────────────────────
+function renderSlidePagePortrait(
+  pdf: jsPDF,
+  opts: {
+    week: CoachCardWeek;
+    slideIndex: number;
+    slideCount: number;
+    title: string;
+    learning: SlideLearning;
+    questions: string[];
+    objections: Array<{ pushback: string; response: string }>;
+    meta: SlideMeta;
+  },
+) {
+  const { week, slideIndex, slideCount, title, learning, questions, objections, meta } = opts;
+
+  pdf.addPage("a4", "portrait");
+  const pageW = pdf.internal.pageSize.getWidth();
+  const pageH = pdf.internal.pageSize.getHeight();
+  const margin = 56;
+  const contentW = pageW - margin * 2;
+
+  // ── Header line ────────────────────────────────────────────────────────────
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7.5);
+  setText(pdf, C.subtle);
+  pdf.text("COMPLY365 · SALES ENABLEMENT ACADEMY", margin, 34);
+
+  const headRight: string[] = [];
+  headRight.push(`Week ${week.number} · Slide ${String(slideIndex + 1).padStart(2, "0")} of ${slideCount}`);
+  if (meta.dtop) headRight.push(`DTOP · ${meta.dtop}`);
+  if (meta.persona?.length) headRight.push(meta.persona.join(" · "));
+  pdf.setFont("helvetica", "normal");
+  setText(pdf, C.muted);
+  pdf.text(sanitize(headRight.join("   ·   ")), pageW - margin, 34, { align: "right" });
+
+  // ── Numeral-led title ──────────────────────────────────────────────────────
+  let y = 78;
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(34);
+  setText(pdf, C.brand);
+  const numStr = String(slideIndex + 1).padStart(2, "0");
+  pdf.text(numStr, margin, y);
+  const numW = pdf.getTextWidth(numStr);
+
+  pdf.setFont("helvetica", "normal");
+  pdf.setFontSize(22);
+  setText(pdf, [200, 215, 235]);
+  pdf.text("/", margin + numW + 10, y - 4);
+
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(18);
+  setText(pdf, C.ink);
+  const titleX = margin + numW + 28;
+  const titleLines = clipLines(pdf.splitTextToSize(title.toUpperCase(), contentW - (titleX - margin)), 2);
+  pdf.text(titleLines, titleX, y - 2, { lineHeightFactor: 1.15 });
+  y += Math.max(0, (titleLines.length - 1) * 22) + 14;
+
+  setStroke(pdf, C.ink);
+  pdf.setLineWidth(0.7);
+  pdf.line(margin, y, margin + 32, y);
+  y += 28;
+
+  // ── Outcome — full width opening paragraph ─────────────────────────────────
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7);
+  setText(pdf, C.muted);
+  pdf.text("OUTCOME · WHAT THE REP CAN DO AFTER THIS SLIDE", margin, y);
+  y += 14;
+  pdf.setFont("helvetica", "normal");
+  pdf.setFontSize(12);
+  setText(pdf, C.slate);
+  const oLines = pdf.splitTextToSize(sanitize(learning.outcome), contentW);
+  pdf.text(oLines, margin, y, { lineHeightFactor: 1.35 });
+  y += oLines.length * 15 + 22;
+
+  // Section rule
+  setStroke(pdf, C.hairline);
+  pdf.setLineWidth(0.5);
+  pdf.line(margin, y, pageW - margin, y);
+  y += 24;
+
+  // ── Two columns 60/40 ──────────────────────────────────────────────────────
+  const colGap = 30;
+  const leftW = (contentW - colGap) * 0.6;
+  const rightX = margin + leftW + colGap;
+  const rightW = contentW - leftW - colGap;
+  const colTopY = y;
+  const footerY = pageH - 56;
+  const colBottomY = footerY - 20;
+
+  // ── LEFT: Core idea → 3 beats → Say it like this ───────────────────────────
+  let ly = colTopY;
+
+  // Core idea
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7);
+  setText(pdf, C.brand);
+  pdf.text("THE CORE IDEA", margin, ly);
+  ly += 14;
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(13);
+  setText(pdf, C.ink);
+  const coreLines = pdf.splitTextToSize(sanitize(learning.coreIdea), leftW);
+  pdf.text(coreLines, margin, ly, { lineHeightFactor: 1.3 });
+  ly += coreLines.length * 16 + 24;
+
+  // Teach beats (Hook / Frame / Proof) as numbered prose
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7);
+  setText(pdf, C.muted);
+  pdf.text("HOW TO TEACH IT  ·  HOOK · FRAME · PROOF", margin, ly);
+  ly += 16;
+
+  learning.teachBeats.forEach((b, i) => {
+    const numStrB = String(i + 1).padStart(2, "0");
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(10);
+    setText(pdf, C.brand);
+    pdf.text(numStrB, margin, ly);
+
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(9);
+    setText(pdf, C.ink);
+    const labelText = b.label.toUpperCase();
+    pdf.text(labelText, margin + 22, ly);
+
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(10);
+    setText(pdf, C.slate);
+    const bodyLines = pdf.splitTextToSize(sanitize(b.text), leftW - 22);
+    pdf.text(bodyLines, margin + 22, ly + 14, { lineHeightFactor: 1.35 });
+    ly += 14 + bodyLines.length * 13 + 14;
+  });
+
+  ly += 8;
+
+  // Say it like this — pull quote with left rule, no fill
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7);
+  setText(pdf, C.muted);
+  pdf.text("SAY IT LIKE THIS", margin, ly);
+  ly += 16;
+
+  const quoteX = margin + 10;
+  const quoteW = leftW - 10;
+  pdf.setFont("helvetica", "italic");
+  pdf.setFontSize(11);
+  setText(pdf, C.ink);
+  const qLines = pdf.splitTextToSize(`"${sanitize(learning.sayLikeThis)}"`, quoteW);
+  const quoteH = qLines.length * 14 + 6;
+  setFill(pdf, C.brand);
+  pdf.rect(margin, ly - 10, 2, quoteH, "F");
+  pdf.text(qLines, quoteX, ly, { lineHeightFactor: 1.4 });
+
+  // ── RIGHT: Discovery wedge → Objections ────────────────────────────────────
+  let ry = colTopY;
+
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7);
+  setText(pdf, C.brand);
+  pdf.text("DISCOVERY WEDGE", rightX, ry);
+  ry += 14;
+  const wedge = questions[0] ? sanitize(questions[0]) : "";
+  if (wedge) {
+    pdf.setFont("helvetica", "italic");
+    pdf.setFontSize(11);
+    setText(pdf, C.ink);
+    const wLines = pdf.splitTextToSize(`"${wedge}"`, rightW);
+    pdf.text(wLines, rightX, ry, { lineHeightFactor: 1.35 });
+    ry += wLines.length * 14 + 6;
+  }
+
+  if (questions[1]) {
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(9);
+    setText(pdf, C.muted);
+    const altLabel = "Follow-up: ";
+    pdf.text(altLabel, rightX, ry + 2);
+    const altW = pdf.getTextWidth(altLabel);
+    pdf.setFont("helvetica", "italic");
+    setText(pdf, C.slate);
+    const altLines = pdf.splitTextToSize(sanitize(questions[1]), rightW - altW);
+    pdf.text(altLines, rightX + altW, ry + 2, { lineHeightFactor: 1.35 });
+    ry += altLines.length * 12 + 10;
+  }
+
+  ry += 14;
+  setStroke(pdf, C.hairline);
+  pdf.setLineWidth(0.5);
+  pdf.line(rightX, ry, rightX + rightW, ry);
+  ry += 16;
+
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7);
+  setText(pdf, C.muted);
+  pdf.text("IF THEY PUSH BACK", rightX, ry);
+  ry += 16;
+
+  objections.slice(0, 2).forEach((o, i) => {
+    if (i > 0) {
+      setStroke(pdf, C.hairline);
+      pdf.setLineWidth(0.3);
+      pdf.line(rightX, ry, rightX + rightW, ry);
+      ry += 12;
+    }
+    // Pushback in bold
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(10);
+    setText(pdf, C.ink);
+    const pLines = pdf.splitTextToSize(sanitize(o.pushback), rightW);
+    pdf.text(pLines, rightX, ry, { lineHeightFactor: 1.3 });
+    ry += pLines.length * 13 + 6;
+
+    // Response with chevron prefix
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(10);
+    setText(pdf, C.brand);
+    pdf.text(">", rightX, ry);
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(10);
+    setText(pdf, C.slate);
+    const rLines = pdf.splitTextToSize(sanitize(o.response), rightW - 12);
+    pdf.text(rLines, rightX + 12, ry, { lineHeightFactor: 1.35 });
+    ry += rLines.length * 13 + 14;
+  });
+
+  // ── Footer ─────────────────────────────────────────────────────────────────
+  setStroke(pdf, C.hairline);
+  pdf.setLineWidth(0.5);
+  pdf.line(margin, footerY, pageW - margin, footerY);
+
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7);
+  setText(pdf, C.muted);
+  pdf.text("CONNECTS TO", margin, footerY + 14);
+  pdf.setFont("helvetica", "normal");
+  setText(pdf, C.slate);
+  const ctx = meta.connectsTo?.length ? sanitize(meta.connectsTo.join("  ·  ")) : "—";
+  pdf.text(
+    clipLines(pdf.splitTextToSize(ctx, contentW * 0.5 - 60), 1),
+    margin + 62,
+    footerY + 14,
+  );
+
+  pdf.setFont("helvetica", "bold");
+  setText(pdf, C.muted);
+  const bX = margin + contentW * 0.55;
+  pdf.text("BANNED HERE", bX, footerY + 14);
+  pdf.setFont("helvetica", "normal");
+  setText(pdf, C.slate);
+  const banned = meta.bannedHere?.length ? sanitize(meta.bannedHere.join("  ·  ")) : "—";
+  pdf.text(
+    clipLines(pdf.splitTextToSize(banned, contentW * 0.45 - 60), 1),
+    bX + 62,
+    footerY + 14,
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Coach's Sidebar — per-week appendix collecting "watch out" + "check yourself"
+// for every slide in one scannable checklist.
+// ─────────────────────────────────────────────────────────────────────────────
+function renderCoachSidebarPage(pdf: jsPDF, week: CoachCardWeek) {
+  pdf.addPage("a4", "portrait");
+  const pageW = pdf.internal.pageSize.getWidth();
+  const pageH = pdf.internal.pageSize.getHeight();
+  const margin = 56;
+  const contentW = pageW - margin * 2;
+
+  // Header
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7.5);
+  setText(pdf, C.subtle);
+  pdf.text("COMPLY365 · SALES ENABLEMENT ACADEMY", margin, 34);
+  pdf.setFont("helvetica", "normal");
+  setText(pdf, C.muted);
+  pdf.text(`Week ${week.number} · Coach's Sidebar`, pageW - margin, 34, { align: "right" });
+
+  let y = 78;
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(24);
+  setText(pdf, C.ink);
+  pdf.text("Coach's sidebar", margin, y);
+  y += 6;
+  setFill(pdf, C.brand);
+  pdf.rect(margin, y, 36, 3, "F");
+  y += 22;
+
+  pdf.setFont("helvetica", "normal");
+  pdf.setFontSize(10);
+  setText(pdf, C.muted);
+  const intro = "One pass before the next call. For every slide, the mistake to avoid — and the question to gate moving on.";
+  const introLines = pdf.splitTextToSize(intro, contentW);
+  pdf.text(introLines, margin, y, { lineHeightFactor: 1.4 });
+  y += introLines.length * 13 + 18;
+
+  week.slideIds.forEach((slideId, idx) => {
+    const narration = getSalesEnablementNarration(slideId);
+    const title = sanitize(narration?.title ?? slideId);
+    const learning = buildSlideLearning(slideId, week.id);
+    const mistake = sanitize(buildMistake(slideId, week.id));
+    const check = sanitize(learning.checkYourself);
+
+    // Title row
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(8);
+    setText(pdf, C.subtle);
+    pdf.text(String(idx + 1).padStart(2, "0"), margin, y);
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(11);
+    setText(pdf, C.ink);
+    const tLines = clipLines(pdf.splitTextToSize(title, contentW - 28), 1);
+    pdf.text(tLines, margin + 22, y);
+    y += 14;
+
+    // Mistake
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(7);
+    setText(pdf, C.rose);
+    pdf.text("AVOID", margin + 22, y);
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(9.5);
+    setText(pdf, C.slate);
+    const mLines = clipLines(pdf.splitTextToSize(mistake, contentW - 22 - 40), 2);
+    pdf.text(mLines, margin + 22 + 40, y, { lineHeightFactor: 1.35 });
+    y += Math.max(13, mLines.length * 12) + 4;
+
+    // Check
+    pdf.setDrawColor(91, 103, 118);
+    pdf.setLineWidth(0.6);
+    pdf.rect(margin + 22, y - 8, 9, 9, "S");
+    pdf.setFont("helvetica", "italic");
+    pdf.setFontSize(9.5);
+    setText(pdf, C.ink);
+    const cLines = clipLines(pdf.splitTextToSize(check, contentW - 22 - 16), 2);
+    pdf.text(cLines, margin + 22 + 16, y - 1, { lineHeightFactor: 1.35 });
+    y += Math.max(13, cLines.length * 12) + 10;
+
+    setStroke(pdf, C.hairline);
+    pdf.setLineWidth(0.4);
+    pdf.line(margin, y, pageW - margin, y);
+    y += 12;
+
+    if (y > pageH - 90 && idx < week.slideIds.length - 1) {
+      pdf.addPage("a4", "portrait");
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(7.5);
+      setText(pdf, C.subtle);
+      pdf.text("COMPLY365 · SALES ENABLEMENT ACADEMY", margin, 34);
+      pdf.setFont("helvetica", "normal");
+      setText(pdf, C.muted);
+      pdf.text(`Week ${week.number} · Coach's Sidebar (cont.)`, pageW - margin, 34, { align: "right" });
+      y = 70;
+    }
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Whiteboard & Proof Reference — per-week appendix collecting the whiteboard
+// recipe and proof points for every slide in one table.
+// ─────────────────────────────────────────────────────────────────────────────
+function renderWhiteboardAppendixPage(pdf: jsPDF, week: CoachCardWeek) {
+  pdf.addPage("a4", "portrait");
+  const pageW = pdf.internal.pageSize.getWidth();
+  const pageH = pdf.internal.pageSize.getHeight();
+  const margin = 56;
+  const contentW = pageW - margin * 2;
+
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7.5);
+  setText(pdf, C.subtle);
+  pdf.text("COMPLY365 · SALES ENABLEMENT ACADEMY", margin, 34);
+  pdf.setFont("helvetica", "normal");
+  setText(pdf, C.muted);
+  pdf.text(`Week ${week.number} · Whiteboard & Proof Reference`, pageW - margin, 34, { align: "right" });
+
+  let y = 78;
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(24);
+  setText(pdf, C.ink);
+  pdf.text("Whiteboard & proof", margin, y);
+  y += 6;
+  setFill(pdf, C.brand);
+  pdf.rect(margin, y, 36, 3, "F");
+  y += 22;
+
+  pdf.setFont("helvetica", "normal");
+  pdf.setFontSize(10);
+  setText(pdf, C.muted);
+  const intro = "What to draw, where to point, and the defensible numbers to drop. One row per slide.";
+  const iLines = pdf.splitTextToSize(intro, contentW);
+  pdf.text(iLines, margin, y, { lineHeightFactor: 1.4 });
+  y += iLines.length * 13 + 18;
+
+  week.slideIds.forEach((slideId, idx) => {
+    const narration = getSalesEnablementNarration(slideId);
+    const title = sanitize(narration?.title ?? slideId);
+    const whiteboard = sanitize(buildWhiteboard(slideId, week.id));
+    const proofs = buildProofs(slideId, week.id, idx).map(sanitize);
+
+    // Title row
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(8);
+    setText(pdf, C.subtle);
+    pdf.text(String(idx + 1).padStart(2, "0"), margin, y);
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(11);
+    setText(pdf, C.ink);
+    const tLines = clipLines(pdf.splitTextToSize(title, contentW - 28), 1);
+    pdf.text(tLines, margin + 22, y);
+    y += 14;
+
+    // Whiteboard
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(7);
+    setText(pdf, C.brand);
+    pdf.text("DRAW", margin + 22, y);
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(9.5);
+    setText(pdf, C.slate);
+    const wLines = clipLines(pdf.splitTextToSize(whiteboard, contentW - 22 - 40), 3);
+    pdf.text(wLines, margin + 22 + 40, y, { lineHeightFactor: 1.35 });
+    y += Math.max(13, wLines.length * 12) + 6;
+
+    // Proofs
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(7);
+    setText(pdf, C.emerald);
+    pdf.text("PROOF", margin + 22, y);
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(9.5);
+    setText(pdf, C.slate);
+    const proofText = proofs.join("   ·   ");
+    const pLines = clipLines(pdf.splitTextToSize(proofText, contentW - 22 - 40), 3);
+    pdf.text(pLines, margin + 22 + 40, y, { lineHeightFactor: 1.35 });
+    y += Math.max(13, pLines.length * 12) + 10;
+
+    setStroke(pdf, C.hairline);
+    pdf.setLineWidth(0.4);
+    pdf.line(margin, y, pageW - margin, y);
+    y += 12;
+
+    if (y > pageH - 100 && idx < week.slideIds.length - 1) {
+      pdf.addPage("a4", "portrait");
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(7.5);
+      setText(pdf, C.subtle);
+      pdf.text("COMPLY365 · SALES ENABLEMENT ACADEMY", margin, 34);
+      pdf.setFont("helvetica", "normal");
+      setText(pdf, C.muted);
+      pdf.text(`Week ${week.number} · Whiteboard & Proof (cont.)`, pageW - margin, 34, { align: "right" });
+      y = 70;
+    }
+  });
+}
