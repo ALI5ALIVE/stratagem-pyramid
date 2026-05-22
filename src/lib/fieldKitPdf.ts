@@ -669,45 +669,78 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
   pdf.text(introLines, margin, y);
   y += introLines.length * 13 + 18;
 
+  // 2-column scannable tile grid
+  const gutter = 14;
+  const tileW = (contentW - gutter) / 2;
+  const tileH = 56;
+  const tileGapY = 10;
+  let col = 0;
+  let rowY = y;
+
   week.slideIds.forEach((slideId, idx) => {
     const cc = salesEnablementCoachCards[slideId];
     const narration = getSalesEnablementNarration(slideId);
     if (!cc) return;
-    const title = narration?.title ?? slideId;
+    const slideTitle = sanitize(narration?.title ?? slideId);
+    const studyNote = buildStudyNote(slideId, week.id, narration?.script);
+    const slideMeta = buildMeta(slideId, week.id);
+    const takeaway = sanitize(studyNote.inOneSentence || cc.remember || "");
 
-    const rowH = 38;
-    if (y + rowH > pageH - 60) {
+    if (rowY + tileH > pageH - 60) {
       drawFooter();
       pdf.addPage();
       drawHeader(`Week ${week.number} · ${week.title}`);
-      y = 70;
+      rowY = 70;
+      col = 0;
     }
 
-    // Index
+    const tx = margin + col * (tileW + gutter);
+    // Left brand rule
+    setFill(pdf, C.brand);
+    pdf.rect(tx, rowY, 2, tileH, "F");
+
+    // Index + title row
     pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(9);
+    pdf.setFontSize(8);
     setText(pdf, C.subtle);
-    pdf.text(String(idx + 1).padStart(2, "0"), margin, y + 4);
+    pdf.text(String(idx + 1).padStart(2, "0"), tx + 10, rowY + 12);
 
-    // Title
     pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(11);
+    pdf.setFontSize(10.5);
     setText(pdf, C.ink);
-    const titleLines = pdf.splitTextToSize(title, contentW - 36);
-    pdf.text(titleLines, margin + 28, y + 4);
+    const titleLines = clipLines(
+      pdf.splitTextToSize(slideTitle, tileW - 36),
+      2,
+    );
+    pdf.text(titleLines, tx + 26, rowY + 12, { lineHeightFactor: 1.15 });
 
-    // Remember (one-liner)
+    // One-line takeaway
     pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(9.5);
+    pdf.setFontSize(8.5);
     setText(pdf, C.muted);
-    const remLines = pdf.splitTextToSize(cc.remember, contentW - 36);
-    pdf.text(remLines.slice(0, 2), margin + 28, y + 4 + titleLines.length * 13);
+    const takeLines = clipLines(
+      pdf.splitTextToSize(takeaway, tileW - 28),
+      2,
+    );
+    pdf.text(takeLines, tx + 10, rowY + 12 + titleLines.length * 12 + 6);
 
-    const used = titleLines.length * 13 + Math.min(remLines.length, 2) * 12 + 12;
-    setStroke(pdf, C.hairline);
-    pdf.setLineWidth(0.5);
-    pdf.line(margin + 28, y + used, pageW - margin, y + used);
-    y += used + 8;
+    // DTOP chip
+    if (slideMeta.dtop) {
+      const chip = sanitize(slideMeta.dtop);
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(6.5);
+      const cw = pdf.getTextWidth(chip) + 10;
+      setFill(pdf, C.brand);
+      pdf.roundedRect(tx + tileW - cw - 4, rowY + 4, cw, 10, 2, 2, "F");
+      setText(pdf, C.white);
+      pdf.text(chip, tx + tileW - cw / 2 - 4, rowY + 11, { align: "center" });
+    }
+
+    col += 1;
+    if (col >= 2) {
+      col = 0;
+      rowY += tileH + tileGapY;
+    }
   });
 
   drawFooter();
