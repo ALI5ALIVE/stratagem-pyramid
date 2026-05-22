@@ -1167,9 +1167,6 @@ function drawAccentBlock(
   pdf.text(lines, x + 10, y + 26, { lineHeightFactor: 1.3 });
 }
 
-function drawMetaStrip(pdf: jsPDF, x: number, y: number, w: number, meta: SlideMeta) {
-}
-
 // ─── Learning-outcome column renderer ──────────────────────────────────────
 function renderLearningColumn(
   pdf: jsPDF,
