@@ -1231,9 +1231,48 @@ function renderLearningColumn(
   pdf.rect(x, y + 3, 18, 1.5, "F");
   y += 14;
 
+  // 4 + 5 are anchored to bottom; reserve their space now so beats height-fit
+  const wbH = 56;
+  const sayH = 50;
+  const beatsBottom = yBottom - wbH - 10 - sayH - 10;
+
   const indent = 18;
   const beatGap = 8;
+  const lineH = 11;
+
+  // Pre-measure each beat at progressively tighter wrap caps until the
+  // stack fits between y and beatsBottom. Always keep all 3 beats; reduce
+  // wrap lines first, then drop characters via clipLines truncation.
+  pdf.setFont("helvetica", "normal");
+  pdf.setFontSize(9);
+  const measureBeat = (b: { label: string; text: string }, wrapCap: number) => {
+    const labelW = (() => {
+      pdf.setFont("helvetica", "bold");
+      const wL = pdf.getTextWidth(b.label);
+      pdf.setFont("helvetica", "normal");
+      return wL;
+    })();
+    const firstSlotW = Math.max(40, w - indent - labelW - 5);
+    const firstFit = pdf.splitTextToSize(b.text, firstSlotW);
+    const firstChunk = firstFit[0] ?? "";
+    const remaining = b.text.slice(firstChunk.length).trim();
+    const wrapLines = remaining
+      ? clipLines(pdf.splitTextToSize(remaining, w - indent), wrapCap)
+      : [];
+    return { labelW, firstChunk, wrapLines };
+  };
+  let wrapCap = 2;
+  let prepared = L.beats.map((b) => measureBeat(b, wrapCap));
+  const stackH = (p: typeof prepared) =>
+    p.reduce((acc, m) => acc + lineH + m.wrapLines.length * lineH, 0) +
+    (p.length - 1) * beatGap;
+  while (wrapCap > 0 && y + stackH(prepared) > beatsBottom) {
+    wrapCap -= 1;
+    prepared = L.beats.map((b) => measureBeat(b, wrapCap));
+  }
+
   L.beats.forEach((b, i) => {
+    const m = prepared[i];
     // Number chip
     setFill(pdf, [0, 102, 255]);
     pdf.circle(x + 6, y + 3, 6, "F");
@@ -1241,31 +1280,21 @@ function renderLearningColumn(
     pdf.setFontSize(7.5);
     pdf.setTextColor(255, 255, 255);
     pdf.text(String(i + 1), x + 6, y + 5.5, { align: "center" });
-    // Label (bold) + body (normal) — drawn separately to avoid em-dash splits
+    // Label (bold)
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(9);
     pdf.setTextColor(11, 18, 32);
     pdf.text(b.label, x + indent, y + 4);
-    const labelW = pdf.getTextWidth(b.label);
+    // First chunk of body on the same line
     pdf.setFont("helvetica", "normal");
     pdf.setFontSize(9);
     pdf.setTextColor(31, 41, 55);
-    // first line slot after label; subsequent wrap aligns to indent
-    const firstSlotW = w - indent - labelW - 8;
-    const allLines = pdf.splitTextToSize(b.text, w - indent);
-    // Try to fit first chunk after the label
-    const firstFit = pdf.splitTextToSize(b.text, firstSlotW);
-    const firstChunk = firstFit[0] ?? "";
-    pdf.text(firstChunk, x + indent + labelW + 5, y + 4);
-    // Remaining text wraps under, aligned to indent, max 2 wrapped lines
-    const remaining = b.text.slice(firstChunk.length).trim();
-    let wrapH = 0;
-    if (remaining) {
-      const wrapLines = clipLines(pdf.splitTextToSize(remaining, w - indent), 2);
-      pdf.text(wrapLines, x + indent, y + 4 + 11, { lineHeightFactor: 1.3 });
-      wrapH = wrapLines.length * 11;
+    pdf.text(m.firstChunk, x + indent + m.labelW + 5, y + 4);
+    // Wrap lines aligned to indent
+    if (m.wrapLines.length) {
+      pdf.text(m.wrapLines, x + indent, y + 4 + lineH, { lineHeightFactor: 1.3 });
     }
-    y += 4 + 11 + wrapH + beatGap;
+    y += 4 + lineH + m.wrapLines.length * lineH + beatGap;
   });
 
   // 4. SAY IT LIKE THIS — emerald accent block (anchored above whiteboard)
