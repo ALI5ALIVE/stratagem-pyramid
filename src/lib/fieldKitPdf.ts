@@ -24,6 +24,8 @@ import {
   buildSlideLearning,
   buildSlideLearningFromCoachCard,
   type SlideLearning,
+  buildSlideOnePager,
+  type SlideOnePager,
 } from "@/data/salesEnablementLearningOutcomes";
 
 // ─── Glyph sanitiser ─────────────────────────────────────────────────────────
