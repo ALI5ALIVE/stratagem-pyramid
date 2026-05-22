@@ -2010,12 +2010,12 @@ function renderSlideTranscriptPage(
       }
       h += 4;
     }
-    // listen for
+    // listen for: divider + label row + body lines
     if (b.listenFor) {
       pdf.setFont("helvetica", "normal");
       pdf.setFontSize(listenSize);
-      const wLines = pdf.splitTextToSize(b.listenFor, bodyW() - cardPadX * 2 - 12);
-      h += 8 + wLines.length * listenLeading;
+      const wLines = pdf.splitTextToSize(b.listenFor, bodyW() - cardPadX * 2);
+      h += 12 + listenLeading + wLines.length * listenLeading;
     }
     h += cardPadY; // bottom padding
     // ensure the rail content fits too
