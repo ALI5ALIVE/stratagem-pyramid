@@ -300,6 +300,70 @@ const buildObjections = (slideId: string, weekId: CoachCardWeek["id"]): SlideObj
   return WEEK_OBJECTION_FALLBACK[weekId].slice(0, 2);
 };
 
+/** Rotate fallback pools so consecutive slides don't show identical content. */
+const rotatePool = <T,>(pool: T[], idx: number, take: number): T[] => {
+  if (!pool.length) return [];
+  const out: T[] = [];
+  for (let i = 0; i < take && i < pool.length; i++) {
+    out.push(pool[(idx + i) % pool.length]);
+  }
+  return out;
+};
+
+const buildObjectionsRotated = (
+  slideId: string,
+  weekId: CoachCardWeek["id"],
+  idx: number,
+): SlideObjection[] => {
+  const curated = SLIDE_OBJECTIONS[slideId];
+  if (curated && curated.length) return curated.slice(0, 2);
+  return rotatePool(WEEK_OBJECTION_FALLBACK[weekId], idx, 2);
+};
+
+const buildDiscoveryQuestionsRotated = (
+  script: string | undefined,
+  slideId: string,
+  weekId: CoachCardWeek["id"],
+  idx: number,
+): string[] => {
+  const fromScript: string[] = [];
+  if (script) {
+    const qMatch = script.match(/['"]([^'".?]{15,140}\?)['"]/g);
+    if (qMatch) qMatch.forEach((q) => fromScript.push(q.replace(/^['"]|['"]$/g, "").trim()));
+  }
+  const curated = SLIDE_DISCOVERY[slideId] ?? [];
+  const merged: string[] = [];
+  const seen = new Set<string>();
+  [...curated, ...fromScript].forEach((q) => {
+    const norm = q.toLowerCase().replace(/[^a-z0-9? ]/g, "").trim();
+    if (!seen.has(norm) && q.length <= 160) {
+      seen.add(norm);
+      merged.push(q);
+    }
+  });
+  if (merged.length === 0) merged.push(...rotatePool(WEEK_DISCOVERY_FALLBACK[weekId], idx, 2));
+  return merged.slice(0, 3);
+};
+
+const buildProofs = (slideId: string, weekId: CoachCardWeek["id"], idx: number): string[] => {
+  const curated = SLIDE_PROOFS[slideId];
+  if (curated && curated.length) return curated.slice(0, 3);
+  const pools = WEEK_PROOF_FALLBACK[weekId];
+  return pools[idx % pools.length];
+};
+
+const buildWhiteboard = (slideId: string, weekId: CoachCardWeek["id"]): string => {
+  return SLIDE_WHITEBOARD[slideId] ?? WEEK_WHITEBOARD_FALLBACK[weekId];
+};
+
+const buildMistake = (slideId: string, weekId: CoachCardWeek["id"]): string => {
+  return SLIDE_MISTAKE[slideId] ?? WEEK_MISTAKE_FALLBACK[weekId];
+};
+
+const buildMeta = (slideId: string, weekId: CoachCardWeek["id"]): SlideMeta => {
+  return SLIDE_META[slideId] ?? WEEK_META_FALLBACK[weekId];
+};
+
 // ─── PDF Builder ─────────────────────────────────────────────────────────────
 export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
   const pdf = new jsPDF({ unit: "pt", format: "a4" });
