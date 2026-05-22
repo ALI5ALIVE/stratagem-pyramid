@@ -575,9 +575,9 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
   pdf.text("HOW TO USE THIS KIT", cardX + 20, cardY + 26);
   let oy = cardY + 50;
   const usageGuide = [
-    "One slide per page. Each page is a self-contained study sheet — read it cold and you can walk the slide without the audio.",
-    "Top half: the one-sentence takeaway, what's on the slide, why a buyer cares, and the ideas you must own.",
-    "Bottom half: key terms, defensible facts, the watch-out to avoid, what this connects to, and three self-test questions.",
+    "Every slide gets two pages: a one-page study sheet, then the full coach transcript verbatim for memorisation and self-recording.",
+    "Study sheet — left rail: takeaway, why a buyer cares, watch-out, what this connects to. Right column: what's on the slide, ideas you must own, terms, facts.",
+    "Transcript page — read it once before you record yourself, then close the kit. Never read the transcript live on a customer call.",
   ];
   usageGuide.forEach((o, i) => {
     // Number chip
