@@ -517,12 +517,20 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
 
   const stampPageNumbers = () => {
     const total = pdf.getNumberOfPages();
+    const chipText = (i: number) => `W${week.number} · ${i} / ${total}`;
     for (let i = 1; i <= total; i++) {
       pdf.setPage(i);
-      pdf.setFont("helvetica", "normal");
+      pdf.setFont("helvetica", "bold");
       pdf.setFontSize(7.5);
-      setText(pdf, C.subtle);
-      pdf.text(`${i} / ${total}`, pageW / 2, pageH - 18, { align: "center" });
+      const txt = chipText(i);
+      const w = pdf.getTextWidth(txt) + 14;
+      const h = 14;
+      const cx = pageW / 2 - w / 2;
+      const cy = pageH - 24;
+      setFill(pdf, C.brand);
+      pdf.roundedRect(cx, cy, w, h, h / 2, h / 2, "F");
+      setText(pdf, C.white);
+      pdf.text(txt, pageW / 2, cy + 9.5, { align: "center" });
     }
   };
 
