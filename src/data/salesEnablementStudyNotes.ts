@@ -1193,9 +1193,9 @@ export const STUDY_NOTES: Record<string, SlideOnePager> = {
 
   "se-discovery-to-close": {
     inOneSentence:
-      "Three words, one motion: Discover, Walk, Close. Their words become your walkthrough script; the next step is the Strategy & Vision Session.",
+      "Three words, one motion. Discover. Walk. Close. Their words become your walkthrough script. The next step is the Strategy & Vision Session.",
     whyItMatters:
-      "Disciplined discovery stops the guessing. Most reps over-pitch and lose deals at the close. The motion forces listening before showing.",
+      "Disciplined discovery stops the guessing. Most reps over-pitch and lose deals at the close. This motion forces you to listen before you show.",
     keyIdeas: [
       "Discover: ask, listen, take notes. Their words drive the walkthrough.",
       "Walk: we say 'walkthrough', not 'demo'. Walk them through how DTOP would close THEIR loop.",
@@ -1207,35 +1207,35 @@ export const STUDY_NOTES: Record<string, SlideOnePager> = {
       "Three-word motion: Discover, Walk, Close.",
       "Never use 'demo'. Never use 'pilot'.",
     ],
-    watchOut: "Don't over-pitch. Don't close on a procurement step.",
+    watchOut: "Do not over-pitch. Do not close on a procurement step.",
     connectsTo: ["Discovery Call Runbook", "Strategy & Vision Session"],
     checkYourself: [
-      "What are the three motions in order?",
-      "What's the approved replacement for 'demo'?",
-      "What's the only step we close on?",
+      "What are the three moves in order?",
+      "What is the approved replacement for 'demo'?",
+      "What is the only step we close on?",
     ],
   },
 
   "se-discovery-call-runbook": {
     inOneSentence:
-      "The 45-minute discovery call: frame the signals story first, ask one question at a time, shut up and take notes.",
+      "The 45-minute discovery call. Frame the signals story first. Ask one question at a time. Stop talking and take notes.",
     whyItMatters:
-      "A runbook on a second monitor stops the rep from improvising. The opening frame — 'most carriers we work with aren't short on data, they're short on signals they can act on' — earns the right to ask.",
+      "A runbook on a second monitor stops the rep from making it up as they go. The opening frame — 'most carriers we work with are not short on data, they are short on signals they can act on' — earns the right to ask.",
     keyIdeas: [
-      "First 5 minutes: frame the signals story. Don't pitch.",
-      "Next 30 minutes: ask one question at a time, then shut up.",
+      "First 5 minutes: frame the signals story. Do not pitch.",
+      "Next 30 minutes: ask one question at a time, then stop talking.",
       "Last 10 minutes: recap their words, ask what 'good' looks like, book the next step.",
-      "If they ask for the deck, counter with a 30-min working session — don't just send the file.",
+      "If they ask for the deck, counter with a 30-minute working session. Do not just send the file.",
     ],
     terms: [T.detect, T.svs, T.walkthrough],
     facts: [
       "Runbook lives on the rep's second monitor during the call.",
-      "Opening line: 'most carriers we work with aren't short on data — they're short on signals they can act on.'",
+      "Opening line: 'most carriers we work with are not short on data. They are short on signals they can act on.'",
     ],
-    watchOut: "Don't just send the deck. Counter with a 30-min working session.",
+    watchOut: "Do not just send the deck. Counter with a 30-minute working session.",
     connectsTo: ["Discovery Question Bank", "Persona Playbook"],
     checkYourself: [
-      "What's the opening frame line?",
+      "What is the opening frame line?",
       "What do I say when they ask for the deck?",
       "How do I time-box the three phases of the call?",
     ],
@@ -1243,121 +1243,121 @@ export const STUDY_NOTES: Record<string, SlideOnePager> = {
 
   "se-discovery-question-bank": {
     inOneSentence:
-      "12 discovery questions grouped by D, T, O, P. Red-flag answers map directly to the DTOP step the platform closes.",
+      "12 discovery questions, grouped by D, T, O, P. Red-flag answers map directly to the DTOP step the platform closes.",
     whyItMatters:
-      "Discovery questions are the rep's most-used asset. Picking four before the call (one per DTOP step) and asking one at a time builds rhythm — and the silence between questions does the work.",
+      "Discovery questions are the rep's most-used tool. Pick four before the call (one per DTOP step). Ask one at a time to build rhythm. The silence between questions does the work.",
     keyIdeas: [
       "12 questions: 3 per DTOP step.",
       "Pick four before the call — one per step.",
-      "Ask one, shut up, take notes. Move on.",
-      "Prove is where the audit pain is loudest — the easiest 'yes' you'll get.",
+      "Ask one. Stop talking. Take notes. Move on.",
+      "Prove is where the audit pain is loudest. That is the easiest 'yes' you will get.",
     ],
     terms: [T.dtop, T.detect, T.prove],
     facts: [
-      "12-question bank, 3 per DTOP step.",
-      "Prove questions land hardest — leverage them.",
+      "12-question bank. 3 per DTOP step.",
+      "Prove questions land hardest. Use them.",
     ],
-    watchOut: "Don't ask all 12. Pick four. Then ask one and shut up.",
+    watchOut: "Do not ask all 12. Pick four. Then ask one and stop talking.",
     connectsTo: ["Discovery Call Runbook", "Footprint Playbook"],
     checkYourself: [
       "How many DTOP steps and how many questions per step?",
-      "What's the rule about how many to ask in a call?",
+      "What is the rule about how many to ask in a call?",
       "Which DTOP step gives the easiest 'yes'?",
     ],
   },
 
   "se-persona-playbook": {
     inOneSentence:
-      "Five rooms, five different conversations, one platform underneath. Mirror the persona's metric in the first five minutes, end with the proof artifact within the hour.",
+      "Five rooms. Five different talks. One platform underneath. Mirror the persona's metric in the first five minutes. End with the proof artifact within the hour.",
     whyItMatters:
-      "Same demo to different personas loses deals. The persona playbook tells the rep which slide leads, which language to use, which proof to leave behind — for each of five rooms.",
+      "Same demo to different personas loses deals. The persona playbook tells the rep which slide leads, which words to use, and which proof to leave behind — for each of the five rooms.",
     keyIdeas: [
-      "Five personas: Director of Safety, Head of Training, VP Operations, Chief Compliance Officer, IT/Tech.",
+      "Five personas: Director of Safety, Head of Training, VP Operations, Chief Compliance Officer, IT and Tech.",
       "Each has a different lead-in slide, different metric, different proof artifact.",
       "Pick the persona row before the call. End with the proof artifact within the hour.",
-      "Never say FOQA/FDM/ASAP to Safety. Never pitch an SMS replacement — we extend theirs.",
+      "Never say FOQA, FDM or ASAP to Safety. Never pitch an SMS replacement. We extend theirs.",
     ],
     terms: [T.svs, T.walkthrough],
     facts: [
-      "Five personas, five distinct selling motions.",
-      "Proof artifact within the hour = signal the conversation is real.",
+      "Five personas. Five distinct selling motions.",
+      "A proof artifact within the hour = the signal the talk is real.",
     ],
-    watchOut: "Don't run the same conversation across personas. Don't use raw acronyms with Safety. Don't pitch SMS replacement.",
+    watchOut: "Do not run the same talk across personas. Do not use raw acronyms with Safety. Do not pitch SMS replacement.",
     connectsTo: ["Who To Target", "Customer Outcomes"],
     checkYourself: [
       "Can I name the five personas?",
-      "What's the lead-in slide and proof artifact for each?",
-      "What's the rule about SMS and Safety conversations?",
+      "What is the lead-in slide and proof artifact for each?",
+      "What is the rule about SMS and Safety talks?",
     ],
   },
 
   "se-slide-outcomes": {
     inOneSentence:
-      "Four customer outcomes in the buyer's language: the schedule holds, revenue holds, costs come down, customers come back.",
+      "Four customer outcomes in the buyer's words. The schedule holds. Revenue holds. Costs come down. Customers come back.",
     whyItMatters:
-      "By this point the buyer has seen architecture, use cases and the loop. The only question left in their head: so what does this actually change? This slide answers in their language, not ours.",
+      "By this point the buyer has seen the architecture, the use cases and the loop. The only question left in their head is 'so what does this actually change?' This slide answers in their words, not ours.",
     keyIdeas: [
-      "Schedule Protection: hard-landing trend → targeted retraining → fewer AOG events, fewer cancelled rotations.",
+      "Schedule Protection: hard-landing trend, then targeted retraining, then fewer AOG events and fewer cancelled rotations.",
       "Revenue Protection: protect operational windows that revenue depends on (slots, contracts).",
-      "Cost Reduction: investigation cost down, leakage recovered, audit prep collapsed.",
+      "Cost Reduction: investigation cost down, leakage recovered, audit prep cut to almost nothing.",
       "Customer Retention: passenger experience holds because the operation holds.",
     ],
     terms: [T.lineOfSight, T.dtop],
     facts: [
-      "Four outcomes — walked in Signal, Action, Result rhythm.",
-      "Customer-specific value modelled in Line-of-Sight before commercial conversation.",
+      "Four outcomes. Walked in Signal, Action, Result rhythm.",
+      "Customer-specific value is sized in Line-of-Sight before any commercial talk.",
     ],
-    watchOut: "Never claim a customer outcome you can't defend with a named example (offline).",
+    watchOut: "Never claim a customer outcome you cannot defend with a named example (offline).",
     connectsTo: ["Strategy & Vision Session", "Line-of-Sight"],
     checkYourself: [
       "Can I name the four outcomes in order?",
-      "Can I narrate each one in Signal-Action-Result rhythm?",
-      "Why is the order (schedule → revenue → cost → customers) deliberate?",
+      "Can I tell each one in Signal-Action-Result rhythm?",
+      "Why is the order (schedule, revenue, cost, customers) deliberate?",
     ],
   },
 
   "se-strategy-vision-session": {
     inOneSentence:
-      "The Strategy & Vision Session: three hours, fixed agenda, complimentary, run by the domain team on the buyer's operating model. The next step we close on — not procurement.",
+      "The Strategy & Vision Session. Three hours. Fixed agenda. Free. Run by the domain team on the buyer's operating model. The next step we close on, not procurement.",
     whyItMatters:
-      "This is the meeting that changes the conversation. It is the only next step the rep closes on. It is NOT a workshop, not a demo, not a sales process — and naming what it isn't is half the pitch.",
+      "This is the meeting that changes the talk. It is the only next step the rep closes on. It is NOT a workshop, NOT a demo, NOT a sales process. Naming what it is not is half the pitch.",
     keyIdeas: [
       "Three boxes on the whiteboard: their operating model, our domain team, the outcome (clarity). No procurement box.",
-      "Run by the domain team, not sales — the same people who built the operating model.",
-      "Free, complimentary, pre-scoped. Never scope it in the meeting.",
-      "Frame it for the leadership room: 'your leadership is being asked roadmap-level questions — this is the right venue to answer them.'",
+      "Run by the domain team, not sales. The same people who built the operating model.",
+      "Free and pre-scoped. Never scope it in the meeting.",
+      "Frame it for the leadership room: 'your leadership is being asked roadmap-level questions. This is the right venue to answer them.'",
     ],
     terms: [T.svs],
     facts: [
-      "3 hours, fixed agenda, complimentary.",
-      "Run by the domain team — not sales.",
+      "3 hours. Fixed agenda. Free.",
+      "Run by the domain team, not sales.",
     ],
     watchOut: "Never call it a workshop or a demo. Never scope it in the meeting. Never offer it cold.",
     connectsTo: ["Discovery to Close", "Maturity Roadmap"],
     checkYourself: [
       "What does the SVS specifically NOT include?",
       "Why is it run by the domain team and not sales?",
-      "What's the rule about scoping it in the meeting?",
+      "What is the rule about scoping it in the meeting?",
     ],
   },
 
   "se-w3-capstone": {
     inOneSentence:
-      "The 30-day capstone: six moves in order — pick the account, run the call, pick the use case, handle the objection, close, book the Strategy & Vision Session.",
+      "The 30-day capstone. Six moves in order. Pick the account. Run the call. Pick the use case. Handle the objection. Close. Book the Strategy & Vision Session.",
     whyItMatters:
       "This is the rep's self-test for Week 3 and the academy as a whole. If any of the six moves breaks, rehearse it in Practice Center before the next real call.",
     keyIdeas: [
       "Move 1: pick the account (Tier 1/2/3).",
       "Move 2: run the discovery call (45-min runbook).",
       "Move 3: pick the use case from their words.",
-      "Move 4-6: handle the objection, close on the SVS, book the session.",
+      "Moves 4-6: handle the objection, close on the SVS, book the session.",
     ],
     terms: [T.svs, T.walkthrough, T.coreApps],
     facts: [
-      "Six moves, in order, in 30 days.",
+      "Six moves. In order. In 30 days.",
       "Rehearse breaks in Practice Center against the AI buyer.",
     ],
-    watchOut: "If any move breaks, don't take the next real call until it's rehearsed.",
+    watchOut: "If any move breaks, do not take the next real call until it is rehearsed.",
     connectsTo: ["Practice Center", "Strategy & Vision Session"],
     checkYourself: [
       "Can I name the six moves in order?",
