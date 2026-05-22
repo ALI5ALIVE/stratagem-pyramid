@@ -45,6 +45,7 @@ import Comply365MockupHome from "./pages/Comply365MockupHome";
 import PlatformMockup from "./pages/PlatformMockup";
 import SignalsEvent from "./pages/events/SignalsEvent";
 import SignalsEventBrief from "./pages/events/SignalsEventBrief";
+import AIInfographic from "./pages/AIInfographic";
 import PasswordGate from "./components/shared/PasswordGate";
 import { AuthProvider } from "./contexts/AuthContext";
 import RequireAuth from "./components/academy/RequireAuth";
@@ -117,6 +118,7 @@ const App = () => (
             <Route path="/platform-mockup" element={<PlatformMockup />} />
             <Route path="/events/from-signals-to-control" element={<SignalsEvent />} />
             <Route path="/events/from-signals-to-control/brief" element={<SignalsEventBrief />} />
+            <Route path="/ai-infographic" element={<AIInfographic />} />
             <Route path="/academy" element={<RequireAuth><AcademyHome /></RequireAuth>} />
             <Route path="/academy/admin" element={<RequireAuth><AdminDashboard /></RequireAuth>} />
             <Route path="/academy/certificate" element={<RequireAuth><Certificate /></RequireAuth>} />
