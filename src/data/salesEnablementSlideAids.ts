@@ -8,6 +8,13 @@ export interface SlideObjection {
   response: string;
 }
 
+export interface SlideMeta {
+  dtop?: "D" | "T" | "O" | "P";
+  persona: Array<"Exec" | "Ops" | "Tech">;
+  connectsTo?: string[]; // human label, e.g. "Slide 03 · DTOP"
+  bannedHere?: string[]; // slide-specific landmine phrases
+}
+
 /** Hand-curated discovery questions per slide. Used in addition to anything
  *  the paraphraser pulls out of narration quotes. Cap 3 per slide. */
 export const SLIDE_DISCOVERY: Record<string, string[]> = {
@@ -237,4 +244,250 @@ export const WEEK_OBJECTION_FALLBACK: Record<"w1" | "w2" | "w3", SlideObjection[
         "Fair. What would you need to see in the next two weeks to make this worth bringing to your leadership?",
     },
   ],
+};
+
+// ─── Proof points (defensible stats the rep can drop in-meeting) ─────────────
+export const SLIDE_PROOFS: Record<string, string[]> = {
+  "se-slide-shift": [
+    "Regulators have shifted from prescriptive compliance to outcome evidence.",
+    "Industry exposure: $25–35B in controllable operational cost (Eurocontrol, IATA, SITA).",
+  ],
+  "se-slide-dtop": [
+    "DTOP is the only loop that includes both a Detect and a Prove step.",
+    "Point tools cover one of four signal sources at best.",
+  ],
+  "se-slide-coanalyst": [
+    "~90% accuracy on aviation-domain questions at L4–5 maturity.",
+    "~35% accuracy when generic AI runs on disconnected data.",
+    "Every answer cited to regulation, procedure and training source.",
+  ],
+  "se-platform-insights-intelligence": [
+    "Three intelligence tiers — Insights, Intelligence, Automation — on one foundation.",
+    "~90% domain vs ~35% generic on the same questions.",
+  ],
+  "se-slide-insights": [
+    "Trends route a Recommended Action into the loop — not a slide.",
+    "Detect layer fuses four signal sources into one stream.",
+  ],
+  "se-slide-automation": [
+    "Orchestrate step: routing, review, training assignment, device sync.",
+    "SMEs keep decisions; the platform removes the chasing.",
+  ],
+  "se-slide-mobile": [
+    "Revision-to-device in under 48 hours, offline-first.",
+    "Read-receipt and training context land with the same revision.",
+  ],
+  "se-slide-signals": [
+    "Four canonical signal sources: operational, safety, regulatory, training.",
+    "Wedge question after Detect: 'Which of these four is hardest to act on today?'",
+  ],
+  "se-slide-maturity-roadmap": [
+    "Most operators self-describe at Connected; operate at Managed.",
+    "Intelligence Layer outcomes anchor at L4–5.",
+  ],
+  "se-strategy-vision-session": [
+    "Three hours, fixed agenda, your leadership on your operating model.",
+    "Run by the domain team, not sales — complimentary, scoped in advance.",
+  ],
+  "se-w3-roadmap-vision-frame": [
+    "Phase dates committed; POC partners named under NDA.",
+    "Insights, Automation, Mobile — sequenced, not simultaneous.",
+  ],
+  "se-footprint-single": [
+    "Most customers start with one Core App; second and third land in weeks.",
+    "One foundation, three Core Apps — the moat compounds.",
+  ],
+  "se-footprint-all": [
+    "Three apps land on one foundation, in one rollout.",
+    "Less change than buying three point solutions and integrating later.",
+  ],
+  "se-plain-english-shift": [
+    "Aviation isn't short on data — it's short on signals it can act on.",
+    "Three disconnected stacks today: safety, content, training.",
+  ],
+  "se-slide-whatis": [
+    "Five boxes: safety, content, training, intelligence, mobile.",
+    "One Operational Data foundation underneath all five.",
+  ],
+};
+
+export const WEEK_PROOF_FALLBACK: Record<"w1" | "w2" | "w3", string[][]> = {
+  w1: [
+    [
+      "DTOP loop: Detect → Trigger → Orchestrate → Prove.",
+      "One foundation under safety, content and training.",
+    ],
+    [
+      "Four signal sources fused at the Detect layer.",
+      "Outcome evidence on demand, not on request.",
+    ],
+  ],
+  w2: [
+    [
+      "~90% domain vs ~35% generic AI accuracy.",
+      "Every answer cited to source — regulation, procedure, training.",
+    ],
+    [
+      "Insights · Intelligence · Automation on one Operational Data layer.",
+      "Unified Mobile is the last mile, not a separate app.",
+    ],
+  ],
+  w3: [
+    [
+      "Strategy & Vision Session: 3 hours, complimentary, fixed agenda.",
+      "Three differentiators: connected data, cited AI, closed loop.",
+    ],
+    [
+      "Footprint patterns: 1, 2, or all 3 Core Apps — same foundation.",
+      "Land first app in weeks; second and third compound from there.",
+    ],
+  ],
+};
+
+// ─── Whiteboard recipe / where-to-point ──────────────────────────────────────
+export const SLIDE_WHITEBOARD: Record<string, string> = {
+  "se-slide-dtop": "Draw four boxes in a loop: D (blue), T (amber), O (violet), P (emerald). Arrow the loop clockwise. Circle the gap they own today.",
+  "se-slide-dtop-whiteboard": "Same as the DTOP slide — but draw it yourself, in colour, in under 90 seconds, without looking at the deck.",
+  "se-slide-dtop-whiteboard-runbook": "Stroke order: D · T · O · P · loop arrow · 'PROVE' underline. Pause after each letter for the customer to react.",
+  "se-slide-signals": "Draw four arrows pointing into a single 'Detect' box: operational, safety, regulatory, training. Ask which arrow is weakest.",
+  "se-slide-whatis": "Five stacked bands: safety, content, training (Core Apps) · intelligence · mobile. Underline the foundation.",
+  "se-slide-coanalyst": "Two columns: 'Generic AI ~35%' vs 'Domain AI on Operational Data ~90%'. Circle the 55-point gap.",
+  "se-slide-maturity-roadmap": "Five rungs: Ad-hoc · Managed · Connected · Predictive · Autonomous. Mark where they are, where they're being asked to be.",
+  "se-platform-insights-intelligence": "Three horizontal bands: Insights (see) · Intelligence (reason) · Automation (act). Point to each, then the foundation underneath.",
+  "se-slide-mobile": "One arrow from 'Revision approved' to 'Crew device, offline'. Label the arrow '48 hours'.",
+  "se-strategy-vision-session": "Three boxes: their operating model · our domain team · the outcome (clarity). No procurement box.",
+  "se-footprint-single": "Draw one Core App on the foundation. Show two empty slots — the upgrade path.",
+  "se-footprint-two": "Two Core Apps sharing one foundation. Show the third slot.",
+  "se-footprint-all": "Three Core Apps on one foundation, one rollout. Cross out '3 point solutions + integration'.",
+};
+
+export const WEEK_WHITEBOARD_FALLBACK: Record<"w1" | "w2" | "w3", string> = {
+  w1: "Point at the loop, then the foundation, then the signal sources — in that order.",
+  w2: "Point at the capability band, then the Operational Data layer it runs on.",
+  w3: "Point at the footprint pattern, then the Strategy & Vision Session as the next step.",
+};
+
+// ─── Common rep mistake to avoid ─────────────────────────────────────────────
+export const SLIDE_MISTAKE: Record<string, string> = {
+  "se-slide-shift": "Don't open with product. Open with the regulator's shift to outcome evidence.",
+  "se-slide-dtop": "Don't pitch DTOP as workflow. Workflow has no Detect and no Prove.",
+  "se-slide-coanalyst": "Don't say 'our AI is better' — anchor the 90% vs 35% on aviation-domain questions at L4–5 maturity.",
+  "se-slide-mobile": "Don't position it as another EFB reader — it's the last mile of DTOP.",
+  "se-slide-automation": "Don't say automation replaces SMEs. It removes the chasing; SMEs keep the decisions.",
+  "se-slide-insights": "Don't conflate Insights with dashboards. Dashboards show what happened; Insights route the action.",
+  "se-slide-signals": "Don't list the four signal sources flat. Anchor each to a system the customer already runs.",
+  "se-platform-insights-intelligence": "Don't show the three tiers without naming the foundation underneath.",
+  "se-slide-maturity-roadmap": "Don't let them self-rate without pressure-testing — most claim Connected, operate at Managed.",
+  "se-strategy-vision-session": "Don't scope it in the meeting — it's pre-scoped, complimentary, fixed agenda.",
+  "se-slide-whatis": "Don't read the boxes left to right. Start with the foundation, then build up.",
+  "se-plain-english-shift": "Don't quote ROI numbers we haven't signed off. This slide is messaging.",
+  "se-footprint-single": "Don't oversell a multi-app rollout. Land the wedge first.",
+  "se-footprint-all": "Don't apologise for the scope. Three on one foundation is less change than three point tools.",
+  "se-discovery-to-close": "Don't close on a procurement step. Close on the Strategy & Vision Session.",
+};
+
+export const WEEK_MISTAKE_FALLBACK: Record<"w1" | "w2" | "w3", string> = {
+  w1: "Don't pitch features in week-1 territory. Earn the right with the operating model first.",
+  w2: "Don't tour capabilities without anchoring each to a use case the customer owns.",
+  w3: "Don't ask for a commitment. Ask for the Strategy & Vision Session.",
+};
+
+// ─── Per-slide meta (DTOP stage, persona fit, cross-refs, banned phrases) ────
+export const SLIDE_META: Record<string, SlideMeta> = {
+  "se-slide-shift": {
+    persona: ["Exec"],
+    connectsTo: ["DTOP", "Maturity Roadmap"],
+    bannedHere: ["digital transformation", "AI-powered"],
+  },
+  "se-plain-english-shift": {
+    persona: ["Exec", "Ops"],
+    connectsTo: ["What Is the Platform"],
+    bannedHere: ["unapproved ROI numbers"],
+  },
+  "se-slide-whatis": {
+    persona: ["Exec", "Ops", "Tech"],
+    connectsTo: ["DTOP", "Signal Sources"],
+  },
+  "se-slide-dtop": {
+    dtop: "D",
+    persona: ["Exec", "Ops"],
+    connectsTo: ["Signal Sources", "Value Unlocked"],
+    bannedHere: ["workflow tool", "FOQA", "FDM", "ASAP"],
+  },
+  "se-slide-dtop-whiteboard": {
+    dtop: "D",
+    persona: ["Ops", "Tech"],
+    connectsTo: ["DTOP", "Maturity Whiteboard"],
+  },
+  "se-slide-signals": {
+    dtop: "D",
+    persona: ["Ops", "Tech"],
+    connectsTo: ["DTOP"],
+    bannedHere: ["FOQA", "FDM", "ASAP"],
+  },
+  "se-slide-maturity-roadmap": {
+    persona: ["Exec"],
+    connectsTo: ["Strategy & Vision Session"],
+  },
+  "se-platform-insights-intelligence": {
+    dtop: "O",
+    persona: ["Exec", "Tech"],
+    connectsTo: ["CoAnalyst Slide", "Insights", "Automation"],
+    bannedHere: ["CoAnalyst", "the AI", "LLM"],
+  },
+  "se-slide-coanalyst": {
+    dtop: "O",
+    persona: ["Exec", "Tech"],
+    connectsTo: ["Tiers vs AI"],
+    bannedHere: ["CoAnalyst", "chatbot", "the AI"],
+  },
+  "se-slide-insights": {
+    dtop: "D",
+    persona: ["Ops"],
+    connectsTo: ["Automation", "Recommended Actions"],
+    bannedHere: ["dashboard tool"],
+  },
+  "se-slide-automation": {
+    dtop: "O",
+    persona: ["Ops", "Tech"],
+    connectsTo: ["Insights", "Mobile"],
+    bannedHere: ["replace SMEs"],
+  },
+  "se-slide-mobile": {
+    dtop: "P",
+    persona: ["Ops"],
+    connectsTo: ["Automation"],
+    bannedHere: ["EFB", "reader app"],
+  },
+  "se-strategy-vision-session": {
+    persona: ["Exec"],
+    connectsTo: ["Maturity Roadmap", "Discovery to Close"],
+    bannedHere: ["workshop", "demo", "procurement"],
+  },
+  "se-footprint-single": {
+    persona: ["Exec", "Ops"],
+    connectsTo: ["Footprint Ladder"],
+  },
+  "se-footprint-two": {
+    persona: ["Exec", "Ops"],
+    connectsTo: ["Footprint Ladder"],
+  },
+  "se-footprint-all": {
+    persona: ["Exec"],
+    connectsTo: ["Footprint Ladder"],
+  },
+  "se-discovery-to-close": {
+    persona: ["Exec", "Ops", "Tech"],
+    connectsTo: ["Strategy & Vision Session"],
+  },
+  "se-w3-roadmap-vision-frame": {
+    persona: ["Exec"],
+    connectsTo: ["Strategy & Vision Session"],
+  },
+};
+
+export const WEEK_META_FALLBACK: Record<"w1" | "w2" | "w3", SlideMeta> = {
+  w1: { persona: ["Exec", "Ops"], bannedHere: ["FOQA", "FDM", "ASAP", "CoAnalyst"] },
+  w2: { persona: ["Tech", "Ops"], bannedHere: ["CoAnalyst", "the AI", "LLM"] },
+  w3: { persona: ["Exec"], bannedHere: ["procurement step", "workshop"] },
 };

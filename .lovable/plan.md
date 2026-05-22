@@ -1,71 +1,109 @@
+# Field Kit PDF — World-Class One-Pager Pass
+
+## What's wrong today (visual QA of generated Week 1 PDF)
+
+I rendered Week 1 and inspected slides 1, 4, 6, 10. Three structural problems:
+
+### 1. Huge dead vertical band (the real "white space" complaint)
+- Left column ends ~1/3 down the page (title + Core Idea + Teaching Summary), then a 250-300pt empty void before the coach-chip strip pinned at the bottom.
+- Right column ends after objections, leaving another 200pt empty band.
+- Roughly **45-55% of every slide page is empty paper.**
+
+### 2. Broken glyphs (helvetica core font doesn't contain these)
+- ▸ U+25B8 (pushback marker) renders as `%`
+- ↳ U+21B3 (response marker) renders as `I³`
+- ☐ U+2610 (closing-page checkboxes) renders as `&`
+- Smart quotes `"` `"` render with weird inter-letter spacing in titles ("W elcom e", "W eek 1 ·D TO P")
+
+### 3. Fallback content repeats and feels generic
+- ~7 of 13 Week 1 slides fall back to the same 2 objections ("We've been told this before" / "Why now?") and the same 2 discovery questions because no curated entry exists. A rep reading the deck end-to-end sees the same two pink cards over and over.
+
 ## Goal
 
-Reshape every slide one-pager so the three things the user asked for are the page — paraphrased transcript summary, the key questions to ask, and the objections they'll need to answer — while keeping the coach-card takeaways visible but secondary.
+Every slide one-pager: zero empty bands, every pixel earns its place, 6 rep-facing blocks instead of 3, all glyphs render correctly, no duplicate fallbacks.
 
-## New one-pager layout (A4 landscape, single page)
+## New one-pager layout (A4 landscape)
 
 ```text
-┌─────────────────────────────────────────────────────────────────┐
-│ Header: Comply365 · Sales Enablement Academy · Wk N / Slide X   │
-├──────────────────────────────────────┬──────────────────────────┤
-│  TITLE BAR (navy, slide # + title)   │  KEY QUESTIONS TO ASK    │
-│  ─────────────────────────────────   │   1.  "….?"              │
-│  THE CORE IDEA  (1 line)             │   2.  "….?"              │
-│                                      │   3.  "….?"  (optional)  │
-│  TEACHING SUMMARY                    │                          │
-│   Paraphrased narration, 6–8 lines,  │  OBJECTIONS YOU'LL HEAR  │
-│   tightened. The "study" anchor.     │   ▸ Pushback line        │
-│                                      │     ↳ Approved response  │
-│  COACH CHIPS (one-line, 4 across):   │   ▸ Pushback line        │
-│   [Remember]·[Say]·[Watch]·[Bridge]  │     ↳ Approved response  │
-├──────────────────────────────────────┴──────────────────────────┤
-│ Footer: Time ~60–90s · Drill ☐☐☐☐☐ · Rep-facing                 │
-└─────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────┐
+│ COMPLY365 · ACADEMY            DTOP:[D] Persona:[Exec][Ops] Time:60-90s │ ← thin meta strip
+├──────────────────────────────────────┬──────────────────────────────────┤
+│ ▌SLIDE 06 — Week 1 · DTOP            │ KEY QUESTIONS TO ASK             │
+│ ▌(navy hero, 48pt tall — was 52pt)   │ ① ② ③ (3 numbered chips)         │
+├──────────────────────────────────────┼──────────────────────────────────┤
+│ THE CORE IDEA                        │ OBJECTIONS & APPROVED ANSWERS    │
+│ (1-line, bold)                       │ ▸ pushback                       │
+├──────────────────────────────────────┤ ↳ response                       │
+│ TEACHING SUMMARY                     │ (2 blocks, auto-stretch)         │
+│ (paraphrased narration, grows to     │                                  │
+│  fill — no fixed cap; justifies      ├──────────────────────────────────┤
+│  vertically with right column)       │ PROOF POINTS YOU CAN DROP        │
+│                                      │ • ~90% domain vs ~35% generic    │
+│                                      │ • Operational Data, not training │
+│                                      │ • +5 defensible stats per slide  │
+├──────────────────────────────────────┼──────────────────────────────────┤
+│ WHITEBOARD RECIPE / WHERE TO POINT   │ COMMON REP MISTAKE               │
+│ 1. Draw … 2. Label … 3. Circle …     │ (1 line — what new reps fumble)  │
+│ (or "Point at the X, then the Y")    │                                  │
+├──────────────────────────────────────┴──────────────────────────────────┤
+│ ▌REMEMBER   ▌SAY IT   ▌WATCH OUT   ▌BRIDGE   (4 colour chips, full-width)│
+├─────────────────────────────────────────────────────────────────────────┤
+│ Connects to: Slide 03 · Slide 09      Banned here: "AI assistant"…      │ ← micro footer
+└─────────────────────────────────────────────────────────────────────────┘
 ```
 
-Why this shape:
-- Left = **study side** (read once, internalise). Summary is the hero block, ~8.5pt, ~520 chars.
-- Right = **in-meeting side** (glance at during a call). Questions on top, objections below — the two moves a rep actually does live.
-- The original Remember/Say/Watch/Bridge cards stay as a colour-coded chip strip at the bottom of the left column, not a 2×2 — 4 short one-liners, one per chip, same accent colours so the existing colour story still reads.
+### Sizing rule (kills the white band)
+- Compute `availableH = pageH - header - metaStrip - chipStrip - microFooter`.
+- Distribute that height between **left stack** (Core Idea, Teaching Summary, Whiteboard Recipe) and **right stack** (Questions, Objections, Proof Points, Rep Mistake) by **measuring each block's natural height and then expanding the largest text block (Teaching Summary on the left, Objections on the right) to absorb any remainder.**
+- Coach chip strip stretches to fill its band (44 → up to 64pt). Objection blocks stretch from 76pt → up to whatever fills the right column.
+- No more pinning chips at `pageH - 50` — they flow with content.
 
-## Content sourcing
+## Four new content sections per slide
 
-**Teaching Summary** — already implemented via `paraphraseNarration()`. Expand its target length from 540 → ~620 chars now that the right column is doing the heavy lifting. Drop the "What to listen for" block (its job is now done by Key Questions).
+Added to `src/data/salesEnablementSlideAids.ts`:
 
-**Key Questions to Ask** — new helper `extractDiscoveryQuestions(script, slideId)`:
-1. Pull all quoted questions from the narration (`/['"]([^'".?]{15,140}\?)['"]/g`)
-2. Also pull bare questions following "ask" / "discovery question" cues
-3. Fall back to a small curated `SLIDE_DISCOVERY` map for ~15 slides where narration has none (already known: Week 3 discovery slides, Week 2 capability slides, persona playbook)
-4. Cap at 3 questions, each ≤120 chars
+1. **`SLIDE_PROOFS: Record<slideId, string[]>`** — 2-3 defensible stats, anchored to approved numbers (~90% / ~35%, DTOP outcomes, 48-hour mobile sync). Per-week fallbacks.
+2. **`SLIDE_WHITEBOARD: Record<slideId, string>`** — 1-3 stroke/point instructions. For non-whiteboard slides: "Point at X, then Y, then Z."
+3. **`SLIDE_MISTAKE: Record<slideId, string>`** — one-line fumble to avoid ("Don't pitch features before you've drawn the loop.").
+4. **`SLIDE_META: Record<slideId, { dtop?: "D"|"T"|"O"|"P"; persona: ("Exec"|"Ops"|"Tech")[]; connectsTo?: string[]; bannedHere?: string[] }>`** — drives the meta strip and micro footer.
 
-**Objections + Responses** — new helper `getSlideObjections(slideId, weekId)`:
-- Curated `SLIDE_OBJECTIONS` map for the slides where canonical pushback is known:
-  - DTOP slides → "isn't this just workflow?" / "we have a CMS already"
-  - Intelligence Layer slides → "we'll build it internally with GPT" / "how is this different from a generic LLM"
-  - CoAnalyst / accuracy slides → "90% — prove it" / "what about data security & training on our data"
-  - Mobile / Unified Mobile → "our crews already have iPads with X"
-  - Strategy & Vision Session → "we're not ready for a workshop"
-  - Footprint / pricing → "we only need one app today"
-- Fallback to per-week generic objection (2 items) so every slide has something
-- Each entry: `{ pushback: string, response: string }`, response always uses approved language, no banned terms, anchors to ~90% vs ~35%, locked customer outcomes, or "Operational Data" where relevant
+All four hand-curated for the ~15 anchor slides; per-week fallbacks cover the rest so **no slide ever shows a duplicate-looking page next to another.**
 
-Both new datasets live in a new file `src/data/salesEnablementSlideAids.ts` so they're easy to edit without touching the PDF renderer.
+### De-duplication for fallbacks
+- Track which fallback was last used per week; rotate through a pool of 4 objections + 4 questions per week instead of always serving the same 2. Stops the "same pink card twice" problem.
 
-## Visual treatment
+## Glyph fix (must-do)
 
-- Questions: brand-blue numbered chips (●1 ●2 ●3), question text in italic slate
-- Objections: rose-tinted micro-card per item, pushback in bold slate prefixed with `▸`, response below prefixed with `↳` in emerald-tinted strip
-- Coach chips strip: 4 colour-coded pills (amber / emerald / rose / sky) sized to fit one short line each
-- Locked-term mini reminder removed from slide pages (lives on cover); foot rule kept
+Replace all non-Latin-1 characters in the PDF — helvetica core font doesn't contain them:
 
-## Files to change
+| Used today | Renders as | Replacement |
+|---|---|---|
+| `▸` U+25B8 | `%` | filled triangle drawn via `pdf.triangle()` |
+| `↳` U+21B3 | `I³` | filled arrow drawn via two short lines |
+| `☐` U+2610 | `&` | `pdf.rect(x, y, 10, 10, "S")` (already done elsewhere — fix closing page) |
+| `"` `"` U+201C/D | spacing artefacts | plain ASCII `"` |
+| `·` U+00B7 | OK (Latin-1) | keep |
+| `—` U+2014 | OK (Latin-1) | keep |
 
-- `src/lib/fieldKitPdf.ts` — replace the slide-card layout; new helpers; remove the 2×2 + listen-for blocks; add Questions and Objections renderers; chip-strip renderer for coach cards
-- `src/data/salesEnablementSlideAids.ts` *(new)* — `SLIDE_DISCOVERY: Record<string, string[]>` and `SLIDE_OBJECTIONS: Record<string, Array<{pushback, response}>>` plus per-week fallback sets
-- Cover, week-at-a-glance, closing pages stay unchanged (already polished)
+Glyph markers become small drawn shapes (rose triangle, emerald right-arrow), which also looks more designed than typographic dingbats.
+
+## Files
+
+- **Edit** `src/lib/fieldKitPdf.ts` — new layout engine (height-distributing), new `drawProofList`, `drawMistakeBlock`, `drawWhiteboardRecipe`, `drawMetaStrip` helpers, glyph fixes, no more bottom-pinning.
+- **Edit** `src/data/salesEnablementSlideAids.ts` — add `SLIDE_PROOFS`, `SLIDE_WHITEBOARD`, `SLIDE_MISTAKE`, `SLIDE_META`, week fallbacks for each, plus rotation logic.
+- **No changes** to cover, week-at-a-glance, closing page, narration data, coach card data, or any UI component.
+
+## QA loop
+
+After implementing, regenerate all 3 weeks → rasterize at 110 DPI → visually inspect every slide page. Iterate until:
+- No page has a vertical empty band > 40pt
+- Every glyph renders as intended
+- No two consecutive slides show identical fallback pushbacks
+- Every section fits without clipping
 
 ## Out of scope
 
 - Editing narration scripts
-- New per-slide content beyond questions + objections (no proof points, no persona chips this round — can be added later if needed)
-- Per-slide PDFs
+- Per-slide PDFs (still one PDF per week)
+- Cover, week-at-a-glance, closing pages (already dense)
+- Adding screenshots of the actual slides (would change page count and is a separate request)

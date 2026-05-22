@@ -10,6 +10,15 @@ import {
   WEEK_DISCOVERY_FALLBACK,
   WEEK_OBJECTION_FALLBACK,
   type SlideObjection,
+  SLIDE_PROOFS,
+  WEEK_PROOF_FALLBACK,
+  SLIDE_WHITEBOARD,
+  WEEK_WHITEBOARD_FALLBACK,
+  SLIDE_MISTAKE,
+  WEEK_MISTAKE_FALLBACK,
+  SLIDE_META,
+  WEEK_META_FALLBACK,
+  type SlideMeta,
 } from "@/data/salesEnablementSlideAids";
 
 // ─── Brand tokens (RGB tuples for jsPDF) ─────────────────────────────────────
@@ -165,7 +174,7 @@ const FILLER_SENTENCES = [
 ];
 
 /** Deterministic paraphrase of a teaching script → coaching summary. */
-const paraphraseNarration = (script: string): string => {
+const paraphraseNarration = (script: string, maxChars = 540): string => {
   let s = script.trim();
   FILLER_OPENERS.forEach((re) => { s = s.replace(re, ""); });
   FILLER_SENTENCES.forEach((re) => { s = s.replace(re, ""); });
@@ -206,7 +215,7 @@ const paraphraseNarration = (script: string): string => {
 
   let out = "";
   for (const sent of ranked) {
-    if ((out + " " + sent).length > 540) break;
+    if ((out + " " + sent).length > maxChars) break;
     out = out ? `${out} ${sent}` : sent;
   }
   // Tidy spacing
@@ -214,6 +223,17 @@ const paraphraseNarration = (script: string): string => {
   // Ensure ends with .
   if (out && !/[.!?]$/.test(out)) out += ".";
   return out;
+};
+
+/** Pull a representative "verbatim lift" — first quoted sentence, or first
+ *  declarative line after stripping filler. */
+const extractVerbatimLift = (script: string): string | undefined => {
+  const q = script.match(/['"]([^'"\n]{20,180}[.!?])['"]/);
+  if (q) return q[1].trim();
+  // pull the first sentence anchored to "Core message"
+  const core = script.match(/core message[^.:]*[:.]\s*([^.]{20,160}[.!?])/i);
+  if (core) return core[1].trim();
+  return undefined;
 };
 
 /** Pull customer-signal cues from narration; fallback to generic per-week. */
@@ -289,6 +309,70 @@ const buildObjections = (slideId: string, weekId: CoachCardWeek["id"]): SlideObj
   const curated = SLIDE_OBJECTIONS[slideId];
   if (curated && curated.length) return curated.slice(0, 2);
   return WEEK_OBJECTION_FALLBACK[weekId].slice(0, 2);
+};
+
+/** Rotate fallback pools so consecutive slides don't show identical content. */
+const rotatePool = <T,>(pool: T[], idx: number, take: number): T[] => {
+  if (!pool.length) return [];
+  const out: T[] = [];
+  for (let i = 0; i < take && i < pool.length; i++) {
+    out.push(pool[(idx + i) % pool.length]);
+  }
+  return out;
+};
+
+const buildObjectionsRotated = (
+  slideId: string,
+  weekId: CoachCardWeek["id"],
+  idx: number,
+): SlideObjection[] => {
+  const curated = SLIDE_OBJECTIONS[slideId];
+  if (curated && curated.length) return curated.slice(0, 2);
+  return rotatePool(WEEK_OBJECTION_FALLBACK[weekId], idx, 2);
+};
+
+const buildDiscoveryQuestionsRotated = (
+  script: string | undefined,
+  slideId: string,
+  weekId: CoachCardWeek["id"],
+  idx: number,
+): string[] => {
+  const fromScript: string[] = [];
+  if (script) {
+    const qMatch = script.match(/['"]([^'".?]{15,140}\?)['"]/g);
+    if (qMatch) qMatch.forEach((q) => fromScript.push(q.replace(/^['"]|['"]$/g, "").trim()));
+  }
+  const curated = SLIDE_DISCOVERY[slideId] ?? [];
+  const merged: string[] = [];
+  const seen = new Set<string>();
+  [...curated, ...fromScript].forEach((q) => {
+    const norm = q.toLowerCase().replace(/[^a-z0-9? ]/g, "").trim();
+    if (!seen.has(norm) && q.length <= 160) {
+      seen.add(norm);
+      merged.push(q);
+    }
+  });
+  if (merged.length === 0) merged.push(...rotatePool(WEEK_DISCOVERY_FALLBACK[weekId], idx, 2));
+  return merged.slice(0, 3);
+};
+
+const buildProofs = (slideId: string, weekId: CoachCardWeek["id"], idx: number): string[] => {
+  const curated = SLIDE_PROOFS[slideId];
+  if (curated && curated.length) return curated.slice(0, 3);
+  const pools = WEEK_PROOF_FALLBACK[weekId];
+  return pools[idx % pools.length];
+};
+
+const buildWhiteboard = (slideId: string, weekId: CoachCardWeek["id"]): string => {
+  return SLIDE_WHITEBOARD[slideId] ?? WEEK_WHITEBOARD_FALLBACK[weekId];
+};
+
+const buildMistake = (slideId: string, weekId: CoachCardWeek["id"]): string => {
+  return SLIDE_MISTAKE[slideId] ?? WEEK_MISTAKE_FALLBACK[weekId];
+};
+
+const buildMeta = (slideId: string, weekId: CoachCardWeek["id"]): SlideMeta => {
+  return SLIDE_META[slideId] ?? WEEK_META_FALLBACK[weekId];
 };
 
 // ─── PDF Builder ─────────────────────────────────────────────────────────────
@@ -531,9 +615,17 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     const narration = getSalesEnablementNarration(slideId);
     const title = narration?.title ?? slideId;
     const coreLine = extractCoreLine(slideId);
-    const summary = narration ? paraphraseNarration(narration.script) : "";
-    const questions = buildDiscoveryQuestions(narration?.script, slideId, week.id);
-    const objections = buildObjections(slideId, week.id);
+    const summary = narration ? paraphraseNarration(narration.script, 1100) : "";
+    const verbatim = narration ? extractVerbatimLift(narration.script) : undefined;
+    const questions = buildDiscoveryQuestionsRotated(narration?.script, slideId, week.id, idx);
+    const objections = buildObjectionsRotated(slideId, week.id, idx);
+    const proofs = buildProofs(slideId, week.id, idx).map((p) =>
+      // sanitize non-Latin-1 glyphs that helvetica core can't render
+      p.replace(/\u2192/g, " · ").replace(/\u2013/g, "-").replace(/[\u201C\u201D]/g, '"'),
+    );
+    const whiteboard = buildWhiteboard(slideId, week.id);
+    const mistake = buildMistake(slideId, week.id);
+    const sMeta = buildMeta(slideId, week.id);
 
     // Landscape page for slide cards
     pdf.addPage("a4", "landscape");
@@ -559,161 +651,228 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     pdf.setLineWidth(0.5);
     pdf.line(lMargin, 30, lPageW - lMargin, 30);
 
-    // ── LEFT COLUMN ──────────────────────────────────────────────────────────
+    // ── Meta strip (DTOP chip · personas · time-on-slide) ─────────────────────
+    drawMetaStrip(pdf, lMargin, 38, lContentW, sMeta);
+
+    // Layout regions
     const leftX = lMargin;
-    const colGap = 18;
-    const leftW = lContentW * 0.5;
+    const colGap = 16;
+    const leftW = lContentW * 0.52;
     const rightX = leftX + leftW + colGap;
     const rightW = lContentW - leftW - colGap;
 
-    // Title block (compact)
-    const tbY = 42;
-    const tbH = 52;
+    const topY = 64;
+    const microFooterY = lPageH - 30;
+    const chipStripH = 56;
+    const chipStripY = microFooterY - chipStripH - 10;
+    const colBottomY = chipStripY - 10;
+
+    // Title hero (compact, full content width across BOTH columns)
+    const tbH = 46;
     setFill(pdf, C.navyDeep);
-    pdf.rect(leftX, tbY, leftW, tbH, "F");
+    pdf.rect(leftX, topY, lContentW, tbH, "F");
     setFill(pdf, C.brand);
-    pdf.rect(leftX, tbY, 3, tbH, "F");
+    pdf.rect(leftX, topY, 3, tbH, "F");
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(7.5);
     setText(pdf, [140, 175, 230]);
-    pdf.text(`SLIDE ${String(idx + 1).padStart(2, "0")}`, leftX + 14, tbY + 17);
+    pdf.text(`SLIDE ${String(idx + 1).padStart(2, "0")}`, leftX + 14, topY + 16);
     pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(13);
+    pdf.setFontSize(15);
     setText(pdf, C.white);
-    const tLines = clipLines(pdf.splitTextToSize(title, leftW - 28), 2);
-    pdf.text(tLines, leftX + 14, tbY + 34);
+    const tLines = clipLines(pdf.splitTextToSize(title, lContentW - 28), 1);
+    pdf.text(tLines, leftX + 14, topY + 34);
 
-    let ly = tbY + tbH + 16;
+    const bodyTopY = topY + tbH + 14;
 
+    // ── LEFT COLUMN: Core Idea · Teaching Summary · Whiteboard Recipe ──────
+    let ly = bodyTopY;
     // Core idea
     if (coreLine) {
-      pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(7.5);
-      setText(pdf, C.brand);
-      pdf.text("THE CORE IDEA", leftX, ly);
+      drawSectionLabel(pdf, leftX, ly, "THE CORE IDEA", C.brand);
       ly += 12;
       pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(10);
+      pdf.setFontSize(10.5);
       setText(pdf, C.ink);
       const coreLines = clipLines(pdf.splitTextToSize(coreLine, leftW), 2);
       pdf.text(coreLines, leftX, ly);
-      ly += coreLines.length * 12 + 14;
+      ly += coreLines.length * 12 + 12;
     }
 
-    // Teaching summary
+    // Reserve room for the two bottom-left blocks: whiteboard + verbatim lift.
+    // When there's no verbatim, expand whiteboard to consume the space.
+    const baseWbH = 64;
+    const liftBlockH = verbatim ? 58 : 0;
+    const wbBlockH = verbatim ? baseWbH : baseWbH + 58 + 8;
+    const bottomLeftStackH = wbBlockH + (liftBlockH ? liftBlockH + 8 : 0);
+    const summaryBottom = colBottomY - bottomLeftStackH - 14;
+
+    // Teaching summary (justified to fill available left height)
     if (summary) {
-      pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(7.5);
-      setText(pdf, C.muted);
-      pdf.text("TEACHING SUMMARY", leftX, ly);
+      drawSectionLabel(pdf, leftX, ly, "TEACHING SUMMARY", C.muted);
       ly += 12;
       pdf.setFont("helvetica", "normal");
-      pdf.setFontSize(8.5);
+      pdf.setFontSize(9);
       setText(pdf, C.slate);
-      // Reserve room for the coach chip strip at bottom of left col
-      const chipStripH = 44;
-      const availableH = lPageH - 60 - ly - chipStripH - 10;
-      const maxLines = Math.max(6, Math.floor(availableH / 11));
+      const availH = summaryBottom - ly;
+      const lineH = 11.5;
+      const maxLines = Math.max(6, Math.floor(availH / lineH));
       const sumLines = clipLines(pdf.splitTextToSize(summary, leftW), maxLines);
       pdf.text(sumLines, leftX, ly, { lineHeightFactor: 1.35 });
-      ly += sumLines.length * 11 + 12;
+      ly += sumLines.length * lineH + 6;
     }
 
-    // ── Coach chip strip (bottom of left column) ─────────────────────────────
-    const chipY = lPageH - 50 - 44;
-    const chipDefs: Array<{ key: FieldKey; label: string; text: string }> = [
-      { key: "remember", label: "REMEMBER", text: cc.remember },
-      { key: "sayItLikeThis", label: "SAY IT", text: cc.sayItLikeThis },
-      { key: "watchOutFor", label: "WATCH OUT", text: cc.watchOutFor },
-      { key: "bridge", label: "BRIDGE", text: cc.bridge },
-    ];
-    const chipGap = 6;
-    const chipW = (leftW - chipGap * 3) / 4;
-    chipDefs.forEach((chip, i) => {
-      drawCoachChip(
-        pdf,
-        leftX + i * (chipW + chipGap),
-        chipY,
-        chipW,
-        44,
-        chip.key,
-        chip.label,
-        chip.text,
-      );
-    });
+    // Whiteboard recipe (anchored to bottom of left column)
+    const wbY = colBottomY - bottomLeftStackH;
+    drawAccentBlock(
+      pdf,
+      leftX,
+      wbY,
+      leftW,
+      wbBlockH,
+      "WHITEBOARD RECIPE / WHERE TO POINT",
+      whiteboard,
+      C.oViolet,
+      [243, 240, 253],
+    );
 
-    // ── RIGHT COLUMN: Questions + Objections ─────────────────────────────────
-    let ry = tbY;
+    // Verbatim lift (right under whiteboard, anchored to col bottom)
+    if (verbatim) {
+      drawAccentBlock(
+        pdf,
+        leftX,
+        colBottomY - liftBlockH,
+        leftW,
+        liftBlockH,
+        "VERBATIM LIFT — SAY THIS NEAR-EXACTLY",
+        `"${verbatim}"`,
+        C.emerald,
+        C.emeraldSoft,
+      );
+    }
+
+    // ── RIGHT COLUMN: Questions · Objections · Proofs · Mistake ────────────
+    let ry = bodyTopY;
 
     // KEY QUESTIONS TO ASK
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(8);
-    setText(pdf, C.brand);
-    pdf.text("KEY QUESTIONS TO ASK", rightX, ry + 8);
-    setFill(pdf, C.brand);
-    pdf.rect(rightX, ry + 12, 18, 2, "F");
-    ry += 24;
-
+    drawSectionLabel(pdf, rightX, ry, "KEY QUESTIONS TO ASK", C.brand);
+    ry += 16;
     questions.forEach((q, i) => {
-      // Numbered chip
       setFill(pdf, C.brand);
       pdf.circle(rightX + 7, ry + 3, 7, "F");
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(8);
       setText(pdf, C.white);
       pdf.text(String(i + 1), rightX + 7, ry + 5.5, { align: "center" });
-      // Question text
       pdf.setFont("helvetica", "italic");
       pdf.setFontSize(9);
       setText(pdf, C.slate);
       const lines = clipLines(
-        pdf.splitTextToSize(`\u201C${q}\u201D`, rightW - 24),
+        pdf.splitTextToSize(`"${q}"`, rightW - 24),
         3,
       );
       pdf.text(lines, rightX + 20, ry + 6, { lineHeightFactor: 1.3 });
-      ry += lines.length * 11 + 8;
+      ry += lines.length * 11 + 6;
     });
-
-    ry += 8;
+    ry += 6;
     setStroke(pdf, C.hairline);
     pdf.setLineWidth(0.5);
     pdf.line(rightX, ry, rightX + rightW, ry);
-    ry += 14;
+    ry += 12;
 
-    // OBJECTIONS YOU'LL HEAR
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(8);
-    setText(pdf, C.rose);
-    pdf.text("OBJECTIONS YOU'LL HEAR — AND THE APPROVED ANSWER", rightX, ry);
-    setFill(pdf, C.rose);
-    pdf.rect(rightX, ry + 4, 18, 2, "F");
-    ry += 18;
+    // Reserve room for Proof Points + Common Mistake at bottom of right column
+    const proofH = 18 + proofs.length * 12 + 10;
+    const mistakeH = 38;
+    const reserveBottom = proofH + mistakeH + 14;
+    const objSectionTop = ry;
+    const objSectionBottom = colBottomY - reserveBottom;
 
-    const objAvail = lPageH - 60 - ry;
-    const objH = Math.min(76, (objAvail - 8) / objections.length);
+    // OBJECTIONS
+    drawSectionLabel(pdf, rightX, objSectionTop, "OBJECTIONS & APPROVED ANSWERS", C.rose);
+    let ry2 = objSectionTop + 14;
+    const objAvail = objSectionBottom - ry2;
+    const objH = Math.max(54, Math.min(96, (objAvail - 8) / Math.max(1, objections.length)));
     objections.forEach((o) => {
-      drawObjectionBlock(pdf, rightX, ry, rightW, objH, o);
-      ry += objH + 8;
+      drawObjectionBlock(pdf, rightX, ry2, rightW, objH, o);
+      ry2 += objH + 6;
     });
 
-    // Micro footer strip
-    const mfY = lPageH - 38;
+    // PROOF POINTS
+    let py = colBottomY - reserveBottom + 4;
+    drawSectionLabel(pdf, rightX, py, "PROOF POINTS YOU CAN DROP", C.emerald);
+    py += 14;
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(9);
+    setText(pdf, C.slate);
+    proofs.forEach((p) => {
+      // bullet
+      setFill(pdf, C.emerald);
+      pdf.circle(rightX + 2.5, py - 3, 1.6, "F");
+      const lines = clipLines(pdf.splitTextToSize(p, rightW - 12), 2);
+      pdf.text(lines, rightX + 9, py);
+      py += lines.length * 11;
+    });
+
+    // COMMON REP MISTAKE (bottom-right block)
+    drawAccentBlock(
+      pdf,
+      rightX,
+      colBottomY - mistakeH,
+      rightW,
+      mistakeH,
+      "COMMON REP MISTAKE",
+      mistake,
+      C.rose,
+      [253, 242, 245],
+    );
+
+    // ── Coach chip strip (full width, taller) ─────────────────────────────
+    const chipDefs: Array<{ key: FieldKey; label: string; text: string }> = [
+      { key: "remember", label: "REMEMBER", text: cc.remember },
+      { key: "sayItLikeThis", label: "SAY IT", text: cc.sayItLikeThis },
+      { key: "watchOutFor", label: "WATCH OUT", text: cc.watchOutFor },
+      { key: "bridge", label: "BRIDGE", text: cc.bridge },
+    ];
+    const chipGap = 8;
+    const chipW = (lContentW - chipGap * 3) / 4;
+    chipDefs.forEach((chip, i) => {
+      drawCoachChip(
+        pdf,
+        leftX + i * (chipW + chipGap),
+        chipStripY,
+        chipW,
+        chipStripH,
+        chip.key,
+        chip.label,
+        chip.text,
+      );
+    });
+
+    // ── Micro footer (connects-to · banned phrases) ───────────────────────
     setStroke(pdf, C.hairline);
     pdf.setLineWidth(0.5);
-    pdf.line(lMargin, mfY, lPageW - lMargin, mfY);
+    pdf.line(lMargin, microFooterY, lPageW - lMargin, microFooterY);
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(7);
+    setText(pdf, C.muted);
+    pdf.text("CONNECTS TO:", lMargin, microFooterY + 12);
     pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(7.5);
-    setText(pdf, C.subtle);
+    setText(pdf, C.slate);
+    const ctx = sMeta.connectsTo?.length ? sMeta.connectsTo.join("  ·  ") : "—";
+    pdf.text(clipLines(pdf.splitTextToSize(ctx, lContentW * 0.45), 1), lMargin + 60, microFooterY + 12);
+
+    pdf.setFont("helvetica", "bold");
+    setText(pdf, C.rose);
+    const bannedLabel = "BANNED HERE:";
+    const bannedLabelX = lMargin + lContentW * 0.55;
+    pdf.text(bannedLabel, bannedLabelX, microFooterY + 12);
+    pdf.setFont("helvetica", "normal");
+    setText(pdf, C.slate);
+    const banned = sMeta.bannedHere?.length ? sMeta.bannedHere.join("  ·  ") : "—";
     pdf.text(
-      `Comply365 · Week ${week.number} Field Kit · ${week.title}`,
-      lMargin,
-      mfY + 14,
-    );
-    pdf.text(
-      "Time on slide ~60–90s   ·   Drill rating: ☐ 1  ☐ 2  ☐ 3  ☐ 4  ☐ 5",
-      lPageW - lMargin,
-      mfY + 14,
-      { align: "right" },
+      clipLines(pdf.splitTextToSize(banned, lContentW * 0.4), 1),
+      bannedLabelX + 64,
+      microFooterY + 12,
     );
   });
 
@@ -899,29 +1058,120 @@ function drawObjectionBlock(
   setFill(pdfInner, C.rose);
   pdfInner.rect(x, yPos, 3, h, "F");
 
-  // Pushback row
-  pdfInner.setFont("helvetica", "bold");
-  pdfInner.setFontSize(8);
-  setText(pdfInner, C.rose);
-  pdfInner.text("\u25B8", x + 10, yPos + 12);
+  // Pushback row — draw a filled rose triangle (helvetica core lacks U+25B8)
+  setFill(pdfInner, C.rose);
+  pdfInner.triangle(x + 9, yPos + 8, x + 9, yPos + 16, x + 16, yPos + 12, "F");
   pdfInner.setFont("helvetica", "bold");
   pdfInner.setFontSize(8.5);
   setText(pdfInner, C.ink);
   const pLines = clipLines(pdfInner.splitTextToSize(o.pushback, w - 26), 2);
-  pdfInner.text(pLines, x + 20, yPos + 12);
+  pdfInner.text(pLines, x + 22, yPos + 12);
   const afterPushY = yPos + 12 + pLines.length * 10 + 4;
 
-  // Response row
-  pdfInner.setFont("helvetica", "bold");
-  pdfInner.setFontSize(8);
-  setText(pdfInner, C.emerald);
-  pdfInner.text("\u21B3", x + 10, afterPushY);
+  // Response row — draw an emerald right-arrow (avoid U+21B3)
+  setStroke(pdfInner, C.emerald);
+  pdfInner.setLineWidth(1.2);
+  pdfInner.line(x + 9, afterPushY - 3, x + 18, afterPushY - 3);
+  pdfInner.line(x + 14, afterPushY - 6, x + 18, afterPushY - 3);
+  pdfInner.line(x + 14, afterPushY, x + 18, afterPushY - 3);
   pdfInner.setFont("helvetica", "normal");
   pdfInner.setFontSize(8);
   setText(pdfInner, C.slate);
   const maxRespLines = Math.max(2, Math.floor((h - (afterPushY - yPos) - 6) / 10));
   const rLines = clipLines(pdfInner.splitTextToSize(o.response, w - 26), maxRespLines);
-  pdfInner.text(rLines, x + 20, afterPushY, { lineHeightFactor: 1.3 });
+  pdfInner.text(rLines, x + 22, afterPushY, { lineHeightFactor: 1.3 });
+}
+
+// ─── New rendering helpers ──────────────────────────────────────────────────
+function drawSectionLabel(pdf: jsPDF, x: number, y: number, label: string, color: [number, number, number]) {
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7.5);
+  setText(pdf, color);
+  pdf.text(label, x, y);
+  setFill(pdf, color);
+  pdf.rect(x, y + 3, 18, 1.5, "F");
+}
+
+function drawAccentBlock(
+  pdf: jsPDF,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  label: string,
+  body: string,
+  accent: [number, number, number],
+  soft: [number, number, number],
+) {
+  setFill(pdf, soft);
+  pdf.roundedRect(x, y, w, h, 5, 5, "F");
+  setFill(pdf, accent);
+  pdf.rect(x, y, 3, h, "F");
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7.5);
+  setText(pdf, accent);
+  pdf.text(label, x + 10, y + 14);
+  pdf.setFont("helvetica", "normal");
+  pdf.setFontSize(9);
+  setText(pdf, C.slate);
+  const lines = clipLines(
+    pdf.splitTextToSize(body, w - 18),
+    Math.max(1, Math.floor((h - 22) / 11)),
+  );
+  pdf.text(lines, x + 10, y + 26, { lineHeightFactor: 1.3 });
+}
+
+function drawMetaStrip(pdf: jsPDF, x: number, y: number, w: number, meta: SlideMeta) {
+  // DTOP chip
+  let cx = x;
+  if (meta.dtop) {
+    const dtopColor: Record<NonNullable<SlideMeta["dtop"]>, [number, number, number]> = {
+      D: C.dBlue,
+      T: C.tAmber,
+      O: C.oViolet,
+      P: C.pEmerald,
+    };
+    const col = dtopColor[meta.dtop];
+    setFill(pdf, col);
+    pdf.roundedRect(cx, y - 8, 14, 14, 3, 3, "F");
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(9);
+    setText(pdf, C.white);
+    pdf.text(meta.dtop, cx + 7, y + 2, { align: "center" });
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(7);
+    setText(pdf, C.muted);
+    pdf.text("DTOP STAGE", cx + 20, y + 2);
+    cx += 86;
+  }
+
+  // Persona chips
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7);
+  setText(pdf, C.muted);
+  pdf.text("PERSONA FIT:", cx, y + 2);
+  cx += 64;
+  meta.persona.forEach((p) => {
+    const pw = pdf.getTextWidth(p) + 12;
+    setFill(pdf, C.offwhite);
+    setStroke(pdf, C.hairline);
+    pdf.setLineWidth(0.5);
+    pdf.roundedRect(cx, y - 7, pw, 13, 3, 3, "FD");
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(7.5);
+    setText(pdf, C.slate);
+    pdf.text(p, cx + 6, y + 2);
+    cx += pw + 5;
+  });
+
+  // Time-on-slide pinned right
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7);
+  setText(pdf, C.muted);
+  pdf.text("TIME ON SLIDE:", x + w - 96, y + 2);
+  pdf.setFont("helvetica", "normal");
+  setText(pdf, C.slate);
+  pdf.text("60–90s", x + w - 36, y + 2);
 }
 
 export const downloadWeekFieldKit = (week: CoachCardWeek) => {
