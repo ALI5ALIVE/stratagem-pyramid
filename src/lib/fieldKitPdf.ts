@@ -1657,10 +1657,16 @@ function renderSlideTranscriptPage(
   const margin = 40;
   const topMargin = 44;
 
+  // Split source script into beat-sized paragraphs. Authors sometimes use
+  // blank-line separators, sometimes a single block of prose. Always try
+  // an inline split on canonical cue phrases too so a wall of text becomes
+  // multiple labelled beats.
+  const INLINE_CUE = /(?=\b(?:Why this matters|Core message[^.:]*|The pain[^.:]*|The value lever[^.:]*|Say it like this|Watch out for|Bridge to next|Delivery tip|When you deliver this|Next we go|Next,)[:\s])/gi;
   const paragraphs = sanitize(script)
     .split(/\n\s*\n/)
+    .flatMap((block) => block.split(INLINE_CUE))
     .map((p) => p.trim())
-    .filter(Boolean);
+    .filter((p) => p.length > 20);
 
   // Estimate ~150 words per minute spoken.
   const wordCount = script.split(/\s+/).filter(Boolean).length;
