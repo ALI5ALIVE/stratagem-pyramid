@@ -2072,25 +2072,29 @@ function renderSlideTranscriptPage(
       }
     }
 
-    // Listen for — small side note with leading dot
+    // Listen for — proper footer row: divider, label on its own line, body underneath
     if (b.listenFor) {
+      cy += 8;
+      // hairline divider across the card body
+      setStroke(pdf, C.hairline);
+      pdf.setLineWidth(0.4);
+      pdf.line(bx, cy - 4, bx + innerW, cy - 4);
       cy += 4;
-      setFill(pdf, b.accent);
-      pdf.circle(bx + 2, cy - 3, 1.4, "F");
+      // Label (own line)
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(listenSize);
       setText(pdf, b.accent);
-      pdf.text("Listen for", bx + 8, cy);
-      const labelW = pdf.getTextWidth("Listen for") + 4;
+      pdf.text("LISTEN FOR", bx, cy);
+      cy += listenLeading;
+      // Body (own block, full width)
       pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(listenSize);
       setText(pdf, C.muted);
-      const wLines = pdf.splitTextToSize(b.listenFor, innerW - 8 - labelW);
-      let lcy = cy;
-      wLines.forEach((ln: string, idx: number) => {
-        const lx = idx === 0 ? bx + 8 + labelW : bx + 8;
-        pdf.text(ln, lx, lcy);
-        lcy += listenLeading;
-      });
+      const wLines = pdf.splitTextToSize(b.listenFor, innerW);
+      for (const ln of wLines) {
+        pdf.text(ln, bx, cy);
+        cy += listenLeading;
+      }
     }
 
     y += cardH + cardGap;
