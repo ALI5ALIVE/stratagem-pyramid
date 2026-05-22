@@ -1,144 +1,127 @@
-## What's wrong with the current 1-pager
+## Goals
 
-The current `renderSlidePagePortrait` (in `src/lib/fieldKitPdf.ts`) builds a portrait A4 with 7 stacked sections plus 56pt margins. The visual result is loose because:
+Polish the Sales Enablement Field Kit PDF on four specific issues:
+1. Stop shouting — fix copy that is wrongly upper-cased.
+2. Move "Check Yourself" higher on the study sheet so reps see it before the fold.
+3. Reformat the Contents ("Week at a glance") page so it's scannable, not a flat list.
+4. Reformat each transcript page so it reads as structured paragraphs, not a wall of text.
 
-- **Fixed reserves, elastic middle.** The bottom is hard-reserved for the 2×2 grid (138pt) + check band (60pt) + footer. The "Ideas you must own" block in the middle stretches to absorb whatever is left, so when curated content is short, ideas get over-spaced and the whole page reads empty.
-- **Heading-heavy.** Every section has its own SECTION LABEL + accent rule + 14pt of padding. Seven of them stacked = ~100pt of pure labelling chrome.
-- **Round-rect cards with thick padding** (`splitBlockH = 116`, `rowH ~63`) waste vertical space because text inside is only 8.5pt — most cards sit half-empty.
-- **No use of the right margin** — the title row, takeaway, and ideas all run full-width even when the text is short.
-- **No transcript** of the narration is included anywhere; reps only get a 1-line italic echo.
+Scope is `src/lib/fieldKitPdf.ts` only. No data files change.
 
 ---
 
-## Proposed redesign — denser editorial 1-pager + transcript page
+## 1. Copy casing pass
 
-### Page 1 — the study sheet (single page, no white-space sag)
+Today, every slide title is force-`toUpperCase()`'d on both the study sheet (line 1310) and the transcript page (line 1679, 1702). Section labels are also forced caps. That looks like shouting and breaks BrandNumber casing rules (e.g. "Comply365").
 
-Switch from "stacked sections with reserves" to a **two-column editorial layout** with a fixed left rail and a flowing right column. Margins drop from 56pt to 40pt (sides) / 44pt (top/bottom). All section labels become inline mini-tags on the left rail rather than full-width banners.
+Changes:
+- **Slide titles** — render in Title Case as authored (drop `title.toUpperCase()` in `renderSlidePagePortrait` and `renderSlideTranscriptPage`). Keep the numeral big and brand-blue; title goes 14pt bold ink, sentence case as written.
+- **Header strip** — replace `"COMPLY365 · SALES ENABLEMENT ACADEMY"` (line 1278, 1647) with `"Comply365 · Sales Enablement Academy"` at 7.5pt tracked (use letter-spacing illusion via spaced separator, not real caps).
+- **Section labels** (`TAKEAWAY`, `WHY A BUYER CARES`, `WATCH-OUT`, `CONNECTS`, `WHAT'S ON THE SLIDE`, `THE IDEAS YOU MUST OWN`, `KEY TERMS`, `DEFENSIBLE FACTS`, `CHECK YOURSELF`, `TRANSCRIPT · COACH NARRATION (VERBATIM)`) — keep as small-caps style (these are intentional eyebrow labels) BUT shorten and soften:
+  - `THE IDEAS YOU MUST OWN` → `Ideas to own`
+  - `WHAT'S ON THE SLIDE` → `What's on screen`
+  - `WHY A BUYER CARES` → `Why the buyer cares`
+  - `DEFENSIBLE FACTS` → `Proof points`
+  - `TRANSCRIPT · COACH NARRATION (VERBATIM)` → `Coach transcript · verbatim`
+  - `CHECK YOURSELF` → `Check yourself`
+  - All rendered at 7pt bold, 0.6pt letter spacing via the existing `drawRailLabel`, no `.toUpperCase()` on the underlying string.
+- **Footer lines** — change `"Rep-facing · Not for customer distribution"` and `"Read once to memorise · do not read live on a call"` to sentence case (already are). Audit `Week ${n} · Study sheet` etc. — already fine.
+- **Cover page** — change `WEEK ${n}  ·  FIELD KIT` (line 550) and `HOW TO USE THIS KIT` (line 575), `CARD LEGEND` (line 603), `LOCKED TERMINOLOGY — USE THESE, NEVER THE OTHERS` (line 628) to softer Title/sentence case eyebrows. Keep "Comply365" cased correctly (line 541 currently `"COMPLY365"`).
 
-```text
-┌──────────────────────────────────────────────────────────────┐
-│ COMPLY365 · ACADEMY                W1 · Slide 04 / 18 · DTOP │
-├──────────────────────────────────────────────────────────────┤
-│ 04                                                           │
-│ ─── DTOP — DETECT TRIGGER ORCHESTRATE PROVE                  │
-│                                                              │
-│ ┌── LEFT RAIL (38%) ────┐ ┌── RIGHT COLUMN (62%) ──────────┐│
-│ │ TAKEAWAY              │ │ WHAT'S ON THE SLIDE            ││
-│ │ DTOP is the closed    │ │ • 4 connected stages D→T→O→P   ││
-│ │ loop from signal to   │ │ • Closed loop arrow back       ││
-│ │ verified outcome…     │ │ • Signal-source inputs feed D  ││
-│ │                       │ │                                ││
-│ │ WHY A BUYER CARES     │ │ THE IDEAS YOU MUST OWN         ││
-│ │ Workflow tools move   │ │ 01 Detect fuses 4 signal srcs  ││
-│ │ tasks but don't fuse  │ │ 02 Trigger turns signal → cited││
-│ │ signals or produce    │ │    next action                 ││
-│ │ regulator-ready proof │ │ 03 Prove closes the loop       ││
-│ │                       │ │                                ││
-│ │ WATCH-OUT             │ │ KEY TERMS                      ││
-│ │ Don't pitch DTOP as   │ │ Detect · …    Trigger · …      ││
-│ │ "workflow with a      │ │ Orchestrate · … Prove · …      ││
-│ │ fancy name". Never    │ │                                ││
-│ │ FOQA/FDM/ASAP.        │ │ DEFENSIBLE FACTS               ││
-│ │                       │ │ • Only loop with Detect+Prove  ││
-│ │ CONNECTS              │ │ • Point tools cover 1/4 sources││
-│ │ ← Signal Sources      │ │ • Whiteboard colours D/T/O/P   ││
-│ │ → Whiteboard Drill    │ │                                ││
-│ │ → Value Unlocked      │ │                                ││
-│ └───────────────────────┘ └────────────────────────────────┘│
-├──────────────────────────────────────────────────────────────┤
-│ CHECK YOURSELF  ☐ q1     ☐ q2     ☐ q3                       │
-│ W1 · Foundation · Study Notes                Page 6 · 1 of 2 │
-└──────────────────────────────────────────────────────────────┘
-```
+Acceptance: zero `.toUpperCase()` calls applied to user-authored copy (titles, body, narration). The only caps that remain are intentional 7pt eyebrow labels via the helper.
 
-Key density moves:
+---
 
-1. **Two-column body** — left rail (≈38% width) carries the four "buyer-facing" anchors (Takeaway, Why a buyer cares, Watch-out, Connects). Right column (≈62%) carries the three "rep-facing" study blocks (What's on the slide, Ideas you must own, Terms + Facts).
-2. **Inline mini-tags** — small caps 7pt label flush left with a 2pt brand-coloured square instead of full-width accent rules. Saves ~80pt.
-3. **No box chrome.** Replace round-rect cards with single 0.5pt hairline dividers between blocks. The current `drawStudyBlock` filled cards are dropped.
-4. **Tighter type rhythm.** Body 9pt / 11.5pt line. Headings 11pt. Takeaway sits at 12pt bold ink (down from 11pt bold but with much less whitespace around it).
-5. **Check-yourself becomes a single horizontal strip** at the bottom (3 inline checkboxes) — drops from 60pt to ~28pt.
-6. **Page indicator gains "1 of 2"** to signal the transcript continuation.
+## 2. Lift "Check Yourself" up the page
 
-A height-aware overflow rule pre-measures content and trims in this order before clipping: `facts → terms → connects → keyIdeas → whatsOnSlide`. Takeaway, Why-it-matters, Watch-out, and Check-yourself are never trimmed.
+Today, Check Yourself is pinned to `footerY - checkH - 6` — bottom of page, below the entire 2-column body (lines 1438–1467). On a short slide, it floats far below the content; on a dense slide, reps don't see it until they finish reading.
 
-### Page 2 — full narration transcript
+Change in `renderSlidePagePortrait`:
+- Promote Check Yourself to sit **immediately under the title rule** (after the brand 28×2 underline, before the 2-column body).
+- New stack: header → numeral + title → brand rule → **Check Yourself strip (compact, 26pt)** → 2-column body (rail + right column) → footer.
+- The strip is one row: small "Check yourself" eyebrow, then 3 inline checkboxes with truncated question text (max 2 lines, clipped). Background switches from `C.offwhite` panel to a hairline-bordered light rule (`0.5pt` top + bottom, no fill) so it doesn't dominate above the body.
+- `bodyTop` becomes `y + checkH + 12`. `bodyBottom = footerY - 12` (the bottom reserve is freed because Check Yourself moved up). Body now uses the full vertical span.
+- Keep the same 3-question slot logic; recompute `labelW` against the new shorter eyebrow.
 
-New page added **immediately after** every slide 1-pager (so the PDF runs: slide-1 study, slide-1 transcript, slide-2 study, slide-2 transcript, …).
+Acceptance: Check Yourself sits in the top ~25% of every page directly under the title, never below the rail/column content.
 
-```text
-┌──────────────────────────────────────────────────────────────┐
-│ COMPLY365 · ACADEMY                W1 · Slide 04 / 18 · DTOP │
-├──────────────────────────────────────────────────────────────┤
-│ 04 / DTOP — DETECT TRIGGER ORCHESTRATE PROVE                 │
-│ TRANSCRIPT — COACH NARRATION (verbatim)                      │
-│                                                              │
-│ ~3 min · spoken script                                       │
-│ ────────────────────────────────────────────                 │
-│                                                              │
-│ This is the operating model that turns every signal into a   │
-│ verified outcome. Detect fuses four signal sources…          │
-│                                                              │
-│ [continues, paragraph-broken, 10pt slate, 1.45 leading,      │
-│  two columns if it spills past 600pt, page-break with        │
-│  "Transcript continued ·" header on overflow]                │
-│                                                              │
-│ ────────────────────────────────────────────                 │
-│ Tip — read this once before you record yourself; don't read  │
-│ it on the call.                                              │
-│                                                              │
-│ W1 · Foundation · Transcript                  Page 7 · 2 of 2│
-└──────────────────────────────────────────────────────────────┘
-```
+---
 
-Behaviour:
+## 3. Contents page reformat ("Week at a glance")
 
-- Pulls `getSalesEnablementNarration(slideId).script` (already exists, used elsewhere in this file).
-- Sanitised through the existing `sanitize()` helper, split on blank lines into paragraphs, justified left, 10pt slate, 14pt leading.
-- If the script overflows one page, automatically wrap to a second transcript page with `Transcript continued` header — natural paragraph break only, never mid-sentence.
-- If a slide has **no narration script** (rare), the transcript page is skipped silently (no blank page, no "no transcript available" stub).
-- Header reuses the same brand bar as page 1 so the spread reads as a single chapter.
+Today (lines 654–711) it's a flat vertical list of 18 rows, each row: 2-digit index + title + 2-line `remember` line + hairline. By slide 12+ it pages over and looks like a spreadsheet.
 
-### Cover-page copy update
+Change to a **two-column scannable index** with grouping:
+- Header unchanged: "Week at a glance" + brand rule.
+- Intro line stays.
+- Body splits into 2 columns. Each entry becomes a compact tile (no fill, hairline left rule in brand colour 2pt wide):
+  - Top row: `01` (8pt subtle) · slide title (10.5pt bold ink, Title Case, clipped to 2 lines)
+  - Below: one-line takeaway (9pt muted, 1 line clipped, ellipsis)
+  - Bottom-right of tile: a tiny DTOP/footprint chip when `meta.dtop` exists (7pt brand chip)
+- Tile height ~52pt. 2 columns × ~9 tiles = 18 slides on one A4 page. W2 (8 slides) and W3 (15 slides) also fit.
+- If a week ever exceeds 18, second contents page is added with the same grid.
+- One-liner takeaway sourced from `studyNote.inOneSentence` (preferred) falling back to `cc.remember`, sanitised and clipped.
 
-Update the "How to use this kit" block in `buildWeekFieldKitPdf` cover page to say:
+Acceptance: contents page reads as a 2-column scannable grid, every slide visible on a single page for W1 (18), W2 (8), W3 (15).
 
-> Every slide has two pages: a one-page study sheet (takeaway, what's on the slide, ideas, terms, facts, watch-out, self-check) followed by the full coach transcript for memorisation and self-recording.
+---
+
+## 4. Transcript page — break up the wall of text
+
+Today (lines 1748–onwards) paragraphs are dumped at 10pt with 14pt leading, full content width (~515pt). Long paragraphs become wall-of-text blocks.
+
+Changes in `renderSlideTranscriptPage`:
+- **Narrower measure for readability** — use a single column constrained to ~440pt (centered) instead of full ~515pt. Better reading line length (~70 chars).
+- **Paragraph break sweetener** — after each paragraph add 8pt vertical air (currently only line leading carries over).
+- **Drop cap for paragraph 1** — first paragraph gets a 2-line drop initial in brand blue (16pt bold), rest of body at 10pt slate. Visually anchors the start.
+- **Pull quote every ~4 paragraphs** — extract the first sentence of paragraph index 3 (and 7 if present) and render it as a 12pt italic ink pull-quote with a 2pt brand left bar, 10pt padding either side. Pulls air into the page and breaks the grey block.
+- **Section dividers** — when a paragraph starts with a coach-script cue word (the existing `CUE_OPENERS` like `"core message:"`, `"say it like this:"`, `"watch out for:"`, `"bridge to next:"`, `"why this matters:"`), strip the cue and render a one-line eyebrow above the paragraph (`Core message`, `Say it like this`, etc.) in 7pt brand. This converts the 5-part coach format into visible sections instead of running prose.
+- **Justification** — left-aligned (current). Do NOT justify, that creates rivers at this width.
+- **Continuation page** — already supported; header eyebrow becomes "Coach transcript · continued" (sentence case).
+
+Acceptance: a typical 350-word transcript page now reads as a narrow column with a drop cap, 1–2 eyebrow section labels, and at most one pull quote; no paragraph runs more than ~6 lines without visual relief.
 
 ---
 
 ## Technical changes
 
-**1. `src/lib/fieldKitPdf.ts`**
+`src/lib/fieldKitPdf.ts` only. No data files touched.
 
-- Rewrite `renderSlidePagePortrait` to the 2-column layout above. Drop `drawStudyBlock` (round-rect cards) and replace its callers with a new `drawRailBlock(pdf, x, y, w, label, accent, body)` helper that draws a 7pt label + 2pt accent square + body text and returns the consumed height.
-- Replace the fixed `splitBlockH = 116` / `gridH = 138` / `checkBandH = 60` reserves with a **measure-then-place** pass: pre-measure each block at target font sizes, allocate from a single content budget, apply the trim order above only if total exceeds budget.
-- Add `renderSlideTranscriptPage(pdf, { week, slideIndex, slideCount, title, script })`. Called from the same loop where `renderSlidePagePortrait` is invoked (around line 724), only when `getSalesEnablementNarration(slideId)?.script` exists.
-- Update the page-number footer to render `Page N · 1 of 2` / `Page N+1 · 2 of 2`.
-- `drawBottomBlock` is retained but only used by appendices (Glossary, Sell & Win) — those pages don't change.
+1. **`renderSlidePagePortrait`**
+   - Remove `title.toUpperCase()`; render title as-is.
+   - Move Check Yourself block above the body; replace `roundedRect` fill with hairline rule-only style.
+   - Recompute `bodyTop` / `bodyBottom`; drop the bottom reserve.
+   - Rename eyebrow labels per §1.
 
-**2. Cover page (`buildWeekFieldKitPdf`)**
+2. **`renderSlideTranscriptPage`**
+   - Remove `title.toUpperCase()` (two places).
+   - Switch body to a centered ~440pt column.
+   - Add `drawDropCap(pdf, x, y, char)` helper; apply to paragraph 0.
+   - Add `drawPullQuote(pdf, x, y, w, text)` helper; apply on para 3 (and 7 if exists).
+   - Detect cue-opener paragraphs (reuse the existing `CUE_OPENERS` regex set), strip the cue, prepend a 7pt brand eyebrow.
+   - Add 8pt paragraph spacing.
 
-- Update the instructional sub-copy to mention the two-page-per-slide structure.
-- Update the estimated page count line if one exists.
+3. **Week at a glance (lines 651–713)**
+   - Rewrite as a 2-column tile grid (`tileW = contentW/2 - 8`, `tileH ≈ 52`).
+   - Use `studyNote.inOneSentence` (already imported via `buildStudyNote`) as the takeaway line per tile.
+   - Add a small DTOP/footprint chip when `meta.dtop` is set (reuse existing `SLIDE_META` lookup — already loaded for slide pages).
 
-**3. Out of scope**
+4. **Cover page (lines 540–648)**
+   - Re-case the brand wordmark, eyebrow chips, and section labels per §1 (`Comply365`, `Week ${n} · Field Kit`, `How to use this kit`, `Card legend`, `Locked terminology — use these, never the others`).
 
-- `salesEnablementStudyNotes.ts` — no data shape change. `whatsOnSlide`, `keyIdeas`, `terms`, etc. stay as they are.
-- `salesEnablementNarration.ts` — no change.
-- `CoachCardPanel.tsx`, slide components, other PDF exports (DTOP, exec, customer-overview, tech) — no change.
-- Glossary and W3 Sell & Win appendices — no change.
+5. **Out of scope**
+   - `salesEnablementStudyNotes.ts`, `salesEnablementNarration.ts`, `salesEnablementCoachCards.ts`, `salesEnablementSlideAids.ts` — untouched.
+   - Glossary appendix, Sell & Win appendix — untouched.
+   - PPTX exporters, slide React components — untouched.
 
 ---
 
 ## Validation
 
-1. Generate W1 / W2 / W3 PDFs.
-2. Convert to images at 150dpi and inspect every slide spread (study page + transcript page) for:
-   - No white-space sag — content fills the page edge to edge.
-   - Transcript page never starts mid-sentence; overflow page header reads "Transcript continued".
-   - Check-yourself strip never gets cut.
-   - Page numbering `1 of 2` / `2 of 2` is correct for slides with and without narration.
-3. Spot-check 6 slides across the three weeks (cover-adjacent, DTOP, capability tour, footprint, objections, capstone).
-4. Confirm the appendices (Glossary, Sell & Win) still render unchanged.
+1. Generate W1, W2, W3 PDFs via `scripts/genpdf.ts` (or the UI download buttons on `/sales-enablement`).
+2. Render each page to PNG at 150 dpi and inspect:
+   - No accidental ALL-CAPS in titles or body copy on any page.
+   - Check Yourself sits directly under the title strip on every slide page.
+   - Contents page fits on one A4 for W1/W2/W3 with no overflow.
+   - Transcript pages have a drop cap, visible section eyebrows where cues exist, no paragraph blob exceeds ~6 lines.
+3. Spot-check Comply365 / SafetyManager365 / ContentManager365 casing in titles and contents.
