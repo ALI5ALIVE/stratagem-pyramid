@@ -1956,11 +1956,11 @@ function renderSlideTranscriptPage(
   const railW = 64;        // left rail width
   const cardPadX = 16;
   const cardPadY = 14;
-  const pointSize = 9;
-  const pointLeading = 12;
-  const sayPhraseSize = 12;     // big and readable
-  const sayPhraseLeading = 18;  // generous breathing room
-  const sayPhraseGap = 4;       // extra space between phrase lines
+  const pointSize = 9.5;
+  const pointLeading = 13;
+  const sayBodySize = 10.5;     // calm, paragraph body
+  const sayBodyLeading = 14;    // generous line-height for easy reading
+  const sentenceGap = 6;        // paragraph break between sentences
   const listenSize = 8.5;
   const listenLeading = 11;
   const cardGap = 14;
@@ -1968,56 +1968,66 @@ function renderSlideTranscriptPage(
   const bodyX = () => colX + railW;
   const bodyW = () => colW - railW;
 
-  // Render a single phrase line with bold highlight tokens, no wrap — we
-  // assume phrases are short enough; if a phrase still overflows, fall back
-  // to splitTextToSize on the plain string.
-  const drawPhraseLine = (text: string, x: number, baseline: number, maxW: number) => {
-    const tokens = tokenize(text);
-    // measure
-    let total = 0;
-    for (const tok of tokens) {
-      pdf.setFont("helvetica", tok.bold ? "bold" : "normal");
-      pdf.setFontSize(sayPhraseSize);
-      total += pdf.getTextWidth(tok.text);
-    }
-    if (total <= maxW) {
-      let cx = x;
-      for (const tok of tokens) {
-        const isSpace = /^\s+$/.test(tok.text);
+  // Wrap a sentence to the card width and figure out where each token sits
+  // on each line — so we can re-render that line word-by-word and keep
+  // bold highlights (product names, stats, quoted phrases) intact without
+  // breaking the natural reading flow.
+  const wrapSentenceTokens = (text: string, maxW: number): Array<Array<{ text: string; bold: boolean }>> => {
+    const tokens = tokenize(text).filter((t) => !/^\s+$/.test(t.text));
+    const lines: Array<Array<{ text: string; bold: boolean }>> = [];
+    let current: Array<{ text: string; bold: boolean }> = [];
+    const measure = (line: Array<{ text: string; bold: boolean }>) => {
+      let w = 0;
+      line.forEach((tok, idx) => {
         pdf.setFont("helvetica", tok.bold ? "bold" : "normal");
-        pdf.setFontSize(sayPhraseSize);
-        setText(pdf, tok.bold ? C.ink : C.slate);
-        if (!isSpace) pdf.text(tok.text, cx, baseline);
-        cx += pdf.getTextWidth(tok.text);
+        pdf.setFontSize(sayBodySize);
+        if (idx > 0) {
+          pdf.setFont("helvetica", "normal");
+          w += pdf.getTextWidth(" ");
+        }
+        pdf.setFont("helvetica", tok.bold ? "bold" : "normal");
+        w += pdf.getTextWidth(tok.text);
+      });
+      return w;
+    };
+    for (const tok of tokens) {
+      const next = [...current, tok];
+      if (measure(next) <= maxW || current.length === 0) {
+        current = next;
+      } else {
+        lines.push(current);
+        current = [tok];
       }
-      return 1;
     }
-    // Fallback wrap (rare): plain wrap, no inline bold.
-    pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(sayPhraseSize);
-    setText(pdf, C.slate);
-    const wrapped = pdf.splitTextToSize(text, maxW);
-    let by = baseline;
-    for (const ln of wrapped) {
-      pdf.text(ln, x, by);
-      by += sayPhraseLeading;
-    }
-    return wrapped.length;
+    if (current.length) lines.push(current);
+    return lines;
   };
 
-  // Phrase line count after fallback wrapping.
-  const phraseLineCount = (text: string, maxW: number): number => {
-    const tokens = tokenize(text);
-    let total = 0;
-    for (const tok of tokens) {
-      pdf.setFont("helvetica", tok.bold ? "bold" : "normal");
-      pdf.setFontSize(sayPhraseSize);
-      total += pdf.getTextWidth(tok.text);
+  // Render one sentence as a flowing paragraph. Returns y advance.
+  const drawSentence = (text: string, x: number, baseline: number, maxW: number): number => {
+    const lines = wrapSentenceTokens(text, maxW);
+    let by = baseline;
+    for (const line of lines) {
+      let cx = x;
+      line.forEach((tok, idx) => {
+        if (idx > 0) {
+          pdf.setFont("helvetica", "normal");
+          pdf.setFontSize(sayBodySize);
+          cx += pdf.getTextWidth(" ");
+        }
+        pdf.setFont("helvetica", tok.bold ? "bold" : "normal");
+        pdf.setFontSize(sayBodySize);
+        setText(pdf, tok.bold ? C.ink : C.slate);
+        pdf.text(tok.text, cx, by);
+        cx += pdf.getTextWidth(tok.text);
+      });
+      by += sayBodyLeading;
     }
-    if (total <= maxW) return 1;
-    pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(sayPhraseSize);
-    return pdf.splitTextToSize(text, maxW).length;
+    return lines.length * sayBodyLeading;
+  };
+
+  const sentenceLineCount = (text: string, maxW: number): number => {
+    return wrapSentenceTokens(text, maxW).length;
   };
 
   const measureBeat = (b: Beat): number => {
@@ -2026,14 +2036,15 @@ function renderSlideTranscriptPage(
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(pointSize);
     const pLines = pdf.splitTextToSize(b.point, bodyW() - cardPadX * 2);
-    h += pLines.length * pointLeading + 6;
-    // say lines
+    h += pLines.length * pointLeading + 8;
+    // say sentences — each wraps naturally; gap between sentences only
     if (b.sayLines && b.sayLines.length) {
       const innerW = bodyW() - cardPadX * 2;
-      for (const ph of b.sayLines) {
-        const n = phraseLineCount(ph, innerW);
-        h += n * sayPhraseLeading + sayPhraseGap;
-      }
+      b.sayLines.forEach((sent, i) => {
+        const n = sentenceLineCount(sent, innerW);
+        h += n * sayBodyLeading;
+        if (i < b.sayLines!.length - 1) h += sentenceGap;
+      });
       h += 4;
     }
     // listen for: divider + label row + body lines
@@ -2078,24 +2089,26 @@ function renderSlideTranscriptPage(
     const innerW = bodyW() - cardPadX * 2;
     let cy = y + cardPadY + pointSize;
 
-    // Point
+    // Point — sentence case, calm subtitle (no ALL CAPS shouting)
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(pointSize);
     setText(pdf, C.muted);
     const pLines = pdf.splitTextToSize(b.point, innerW);
     for (const ln of pLines) {
-      pdf.text(ln.toUpperCase(), bx, cy);
+      pdf.text(ln, bx, cy);
       cy += pointLeading;
     }
-    cy += 4;
+    cy += 6;
 
-    // Say lines — each on its own line, bigger type, lots of air
+    // Say — flowing paragraphs. One sentence per paragraph, wrapped
+    // naturally; a small gap between sentences gives rhythm without
+    // chopping the prose.
     if (b.sayLines && b.sayLines.length) {
-      cy += 2;
-      for (const ph of b.sayLines) {
-        const n = drawPhraseLine(ph, bx, cy, innerW);
-        cy += n * sayPhraseLeading + sayPhraseGap;
-      }
+      b.sayLines.forEach((sent, i) => {
+        const advanced = drawSentence(sent, bx, cy, innerW);
+        cy += advanced;
+        if (i < b.sayLines!.length - 1) cy += sentenceGap;
+      });
     }
 
     // Listen for — proper footer row: divider, label on its own line, body underneath
