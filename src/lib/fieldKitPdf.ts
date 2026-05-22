@@ -489,7 +489,7 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(8);
     setText(pdf, C.subtle);
-    pdf.text("COMPLY365 · SALES ENABLEMENT ACADEMY", margin, 28);
+    pdf.text("Comply365 · Sales Enablement Academy", margin, 28);
     pdf.setFont("helvetica", "normal");
     setText(pdf, C.muted);
     pdf.text(label, pageW - margin, 28, { align: "right" });
@@ -510,7 +510,7 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
       margin,
       pageH - 18,
     );
-    pdf.text("Rep-facing · Not for customer distribution", pageW - margin, pageH - 18, {
+    pdf.text("Rep-facing · not for customer distribution", pageW - margin, pageH - 18, {
       align: "right",
     });
   };
@@ -538,16 +538,16 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(10);
   setText(pdf, [180, 200, 230]);
-  pdf.text("COMPLY365", margin, 64);
+  pdf.text("Comply365", margin, 64);
   pdf.setFont("helvetica", "normal");
   setText(pdf, [120, 140, 175]);
-  pdf.text("SALES ENABLEMENT ACADEMY", margin + 78, 64);
+  pdf.text("Sales Enablement Academy", margin + 62, 64);
 
   // Title block
   pdf.setFont("helvetica", "normal");
   pdf.setFontSize(11);
   setText(pdf, [120, 160, 220]);
-  pdf.text(`WEEK ${week.number}  ·  FIELD KIT`, margin, pageH * 0.22);
+  pdf.text(`Week ${week.number}  ·  Field Kit`, margin, pageH * 0.22);
 
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(40);
@@ -572,7 +572,7 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(8);
   setText(pdf, C.brand);
-  pdf.text("HOW TO USE THIS KIT", cardX + 20, cardY + 26);
+  pdf.text("How to use this kit", cardX + 20, cardY + 26);
   let oy = cardY + 50;
   const usageGuide = [
     "Every slide gets two pages: a one-page study sheet, then the full coach transcript verbatim for memorisation and self-recording.",
@@ -600,7 +600,7 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(8);
   setText(pdf, C.muted);
-  pdf.text("CARD LEGEND", margin, legY);
+  pdf.text("Card legend", margin, legY);
   const legend: Array<[string, [number, number, number]]> = [
     ["Remember this", C.amber],
     ["Say it like this", C.emerald],
@@ -625,7 +625,7 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(8);
   setText(pdf, C.muted);
-  pdf.text("LOCKED TERMINOLOGY — USE THESE, NEVER THE OTHERS", margin + 16, termY + 18);
+  pdf.text("Locked terminology — use these, never the others", margin + 16, termY + 18);
   const terms: Array<[string, string]> = [
     ["Operational Data", "not FOQA / FDM / ASAP"],
     ["Generative AI", "not 'the AI' / LLM"],
