@@ -17,9 +17,13 @@ export interface StudyTerm {
 
 export type BeatLabel =
   | "Why this matters"
+  | "What's on the slide"
   | "Core message"
-  | "Pain & value"
+  | "The pain"
+  | "The value lever"
   | "How to deliver"
+  | "Roadmap honesty"
+  | "Discovery question"
   | "Transition";
 
 export interface KeyPoint {
@@ -1438,9 +1442,13 @@ const WEEK_FALLBACK: Record<WeekId, SlideOnePager> = {
 
 const BEAT_ORDER: BeatLabel[] = [
   "Why this matters",
+  "What's on the slide",
   "Core message",
-  "Pain & value",
+  "The pain",
+  "The value lever",
   "How to deliver",
+  "Roadmap honesty",
+  "Discovery question",
   "Transition",
 ];
 
@@ -1451,24 +1459,44 @@ const BEAT_MARKERS: Array<{ beat: BeatLabel; re: RegExp; strip?: RegExp }> = [
     strip: /^(why this (slide|drill|matters|is|exists|stretch|page)[^.:,]*[:.,]\s*)/i,
   },
   {
+    beat: "What's on the slide",
+    re: /^(what is on the slide|what's on the slide|on the slide|the slide (shows|opens|has))/i,
+    strip: /^((what(\s+is|'s)?\s+on the slide|on the slide|the slide (shows|opens|has))[^.:,]*[:.,—-]\s*)/i,
+  },
+  {
     beat: "Core message",
     re: /^(the core message|core message|core line[,:]?\s*verbatim|core line[,:]?)/i,
     strip: /^((the )?core message[^.:]*[:.]\s*|core line[,:]?\s*verbatim[.,]?\s*|core line[,:]?\s*)/i,
   },
   {
-    beat: "Pain & value",
-    re: /^(the pain|pain you|pain it|the value lever|value lever)/i,
-    strip: /^((the )?(pain|value lever)[^.:]*[:.]\s*)/i,
+    beat: "The pain",
+    re: /^(the pain|pain you|pain it|pain this addresses|pain addressed)/i,
+    strip: /^((the )?pain[^.:]*[:.]\s*)/i,
+  },
+  {
+    beat: "The value lever",
+    re: /^(the value lever|value lever|the value|value you)/i,
+    strip: /^((the )?value( lever)?[^.:]*[:.]\s*)/i,
   },
   {
     beat: "How to deliver",
-    re: /^(how to deliver|delivery tip|when you deliver|deliver each|deliver it|deliver this|how to deliver it|to deliver)/i,
-    strip: /^(how to deliver( it)?[^.:,]*[:.,—-]\s*|delivery tip[^.:,]*[:.,—-]\s*|when you deliver[^.,]*,\s*)/i,
+    re: /^(how to deliver|delivery tip|when you deliver|deliver each|deliver it|deliver this|to deliver|setup[:.]|run[:.]|recover[:.]|pre-line|emphasise|always frame|do not say|don't say|never call|never quote)/i,
+    strip: /^(how to deliver( it)?[^.:,]*[:.,—-]\s*|delivery tip[^.:,]*[:.,—-]\s*|when you deliver[^.,]*,\s*|setup[:.]\s*|run[:.]\s*|recover[:.]\s*)/i,
+  },
+  {
+    beat: "Roadmap honesty",
+    re: /^(be precise (on|and phased) (the )?roadmap|the honest limitation|honestly|be honest|do not promise|don't promise|the poc|poc[- ]versus[- ]production|phase \d|h1 2026|h2 2026)/i,
+    strip: /^(be precise (on|and phased) (the )?roadmap[^.:,]*[:.,—-]\s*|the honest limitation[^.:,]*[:.,—-]\s*|be honest[^.:,]*[:.,—-]\s*)/i,
+  },
+  {
+    beat: "Discovery question",
+    re: /^(discovery question|the discovery question|ask (this|one) (good )?(discovery )?question|then ask)/i,
+    strip: /^((the )?discovery question[^.:,]*[:.,—-]\s*|ask (this|one) (good )?(discovery )?question[^.:,]*[:.,—-]\s*|then ask[^.:,]*[:.,—-]\s*)/i,
   },
   {
     beat: "Transition",
-    re: /^(transition|next slide|next we|next:|next,|now we|hand straight|hand off|then we|once you)/i,
-    strip: /^(transition[^.:,]*[:.,—-]\s*|next[,:]?\s*)/i,
+    re: /^(transition|next slide|next we|next:|next,|now we|hand straight|hand off|then we|once you|that is|that's the)/i,
+    strip: /^(transition[^.:,]*[:.,—-]\s*|next slide[,:]?\s*|next[,:]?\s*)/i,
   },
 ];
 
@@ -1504,9 +1532,13 @@ export const buildKeyPointsFromScript = (
   const sentences = splitSentences(script);
   const buckets: Record<BeatLabel, string[]> = {
     "Why this matters": [],
+    "What's on the slide": [],
     "Core message": [],
-    "Pain & value": [],
+    "The pain": [],
+    "The value lever": [],
     "How to deliver": [],
+    "Roadmap honesty": [],
+    "Discovery question": [],
     "Transition": [],
   };
   let current: BeatLabel = "Why this matters";
@@ -1522,7 +1554,9 @@ export const buildKeyPointsFromScript = (
     if (!list.length) continue;
     const head = stripBeatPrefix(list[0], beat).trim();
     if (!head) continue;
-    const support = list.slice(1, 4).map((s) => s.trim());
+    // Keep ALL supporting sentences — no truncation. The renderer chooses
+    // how many to display based on available page space.
+    const support = list.slice(1).map((s) => s.trim());
     keyPoints.push({ beat, point: head, support });
   }
 

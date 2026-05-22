@@ -1320,8 +1320,8 @@ function renderSlidePagePortrait(
   pdf.text("KEY POINTS FROM THE NARRATION", margin, y);
   y += 14;
 
-  const bottomGridH = 170;
-  const keyPointsMaxY = footerY - bottomGridH - 18;
+  const bottomGridH = 150;
+  const keyPointsMaxY = footerY - bottomGridH - 16;
 
   const keyPoints = studyNote.keyPoints ?? [];
   if (keyPoints.length === 0) {
@@ -1356,8 +1356,8 @@ function renderSlidePagePortrait(
       pdf.text(pointLines, bodyX, y + 10, { lineHeightFactor: 1.35 });
       let lineY = y + 10 + pointLines.length * 11;
 
-      const maxSupport = Math.min(kp.support.length, 3);
-      for (let s = 0; s < maxSupport; s++) {
+      // Render every supporting sentence — only stop when the page runs out.
+      for (let s = 0; s < kp.support.length; s++) {
         if (lineY > keyPointsMaxY - 12) break;
         const supportText = sanitize(kp.support[s]);
         pdf.setFont("helvetica", "normal");
@@ -1365,9 +1365,9 @@ function renderSlidePagePortrait(
         setText(pdf, C.subtle);
         pdf.text("·", bodyX, lineY + 8);
         setText(pdf, C.slate);
-        const supLines = clipLines(pdf.splitTextToSize(supportText, bodyW - 12), 2);
+        const supLines = clipLines(pdf.splitTextToSize(supportText, bodyW - 12), 3);
         pdf.text(supLines, bodyX + 10, lineY + 8, { lineHeightFactor: 1.35 });
-        lineY += supLines.length * 10 + 2;
+        lineY += supLines.length * 10 + 3;
       }
 
       y = lineY + 10;
