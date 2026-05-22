@@ -20,6 +20,33 @@ import {
   WEEK_META_FALLBACK,
   type SlideMeta,
 } from "@/data/salesEnablementSlideAids";
+import {
+  buildSlideLearning,
+  type SlideLearning,
+} from "@/data/salesEnablementLearningOutcomes";
+
+// ─── Glyph sanitiser ─────────────────────────────────────────────────────────
+// helvetica core (jsPDF default) is Latin-1 only. Smart quotes, em-dashes,
+// bullets, arrows etc. render as boxes or wrong glyphs. Sanitise at the
+// write site so data files can stay readable.
+const GLYPH_MAP: Array<[RegExp, string]> = [
+  [/[\u2018\u2019\u02BC]/g, "'"],   // smart single quotes
+  [/[\u201C\u201D]/g, '"'],         // smart double quotes
+  [/[\u2013\u2014]/g, "-"],         // en/em dash
+  [/\u2026/g, "..."],               // ellipsis
+  [/[\u2022\u25CF\u25AA\u25A0]/g, "·"], // bullets to middle dot (Latin-1 safe)
+  [/[\u2192\u27A1]/g, ">"],         // right arrows
+  [/\u21B3/g, ">"],                 // turn arrow
+  [/\u00A0/g, " "],                 // nbsp
+];
+const sanitize = (s: string | undefined): string => {
+  if (!s) return "";
+  let out = s;
+  GLYPH_MAP.forEach(([re, rep]) => { out = out.replace(re, rep); });
+  // strip anything still outside Latin-1
+  out = out.replace(/[^\x00-\xFF]/g, "");
+  return out;
+};
 
 // ─── Brand tokens (RGB tuples for jsPDF) ─────────────────────────────────────
 const C = {
