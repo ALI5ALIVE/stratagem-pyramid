@@ -142,6 +142,114 @@ const FIELD_STYLES = {
 
 type FieldKey = keyof typeof FIELD_STYLES;
 
+// ─── Narration paraphrasing ──────────────────────────────────────────────────
+const FILLER_OPENERS = [
+  /^this slide matters because[^.]*\.\s*/i,
+  /^why this matters[^.:]*[:.]\s*/i,
+  /^this is the[^.]*and it does the heavy lifting[^.]*\.\s*/i,
+  /^this slide[^.]*\.\s*/i,
+];
+
+const FILLER_SENTENCES = [
+  /when you deliver this[^.]*\./gi,
+  /slow down[^.]*\./gi,
+  /delivery tip[^.:]*[:.][^.]*\./gi,
+  /^next[^.]*\.\s*$/gim,
+];
+
+/** Deterministic paraphrase of a teaching script → coaching summary. */
+const paraphraseNarration = (script: string): string => {
+  let s = script.trim();
+  FILLER_OPENERS.forEach((re) => { s = s.replace(re, ""); });
+  FILLER_SENTENCES.forEach((re) => { s = s.replace(re, ""); });
+
+  // Voice shift: 2nd person teaching → 3rd person coaching
+  const subs: Array<[RegExp, string]> = [
+    [/\byou must internalise\b/gi, "reps should internalise"],
+    [/\byou must\b/gi, "reps need to"],
+    [/\byour job is\b/gi, "the rep's job is"],
+    [/\byour job\b/gi, "the rep's job"],
+    [/\byou're addressing\b/gi, "this addresses"],
+    [/\byou are\b/gi, "the rep is"],
+    [/\byou'll\b/gi, "reps will"],
+    [/\byou can\b/gi, "reps can"],
+    [/\byou\b/gi, "the rep"],
+    [/\byour\b/gi, "the rep's"],
+    [/\bthe core message[^.:]*[:.]\s*/gi, "Core message: "],
+    [/\bthe pain[^.:]*[:.]\s*/gi, "Pain: "],
+    [/\bthe value lever[^.:]*[:.]\s*/gi, "Value lever: "],
+  ];
+  subs.forEach(([re, repl]) => { s = s.replace(re, repl); });
+
+  // Split into sentences, dedupe, drop short fragments, dropt next-slide cues
+  const sentences = s
+    .split(/(?<=[.!?])\s+/)
+    .map((x) => x.trim())
+    .filter((x) => x.length > 25 && !/^next[\s,]/i.test(x) && !/^then\s/i.test(x));
+
+  // Prefer sentences anchored to core/pain/value
+  const ranked = [
+    ...sentences.filter((x) => /^Core message:/i.test(x)),
+    ...sentences.filter((x) => /^Pain:/i.test(x)),
+    ...sentences.filter((x) => /^Value lever:/i.test(x)),
+    ...sentences.filter(
+      (x) => !/^(Core message|Pain|Value lever):/i.test(x),
+    ),
+  ];
+
+  let out = "";
+  for (const sent of ranked) {
+    if ((out + " " + sent).length > 540) break;
+    out = out ? `${out} ${sent}` : sent;
+  }
+  // Tidy spacing
+  out = out.replace(/\s{2,}/g, " ").trim();
+  // Ensure ends with .
+  if (out && !/[.!?]$/.test(out)) out += ".";
+  return out;
+};
+
+/** Pull customer-signal cues from narration; fallback to generic per-week. */
+const extractListenFor = (script: string, weekId: CoachCardWeek["id"]): string[] => {
+  const out: string[] = [];
+  // Discovery questions framed in quotes or starting with "which/how/what"
+  const qMatch = script.match(/['"]([^'".?]{15,120}\?)['"]/g);
+  if (qMatch) {
+    qMatch.slice(0, 1).forEach((q) => {
+      out.push(`They ask ${q.replace(/^['"]|['"]$/g, "").trim()}`);
+    });
+  }
+  // "their answer almost always points at X" pattern
+  const wedge = script.match(/(?:their answer|the wedge)[^.]{10,140}\./i);
+  if (wedge) out.push(wedge[0].replace(/^./, (c) => c.toUpperCase()));
+
+  const fallback: Record<CoachCardWeek["id"], string[]> = {
+    w1: [
+      "They lean in when DTOP is drawn — not when features are listed.",
+      "They name a stack they've already tried to stitch together themselves.",
+    ],
+    w2: [
+      "They ask how the intelligence layer differs from a generic chatbot.",
+      "They start naming internal data sources they want connected.",
+    ],
+    w3: [
+      "They volunteer the names of two stakeholders who should be in the next meeting.",
+      "They ask what the Strategy & Vision Session would actually cover.",
+    ],
+  };
+  while (out.length < 2) out.push(fallback[weekId][out.length]);
+  return out.slice(0, 2);
+};
+
+/** Soft-clip text to fit a max line count for splitTextToSize results. */
+const clipLines = (lines: string[], max: number): string[] => {
+  if (lines.length <= max) return lines;
+  const kept = lines.slice(0, max);
+  const last = kept[max - 1];
+  kept[max - 1] = last.replace(/[\s,.;:]*$/, "") + "…";
+  return kept;
+};
+
 // ─── PDF Builder ─────────────────────────────────────────────────────────────
 export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
   const pdf = new jsPDF({ unit: "pt", format: "a4" });
