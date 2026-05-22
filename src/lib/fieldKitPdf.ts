@@ -2127,8 +2127,8 @@ function renderSlideTranscriptPage(
     if (i > 0 && y + h > footerY - 14) {
       drawFooter(!isFirstPage);
       isFirstPage = false;
-      y = startPage(true);
       pageBeatStart = b.n;
+      y = startPage(true);
     }
     drawBeat(b);
     pageBeatEnd = b.n;
