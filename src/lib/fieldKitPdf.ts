@@ -713,12 +713,7 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     if (!cc) return;
     const narration = getSalesEnablementNarration(slideId);
     const title = sanitize(narration?.title ?? slideId);
-    const onePager = buildSlideOnePager(slideId, week.id, narration?.script, cc);
-    const questions = buildDiscoveryQuestionsRotated(narration?.script, slideId, week.id, idx).map(sanitize);
-    const objections = buildObjectionsRotated(slideId, week.id, idx).map((o) => ({
-      pushback: sanitize(o.pushback),
-      response: sanitize(o.response),
-    }));
+    const studyNote = buildStudyNote(slideId, week.id, narration?.script);
     const sMeta = buildMeta(slideId, week.id);
 
     renderSlidePagePortrait(pdf, {
@@ -726,18 +721,18 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
       slideIndex: idx,
       slideCount: week.slideIds.length,
       title,
-      onePager,
-      questions,
-      objections,
+      studyNote,
       meta: sMeta,
     });
   });
 
-  // ── 3b. APPENDIX: COACH'S SIDEBAR (rep self-check + watch-outs) ────────────
-  renderCoachSidebarPage(pdf, week);
+  // ── 3b. APPENDIX: GLOSSARY (every term across the week, A-Z) ───────────────
+  renderGlossaryAppendixPage(pdf, week);
 
-  // ── 3c. APPENDIX: WHITEBOARD & PROOF REFERENCE ─────────────────────────────
-  renderWhiteboardAppendixPage(pdf, week);
+  // ── 3c. APPENDIX: SELL & WIN (W3 only — discovery + objections) ────────────
+  if (week.id === "w3") {
+    renderSellAndWinAppendixPage(pdf, week);
+  }
 
   // ── 4. CLOSING PAGE ────────────────────────────────────────────────────────
   pdf.addPage();
