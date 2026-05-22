@@ -862,12 +862,22 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
       [253, 242, 245],
     );
 
+    // ── CHECK YOURSELF band (full width, gates moving on) ────────────────
+    renderCheckYourselfBand(
+      pdf,
+      leftX,
+      checkBandY,
+      lContentW,
+      checkBandH,
+      sanitize(learning.checkYourself),
+    );
+
     // ── Coach chip strip (full width, taller) ─────────────────────────────
     const chipDefs: Array<{ key: FieldKey; label: string; text: string }> = [
-      { key: "remember", label: "REMEMBER", text: cc.remember },
-      { key: "sayItLikeThis", label: "SAY IT", text: cc.sayItLikeThis },
-      { key: "watchOutFor", label: "WATCH OUT", text: cc.watchOutFor },
-      { key: "bridge", label: "BRIDGE", text: cc.bridge },
+      { key: "remember", label: "REMEMBER", text: sanitize(cc.remember) },
+      { key: "sayItLikeThis", label: "SAY IT", text: sanitize(cc.sayItLikeThis) },
+      { key: "watchOutFor", label: "WATCH OUT", text: sanitize(cc.watchOutFor) },
+      { key: "bridge", label: "BRIDGE", text: sanitize(cc.bridge) },
     ];
     const chipGap = 8;
     const chipW = (lContentW - chipGap * 3) / 4;
@@ -894,7 +904,7 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     pdf.text("CONNECTS TO:", lMargin, microFooterY + 12);
     pdf.setFont("helvetica", "normal");
     setText(pdf, C.slate);
-    const ctx = sMeta.connectsTo?.length ? sMeta.connectsTo.join("  ·  ") : "—";
+    const ctx = sMeta.connectsTo?.length ? sanitize(sMeta.connectsTo.join("  ·  ")) : "-";
     pdf.text(clipLines(pdf.splitTextToSize(ctx, lContentW * 0.45), 1), lMargin + 60, microFooterY + 12);
 
     pdf.setFont("helvetica", "bold");
@@ -904,7 +914,7 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     pdf.text(bannedLabel, bannedLabelX, microFooterY + 12);
     pdf.setFont("helvetica", "normal");
     setText(pdf, C.slate);
-    const banned = sMeta.bannedHere?.length ? sMeta.bannedHere.join("  ·  ") : "—";
+    const banned = sMeta.bannedHere?.length ? sanitize(sMeta.bannedHere.join("  ·  ")) : "-";
     pdf.text(
       clipLines(pdf.splitTextToSize(banned, lContentW * 0.4), 1),
       bannedLabelX + 64,
