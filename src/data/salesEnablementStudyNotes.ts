@@ -159,106 +159,106 @@ export const STUDY_NOTES: Record<string, SlideOnePager> = {
 
   "se-slide-shift": {
     inOneSentence:
-      "Regulators have shifted from prescriptive compliance ('did you tick the box?') to outcome evidence ('can you prove the loop closed?').",
+      "Regulators have shifted. The old question was 'did you tick the box?' The new one is 'can you prove the loop closed?'",
     whyItMatters:
-      "This is the only reason prospects take the meeting. Leadership is being asked for outcome evidence their record-keeping tools cannot produce, and the gap is structural — not a matter of effort or budget.",
+      "This is why buyers take the meeting. Their bosses now want proof the fix worked, not just records that it was logged. Their old tools cannot give that proof. It is a tool problem, not a team problem.",
     keyIdeas: [
-      "The regulator's question changed: it used to be 'did you do the training?'; it is now 'did the behaviour change?'",
-      "Tools built for records cannot produce outcome evidence on demand. The gap is in the system, not the team.",
-      "Industry-wide controllable cost sits at roughly $25-35B annually (Eurocontrol, IATA, SITA) — the exposure the shift creates.",
+      "The question used to be 'did you do the training?' Now it is 'did the behaviour change?'",
+      "Tools built for records cannot show outcome proof on demand. The gap is in the system, not the team.",
+      "The cost the industry can control sits around $25-35B a year (Eurocontrol, IATA, SITA). That is the exposure this shift creates.",
     ],
     terms: [
-      { term: "Prescriptive compliance", definition: "Did you do the action? (Records.)" },
-      { term: "Performance-based oversight", definition: "Did the action produce the outcome? (Evidence.)" },
+      { term: "Prescriptive compliance", definition: "Did you do the action? It tests records." },
+      { term: "Performance-based oversight", definition: "Did the action work? It tests evidence." },
       T.prove,
     ],
     facts: [
-      "Industry exposure: $25-35B controllable operational cost (Eurocontrol, IATA, SITA).",
-      "Major aviation regulators (FAA, EASA, CAA, CASA) are converging on outcome-evidence frameworks.",
+      "Industry exposure: $25-35B in controllable operational cost (Eurocontrol, IATA, SITA).",
+      "Major aviation regulators — FAA, EASA, CAA, CASA — are moving to outcome-evidence rules.",
     ],
     watchOut:
-      "Don't open with product or AI. Don't list regulators by name. Don't say 'digital transformation'.",
+      "Do not open with product or AI. Do not list regulators by name. Do not say 'digital transformation'.",
     connectsTo: ["Plain-English Shift", "DTOP · Prove"],
     checkYourself: [
-      "Can I deliver the shift in under 30 seconds without naming a product?",
-      "What's the difference between prescriptive compliance and performance-based oversight?",
-      "Where does the $25-35B figure come from?",
+      "Can I land the shift in under 30 seconds without naming a product?",
+      "What is the gap between prescriptive compliance and performance-based oversight?",
+      "Where does the $25-35B number come from?",
     ],
   },
 
   "se-plain-english-shift": {
     inOneSentence:
-      "Aviation isn't short on data — it's short on signals it can act on, and proof the action worked.",
+      "Aviation is not short on data. It is short on signals it can act on, and proof the action worked.",
     whyItMatters:
-      "This slide is the plain-English version of the regulator shift, designed for any room — not just compliance leaders. It works because most operators already feel the disconnection between their stacks; this slide names it.",
+      "This is the plain-English version of the regulator shift. It works in any room, not just compliance. Most operators already feel their stacks are cut off from each other. This slide names that feeling.",
     keyIdeas: [
-      "Three stacks today: safety, content, training — each runs in its own world.",
-      "A signal that lands in one stack rarely reaches the others without a human chasing it.",
-      "The platform unifies the three stacks with a domain-trained Intelligence Layer on top.",
+      "Three stacks today: safety, content, training. Each one runs in its own world.",
+      "A signal that lands in one stack rarely reaches the others. A human has to chase it.",
+      "The platform joins the three stacks together, with the Intelligence Layer on top.",
     ],
     terms: [T.coreApps, T.intelligenceLayer, T.operationalData],
     facts: [
-      "Most operators run 5-7 disconnected tools across safety, content and training.",
-      "The 'wedge' question: which of the three stacks is most disconnected today?",
+      "Most operators run 5-7 separate tools across safety, content and training.",
+      "Wedge question: which of the three stacks is most cut off today?",
     ],
     watchOut:
-      "No unapproved ROI numbers on this slide. It's a messaging slide, not a business case.",
+      "No off-list ROI numbers here. This is a message slide, not a business case.",
     connectsTo: ["Strategic Shift", "What Is the Platform"],
     checkYourself: [
-      "Can I name the three disconnected stacks?",
-      "Can I ask the 'wedge' question that follows?",
-      "Why is this slide messaging, not modelling?",
+      "Can I name the three cut-off stacks?",
+      "Can I ask the wedge question that comes next?",
+      "Why is this a message slide, not a modelling slide?",
     ],
   },
 
   "se-slide-whatis": {
     inOneSentence:
-      "Comply365 is one Operational Performance Platform: three Core Apps on one Operational Data foundation, with an Intelligence Layer on top and Unified Mobile as the last mile.",
+      "Comply365 is one Operational Performance Platform. Three Core Apps sit on one Operational Data base. The Intelligence Layer sits on top. Unified Mobile is the last mile to the crew.",
     whyItMatters:
-      "This diagram is the rep's anchor in almost every customer meeting. Buyers compare against five-to-seven point tools — this slide reframes the conversation around one foundation, which is the only place the differentiation actually shows.",
+      "This picture is the rep's anchor in almost every meeting. Buyers compare us to five-to-seven point tools. This slide moves the talk to one shared base. That base is the only place our edge really shows.",
     keyIdeas: [
-      "The order matters: foundation first, Core Apps next, Intelligence Layer above, Unified Mobile as the device-side shell.",
-      "Three Core Apps share one foundation — SafetyManager365, ContentManager365, TrainingManager365.",
-      "Intelligence Layer reasons across all three apps; Unified Mobile is the last mile to the crew, not a separate app.",
-      "Resist the deep-dive. The job here is to land the shape, not the features.",
+      "Order matters. Base first, then Core Apps, then Intelligence Layer on top, then Unified Mobile on the device.",
+      "Three Core Apps share one base: SafetyManager365, ContentManager365, TrainingManager365.",
+      "The Intelligence Layer thinks across all three apps. Unified Mobile is the last mile to the crew, not a separate app.",
+      "Hold back from deep dives. The job here is to land the shape, not the features.",
     ],
     terms: [T.operationalData, T.coreApps, T.intelligenceLayer, T.unifiedMobile, T.dtop],
     facts: [
-      "Five visible boxes: 3 Core Apps · 1 Intelligence Layer · 1 Unified Mobile.",
-      "One foundation underneath all five — that's the moat.",
+      "Five visible boxes: 3 Core Apps, 1 Intelligence Layer, 1 Unified Mobile.",
+      "One base under all five. That base is our moat.",
     ],
-    watchOut: "Don't read the boxes left-to-right. Start at the foundation and build up. Say 'one platform' — never 'modules' or 'suite'.",
+    watchOut: "Do not read the boxes left to right. Start at the base and build up. Say 'one platform' — never 'modules' or 'suite'.",
     connectsTo: ["DTOP loop", "Signal Sources"],
     checkYourself: [
-      "Can I draw the five boxes, foundation first, in under 60 seconds?",
-      "What are the three Core Apps named in BrandNumber format?",
-      "Why does the order matter when walking this diagram?",
+      "Can I draw the five boxes, base first, in under 60 seconds?",
+      "Can I name the three Core Apps in BrandNumber format?",
+      "Why does the order matter when I walk this diagram?",
     ],
   },
 
   "se-slide-dtop": {
     inOneSentence:
-      "DTOP — Detect, Trigger, Orchestrate, Prove — is the closed loop from operational signal to verified outcome.",
+      "DTOP is the closed loop from signal to proof: Detect, Trigger, Orchestrate, Prove.",
     whyItMatters:
-      "DTOP is the operating model, not a feature. It is the only loop that includes both a Detect step (signal fusion) and a Prove step (auditable evidence). Workflow tools have neither — which is why this loop is the defensible differentiator.",
+      "DTOP is the operating model, not a feature. It is the only loop with a real Detect step and a real Prove step. Workflow tools have neither. That is why this loop is our edge.",
     keyIdeas: [
-      "Detect: fuses four signal sources (operational, safety, regulatory, training) into one Detect layer.",
-      "Trigger: turns the signal into the right next action — cited, not guessed.",
-      "Orchestrate: moves the work across the systems that already exist (revision routing, review assignment, training assignment, device sync).",
-      "Prove: closes the loop with audit evidence a regulator accepts.",
+      "Detect: pulls four signals into one place — operations, safety, rules, training.",
+      "Trigger: turns the signal into the right next action. Cited, not guessed.",
+      "Orchestrate: moves the work through the systems already in place. Revision routing, review, training, device sync.",
+      "Prove: closes the loop with audit-ready evidence a regulator will accept.",
     ],
     terms: [T.detect, T.trigger, T.orchestrate, T.prove],
     facts: [
-      "Only loop in the market with both a Detect and a Prove step.",
-      "Point tools cover one of the four signal sources at best.",
-      "Canonical colours when whiteboarding: D · blue, T · amber, O · violet, P · emerald.",
+      "The only loop on the market with a Detect step and a Prove step.",
+      "Point tools cover one of the four signal sources, at best.",
+      "Whiteboard colours: D blue, T amber, O violet, P emerald.",
     ],
-    watchOut: "Don't pitch DTOP as 'workflow with a fancy name'. Workflow moves tasks; DTOP closes a loop. Never use FOQA, FDM or ASAP.",
+    watchOut: "Do not pitch DTOP as 'workflow with a fancy name'. Workflow moves tasks. DTOP closes a loop. Never use FOQA, FDM or ASAP.",
     connectsTo: ["Signal Sources", "Whiteboard Drill", "Value Unlocked"],
     checkYourself: [
-      "Can I name what each of D, T, O and P is responsible for in one sentence each?",
-      "Why is 'workflow' the wrong category to compare DTOP to?",
-      "What's the wedge question to ask after drawing Detect?",
+      "Can I say what D, T, O and P each do in one sentence?",
+      "Why is 'workflow' the wrong word for DTOP?",
+      "What wedge question do I ask after I draw Detect?",
     ],
   },
 
