@@ -142,6 +142,114 @@ const FIELD_STYLES = {
 
 type FieldKey = keyof typeof FIELD_STYLES;
 
+// ─── Narration paraphrasing ──────────────────────────────────────────────────
+const FILLER_OPENERS = [
+  /^this slide matters because[^.]*\.\s*/i,
+  /^why this matters[^.:]*[:.]\s*/i,
+  /^this is the[^.]*and it does the heavy lifting[^.]*\.\s*/i,
+  /^this slide[^.]*\.\s*/i,
+];
+
+const FILLER_SENTENCES = [
+  /when you deliver this[^.]*\./gi,
+  /slow down[^.]*\./gi,
+  /delivery tip[^.:]*[:.][^.]*\./gi,
+  /^next[^.]*\.\s*$/gim,
+];
+
+/** Deterministic paraphrase of a teaching script → coaching summary. */
+const paraphraseNarration = (script: string): string => {
+  let s = script.trim();
+  FILLER_OPENERS.forEach((re) => { s = s.replace(re, ""); });
+  FILLER_SENTENCES.forEach((re) => { s = s.replace(re, ""); });
+
+  // Voice shift: 2nd person teaching → 3rd person coaching
+  const subs: Array<[RegExp, string]> = [
+    [/\byou must internalise\b/gi, "reps should internalise"],
+    [/\byou must\b/gi, "reps need to"],
+    [/\byour job is\b/gi, "the rep's job is"],
+    [/\byour job\b/gi, "the rep's job"],
+    [/\byou're addressing\b/gi, "this addresses"],
+    [/\byou are\b/gi, "the rep is"],
+    [/\byou'll\b/gi, "reps will"],
+    [/\byou can\b/gi, "reps can"],
+    [/\byou\b/gi, "the rep"],
+    [/\byour\b/gi, "the rep's"],
+    [/\bthe core message[^.:]*[:.]\s*/gi, "Core message: "],
+    [/\bthe pain[^.:]*[:.]\s*/gi, "Pain: "],
+    [/\bthe value lever[^.:]*[:.]\s*/gi, "Value lever: "],
+  ];
+  subs.forEach(([re, repl]) => { s = s.replace(re, repl); });
+
+  // Split into sentences, dedupe, drop short fragments, dropt next-slide cues
+  const sentences = s
+    .split(/(?<=[.!?])\s+/)
+    .map((x) => x.trim())
+    .filter((x) => x.length > 25 && !/^next[\s,]/i.test(x) && !/^then\s/i.test(x));
+
+  // Prefer sentences anchored to core/pain/value
+  const ranked = [
+    ...sentences.filter((x) => /^Core message:/i.test(x)),
+    ...sentences.filter((x) => /^Pain:/i.test(x)),
+    ...sentences.filter((x) => /^Value lever:/i.test(x)),
+    ...sentences.filter(
+      (x) => !/^(Core message|Pain|Value lever):/i.test(x),
+    ),
+  ];
+
+  let out = "";
+  for (const sent of ranked) {
+    if ((out + " " + sent).length > 540) break;
+    out = out ? `${out} ${sent}` : sent;
+  }
+  // Tidy spacing
+  out = out.replace(/\s{2,}/g, " ").trim();
+  // Ensure ends with .
+  if (out && !/[.!?]$/.test(out)) out += ".";
+  return out;
+};
+
+/** Pull customer-signal cues from narration; fallback to generic per-week. */
+const extractListenFor = (script: string, weekId: CoachCardWeek["id"]): string[] => {
+  const out: string[] = [];
+  // Discovery questions framed in quotes or starting with "which/how/what"
+  const qMatch = script.match(/['"]([^'".?]{15,120}\?)['"]/g);
+  if (qMatch) {
+    qMatch.slice(0, 1).forEach((q) => {
+      out.push(`They ask ${q.replace(/^['"]|['"]$/g, "").trim()}`);
+    });
+  }
+  // "their answer almost always points at X" pattern
+  const wedge = script.match(/(?:their answer|the wedge)[^.]{10,140}\./i);
+  if (wedge) out.push(wedge[0].replace(/^./, (c) => c.toUpperCase()));
+
+  const fallback: Record<CoachCardWeek["id"], string[]> = {
+    w1: [
+      "They lean in when DTOP is drawn — not when features are listed.",
+      "They name a stack they've already tried to stitch together themselves.",
+    ],
+    w2: [
+      "They ask how the intelligence layer differs from a generic chatbot.",
+      "They start naming internal data sources they want connected.",
+    ],
+    w3: [
+      "They volunteer the names of two stakeholders who should be in the next meeting.",
+      "They ask what the Strategy & Vision Session would actually cover.",
+    ],
+  };
+  while (out.length < 2) out.push(fallback[weekId][out.length]);
+  return out.slice(0, 2);
+};
+
+/** Soft-clip text to fit a max line count for splitTextToSize results. */
+const clipLines = (lines: string[], max: number): string[] => {
+  if (lines.length <= max) return lines;
+  const kept = lines.slice(0, max);
+  const last = kept[max - 1];
+  kept[max - 1] = last.replace(/[\s,.;:]*$/, "") + "…";
+  return kept;
+};
+
 // ─── PDF Builder ─────────────────────────────────────────────────────────────
 export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
   const pdf = new jsPDF({ unit: "pt", format: "a4" });
@@ -382,68 +490,147 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     const narration = getSalesEnablementNarration(slideId);
     const title = narration?.title ?? slideId;
     const coreLine = extractCoreLine(slideId);
+    const summary = narration ? paraphraseNarration(narration.script) : "";
+    const listenFor = narration ? extractListenFor(narration.script, week.id) : [];
 
-    pdf.addPage();
-    drawHeader(`Week ${week.number} · ${week.title}  ·  Slide ${idx + 1} of ${week.slideIds.length}`);
+    // Landscape page for slide cards
+    pdf.addPage("a4", "landscape");
+    const lPageW = pdf.internal.pageSize.getWidth();
+    const lPageH = pdf.internal.pageSize.getHeight();
+    const lMargin = 36;
+    const lContentW = lPageW - lMargin * 2;
 
-    // Title block with brand bar
-    const tbY = 64;
-    setFill(pdf, C.navyDeep);
-    pdf.rect(margin, tbY, contentW, 64, "F");
-    setFill(pdf, C.brand);
-    pdf.rect(margin, tbY, 4, 64, "F");
-
-    // Slide number chip
+    // Header (landscape variant)
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(8);
-    setText(pdf, [140, 175, 230]);
-    pdf.text(`SLIDE ${String(idx + 1).padStart(2, "0")}`, margin + 18, tbY + 22);
-
-    // Title
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(16);
-    setText(pdf, C.white);
-    const tLines = pdf.splitTextToSize(title, contentW - 36);
-    pdf.text(tLines.slice(0, 2), margin + 18, tbY + 42);
-
-    let cy = tbY + 64 + 22;
-
-    // Core idea (italic-ish via tone)
-    if (coreLine) {
-      pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(8);
-      setText(pdf, C.brand);
-      pdf.text("THE CORE IDEA", margin, cy);
-      cy += 14;
-      pdf.setFont("helvetica", "normal");
-      pdf.setFontSize(12);
-      setText(pdf, C.slate);
-      const coreLines = pdf.splitTextToSize(coreLine, contentW);
-      pdf.text(coreLines, margin, cy);
-      cy += coreLines.length * 15 + 14;
-    }
-
+    setText(pdf, C.subtle);
+    pdf.text("COMPLY365 · SALES ENABLEMENT ACADEMY", lMargin, 22);
+    pdf.setFont("helvetica", "normal");
+    setText(pdf, C.muted);
+    pdf.text(
+      `Week ${week.number} · ${week.title}  ·  Slide ${idx + 1} of ${week.slideIds.length}`,
+      lPageW - lMargin,
+      22,
+      { align: "right" },
+    );
     setStroke(pdf, C.hairline);
     pdf.setLineWidth(0.5);
-    pdf.line(margin, cy, pageW - margin, cy);
-    cy += 18;
+    pdf.line(lMargin, 30, lPageW - lMargin, 30);
 
-    // 2x2 grid of field panels
+    // ── LEFT COLUMN ──────────────────────────────────────────────────────────
+    const leftX = lMargin;
+    const colGap = 18;
+    const leftW = lContentW * 0.46;
+    const rightX = leftX + leftW + colGap;
+    const rightW = lContentW - leftW - colGap;
+
+    // Title block (compact)
+    const tbY = 42;
+    const tbH = 52;
+    setFill(pdf, C.navyDeep);
+    pdf.rect(leftX, tbY, leftW, tbH, "F");
+    setFill(pdf, C.brand);
+    pdf.rect(leftX, tbY, 3, tbH, "F");
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(7.5);
+    setText(pdf, [140, 175, 230]);
+    pdf.text(`SLIDE ${String(idx + 1).padStart(2, "0")}`, leftX + 14, tbY + 17);
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(13);
+    setText(pdf, C.white);
+    const tLines = clipLines(pdf.splitTextToSize(title, leftW - 28), 2);
+    pdf.text(tLines, leftX + 14, tbY + 34);
+
+    let ly = tbY + tbH + 16;
+
+    // Core idea
+    if (coreLine) {
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(7.5);
+      setText(pdf, C.brand);
+      pdf.text("THE CORE IDEA", leftX, ly);
+      ly += 12;
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(10);
+      setText(pdf, C.ink);
+      const coreLines = clipLines(pdf.splitTextToSize(coreLine, leftW), 2);
+      pdf.text(coreLines, leftX, ly);
+      ly += coreLines.length * 12 + 14;
+    }
+
+    // Teaching summary
+    if (summary) {
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(7.5);
+      setText(pdf, C.muted);
+      pdf.text("TEACHING SUMMARY", leftX, ly);
+      ly += 12;
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(9);
+      setText(pdf, C.slate);
+      // Auto-shrink: estimate available
+      const availableH = lPageH - 60 - ly - 92 /* listen-for + footer */;
+      const maxLines = Math.max(6, Math.floor(availableH / 11.5));
+      const sumLines = clipLines(pdf.splitTextToSize(summary, leftW), maxLines);
+      pdf.text(sumLines, leftX, ly, { lineHeightFactor: 1.35 });
+      ly += sumLines.length * 11.5 + 14;
+    }
+
+    // What to listen for
+    if (listenFor.length) {
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(7.5);
+      setText(pdf, C.muted);
+      pdf.text("WHAT TO LISTEN FOR", leftX, ly);
+      ly += 12;
+      listenFor.forEach((l) => {
+        // ear bullet
+        setFill(pdf, C.brand);
+        pdf.circle(leftX + 3, ly - 3, 1.6, "F");
+        pdf.setFont("helvetica", "italic");
+        pdf.setFontSize(8.5);
+        setText(pdf, C.muted);
+        const lines = clipLines(pdf.splitTextToSize(l, leftW - 14), 2);
+        pdf.text(lines, leftX + 12, ly);
+        ly += lines.length * 10.5 + 4;
+      });
+    }
+
+    // ── RIGHT COLUMN: 2x2 panels ─────────────────────────────────────────────
     const fields: FieldKey[] = ["remember", "sayItLikeThis", "watchOutFor", "bridge"];
-    const gap = 14;
-    const colWidth = (contentW - gap) / 2;
-    const remaining = pageH - 60 - cy;
-    const rowHeight = Math.max(110, (remaining - gap) / 2);
+    const gap = 10;
+    const panelW = (rightW - gap) / 2;
+    const gridTop = tbY;
+    const gridBottom = lPageH - 50;
+    const panelH = (gridBottom - gridTop - gap) / 2;
 
     fields.forEach((key, i) => {
       const row = Math.floor(i / 2);
       const col = i % 2;
-      const x = margin + col * (colWidth + gap);
-      const yPos = cy + row * (rowHeight + gap);
-      drawFieldPanel(pdf, x, yPos, colWidth, rowHeight, key, cc[key]);
+      const x = rightX + col * (panelW + gap);
+      const yPos = gridTop + row * (panelH + gap);
+      drawFieldPanelCompact(pdf, x, yPos, panelW, panelH, key, cc[key]);
     });
 
-    drawFooter();
+    // Micro footer strip
+    const mfY = lPageH - 38;
+    setStroke(pdf, C.hairline);
+    pdf.setLineWidth(0.5);
+    pdf.line(lMargin, mfY, lPageW - lMargin, mfY);
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(7.5);
+    setText(pdf, C.subtle);
+    pdf.text(
+      `Comply365 · Week ${week.number} Field Kit · ${week.title}`,
+      lMargin,
+      mfY + 14,
+    );
+    pdf.text(
+      "Time on slide ~60–90s   ·   Drill rating: ☐ 1  ☐ 2  ☐ 3  ☐ 4  ☐ 5",
+      lPageW - lMargin,
+      mfY + 14,
+      { align: "right" },
+    );
   });
 
   // ── 4. CLOSING PAGE ────────────────────────────────────────────────────────
@@ -555,6 +742,38 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
     pdfInner.text(lines, x + 14, yPos + 40);
   }
 };
+
+function drawFieldPanelCompact(
+  pdfInner: jsPDF,
+  x: number,
+  yPos: number,
+  w: number,
+  h: number,
+  key: FieldKey,
+  text: string,
+) {
+  const style = FIELD_STYLES[key];
+  setFill(pdfInner, style.soft);
+  pdfInner.roundedRect(x, yPos, w, h, 5, 5, "F");
+  setFill(pdfInner, style.accent);
+  pdfInner.rect(x, yPos, 3, h, "F");
+  setStroke(pdfInner, C.hairline);
+  pdfInner.setLineWidth(0.4);
+  pdfInner.roundedRect(x, yPos, w, h, 5, 5, "S");
+
+  pdfInner.setFont("helvetica", "bold");
+  pdfInner.setFontSize(7);
+  setText(pdfInner, style.accent);
+  pdfInner.text(style.label, x + 10, yPos + 14);
+
+  const isQuote = key === "sayItLikeThis";
+  pdfInner.setFont("helvetica", isQuote ? "bolditalic" : "normal");
+  pdfInner.setFontSize(9);
+  setText(pdfInner, C.slate);
+  const body = isQuote ? `\u201C${text}\u201D` : text;
+  const lines = clipLines(pdfInner.splitTextToSize(body, w - 22), Math.floor((h - 24) / 11));
+  pdfInner.text(lines, x + 10, yPos + 28, { lineHeightFactor: 1.3 });
+}
 
 export const downloadWeekFieldKit = (week: CoachCardWeek) => {
   const pdf = buildWeekFieldKitPdf(week);
