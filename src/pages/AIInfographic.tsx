@@ -1,19 +1,13 @@
-import { Helmet } from "react-helmet-async";
+import { useEffect } from "react";
 import AICapabilitiesMatrix from "@/components/ai-infographic/AICapabilitiesMatrix";
 import DeckPPTXExportButton from "@/components/DeckPPTXExportButton";
 
 const AIInfographic = () => {
+  useEffect(() => {
+    document.title = "Comply365 AI Capabilities | AI Infographic";
+  }, []);
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Helmet>
-        <title>Comply365 AI Capabilities | AI Infographic</title>
-        <meta
-          name="description"
-          content="Comply365 AI capabilities mapped across ContentManager365, TrainingManager365 and SafetyManager365 — with downloadable PPTX."
-        />
-        <link rel="canonical" href="/ai-infographic" />
-      </Helmet>
-
       <main className="max-w-7xl mx-auto px-6 lg:px-10 py-12">
         <header className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
           <div>
