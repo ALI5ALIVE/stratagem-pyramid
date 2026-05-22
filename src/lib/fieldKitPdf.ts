@@ -1883,7 +1883,7 @@ function renderSlideTranscriptPage(
   let pageW = pdf.internal.pageSize.getWidth();
   let pageH = pdf.internal.pageSize.getHeight();
   let footerY = pageH - 44;
-  const colW = Math.min(460, pageW - margin * 2);
+  const colW = Math.min(515, pageW - margin * 2);
   let colX = (pageW - colW) / 2;
 
   let y = startPage(false);
@@ -1910,8 +1910,8 @@ function renderSlideTranscriptPage(
     );
     const tip =
       pageCount <= 1
-        ? "Rehearse one beat at a time. Bold tokens are the words your customer will remember."
-        : "Record yourself. Play back at 1.25× — does it still land?";
+        ? "One card = one beat. Read down line by line — each line is a breath."
+        : "Record yourself. Play back at 1.25x — does it still land?";
     pdf.text(tip, pageW - margin, footerY + 14, { align: "right" });
     void continued;
   };
