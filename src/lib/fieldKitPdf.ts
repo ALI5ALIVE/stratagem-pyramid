@@ -710,217 +710,25 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
       pushback: sanitize(o.pushback),
       response: sanitize(o.response),
     }));
-    const proofs = buildProofs(slideId, week.id, idx).map(sanitize);
-    const whiteboard = sanitize(buildWhiteboard(slideId, week.id));
-    const mistake = sanitize(buildMistake(slideId, week.id));
     const sMeta = buildMeta(slideId, week.id);
 
-    // Landscape page for slide cards
-    pdf.addPage("a4", "landscape");
-    const lPageW = pdf.internal.pageSize.getWidth();
-    const lPageH = pdf.internal.pageSize.getHeight();
-    const lMargin = 36;
-    const lContentW = lPageW - lMargin * 2;
-
-    // Header (landscape variant)
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(8);
-    setText(pdf, C.subtle);
-    pdf.text("COMPLY365 · SALES ENABLEMENT ACADEMY", lMargin, 22);
-    pdf.setFont("helvetica", "normal");
-    setText(pdf, C.muted);
-    pdf.text(
-      `Week ${week.number} · ${week.title}  ·  Slide ${idx + 1} of ${week.slideIds.length}`,
-      lPageW - lMargin,
-      22,
-      { align: "right" },
-    );
-    setStroke(pdf, C.hairline);
-    pdf.setLineWidth(0.5);
-    pdf.line(lMargin, 30, lPageW - lMargin, 30);
-
-    // ── Meta strip (DTOP chip · personas · time-on-slide) ─────────────────────
-    drawMetaStrip(pdf, lMargin, 38, lContentW, sMeta);
-
-    // Layout regions
-    const leftX = lMargin;
-    const colGap = 16;
-    const leftW = lContentW * 0.52;
-    const rightX = leftX + leftW + colGap;
-    const rightW = lContentW - leftW - colGap;
-
-    const topY = 64;
-    const microFooterY = lPageH - 30;
-    const chipStripH = 56;
-    const chipStripY = microFooterY - chipStripH - 10;
-    // Check-yourself band sits above the coach-chip strip
-    const checkBandH = 26;
-    const checkBandY = chipStripY - checkBandH - 8;
-    const colBottomY = checkBandY - 10;
-
-    // Title hero (compact, full content width across BOTH columns)
-    const tbH = 46;
-    setFill(pdf, C.navyDeep);
-    pdf.rect(leftX, topY, lContentW, tbH, "F");
-    setFill(pdf, C.brand);
-    pdf.rect(leftX, topY, 3, tbH, "F");
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(7.5);
-    setText(pdf, [140, 175, 230]);
-    pdf.text(`SLIDE ${String(idx + 1).padStart(2, "0")}`, leftX + 14, topY + 16);
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(15);
-    setText(pdf, C.white);
-    const tLines = clipLines(pdf.splitTextToSize(title, lContentW - 28), 1);
-    pdf.text(tLines, leftX + 14, topY + 34);
-
-    const bodyTopY = topY + tbH + 14;
-
-    // ── LEFT COLUMN: Learning Outcome -> Core Idea -> Teach Beats ->
-    //                Say It Like This -> Whiteboard ────────────────────────
-    renderLearningColumn(pdf, {
-      x: leftX,
-      yTop: bodyTopY,
-      yBottom: colBottomY,
-      w: leftW,
+    renderSlidePagePortrait(pdf, {
+      week,
+      slideIndex: idx,
+      slideCount: week.slideIds.length,
+      title,
       learning,
-      whiteboard,
+      questions,
+      objections,
+      meta: sMeta,
     });
-
-    // ── RIGHT COLUMN: Questions · Objections · Proofs · Mistake ────────────
-    let ry = bodyTopY;
-
-    // KEY QUESTIONS TO ASK
-    drawSectionLabel(pdf, rightX, ry, "KEY QUESTIONS TO ASK", C.brand);
-    ry += 16;
-    questions.forEach((q, i) => {
-      setFill(pdf, C.brand);
-      pdf.circle(rightX + 7, ry + 3, 7, "F");
-      pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(8);
-      setText(pdf, C.white);
-      pdf.text(String(i + 1), rightX + 7, ry + 5.5, { align: "center" });
-      pdf.setFont("helvetica", "italic");
-      pdf.setFontSize(9);
-      setText(pdf, C.slate);
-      const lines = clipLines(
-        pdf.splitTextToSize(`"${q}"`, rightW - 24),
-        3,
-      );
-      pdf.text(lines, rightX + 20, ry + 6, { lineHeightFactor: 1.3 });
-      ry += lines.length * 11 + 6;
-    });
-    ry += 6;
-    setStroke(pdf, C.hairline);
-    pdf.setLineWidth(0.5);
-    pdf.line(rightX, ry, rightX + rightW, ry);
-    ry += 12;
-
-    // Reserve room for Proof Points + Common Mistake at bottom of right column
-    const proofH = 18 + proofs.length * 12 + 10;
-    const mistakeH = 38;
-    const reserveBottom = proofH + mistakeH + 14;
-    const objSectionTop = ry;
-    const objSectionBottom = colBottomY - reserveBottom;
-
-    // OBJECTIONS
-    drawSectionLabel(pdf, rightX, objSectionTop, "OBJECTIONS & APPROVED ANSWERS", C.rose);
-    let ry2 = objSectionTop + 14;
-    const objAvail = objSectionBottom - ry2;
-    const objH = Math.max(54, Math.min(96, (objAvail - 8) / Math.max(1, objections.length)));
-    objections.forEach((o) => {
-      drawObjectionBlock(pdf, rightX, ry2, rightW, objH, o);
-      ry2 += objH + 6;
-    });
-
-    // PROOF POINTS
-    let py = colBottomY - reserveBottom + 4;
-    drawSectionLabel(pdf, rightX, py, "PROOF POINTS YOU CAN DROP", C.emerald);
-    py += 14;
-    pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(9);
-    setText(pdf, C.slate);
-    proofs.forEach((p) => {
-      // bullet
-      setFill(pdf, C.emerald);
-      pdf.circle(rightX + 2.5, py - 3, 1.6, "F");
-      const lines = clipLines(pdf.splitTextToSize(p, rightW - 12), 2);
-      pdf.text(lines, rightX + 9, py);
-      py += lines.length * 11;
-    });
-
-    // COMMON REP MISTAKE (bottom-right block)
-    drawAccentBlock(
-      pdf,
-      rightX,
-      colBottomY - mistakeH,
-      rightW,
-      mistakeH,
-      "COMMON REP MISTAKE",
-      mistake,
-      C.rose,
-      [253, 242, 245],
-    );
-
-    // ── CHECK YOURSELF band (full width, gates moving on) ────────────────
-    renderCheckYourselfBand(
-      pdf,
-      leftX,
-      checkBandY,
-      lContentW,
-      checkBandH,
-      sanitize(learning.checkYourself),
-    );
-
-    // ── Coach chip strip (full width, taller) ─────────────────────────────
-    const chipDefs: Array<{ key: FieldKey; label: string; text: string }> = [
-      { key: "remember", label: "REMEMBER", text: sanitize(cc.remember) },
-      { key: "sayItLikeThis", label: "SAY IT", text: sanitize(cc.sayItLikeThis) },
-      { key: "watchOutFor", label: "WATCH OUT", text: sanitize(cc.watchOutFor) },
-      { key: "bridge", label: "BRIDGE", text: sanitize(cc.bridge) },
-    ];
-    const chipGap = 8;
-    const chipW = (lContentW - chipGap * 3) / 4;
-    chipDefs.forEach((chip, i) => {
-      drawCoachChip(
-        pdf,
-        leftX + i * (chipW + chipGap),
-        chipStripY,
-        chipW,
-        chipStripH,
-        chip.key,
-        chip.label,
-        chip.text,
-      );
-    });
-
-    // ── Micro footer (connects-to · banned phrases) ───────────────────────
-    setStroke(pdf, C.hairline);
-    pdf.setLineWidth(0.5);
-    pdf.line(lMargin, microFooterY, lPageW - lMargin, microFooterY);
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(7);
-    setText(pdf, C.muted);
-    pdf.text("CONNECTS TO:", lMargin, microFooterY + 12);
-    pdf.setFont("helvetica", "normal");
-    setText(pdf, C.slate);
-    const ctx = sMeta.connectsTo?.length ? sanitize(sMeta.connectsTo.join("  ·  ")) : "-";
-    pdf.text(clipLines(pdf.splitTextToSize(ctx, lContentW * 0.45), 1), lMargin + 60, microFooterY + 12);
-
-    pdf.setFont("helvetica", "bold");
-    setText(pdf, C.rose);
-    const bannedLabel = "BANNED HERE:";
-    const bannedLabelX = lMargin + lContentW * 0.55;
-    pdf.text(bannedLabel, bannedLabelX, microFooterY + 12);
-    pdf.setFont("helvetica", "normal");
-    setText(pdf, C.slate);
-    const banned = sMeta.bannedHere?.length ? sanitize(sMeta.bannedHere.join("  ·  ")) : "-";
-    pdf.text(
-      clipLines(pdf.splitTextToSize(banned, lContentW * 0.4), 1),
-      bannedLabelX + 64,
-      microFooterY + 12,
-    );
   });
+
+  // ── 3b. APPENDIX: COACH'S SIDEBAR (rep self-check + watch-outs) ────────────
+  renderCoachSidebarPage(pdf, week);
+
+  // ── 3c. APPENDIX: WHITEBOARD & PROOF REFERENCE ─────────────────────────────
+  renderWhiteboardAppendixPage(pdf, week);
 
   // ── 4. CLOSING PAGE ────────────────────────────────────────────────────────
   pdf.addPage();
