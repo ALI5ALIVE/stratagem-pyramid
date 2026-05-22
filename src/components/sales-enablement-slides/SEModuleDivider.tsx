@@ -1,12 +1,14 @@
 import PitchSlideContainer from "@/components/shared/PitchSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { BookOpen, Clock, Target } from "lucide-react";
+import { BookOpen, CheckCircle2, Clock, Target } from "lucide-react";
 
 interface Props extends SlideNarrationProps {
   slideNumber?: number;
   moduleNumber?: number;
   title?: string;
   learningGoal?: string;
+  intent?: string;
+  outcomes?: string[];
   estimatedMinutes?: number;
   upNext?: string[];
   weekNumber?: number;
@@ -18,6 +20,8 @@ const SEModuleDivider = ({
   moduleNumber = 0,
   title = "",
   learningGoal = "",
+  intent,
+  outcomes = [],
   estimatedMinutes,
   upNext = [],
   weekNumber,
@@ -41,14 +45,31 @@ const SEModuleDivider = ({
         )}
       </div>
 
-      <h2 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight mb-6">{title}</h2>
+      <h2 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight mb-3">{title}</h2>
 
-      <div className="p-4 rounded-xl border border-emerald-500/30 bg-emerald-500/5 mb-6 max-w-3xl">
-        <div className="flex items-center gap-2 mb-2">
+      {intent && (
+        <p className="text-base sm:text-lg text-muted-foreground leading-snug mb-5 max-w-3xl">{intent}</p>
+      )}
+
+      <div className="p-5 rounded-xl border border-emerald-500/30 bg-emerald-500/5 mb-6 max-w-4xl">
+        <div className="flex items-center gap-2 mb-3">
           <Target className="h-4 w-4 text-emerald-400" />
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-400">What you'll learn</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-400">
+            What you'll be able to do by the end of {weekNumber ? `Week ${weekNumber}` : `Module ${moduleNumber}`}
+          </span>
         </div>
-        <p className="text-base text-foreground leading-relaxed">{learningGoal}</p>
+        {outcomes.length > 0 ? (
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2.5">
+            {outcomes.map((o, i) => (
+              <li key={i} className="flex items-start gap-2.5">
+                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                <span className="text-[14px] text-foreground leading-snug">{o}</span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-base text-foreground leading-relaxed">{learningGoal}</p>
+        )}
       </div>
 
       {upNext.length > 0 && (

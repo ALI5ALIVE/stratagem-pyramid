@@ -60,8 +60,16 @@ const weekProps = {
     weekNumber: 1,
     kicker: "Foundation",
     title: "Set the scene — and put the platform in plain English",
-    learningGoal:
-      "By the end of Week 1 you can explain why the market is shifting, give the one-sentence platform pitch, walk the DTOP loop (Detect → Trigger → Orchestrate → Prove) on a whiteboard, and name the four signal sources behind Detect — without jargon, without reading off a slide.",
+    intent:
+      "Set the scene, put the platform in plain English, and learn the operating loop that makes everything land.",
+    outcomes: [
+      "Explain why the market is shifting in one minute",
+      "Deliver the one-sentence platform pitch from memory",
+      "Walk the DTOP loop on a whiteboard, in order",
+      "Name the four signal sources behind Detect",
+      "Name the four capability bands in canonical order",
+      "Run the Week 1 recap as a talk track, not a slide read",
+    ],
     estimatedMinutes: 19,
     upNext: ["Plain-English definition", "The platform at a glance", "DTOP — the operating loop", "DTOP whiteboard drill", "Signal sources", "Value unlocked", "Operational Performance Roadmap", "Operational Performance Roadmap whiteboard", "Recap talk track"],
   },
@@ -70,8 +78,17 @@ const weekProps = {
     weekNumber: 2,
     kicker: "Capabilities",
     title: "How the capabilities fit together",
-    learningGoal:
-      "By the end of Week 2 you can walk the platform map, land Insights & Intelligence as a platform-wide capability, name the cross-domain use cases only this layer can answer, explain the Intelligence Layer stack (Insights → Recommendations → Automation) and why it beats generic AI (~90% vs ~35%), anchor on Regulation Management as your end-to-end proof, show how Unified Mobile closes the loop on the device — and tell the whole story as one DTOP loop in 60 seconds using the W2 capstone.",
+    intent:
+      "Walk the platform map and prove why the Intelligence Layer beats generic AI.",
+    outcomes: [
+      "Walk the Platform map end to end",
+      "Position Insights & Intelligence as platform-wide",
+      "Tell the Intelligence stack: Insights → Recommendations → Automation",
+      "Defend the ~90% domain vs ~35% generic AI headline",
+      "Anchor Regulation Management as end-to-end proof",
+      "Close the loop with Unified Mobile on-device",
+      "Tell the whole story as one DTOP loop in 60 seconds",
+    ],
     estimatedMinutes: 16,
     upNext: ["The Platform map", "Insights & Intelligence", "Platform-wide use cases", "Intelligence Layer", "Per-solution use cases", "Insights", "Recommendations use cases", "Automation", "Automation use cases", "Intelligence Layer vs Generic AI", "Regulation Management (end-to-end proof)", "Unified Mobile", "Capability cheat sheet", "Capstone — one use case, every capability, one DTOP loop"],
   },
@@ -80,8 +97,18 @@ const weekProps = {
     weekNumber: 3,
     kicker: "Sell & Win",
     title: "Sell it, prove it, win it",
-    learningGoal:
-      "By the end of Week 3 you can pick the right account to chase, run a real discovery call, pull the right questions for the room, read the persona, handle the top 8 objections, position against any competitor in the DTOP loop, end every conversation with the scripted next-step line, and put the complimentary 3-hour Strategy & Vision Session on the table.",
+    intent:
+      "Pick the account, run the call, handle the objections, book the Strategy & Vision Session.",
+    outcomes: [
+      "Pick high-propensity accounts to chase",
+      "Run a discovery call that surfaces the wedge",
+      "Pull the right discovery questions for the room",
+      "Read the persona and adapt on the fly",
+      "Handle the top 8 objections without flinching",
+      "Position against any competitor in the DTOP loop",
+      "Land the scripted next-step language every time",
+      "Put the 3-hour Strategy & Vision Session on the table",
+    ],
     estimatedMinutes: 38,
     upNext: [
       "Recap — One Use Case, Every Capability, One DTOP Loop",
