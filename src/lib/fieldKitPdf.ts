@@ -575,9 +575,9 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
   pdf.text("HOW TO USE THIS KIT", cardX + 20, cardY + 26);
   let oy = cardY + 50;
   const usageGuide = [
-    "One slide per page. Each page is a self-contained study sheet — read it cold and you can walk the slide without the audio.",
-    "Top half: the one-sentence takeaway, what's on the slide, why a buyer cares, and the ideas you must own.",
-    "Bottom half: key terms, defensible facts, the watch-out to avoid, what this connects to, and three self-test questions.",
+    "Every slide gets two pages: a one-page study sheet, then the full coach transcript verbatim for memorisation and self-recording.",
+    "Study sheet — left rail: takeaway, why a buyer cares, watch-out, what this connects to. Right column: what's on the slide, ideas you must own, terms, facts.",
+    "Transcript page — read it once before you record yourself, then close the kit. Never read the transcript live on a customer call.",
   ];
   usageGuide.forEach((o, i) => {
     // Number chip
@@ -729,6 +729,16 @@ export const buildWeekFieldKitPdf = (week: CoachCardWeek): jsPDF => {
       studyNote,
       meta: sMeta,
     });
+
+    if (narration?.script) {
+      renderSlideTranscriptPage(pdf, {
+        week,
+        slideIndex: idx,
+        slideCount: week.slideIds.length,
+        title,
+        script: narration.script,
+      });
+    }
   });
 
   // ── 3b. APPENDIX: GLOSSARY (every term across the week, A-Z) ───────────────
@@ -1256,296 +1266,513 @@ function renderSlidePagePortrait(
   pdf.addPage("a4", "portrait");
   const pageW = pdf.internal.pageSize.getWidth();
   const pageH = pdf.internal.pageSize.getHeight();
-  const margin = 56;
+  const margin = 40;
+  const topMargin = 44;
   const contentW = pageW - margin * 2;
-  const footerY = pageH - 56;
+  const footerY = pageH - 44;
 
-  // Header line
+  // ─── Header strip ─────────────────────────────────────────────────────────
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(7.5);
   setText(pdf, C.subtle);
-  pdf.text("COMPLY365 · SALES ENABLEMENT ACADEMY", margin, 34);
+  pdf.text("COMPLY365 · SALES ENABLEMENT ACADEMY", margin, topMargin - 14);
 
   const headRight: string[] = [];
-  headRight.push(`Week ${week.number} · Slide ${String(slideIndex + 1).padStart(2, "0")} of ${slideCount}`);
+  headRight.push(`W${week.number} · Slide ${String(slideIndex + 1).padStart(2, "0")} / ${slideCount}`);
   if (meta.dtop) headRight.push(`DTOP · ${meta.dtop}`);
+  headRight.push("Study sheet · 1 of 2");
   pdf.setFont("helvetica", "normal");
   setText(pdf, C.muted);
-  pdf.text(sanitize(headRight.join("   ·   ")), pageW - margin, 34, { align: "right" });
+  pdf.text(sanitize(headRight.join("   ·   ")), pageW - margin, topMargin - 14, { align: "right" });
 
-  // Numeral-led title
-  let y = 78;
+  setStroke(pdf, C.hairline);
+  pdf.setLineWidth(0.5);
+  pdf.line(margin, topMargin - 6, pageW - margin, topMargin - 6);
+
+  // ─── Numeral-led title ────────────────────────────────────────────────────
+  let y = topMargin + 26;
   pdf.setFont("helvetica", "bold");
-  pdf.setFontSize(34);
+  pdf.setFontSize(30);
   setText(pdf, C.brand);
   const numStr = String(slideIndex + 1).padStart(2, "0");
   pdf.text(numStr, margin, y);
   const numW = pdf.getTextWidth(numStr);
 
   pdf.setFont("helvetica", "normal");
-  pdf.setFontSize(22);
+  pdf.setFontSize(20);
   setText(pdf, [200, 215, 235]);
-  pdf.text("/", margin + numW + 10, y - 4);
+  pdf.text("/", margin + numW + 8, y - 3);
 
   pdf.setFont("helvetica", "bold");
-  pdf.setFontSize(16);
+  pdf.setFontSize(14);
   setText(pdf, C.ink);
-  const titleX = margin + numW + 28;
+  const titleX = margin + numW + 22;
   const titleLines = clipLines(pdf.splitTextToSize(title.toUpperCase(), contentW - (titleX - margin)), 2);
   pdf.text(titleLines, titleX, y - 2, { lineHeightFactor: 1.15 });
-  y += Math.max(0, (titleLines.length - 1) * 20) + 14;
+  y += Math.max(8, (titleLines.length - 1) * 16) + 12;
 
-  setStroke(pdf, C.ink);
-  pdf.setLineWidth(0.7);
-  pdf.line(margin, y, margin + 32, y);
-  y += 22;
-
-  // ── 02. THE ONE-SENTENCE TAKEAWAY ──────────────────────────────────────────
-  pdf.setFont("helvetica", "bold");
-  pdf.setFontSize(7);
-  setText(pdf, C.brand);
-  pdf.text("THE ONE-SENTENCE TAKEAWAY", margin, y);
   setFill(pdf, C.brand);
-  pdf.rect(margin, y + 3, 22, 1.5, "F");
-  y += 14;
-  pdf.setFont("helvetica", "bold");
-  pdf.setFontSize(11);
-  setText(pdf, C.ink);
-  const oneSent = sanitize(studyNote.inOneSentence);
-  const oneSentLines = clipLines(pdf.splitTextToSize(oneSent, contentW), 3);
-  pdf.text(oneSentLines, margin, y, { lineHeightFactor: 1.35 });
-  y += oneSentLines.length * 13 + 14;
-
-  // ── 03. WHAT'S ON THE SLIDE  |  WHY A BUYER CARES ──────────────────────────
-  const splitGap = 16;
-  const splitW = (contentW - splitGap) / 2;
-  const splitBlockH = 116;
-  const whatsOn = (studyNote.whatsOnSlide ?? []).slice(0, 4).map(sanitize);
-  drawStudyBlock(
-    pdf,
-    margin,
-    y,
-    splitW,
-    splitBlockH,
-    "WHAT'S ON THE SLIDE",
-    C.brand,
-    [243, 247, 255],
-    whatsOn.map((b) => ({ bullet: true, text: b })),
-  );
-  drawStudyBlock(
-    pdf,
-    margin + splitW + splitGap,
-    y,
-    splitW,
-    splitBlockH,
-    "WHY A BUYER CARES",
-    [11, 26, 74],
-    [241, 244, 252],
-    [{ bullet: false, text: sanitize(studyNote.whyItMatters) }],
-  );
-  y += splitBlockH + 16;
-
-  // ── 04. THE IDEAS YOU MUST OWN ─────────────────────────────────────────────
-  pdf.setFont("helvetica", "bold");
-  pdf.setFontSize(7);
-  setText(pdf, C.brand);
-  pdf.text("THE IDEAS YOU MUST OWN", margin, y);
-  setFill(pdf, C.brand);
-  pdf.rect(margin, y + 3, 22, 1.5, "F");
+  pdf.rect(margin, y, 28, 2, "F");
   y += 14;
 
-  // Reserve bottom space for the 2x2 grid + check-yourself + footer first.
-  const checkBandH = 60;
-  const gridH = 138;
-  const ideasMaxY = footerY - 14 - checkBandH - 12 - gridH - 16;
+  // ─── Two-column body ──────────────────────────────────────────────────────
+  const checkH = 30;
+  const bodyTop = y;
+  const bodyBottom = footerY - checkH - 14;
+  const bodyH = bodyBottom - bodyTop;
 
+  const railW = Math.floor(contentW * 0.38);
+  const railGap = 18;
+  const colW = contentW - railW - railGap;
+  const railX = margin;
+  const colX = margin + railW + railGap;
+
+  // Vertical divider between columns
+  setStroke(pdf, C.hairline);
+  pdf.setLineWidth(0.5);
+  pdf.line(railX + railW + railGap / 2, bodyTop, railX + railW + railGap / 2, bodyBottom);
+
+  // ── Left rail blocks (buyer-facing anchors)
+  const connects = (studyNote.connectsTo.length ? studyNote.connectsTo : meta.connectsTo ?? [])
+    .slice(0, 4)
+    .map(sanitize);
+
+  const railBlocks: Array<{ label: string; accent: [number, number, number]; body: (yy: number) => number; }> = [
+    {
+      label: "TAKEAWAY",
+      accent: C.brand,
+      body: (yy) => drawParagraph(pdf, railX, yy, railW, sanitize(studyNote.inOneSentence), {
+        font: "bold", size: 11, color: C.ink, leading: 13,
+      }),
+    },
+    {
+      label: "WHY A BUYER CARES",
+      accent: C.navy,
+      body: (yy) => drawParagraph(pdf, railX, yy, railW, sanitize(studyNote.whyItMatters), {
+        font: "normal", size: 9, color: C.slate, leading: 11.5,
+      }),
+    },
+    {
+      label: "WATCH-OUT",
+      accent: C.rose,
+      body: (yy) => drawParagraph(pdf, railX, yy, railW, sanitize(studyNote.watchOut), {
+        font: "normal", size: 9, color: C.slate, leading: 11.5,
+      }),
+    },
+    ...(connects.length ? [{
+      label: "CONNECTS",
+      accent: C.sky,
+      body: (yy: number) => drawBulletList(pdf, railX, yy, railW, connects, {
+        size: 9, color: C.slate, leading: 11, bulletChar: ">",
+      }),
+    }] : []),
+  ];
+
+  const railSpacing = 14;
+  let railY = bodyTop;
+  for (const block of railBlocks) {
+    if (railY > bodyBottom - 24) break;
+    railY += drawRailLabel(pdf, railX, railY, block.label, block.accent);
+    // measure via fake render to a sandbox is overkill — body() returns consumed height after drawing at current position.
+    // We adjust by translating: call body with the right y by temporarily setting in helper. Simplify by accepting closure.
+    const consumed = drawAtY(pdf, railY, block.body);
+    railY += consumed + railSpacing;
+  }
+
+  // ── Right column blocks (rep-facing study)
+  const whatsOn = (studyNote.whatsOnSlide ?? []).slice(0, 5).map(sanitize);
   const ideas = (studyNote.keyIdeas ?? []).slice(0, 4).map(sanitize);
-  if (ideas.length === 0) {
-    pdf.setFont("helvetica", "italic");
-    pdf.setFontSize(9.5);
-    setText(pdf, C.muted);
-    pdf.text("(No curated ideas for this slide.)", margin, y);
-  } else {
-    const numW2 = 22;
-    const ideaX = margin + numW2;
-    const ideaW = contentW - numW2;
-    // Available vertical budget per idea.
-    const budget = Math.max(28, (ideasMaxY - y) / ideas.length);
-    const maxLines = Math.max(1, Math.floor((budget - 6) / 12));
-    ideas.forEach((idea, i) => {
-      pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(11);
-      setText(pdf, C.brand);
-      pdf.text(String(i + 1).padStart(2, "0"), margin, y + 9);
+  const terms = studyNote.terms.slice(0, 4).map((t) => ({
+    label: sanitize(t.term),
+    text: sanitize(t.definition),
+  }));
+  const facts = studyNote.facts.slice(0, 4).map(sanitize);
 
-      pdf.setFont("helvetica", "normal");
-      pdf.setFontSize(9.5);
-      setText(pdf, C.slate);
-      const lines = clipLines(pdf.splitTextToSize(idea, ideaW), maxLines);
-      pdf.text(lines, ideaX, y + 9, { lineHeightFactor: 1.35 });
-      y += Math.max(20, lines.length * 12 + 8);
+  let colY = bodyTop;
+
+  // What's on the slide
+  if (whatsOn.length) {
+    colY += drawRailLabel(pdf, colX, colY, "WHAT'S ON THE SLIDE", C.brand);
+    colY += drawAtY(pdf, colY, (yy) =>
+      drawBulletList(pdf, colX, yy, colW, whatsOn, {
+        size: 9.5, color: C.slate, leading: 12, bulletChar: "·",
+      })
+    );
+    colY += 12;
+  }
+
+  // Ideas you must own (numbered)
+  if (ideas.length && colY < bodyBottom - 60) {
+    colY += drawRailLabel(pdf, colX, colY, "THE IDEAS YOU MUST OWN", C.brand);
+    colY += drawAtY(pdf, colY, (yy) =>
+      drawNumberedList(pdf, colX, yy, colW, ideas, {
+        size: 9.5, color: C.slate, leading: 12, numberColor: C.brand,
+      })
+    );
+    colY += 12;
+  }
+
+  // Key terms (label · def)
+  if (terms.length && colY < bodyBottom - 40) {
+    colY += drawRailLabel(pdf, colX, colY, "KEY TERMS", C.brand);
+    colY += drawAtY(pdf, colY, (yy) =>
+      drawLabelledList(pdf, colX, yy, colW, terms, {
+        size: 8.5, color: C.slate, labelColor: C.ink, leading: 11,
+      })
+    );
+    colY += 12;
+  }
+
+  // Defensible facts
+  if (facts.length && colY < bodyBottom - 30) {
+    // Trim facts to fit remaining space.
+    colY += drawRailLabel(pdf, colX, colY, "DEFENSIBLE FACTS", C.emerald);
+    colY += drawAtY(pdf, colY, (yy) =>
+      drawBulletList(pdf, colX, yy, colW, facts, {
+        size: 9, color: C.slate, leading: 11.5, bulletChar: "·",
+        bulletColor: C.emerald, maxBottom: bodyBottom,
+      })
+    );
+  }
+
+  // ─── Check-yourself strip ─────────────────────────────────────────────────
+  const checkY = footerY - checkH - 6;
+  setFill(pdf, C.offwhite);
+  pdf.roundedRect(margin, checkY, contentW, checkH, 4, 4, "F");
+  setFill(pdf, C.brand);
+  pdf.rect(margin, checkY, 2.5, checkH, "F");
+
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(7);
+  setText(pdf, C.brand);
+  pdf.text("CHECK YOURSELF", margin + 10, checkY + 12);
+
+  const questions = (studyNote.checkYourself ?? []).slice(0, 3).map(sanitize);
+  if (questions.length) {
+    const labelW = pdf.getTextWidth("CHECK YOURSELF") + 18;
+    const qAvail = contentW - labelW - 10;
+    const qSlot = qAvail / questions.length;
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(8);
+    setText(pdf, C.slate);
+    questions.forEach((q, i) => {
+      const qx = margin + labelW + i * qSlot;
+      // checkbox
+      setStroke(pdf, C.muted);
+      pdf.setLineWidth(0.6);
+      pdf.rect(qx, checkY + 11, 7, 7, "S");
+      const lines = clipLines(pdf.splitTextToSize(q, qSlot - 14), 2);
+      pdf.text(lines, qx + 11, checkY + 16, { lineHeightFactor: 1.2 });
     });
   }
 
-  // ── 05. 2x2 GRID — Terms · Facts · Watch-out · How this connects ──────────
-  const gridTop = footerY - 14 - checkBandH - 12 - gridH;
-  setStroke(pdf, C.hairline);
-  pdf.setLineWidth(0.5);
-  pdf.line(margin, gridTop - 10, pageW - margin, gridTop - 10);
-
-  const colGap = 16;
-  const colW = (contentW - colGap) / 2;
-  const leftX = margin;
-  const rightX = margin + colW + colGap;
-  const rowH = gridH / 2 - 6;
-
-  drawBottomBlock(
-    pdf,
-    leftX,
-    gridTop,
-    colW,
-    rowH,
-    "KEY TERMS",
-    C.brand,
-    studyNote.terms.slice(0, 4).map((t) => ({ label: sanitize(t.term), text: sanitize(t.definition) })),
-  );
-  drawBottomBlock(
-    pdf,
-    rightX,
-    gridTop,
-    colW,
-    rowH,
-    "DEFENSIBLE FACTS",
-    C.emerald,
-    studyNote.facts.slice(0, 3).map((f) => ({ label: "", text: sanitize(f) })),
-  );
-  drawBottomBlock(
-    pdf,
-    leftX,
-    gridTop + rowH + 12,
-    colW,
-    rowH,
-    "WATCH-OUT",
-    C.rose,
-    [{ label: "", text: sanitize(studyNote.watchOut) }],
-  );
-  const connectsItems = (studyNote.connectsTo.length ? studyNote.connectsTo : meta.connectsTo ?? []).slice(0, 4);
-  drawBottomBlock(
-    pdf,
-    rightX,
-    gridTop + rowH + 12,
-    colW,
-    rowH,
-    "HOW THIS CONNECTS",
-    C.sky,
-    connectsItems.map((c) => ({ label: "", text: sanitize(c) })),
-  );
-
-  // ── 06. CHECK YOURSELF — three checkboxes ──────────────────────────────────
-  const checkY = gridTop + gridH + 12;
-  setFill(pdf, C.offwhite);
-  pdf.roundedRect(margin, checkY, contentW, checkBandH, 5, 5, "F");
-  setFill(pdf, C.brand);
-  pdf.rect(margin, checkY, 3, checkBandH, "F");
-  pdf.setFont("helvetica", "bold");
-  pdf.setFontSize(7);
-  setText(pdf, C.brand);
-  pdf.text("CHECK YOURSELF · ANSWER ALOUD BEFORE TURNING THE PAGE", margin + 10, checkY + 12);
-
-  const questions = (studyNote.checkYourself ?? []).slice(0, 3).map(sanitize);
-  const qInner = contentW - 36;
-  let qy = checkY + 22;
-  const qBudget = (checkBandH - 26) / Math.max(questions.length, 1);
-  questions.forEach((q) => {
-    setStroke(pdf, C.muted);
-    pdf.setLineWidth(0.7);
-    pdf.rect(margin + 10, qy + 2, 8, 8, "S");
-    pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(8.5);
-    setText(pdf, C.slate);
-    const lines = clipLines(pdf.splitTextToSize(q, qInner), Math.max(1, Math.floor((qBudget - 2) / 10)));
-    pdf.text(lines, margin + 24, qy + 9, { lineHeightFactor: 1.3 });
-    qy += qBudget;
-  });
-
-  // ── 07. Footer ─────────────────────────────────────────────────────────────
+  // ─── Footer ───────────────────────────────────────────────────────────────
   setStroke(pdf, C.hairline);
   pdf.setLineWidth(0.5);
   pdf.line(margin, footerY, pageW - margin, footerY);
   pdf.setFont("helvetica", "normal");
   pdf.setFontSize(7);
   setText(pdf, C.subtle);
-  pdf.text(`Week ${week.number} · ${sanitize(week.title)} · Study Notes`, margin, footerY + 14);
+  pdf.text(`Week ${week.number} · ${sanitize(week.title)} · Study sheet`, margin, footerY + 14);
   pdf.text("Rep-facing · Not for customer distribution", pageW - margin, footerY + 14, { align: "right" });
-
-  // Optional narration echo, single italic line just above footer line.
-  const echo = sanitize(studyNote.narrationInOneLine ?? "");
-  if (echo) {
-    pdf.setFont("helvetica", "italic");
-    pdf.setFontSize(7.5);
-    setText(pdf, C.subtle);
-    const echoLines = clipLines(
-      pdf.splitTextToSize(`From the coach narration: "${echo}"`, contentW),
-      1,
-    );
-    pdf.text(echoLines, margin, footerY - 6);
-  }
 }
 
-// Two-column study block used at the top of the page (What's on slide / Why
-// a buyer cares). Supports either bullet list or paragraph body.
-function drawStudyBlock(
+// ─── Rail / column helpers ────────────────────────────────────────────────
+
+/** Draws an inline mini-label with a small accent square. Returns consumed height. */
+function drawRailLabel(
   pdf: jsPDF,
   x: number,
-  yTop: number,
-  w: number,
-  h: number,
-  heading: string,
+  y: number,
+  label: string,
   accent: [number, number, number],
-  soft: [number, number, number],
-  items: Array<{ bullet: boolean; text: string }>,
-) {
-  setFill(pdf, soft);
-  pdf.roundedRect(x, yTop, w, h, 5, 5, "F");
+): number {
   setFill(pdf, accent);
-  pdf.rect(x, yTop, 3, h, "F");
-
+  pdf.rect(x, y - 5, 5, 5, "F");
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(7);
   setText(pdf, accent);
-  pdf.text(heading, x + 10, yTop + 13);
+  pdf.text(sanitize(label), x + 9, y - 1);
+  return 10;
+}
 
-  const innerX = x + 12;
-  const innerW = w - 22;
-  let cy = yTop + 26;
-  const bottom = yTop + h - 4;
+/** Runs a draw callback starting at yy and returns its reported consumed height. */
+function drawAtY(_pdf: jsPDF, yy: number, fn: (yy: number) => number): number {
+  return fn(yy);
+}
 
+interface TextStyle {
+  font?: "normal" | "bold" | "italic";
+  size: number;
+  color: [number, number, number];
+  leading: number;
+}
+
+function drawParagraph(
+  pdf: jsPDF,
+  x: number,
+  y: number,
+  w: number,
+  text: string,
+  style: TextStyle,
+): number {
+  pdf.setFont("helvetica", style.font ?? "normal");
+  pdf.setFontSize(style.size);
+  setText(pdf, style.color);
+  const lines = pdf.splitTextToSize(text, w);
+  pdf.text(lines, x, y + style.size, { lineHeightFactor: style.leading / style.size });
+  return lines.length * style.leading + 2;
+}
+
+function drawBulletList(
+  pdf: jsPDF,
+  x: number,
+  y: number,
+  w: number,
+  items: string[],
+  opts: {
+    size: number;
+    color: [number, number, number];
+    leading: number;
+    bulletChar?: string;
+    bulletColor?: [number, number, number];
+    maxBottom?: number;
+  },
+): number {
+  const bullet = opts.bulletChar ?? "·";
+  let cy = y + opts.size;
+  const indent = 9;
   for (const item of items) {
-    if (cy > bottom - 6) break;
-    if (item.bullet) {
-      const remH = bottom - cy;
-      const maxLines = Math.max(1, Math.floor(remH / 10));
-      pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(8);
-      setText(pdf, accent);
-      pdf.text("·", innerX, cy + 4);
-      pdf.setFont("helvetica", "normal");
-      pdf.setFontSize(8.5);
-      setText(pdf, C.slate);
-      const lines = clipLines(pdf.splitTextToSize(item.text, innerW - 10), Math.min(maxLines, 3));
-      pdf.text(lines, innerX + 8, cy + 4, { lineHeightFactor: 1.3 });
-      cy += lines.length * 10 + 4;
-    } else {
-      const remH = bottom - cy;
-      const maxLines = Math.max(1, Math.floor(remH / 11));
-      pdf.setFont("helvetica", "normal");
-      pdf.setFontSize(9);
-      setText(pdf, C.slate);
-      const lines = clipLines(pdf.splitTextToSize(item.text, innerW), maxLines);
-      pdf.text(lines, innerX, cy + 4, { lineHeightFactor: 1.35 });
-      cy += lines.length * 11 + 4;
-    }
+    if (opts.maxBottom && cy > opts.maxBottom) break;
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(opts.size);
+    setText(pdf, opts.bulletColor ?? opts.color);
+    pdf.text(bullet, x, cy);
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(opts.size);
+    setText(pdf, opts.color);
+    const lines = pdf.splitTextToSize(item, w - indent);
+    pdf.text(lines, x + indent, cy, { lineHeightFactor: opts.leading / opts.size });
+    cy += lines.length * opts.leading + 2;
   }
+  return cy - y;
+}
+
+function drawNumberedList(
+  pdf: jsPDF,
+  x: number,
+  y: number,
+  w: number,
+  items: string[],
+  opts: { size: number; color: [number, number, number]; leading: number; numberColor: [number, number, number]; },
+): number {
+  const indent = 18;
+  let cy = y + opts.size;
+  items.forEach((it, i) => {
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(opts.size);
+    setText(pdf, opts.numberColor);
+    pdf.text(String(i + 1).padStart(2, "0"), x, cy);
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(opts.size);
+    setText(pdf, opts.color);
+    const lines = pdf.splitTextToSize(it, w - indent);
+    pdf.text(lines, x + indent, cy, { lineHeightFactor: opts.leading / opts.size });
+    cy += lines.length * opts.leading + 3;
+  });
+  return cy - y;
+}
+
+function drawLabelledList(
+  pdf: jsPDF,
+  x: number,
+  y: number,
+  w: number,
+  items: Array<{ label: string; text: string }>,
+  opts: { size: number; color: [number, number, number]; labelColor: [number, number, number]; leading: number; },
+): number {
+  let cy = y + opts.size;
+  for (const it of items) {
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(opts.size);
+    setText(pdf, opts.labelColor);
+    const labelTxt = it.label + " ·";
+    pdf.text(labelTxt, x, cy);
+    const lw = pdf.getTextWidth(labelTxt) + 3;
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(opts.size);
+    setText(pdf, opts.color);
+    const lines = clipLines(pdf.splitTextToSize(it.text, w - lw), 2);
+    pdf.text(lines, x + lw, cy, { lineHeightFactor: opts.leading / opts.size });
+    cy += lines.length * opts.leading + 2;
+  }
+  return cy - y;
+}
+
+// ─── Transcript page (verbatim coach narration) ───────────────────────────
+function renderSlideTranscriptPage(
+  pdf: jsPDF,
+  opts: {
+    week: CoachCardWeek;
+    slideIndex: number;
+    slideCount: number;
+    title: string;
+    script: string;
+  },
+) {
+  const { week, slideIndex, slideCount, title, script } = opts;
+  const margin = 40;
+  const topMargin = 44;
+
+  const paragraphs = sanitize(script)
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+
+  // Estimate ~150 words per minute spoken.
+  const wordCount = script.split(/\s+/).filter(Boolean).length;
+  const mins = Math.max(1, Math.round(wordCount / 150));
+
+  let isFirstPage = true;
+
+  const startPage = (continued: boolean) => {
+    pdf.addPage("a4", "portrait");
+    const pageW = pdf.internal.pageSize.getWidth();
+    const contentW = pageW - margin * 2;
+
+    // Header strip
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(7.5);
+    setText(pdf, C.subtle);
+    pdf.text("COMPLY365 · SALES ENABLEMENT ACADEMY", margin, topMargin - 14);
+    pdf.setFont("helvetica", "normal");
+    setText(pdf, C.muted);
+    pdf.text(
+      `W${week.number} · Slide ${String(slideIndex + 1).padStart(2, "0")} / ${slideCount}   ·   Transcript${continued ? " · continued" : " · 2 of 2"}`,
+      pageW - margin,
+      topMargin - 14,
+      { align: "right" },
+    );
+    setStroke(pdf, C.hairline);
+    pdf.setLineWidth(0.5);
+    pdf.line(margin, topMargin - 6, pageW - margin, topMargin - 6);
+
+    let y = topMargin + 22;
+
+    if (!continued) {
+      // Numeral + title block
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(22);
+      setText(pdf, C.brand);
+      const numStr = String(slideIndex + 1).padStart(2, "0");
+      pdf.text(numStr, margin, y);
+      const numW = pdf.getTextWidth(numStr);
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(16);
+      setText(pdf, [200, 215, 235]);
+      pdf.text("/", margin + numW + 6, y - 2);
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(12);
+      setText(pdf, C.ink);
+      const titleX = margin + numW + 18;
+      const titleLines = clipLines(
+        pdf.splitTextToSize(title.toUpperCase(), contentW - (titleX - margin)),
+        2,
+      );
+      pdf.text(titleLines, titleX, y - 1, { lineHeightFactor: 1.15 });
+      y += Math.max(8, (titleLines.length - 1) * 14) + 14;
+
+      // Eyebrow + meta line
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(7);
+      setText(pdf, C.brand);
+      pdf.text("TRANSCRIPT · COACH NARRATION (VERBATIM)", margin, y);
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(8);
+      setText(pdf, C.muted);
+      pdf.text(`~${mins} min spoken · ${wordCount} words`, pageW - margin, y, { align: "right" });
+      y += 6;
+      setFill(pdf, C.brand);
+      pdf.rect(margin, y, 28, 1.5, "F");
+      y += 16;
+    } else {
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(11);
+      setText(pdf, C.ink);
+      pdf.text(`${sanitize(title.toUpperCase())} — transcript continued`, margin, y);
+      y += 14;
+      setFill(pdf, C.brand);
+      pdf.rect(margin, y, 28, 1.5, "F");
+      y += 16;
+    }
+
+    return y;
+  };
+
+  let pageW = pdf.internal.pageSize.getWidth();
+  let pageH = pdf.internal.pageSize.getHeight();
+  let footerY = pageH - 44;
+  let contentW = pageW - margin * 2;
+
+  let y = startPage(false);
+  pageW = pdf.internal.pageSize.getWidth();
+  pageH = pdf.internal.pageSize.getHeight();
+  footerY = pageH - 44;
+  contentW = pageW - margin * 2;
+
+  pdf.setFont("helvetica", "normal");
+  pdf.setFontSize(10);
+  setText(pdf, C.slate);
+  const leading = 14;
+
+  const drawFooter = (continued: boolean) => {
+    setStroke(pdf, C.hairline);
+    pdf.setLineWidth(0.5);
+    pdf.line(margin, footerY, pageW - margin, footerY);
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(7);
+    setText(pdf, C.subtle);
+    pdf.text(
+      `Week ${week.number} · ${sanitize(week.title)} · Transcript${continued ? " (cont.)" : ""}`,
+      margin,
+      footerY + 14,
+    );
+    pdf.text(
+      "Read once to memorise · do not read live on a call",
+      pageW - margin,
+      footerY + 14,
+      { align: "right" },
+    );
+  };
+
+  for (let pi = 0; pi < paragraphs.length; pi++) {
+    const para = paragraphs[pi];
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(10);
+    setText(pdf, C.slate);
+    const lines = pdf.splitTextToSize(para, contentW);
+    let i = 0;
+    while (i < lines.length) {
+      const remaining = (footerY - 8 - y) / leading;
+      const take = Math.max(1, Math.floor(remaining));
+      if (take <= 0 || y + leading > footerY - 8) {
+        drawFooter(!isFirstPage);
+        isFirstPage = false;
+        y = startPage(true);
+        pdf.setFont("helvetica", "normal");
+        pdf.setFontSize(10);
+        setText(pdf, C.slate);
+        continue;
+      }
+      const slice = lines.slice(i, i + take);
+      pdf.text(slice, margin, y, { lineHeightFactor: leading / 10 });
+      y += slice.length * leading;
+      i += slice.length;
+    }
+    y += 6; // paragraph gap
+  }
+
+  drawFooter(!isFirstPage);
 }
 
 function drawBottomBlock(
