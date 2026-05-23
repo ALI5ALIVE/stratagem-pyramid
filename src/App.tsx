@@ -36,6 +36,7 @@ import PositioningPlaybook from "./pages/PositioningPlaybook";
 import DtopPackagingPov from "./pages/DtopPackagingPov";
 import SalesEnablement from "./pages/SalesEnablement";
 import StrategyVisionSession from "./pages/StrategyVisionSession";
+import CategoryResearchProgramme from "./pages/CategoryResearchProgramme";
 import RoadmapDeck from "./pages/RoadmapDeck";
 import AuthPage from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
@@ -111,6 +112,7 @@ const App = () => (
             <Route path="/dtop-packaging-pov" element={<DtopPackagingPov />} />
             <Route path="/sales-enablement" element={<SalesEnablement />} />
             <Route path="/strategy-vision-session" element={<StrategyVisionSession />} />
+            <Route path="/category-research-programme" element={<CategoryResearchProgramme />} />
             <Route path="/practice-center" element={<RequireAuth><Suspense fallback={<PageLoader />}><PracticeCenter /></Suspense></RequireAuth>} />
             <Route path="/admin/knowledge-base" element={<RequireAuth><Suspense fallback={<PageLoader />}><AdminKnowledgeBase /></Suspense></RequireAuth>} />
             <Route path="/roadmap" element={<RoadmapDeck />} />

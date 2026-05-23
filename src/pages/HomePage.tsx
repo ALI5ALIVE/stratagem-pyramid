@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { 
   Rocket, Briefcase, BookOpen, 
   Presentation, Brain, 
-  ArrowRight, Users, ScrollText, Workflow, Layers, Sparkles, Zap, Smartphone, GraduationCap, Radio, Mic
+  ArrowRight, Users, ScrollText, Workflow, Layers, Sparkles, Zap, Smartphone, GraduationCap, Radio, Mic, FlaskConical
 } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
 
@@ -42,6 +42,14 @@ const additionalResources: DeckCard[] = [
     icon: BookOpen,
     badge: "New · 13 sections",
     accent: "from-primary to-comply-plum",
+  },
+  {
+    title: "Category Research Programme",
+    description: "McKinsey/Forrester-style mixed-methods research design — survey, interviews, secondary — built to evidence the new category before the report ships.",
+    href: "/category-research-programme",
+    icon: FlaskConical,
+    badge: "New · 12-week programme",
+    accent: "from-primary to-comply-teal",
   },
   {
     title: "CEO Overview",
