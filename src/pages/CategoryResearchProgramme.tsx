@@ -314,6 +314,52 @@ export default function CategoryResearchProgramme() {
         </div>
       </Section>
 
+      {/* INTERVIEW DISCUSSION GUIDE */}
+      <Section
+        eyebrow="Interview discussion guide"
+        title="The full 60-minute guide — primary question, probes, and what we're listening for."
+        sub="Six sections, ~60 minutes total. Probes are prompts only; interviewers follow the respondent's thread when it surfaces something the guide didn't anticipate."
+        icon={BookOpenCheck}
+        alt
+      >
+        <div className="grid md:grid-cols-2 gap-5">
+          {interviewQuestions.map((s) => (
+            <div key={s.section} className="rounded-xl border border-border bg-card p-5 flex flex-col">
+              <div className="flex items-center justify-between gap-3">
+                <div className="text-sm font-semibold text-foreground">{s.section}</div>
+                <div className="flex items-center gap-2">
+                  <Chip>{s.durationMin} min</Chip>
+                  <Chip tone="primary">{s.tests}</Chip>
+                </div>
+              </div>
+              <div className="mt-4">
+                <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5">Primary question</div>
+                <p className="text-sm text-foreground leading-relaxed">“{s.primary}”</p>
+              </div>
+              <div className="mt-4">
+                <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5">Probes</div>
+                <ul className="space-y-1.5">
+                  {s.probes.map((p) => (
+                    <li key={p} className="text-sm text-muted-foreground leading-relaxed flex gap-2">
+                      <span className="text-primary mt-1.5 shrink-0">→</span>
+                      <span>{p}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-4">
+                <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5">Listening for</div>
+                <div className="flex flex-wrap gap-1.5">
+                  {s.listenFors.map((l) => (
+                    <Chip key={l}>{l}</Chip>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
       {/* SECONDARY */}
       <Section
         eyebrow="Secondary & desk research"
