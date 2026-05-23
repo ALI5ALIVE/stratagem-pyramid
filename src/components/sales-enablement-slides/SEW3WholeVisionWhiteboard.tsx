@@ -1,6 +1,6 @@
 import PitchSlideContainer from "@/components/shared/PitchSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { PenLine, Sparkles, Layers, MapPin } from "lucide-react";
+import { PenLine, Layers, MapPin } from "lucide-react";
 
 interface Props extends SlideNarrationProps {
   slideNumber?: number;
@@ -109,16 +109,10 @@ const SEW3WholeVisionWhiteboard = ({
   >
     <div className="h-full min-h-0 overflow-hidden grid grid-cols-12 gap-4 px-8 pt-2 pb-2 max-w-[1700px] mx-auto">
       {/* Whiteboard */}
-      <div className="col-span-7 min-h-0 overflow-hidden flex flex-col rounded-xl bg-[#f5f1e6] border-4 border-[#3a2a1a] shadow-2xl p-4 relative">
-        <div className="absolute top-2 left-3 text-[10px] uppercase tracking-widest text-[#3a2a1a]/60 font-mono">
-          whiteboard · whole vision · build bottom-up
-        </div>
-        <div className="absolute top-2 right-3 text-[10px] uppercase tracking-widest text-[#3a2a1a]/60 font-mono flex items-center gap-1">
-          <Sparkles className="h-3 w-3" /> one marker · 90 seconds
-        </div>
+      <div className="col-span-8 min-h-0 overflow-hidden flex flex-col rounded-xl bg-[#f5f1e6] border-4 border-[#3a2a1a] shadow-2xl p-3 relative">
         <svg
           viewBox="0 0 700 500"
-          preserveAspectRatio="xMidYMid meet"
+          preserveAspectRatio="xMidYMin meet"
           className="w-full h-full flex-1"
           style={{ fontFamily: "'Caveat', 'Comic Sans MS', cursive" }}
         >
@@ -258,7 +252,7 @@ const SEW3WholeVisionWhiteboard = ({
       </div>
 
       {/* Say-it script + close */}
-      <div className="col-span-5 flex flex-col gap-1.5 min-h-0 overflow-y-auto pr-1">
+      <div className="col-span-4 flex flex-col gap-1.5 min-h-0 overflow-y-auto pr-1">
         {/* MAD use case opener */}
         <div className="text-[10px] uppercase tracking-widest text-amber-300 flex items-center gap-2">
           <MapPin className="h-3 w-3" /> Open with the use case · 20 seconds
