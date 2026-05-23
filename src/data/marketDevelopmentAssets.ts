@@ -1,9 +1,7 @@
 import {
-  FlaskConical, Calculator,
+  FlaskConical,
   BookOpen, Package, Compass,
-  Radio, Brain, Users,
   Newspaper, Sparkles, CalendarDays, FileText,
-  Globe, Building2, Plane, Shield, Train, Layers,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -46,13 +44,6 @@ export const workstreams: MarketWorkstream[] = [
         status: "In Research",
         icon: FlaskConical,
       },
-      {
-        title: "Line of Sight ROI Model",
-        href: "/line-of-sight",
-        purpose: "Interactive ROI calculator built on Eurocontrol, IATA and SITA cost models — quant proof of controllable operational cost.",
-        status: "Live",
-        icon: Calculator,
-      },
     ],
   },
   {
@@ -85,39 +76,6 @@ export const workstreams: MarketWorkstream[] = [
         purpose: "Three-hour executive whiteboard — outcome-led conversation that tests the category narrative with real operators.",
         status: "Live",
         icon: Compass,
-      },
-    ],
-  },
-  {
-    id: "messaging",
-    number: "03",
-    label: "Messaging & Narrative",
-    eyebrow: "The story stack",
-    headline: "One narrative, layered for every audience.",
-    intro:
-      "The core stories — Signals, Intelligence Layer, Personas — that translate the category into language for boards, operators and technical buyers.",
-    accent: "violet",
-    assets: [
-      {
-        title: "Signals 101",
-        href: "/signals-playbook",
-        purpose: "Foundational narrative: what a signal is, why ~65% never make it home, and how Comply365 closes the loop.",
-        status: "Live",
-        icon: Radio,
-      },
-      {
-        title: "Intelligence Layer Playbook",
-        href: "/coanalyst",
-        purpose: "The 90% vs 35% accuracy story — domain intelligence as the bridge from event to control.",
-        status: "Live",
-        icon: Brain,
-      },
-      {
-        title: "Personas Deep Dive",
-        href: "/personas",
-        purpose: "Five buyer/user personas with messaging, objections and discovery questions — the audience map for every asset.",
-        status: "Live",
-        icon: Users,
       },
     ],
   },
@@ -158,67 +116,6 @@ export const workstreams: MarketWorkstream[] = [
         purpose: "Pre-read briefing pack: agenda, speakers, narrative arc and outcomes.",
         status: "Live",
         icon: FileText,
-      },
-    ],
-  },
-  {
-    id: "brand",
-    number: "05",
-    label: "Brand & Category Homepages",
-    eyebrow: "Public surfaces",
-    headline: "Where the category meets the market.",
-    intro:
-      "The public-facing brand surfaces — flagship home, industry pages and exploratory mockups — that present the category to prospects, analysts and press.",
-    accent: "rose",
-    assets: [
-      {
-        title: "Comply365 Home",
-        href: "/comply365-home",
-        purpose: "Flagship brand home — the canonical public narrative for the Operational Performance Platform.",
-        status: "Live",
-        icon: Globe,
-      },
-      {
-        title: "Operational Platform Home",
-        href: "/operational-platform",
-        purpose: "Product-led category home presenting the platform as the operating system for operational performance.",
-        status: "Live",
-        icon: Layers,
-      },
-      {
-        title: "Platform Mockup",
-        href: "/platform-mockup",
-        purpose: "Exploratory brand surface used to test alternate framings of the platform story.",
-        status: "Draft",
-        icon: Building2,
-      },
-      {
-        title: "Homepage Mockup",
-        href: "/homepage-mockup",
-        purpose: "Alternate homepage concept under evaluation alongside the flagship.",
-        status: "Draft",
-        icon: Building2,
-      },
-      {
-        title: "Airlines",
-        href: "/solutions/airlines",
-        purpose: "Industry surface translating the category for aviation operations.",
-        status: "Live",
-        icon: Plane,
-      },
-      {
-        title: "Defense",
-        href: "/solutions/defense",
-        purpose: "Industry surface translating the category for defense and mission-critical operations.",
-        status: "Live",
-        icon: Shield,
-      },
-      {
-        title: "Rail",
-        href: "/solutions/rail",
-        purpose: "Industry surface translating the category for rail operators.",
-        status: "Live",
-        icon: Train,
       },
     ],
   },

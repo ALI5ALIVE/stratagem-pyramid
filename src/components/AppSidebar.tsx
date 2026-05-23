@@ -1,7 +1,7 @@
 import {
   Presentation, Brain,
   Rocket, BookOpen, Home, Users, ScrollText, Workflow, Sparkles, Zap, Smartphone, Layers, Radio,
-  LogIn, LogOut, GraduationCap, Mic, FlaskConical, Compass
+  LogIn, LogOut, GraduationCap, Mic
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useSidebar } from "@/components/ui/sidebar";
@@ -42,17 +42,8 @@ const salesEnablementItems: NavItem[] = [
   { title: "Practice Center", url: "/practice-center", icon: Mic, badge: "New" },
 ];
 
-const researchItems: NavItem[] = [
-  { title: "Category Research Programme", url: "/category-research-programme", icon: FlaskConical, badge: "New" },
-];
-
-const marketDevItems: NavItem[] = [
-  { title: "Market Development Hub", url: "/market-development", icon: Compass, badge: "New" },
-];
-
 const capabilityItems: NavItem[] = [
   { title: "Platform Playbook", url: "/platform-playbook", icon: Layers, badge: "Master" },
-  { title: "AI Capabilities Infographic", url: "/ai-infographic", icon: Sparkles, badge: "New" },
   { title: "Signals 101", url: "/signals-playbook", icon: Radio },
   { title: "Intelligence Layer Playbook", url: "/coanalyst", icon: Brain },
   { title: "Regulation Management", url: "/regulation-management", icon: ScrollText },
@@ -134,10 +125,6 @@ export function AppSidebar() {
         <NavGroup label="Pitch Decks" items={pitchItems} />
         <SidebarSeparator />
         <NavGroup label="Sales Enablement" items={salesEnablementItems} />
-        <SidebarSeparator />
-        <NavGroup label="Research & Category" items={researchItems} />
-        <SidebarSeparator />
-        <NavGroup label="Market Development" items={marketDevItems} />
         <SidebarSeparator />
         <NavGroup label="Capabilities" items={capabilityItems} />
         <SidebarSeparator />
