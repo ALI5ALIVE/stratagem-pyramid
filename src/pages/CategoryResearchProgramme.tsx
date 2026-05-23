@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import {
   FlaskConical, Target, GitBranch, Layers, ClipboardList, MessagesSquare,
-  Library, LineChart, CalendarClock, ShieldCheck, Package, Wallet, AlertTriangle, ArrowRight,
+  Library, LineChart, CalendarClock, ShieldCheck, Package, AlertTriangle, ArrowRight,
+  ListChecks, BookOpenCheck,
 } from "lucide-react";
 import {
   hypotheses, surveyBlocks, quotaMatrix, interviewGuide, secondarySources,
-  timelinePhases, deliverables, risks, advisoryPanel, budgetBands,
+  timelinePhases, deliverables, risks, advisoryPanel,
+  surveyQuestions, interviewQuestions,
 } from "@/data/categoryResearchProgramme";
 
 const bucketColor: Record<"D" | "T" | "O" | "P", string> = {
