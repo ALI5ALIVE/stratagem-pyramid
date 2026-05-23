@@ -116,6 +116,7 @@ const App = () => (
             <Route path="/strategy-vision-session" element={<StrategyVisionSession />} />
             <Route path="/category-research-programme" element={<CategoryResearchProgramme />} />
             <Route path="/market-development" element={<MarketDevelopmentHub />} />
+            <Route path="/keynote/silos-to-signals" element={<SilosToSignalsKeynote />} />
             <Route path="/practice-center" element={<RequireAuth><Suspense fallback={<PageLoader />}><PracticeCenter /></Suspense></RequireAuth>} />
             <Route path="/admin/knowledge-base" element={<RequireAuth><Suspense fallback={<PageLoader />}><AdminKnowledgeBase /></Suspense></RequireAuth>} />
             <Route path="/roadmap" element={<RoadmapDeck />} />
