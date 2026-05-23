@@ -1,6 +1,7 @@
 import PitchSlideContainer from "@/components/shared/PitchSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { Clock, Users, Gift, Coffee, ArrowRight } from "lucide-react";
+import { Clock, Users, Gift, Coffee, ArrowRight, ExternalLink } from "lucide-react";
+import { Link } from "react-router-dom";
 import {
   visionSessionAgenda,
   visionSessionAttendees,
@@ -98,6 +99,17 @@ const SEStrategyVisionSession = ({ slideNumber, ...narrationProps }: Props) => (
       <div className="flex items-center justify-center gap-2 text-xs text-primary font-semibold">
         Book it. Then go run your 30-day plan.
         <ArrowRight className="h-3.5 w-3.5" />
+      </div>
+      <div className="flex items-center justify-center">
+        <Link
+          to="/strategy-vision-session"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-[11px] text-foreground/60 hover:text-primary transition-colors"
+        >
+          <ExternalLink className="h-3 w-3" />
+          Open customer-facing page to share with the prospect
+        </Link>
       </div>
     </div>
   </PitchSlideContainer>
