@@ -76,7 +76,7 @@ export default function CategoryResearchProgramme() {
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl">
             {[
               { k: "300", v: "Survey completes" },
-              { k: "30–40", v: "Exec interviews" },
+              { k: "18–24", v: "Exec interviews" },
               { k: "12 wks", v: "Design → publish" },
               { k: "±5.7%", v: "Margin @ 95% CI" },
             ].map((m) => (
@@ -164,7 +164,7 @@ export default function CategoryResearchProgramme() {
           <div className="space-y-4">
             {[
               { t: "Quant survey (n=300)", d: "Sizes the pain and tests preference at statistical power. Answers 'how many, how much, how strong'." },
-              { t: "Qual interviews (30–40)", d: "Surfaces language, decision triggers and unspoken procurement reality. Answers 'why and how'." },
+              { t: "Qual interviews (18–24)", d: "Surfaces language, decision triggers and unspoken procurement reality. Answers 'why and how'." },
               { t: "Secondary synthesis", d: "Anchors the claim in regulator, analyst and operator-filed evidence we did not commission." },
             ].map((b) => (
               <div key={b.t} className="rounded-lg border border-border bg-card p-4">
@@ -243,7 +243,7 @@ export default function CategoryResearchProgramme() {
       {/* QUAL */}
       <Section
         eyebrow="Qualitative interviews"
-        title="30–40 executive conversations, recruited to avoid the friendly-customer trap."
+        title="18–24 executive conversations, recruited to avoid the friendly-customer trap."
         sub="60% customer/prospect base, 30% cold via industry associations, 10% lapsed or lost. Coded twice by independent reviewers."
         icon={MessagesSquare}
         alt
