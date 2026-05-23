@@ -452,9 +452,10 @@ const StrategyVisionSession = () => {
 
       {/* Trust strip */}
       <section className="border-y border-border/40 bg-card/30">
-        <div className="max-w-6xl mx-auto px-6 lg:px-10 py-14">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-            <div className="md:col-span-1">
+        <div className="max-w-6xl mx-auto px-6 lg:px-10 py-16 lg:py-20 space-y-10">
+          {/* Facilitator badge */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+            <div>
               <div className="text-[11px] uppercase tracking-wider text-primary font-semibold mb-2">
                 Run by people who've done this
               </div>
@@ -463,7 +464,30 @@ const StrategyVisionSession = () => {
                 defense, and rail — including six of the world's twenty largest airlines.
               </p>
             </div>
-            <div className="md:col-span-2">
+            <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-4 rounded-xl border border-border bg-background/60">
+                <div className="text-[10px] uppercase tracking-[0.18em] text-primary font-bold mb-1.5">
+                  Lead facilitator
+                </div>
+                <div className="text-sm font-semibold mb-1">Comply365 Strategy Director</div>
+                <div className="text-xs text-foreground/60">15+ years in aviation operations &amp; SMS transformation</div>
+              </div>
+              <div className="p-4 rounded-xl border border-border bg-background/60">
+                <div className="text-[10px] uppercase tracking-[0.18em] text-primary font-bold mb-1.5">
+                  Solutions engineer
+                </div>
+                <div className="text-sm font-semibold mb-1">Intelligence Layer architect</div>
+                <div className="text-xs text-foreground/60">Former airline operational data lead</div>
+              </div>
+              <p className="sm:col-span-2 text-xs text-foreground/50">
+                Your exact facilitator pair is confirmed in your prep call.
+              </p>
+            </div>
+          </div>
+
+          {/* Chips: industry + regulator frameworks */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2 border-t border-border/40">
+            <div>
               <div className="text-[11px] uppercase tracking-wider text-foreground/50 font-semibold mb-3">
                 Recent attendees include
               </div>
@@ -477,12 +501,33 @@ const StrategyVisionSession = () => {
                   </span>
                 ))}
               </div>
-              <p className="mt-5 text-sm text-foreground/60 italic">
-                "Three hours that reframed the conversation we'd been having for a year. We came in
-                talking renewals. We left with a board paper."
-                <span className="not-italic text-foreground/40"> — VP Safety, Tier-1 European airline</span>
-              </p>
             </div>
+            <div>
+              <div className="text-[11px] uppercase tracking-wider text-foreground/50 font-semibold mb-3">
+                Regulator regimes routinely referenced
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {["EASA", "FAA", "CAA", "TCCA", "ICAO Annex 19", "IS-BAO"].map((r) => (
+                  <span
+                    key={r}
+                    className="px-3 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-xs font-medium text-primary"
+                  >
+                    {r}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Sourced quote */}
+          <div className="pt-2 border-t border-border/40">
+            <p className="text-base md:text-lg text-foreground/80 italic max-w-3xl">
+              "Three hours that reframed the conversation we'd been having for a year. We came in
+              talking renewals. We left with a board paper."
+            </p>
+            <p className="mt-2 text-xs text-foreground/50 not-italic">
+              — VP Safety, Tier-1 European airline · named on request under NDA
+            </p>
           </div>
         </div>
       </section>
