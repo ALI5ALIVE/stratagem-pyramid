@@ -38,6 +38,7 @@ import SalesEnablement from "./pages/SalesEnablement";
 import StrategyVisionSession from "./pages/StrategyVisionSession";
 import CategoryResearchProgramme from "./pages/CategoryResearchProgramme";
 import MarketDevelopmentHub from "./pages/MarketDevelopmentHub";
+import SilosToSignalsKeynote from "./pages/keynote/SilosToSignalsKeynote";
 import RoadmapDeck from "./pages/RoadmapDeck";
 import AuthPage from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";

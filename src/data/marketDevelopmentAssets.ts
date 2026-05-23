@@ -1,7 +1,7 @@
 import {
   FlaskConical,
   BookOpen, Package, Compass,
-  Newspaper, Sparkles, CalendarDays, FileText,
+  Newspaper, Sparkles, CalendarDays, FileText, Mic,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
