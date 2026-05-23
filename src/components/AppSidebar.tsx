@@ -1,7 +1,7 @@
 import {
   Presentation, Brain,
   Rocket, BookOpen, Home, Users, ScrollText, Workflow, Sparkles, Zap, Smartphone, Layers, Radio,
-  LogIn, LogOut, GraduationCap, Mic, FlaskConical
+  LogIn, LogOut, GraduationCap, Mic, FlaskConical, Compass
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useSidebar } from "@/components/ui/sidebar";
@@ -44,6 +44,10 @@ const salesEnablementItems: NavItem[] = [
 
 const researchItems: NavItem[] = [
   { title: "Category Research Programme", url: "/category-research-programme", icon: FlaskConical, badge: "New" },
+];
+
+const marketDevItems: NavItem[] = [
+  { title: "Market Development Hub", url: "/market-development", icon: Compass, badge: "New" },
 ];
 
 const capabilityItems: NavItem[] = [
@@ -132,6 +136,8 @@ export function AppSidebar() {
         <NavGroup label="Sales Enablement" items={salesEnablementItems} />
         <SidebarSeparator />
         <NavGroup label="Research & Category" items={researchItems} />
+        <SidebarSeparator />
+        <NavGroup label="Market Development" items={marketDevItems} />
         <SidebarSeparator />
         <NavGroup label="Capabilities" items={capabilityItems} />
         <SidebarSeparator />
