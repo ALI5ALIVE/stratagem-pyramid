@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { 
-  Rocket, Briefcase, BookOpen, 
+  Rocket, Briefcase, BookOpen, Compass,
   Presentation, Brain, 
   ArrowRight, Users, ScrollText, Workflow, Layers, Sparkles, Zap, Smartphone, GraduationCap, Radio, Mic, FlaskConical
 } from "lucide-react";
@@ -35,6 +35,14 @@ const pitchDecks: DeckCard[] = [
 ];
 
 const additionalResources: DeckCard[] = [
+  {
+    title: "Market Development Hub",
+    description: "The full catalog of research, positioning, messaging, content and brand assets that build the new category — distinct from the sales enablement portal.",
+    href: "/market-development",
+    icon: Compass,
+    badge: "New · Hub",
+    accent: "from-primary to-emerald-500",
+  },
   {
     title: "Positioning & Messaging Playbook",
     description: "Category, master narrative, pillars × personas, competitive frame, objections, sales kit and brand rules — one canonical reference.",
