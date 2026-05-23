@@ -2251,6 +2251,17 @@ function renderSlideTranscriptPage(
       pageBeatStart = b.n;
       y = startPage(true);
     }
+    // If this single beat is still taller than the page area, trim trailing
+    // say-sentences (and append an ellipsis) so it never overflows the footer.
+    const pageAvail = footerY - 14 - (topMargin + 22 + 18);
+    if (measureBeat(b) > pageAvail && b.sayLines && b.sayLines.length > 1) {
+      while (b.sayLines.length > 1 && measureBeat(b) > pageAvail) {
+        b.sayLines.pop();
+      }
+      if (b.sayLines.length) {
+        b.sayLines[b.sayLines.length - 1] = b.sayLines[b.sayLines.length - 1].replace(/[.!?]?$/, "") + " …";
+      }
+    }
     drawBeat(b);
     pageBeatEnd = b.n;
   }
