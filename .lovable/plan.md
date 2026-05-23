@@ -1,71 +1,65 @@
 ## Goal
 
-Create a dedicated **Market Development** hub at `/market-development` that brings together every asset we've built to *create and validate the category* — research, positioning, messaging, content strategy, thought-leadership, brand homepages — separate from the sales enablement portal (which is for closing deals on existing pipeline).
+On `/category-research-programme`: (1) write and surface the **full survey question set** and **full qualitative discussion guide**, (2) **remove the budget section** entirely, (3) **reduce interview sample** from 30–40 down to a tighter 18–24 (n=20 target).
 
-This becomes the home for the "outside-in" workstream: how we shape the market, not how we sell into it.
+## Changes
 
-## What goes on the page
+### 1. Survey question set (new data + new section)
 
-Assets are grouped into 5 workstreams. Each item is a card with title, one-line purpose, status chip (Live / Draft / In Research), and a deep-link.
+Add `surveyQuestions` to `src/data/categoryResearchProgramme.ts`: for each of the 8 instrument blocks, the actual question wording, answer scale, and which hypothesis/segmentation it serves. ~30 questions total (~18 min completion preserved).
 
-**1. Research & Evidence**
-- Category Research Programme (`/category-research-programme`) — McKinsey-style mixed-methods study
-- Line of Sight ROI model (`/line-of-sight`) — quant proof of operational cost
-- Maturity Curve (`/maturity-curve`) — diagnostic instrument
-
-**2. Positioning & Category Design**
-- Positioning Playbook (`/positioning-playbook`) — category narrative source of truth
-- DTOP Packaging POV (`/dtop-packaging-pov`) — how we package the operating model
-- Strategy Vision Session (`/strategy-vision-session`) — 3-hour executive whiteboard
-
-**3. Messaging & Narrative**
-- Signals Playbook (`/signals-playbook`) — core "signals" narrative
-- CoAnalyst Intelligence Layer (`/coanalyst`) — intelligence-layer story
-- Personas Deep Dive (`/personas`) — buyer/user persona narratives
-
-**4. Content Strategy & Thought Leadership**
-- Content Strategy (`/content-strategy`) — editorial plan and pillars
-- AI Infographic (`/ai-infographic`) — visual thought-leadership asset
-- From Signals to Control event (`/events/from-signals-to-control`) — flagship event
-- Event brief (`/events/from-signals-to-control/brief`)
-
-**5. Brand & Category Homepages**
-- Comply365 Home (`/comply365-home`) — flagship brand home
-- Operational Platform Home (`/operational-platform`)
-- Platform Mockup (`/platform-mockup`) — exploratory brand surface
-- Homepage Mockup (`/homepage-mockup`)
-- Industry pages: Airlines, Defense, Rail
-
-## Page structure
-
+Example shape per question:
 ```
-Hero band            — "Market Development" eyebrow, H1 on creating the category, short subhead
-Workstream nav strip — 5 anchor links to sections below
-Programme map (1 band) — visual: how research → positioning → messaging → content → brand fit together
-Section per workstream (×5) — short framing paragraph + card grid of assets
-Operating rhythm band — cadence (quarterly research cut, monthly narrative review, etc.)
-CTA band             — "Contribute / commission new asset" — links to Strategy Vision Session
+{ id: "Q2.3", block: 2, text: "...", scale: "5-pt Likert", maps: "H1" }
 ```
 
-All sections `h-screen`-friendly with asymmetrical padding, DTOP color tokens, dark theme, Space Grotesk / Inter per design system.
+Coverage per block:
+- B1 Screener & firmographics — 4 (industry, role, fleet/network size, budget authority)
+- B2 Stack & fragmentation — 5 (tool count, hand-offs, time-to-decision, data trust, friction)
+- B3 Decision quality at L4–5 — 4 (confidence, rework rate, AI usage, AI trust)
+- B4 Budget & procurement — 4 (today vs 24-mo allocation, conjoint trade-off, signing authority)
+- B5 Regulatory pressure — 3 (awareness of performance-based oversight, readiness, audit pain)
+- B6 Category language test — 4 (label comprehension, preference between 3 labels, intent-to-explore, willingness-to-pay)
+- B7 Maturity self-assessment — 6 (one rubric question per capability dimension)
+- B8 Brand-lift — 2 (aided/unaided)
 
-## Navigation & integration
+New page section **"Survey question set"** rendered as accordion-style blocks (one per instrument block) with the question text + scale + hypothesis chip. Sits immediately after the existing "Quantitative survey" block.
 
-- **`App.tsx`** — register `/market-development` route
-- **`AppSidebar.tsx`** — new top-level "Market Development" group containing this hub link (keeps it visibly distinct from the existing sales enablement group)
-- **`HomePage.tsx`** — add a primary card linking to the hub (alongside Sales Enablement, Strategy Vision Session, Category Research Programme)
+### 2. Qualitative discussion guide (new data + new section)
+
+Add `interviewQuestions` to data: for each of the 6 sections (already defined), full primary question + 2–3 follow-up probes + listening-fors.
+
+Shape:
+```
+{ section: "Context", primary: "...", probes: ["...","...","..."], listenFors: ["...","..."], tests: "Frame" }
+```
+
+New page section **"Interview discussion guide"** rendered as numbered cards showing primary question, probes (bulleted), and listening-fors (chips). Sits after the existing "Qualitative interviews" block.
+
+The existing `interviewGuide` array (sample probes only) stays for the summary table; the new `interviewQuestions` powers the full guide section. No duplication of content visible to user — the summary table becomes a one-line index, then the full guide expands below.
+
+### 3. Reduce interview sample size
+
+Change every reference from `30–40` → `18–24` (target n=20). Touchpoints:
+- `src/pages/CategoryResearchProgramme.tsx` hero stat tile, "Triangulation" copy line, qual section title, qual section sub-copy
+- `src/data/marketDevelopmentAssets.ts` Category Research Programme card description
+- Saturation gate copy already references "stop when the last two add no new themes" — keep but reinforce that 18–24 is the design range
+
+### 4. Remove budget
+
+- Delete the entire **Budget & resourcing** section in `CategoryResearchProgramme.tsx` (lines ~436–458)
+- Remove `budgetBands` from the imports
+- Remove `budgetBands` export from `categoryResearchProgramme.ts`
+- Remove the `Wallet` lucide import if unused
+- Remove the "Fieldwork overrun" risk line that references parallelisation cost — keep, it's about scope not money
 
 ## Files
 
-- `src/pages/MarketDevelopmentHub.tsx` (new)
-- `src/data/marketDevelopmentAssets.ts` (new) — typed array of asset records grouped by workstream
-- `src/App.tsx` (edit) — add route
-- `src/components/AppSidebar.tsx` (edit) — add nav group
-- `src/pages/HomePage.tsx` (edit) — add hub card
+- `src/data/categoryResearchProgramme.ts` (edit) — add `surveyQuestions`, add `interviewQuestions`, delete `budgetBands`, update interview-count references
+- `src/pages/CategoryResearchProgramme.tsx` (edit) — add 2 new sections, delete budget section, update count references
+- `src/data/marketDevelopmentAssets.ts` (edit) — update interview count in card description
 
 ## Out of scope
 
-- No backend / auth
-- No edits to enablement portal pages
-- No new deck or playbook content — this is a *catalog and hub*, not new artefacts
-- No PDF export
+- No change to hypothesis tree, secondary sources, timeline, deliverables, advisory panel, risks (except removing any cost-flavoured wording)
+- No backend, no PDF export, no new routes
