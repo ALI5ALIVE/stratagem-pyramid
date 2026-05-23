@@ -28,7 +28,7 @@ await renderMedia({
   composition,
   serveUrl: bundled,
   codec: "h264",
-  audioCodec: "aac",
+  audioCodec: "mp3",
   audioBitrate: "192k",
   outputLocation: output,
   puppeteerInstance: browser,

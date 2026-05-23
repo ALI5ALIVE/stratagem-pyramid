@@ -4,9 +4,8 @@ import { DISPLAY, BODY } from "../components/Type";
 
 const SILOS = [
   { label: "Safety", tint: "#3a4252" },
-  { label: "Operations", tint: "#3f4858" },
-  { label: "Engineering", tint: "#444e5f" },
-  { label: "Compliance", tint: "#49546a" },
+  { label: "Content", tint: "#3f4858" },
+  { label: "Training", tint: "#444e5f" },
 ];
 
 const STATS = [
@@ -47,7 +46,7 @@ export const Act2_Challenge: React.FC = () => {
           opacity: interpolate(frame, [20, 60], [0, 1], { extrapolateRight: "clamp" }),
         }}
       >
-        Four systems. One reality. <span style={{ color: COLORS.typeDim }}>No shared truth.</span>
+        Three systems. One reality. <span style={{ color: COLORS.typeDim }}>No shared truth.</span>
       </h2>
 
       {/* silos */}
