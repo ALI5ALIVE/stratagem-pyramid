@@ -1,6 +1,6 @@
 import PitchSlideContainer from "@/components/shared/PitchSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { PenLine, Sparkles, Layers, MapPin } from "lucide-react";
+import { PenLine, Layers, MapPin } from "lucide-react";
 
 interface Props extends SlideNarrationProps {
   slideNumber?: number;
