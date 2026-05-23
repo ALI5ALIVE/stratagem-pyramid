@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import {
   FlaskConical, Target, GitBranch, Layers, ClipboardList, MessagesSquare,
-  Library, LineChart, CalendarClock, ShieldCheck, Package, Wallet, AlertTriangle, ArrowRight,
+  Library, LineChart, CalendarClock, ShieldCheck, Package, AlertTriangle, ArrowRight,
+  ListChecks, BookOpenCheck,
 } from "lucide-react";
 import {
   hypotheses, surveyBlocks, quotaMatrix, interviewGuide, secondarySources,
-  timelinePhases, deliverables, risks, advisoryPanel, budgetBands,
+  timelinePhases, deliverables, risks, advisoryPanel,
+  surveyQuestions, interviewQuestions,
 } from "@/data/categoryResearchProgramme";
 
 const bucketColor: Record<"D" | "T" | "O" | "P", string> = {
@@ -74,7 +76,7 @@ export default function CategoryResearchProgramme() {
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl">
             {[
               { k: "300", v: "Survey completes" },
-              { k: "30–40", v: "Exec interviews" },
+              { k: "18–24", v: "Exec interviews" },
               { k: "12 wks", v: "Design → publish" },
               { k: "±5.7%", v: "Margin @ 95% CI" },
             ].map((m) => (
@@ -162,7 +164,7 @@ export default function CategoryResearchProgramme() {
           <div className="space-y-4">
             {[
               { t: "Quant survey (n=300)", d: "Sizes the pain and tests preference at statistical power. Answers 'how many, how much, how strong'." },
-              { t: "Qual interviews (30–40)", d: "Surfaces language, decision triggers and unspoken procurement reality. Answers 'why and how'." },
+              { t: "Qual interviews (18–24)", d: "Surfaces language, decision triggers and unspoken procurement reality. Answers 'why and how'." },
               { t: "Secondary synthesis", d: "Anchors the claim in regulator, analyst and operator-filed evidence we did not commission." },
             ].map((b) => (
               <div key={b.t} className="rounded-lg border border-border bg-card p-4">
@@ -238,10 +240,39 @@ export default function CategoryResearchProgramme() {
         </div>
       </Section>
 
+      {/* SURVEY QUESTION SET */}
+      <Section
+        eyebrow="Survey question set"
+        title="Every question, every scale, every hypothesis it serves."
+        sub="Published in full so the instrument is auditable before fieldwork — and so analysts can challenge it on its merits."
+        icon={ListChecks}
+      >
+        <div className="space-y-6">
+          {surveyQuestions.map((b) => (
+            <div key={b.block} className="rounded-xl border border-border bg-card overflow-hidden">
+              <div className="px-5 py-4 border-b border-border bg-secondary/30">
+                <div className="text-sm font-semibold text-foreground">{b.block}</div>
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{b.intent}</p>
+              </div>
+              <ul className="divide-y divide-border">
+                {b.questions.map((q) => (
+                  <li key={q.id} className="px-5 py-4 grid md:grid-cols-12 gap-3 md:gap-6 items-start">
+                    <div className="md:col-span-1 text-[11px] font-mono text-primary">{q.id}</div>
+                    <div className="md:col-span-7 text-sm text-foreground leading-relaxed">{q.text}</div>
+                    <div className="md:col-span-3 text-xs text-muted-foreground leading-relaxed">{q.scale}</div>
+                    <div className="md:col-span-1 flex md:justify-end"><Chip tone="primary">{q.maps}</Chip></div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </Section>
+
       {/* QUAL */}
       <Section
         eyebrow="Qualitative interviews"
-        title="30–40 executive conversations, recruited to avoid the friendly-customer trap."
+        title="18–24 executive conversations, recruited to avoid the friendly-customer trap."
         sub="60% customer/prospect base, 30% cold via industry associations, 10% lapsed or lost. Coded twice by independent reviewers."
         icon={MessagesSquare}
         alt
@@ -278,6 +309,52 @@ export default function CategoryResearchProgramme() {
             <div key={b.t} className="rounded-lg border border-border bg-card p-4">
               <div className="text-sm font-semibold text-foreground">{b.t}</div>
               <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{b.d}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* INTERVIEW DISCUSSION GUIDE */}
+      <Section
+        eyebrow="Interview discussion guide"
+        title="The full 60-minute guide — primary question, probes, and what we're listening for."
+        sub="Six sections, ~60 minutes total. Probes are prompts only; interviewers follow the respondent's thread when it surfaces something the guide didn't anticipate."
+        icon={BookOpenCheck}
+        alt
+      >
+        <div className="grid md:grid-cols-2 gap-5">
+          {interviewQuestions.map((s) => (
+            <div key={s.section} className="rounded-xl border border-border bg-card p-5 flex flex-col">
+              <div className="flex items-center justify-between gap-3">
+                <div className="text-sm font-semibold text-foreground">{s.section}</div>
+                <div className="flex items-center gap-2">
+                  <Chip>{s.durationMin} min</Chip>
+                  <Chip tone="primary">{s.tests}</Chip>
+                </div>
+              </div>
+              <div className="mt-4">
+                <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5">Primary question</div>
+                <p className="text-sm text-foreground leading-relaxed">“{s.primary}”</p>
+              </div>
+              <div className="mt-4">
+                <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5">Probes</div>
+                <ul className="space-y-1.5">
+                  {s.probes.map((p) => (
+                    <li key={p} className="text-sm text-muted-foreground leading-relaxed flex gap-2">
+                      <span className="text-primary mt-1.5 shrink-0">→</span>
+                      <span>{p}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-4">
+                <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5">Listening for</div>
+                <div className="flex flex-wrap gap-1.5">
+                  {s.listenFors.map((l) => (
+                    <Chip key={l}>{l}</Chip>
+                  ))}
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -431,30 +508,6 @@ export default function CategoryResearchProgramme() {
             </div>
           ))}
         </div>
-      </Section>
-
-      {/* BUDGET */}
-      <Section
-        eyebrow="Budget & resourcing"
-        title="Indicative bands, not a single number — the final figure depends on partner selection."
-        icon={Wallet}
-        alt
-      >
-        <div className="rounded-xl border border-border bg-card overflow-hidden max-w-3xl">
-          {budgetBands.map((b, i) => (
-            <div key={b.line} className={`flex items-center justify-between px-5 py-4 ${i > 0 ? "border-t border-border" : ""}`}>
-              <span className="text-sm text-foreground">{b.line}</span>
-              <span className="text-sm font-mono text-primary">{b.range}</span>
-            </div>
-          ))}
-          <div className="px-5 py-4 border-t border-border bg-secondary/40 flex items-center justify-between">
-            <span className="text-sm font-semibold text-foreground">Indicative total</span>
-            <span className="text-sm font-mono text-foreground">£250k – £385k</span>
-          </div>
-        </div>
-        <p className="mt-4 text-xs text-muted-foreground max-w-2xl">
-          Ranges reflect 2025 market rates for blinded panel work in safety-critical B2B verticals. Final scope locked at end of Week 1.
-        </p>
       </Section>
 
       {/* RISKS */}

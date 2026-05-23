@@ -42,7 +42,7 @@ export const workstreams: MarketWorkstream[] = [
       {
         title: "Category Research Programme",
         href: "/category-research-programme",
-        purpose: "McKinsey-style mixed-methods study (survey n=300, 30–40 interviews, secondary synthesis) to validate category language and willingness-to-pay.",
+        purpose: "McKinsey-style mixed-methods study (survey n=300, 18–24 executive interviews, secondary synthesis) to validate category language and willingness-to-pay.",
         status: "In Research",
         icon: FlaskConical,
       },
