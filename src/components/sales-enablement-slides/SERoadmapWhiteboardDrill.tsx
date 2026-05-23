@@ -26,9 +26,8 @@ const SERoadmapWhiteboardDrill = ({ slideNumber, ...narrationProps }: Props) => 
   >
     <div className="h-full min-h-0 grid grid-cols-12 gap-4 px-8 pt-2 pb-2 max-w-[1700px] mx-auto">
       {/* Whiteboard */}
-      <div className="col-span-7 rounded-xl bg-[#f5f1e6] border-4 border-[#3a2a1a] shadow-2xl p-6 relative overflow-hidden">
-        <div className="absolute top-2 left-3 text-[10px] uppercase tracking-widest text-[#3a2a1a]/60 font-mono">whiteboard · 90 sec · the vision sale</div>
-        <svg viewBox="0 0 700 460" className="w-full h-full" style={{ fontFamily: "'Caveat', 'Comic Sans MS', cursive" }}>
+      <div className="col-span-8 rounded-xl bg-[#f5f1e6] border-4 border-[#3a2a1a] shadow-2xl p-3 relative min-h-0 overflow-hidden flex flex-col">
+        <svg viewBox="0 0 700 460" preserveAspectRatio="xMidYMin meet" className="w-full h-full flex-1" style={{ fontFamily: "'Caveat', 'Comic Sans MS', cursive" }}>
           {/* Axes */}
           <g stroke="#3a2a1a" strokeWidth="3" fill="none">
             <line x1="60" y1="60" x2="60" y2="400" />
@@ -86,7 +85,7 @@ const SERoadmapWhiteboardDrill = ({ slideNumber, ...narrationProps }: Props) => 
       </div>
 
       {/* Stroke script */}
-      <div className="col-span-5 flex flex-col gap-1.5 min-h-0 overflow-hidden">
+      <div className="col-span-4 flex flex-col gap-1.5 min-h-0 overflow-hidden">
         <div className="text-[10px] uppercase tracking-widest text-primary flex items-center gap-2">
           <PenLine className="h-3 w-3" /> Stroke script · say it as you draw it
         </div>

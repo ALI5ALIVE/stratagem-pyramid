@@ -1,6 +1,6 @@
 import PitchSlideContainer from "@/components/shared/PitchSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { Clock, PenLine, Sparkles } from "lucide-react";
+import { Clock, PenLine } from "lucide-react";
 
 interface Props extends SlideNarrationProps {
   slideNumber?: number;
@@ -73,16 +73,11 @@ const SEW2CapstoneWhiteboard = ({
   >
     <div className="h-full grid grid-cols-12 gap-5 px-8 pt-4 pb-6 max-w-[1700px] mx-auto">
       {/* Whiteboard */}
-      <div className="col-span-7 rounded-xl bg-[#f5f1e6] border-4 border-[#3a2a1a] shadow-2xl p-6 relative overflow-hidden">
-        <div className="absolute top-2 left-3 text-[10px] uppercase tracking-widest text-[#3a2a1a]/60 font-mono">
-          whiteboard · one use case · 5 days
-        </div>
-        <div className="absolute top-2 right-3 text-[10px] uppercase tracking-widest text-[#3a2a1a]/60 font-mono flex items-center gap-1">
-          <Sparkles className="h-3 w-3" /> every capability
-        </div>
+      <div className="col-span-8 rounded-xl bg-[#f5f1e6] border-4 border-[#3a2a1a] shadow-2xl p-3 relative min-h-0 overflow-hidden flex flex-col">
         <svg
           viewBox="0 0 700 460"
-          className="w-full h-full"
+          preserveAspectRatio="xMidYMin meet"
+          className="w-full h-full flex-1"
           style={{ fontFamily: "'Caveat', 'Comic Sans MS', cursive" }}
         >
           {/* DETECT */}
@@ -156,7 +151,7 @@ const SEW2CapstoneWhiteboard = ({
       </div>
 
       {/* Story script + capability legend */}
-      <div className="col-span-5 flex flex-col gap-2 min-h-0">
+      <div className="col-span-4 flex flex-col gap-2 min-h-0">
         <div className="text-[10px] uppercase tracking-widest text-primary flex items-center gap-2">
           <PenLine className="h-3 w-3" /> Say-it script · 60 seconds end-to-end
         </div>
