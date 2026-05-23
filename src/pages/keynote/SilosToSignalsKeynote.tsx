@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import {
   ArrowLeft, Mic, Play, Sparkles, Radio, Workflow,
-  Search, Layers, ShieldCheck, FlaskConical, Users,
+  Search, Layers, ShieldCheck, FlaskConical,
   Film, Download, FileText, BookOpen, Activity, Clock,
 } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
@@ -108,14 +108,6 @@ const acts: Act[] = [
       { label: "Close", detail: "\"We're not selling into a category. We're building one.\"" },
     ],
   },
-  {
-    id: "qa", number: "Q&A", title: "Q&A",
-    intent: "Curated, not chaotic. Mic runners in the aisles.",
-    start: 35, end: 40, energy: "resolve", icon: Users, accent: "blue",
-    onStage: "CEO joined on stage by the Chief Product Officer and one customer voice.",
-    onScreen: "Question prompts on screen. Soft Comply365 wordmark watermark.",
-    beats: [{ label: "5 min", detail: "3 questions max. Time-boxed. Followed by drinks and named conversations." }],
-  },
 ];
 
 const energyColor: Record<EnergyLevel, string> = {
@@ -144,15 +136,15 @@ function EnergyBar() {
     <div className="rounded-xl border border-border bg-card/50 p-5">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
-          <Activity className="h-3.5 w-3.5" /> Energy curve · 40 min
+          <Activity className="h-3.5 w-3.5" /> Energy curve · 35 min
         </div>
         <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
-          <Clock className="h-3.5 w-3.5" /> 35 min on stage · 5 min Q&A
+          <Clock className="h-3.5 w-3.5" /> 35 min on stage
         </div>
       </div>
       <div className="relative h-28 flex items-end gap-1">
         {acts.map((act) => {
-          const widthPct = ((act.end - act.start) / 40) * 100;
+          const widthPct = ((act.end - act.start) / 35) * 100;
           return (
             <a key={act.id} href={`#${act.id}`} className="relative group flex flex-col justify-end" style={{ width: `${widthPct}%` }}>
               <div className={`w-full ${energyHeight[act.energy]} ${energyColor[act.energy]} rounded-sm`} />
@@ -169,7 +161,7 @@ function EnergyBar() {
         })}
       </div>
       <div className="mt-2 flex justify-between text-[10px] uppercase tracking-[0.22em] text-muted-foreground/60">
-        <span>0:00</span><span>10:00</span><span>20:00</span><span>30:00</span><span>40:00</span>
+        <span>0:00</span><span>10:00</span><span>20:00</span><span>30:00</span><span>35:00</span>
       </div>
     </div>
   );
