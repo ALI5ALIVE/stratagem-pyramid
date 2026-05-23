@@ -1,9 +1,7 @@
 import {
-  FlaskConical, Calculator,
+  FlaskConical,
   BookOpen, Package, Compass,
-  Radio, Brain, Users,
   Newspaper, Sparkles, CalendarDays, FileText,
-  Globe, Building2, Plane, Shield, Train, Layers,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
