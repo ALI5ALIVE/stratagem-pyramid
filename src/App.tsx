@@ -38,6 +38,7 @@ import SalesEnablement from "./pages/SalesEnablement";
 import StrategyVisionSession from "./pages/StrategyVisionSession";
 import CategoryResearchProgramme from "./pages/CategoryResearchProgramme";
 import MarketDevelopmentHub from "./pages/MarketDevelopmentHub";
+import SilosToSignalsKeynote from "./pages/keynote/SilosToSignalsKeynote";
 import RoadmapDeck from "./pages/RoadmapDeck";
 import AuthPage from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
@@ -115,6 +116,7 @@ const App = () => (
             <Route path="/strategy-vision-session" element={<StrategyVisionSession />} />
             <Route path="/category-research-programme" element={<CategoryResearchProgramme />} />
             <Route path="/market-development" element={<MarketDevelopmentHub />} />
+            <Route path="/keynote/silos-to-signals" element={<SilosToSignalsKeynote />} />
             <Route path="/practice-center" element={<RequireAuth><Suspense fallback={<PageLoader />}><PracticeCenter /></Suspense></RequireAuth>} />
             <Route path="/admin/knowledge-base" element={<RequireAuth><Suspense fallback={<PageLoader />}><AdminKnowledgeBase /></Suspense></RequireAuth>} />
             <Route path="/roadmap" element={<RoadmapDeck />} />

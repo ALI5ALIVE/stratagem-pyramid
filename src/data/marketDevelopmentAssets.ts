@@ -1,7 +1,7 @@
 import {
   FlaskConical,
   BookOpen, Package, Compass,
-  Newspaper, Sparkles, CalendarDays, FileText,
+  Newspaper, Sparkles, CalendarDays, FileText, Mic,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -116,6 +116,13 @@ export const workstreams: MarketWorkstream[] = [
         purpose: "Pre-read briefing pack: agenda, speakers, narrative arc and outcomes.",
         status: "Live",
         icon: FileText,
+      },
+      {
+        title: "Keynote: From Silos to Signals",
+        href: "/keynote/silos-to-signals",
+        purpose: "CEO keynote — 40-minute, 7-act narrative with a 2-minute hero film. The category, declared live.",
+        status: "Draft",
+        icon: Mic,
       },
     ],
   },
