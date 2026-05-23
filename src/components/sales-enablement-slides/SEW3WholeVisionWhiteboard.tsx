@@ -107,9 +107,9 @@ const SEW3WholeVisionWhiteboard = ({
     showHeader
     {...narrationProps}
   >
-    <div className="h-full grid grid-cols-12 gap-5 px-8 pt-4 pb-6 max-w-[1700px] mx-auto">
+    <div className="h-full min-h-0 overflow-hidden grid grid-cols-12 gap-4 px-8 pt-2 pb-2 max-w-[1700px] mx-auto">
       {/* Whiteboard */}
-      <div className="col-span-7 rounded-xl bg-[#f5f1e6] border-4 border-[#3a2a1a] shadow-2xl p-6 relative overflow-hidden">
+      <div className="col-span-7 min-h-0 overflow-hidden flex flex-col rounded-xl bg-[#f5f1e6] border-4 border-[#3a2a1a] shadow-2xl p-4 relative">
         <div className="absolute top-2 left-3 text-[10px] uppercase tracking-widest text-[#3a2a1a]/60 font-mono">
           whiteboard · whole vision · build bottom-up
         </div>
@@ -118,7 +118,8 @@ const SEW3WholeVisionWhiteboard = ({
         </div>
         <svg
           viewBox="0 0 700 500"
-          className="w-full h-full"
+          preserveAspectRatio="xMidYMid meet"
+          className="w-full h-full flex-1"
           style={{ fontFamily: "'Caveat', 'Comic Sans MS', cursive" }}
         >
           {/* Use-case header — title strip */}
@@ -257,35 +258,32 @@ const SEW3WholeVisionWhiteboard = ({
       </div>
 
       {/* Say-it script + close */}
-      <div className="col-span-5 flex flex-col gap-2 min-h-0">
+      <div className="col-span-5 flex flex-col gap-1.5 min-h-0 overflow-y-auto pr-1">
         {/* MAD use case opener */}
         <div className="text-[10px] uppercase tracking-widest text-amber-300 flex items-center gap-2">
           <MapPin className="h-3 w-3" /> Open with the use case · 20 seconds
         </div>
-        <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-2.5">
-          <p className="text-[12px] text-foreground leading-snug mb-2">
+        <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-2">
+          <p className="text-[11px] text-foreground leading-snug mb-1.5">
             <span className="font-semibold">Madrid (MAD) — unstable approach.</span> A 14-day window: same crews, same procedure, same airport. Three weeks ago this would have been an email chain. Today it's one closed loop in 5 days.
           </p>
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-0.5">
             {madTimeline.map((s) => (
-              <div key={s.label} className={`flex items-start gap-2 px-2 py-1.5 rounded border ${s.border} ${s.bg}`}>
+              <div key={s.label} className={`flex items-start gap-2 px-2 py-1 rounded border ${s.border} ${s.bg}`}>
                 <div className={`shrink-0 mt-1 h-2 w-2 rounded-full ${s.dot}`} />
                 <div className="min-w-0">
                   <div className={`text-[10px] font-semibold uppercase tracking-wider ${s.accent}`}>{s.label}</div>
-                  <p className="text-[11px] text-foreground/90 leading-snug">{s.text}</p>
+                  <p className="text-[11px] text-foreground/90 leading-tight">{s.text}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
-        <div className="text-[11px] italic text-muted-foreground border-t border-border/50 pt-1.5">
-          Now build the stack that made that possible — bottom-up, one line per layer.
-        </div>
 
-        <div className="text-[10px] uppercase tracking-widest text-primary flex items-center gap-2">
-          <PenLine className="h-3 w-3" /> Say-it script · one line per layer
+        <div className="text-[10px] uppercase tracking-widest text-primary flex items-center gap-2 pt-1 border-t border-border/50">
+          <PenLine className="h-3 w-3" /> Say-it script · build the stack bottom-up
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-0.5">
           {beats.map((b) => (
             <div key={b.n} className="flex items-start gap-3 p-2 rounded-lg border border-border bg-card/60">
               <div
@@ -303,7 +301,7 @@ const SEW3WholeVisionWhiteboard = ({
           ))}
         </div>
 
-        <div className="mt-auto flex items-start gap-2 px-3 py-2.5 rounded-lg bg-primary/10 border border-primary/30 text-xs text-foreground">
+        <div className="flex items-start gap-2 px-3 py-2 rounded-lg bg-primary/10 border border-primary/30 text-[11px] text-foreground">
           <Layers className="h-4 w-4 text-primary shrink-0 mt-0.5" />
           <span>
             <span className="font-semibold">Close:</span> "That's the whole vision — start with one app, the stack lifts the rest as you grow. One foundation, one intelligence, one loop."
