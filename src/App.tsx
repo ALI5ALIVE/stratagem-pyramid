@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import { AppLayout } from "./components/AppLayout";
+import { MarketDevLayout } from "./components/MarketDevLayout";
 import HomePage from "./pages/HomePage";
 import OperationalPlatformHome from "./pages/OperationalPlatformHome";
 import SlideDeck from "./pages/SlideDeck";
@@ -115,8 +116,6 @@ const App = () => (
             <Route path="/sales-enablement" element={<SalesEnablement />} />
             <Route path="/strategy-vision-session" element={<StrategyVisionSession />} />
             <Route path="/category-research-programme" element={<CategoryResearchProgramme />} />
-            <Route path="/market-development" element={<MarketDevelopmentHub />} />
-            <Route path="/keynote/silos-to-signals" element={<SilosToSignalsKeynote />} />
             <Route path="/practice-center" element={<RequireAuth><Suspense fallback={<PageLoader />}><PracticeCenter /></Suspense></RequireAuth>} />
             <Route path="/admin/knowledge-base" element={<RequireAuth><Suspense fallback={<PageLoader />}><AdminKnowledgeBase /></Suspense></RequireAuth>} />
             <Route path="/roadmap" element={<RoadmapDeck />} />
@@ -136,6 +135,10 @@ const App = () => (
             <Route path="/academy/:moduleId" element={<RequireAuth><ModuleLesson /></RequireAuth>} />
             <Route path="/academy/:moduleId/quiz" element={<RequireAuth><ModuleQuiz /></RequireAuth>} />
             <Route path="/academy/:moduleId/result" element={<RequireAuth><QuizResult /></RequireAuth>} />
+          </Route>
+          <Route element={<MarketDevLayout />}>
+            <Route path="/market-development" element={<MarketDevelopmentHub />} />
+            <Route path="/keynote/silos-to-signals" element={<SilosToSignalsKeynote />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
