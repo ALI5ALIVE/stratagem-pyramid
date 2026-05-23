@@ -75,17 +75,52 @@ const colorMap: Record<string, { border: string; bg: string; text: string; dot: 
 // Outcome line per agenda block (keyed by title — keeps internal slide untouched).
 const agendaOutcomes: Record<string, string> = {
   "Where the industry is going":
-    "A shared language for where oversight is heading — and why your peers are moving now.",
+    "Shared language with your board for the oversight shift — in their words, not ours.",
   "The platform story":
-    "A clear mental model of one platform, three Core Apps, one Intelligence Layer.",
+    "A whiteboard map of where your decision-grade data actually lives today.",
   "Capabilities deep-dive":
-    "A view of which capabilities map to your real footprint and data shape.",
+    "Three live pains, each tied to a signal you already own.",
   "Operational Performance Roadmap":
-    "A plotted point on the L1→L5 curve — and a named L4 target for your operation.",
+    "A plotted point on the maturity curve — and what L4 changes for each function head in the room.",
   "Their DTOP loop, end-to-end":
-    "One of your real use cases walked end-to-end on a whiteboard.",
+    "One real use case walked end-to-end, with the evidence trail named.",
   "Agreed next step":
-    "A named exec sponsor, a candidate use case, and a date on the calendar.",
+    "A sponsor, a use case, and a date.",
+};
+
+// Microsite-only display override — reframes product-shaped titles into pain-led ones.
+// Source data in week3FieldKit.ts is untouched (internal sales slide keeps original).
+const agendaDisplay: Record<string, { title: string; detail: string }> = {
+  "Where the industry is going": {
+    title: "The shift you're being measured on",
+    detail:
+      "Why regulators, boards and insurers are moving from \"did you comply?\" to \"can you prove performance?\" — and what that means for your team's next 12 months.",
+  },
+  "The platform story": {
+    title: "The gap between your systems and your decisions",
+    detail:
+      "Where safety, training, ops and compliance data already lives in your business — and why it still takes weeks to answer a single board question. We map your real stack on the whiteboard.",
+  },
+  "Capabilities deep-dive": {
+    title: "The signals you're sitting on but not using",
+    detail:
+      "Working through three operational pains you brought into the room — fatigue, repeat findings, training decay, runway excursions, whatever's live — and where the leading indicators actually are.",
+  },
+  "Operational Performance Roadmap": {
+    title: "Where you are vs. where your peers are heading",
+    detail:
+      "An honest read of your current maturity against the industry — and what a Level 4 predictive posture would change for your safety, training and compliance leaders specifically.",
+  },
+  "Their DTOP loop, end-to-end": {
+    title: "One of your real problems, end-to-end",
+    detail:
+      "Pick a live use case from your operation. We whiteboard it from the weak signal through the targeted intervention to the evidence pack a regulator can read. No slides.",
+  },
+  "Agreed next step": {
+    title: "What you'd action on Monday",
+    detail:
+      "A named exec sponsor, the first use case worth proving, and a date — so the session converts into movement, not a follow-up email.",
+  },
 };
 
 const agendaColor = (idx: number, isBreak?: boolean) => {
