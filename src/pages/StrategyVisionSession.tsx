@@ -140,9 +140,9 @@ const personaCards = [
   {
     icon: ShieldCheck,
     color: "violet",
-    role: "Head of Safety / Compliance",
+    role: "Head of Safety / VP SMS",
     promise:
-      "A clear path from prescriptive compliance to evidence-led, regulator-ready performance.",
+      "A clear path from prescriptive compliance to evidence-led, regulator-ready safety performance.",
     takeaways: [
       "Evidence model walkthrough",
       "Audit-readiness gap view",
@@ -150,15 +150,27 @@ const personaCards = [
     ],
   },
   {
-    icon: Database,
+    icon: GraduationCap,
     color: "emerald",
-    role: "CIO / Head of IT & Data",
+    role: "Head of Training & L&D",
     promise:
-      "Clarity on architecture, data substrate, and how the Intelligence Layer integrates — without rip-and-replace.",
+      "Closed-loop targeting — assigning the right training from operational signals, and proving it changed behaviour.",
     takeaways: [
-      "Data substrate review",
-      "Integration shape",
-      "Security & sovereignty Q&A",
+      "Closed-loop targeting model",
+      "Behaviour-change evidence (not completion %)",
+      "TMS-extension plan (no rip-and-replace)",
+    ],
+  },
+  {
+    icon: Scale,
+    color: "sky",
+    role: "Head of Compliance / Regulatory",
+    promise:
+      "Confidence that performance-based oversight stands up under EASA, FAA, CAA and TCCA regimes.",
+    takeaways: [
+      "Regulator narrative (named regimes)",
+      "Audit-evidence model",
+      "Framework alignment review",
     ],
   },
 ] as const;
