@@ -53,13 +53,6 @@ export const workstreams: MarketWorkstream[] = [
         status: "Live",
         icon: Calculator,
       },
-      {
-        title: "Maturity Curve Diagnostic",
-        href: "/maturity-curve",
-        purpose: "Five-stage operational maturity instrument used to benchmark prospects and anchor research segmentation.",
-        status: "Live",
-        icon: Activity,
-      },
     ],
   },
   {
