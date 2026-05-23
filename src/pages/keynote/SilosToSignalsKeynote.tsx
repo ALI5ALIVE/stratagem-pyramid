@@ -229,7 +229,7 @@ function ActSection({ act }: { act: Act }) {
             <div className="rounded-xl border border-border bg-gradient-to-br from-blue-500/10 via-card to-violet-500/10 p-4 space-y-4">
               <div className="aspect-video w-full overflow-hidden rounded-lg border border-border bg-black">
                 <video
-                  src="/keynote/silos-to-signals.mp4"
+                  src="/keynote/silos-to-signals.mp4?v=2"
                   controls
                   playsInline
                   preload="metadata"
@@ -239,11 +239,12 @@ function ActSection({ act }: { act: Act }) {
               <div className="flex items-center justify-between px-2">
                 <div>
                   <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Hero film</div>
-                  <div className="font-display text-xl font-bold tracking-tight">From Silos to Signals — 1:30</div>
+                  <div className="font-display text-xl font-bold tracking-tight">From Silos to Signals — 2:00</div>
                   <div className="text-xs text-muted-foreground mt-1">Pain · Challenge · Turn · Insight · Value · Resolve</div>
+                  <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground/70 mt-2">Voiceover · Brian  ·  Score · Hybrid orchestral</div>
                 </div>
                 <a
-                  href="/keynote/silos-to-signals.mp4"
+                  href="/keynote/silos-to-signals.mp4?v=2"
                   download
                   className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-xs uppercase tracking-[0.18em] text-foreground hover:bg-muted/40"
                 >
