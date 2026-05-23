@@ -1,112 +1,75 @@
-# Strategy & Vision Session microsite — review & upgrade plan
+# Strategy & Vision Session — EMCS uplift sprint
 
-## What's working
+Goal: take the microsite from **65.8 → ~80** by closing the two structural gaps (Training & Compliance as first-class personas) and the dominant weakness (credibility / proof). All work lives in `src/pages/StrategyVisionSession.tsx`.
 
-- **Strong spine.** Hero → why → differentiators → agenda → DTOP loop → maturity curve → room → deliverables → logistics → CTA is the right narrative for an exec audience.
-- **DTOP loop preview** and **maturity curve** are visually distinctive and reinforce the playbook language without feeling like a product demo.
-- **Agenda timeline** with DTOP color coding is genuinely premium and scannable.
-- **Tone** has shifted from internal coaching to customer-facing in most places.
-- **Visual system** matches the rest of the brand (Space Grotesk/Inter, dark, DTOP tokens).
+## What changes
 
-## What's holding it back from "world class"
+### 1. Persona band — expand from 4 to 5 cards (drop CIO, add Training, split Compliance)
 
-1. **Hero works too hard, says too little.** "The Strategy & Vision Session" is a label, not a promise. The subline ("tickets and renewals") sounds like an internal sales objection, not a customer hook. No emotional pull, no contrast.
-2. **No "what's in it for me" by role.** A CEO, COO, Head of Safety, and IT lead all read the same page today. They need a single card each that says *why this is worth 3 hours of your calendar*.
-3. **No trust signals.** No logos, no quote, no facilitator credibility. A complimentary 3-hour exec session needs proof someone serious is in the room.
-4. **"Most start here" L2 marker** is presumptuous — it pre-judges the customer before the session. Should be reframed as "where most of the industry sits" with a source, or removed.
-5. **No "how to prepare"** block. Execs want to know what's expected of them before they say yes.
-6. **No FAQ.** Common objections (Is this a sales pitch in disguise? Who facilitates? What happens with our data? What if we're not ready?) go unanswered.
-7. **Agenda blocks lack an explicit "outcome"** line. Each block should end with "You leave this block with…".
-8. **Closing CTA is single-channel** (mailto). No calendar link, no fallback, no urgency.
-9. **No "Not for you if…" honesty block.** Counter-intuitively raises trust.
+New persona set, in this order:
 
-## Title / copy direction
+| # | Persona | DTOP colour | Promise | Take-aways |
+|---|---|---|---|---|
+| 1 | CEO / Accountable Executive | sky | Board-ready view of where your operation sits against the industry shift to performance-based oversight. | Maturity snapshot vs peers · Competitive position narrative · 12-month vision you can present |
+| 2 | COO / Head of Operations | amber | Concrete picture of what predictive operations unlock — and which use case to start with. | Candidate DTOP use case · Operational bottleneck map · Quick-win shortlist |
+| 3 | Head of Safety / VP SMS | violet | Clear path from prescriptive compliance to evidence-led, regulator-ready safety performance. | Evidence model walkthrough · Audit-readiness gap view · Regulator-ready narrative |
+| 4 | Head of Training & L&D | emerald | Closed-loop targeting — assigning the right training from operational signals and proving it changed behaviour. | Closed-loop targeting model · Behaviour-change evidence (not completion %) · TMS-extension plan (no rip-and-replace) |
+| 5 | Head of Compliance / Regulatory | sky | Confidence that performance-based oversight stands up under EASA, FAA, CAA and TCCA regimes. | Regulator narrative (named regimes) · Audit-evidence model · Framework alignment review |
 
-Keep **"The Strategy & Vision Session"** as the product name — it's already used internally and on the slide. Don't rename it to "From silos to signals". But **use "From silos to signals" (or similar) as the eyebrow promise above the H1**, so the hero reads like:
+Layout: switch from 2-col to a 5-card responsive grid (1 col mobile, 2 col md, 3 col lg with the 5th card spanning balanced). Same card pattern; alternating DTOP colour accents.
 
-```
-Eyebrow:   FROM SILOS TO SIGNALS · COMPLIMENTARY · 3 HOURS
-H1:        The Strategy & Vision Session
-Subline:   Three hours with your leadership team to map where your
-           operation sits today — and what predictive, performance-
-           based oversight looks like for you in the next twelve months.
-```
+Headline updated: *"Five people in the room. Five reasons it's worth the calendar block."*
 
-Other copy tightening:
-- Remove "tickets and renewals" framing (internal-sounding).
-- "It's the conversation your CEO, COO, and Head of Safety should be having together" → keep, but move to the persona band where it pays off.
-- "Most start here" pill on the maturity curve → replace with neutral "Industry median (IATA, 2024)" or remove.
-- "Not a vendor pitch" headline → keep, it's the single best objection-handler on the page.
+### 2. Credibility band — replace the current trust strip with a richer proof block
 
-## The improvement plan
+- **Named facilitator badge.** Two placeholder bios: "Lead facilitator: Comply365 Strategy Director · 15+ years aviation operations" and "Solutions engineer: Intelligence Layer architect · former airline data lead". Add note: *"Your exact facilitator pair confirmed in your prep call."*
+- **Regulator-framework chips** (new row): EASA · FAA · CAA · TCCA · ICAO Annex 19 · IS-BAO — visually treated as small framework chips beside the existing industry chips.
+- **Source-attributed stat line**: *"Industry SMS maturity sits broadly at Level 2 (IATA SMS implementation survey)."* — with the small `StatSourceChip` pattern already used elsewhere.
+- Keep the existing customer quote; relabel speaker as "VP Safety, Tier-1 European airline (named on request under NDA)".
 
-### 1. Hero rewrite (no structural change)
-- Add eyebrow promise line above the existing eyebrow ("From silos to signals").
-- Rewrite subline (above).
-- Add a small **third CTA**: "Download the 1-page overview (PDF)" using the existing fieldKitPdf hook — gives non-ready buyers a takeaway.
+### 3. Maturity curve — neutralize and source the "industry median" pill
 
-### 2. NEW — "What's in it for you" persona band (after differentiators, before agenda)
-Four cards, one per persona, each with: role, icon, one-line promise, three concrete take-aways from the session.
+Add a small source line under the curve: *"Industry median anchored to IATA SMS maturity benchmark, 2024."* Keeps the visual but earns the claim.
 
-| Persona | Promise | Take-aways |
-|---|---|---|
-| **CEO / Accountable Executive** | A board-ready view of where your operation sits vs. the industry shift to performance-based oversight. | Maturity snapshot · Competitive position · 12-month vision narrative |
-| **COO / Head of Operations** | A concrete picture of what predictive operations unlock — and which use case to start with. | Candidate DTOP use case · Operational bottleneck map · Quick-win shortlist |
-| **Head of Safety / Compliance** | A clear path from prescriptive compliance to evidence-led, regulator-ready performance. | Evidence model · Audit-readiness gaps · Regulator narrative |
-| **CIO / Head of IT & Data** | Clarity on architecture, data substrate, and how the Intelligence Layer integrates — without rip-and-replace. | Data substrate review · Integration shape · Security & sovereignty Q&A |
+### 4. Deliverables — show, don't tell
 
-Visual: 2×2 grid on desktop, single column on mobile, DTOP-colored accent per card, same card pattern as differentiators for consistency.
+Add a **small thumbnail mock** next to each of the three deliverables. CSS-only mocks (no external assets): a stylised one-pager preview built from divs — header band, three rule lines, a small chart block — clearly labelled "Sample". Reuses existing card structure; thumbnail sits to the left at md+.
 
-### 3. Trust strip (after persona band)
-- Single horizontal band: "Run by Comply365 strategists who've led sessions with [N] operators across aviation, defense, and rail."
-- 4–5 customer logos (or anonymized industry chips if logo permission is an issue — e.g. "Tier-1 European airline", "North American defense prime").
-- One short pull-quote (placeholder until real one is approved).
+### 5. New "Built for performance-based oversight" micro-section (after maturity curve)
 
-### 4. Agenda — add an "outcome" line per block
-Each non-break block gets a one-liner: *"You leave with: …"* — small text, accent color, under the existing detail.
+Two-column band:
+- Left: short paragraph on the regulatory shift (EASA SMS, FAA SMS Part 5, CAA CAP 795) — three sentences, with the framework names as visible callouts.
+- Right: 4 small stats — `~90%` Intelligence Layer accuracy · `L2 → L4` industry trajectory · `4` regulator regimes routinely referenced · `3 hrs` to map your use case. Each with the source chip pattern.
 
-### 5. Maturity curve — neutralize the "you are here"
-- Replace the "Most start here" pill on L2 with a neutral "Industry median" label and a small source chip (StatSourceChip exists already).
-- Keep the "destination" emerald marker on L4.
+This single band addresses the Compliance and Safety credibility gaps directly.
 
-### 6. NEW — "How to prepare" block (before logistics)
-Three small cards: 30-min pre-call · Two artifacts to bring (org chart + current ops KPI sheet) · One named exec sponsor.
+### 6. CTA — broaden conversion paths
 
-### 7. NEW — FAQ block (before closing CTA)
-Accordion or simple Q&A list, 5–6 items:
-- Is this a sales pitch? *(No. Zero product demo. If a demo is useful afterwards, we book it separately.)*
-- Who facilitates? *(Comply365 strategist + solutions engineer, named in the prep call.)*
-- What happens with anything we share? *(Nothing leaves the room without your written approval. NDA available on request.)*
-- What if we're early-stage / not ready to buy? *(Most attendees aren't. Half of sessions don't convert in-year.)*
-- On-site or virtual — which works better? *(On-site for the whiteboard hour. Virtual works if calendars don't.)*
-- Can we bring a partner / SI? *(Yes, if they're already in your operational stack.)*
+- Primary: "Request a date" (mailto, unchanged).
+- Secondary: "Book directly on our calendar →" — keep mailto fallback but rename CTA to "Pick a date from our calendar" and add small text *"Opens our scheduling page"* (placeholder href; swap to Calendly/HubSpot later).
+- Tertiary: existing account-lead line.
+- Add a small **scarcity line** under the closing H2: *"We run 6 sessions per quarter. 2 dates currently open for the next quarter."*
 
-### 8. NEW — "Not for you if…" honesty strip (small, between FAQ and CTA)
-Three short lines:
-- You're looking for a product demo (book one instead).
-- You can't get an exec sponsor in the room.
-- Your team isn't ready to discuss real operational data, even at high level.
+### 7. Small polish
 
-### 9. Closing CTA — broaden channels
-- Primary: "Request a date" (mailto, as today).
-- Secondary: "Book directly on our calendar →" (placeholder link, easily swapped for Calendly/HubSpot later).
-- Tertiary line stays: "Or speak to your Comply365 account lead."
-
-### 10. Small polish
-- Add `<title>` and meta description for SEO/share (currently inherits app default).
-- Add an OG image (can reuse an existing brand asset).
-- Add a subtle scroll-progress indicator at top — premium feel, low cost.
+- Add `id` anchors on persona band and FAQ for in-page sharing.
+- Update the page meta description to reference the five attending roles by name.
 
 ## Out of scope (v1)
-- No backend form, no calendar integration wired up (placeholder link only).
-- No real customer logos until permission is confirmed — ship with industry chips.
-- No PDF generation for the customer overview — reuse the existing field-kit PDF or stub.
-- No i18n.
 
-## Files to touch
-- `src/pages/StrategyVisionSession.tsx` — all the above (sectioned, no new routes).
-- `src/data/week3FieldKit.ts` — only if we add per-block outcome strings to the agenda (additive, won't affect internal slide).
-- `mem/content/strategy-vision-session-microsite.md` — append the persona-band + FAQ + trust strip decisions so future loops don't regress.
+- Real facilitator photos (placeholder credential badges only — swap later).
+- Real customer logos (industry + framework chips only).
+- Live calendar embed (placeholder link only).
+- No backend, no form, no auth.
+- No changes to `week3FieldKit.ts` or the internal slide.
 
-## Result
-The page goes from "well-built brochure" to a **role-targeted, objection-handled, trust-anchored microsite** an exec will actually forward to their peer with one line: *"We should do this."*
+## Technical notes
+
+- All copy stays inside `src/pages/StrategyVisionSession.tsx` — single-file edit.
+- DTOP colour mapping reuses the existing `colorMap` lookup.
+- Stat chips reuse the look of `StatSourceChip` inline (don't need to import the component — small custom span keeps the file self-contained).
+- 5-card grid: `grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5`; the 5th card uses `lg:col-span-3` with constrained max-width centered, or stays in-flow — pick whichever reads cleaner at 1141px and ≥1440px.
+
+## Expected outcome
+
+Personas Training (5.62 → ~7.5) and Compliance (5.66 → ~7.5) move from "likely decline" to "probably attend". Safety credibility (4 → 7) rises with named regulators. CEO and COO unaffected materially but benefit from richer proof. Page-wide **EMCS lifts from 65.8 to ~80**, into the world-class band.
