@@ -142,13 +142,6 @@ export const advisoryPanel = [
   { role: "Operator-side practitioner (ex-CSO/COO)", purpose: "Face-validity of constructs and interview probes." },
 ];
 
-export const budgetBands = [
-  { line: "Fieldwork partner (blinded panel + recruiting)", range: "£120k – £180k" },
-  { line: "Qual interviews (recruit + honoraria + transcription)", range: "£45k – £70k" },
-  { line: "Advisory panel (3 × honoraria)", range: "£15k – £25k" },
-  { line: "Design, analysis, report production", range: "£60k – £90k" },
-  { line: "Analyst pre-brief programme", range: "£10k – £20k" },
-];
 
 // -----------------------------------------------------------------------------
 // FULL SURVEY QUESTION SET
