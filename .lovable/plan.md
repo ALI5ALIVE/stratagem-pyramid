@@ -1,10 +1,11 @@
-The video player on `/keynote/silos-to-signals.mp4` is already wired up correctly — the file in `public/keynote/silos-to-signals.mp4` is the freshly re-rendered 2-minute master with the 3-silo Act 2 fix. Two pieces of on-page copy still reference the old 90-second cut and need to be brought into line.
+Remove the Q&A act from the keynote agenda on `src/pages/keynote/SilosToSignalsKeynote.tsx`.
 
-## Changes to `src/pages/keynote/SilosToSignalsKeynote.tsx`
+## Changes
 
-1. Film card title: `From Silos to Signals — 1:30` → `From Silos to Signals — 2:00`.
-2. Subhead under the film card: `Pain · Challenge · Turn · Insight · Value · Resolve` (keep — still accurate).
-3. Add a small "Voiceover · Brian" / "Score · Hybrid orchestral" line under the title so viewers know audio is on by default.
-4. Bust the browser cache on the video src and download href: append `?v=2` to `/keynote/silos-to-signals.mp4` in both the `<video src>` and the `<a href download>`, so anyone who previously loaded the 90s silent cut sees the new 2-minute audio version on refresh.
+1. Delete the `qa` entry from the `acts` array (lines ~111–118).
+2. Update the hero subhead from "Seven acts, one 2-minute film, one ask of the room." — keep as is (already accurate).
+3. Update the EnergyBar header from "35 min on stage · 5 min Q&A" → "35 min on stage".
+4. Update the energy curve total: the bar widths divide by 40 minutes. Either re-base to 35 min, or extend the final act `call-to-arms` end to 35 and rebase divisor to 35. Cleanest: change the divisor from 40 → 35 and the bottom timeline markers from "0:00 / 10:00 / 20:00 / 30:00 / 40:00" → "0:00 / 10:00 / 20:00 / 30:00 / 35:00".
+5. Remove the unused `Users` icon import (only Q&A used it).
 
-No other files change. The hero stat pill already says "2 min" so no edit needed there.
+No other files affected.
