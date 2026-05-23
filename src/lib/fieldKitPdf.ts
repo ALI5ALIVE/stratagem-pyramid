@@ -1635,14 +1635,17 @@ function drawBulletList(
   const indent = 9;
   for (const item of items) {
     if (opts.maxBottom && cy > opts.maxBottom) break;
-    pdf.setFont("helvetica", "bold");
     pdf.setFontSize(opts.size);
+    let lines = pdf.splitTextToSize(item, w - indent);
+    if (opts.maxBottom) {
+      const maxLines = Math.max(1, Math.floor((opts.maxBottom - cy) / opts.leading) + 1);
+      if (lines.length > maxLines) lines = clipLines(lines, maxLines);
+    }
+    pdf.setFont("helvetica", "bold");
     setText(pdf, opts.bulletColor ?? opts.color);
     pdf.text(bullet, x, cy);
     pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(opts.size);
     setText(pdf, opts.color);
-    const lines = pdf.splitTextToSize(item, w - indent);
     pdf.text(lines, x + indent, cy, { lineHeightFactor: opts.leading / opts.size });
     cy += lines.length * opts.leading + 2;
   }
@@ -1655,11 +1658,13 @@ function drawNumberedList(
   y: number,
   w: number,
   items: string[],
-  opts: { size: number; color: [number, number, number]; leading: number; numberColor: [number, number, number]; },
+  opts: { size: number; color: [number, number, number]; leading: number; numberColor: [number, number, number]; maxBottom?: number; },
 ): number {
   const indent = 18;
   let cy = y + opts.size;
-  items.forEach((it, i) => {
+  for (let i = 0; i < items.length; i++) {
+    if (opts.maxBottom && cy > opts.maxBottom) break;
+    const it = items[i];
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(opts.size);
     setText(pdf, opts.numberColor);
@@ -1667,10 +1672,14 @@ function drawNumberedList(
     pdf.setFont("helvetica", "normal");
     pdf.setFontSize(opts.size);
     setText(pdf, opts.color);
-    const lines = pdf.splitTextToSize(it, w - indent);
+    let lines = pdf.splitTextToSize(it, w - indent);
+    if (opts.maxBottom) {
+      const maxLines = Math.max(1, Math.floor((opts.maxBottom - cy) / opts.leading) + 1);
+      if (lines.length > maxLines) lines = clipLines(lines, maxLines);
+    }
     pdf.text(lines, x + indent, cy, { lineHeightFactor: opts.leading / opts.size });
     cy += lines.length * opts.leading + 3;
-  });
+  }
   return cy - y;
 }
 
@@ -1680,10 +1689,11 @@ function drawLabelledList(
   y: number,
   w: number,
   items: Array<{ label: string; text: string }>,
-  opts: { size: number; color: [number, number, number]; labelColor: [number, number, number]; leading: number; },
+  opts: { size: number; color: [number, number, number]; labelColor: [number, number, number]; leading: number; maxBottom?: number; },
 ): number {
   let cy = y + opts.size;
   for (const it of items) {
+    if (opts.maxBottom && cy > opts.maxBottom) break;
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(opts.size);
     setText(pdf, opts.labelColor);
@@ -1720,7 +1730,11 @@ function drawLabelledList(
       cy += opts.leading;
       const rest = words.slice(i).join(" ").trim();
       if (rest) {
-        const wrapped = clipLines(pdf.splitTextToSize(rest, w - indent), 3);
+        let wrapped = clipLines(pdf.splitTextToSize(rest, w - indent), 3);
+        if (opts.maxBottom) {
+          const maxLines = Math.max(1, Math.floor((opts.maxBottom - cy) / opts.leading) + 1);
+          if (wrapped.length > maxLines) wrapped = clipLines(wrapped, maxLines);
+        }
         for (const ln of wrapped) {
           pdf.text(ln, x + indent, cy);
           cy += opts.leading;
