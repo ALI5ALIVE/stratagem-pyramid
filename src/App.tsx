@@ -33,6 +33,7 @@ import MobilePlaybook from "./pages/MobilePlaybook";
 import PlatformPlaybook from "./pages/PlatformPlaybook";
 import SignalsPlaybook from "./pages/SignalsPlaybook";
 import PositioningPlaybook from "./pages/PositioningPlaybook";
+import DtopPackagingPov from "./pages/DtopPackagingPov";
 import SalesEnablement from "./pages/SalesEnablement";
 import RoadmapDeck from "./pages/RoadmapDeck";
 import AuthPage from "./pages/Auth";
@@ -106,6 +107,7 @@ const App = () => (
             <Route path="/platform-playbook" element={<PlatformPlaybook />} />
             <Route path="/signals-playbook" element={<SignalsPlaybook />} />
             <Route path="/positioning-playbook" element={<PositioningPlaybook />} />
+            <Route path="/dtop-packaging-pov" element={<DtopPackagingPov />} />
             <Route path="/sales-enablement" element={<SalesEnablement />} />
             <Route path="/practice-center" element={<RequireAuth><Suspense fallback={<PageLoader />}><PracticeCenter /></Suspense></RequireAuth>} />
             <Route path="/admin/knowledge-base" element={<RequireAuth><Suspense fallback={<PageLoader />}><AdminKnowledgeBase /></Suspense></RequireAuth>} />
