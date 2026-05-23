@@ -18,9 +18,10 @@ const STATS = [
 export const Act2_Challenge: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const outO = interpolate(frame, [900, 960], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   return (
-    <AbsoluteFill style={{ padding: "120px 160px" }}>
+    <AbsoluteFill style={{ padding: "120px 160px", opacity: outO }}>
       <div
         style={{
           fontFamily: BODY,

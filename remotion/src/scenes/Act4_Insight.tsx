@@ -14,10 +14,11 @@ export const Act4_Insight: React.FC = () => {
   const { fps } = useVideoConfig();
 
   // Light trace progress
-  const trace = interpolate(frame, [40, 540], [0, 1], { extrapolateRight: "clamp" });
+  const trace = interpolate(frame, [40, 720], [0, 1], { extrapolateRight: "clamp" });
+  const outO = interpolate(frame, [900, 960], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   return (
-    <AbsoluteFill style={{ padding: "100px 140px" }}>
+    <AbsoluteFill style={{ padding: "100px 140px", opacity: outO }}>
       <div
         style={{
           fontFamily: BODY,

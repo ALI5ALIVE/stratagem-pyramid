@@ -9,7 +9,7 @@ export const Act3_Turn: React.FC = () => {
   const dotPulse = 0.4 + 0.6 * Math.abs(Math.sin(frame / 8));
   const dotFade = interpolate(frame, [120, 200], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const fridayO = interpolate(frame, [260, 310], [0, 1], { extrapolateRight: "clamp" });
-  const outO = interpolate(frame, [420, 450], [1, 0], { extrapolateRight: "clamp", extrapolateLeft: "clamp" });
+  const outO = interpolate(frame, [450, 480], [1, 0], { extrapolateRight: "clamp", extrapolateLeft: "clamp" });
 
   return (
     <AbsoluteFill style={{ opacity: outO, alignItems: "center", justifyContent: "center" }}>
