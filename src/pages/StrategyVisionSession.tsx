@@ -406,14 +406,14 @@ const StrategyVisionSession = () => {
           <Users className="h-3.5 w-3.5" /> What's in it for your role
         </div>
         <h2 className="text-3xl md:text-5xl font-bold tracking-tight max-w-3xl mb-4">
-          Four people in the room. Four reasons it's worth the calendar block.
+          Five people in the room. Five reasons it's worth the calendar block.
         </h2>
         <p className="text-lg text-foreground/70 max-w-3xl mb-12">
           The session is designed so every senior attendee leaves with something they can use that
           week — not a summary email.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {personaCards.map((p) => {
             const c = colorMap[p.color];
             return (
