@@ -435,30 +435,6 @@ export default function CategoryResearchProgramme() {
         </div>
       </Section>
 
-      {/* BUDGET */}
-      <Section
-        eyebrow="Budget & resourcing"
-        title="Indicative bands, not a single number — the final figure depends on partner selection."
-        icon={Wallet}
-        alt
-      >
-        <div className="rounded-xl border border-border bg-card overflow-hidden max-w-3xl">
-          {budgetBands.map((b, i) => (
-            <div key={b.line} className={`flex items-center justify-between px-5 py-4 ${i > 0 ? "border-t border-border" : ""}`}>
-              <span className="text-sm text-foreground">{b.line}</span>
-              <span className="text-sm font-mono text-primary">{b.range}</span>
-            </div>
-          ))}
-          <div className="px-5 py-4 border-t border-border bg-secondary/40 flex items-center justify-between">
-            <span className="text-sm font-semibold text-foreground">Indicative total</span>
-            <span className="text-sm font-mono text-foreground">£250k – £385k</span>
-          </div>
-        </div>
-        <p className="mt-4 text-xs text-muted-foreground max-w-2xl">
-          Ranges reflect 2025 market rates for blinded panel work in safety-critical B2B verticals. Final scope locked at end of Week 1.
-        </p>
-      </Section>
-
       {/* RISKS */}
       <Section
         eyebrow="Risks & mitigations"
