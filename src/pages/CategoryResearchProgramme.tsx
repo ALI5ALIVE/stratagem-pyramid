@@ -240,6 +240,35 @@ export default function CategoryResearchProgramme() {
         </div>
       </Section>
 
+      {/* SURVEY QUESTION SET */}
+      <Section
+        eyebrow="Survey question set"
+        title="Every question, every scale, every hypothesis it serves."
+        sub="Published in full so the instrument is auditable before fieldwork — and so analysts can challenge it on its merits."
+        icon={ListChecks}
+      >
+        <div className="space-y-6">
+          {surveyQuestions.map((b) => (
+            <div key={b.block} className="rounded-xl border border-border bg-card overflow-hidden">
+              <div className="px-5 py-4 border-b border-border bg-secondary/30">
+                <div className="text-sm font-semibold text-foreground">{b.block}</div>
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{b.intent}</p>
+              </div>
+              <ul className="divide-y divide-border">
+                {b.questions.map((q) => (
+                  <li key={q.id} className="px-5 py-4 grid md:grid-cols-12 gap-3 md:gap-6 items-start">
+                    <div className="md:col-span-1 text-[11px] font-mono text-primary">{q.id}</div>
+                    <div className="md:col-span-7 text-sm text-foreground leading-relaxed">{q.text}</div>
+                    <div className="md:col-span-3 text-xs text-muted-foreground leading-relaxed">{q.scale}</div>
+                    <div className="md:col-span-1 flex md:justify-end"><Chip tone="primary">{q.maps}</Chip></div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </Section>
+
       {/* QUAL */}
       <Section
         eyebrow="Qualitative interviews"
