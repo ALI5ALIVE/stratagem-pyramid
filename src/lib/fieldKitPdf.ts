@@ -1485,7 +1485,7 @@ function renderSlidePagePortrait(
       label: "Connects",
       accent: C.sky,
       body: (yy: number) => drawBulletList(pdf, railX, yy, railW, connects, {
-        size: 9, color: C.slate, leading: 11, bulletChar: ">",
+        size: 9, color: C.slate, leading: 11, bulletChar: ">", maxBottom: bodyBottom,
       }),
     }] : []),
   ];
@@ -1517,7 +1517,7 @@ function renderSlidePagePortrait(
     colY += drawRailLabel(pdf, colX, colY, "What's on screen", C.brand);
     colY += drawAtY(pdf, colY, (yy) =>
       drawBulletList(pdf, colX, yy, colW, whatsOn, {
-        size: 9.5, color: C.slate, leading: 12, bulletChar: "·",
+        size: 9.5, color: C.slate, leading: 12, bulletChar: "·", maxBottom: bodyBottom,
       })
     );
     colY += 12;
@@ -1528,7 +1528,7 @@ function renderSlidePagePortrait(
     colY += drawRailLabel(pdf, colX, colY, "Ideas to own", C.brand);
     colY += drawAtY(pdf, colY, (yy) =>
       drawNumberedList(pdf, colX, yy, colW, ideas, {
-        size: 9.5, color: C.slate, leading: 12, numberColor: C.brand,
+        size: 9.5, color: C.slate, leading: 12, numberColor: C.brand, maxBottom: bodyBottom,
       })
     );
     colY += 12;
@@ -1539,7 +1539,7 @@ function renderSlidePagePortrait(
     colY += drawRailLabel(pdf, colX, colY, "Key terms", C.brand);
     colY += drawAtY(pdf, colY, (yy) =>
       drawLabelledList(pdf, colX, yy, colW, terms, {
-        size: 8.5, color: C.slate, labelColor: C.ink, leading: 11,
+        size: 8.5, color: C.slate, labelColor: C.ink, leading: 11, maxBottom: bodyBottom,
       })
     );
     colY += 12;
