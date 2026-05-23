@@ -12,16 +12,17 @@ const SCENES = [
 export const Act5_Value: React.FC = () => {
   const frame = useCurrentFrame();
   const headerO = interpolate(frame, [0, 30], [0, 1], { extrapolateRight: "clamp" });
+  const outO = interpolate(frame, [555, 600], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   // counter 35 -> 90
-  const counter = Math.round(interpolate(frame, [80, 260], [35, 90], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }));
+  const counter = Math.round(interpolate(frame, [120, 380], [35, 90], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }));
   const baselineO = interpolate(frame, [60, 100], [0, 1], { extrapolateRight: "clamp" });
 
   // bar fill
-  const fill = interpolate(frame, [80, 260], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const fill = interpolate(frame, [120, 380], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   return (
-    <AbsoluteFill style={{ padding: "100px 140px" }}>
+    <AbsoluteFill style={{ padding: "100px 140px", opacity: outO }}>
       <div
         style={{
           fontFamily: BODY,

@@ -28,9 +28,12 @@ await renderMedia({
   composition,
   serveUrl: bundled,
   codec: "h264",
+  audioCodec: "aac",
+  audioBitrate: "192k",
   outputLocation: output,
   puppeteerInstance: browser,
-  muted: true,
+  muted: false,
+  enforceAudioTrack: true,
   concurrency: 1,
 });
 
