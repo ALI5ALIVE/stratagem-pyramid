@@ -712,6 +712,62 @@ const StrategyVisionSession = () => {
             </div>
           </div>
         </div>
+        <p className="mt-4 text-xs text-foreground/50 max-w-5xl">
+          Industry median anchored to IATA SMS implementation benchmark, 2024.
+        </p>
+      </section>
+
+      {/* Built for performance-based oversight */}
+      <section className="border-y border-border/40 bg-card/30">
+        <div className="max-w-6xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
+          <div className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-3">
+            Built for performance-based oversight
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight max-w-3xl mb-12">
+            Credible under the regimes your regulator actually inspects against.
+          </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+            <div className="space-y-4 text-foreground/80 leading-relaxed">
+              <p>
+                EASA SMS, FAA SMS Part 5, and CAA CAP 795 are all moving operators from
+                prescriptive compliance to performance-based oversight. The question regulators are
+                asking has changed.
+              </p>
+              <p>
+                That shift demands evidence — not paperwork. Linked Operational Data. Traceable
+                interventions. Behaviour change you can show, not just claim.
+              </p>
+              <p className="text-foreground font-medium">
+                The session frames your operation against this shift, with named frameworks and
+                real precedent.
+              </p>
+              <div className="flex flex-wrap gap-2 pt-2">
+                {["EASA SMS", "FAA SMS Part 5", "CAA CAP 795", "ICAO Annex 19"].map((f) => (
+                  <span
+                    key={f}
+                    className="px-3 py-1.5 rounded-md border border-primary/30 bg-primary/5 text-xs font-medium text-primary"
+                  >
+                    {f}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { stat: "~90%", label: "Intelligence Layer accuracy at L4–5 vs ~35% generic AI", src: "Comply365 internal benchmark" },
+                { stat: "L2 → L4", label: "Industry trajectory mapped in the session", src: "IATA SMS benchmark, 2024" },
+                { stat: "4 regimes", label: "Regulator frameworks routinely referenced", src: "EASA · FAA · CAA · TCCA" },
+                { stat: "3 hrs", label: "To map your operation end-to-end on the loop", src: "Fixed session format" },
+              ].map((s) => (
+                <div key={s.label} className="p-5 rounded-2xl border border-border bg-background/60">
+                  <div className="text-2xl md:text-3xl font-bold text-primary mb-1">{s.stat}</div>
+                  <div className="text-xs md:text-sm text-foreground/75 leading-snug mb-3">{s.label}</div>
+                  <div className="text-[10px] uppercase tracking-wider text-foreground/40">{s.src}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* What you'll leave with */}
@@ -732,11 +788,50 @@ const StrategyVisionSession = () => {
                   key={item}
                   className="p-7 rounded-2xl border border-border bg-background/60 hover:border-primary/40 transition-colors"
                 >
-                  <div className="h-11 w-11 rounded-xl bg-primary/15 border border-primary/30 flex items-center justify-center mb-5">
-                    <Icon className="h-5 w-5 text-primary" />
+                  {/* Mini one-pager thumbnail */}
+                  <div className="relative mb-5 aspect-[4/3] rounded-lg border border-border bg-background/80 overflow-hidden p-3">
+                    <div className="absolute top-2 right-2 text-[9px] uppercase tracking-wider text-foreground/40 px-1.5 py-0.5 rounded bg-card border border-border">
+                      Sample
+                    </div>
+                    <div className="h-2 w-1/3 rounded-sm bg-primary/60 mb-2" />
+                    <div className="h-1 w-full rounded-sm bg-foreground/15 mb-1.5" />
+                    <div className="h-1 w-5/6 rounded-sm bg-foreground/15 mb-1.5" />
+                    <div className="h-1 w-4/6 rounded-sm bg-foreground/15 mb-3" />
+                    {i === 0 && (
+                      <div className="flex items-end gap-1 h-12">
+                        {[3, 5, 4, 7, 6, 9, 8].map((h, k) => (
+                          <div key={k} className="flex-1 rounded-sm bg-primary/40" style={{ height: `${h * 10}%` }} />
+                        ))}
+                      </div>
+                    )}
+                    {i === 1 && (
+                      <div className="flex items-center gap-1 h-12">
+                        {["sky", "amber", "violet", "emerald"].map((c) => (
+                          <div
+                            key={c}
+                            className={`flex-1 h-3 rounded-full ${
+                              c === "sky" ? "bg-sky-500/50" :
+                              c === "amber" ? "bg-amber-500/50" :
+                              c === "violet" ? "bg-violet-500/50" :
+                              "bg-emerald-500/50"
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    )}
+                    {i === 2 && (
+                      <div className="grid grid-cols-3 gap-1 h-12">
+                        {[...Array(9)].map((_, k) => (
+                          <div key={k} className={`rounded-sm ${k < 4 ? "bg-emerald-500/40" : "bg-foreground/10"}`} />
+                        ))}
+                      </div>
+                    )}
                   </div>
-                  <div className="text-[11px] uppercase tracking-[0.18em] text-foreground/50 font-semibold mb-2">
-                    Deliverable {i + 1}
+                  <div className="flex items-center gap-2 mb-2">
+                    <Icon className="h-4 w-4 text-primary" />
+                    <div className="text-[11px] uppercase tracking-[0.18em] text-foreground/50 font-semibold">
+                      Deliverable {i + 1}
+                    </div>
                   </div>
                   <h3 className="text-lg font-semibold leading-snug">{item}</h3>
                 </div>
