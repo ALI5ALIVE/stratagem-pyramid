@@ -976,6 +976,9 @@ const StrategyVisionSession = () => {
           <p className="mt-6 text-lg md:text-xl text-foreground/75 max-w-2xl mx-auto">
             Pick a date. We'll send the prep pack and confirm the room.
           </p>
+          <p className="mt-3 text-sm text-primary/90 font-medium">
+            We run 6 sessions per quarter. 2 dates currently open for the next quarter.
+          </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <a
               href="mailto:[email protected]?subject=Strategy%20%26%20Vision%20Session%20%E2%80%94%20request%20a%20date"
