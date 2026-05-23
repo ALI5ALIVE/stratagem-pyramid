@@ -25,9 +25,8 @@ const SEFootprintTwoWhiteboard = ({ slideNumber, ...narrationProps }: Props) => 
     {...narrationProps}
   >
     <div className="h-full grid grid-cols-12 gap-5 px-8 pt-4 pb-6 max-w-[1700px] mx-auto">
-      <div className="col-span-7 rounded-xl bg-[#f5f1e6] border-4 border-[#3a2a1a] shadow-2xl p-6 relative overflow-hidden">
-        <div className="absolute top-2 left-3 text-[10px] uppercase tracking-widest text-[#3a2a1a]/60 font-mono">whiteboard · 90 sec</div>
-        <svg viewBox="0 0 700 460" className="w-full h-full" style={{ fontFamily: "'Caveat', 'Comic Sans MS', cursive" }}>
+      <div className="col-span-8 rounded-xl bg-[#f5f1e6] border-4 border-[#3a2a1a] shadow-2xl p-3 relative min-h-0 overflow-hidden flex flex-col">
+        <svg viewBox="0 0 700 460" preserveAspectRatio="xMidYMin meet" className="w-full h-full flex-1" style={{ fontFamily: "'Caveat', 'Comic Sans MS', cursive" }}>
           {/* Intelligence band */}
           <g>
             <rect x="40" y="20" width="620" height="55" rx="8" fill="#ede9fe" stroke="#6d28d9" strokeWidth="3" />
@@ -75,7 +74,7 @@ const SEFootprintTwoWhiteboard = ({ slideNumber, ...narrationProps }: Props) => 
           <text x="280" y="385" fill="#047857" fontSize="14" fontWeight="700">Circle = the loop-close (cheapest path)</text>
         </svg>
       </div>
-      <div className="col-span-5 flex flex-col gap-2">
+      <div className="col-span-4 flex flex-col gap-2">
         <div className="text-[10px] uppercase tracking-widest text-primary flex items-center gap-2">
           <PenLine className="h-3 w-3" /> Stroke script · say it as you draw it
         </div>
