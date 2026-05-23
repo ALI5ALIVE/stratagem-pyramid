@@ -370,7 +370,7 @@ const StrategyVisionSession = () => {
               href="#agenda"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-border bg-card hover:bg-card/70 font-semibold transition-colors"
             >
-              See the 3-hour agenda <ArrowRight className="h-4 w-4" />
+              See how the 3 hours work <ArrowRight className="h-4 w-4" />
             </a>
             <a
               href="#personas"
@@ -570,14 +570,14 @@ const StrategyVisionSession = () => {
       {/* Agenda */}
       <section id="agenda" className="max-w-5xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
         <div className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-3 flex items-center gap-2">
-          <Clock className="h-3.5 w-3.5" /> The fixed 3-hour agenda
+          <Clock className="h-3.5 w-3.5" /> How we'll spend the three hours
         </div>
         <h2 className="text-3xl md:text-5xl font-bold tracking-tight max-w-3xl mb-4">
-          Designed so every minute earns its place.
+          Built around your operation — not a product tour.
         </h2>
         <p className="text-lg text-foreground/70 max-w-2xl mb-12">
-          Seven blocks. One short break. By the end of hour three, your team has whiteboarded a real
-          use case and agreed the next step.
+          Six working blocks and a short break. By hour three, one of your real use cases is on the
+          whiteboard end-to-end — and you've agreed who owns what next.
         </p>
 
         <div className="relative">
@@ -587,6 +587,7 @@ const StrategyVisionSession = () => {
               const color = agendaColor(idx, b.isBreak);
               const c = colorMap[color];
               const outcome = !b.isBreak ? agendaOutcomes[b.title] : undefined;
+              const display = agendaDisplay[b.title] ?? { title: b.title, detail: b.detail };
               return (
                 <div key={b.time} className="relative pl-12 md:pl-16">
                   <div
@@ -618,7 +619,7 @@ const StrategyVisionSession = () => {
                           b.isBreak ? "text-muted-foreground" : "text-foreground"
                         }`}
                       >
-                        {b.title}
+                        {b.isBreak ? b.title : display.title}
                       </h3>
                     </div>
                     <p
@@ -626,7 +627,7 @@ const StrategyVisionSession = () => {
                         b.isBreak ? "text-muted-foreground" : "text-foreground/75"
                       }`}
                     >
-                      {b.detail}
+                      {b.isBreak ? b.detail : display.detail}
                     </p>
                     {outcome && (
                       <div className={`mt-3 pt-3 border-t border-border/40 flex items-start gap-2 text-xs md:text-sm ${c.text}`}>
