@@ -140,7 +140,6 @@ export default function CategoryResearchProgramme() {
 
       {/* TRIANGULATION */}
       <Section
-        id-anchor="methodology"
         eyebrow="Methodology"
         title="Triangulated by design — no single method carries the claim alone."
         sub="The defensible category claim sits where quantitative scale, qualitative depth and independent secondary evidence overlap."
