@@ -36,30 +36,6 @@ const pitchDecks: DeckCard[] = [
 
 const additionalResources: DeckCard[] = [
   {
-    title: "Market Development Hub",
-    description: "The full catalog of research, positioning, messaging, content and brand assets that build the new category — distinct from the sales enablement portal.",
-    href: "/market-development",
-    icon: Compass,
-    badge: "New · Hub",
-    accent: "from-primary to-emerald-500",
-  },
-  {
-    title: "Positioning & Messaging Playbook",
-    description: "Category, master narrative, pillars × personas, competitive frame, objections, sales kit and brand rules — one canonical reference.",
-    href: "/positioning-playbook",
-    icon: BookOpen,
-    badge: "New · 13 sections",
-    accent: "from-primary to-comply-plum",
-  },
-  {
-    title: "Category Research Programme",
-    description: "McKinsey/Forrester-style mixed-methods research design — survey, interviews, secondary — built to evidence the new category before the report ships.",
-    href: "/category-research-programme",
-    icon: FlaskConical,
-    badge: "New · 12-week programme",
-    accent: "from-primary to-comply-teal",
-  },
-  {
     title: "CEO Overview",
     description: "Boardroom-grade narrative: the before/after of operational performance, DTOP operating model, and the path to maturity.",
     href: "/pitch-executive-2",
