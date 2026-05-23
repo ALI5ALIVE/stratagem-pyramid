@@ -1,5 +1,5 @@
 import {
-  FlaskConical, Calculator, Activity,
+  FlaskConical, Calculator,
   BookOpen, Package, Compass,
   Radio, Brain, Users,
   Newspaper, Sparkles, CalendarDays, FileText,
