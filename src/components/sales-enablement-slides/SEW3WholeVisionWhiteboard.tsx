@@ -1,6 +1,6 @@
 import PitchSlideContainer from "@/components/shared/PitchSlideContainer";
 import { SlideNarrationProps } from "@/types/slideProps";
-import { PenLine, Sparkles, Layers } from "lucide-react";
+import { PenLine, Sparkles, Layers, MapPin } from "lucide-react";
 
 interface Props extends SlideNarrationProps {
   slideNumber?: number;
@@ -54,6 +54,41 @@ const beats = [
     accent: "text-emerald-300",
     say:
       "\"Insights then proves the trend flattened — audit pack already cited. One loop, closed.\"",
+  },
+];
+
+const madTimeline = [
+  {
+    label: "Detect · Day 1",
+    dot: "bg-sky-400",
+    accent: "text-sky-300",
+    border: "border-sky-500/30",
+    bg: "bg-sky-500/5",
+    text: "Insights surfaces a 14-day MAD unstable-approach trend — same procedure, same crews. No analyst pulled a report.",
+  },
+  {
+    label: "Trigger · Day 2",
+    dot: "bg-amber-400",
+    accent: "text-amber-300",
+    border: "border-amber-500/30",
+    bg: "bg-amber-500/5",
+    text: "Intelligence Layer returns Recommended Actions: revise OMA section, retrain the 4 affected crews — regulation, procedure and training cited.",
+  },
+  {
+    label: "Orchestrate · Day 3",
+    dot: "bg-violet-400",
+    accent: "text-violet-300",
+    border: "border-violet-500/30",
+    bg: "bg-violet-500/5",
+    text: "Automation drafts the OMA revision, opens the review, assigns the training. Unified Mobile pushes to crew devices within 48 hours.",
+  },
+  {
+    label: "Prove · Day 5",
+    dot: "bg-emerald-400",
+    accent: "text-emerald-300",
+    border: "border-emerald-500/30",
+    bg: "bg-emerald-500/5",
+    text: "Insights shows the trend flat. Audit pack assembles itself in one click. Loop closed.",
   },
 ];
 
@@ -223,12 +258,36 @@ const SEW3WholeVisionWhiteboard = ({
 
       {/* Say-it script + close */}
       <div className="col-span-5 flex flex-col gap-2 min-h-0">
+        {/* MAD use case opener */}
+        <div className="text-[10px] uppercase tracking-widest text-amber-300 flex items-center gap-2">
+          <MapPin className="h-3 w-3" /> Open with the use case · 20 seconds
+        </div>
+        <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-2.5">
+          <p className="text-[12px] text-foreground leading-snug mb-2">
+            <span className="font-semibold">Madrid (MAD) — unstable approach.</span> A 14-day window: same crews, same procedure, same airport. Three weeks ago this would have been an email chain. Today it's one closed loop in 5 days.
+          </p>
+          <div className="flex flex-col gap-1">
+            {madTimeline.map((s) => (
+              <div key={s.label} className={`flex items-start gap-2 px-2 py-1.5 rounded border ${s.border} ${s.bg}`}>
+                <div className={`shrink-0 mt-1 h-2 w-2 rounded-full ${s.dot}`} />
+                <div className="min-w-0">
+                  <div className={`text-[10px] font-semibold uppercase tracking-wider ${s.accent}`}>{s.label}</div>
+                  <p className="text-[11px] text-foreground/90 leading-snug">{s.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="text-[11px] italic text-muted-foreground border-t border-border/50 pt-1.5">
+          Now build the stack that made that possible — bottom-up, one line per layer.
+        </div>
+
         <div className="text-[10px] uppercase tracking-widest text-primary flex items-center gap-2">
           <PenLine className="h-3 w-3" /> Say-it script · one line per layer
         </div>
-        <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-1">
           {beats.map((b) => (
-            <div key={b.n} className="flex items-start gap-3 p-2.5 rounded-lg border border-border bg-card/60">
+            <div key={b.n} className="flex items-start gap-3 p-2 rounded-lg border border-border bg-card/60">
               <div
                 className={`shrink-0 w-7 h-7 rounded-full ${b.dot} text-background font-bold flex items-center justify-center text-sm`}
               >
@@ -238,7 +297,7 @@ const SEW3WholeVisionWhiteboard = ({
                 <div className={`text-xs font-semibold ${b.accent} uppercase tracking-wider`}>
                   {b.layer} · <span className="opacity-80">{b.dtop}</span>
                 </div>
-                <p className="text-[13px] text-foreground leading-snug">{b.say}</p>
+                <p className="text-[12px] text-foreground leading-snug">{b.say}</p>
               </div>
             </div>
           ))}
