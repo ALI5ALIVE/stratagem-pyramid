@@ -402,7 +402,7 @@ export default function SilosToSignalsKeynote() {
               The film opens the room. Before a word is spoken from the stage, the audience sees what connected operations actually look like. Every act, every stat, and every frame that follows ladders back to one sentence the room can quote tomorrow.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
-              {["~65% lost signals", "$25–35B exposure", "90% vs 35% accuracy", "Detect · Trigger · Orchestrate · Prove"].map((t) => (
+              {["~40% reports unclosed @ 90d", "$25–35B controllable-cost envelope", "~3x recommendation accuracy at L4–L5", "Detect · Trigger · Orchestrate · Prove"].map((t) => (
                 <span key={t} className="rounded-full border border-border bg-card px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-foreground/80">{t}</span>
               ))}
             </div>
