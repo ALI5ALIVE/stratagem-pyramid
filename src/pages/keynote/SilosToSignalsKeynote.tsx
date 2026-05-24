@@ -325,7 +325,7 @@ export default function SilosToSignalsKeynote() {
             </a>
             <a
               href="#cold-open"
-              className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground hover:bg-primary/90 transition-colors"
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-foreground hover:bg-muted/40 transition-colors"
             >
               <FileText className="h-3.5 w-3.5" /> Read full script
             </a>
