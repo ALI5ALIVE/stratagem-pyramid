@@ -308,7 +308,7 @@ export default function SilosToSignalsKeynote() {
             <span className="bg-gradient-to-r from-primary via-violet-400 to-emerald-400 bg-clip-text text-transparent">signals.</span>
           </h1>
           <p className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl">
-            The keynote that turns 12 weeks of research into a category. Seven acts, one 2-minute film, one ask of the room.
+            Open with the film. Then seven acts and one ask of the room. Twelve weeks of research, named as a category.
           </p>
           <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-3">
             <StatPill value="40 min" label="Runtime" />
@@ -317,6 +317,12 @@ export default function SilosToSignalsKeynote() {
             <StatPill value="1" label="Ask of the room" />
           </div>
           <div className="mt-8 flex flex-wrap gap-3 keynote-no-print">
+            <a
+              href="#film"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground hover:bg-primary/90 transition-colors"
+            >
+              <Film className="h-3.5 w-3.5" /> Watch the film
+            </a>
             <a
               href="#cold-open"
               className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground hover:bg-primary/90 transition-colors"
@@ -357,7 +363,7 @@ export default function SilosToSignalsKeynote() {
           </div>
           <div className="lg:col-span-6 lg:col-start-7 text-base text-muted-foreground leading-relaxed">
             <p>
-              The keynote earns the right to claim a new category by showing — not telling — that connected operations are now possible. Every act, every stat, and every frame of the film ladders to one sentence the room can quote tomorrow.
+              The film opens the room. Before a word is spoken from the stage, the audience sees what connected operations actually look like. Every act, every stat, and every frame that follows ladders back to one sentence the room can quote tomorrow.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
               {["~65% lost signals", "$25–35B exposure", "90% vs 35% accuracy", "Detect · Trigger · Orchestrate · Prove"].map((t) => (
