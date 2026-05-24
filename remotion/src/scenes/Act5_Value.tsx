@@ -170,6 +170,18 @@ export const Act5_Value: React.FC = () => {
       >
         Not a faster silo. A different operation.
       </div>
+      <div
+        style={{
+          fontFamily: BODY,
+          color: COLORS.typeDim,
+          fontSize: 14,
+          marginTop: 14,
+          opacity:
+            interpolate(frame, [400, 450], [0, 0.7], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
+        }}
+      >
+        Modelled, not measured. Held lightly enough to revise.
+      </div>
     </AbsoluteFill>
   );
 };
