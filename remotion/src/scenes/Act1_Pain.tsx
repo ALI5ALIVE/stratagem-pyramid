@@ -9,8 +9,8 @@ export const Act1_Pain: React.FC = () => {
   // type-in over 90 frames starting at frame 60
   const chars = Math.max(0, Math.min(LINE.length, Math.floor((frame - 60) / 2.2)));
   const text = LINE.slice(0, chars);
-  // heartbeat pulse
-  const beat = 0.4 + 0.6 * Math.abs(Math.sin(frame / 14));
+  // heartbeat pulse — stronger, more visible cardiac rhythm
+  const beat = 0.5 + 0.5 * Math.abs(Math.sin(frame / 12));
   const lineOpacity = interpolate(frame, [30, 90], [0, 1], { extrapolateRight: "clamp" });
   const eyebrow = interpolate(frame, [0, 40], [0, 1], { extrapolateRight: "clamp" });
   const fadeOut = interpolate(frame, [400, 450], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
@@ -45,17 +45,17 @@ export const Act1_Pain: React.FC = () => {
           {text}
           <span style={{ opacity: chars < LINE.length ? beat : 0, marginLeft: 6 }}>|</span>
         </div>
-        {/* heartbeat dot */}
+        {/* heartbeat dot — pronounced pulse */}
         <div style={{ marginTop: 80, display: "flex", justifyContent: "center" }}>
           <div
             style={{
-              width: 10,
-              height: 10,
+              width: 14,
+              height: 14,
               borderRadius: 999,
               background: COLORS.signal,
-              transform: `scale(${0.8 + beat * 0.6})`,
-              boxShadow: `0 0 ${20 + beat * 40}px ${COLORS.signal}`,
-              opacity: 0.7,
+              transform: `scale(${0.7 + beat * 1.1})`,
+              boxShadow: `0 0 ${30 + beat * 70}px ${beat * 6}px ${COLORS.signal}`,
+              opacity: 0.85,
             }}
           />
         </div>

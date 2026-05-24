@@ -11,7 +11,7 @@ const SILOS = [
 const STATS = [
   { value: "~65%", label: "of operational signals never make it home", at: 180 },
   { value: "$25–35B", label: "annual industry exposure", at: 320 },
-  { value: "~35%", label: "accuracy of generic AI in operational decisions", at: 460 },
+  { value: "5–7 days", label: "average time to resolve a cross-silo signal — the operation reacts to events instead of controlling them", at: 460 },
 ];
 
 export const Act2_Challenge: React.FC = () => {
