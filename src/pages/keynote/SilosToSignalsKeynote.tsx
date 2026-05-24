@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import {
-  ArrowLeft, Mic, Play, Sparkles, Radio, Workflow,
+  ArrowLeft, Mic, Play, Sparkles, Radio, Workflow, ShieldOff,
   Search, Layers, ShieldCheck, FlaskConical,
   Film, Download, FileText, BookOpen, Activity, Clock,
 } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
-import { silosToSignalsScript, topChallenges } from "@/data/silosToSignalsScript";
+import { silosToSignalsScript, topChallenges, notClaiming, RESEARCH_INTERVIEW_N } from "@/data/silosToSignalsScript";
 import { ScriptBlock } from "@/components/keynote/ScriptBlock";
 import KeynoteFragmentationCost from "@/components/keynote/KeynoteFragmentationCost";
 
@@ -53,10 +53,10 @@ const acts: Act[] = [
     onStage: "Step into the audience. Tell the composite 'Tuesday morning' story — the same safety signal seen by four systems, acted on by none.",
     onScreen: "Stat wall builds beat by beat. Org-chart fractures into disconnected boxes; signal-traces die at the boundaries.",
     beats: [
-      { label: "65K+/yr", detail: "Operational signals per Tier-1 operator — IATA SMS Implementation Survey 2023." },
-      { label: "~40%", detail: "Orphaned signals — captured, logged, never closed (Flight Safety Foundation 2023)." },
-      { label: "3 weeks", detail: "Mean signal-to-decision time — Comply365 customer baseline composite." },
-      { label: "$25–35B", detail: "Annual industry exposure stacked from EUROCONTROL, IATA, Oliver Wyman, WTW." },
+      { label: "50–100K/yr", detail: "Reports per Tier-1 operator — IATA SMS 2023 maturity data scaled against Comply365 baselines. Range, not point estimate." },
+      { label: "~40%", detail: "Of operational reports with no documented closure within 90 days (Flight Safety Foundation 2023)." },
+      { label: "2–4 weeks", detail: "Typical signal-to-decision time — Comply365 customer baseline composite (n disclosed in appendix)." },
+      { label: "$25–35B", detail: "Addressable controllable-cost envelope — industry-wide, not Comply365 SAM. EUROCONTROL · IATA · Oliver Wyman · WTW." },
     ],
   },
   {
@@ -68,8 +68,8 @@ const acts: Act[] = [
     beats: [
       { label: "Finding 01", detail: "\"I can't see the operation I'm responsible for.\" Buyer language is line-of-sight, not compliance. (n=300 + interviews → H1)" },
       { label: "Finding 02", detail: "\"I'm done buying islands.\" WTP clusters on connected operations; budget shifting off point tools. (Conjoint block 4 → H3)" },
-      { label: "Finding 03", detail: "Same four verbs — Detect · Trigger · Orchestrate · Prove — across 3 industries, 5 countries. (Exec interviews → H5)" },
-      { label: "Method", detail: "n=300 survey · 18–24 exec interviews · secondary synthesis. Modelled, not measured." },
+      { label: "Finding 03", detail: `Same four verbs — Detect · Trigger · Orchestrate · Prove — across 3 industries, 5 countries. (${RESEARCH_INTERVIEW_N} exec interviews → H5)` },
+      { label: "Method", detail: `n=300 survey · ${RESEARCH_INTERVIEW_N} exec interviews · secondary synthesis. Modelled, not measured.` },
     ],
   },
   {
@@ -93,7 +93,7 @@ const acts: Act[] = [
     onStage: "Back on stage. Walk the DTOP loop using a recorded screen capture — no live demo risk. Bring two named operators on stage via taped interview.",
     onScreen: "Headline contrast: ~90% domain accuracy at L4–5 vs ~35% generic AI. Then the loop in motion: detect → trigger → orchestrate → prove.",
     beats: [
-      { label: "90% vs 35%", detail: "Domain intelligence at L4–5 versus generic AI in operational decisions." },
+      { label: "90% vs 35%", detail: "Recommendation accuracy on a defined operational decision set at L4–L5, scored against a human-expert panel. Methodology in appendix." },
       { label: "Walk the loop", detail: "Recorded screens: a real signal moving through Detect → Trigger → Orchestrate → Prove." },
       { label: "Customer voice", detail: "Two named operators on what changed when they connected the loop." },
       { label: "Roadmap glimpse", detail: "Insights, Automation, Unified Mobile — locked POC dates." },
