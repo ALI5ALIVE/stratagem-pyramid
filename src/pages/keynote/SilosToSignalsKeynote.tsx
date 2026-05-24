@@ -442,6 +442,35 @@ export default function SilosToSignalsKeynote() {
         </div>
       </section>
 
+      <section id="not-claiming" className="scroll-mt-24 border-t border-border/60">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16 grid lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-4">
+            <div className="inline-flex items-center gap-2 rounded-full border border-muted/30 bg-muted/10 px-2.5 py-1 text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+              <ShieldOff className="h-3 w-3" /> Appendix · Guardrails
+            </div>
+            <h2 className="mt-4 font-display text-3xl md:text-4xl font-bold tracking-tight leading-tight">
+              What we are <span className="text-muted-foreground/60">not</span> claiming.
+            </h2>
+            <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
+              Every number in this keynote is bounded. Stating the limits is faster than defending them
+              in Q&amp;A — and it is the only way the claims that remain hold their weight.
+            </p>
+          </div>
+          <div className="lg:col-span-7 lg:col-start-6">
+            <ul className="divide-y divide-border/60 rounded-xl border border-border bg-card/40">
+              {notClaiming.map((line, i) => (
+                <li key={i} className="flex gap-4 px-5 py-4">
+                  <span className="shrink-0 text-[10px] uppercase tracking-[0.22em] font-semibold text-muted-foreground/70 w-6 mt-0.5">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <p className="text-sm text-foreground/90 leading-relaxed">{line}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,_hsl(var(--primary)/0.18),transparent_65%)]" />
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-24 text-center">
