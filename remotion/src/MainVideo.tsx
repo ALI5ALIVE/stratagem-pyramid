@@ -66,7 +66,11 @@ export const MainVideo: React.FC = () => {
       </Series>
       {/* Voiceover per act */}
       {ACTS.map((a) => (
-        <Sequence key={a.id} from={a.start + a.voOffset}>
+        <Sequence
+          key={a.id}
+          from={a.start + a.voOffset}
+          durationInFrames={Math.max(1, a.dur - a.voOffset - 6)}
+        >
           <Audio src={staticFile(`audio/vo/${a.id}.mp3`)} volume={1.0} />
         </Sequence>
       ))}
