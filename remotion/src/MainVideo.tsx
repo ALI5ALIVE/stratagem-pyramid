@@ -7,7 +7,7 @@ import { Act4_Insight } from "./scenes/Act4_Insight";
 import { Act5_Value } from "./scenes/Act5_Value";
 import { Act6_Resolve } from "./scenes/Act6_Resolve";
 
-// Act start frames (cumulative): 0, 450, 1560, 2040, 3060, 3780; total 3780
+// Act start frames (cumulative): 0, 450, 1560, 2040, 3060, 3780; total 3930
 const ACTS = [
   { id: "act1", start: 0,    dur: 450,  voOffset: 30 },
   { id: "act2", start: 450,  dur: 1110, voOffset: 30 },
@@ -28,7 +28,7 @@ const ScoreBed: React.FC = () => {
   // Fade in 0-60, fade out 3540-3600
   const envelope = interpolate(
     frame,
-    [0, 60, 3720, 3780],
+    [0, 60, 3870, 3930],
     [0, 1, 1, 0],
     { extrapolateRight: "clamp", extrapolateLeft: "clamp" }
   );
