@@ -181,6 +181,39 @@ function StatPill({ value, label }: { value: string; label: string }) {
   );
 }
 
+const dtopBadge: Record<"D" | "T" | "O" | "P", { label: string; cls: string }> = {
+  D: { label: "Detect", cls: "border-blue-500/40 text-blue-400 bg-blue-500/10" },
+  T: { label: "Trigger", cls: "border-amber-500/40 text-amber-400 bg-amber-500/10" },
+  O: { label: "Orchestrate", cls: "border-violet-500/40 text-violet-400 bg-violet-500/10" },
+  P: { label: "Prove", cls: "border-emerald-500/40 text-emerald-400 bg-emerald-500/10" },
+};
+
+function TopChallengesGrid() {
+  return (
+    <div className="rounded-xl border border-amber-500/20 bg-amber-500/[0.03] p-5">
+      <div className="text-[10px] uppercase tracking-[0.22em] text-amber-400 mb-4">
+        Top challenges customers describe — and the DTOP step that closes each one
+      </div>
+      <div className="grid sm:grid-cols-2 gap-3">
+        {topChallenges.map((c) => {
+          const badge = dtopBadge[c.bucket];
+          return (
+            <div key={c.label} className="rounded-lg border border-border bg-card p-3">
+              <div className="flex items-center justify-between gap-2 mb-1.5">
+                <h4 className="text-xs font-semibold text-foreground">{c.label}</h4>
+                <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.18em] ${badge.cls}`}>
+                  {badge.label}
+                </span>
+              </div>
+              <p className="text-[11px] text-muted-foreground leading-relaxed">{c.detail}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function ActSection({ act }: { act: Act }) {
   const Icon = act.icon;
   const script = silosToSignalsScript.find((s) => s.actId === act.id);
@@ -224,6 +257,7 @@ function ActSection({ act }: { act: Act }) {
             </div>
           </div>
           {script && <ScriptBlock script={script} accent={act.accent} />}
+          {act.id === "silo-era" && <TopChallengesGrid />}
           {act.id === "film" && (
             <div className="rounded-xl border border-border bg-gradient-to-br from-blue-500/10 via-card to-violet-500/10 p-4 space-y-4">
               <div className="aspect-video w-full overflow-hidden rounded-lg border border-border bg-black">
