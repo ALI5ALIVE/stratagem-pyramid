@@ -88,7 +88,6 @@ const App = () => (
             <Route path="/strategy" element={<SlideDeck />} />
             
             <Route path="/value-deck" element={<ValueDeck />} />
-            <Route path="/content-strategy" element={<ContentStrategyPage />} />
             <Route path="/coanalyst" element={<CoAnalystDeck />} />
             <Route path="/pitch-executive" element={<ExecutivePitch />} />
             <Route path="/pitch-executive-2" element={<ExecutivePitch2 />} />
@@ -111,11 +110,7 @@ const App = () => (
             <Route path="/mobile-playbook" element={<MobilePlaybook />} />
             <Route path="/platform-playbook" element={<PlatformPlaybook />} />
             <Route path="/signals-playbook" element={<SignalsPlaybook />} />
-            <Route path="/positioning-playbook" element={<PositioningPlaybook />} />
-            <Route path="/dtop-packaging-pov" element={<DtopPackagingPov />} />
             <Route path="/sales-enablement" element={<SalesEnablement />} />
-            <Route path="/strategy-vision-session" element={<StrategyVisionSession />} />
-            <Route path="/category-research-programme" element={<CategoryResearchProgramme />} />
             <Route path="/practice-center" element={<RequireAuth><Suspense fallback={<PageLoader />}><PracticeCenter /></Suspense></RequireAuth>} />
             <Route path="/admin/knowledge-base" element={<RequireAuth><Suspense fallback={<PageLoader />}><AdminKnowledgeBase /></Suspense></RequireAuth>} />
             <Route path="/roadmap" element={<RoadmapDeck />} />
@@ -125,9 +120,6 @@ const App = () => (
             <Route path="/comply365-home" element={<PasswordGate><Comply365Home /></PasswordGate>} />
             <Route path="/comply365-mockup" element={<Comply365MockupHome />} />
             <Route path="/platform-mockup" element={<PlatformMockup />} />
-            <Route path="/events/from-signals-to-control" element={<SignalsEvent />} />
-            <Route path="/events/from-signals-to-control/brief" element={<SignalsEventBrief />} />
-            <Route path="/ai-infographic" element={<AIInfographic />} />
             <Route path="/academy" element={<RequireAuth><AcademyHome /></RequireAuth>} />
             <Route path="/academy/admin" element={<RequireAuth><AdminDashboard /></RequireAuth>} />
             <Route path="/academy/certificate" element={<RequireAuth><Certificate /></RequireAuth>} />
@@ -138,6 +130,14 @@ const App = () => (
           </Route>
           <Route element={<MarketDevLayout />}>
             <Route path="/market-development" element={<MarketDevelopmentHub />} />
+            <Route path="/category-research-programme" element={<CategoryResearchProgramme />} />
+            <Route path="/strategy-vision-session" element={<StrategyVisionSession />} />
+            <Route path="/positioning-playbook" element={<PositioningPlaybook />} />
+            <Route path="/dtop-packaging-pov" element={<DtopPackagingPov />} />
+            <Route path="/content-strategy" element={<ContentStrategyPage />} />
+            <Route path="/ai-infographic" element={<AIInfographic />} />
+            <Route path="/events/from-signals-to-control" element={<SignalsEvent />} />
+            <Route path="/events/from-signals-to-control/brief" element={<SignalsEventBrief />} />
             <Route path="/keynote/silos-to-signals" element={<SilosToSignalsKeynote />} />
           </Route>
           <Route path="*" element={<NotFound />} />
