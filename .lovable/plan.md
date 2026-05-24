@@ -1,39 +1,48 @@
-## Problem
+## Goal
 
-VO audio is longer than scene length in two acts (30fps):
+Write the full 35–40 minute CEO keynote script for "From Silos to Signals" and surface it on the existing `/keynote/silos-to-signals` page so it can be read on-screen and downloaded.
 
-| Act | Scene length | VO ends at | Overrun |
-|-----|-------------|-----------|---------|
-| 1 | 15.0s | 14.3s | ok |
-| 2 | 32.0s | **34.9s** | **+3.0s** |
-| 3 | 16.0s | 10.6s | ok |
-| 4 | 32.0s | 32.2s | +0.2s (borderline) |
-| 5 | 20.0s | **22.5s** | **+2.5s** |
-| 6 | 5.0s | 4.4s | ok |
+## Script structure
 
-Act 2 and Act 5 VO bleeds visibly into the next scene; Act 4 is on the edge.
+One script, seven acts, matching the existing `acts` array in `SilosToSignalsKeynote.tsx`. Each act gets:
 
-## Fix
+- **Stage direction** (one line, italic) — where the CEO is, tempo, lighting
+- **Spoken script** (3–8 short paragraphs) — what the CEO actually says, written for the ear, not the page
+- **Cue** (one line) — the screen/audio trigger that closes the act
 
-Extend the scene durations so each VO finishes with ≥1s tail before the next act starts. Only `remotion/src/MainVideo.tsx` changes — VO offsets stay at 30 frames (1s), VO files unchanged, music ducking windows recompute from the ACTS array automatically.
+Tone: confident, evidence-led, low-jargon. Master message lands twice — once at the end of Act 04 (Naming the new game) and once in the closing line of Act 07. No mention of "two named operators" in Act 06 — keep the focus on the intelligence layer (per prior correction). Stats used: ~65% lost signals, $25–35B exposure, ~90% vs ~35% accuracy framed as time-to-resolve and operating-model outcomes (per prior correction).
 
-New per-scene frames @30fps:
+Approx word counts per act (≈140 wpm spoken):
+- 01 Cold open · 2.5 min · ~350 w
+- 02 Silo era · 4.5 min · ~630 w
+- 03 Research · 6 min · ~840 w
+- 04 Naming the new game · 5 min · ~700 w
+- 05 Film · 2 min stage-silent intro · ~120 w
+- 06 Intelligence layer · 10 min · ~1,400 w
+- 07 Call to arms · 5 min · ~700 w
 
-- Act 1: 450 (unchanged)
-- Act 2: 960 → **1110** (+150f / +5s, gives ~2s tail after VO)
-- Act 3: 480 (unchanged)
-- Act 4: 960 → **1020** (+60f / +2s, restores ~2s tail)
-- Act 5: 600 → **720** (+120f / +4s, gives ~1.5s tail)
-- Act 6: 150 (unchanged)
+## Page changes (`src/pages/keynote/SilosToSignalsKeynote.tsx`)
 
-New total: 3780 frames (126s) vs current 3600 (120s).
+1. **New data file** `src/data/silosToSignalsScript.ts` — typed export: `{ actId, stageDirection, paragraphs: string[], cue }[]`, one entry per act, keyed to existing `acts[].id`.
+2. **New `ScriptBlock` component** inside the keynote page (or a sibling file `src/components/keynote/ScriptBlock.tsx`) — renders inside each `ActSection`, below the Beats card:
+   - Header: "Spoken script" with mic icon, est. words + minutes
+   - Stage direction in muted italic
+   - Paragraphs in serif-leaning, larger leading for readability (`text-base leading-[1.75] text-foreground/90`)
+   - Closing "Cue" line in uppercase tracking, accent color of the act
+3. **Top-of-page "Full script" affordance** — add a single anchor button in the hero stat row area: "Read full script ↓" that smooth-scrolls to a new `#script` section *and* a "Print script" button that opens a print-styled view (reuse `window.print()` with a print stylesheet hiding everything except the script blocks).
+4. **Downloads section** — wire the existing "Speaker script (PDF)" card to trigger the same `window.print()` action (browser → Save as PDF). No new PDF pipeline; keeps scope tight.
 
-## Files
+## Out of scope
 
-- `remotion/src/MainVideo.tsx`
-  - Update the `ACTS` array `start`/`dur` values to the new offsets above.
-  - Update the matching `<Series.Sequence durationInFrames={…}>` props for Act 2, Act 4, Act 5.
-  - Update the score envelope keyframes (`[0, 60, 3540, 3600]` → `[0, 60, 3720, 3780]`) so the music tail still fades out at the very end.
-- `remotion/src/Root.tsx` — bump composition `durationInFrames` from 3600 to 3780.
+- No changes to the Remotion video, audio, or VO files.
+- No backend / DB / auth changes.
+- No new routes.
+- No regeneration of narration audio.
 
-No scene component, VO script, or audio file changes. After patching, re-render with `node remotion/scripts/render-remotion.mjs` (no audio regeneration needed).
+## Files touched
+
+- **Add** `src/data/silosToSignalsScript.ts`
+- **Add** `src/components/keynote/ScriptBlock.tsx`
+- **Edit** `src/pages/keynote/SilosToSignalsKeynote.tsx` — import script data, render `<ScriptBlock>` inside each `ActSection`, add hero "Read full script" link, wire Downloads "Speaker script (PDF)" to `window.print()`, add print CSS (scoped `<style>` block or `@media print` in `src/index.css`).
+
+Ready to draft the script and wire it in on approval.
