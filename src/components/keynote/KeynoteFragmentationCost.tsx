@@ -69,10 +69,14 @@ export default function KeynoteFragmentationCost() {
 
         {/* Top cost drivers from the LoS model */}
         <div className="rounded-xl border border-border bg-card/50 p-6">
-          <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-[0.22em] flex items-center gap-2 mb-5">
+          <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-[0.22em] flex items-center gap-2 mb-1">
             <TrendingDown className="h-4 w-4" />
-            Top cost drivers — annual impact (mid-size carrier baseline)
+            Annual envelope for a representative 50-aircraft narrowbody operator
           </h3>
+          <p className="text-[11px] text-muted-foreground/70 leading-relaxed mb-5">
+            The industry-wide $25–35B figure builds bottom-up from baselines like these, applied across
+            IATA's reporting carriers. Per-operator envelope, not measured P&amp;L.
+          </p>
           <div className="space-y-4">
             {costData.map((item) => (
               <div key={item.id} className="space-y-1.5">

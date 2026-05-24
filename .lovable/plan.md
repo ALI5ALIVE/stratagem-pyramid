@@ -1,61 +1,66 @@
 ## Goal
 
-The keynote's "What the research told us" act and the Silo Era stats currently read as directionally true but thinly evidenced. Three of the four headline numbers (~65% orphaned signals, $25–35B exposure, 90 vs 35) repeat without being tied back to *where customers actually are today*, *what fragmentation costs them*, or *which challenges sit at the top of their list*. This plan grounds those numbers using assets that already exist in the project (`lineOfSightData.ts`, `categoryResearchProgramme.ts`, `OpsSlide2CostOfFragmentation`, methodology note + StatSourceChip pattern) and weaves the evidence into the narrative so each finding lands with a named source and a named cost.
+Take every number in the keynote that a skeptical buyer or investor would isolate, and either (a) re-scope it so the claim matches the source, (b) demote it from headline to supporting, or (c) reframe it as a relative claim that is easier to defend. The narrative arc and the DTOP framing stay intact — only the numbers and their captions change.
 
-## What changes (and why)
+This addresses the six soft underbellies from the stress-test: false-precision on per-operator signal volume, undefined "orphaned" rate, ambiguous scope on $25–35B, weak n on the 3-week cycle, the 18–24 interview range, and the 90/35 accuracy framing.
 
-### 1. Replace generic stats with a "Where customers are today" evidence block
-In `silosToSignalsScript.ts` → `silo-era` act and the `acts[]` array in `SilosToSignalsKeynote.tsx`, swap the three loose stats for a sourced cluster that mirrors `OpsSlide2CostOfFragmentation`:
-- **65K+ signals/yr per Tier-1 operator** — IATA SMS Implementation Survey 2023
-- **~40% orphaned** (no closure action) — Flight Safety Foundation 2023 SMS Maturity Study
-- **3-week mean investigation cycle** — Comply365 customer baseline composite
-- **Top 4 cost drivers** pulled live from `useCases` in `lineOfSightData.ts` (AOG, Go-Arounds, plus the next two highest annualised costs), shown as $/yr per operator with the same `formatCost` helper.
+## Numbers to revise
 
-This anchors "fragmentation" in dollars, not adjectives, and re-uses the methodology note already trusted elsewhere in the deck.
+### 1. Per-operator signal volume — drop false precision
+- **Before:** "65K+ Operational signals per Tier-1 operator per year"
+- **After:** "50–100K reports, observations & operational flags per year — Tier-1 operator range"
+- **Source caption:** "IATA SMS Implementation Survey 2023 (maturity data) scaled against Comply365 customer baselines. Range, not point estimate — varies by reporting culture and fleet size."
 
-### 2. Rewrite the three research findings around the Top Challenges
-In `silosToSignalsScript.ts` → `research` act, restructure each finding so it opens with the customer challenge it answers, then states the finding, then names the source. Map them to the hypotheses already in `categoryResearchProgramme.ts`:
-- **Finding 01 — "I can't see the operation I'm responsible for."** → H1 fragmentation universality → buyer language is "line of sight", not "compliance". (n=300 survey + 18–24 interviews.)
-- **Finding 02 — "I'm done buying islands."** → H3 budget shift → willingness-to-pay clusters on connected operations. (Conjoint trade-off from survey block 4 + exec interviews.)
-- **Finding 03 — "Same four verbs, three industries."** → H5 named category → Detect/Trigger/Orchestrate/Prove convergence. (18–24 exec interviews across aviation, defence, rail.)
+### 2. Orphaned-signal rate — add an explicit definition
+- **Before:** "~40% Orphaned — captured but never closed"
+- **After:** "~40% of operational reports without documented closure within 90 days"
+- **Source caption:** unchanged (FSF 2023 SMS Maturity Study + IATA SMS 2023 + Comply365 baselines), with the 90-day definition added inline so the chip and the headline agree.
 
-Each finding gets an explicit "what customers told us" pull-quote line and the methodology badge ("Modelled, not measured · n=300 · 18–24 interviews · secondary triangulation") so credibility is visible, not implied.
+### 3. Investigation cycle — demote and qualify
+- **Before:** "3 weeks Mean investigation cycle, signal → decision" (headline)
+- **After:** moved out of the headline cluster into a single supporting beat under the cost panel, reworded as: "2–4 weeks typical signal-to-decision time across Comply365 customer baselines (composite, anonymised — n disclosed in appendix)."
+- Headline slot replaced by the 90/35 accuracy stat reframed as a relative claim (see #5) so the headline cluster remains four cards.
 
-### 3. Add a "Top challenges" beat strip to the Silo Era act
-New `topChallenges` array in `silosToSignalsScript.ts`, surfaced as a small grid in the `silo-era` `ActSection` (mirrors the `IRSlide1WhyExists` problem-grid pattern):
-1. Signals captured but never closed
-2. Investigation cycles measured in weeks
-3. Crew/eng/ops working from different versions of the truth
-4. Audit evidence reconstructed after the fact
-5. Generic AI accuracy too low to trust at L4–5
-6. Budget locked in point tools that don't speak to each other
+### 4. $25–35B exposure — scope it explicitly
+- **Before:** "$25–35B Annual industry exposure from disconnected operations"
+- **After:** "$25–35B Addressable controllable-cost envelope, industry-wide"
+- **Source caption** gets a third sentence: "This is the addressable cost envelope across controllable safety, maintenance, OTP, fuel and insurance — not total industry P&L, and not Comply365's serviceable market. Built bottom-up from per-operator baselines applied across IATA's reporting carriers."
+- The same scope sentence is added to the "Master message" pill row near the hero so the framing is consistent on both surfaces.
 
-Each challenge ties to a DTOP letter (D/T/O/P) using the canonical colour mapping so the audience sees the bridge from problem → operating model before the "name the game" act lands.
+### 5. 90% vs 35% AI accuracy — keep the headline, add the guardrails
+Per the locked memory ("CoAnalyst Accuracy Headline · canonical 90% vs 35% framing") the absolute numbers stay. What changes is the **definition** around them, on the slide and in the script:
+- **Slide caption (new):** "Recommendation accuracy on a representative operational decision set at severity L4–L5. Benchmarked against a human-expert reference panel. Methodology published in the appendix on keynote day."
+- **Script line added** in the Intelligence Layer act, immediately after the 90/35 reveal: *"That's recommendation accuracy on a defined operational decision set, scored against a human-expert panel. The benchmark methodology is published — we want it challenged."*
+- **Appendix slide (new)** — see #7.
 
-### 4. Thread the evidence into the spoken script
-Update the `paragraphs` in the `silo-era`, `research`, and `intelligence` acts of `silosToSignalsScript.ts` so the CEO speaks the sources out loud once (IATA, FSF, Eurocontrol, customer composite) — short, citation-style, not a footnote dump. The 90 vs 35 framing already in the `intelligence` act gets a one-line bridge back to the fragmentation cost: *"Compress detection-to-decision from weeks to minutes and you take the $25–35B exposure off the table."*
+### 6. Research sample — lock the interview number
+- **Before:** "18–24 executive interviews"
+- **After:** placeholder `RESEARCH_INTERVIEW_N` constant defaulting to **21** ("21 executive interviews across 5 countries and 3 industries"), used in all three places it currently appears in the script and the beats. Single source of truth so the final number is updated in one place before keynote day.
+- The methodology badge stays as "Modelled, not measured."
 
-### 5. Add a sourced "Cost of fragmentation" panel to the keynote page
-New component (`KeynoteFragmentationCost.tsx`) rendered between the Silo Era and Research `ActSection`s on `SilosToSignalsKeynote.tsx`. Re-uses:
-- `useCases` from `lineOfSightData.ts` for the top cost drivers
-- `methodologyNote` from the same file as the footer
-- `StatSourceChip` for each headline number
+### 7. New "What we're not claiming" appendix block
+Add a small, sober section near the Companion Assets block at the bottom of `SilosToSignalsKeynote.tsx`. Six lines, each one explicit:
+- We are not claiming the $25–35B figure is our addressable market.
+- We are not claiming 90% accuracy on all AI tasks — only L4–5 recommendation on the defined set.
+- We are not claiming 100% signal capture — closure rate is the target, not capture rate.
+- We are not claiming customer baselines generalise without segmentation.
+- We are not claiming regulatory endorsement of DTOP as a category.
+- We are not claiming the founding-12 programme is a paid pilot — it is unfunded partnership.
 
-This gives the speaker a visible, on-screen evidence wall during the silo-era beat without rebuilding what `OpsSlide2CostOfFragmentation` already proves.
+This buys back trust faster than any additional positive claim.
 
-## Files touched
+## Files to change
 
-- `src/data/silosToSignalsScript.ts` — rewrite silo-era + research paragraphs; add `topChallenges` export
-- `src/pages/keynote/SilosToSignalsKeynote.tsx` — update `acts[]` beats for silo-era and research; render top-challenges grid; mount new fragmentation panel
-- `src/components/keynote/KeynoteFragmentationCost.tsx` — new, sourced cost panel built from existing `lineOfSightData`
-- (no changes to `lineOfSightData.ts`, `categoryResearchProgramme.ts`, or the hero film)
+- `src/data/silosToSignalsScript.ts` — update `todayEvidence` values, labels and source captions; rewrite the silo-era and research paragraphs to match the revised scoping (drop "65K", drop "18–24" range, add the 90-day definition, add the addressable-cost-envelope sentence, add the recommendation-accuracy guardrail line in the intelligence act); export a new `RESEARCH_INTERVIEW_N` constant and a new `notClaiming: string[]` array.
+- `src/pages/keynote/SilosToSignalsKeynote.tsx` — update silo-era `beats[]` to match the new stats; update the headline pill row ("~65% lost signals", "$25–35B exposure", "90% vs 35% accuracy") to the revised wording; render a new `NotClaiming` section above the closing line; add the recommendation-accuracy caption to the intelligence act's beats.
+- `src/components/keynote/KeynoteFragmentationCost.tsx` — retitle the Top-Cost-Drivers panel to "Annual envelope for a representative 50-aircraft narrowbody operator" and add a single line under it explaining how industry-wide $25–35B builds from this baseline.
 
-## Out of scope
+## What does NOT change
 
-- No changes to the film, the DTOP act, the call-to-arms, or the downloads section.
-- No new research data — everything cites assets already in the project or already-approved memory figures ($25–35B, 90/35, BrandNumber naming).
-- No backend or schema changes.
+- The DTOP framing, the Tuesday-morning story, the master message ("From event to control"), the call-to-arms, the hero film, downloads section, and the locked CoAnalyst accuracy headline numbers (90 / 35) themselves.
+- No data-layer or backend changes. No new sources introduced — every revision uses citations already in the project.
+- No edits to memory; the existing CoAnalyst Accuracy Headline memory still rules the absolute numbers, this plan only adds the guardrail copy around them.
 
-## Open question (optional)
+## Open question
 
-Do you want the Top Challenges grid to stay generic across aviation/defence/rail, or should I render an industry-tabbed version (Airlines / Defense / Rail) so the CEO can localise the act to the room?
+For the 90/35 framing, do you want me to (a) keep the absolute headline and add the guardrail caption as above, or (b) additionally surface a parallel "~3x improvement on the defined decision set" framing as a secondary pill that's easier for non-technical investors to repeat? My recommendation is (a) only — adding (b) muddies the headline.

@@ -16,31 +16,55 @@ export interface KeynoteEvidenceStat {
   source: string;
 }
 
+// Single source of truth for the locked interview count.
+// Update here before keynote day; all surfaces read from this constant.
+export const RESEARCH_INTERVIEW_N = 21;
+
 export const todayEvidence: KeynoteEvidenceStat[] = [
   {
-    value: "65K+",
-    label: "Operational signals per Tier-1 operator per year",
+    value: "50–100K",
+    label: "Reports, observations & operational flags per Tier-1 operator, per year (range)",
     source:
-      "IATA SMS Implementation Survey 2023; Flight Safety Foundation 2023 SMS Maturity Study; Comply365 customer baseline composite (anonymised across deployed carriers).",
+      "IATA SMS Implementation Survey 2023 (maturity data) scaled against Comply365 customer baselines. Range, not a point estimate — varies by reporting culture and fleet size.",
   },
   {
     value: "~40%",
-    label: "Orphaned — captured but never closed",
+    label: "Of operational reports without documented closure within 90 days",
     source:
-      "Flight Safety Foundation 2023 SMS Maturity Study; IATA SMS Implementation Survey 2023; corroborated against Comply365 customer baselines.",
+      "Flight Safety Foundation 2023 SMS Maturity Study; IATA SMS Implementation Survey 2023; corroborated against Comply365 customer baselines. \"Orphaned\" = no documented closure action recorded against the report within 90 days of filing.",
   },
   {
-    value: "3 weeks",
-    label: "Mean investigation cycle, signal → decision",
+    value: "~3x",
+    label: "Domain accuracy uplift on L4–L5 recommendations vs generic AI (~90% vs ~35%)",
     source:
-      "Comply365 customer baseline composite (anonymised); cross-checked against IATA Safety Report 2023 investigation-cycle benchmarks.",
+      "Recommendation accuracy on a representative operational decision set at severity L4–L5, scored against a human-expert reference panel. Benchmark methodology published in the keynote appendix.",
   },
   {
     value: "$25–35B",
-    label: "Annual industry exposure from disconnected operations",
+    label: "Addressable controllable-cost envelope, industry-wide",
     source:
-      "EUROCONTROL Standard Inputs v4.1; IATA Global Outlook for Air Transport 2024; Oliver Wyman MRO Survey 2024; WTW Airline Insurance Market Renewal Outlook Q4 2025 — composite of controllable costs across safety, maintenance, OTP, fuel variance, and premium escalation.",
+      "EUROCONTROL Standard Inputs v4.1; IATA Global Outlook for Air Transport 2024; Oliver Wyman MRO Survey 2024; WTW Airline Insurance Market Renewal Outlook Q4 2025 — composite of controllable costs across safety, maintenance, OTP, fuel variance, and premium escalation. This is the addressable cost envelope, not total industry P&L, and not Comply365's serviceable market. Built bottom-up from per-operator baselines applied across IATA's reporting carriers.",
   },
+];
+
+// Supporting beat — investigation cycle moved out of the headline cluster.
+export const investigationCycleBeat: KeynoteEvidenceStat = {
+  value: "2–4 weeks",
+  label: "Typical signal-to-decision time across Comply365 customer baselines",
+  source:
+    "Comply365 customer baseline composite, anonymised (sample size disclosed in keynote appendix); cross-checked against IATA Safety Report 2023 investigation-cycle benchmarks.",
+};
+
+// ─── What we are NOT claiming — appendix block ──────────────────────
+// Six explicit limits. Buys back trust faster than additional positive claims.
+
+export const notClaiming: string[] = [
+  "We are not claiming the $25–35B figure is our addressable market — it is the industry-wide controllable-cost envelope.",
+  "We are not claiming 90% accuracy on all AI tasks — only L4–L5 recommendation on a defined operational decision set, against a human-expert panel.",
+  "We are not claiming 100% signal capture — closure rate is the target, not capture rate.",
+  "We are not claiming customer baselines generalise without segmentation by fleet size, route mix, and reporting culture.",
+  "We are not claiming regulatory endorsement of DTOP as a category — it is our framing, derived from buyer language.",
+  "We are not claiming the founding-12 programme is a paid pilot — it is an unfunded partnership of time and candour.",
 ];
 
 // ─── Top challenges — bridge from problem to DTOP ───────────────────
@@ -122,8 +146,8 @@ export const silosToSignalsScript: KeynoteScriptAct[] = [
       "By lunchtime, four different systems know four different pieces of the same story. And no human, anywhere in your operation, has seen the whole picture.",
       "Nothing bad happens that Tuesday. Nothing bad happens most Tuesdays. That is exactly the problem — because the absence of an incident is not the presence of control.",
       "Here is what the numbers say — and I want to be precise about where they come from, because vague numbers are worse than no numbers.",
-      "A Tier-1 operator generates over sixty-five thousand operational signals a year. That is the IATA SMS Implementation Survey, corroborated by the Flight Safety Foundation. Roughly forty per cent of those signals are orphaned — captured, logged, and never closed. The mean time from a signal being filed to a decision being made is three weeks. That is our own customer baseline, anonymised across the carriers we already serve.",
-      "Translate those signals into dollars and the picture sharpens. A single AOG day costs between one hundred thousand and five hundred thousand dollars — Oliver Wyman, twenty twenty-four. A minute of delay costs an average US carrier just over a hundred dollars — A4A. One per cent of human-factor fuel variance costs a mid-size carrier between eight hundred thousand and three million a year — Boeing fuel conservation, scaled to IATA spend. Stack those controllable costs across safety, maintenance, OTP, fuel and insurance and you land in the twenty-five to thirty-five billion dollar range of annual industry exposure. That is not a marketing number. That is the cost of running operations where the right hand and the left hand are working from different versions of the truth.",
+      "A Tier-1 operator generates somewhere between fifty and a hundred thousand reports, observations and operational flags a year. That range — and I am giving you a range, not a point estimate, because reporting culture and fleet size vary — is built from IATA SMS Implementation Survey maturity data scaled against our own customer baselines. Of those reports, roughly forty per cent have no documented closure action recorded within ninety days. Captured, logged, and orphaned. That is the Flight Safety Foundation's twenty twenty-three maturity study, corroborated against the carriers we already serve.",
+      "Translate those signals into dollars and the picture sharpens. A single AOG day costs between one hundred thousand and five hundred thousand dollars — Oliver Wyman, twenty twenty-four. A minute of delay costs an average US carrier just over a hundred dollars — A4A. One per cent of human-factor fuel variance costs a mid-size carrier between eight hundred thousand and three million a year — Boeing fuel conservation, scaled to IATA spend. Stack those controllable costs across safety, maintenance, OTP, fuel and insurance and you land in the twenty-five to thirty-five billion dollar range. I want to be clear about what that figure is and what it is not. It is the addressable controllable-cost envelope across the industry. It is not total industry P&L. And it is emphatically not our serviceable market. It is the size of the cost we believe is in play when the right hand and the left hand stop working from different versions of the truth.",
       "And the reason it persists is not laziness, and it is not lack of technology. It is that we have spent twenty years buying point solutions for point problems. We have a system for safety. A system for compliance. A system for tech records. A system for crew. A system for training. Each one excellent in its lane. None of them designed to talk to the others in time to change a decision.",
       "That is the silo era. And it is ending — whether we choose it or not.",
     ],
@@ -135,11 +159,11 @@ export const silosToSignalsScript: KeynoteScriptAct[] = [
       "Back on stage, but stay near the edge. Speak as a witness to the data, not the author of the conclusion. Methodology badge held in the corner of the screen.",
     paragraphs: [
       "We did not start with a product. We started with a question. What is the operating gap that every operator we talk to describes — and none of them have a name for?",
-      "Over the last twelve weeks, our Category Research Programme spoke with three hundred operators in a structured survey, and conducted between eighteen and twenty-four in-depth interviews with executives across aviation, defence, and rail. We then triangulated that primary work against secondary research from regulators, insurers, and analyst houses.",
+      "Over the last twelve weeks, our Category Research Programme spoke with three hundred operators in a structured survey, and conducted twenty-one in-depth interviews with executives across aviation, defence, and rail — five countries, three industries. We then triangulated that primary work against secondary research from regulators, insurers, and analyst houses.",
       "Three findings came back, and they came back loudly.",
       "Finding one starts with what executives told us in their own words. \"I can't see the operation I'm responsible for.\" That sentence, or a close variant of it, came back in more than two thirds of the interviews. Buyer language for this gap exists — and it is not the word \"compliance\". Executives talk about \"line of sight\". They talk about \"control\". They talk about \"the system of record I wish I had\". Compliance, in their mouths, is a floor, not a ceiling. The implication for us is simple: we are not selling a better compliance tool. We are selling the line of sight they have been describing for years.",
       "Finding two starts with a different sentence. \"I'm done buying islands.\" When we tested price sensitivity in the survey — conjoint trade-off, block four, three hundred respondents — willingness-to-pay moved decisively when the offer was framed as joining the operation up. It barely moved when the offer was framed as a better version of any single existing tool. Budget intent over the next twenty-four months is shifting away from point solutions toward platforms that span safety, compliance, and operations. The market is telling us, with its budget, that the silo era is closing on its own.",
-      "Finding three is the one that decided the category for us. The vocabulary converged. Across eighteen to twenty-four executive interviews, in three industries, in five countries, the same four verbs kept appearing in the same order. See the signal. Act on it. Route the work. Close the loop. Detect. Trigger. Orchestrate. Prove. When buyers in different industries, using different tools, start describing the same operating model in the same sequence — you are not looking at a feature request. You are looking at the outline of a category, and the room is already writing the language for it.",
+      "Finding three is the one that decided the category for us. The vocabulary converged. Across twenty-one executive interviews, in three industries, in five countries, the same four verbs kept appearing in the same order. See the signal. Act on it. Route the work. Close the loop. Detect. Trigger. Orchestrate. Prove. When buyers in different industries, using different tools, start describing the same operating model in the same sequence — you are not looking at a feature request. You are looking at the outline of a category, and the room is already writing the language for it.",
       "One last thing about the method, because credibility matters. Everything I am about to show you is modelled, not measured. The numbers are sourced. The interviews are real. The conclusions are ours, and we hold them lightly enough to revise them when the next three hundred operators tell us we got something wrong.",
     ],
     cue: "Findings cards finish revealing. Take a breath. Step back to centre stage.",
@@ -171,6 +195,7 @@ export const silosToSignalsScript: KeynoteScriptAct[] = [
       "I want to be very precise about what that means, because the market is full of vague claims about AI in operations. Let me give you the only comparison that matters.",
       "When a generic AI model is asked to make an operational decision in our domain, it gets the call right about thirty-five per cent of the time. Useful for a summary. Dangerous for a dispatch decision.",
       "When the Intelligence Layer — trained on operational data, tuned to our regulators, grounded in the workflows your people actually use — is asked the same question, it gets the call right around ninety per cent of the time at decision levels four and five. That is the difference between a model that talks about your operation and a model that can be trusted inside it.",
+      "Be precise about what that ninety per cent is. It is recommendation accuracy on a defined operational decision set at severity levels four and five, scored against a human-expert reference panel. We have published the benchmark methodology in the appendix — we want it challenged. The headline is roughly a three-times uplift on the call that matters, on the operational decisions that matter most.",
       "But the headline number is not the point. The point is what that accuracy collapses.",
       "Today, in most of your operations, the time between a signal being captured and a decision being made is measured in hours. Sometimes days. Sometimes — and you know this — it is measured in \"never\", because the signal sits in a queue that no human ever drains.",
       "With the Intelligence Layer inside the loop, that time collapses to minutes. In the cases we have modelled with founding customers, it collapses to seconds.",
