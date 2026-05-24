@@ -1,48 +1,49 @@
 ## Goal
+Rejig the keynote so the 2-minute hero film opens the talk — the audience sees the film first, then the CEO walks on. Reorder both the on-page acts and the script so the film is Act 01.
 
-Write the full 35–40 minute CEO keynote script for "From Silos to Signals" and surface it on the existing `/keynote/silos-to-signals` page so it can be read on-screen and downloaded.
+## New 7-act order
 
-## Script structure
+```
+01  The film              (was 05)  — 2 min   cinematic
+02  Cold open             (was 01)  — 2 min   build       CEO walks on after the film fades
+03  The silo era          (was 02)  — 4.5 min high
+04  What the research told us (was 03) — 6 min  high
+05  Naming the new game   (was 04)  — 5 min   peak
+06  The intelligence layer (was 06) — 10 min  peak
+07  The call to arms      (was 07)  — 5 min   resolve
+```
 
-One script, seven acts, matching the existing `acts` array in `SilosToSignalsKeynote.tsx`. Each act gets:
+Total stays 35 min. Timecodes recompute from the new order (Act 01 = 0:00–2:00, Act 02 = 2:00–4:00, etc.).
 
-- **Stage direction** (one line, italic) — where the CEO is, tempo, lighting
-- **Spoken script** (3–8 short paragraphs) — what the CEO actually says, written for the ear, not the page
-- **Cue** (one line) — the screen/audio trigger that closes the act
+## Script changes (`src/data/silosToSignalsScript.ts`)
 
-Tone: confident, evidence-led, low-jargon. Master message lands twice — once at the end of Act 04 (Naming the new game) and once in the closing line of Act 07. No mention of "two named operators" in Act 06 — keep the focus on the intelligence layer (per prior correction). Stats used: ~65% lost signals, $25–35B exposure, ~90% vs ~35% accuracy framed as time-to-resolve and operating-model outcomes (per prior correction).
-
-Approx word counts per act (≈140 wpm spoken):
-- 01 Cold open · 2.5 min · ~350 w
-- 02 Silo era · 4.5 min · ~630 w
-- 03 Research · 6 min · ~840 w
-- 04 Naming the new game · 5 min · ~700 w
-- 05 Film · 2 min stage-silent intro · ~120 w
-- 06 Intelligence layer · 10 min · ~1,400 w
-- 07 Call to arms · 5 min · ~700 w
+- Reorder the `silosToSignalsScript` array so `film` is first and `cold-open` is second.
+- Rewrite **Act 01 (film)** stage direction + paragraphs to fit the new opener role: house lights down, no introduction, film rolls cold. Script becomes the director's note for the film — the CEO is not speaking yet. Cue: "Film ends on black card → hold 3 sec → spotlight up on CEO."
+- Rewrite **Act 02 (cold-open)** opening paragraph so it follows the film instead of opening the talk. New first line lands directly off the black card (e.g. "That film is not aspirational. Every signal you just saw is already moving through your operation tonight — most of them invisible."). Keep the rest of the cold-open beats intact.
+- Light edits to **Act 03 (silo-era)** opening sentence so it follows the cold-open naturally rather than the film.
+- All other acts unchanged in content; only their `actId` order in the array changes.
 
 ## Page changes (`src/pages/keynote/SilosToSignalsKeynote.tsx`)
 
-1. **New data file** `src/data/silosToSignalsScript.ts` — typed export: `{ actId, stageDirection, paragraphs: string[], cue }[]`, one entry per act, keyed to existing `acts[].id`.
-2. **New `ScriptBlock` component** inside the keynote page (or a sibling file `src/components/keynote/ScriptBlock.tsx`) — renders inside each `ActSection`, below the Beats card:
-   - Header: "Spoken script" with mic icon, est. words + minutes
-   - Stage direction in muted italic
-   - Paragraphs in serif-leaning, larger leading for readability (`text-base leading-[1.75] text-foreground/90`)
-   - Closing "Cue" line in uppercase tracking, accent color of the act
-3. **Top-of-page "Full script" affordance** — add a single anchor button in the hero stat row area: "Read full script ↓" that smooth-scrolls to a new `#script` section *and* a "Print script" button that opens a print-styled view (reuse `window.print()` with a print stylesheet hiding everything except the script blocks).
-4. **Downloads section** — wire the existing "Speaker script (PDF)" card to trigger the same `window.print()` action (browser → Save as PDF). No new PDF pipeline; keeps scope tight.
+- Reorder the `acts` array to match the new sequence above. Renumber the `number` field (`"01"`–`"07"`) and recompute each act's `start` / `end` minutes so they're contiguous from 0 to 35.
+- Update Act 01 (film) `intent`, `onStage`, `onScreen`, and `beats` to reflect "opener, not midpoint pivot":
+  - intent: "Open cold. Let the room feel the category before a single word is spoken."
+  - onStage: "House lights down as doors close. No introduction, no walk-on. 120 seconds of film, then the CEO appears in a single spotlight."
+  - onScreen: unchanged film description.
+  - First beat becomes `0:00 – 0:10 · House lights down, film rolls cold — no host intro.`
+- Update Act 02 (cold-open) `onStage` so the CEO walks on *after* the film fades, not in silence from the start.
+- Move the embedded `<video>` block out of the Act-05 `ActSection` and render it inside the new Act 01 (film) section. The block stays visually identical (aspect-video player + download button), just attached to the new first act.
+- Update the hero copy:
+  - Tagline becomes: "Open with the film. Then seven acts and one ask of the room."
+  - Add a second hero CTA "Watch the film" that anchors to `#film` alongside the existing "Read full script" and "Print / save as PDF" buttons.
+- Update the master-message section's surrounding prose to reference "the film opens the room" rather than "every act ladders to one sentence" (one-sentence tweak).
+- `EnergyBar` automatically reflows from the reordered `acts` array — no separate change needed beyond confirming the film bar still gets its "2 min" pill (logic already keyed on `act.id === "film"`).
 
 ## Out of scope
-
-- No changes to the Remotion video, audio, or VO files.
-- No backend / DB / auth changes.
-- No new routes.
-- No regeneration of narration audio.
+- No Remotion / VO / audio changes.
+- No new routes, no backend changes.
+- No restructuring of `ScriptBlock`, downloads grid, or print CSS.
 
 ## Files touched
-
-- **Add** `src/data/silosToSignalsScript.ts`
-- **Add** `src/components/keynote/ScriptBlock.tsx`
-- **Edit** `src/pages/keynote/SilosToSignalsKeynote.tsx` — import script data, render `<ScriptBlock>` inside each `ActSection`, add hero "Read full script" link, wire Downloads "Speaker script (PDF)" to `window.print()`, add print CSS (scoped `<style>` block or `@media print` in `src/index.css`).
-
-Ready to draft the script and wire it in on approval.
+- **Edit** `src/data/silosToSignalsScript.ts` — reorder + rewrite Act 01 (film) and Act 02 (cold-open) opening; tweak Act 03 first line.
+- **Edit** `src/pages/keynote/SilosToSignalsKeynote.tsx` — reorder `acts`, renumber, recompute timecodes, move video block to film act, refresh hero copy + add "Watch the film" CTA.
