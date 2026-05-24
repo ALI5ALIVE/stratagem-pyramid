@@ -7,14 +7,25 @@ export interface KeynoteScriptAct {
 
 export const silosToSignalsScript: KeynoteScriptAct[] = [
   {
+    actId: "film",
+    stageDirection:
+      "House lights down as the doors close. No introduction, no host, no walk-on. The film rolls cold. The CEO is not on stage yet — watch the room from the wings.",
+    paragraphs: [
+      "Director's note — this act is the film. There is no spoken line from the stage.",
+      "Watch the faces. Watch the signals. Watch what an operation looks like when it moves in concert. Two minutes. No voiceover from the lectern. Let the room feel the category before anyone names it.",
+      "The film ends on a black card: \"This is what operational performance looks like.\" Hold the black for three full seconds. Then the spotlight finds the CEO.",
+    ],
+    cue: "Film ends on black card. Hold 3 sec of dark silence. Spotlight up, centre stage, on the CEO.",
+  },
+  {
     actId: "cold-open",
     stageDirection:
-      "House lights down. Single spotlight, centre stage. CEO walks on in silence. Holds the room for a full beat before the first word.",
+      "Spotlight finds the CEO already standing at centre stage as the film fades. No applause cue. Hold the room for a full beat before the first word.",
     paragraphs: [
-      "Good evening.",
-      "Before I say anything else, I want you to picture something. Picture the operation you run — the flights, the trains, the crews, the platforms, the control rooms. Picture the people on the front line right now, this evening, while we are in this room.",
-      "Now picture every signal coming off that operation. Every report. Every observation. Every near-miss. Every fatigue marker. Every deferred defect. Every line of feedback from a crew member who saw something and did the right thing by writing it down.",
-      "Here is the uncomfortable truth I want to start with tonight. Every operator in this room is running on signals they will never see.",
+      "That film is not aspirational.",
+      "Every signal you just saw is already moving through your operation tonight. The reports. The observations. The near-misses. The fatigue markers. The deferred defects. The lines of feedback from a crew member who saw something and did the right thing by writing it down.",
+      "The difference between the film and your Tuesday is not the signals. It is whether anyone, anywhere in the operation, ever sees them in time to act.",
+      "So here is the uncomfortable truth I want to start with tonight. Every operator in this room is running on signals they will never see.",
       "Not because your people aren't capturing them. They are. Not because your systems aren't recording them. They are. But because the signal that matters and the decision that matters almost never meet in time.",
       "For the next forty minutes I am going to name that gap, show you what our research has told us about it, and show you what we are building to close it. And at the end, I am going to ask one thing of you. Just one.",
     ],
@@ -25,7 +36,7 @@ export const silosToSignalsScript: KeynoteScriptAct[] = [
     stageDirection:
       "Step off the stage and walk into the front rows. Conversational, but pointed. The room should feel slightly uncomfortable by the end.",
     paragraphs: [
-      "Let me tell you about a Tuesday morning. It is composite — drawn from conversations with dozens of operators over the last twelve weeks — but every detail is real, and most of you will recognise it.",
+      "Let me ground that in a Tuesday morning. It is composite — drawn from conversations with dozens of operators over the last twelve weeks — but every detail is real, and most of you will recognise it.",
       "06:14. A first officer files a fatigue report at the end of a long rotation. It goes into the safety system.",
       "06:47. A line engineer defers a minor defect on the same airframe. It goes into the technical records system.",
       "08:02. A crew scheduler, blind to both of those signals, rosters the same airframe and a similar crew pattern for a high-density day of flying. It goes into the planning system.",
@@ -56,7 +67,7 @@ export const silosToSignalsScript: KeynoteScriptAct[] = [
   {
     actId: "name-the-game",
     stageDirection:
-      "Slow the tempo deliberately. Four reveals, four colours, four verbs. Let each one land before the next.",
+      "Slow the tempo deliberately. Four reveals, four colours, four verbs. Let each one land before the next. This is the act that names what the film showed.",
     paragraphs: [
       "So we gave it a name. Not because the industry needs another acronym — it does not — but because a category without a name cannot be bought, sold, or defended.",
       "We call it the DTOP Operating Model. Detect. Trigger. Orchestrate. Prove. Four moves, in that order, every time.",
@@ -66,19 +77,9 @@ export const silosToSignalsScript: KeynoteScriptAct[] = [
       "Prove. Close the loop with auditable evidence that the right thing happened. Not because the regulator asks. Because the operation is only as strong as its last proven outcome.",
       "Detect. Trigger. Orchestrate. Prove. That is the operating model. And the master message I want you to take out of this room and into your Monday morning is six words long.",
       "From event. To control.",
-      "Everything we are building — everything I am about to show you — exists to compress the distance between those two words.",
+      "Everything we are building — and everything you just saw in the opening film — exists to compress the distance between those two words.",
     ],
-    cue: "Hold on the black slide with \"From event to control.\" Step into shadow as the film begins.",
-  },
-  {
-    actId: "film",
-    stageDirection:
-      "Step off-stage into shadow. Do not narrate over the film. The film does the work. Two minutes of silence from the stage.",
-    paragraphs: [
-      "Before the next section, I want to give you ninety seconds of something other than my voice. Watch the people. Watch the signals. Watch what happens when the operation moves in concert.",
-      "Play the film.",
-    ],
-    cue: "Film runs to black card: \"This is what operational performance looks like.\" Wait two beats before walking back to centre stage.",
+    cue: "Hold on the black slide with \"From event to control.\" Step toward the screen for the proof act.",
   },
   {
     actId: "intelligence",

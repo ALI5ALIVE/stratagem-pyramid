@@ -20,21 +20,35 @@ interface Act {
 
 const acts: Act[] = [
   {
-    id: "cold-open", number: "01", title: "Cold open",
-    intent: "Land the tension in one sentence.",
-    start: 0, end: 2.5, energy: "build", icon: Mic, accent: "blue",
-    onStage: "House lights down. CEO walks to centre stage, single spotlight, no slides. 90 seconds of silence-then-line.",
-    onScreen: "Black frame. One line of type fades in over 12 seconds: \"Every operator in this room is running on signals they'll never see.\"",
+    id: "film", number: "01", title: "The film",
+    intent: "Open cold. Let the room feel the category before a single word is spoken.",
+    start: 0, end: 2, energy: "cinematic", icon: Film, accent: "blue",
+    onStage: "House lights down as doors close. No introduction, no host, no walk-on. 120 seconds of film. The CEO appears in a single spotlight only after the black card holds.",
+    onScreen: "Cinematic 2-minute hero film: frontline crews, flight decks, control rooms, rail platforms — signals visualised as light-traces moving across the operation. Ends on a black card.",
     beats: [
-      { label: "0:00 – 0:45", detail: "Walk-on in silence. Let the room settle." },
-      { label: "0:45 – 1:30", detail: "Deliver the opening line. Hold the silence after." },
-      { label: "1:30 – 2:30", detail: "Frame the next 40 minutes: 'Tonight we name the thing we've been avoiding.'" },
+      { label: "0:00 – 0:10", detail: "House lights down, film rolls cold — no host intro, no walk-on." },
+      { label: "0:10 – 0:45", detail: "Open on faces. Pre-shift, pre-dawn. The operation about to begin." },
+      { label: "0:45 – 1:30", detail: "Signal-traces light up across geographies; the operation responds in concert." },
+      { label: "1:30 – 1:50", detail: "A single decision avoids a single incident. Calm replaces noise." },
+      { label: "1:50 – 2:00", detail: "Black card: \"This is what operational performance looks like.\" Hold 3 sec." },
     ],
   },
   {
-    id: "silo-era", number: "02", title: "The silo era",
+    id: "cold-open", number: "02", title: "Cold open",
+    intent: "Land the tension in one sentence.",
+    start: 2, end: 4, energy: "build", icon: Mic, accent: "blue",
+    onStage: "Spotlight finds the CEO already standing at centre stage as the film fades. No applause cue. Holds the room for a full beat before the first word.",
+    onScreen: "Black frame held from the film's closing card. One line of type fades in over 12 seconds: \"Every operator in this room is running on signals they'll never see.\"",
+    beats: [
+      { label: "2:00 – 2:20", detail: "Spotlight up off the film's black card. Hold the silence." },
+      { label: "2:20 – 3:00", detail: "Deliver the opening line: 'That film is not aspirational.' Hold the silence after." },
+      { label: "3:00 – 4:00", detail: "Frame the next 40 minutes: 'Tonight we name the thing we've been avoiding.'" },
+    ],
+  },
+  {
+    id: "silo-era", number: "03", title: "The silo era",
     intent: "Provoke. Make the cost of disconnection feel personal.",
-    start: 2.5, end: 7, energy: "high", icon: Workflow, accent: "amber",
+    start: 4, end: 8.5, energy: "high", icon: Workflow, accent: "amber",
     onStage: "Step into the audience. Tell the composite 'Tuesday morning' story — the same safety signal seen by four systems, acted on by none.",
     onScreen: "Stat wall builds beat by beat. Org-chart fractures into disconnected boxes; signal-traces die at the boundaries.",
     beats: [
@@ -44,9 +58,9 @@ const acts: Act[] = [
     ],
   },
   {
-    id: "research", number: "03", title: "What the research told us",
+    id: "research", number: "04", title: "What the research told us",
     intent: "Evidence, not pitch. Move from opinion to proof.",
-    start: 7, end: 13, energy: "high", icon: FlaskConical, accent: "violet",
+    start: 8.5, end: 14.5, energy: "high", icon: FlaskConical, accent: "violet",
     onStage: "Anchor the room in the Category Research Programme. Speak as a witness to the data, not the author of the conclusion.",
     onScreen: "Three findings revealed sequentially with the methodology badge held in the corner for credibility.",
     beats: [
@@ -57,9 +71,9 @@ const acts: Act[] = [
     ],
   },
   {
-    id: "name-the-game", number: "04", title: "Naming the new game",
+    id: "name-the-game", number: "05", title: "Naming the new game",
     intent: "Pivot from problem to category. Reveal DTOP beat by beat.",
-    start: 13, end: 18, energy: "peak", icon: Sparkles, accent: "emerald",
+    start: 14.5, end: 19.5, energy: "peak", icon: Sparkles, accent: "emerald",
     onStage: "Slow tempo. Four reveals — one for each DTOP step. Each lands with its colour and a single verb.",
     onScreen: "Black background. D · T · O · P appear in sequence with full-bleed colour swatches (blue · amber · violet · emerald).",
     beats: [
@@ -71,22 +85,9 @@ const acts: Act[] = [
     ],
   },
   {
-    id: "film", number: "05", title: "The film",
-    intent: "Emotional pivot. Let the room feel the category before they think it.",
-    start: 18, end: 20, energy: "cinematic", icon: Film, accent: "blue",
-    onStage: "CEO steps off-stage into shadow. 120 seconds of pure film. No voiceover from the stage.",
-    onScreen: "Cinematic 2-minute hero film: frontline crews, flight decks, control rooms, rail platforms — signals visualised as light-traces moving across the operation.",
-    beats: [
-      { label: "0:00 – 0:30", detail: "Open on faces. Pre-shift, pre-dawn. The operation about to begin." },
-      { label: "0:30 – 1:15", detail: "Signal-traces light up across geographies; the operation responds in concert." },
-      { label: "1:15 – 1:45", detail: "A single decision avoids a single incident. Calm replaces noise." },
-      { label: "1:45 – 2:00", detail: "Black card: 'This is what operational performance looks like.'" },
-    ],
-  },
-  {
     id: "intelligence", number: "06", title: "The intelligence layer",
     intent: "Proof of capability. Why Comply365 can deliver the category.",
-    start: 20, end: 30, energy: "peak", icon: Layers, accent: "violet",
+    start: 19.5, end: 30, energy: "peak", icon: Layers, accent: "violet",
     onStage: "Back on stage. Walk the DTOP loop using a recorded screen capture — no live demo risk. Bring two named operators on stage via taped interview.",
     onScreen: "Headline contrast: ~90% domain accuracy at L4–5 vs ~35% generic AI. Then the loop in motion: detect → trigger → orchestrate → prove.",
     beats: [
@@ -307,7 +308,7 @@ export default function SilosToSignalsKeynote() {
             <span className="bg-gradient-to-r from-primary via-violet-400 to-emerald-400 bg-clip-text text-transparent">signals.</span>
           </h1>
           <p className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl">
-            The keynote that turns 12 weeks of research into a category. Seven acts, one 2-minute film, one ask of the room.
+            Open with the film. Then seven acts and one ask of the room. Twelve weeks of research, named as a category.
           </p>
           <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-3">
             <StatPill value="40 min" label="Runtime" />
@@ -317,8 +318,14 @@ export default function SilosToSignalsKeynote() {
           </div>
           <div className="mt-8 flex flex-wrap gap-3 keynote-no-print">
             <a
-              href="#cold-open"
+              href="#film"
               className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground hover:bg-primary/90 transition-colors"
+            >
+              <Film className="h-3.5 w-3.5" /> Watch the film
+            </a>
+            <a
+              href="#cold-open"
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-foreground hover:bg-muted/40 transition-colors"
             >
               <FileText className="h-3.5 w-3.5" /> Read full script
             </a>
@@ -356,7 +363,7 @@ export default function SilosToSignalsKeynote() {
           </div>
           <div className="lg:col-span-6 lg:col-start-7 text-base text-muted-foreground leading-relaxed">
             <p>
-              The keynote earns the right to claim a new category by showing — not telling — that connected operations are now possible. Every act, every stat, and every frame of the film ladders to one sentence the room can quote tomorrow.
+              The film opens the room. Before a word is spoken from the stage, the audience sees what connected operations actually look like. Every act, every stat, and every frame that follows ladders back to one sentence the room can quote tomorrow.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
               {["~65% lost signals", "$25–35B exposure", "90% vs 35% accuracy", "Detect · Trigger · Orchestrate · Prove"].map((t) => (
