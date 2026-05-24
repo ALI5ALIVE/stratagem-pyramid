@@ -1,34 +1,39 @@
-## Goal
+## Problem
 
-Rework the Remotion keynote video at `/keynote/silos-to-signals` so the message centers on operational time, cost and outcomes rather than AI accuracy.
+VO audio is longer than scene length in two acts (30fps):
 
-## Changes
+| Act | Scene length | VO ends at | Overrun |
+|-----|-------------|-----------|---------|
+| 1 | 15.0s | 14.3s | ok |
+| 2 | 32.0s | **34.9s** | **+3.0s** |
+| 3 | 16.0s | 10.6s | ok |
+| 4 | 32.0s | 32.2s | +0.2s (borderline) |
+| 5 | 20.0s | **22.5s** | **+2.5s** |
+| 6 | 5.0s | 4.4s | ok |
 
-### 1. Act 1 — Opening slide (`remotion/src/scenes/Act1_Pain.tsx`)
-- Strengthen the red "signal" dot pulse so it reads clearly as a heartbeat: increase the base glow, widen the scale range (e.g. 0.7 → 1.4), and keep a steady on-beat rhythm. No layout change.
+Act 2 and Act 5 VO bleeds visibly into the next scene; Act 4 is on the edge.
 
-### 2. Act 2 — "The silo era" (`remotion/src/scenes/Act2_Challenge.tsx`)
-- Keep the first two stats (`~65%` signals never make it home, `$25–35B` exposure).
-- Replace the third stat (currently `~35%` generic AI accuracy) with an operational pain stat about reactive operations. New stat:
-  - Value: `5–7 days`
-  - Label: `average time to resolve a cross-silo operational signal — reacting to events, not controlling the operation`
-- Optionally also reframe the headline supporting copy to keep the architecture-vs-tooling beat, but no layout changes.
+## Fix
 
-### 3. Act 5 — "Operation finally in concert" (`remotion/src/scenes/Act5_Value.tsx`)
-- Remove the entire accuracy comparator block (counter 35→90, the two bars, "Domain accuracy at L4–5", "Operational intelligence vs generic AI").
-- Replace with a 3-up outcomes panel showing the benefits of the new operating model:
-  1. **Time** — `–70%` · time-to-resolve cross-silo signals
-  2. **Cost** — `–30%` · operational coordination cost
-  3. **Outcomes** — `+3x` · proactive interventions before incident
-- Keep the existing "Frontline / Flight deck / Control room / Rail platform" row above unchanged.
-- Use existing DTOP color tokens (detect blue / trigger amber / orchestrate violet / prove emerald) for the three metric cards.
+Extend the scene durations so each VO finishes with ≥1s tail before the next act starts. Only `remotion/src/MainVideo.tsx` changes — VO offsets stay at 30 frames (1s), VO files unchanged, music ducking windows recompute from the ACTS array automatically.
 
-### 4. Voiceover script (`remotion/scripts/generate-audio.mjs`)
-Update the `ACTS` array so the narration matches the new on-screen content:
-- **act2** — Replace the "generic A I … thirty-five percent" sentence with: `Today, a single cross-silo signal takes five to seven days to resolve, pulling people from every team — the operation is reacting to events, not controlling them.`
-- **act5** — Replace the accuracy sentence with: `Time-to-resolve drops by around seventy percent. Coordination cost falls by a third. And teams act on three times more signals before they become incidents. Not a faster silo. A different operation.`
-- Note for the user: audio MP3s under `remotion/public/audio/vo/` will need to be re-rendered via the existing `generate-audio.mjs` script (requires `ELEVENLABS_API_KEY`) for the spoken track to match the new visuals. The video visuals will update immediately; the old MP3s will play until regenerated.
+New per-scene frames @30fps:
 
-## Out of scope
-- No changes to Act 3, Act 4, Act 6, music bed, durations, or composition timing.
-- No changes outside the `remotion/` folder.
+- Act 1: 450 (unchanged)
+- Act 2: 960 → **1110** (+150f / +5s, gives ~2s tail after VO)
+- Act 3: 480 (unchanged)
+- Act 4: 960 → **1020** (+60f / +2s, restores ~2s tail)
+- Act 5: 600 → **720** (+120f / +4s, gives ~1.5s tail)
+- Act 6: 150 (unchanged)
+
+New total: 3780 frames (126s) vs current 3600 (120s).
+
+## Files
+
+- `remotion/src/MainVideo.tsx`
+  - Update the `ACTS` array `start`/`dur` values to the new offsets above.
+  - Update the matching `<Series.Sequence durationInFrames={…}>` props for Act 2, Act 4, Act 5.
+  - Update the score envelope keyframes (`[0, 60, 3540, 3600]` → `[0, 60, 3720, 3780]`) so the music tail still fades out at the very end.
+- `remotion/src/Root.tsx` — bump composition `durationInFrames` from 3600 to 3780.
+
+No scene component, VO script, or audio file changes. After patching, re-render with `node remotion/scripts/render-remotion.mjs` (no audio regeneration needed).

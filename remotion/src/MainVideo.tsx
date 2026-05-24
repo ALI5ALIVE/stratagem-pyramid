@@ -7,14 +7,14 @@ import { Act4_Insight } from "./scenes/Act4_Insight";
 import { Act5_Value } from "./scenes/Act5_Value";
 import { Act6_Resolve } from "./scenes/Act6_Resolve";
 
-// Act start frames (cumulative): 0, 450, 1410, 1890, 2850, 3450; total 3600
+// Act start frames (cumulative): 0, 450, 1560, 2040, 3060, 3780; total 3930
 const ACTS = [
-  { id: "act1", start: 0,    dur: 450, voOffset: 30 },
-  { id: "act2", start: 450,  dur: 960, voOffset: 30 },
-  { id: "act3", start: 1410, dur: 480, voOffset: 30 },
-  { id: "act4", start: 1890, dur: 960, voOffset: 30 },
-  { id: "act5", start: 2850, dur: 600, voOffset: 30 },
-  { id: "act6", start: 3450, dur: 150, voOffset: 15 },
+  { id: "act1", start: 0,    dur: 450,  voOffset: 30 },
+  { id: "act2", start: 450,  dur: 1110, voOffset: 30 },
+  { id: "act3", start: 1560, dur: 480,  voOffset: 30 },
+  { id: "act4", start: 2040, dur: 1020, voOffset: 30 },
+  { id: "act5", start: 3060, dur: 720,  voOffset: 30 },
+  { id: "act6", start: 3780, dur: 150,  voOffset: 15 },
 ];
 
 // VO speech windows for ducking (approximate, in frames @30fps)
@@ -28,7 +28,7 @@ const ScoreBed: React.FC = () => {
   // Fade in 0-60, fade out 3540-3600
   const envelope = interpolate(
     frame,
-    [0, 60, 3540, 3600],
+    [0, 60, 3870, 3930],
     [0, 1, 1, 0],
     { extrapolateRight: "clamp", extrapolateLeft: "clamp" }
   );
@@ -48,16 +48,16 @@ export const MainVideo: React.FC = () => {
         <Series.Sequence durationInFrames={450}>
           <Act1_Pain />
         </Series.Sequence>
-        <Series.Sequence durationInFrames={960}>
+        <Series.Sequence durationInFrames={1110}>
           <Act2_Challenge />
         </Series.Sequence>
         <Series.Sequence durationInFrames={480}>
           <Act3_Turn />
         </Series.Sequence>
-        <Series.Sequence durationInFrames={960}>
+        <Series.Sequence durationInFrames={1020}>
           <Act4_Insight />
         </Series.Sequence>
-        <Series.Sequence durationInFrames={600}>
+        <Series.Sequence durationInFrames={720}>
           <Act5_Value />
         </Series.Sequence>
         <Series.Sequence durationInFrames={150}>
