@@ -83,24 +83,7 @@ export default function PositioningPlaybook() {
         </div>
       </header>
 
-      <div className="mx-auto max-w-[1400px] px-6 py-12 lg:grid lg:grid-cols-[240px_1fr] lg:gap-12">
-        {/* Sticky nav */}
-        <aside className="hidden lg:block">
-          <nav className="sticky top-24 space-y-1">
-            <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">On this page</p>
-            {sections.map((s) => (
-              <a
-                key={s.id}
-                href={`#${s.id}`}
-                className="block rounded-md px-3 py-1.5 text-xs text-muted-foreground hover:bg-secondary hover:text-foreground transition"
-              >
-                <span className="text-primary/60 tabular-nums mr-2">{String(s.n).padStart(2, "0")}</span>
-                {s.title}
-              </a>
-            ))}
-          </nav>
-        </aside>
-
+      <div className="mx-auto max-w-[1400px] px-6 py-12">
         <main className="min-w-0 space-y-24">
           {/* HERO */}
           <section className="border-b border-border/40 pb-16">
