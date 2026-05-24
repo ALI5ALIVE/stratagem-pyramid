@@ -140,6 +140,25 @@ export const Act4_Insight: React.FC = () => {
           );
         })}
       </div>
+
+      <div
+        style={{
+          marginTop: 48,
+          textAlign: "center",
+          fontFamily: BODY,
+          color: COLORS.typeDim,
+          fontSize: 14,
+          lineHeight: 1.5,
+          maxWidth: 980,
+          marginLeft: "auto",
+          marginRight: "auto",
+          opacity:
+            interpolate(frame, [600, 660], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) *
+            interpolate(frame, [860, 900], [1, 0.6], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
+        }}
+      >
+        Recommendation accuracy on a defined operational decision set at L4–L5, benchmarked against a human-expert panel. Methodology published.
+      </div>
     </AbsoluteFill>
   );
 };

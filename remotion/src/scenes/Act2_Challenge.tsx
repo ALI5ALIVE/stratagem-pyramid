@@ -9,9 +9,24 @@ const SILOS = [
 ];
 
 const STATS = [
-  { value: "~65%", label: "of operational signals never make it home", at: 180 },
-  { value: "$25–35B", label: "annual industry exposure", at: 320 },
-  { value: "5–7 days", label: "average time to resolve a cross-silo signal — the operation reacts to events instead of controlling them", at: 460 },
+  {
+    value: "~40%",
+    label: "of operational reports without documented closure within 90 days",
+    caption: "IATA SMS 2023 · FSF 2023 · Comply365 baselines",
+    at: 180,
+  },
+  {
+    value: "$25–35B",
+    label: "addressable controllable-cost envelope, industry-wide",
+    caption: "Modelled bottom-up from per-operator baselines",
+    at: 320,
+  },
+  {
+    value: "2–4 wks",
+    label: "typical signal-to-decision time across operational silos",
+    caption: "Comply365 customer baselines (composite, anonymised)",
+    at: 460,
+  },
 ];
 
 export const Act2_Challenge: React.FC = () => {
@@ -127,6 +142,19 @@ export const Act2_Challenge: React.FC = () => {
               </div>
               <div style={{ fontFamily: BODY, color: COLORS.typeDim, fontSize: 18, maxWidth: 320, marginTop: 8 }}>
                 {s.label}
+              </div>
+              <div
+                style={{
+                  fontFamily: BODY,
+                  color: COLORS.typeDim,
+                  fontSize: 13,
+                  maxWidth: 320,
+                  marginTop: 10,
+                  opacity: 0.6,
+                  letterSpacing: 0.3,
+                }}
+              >
+                {s.caption}
               </div>
             </div>
           );

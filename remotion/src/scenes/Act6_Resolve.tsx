@@ -53,6 +53,18 @@ export const Act6_Resolve: React.FC = () => {
         >
           Comply<span style={{ color: COLORS.detect }}>365</span>
         </div>
+        <div
+          style={{
+            marginTop: 28,
+            fontFamily: BODY,
+            color: COLORS.typeDim,
+            fontSize: 13,
+            letterSpacing: 0.3,
+            opacity: markO * 0.7,
+          }}
+        >
+          Research base: 21 executive interviews across 5 countries and 3 industries.
+        </div>
       </div>
     </AbsoluteFill>
   );
