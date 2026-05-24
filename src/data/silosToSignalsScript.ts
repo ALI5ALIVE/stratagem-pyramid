@@ -16,31 +16,55 @@ export interface KeynoteEvidenceStat {
   source: string;
 }
 
+// Single source of truth for the locked interview count.
+// Update here before keynote day; all surfaces read from this constant.
+export const RESEARCH_INTERVIEW_N = 21;
+
 export const todayEvidence: KeynoteEvidenceStat[] = [
   {
-    value: "65K+",
-    label: "Operational signals per Tier-1 operator per year",
+    value: "50–100K",
+    label: "Reports, observations & operational flags per Tier-1 operator, per year (range)",
     source:
-      "IATA SMS Implementation Survey 2023; Flight Safety Foundation 2023 SMS Maturity Study; Comply365 customer baseline composite (anonymised across deployed carriers).",
+      "IATA SMS Implementation Survey 2023 (maturity data) scaled against Comply365 customer baselines. Range, not a point estimate — varies by reporting culture and fleet size.",
   },
   {
     value: "~40%",
-    label: "Orphaned — captured but never closed",
+    label: "Of operational reports without documented closure within 90 days",
     source:
-      "Flight Safety Foundation 2023 SMS Maturity Study; IATA SMS Implementation Survey 2023; corroborated against Comply365 customer baselines.",
+      "Flight Safety Foundation 2023 SMS Maturity Study; IATA SMS Implementation Survey 2023; corroborated against Comply365 customer baselines. \"Orphaned\" = no documented closure action recorded against the report within 90 days of filing.",
   },
   {
-    value: "3 weeks",
-    label: "Mean investigation cycle, signal → decision",
+    value: "~3x",
+    label: "Domain accuracy uplift on L4–L5 recommendations vs generic AI (~90% vs ~35%)",
     source:
-      "Comply365 customer baseline composite (anonymised); cross-checked against IATA Safety Report 2023 investigation-cycle benchmarks.",
+      "Recommendation accuracy on a representative operational decision set at severity L4–L5, scored against a human-expert reference panel. Benchmark methodology published in the keynote appendix.",
   },
   {
     value: "$25–35B",
-    label: "Annual industry exposure from disconnected operations",
+    label: "Addressable controllable-cost envelope, industry-wide",
     source:
-      "EUROCONTROL Standard Inputs v4.1; IATA Global Outlook for Air Transport 2024; Oliver Wyman MRO Survey 2024; WTW Airline Insurance Market Renewal Outlook Q4 2025 — composite of controllable costs across safety, maintenance, OTP, fuel variance, and premium escalation.",
+      "EUROCONTROL Standard Inputs v4.1; IATA Global Outlook for Air Transport 2024; Oliver Wyman MRO Survey 2024; WTW Airline Insurance Market Renewal Outlook Q4 2025 — composite of controllable costs across safety, maintenance, OTP, fuel variance, and premium escalation. This is the addressable cost envelope, not total industry P&L, and not Comply365's serviceable market. Built bottom-up from per-operator baselines applied across IATA's reporting carriers.",
   },
+];
+
+// Supporting beat — investigation cycle moved out of the headline cluster.
+export const investigationCycleBeat: KeynoteEvidenceStat = {
+  value: "2–4 weeks",
+  label: "Typical signal-to-decision time across Comply365 customer baselines",
+  source:
+    "Comply365 customer baseline composite, anonymised (sample size disclosed in keynote appendix); cross-checked against IATA Safety Report 2023 investigation-cycle benchmarks.",
+};
+
+// ─── What we are NOT claiming — appendix block ──────────────────────
+// Six explicit limits. Buys back trust faster than additional positive claims.
+
+export const notClaiming: string[] = [
+  "We are not claiming the $25–35B figure is our addressable market — it is the industry-wide controllable-cost envelope.",
+  "We are not claiming 90% accuracy on all AI tasks — only L4–L5 recommendation on a defined operational decision set, against a human-expert panel.",
+  "We are not claiming 100% signal capture — closure rate is the target, not capture rate.",
+  "We are not claiming customer baselines generalise without segmentation by fleet size, route mix, and reporting culture.",
+  "We are not claiming regulatory endorsement of DTOP as a category — it is our framing, derived from buyer language.",
+  "We are not claiming the founding-12 programme is a paid pilot — it is an unfunded partnership of time and candour.",
 ];
 
 // ─── Top challenges — bridge from problem to DTOP ───────────────────
