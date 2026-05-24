@@ -410,7 +410,12 @@ export default function SilosToSignalsKeynote() {
         </div>
       </section>
 
-      {acts.map((act) => (<ActSection key={act.id} act={act} />))}
+      {acts.map((act) => (
+        <div key={act.id}>
+          <ActSection act={act} />
+          {act.id === "silo-era" && <KeynoteFragmentationCost />}
+        </div>
+      ))}
 
       <section className="border-t border-border/60 bg-card/20">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
