@@ -9,17 +9,16 @@ const SCENES = [
   { label: "Rail platform", icon: "🚆" },
 ];
 
+const OUTCOMES = [
+  { kicker: "Time", value: "–70%", label: "time-to-resolve cross-silo signals", color: COLORS.detect, at: 140 },
+  { kicker: "Cost", value: "–30%", label: "operational coordination cost", color: COLORS.trigger, at: 220 },
+  { kicker: "Outcomes", value: "3×", label: "more proactive interventions before incident", color: COLORS.prove, at: 300 },
+];
+
 export const Act5_Value: React.FC = () => {
   const frame = useCurrentFrame();
   const headerO = interpolate(frame, [0, 30], [0, 1], { extrapolateRight: "clamp" });
   const outO = interpolate(frame, [555, 600], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-
-  // counter 35 -> 90
-  const counter = Math.round(interpolate(frame, [120, 380], [35, 90], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }));
-  const baselineO = interpolate(frame, [60, 100], [0, 1], { extrapolateRight: "clamp" });
-
-  // bar fill
-  const fill = interpolate(frame, [120, 380], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   return (
     <AbsoluteFill style={{ padding: "100px 140px", opacity: outO }}>
@@ -103,54 +102,73 @@ export const Act5_Value: React.FC = () => {
         })}
       </div>
 
-      {/* Accuracy comparator */}
-      <div style={{ opacity: baselineO, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }}>
-        <div>
-          <div style={{ fontFamily: BODY, color: COLORS.typeDim, fontSize: 16, letterSpacing: 3, textTransform: "uppercase" }}>
-            Domain accuracy at L4–5
-          </div>
-          <div style={{ display: "flex", alignItems: "baseline", gap: 24, marginTop: 16 }}>
-            <div style={{ fontFamily: DISPLAY, color: COLORS.prove, fontSize: 160, fontWeight: 700, letterSpacing: -6, lineHeight: 1 }}>
-              {counter}<span style={{ fontSize: 70 }}>%</span>
-            </div>
-            <div style={{ fontFamily: DISPLAY, color: COLORS.typeFaint, fontSize: 60, fontWeight: 400, letterSpacing: -2 }}>
-              vs ~35%
-            </div>
-          </div>
-          <div style={{ fontFamily: BODY, color: COLORS.typeDim, fontSize: 18, marginTop: 8 }}>
-            Operational intelligence vs generic AI.
-          </div>
-        </div>
-        <div>
-          {/* bar */}
-          <div style={{ height: 14, background: "rgba(255,255,255,0.06)", borderRadius: 999, position: "relative", overflow: "hidden" }}>
+      {/* Outcomes panel — Time / Cost / Outcomes */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 36 }}>
+        {OUTCOMES.map((o) => {
+          const op = interpolate(frame, [o.at, o.at + 40], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          const y = interpolate(frame, [o.at, o.at + 40], [24, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          return (
             <div
+              key={o.kicker}
               style={{
-                position: "absolute",
-                left: 0,
-                top: 0,
-                bottom: 0,
-                width: `${35 * baselineO}%`,
-                background: COLORS.typeFaint,
-                borderRadius: 999,
+                opacity: op,
+                transform: `translateY(${y}px)`,
+                borderTop: `2px solid ${o.color}`,
+                paddingTop: 22,
               }}
-            />
-          </div>
-          <div style={{ height: 14, background: "rgba(255,255,255,0.06)", borderRadius: 999, marginTop: 24, position: "relative", overflow: "hidden" }}>
-            <div
-              style={{
-                position: "absolute",
-                left: 0,
-                top: 0,
-                bottom: 0,
-                width: `${90 * fill}%`,
-                background: `linear-gradient(90deg, ${COLORS.detect}, ${COLORS.prove})`,
-                borderRadius: 999,
-                boxShadow: `0 0 24px ${COLORS.prove}`,
-              }}
-            />
-          </div>
-        </div>
+            >
+              <div
+                style={{
+                  fontFamily: BODY,
+                  color: o.color,
+                  fontSize: 14,
+                  letterSpacing: 4,
+                  textTransform: "uppercase",
+                }}
+              >
+                {o.kicker}
+              </div>
+              <div
+                style={{
+                  fontFamily: DISPLAY,
+                  color: COLORS.type,
+                  fontSize: 130,
+                  fontWeight: 700,
+                  letterSpacing: -5,
+                  lineHeight: 1,
+                  marginTop: 10,
+                }}
+              >
+                {o.value}
+              </div>
+              <div
+                style={{
+                  fontFamily: BODY,
+                  color: COLORS.typeDim,
+                  fontSize: 18,
+                  marginTop: 12,
+                  lineHeight: 1.4,
+                  maxWidth: 320,
+                }}
+              >
+                {o.label}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div
+        style={{
+          fontFamily: BODY,
+          color: COLORS.typeDim,
+          fontSize: 16,
+          letterSpacing: 3,
+          textTransform: "uppercase",
+          marginTop: 40,
+          opacity: interpolate(frame, [380, 430], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
+        }}
+      >
+        Not a faster silo. A different operation.
       </div>
     </AbsoluteFill>
   );
