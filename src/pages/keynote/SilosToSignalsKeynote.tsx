@@ -5,6 +5,8 @@ import {
   Film, Download, FileText, BookOpen, Activity, Clock,
 } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
+import { silosToSignalsScript } from "@/data/silosToSignalsScript";
+import { ScriptBlock } from "@/components/keynote/ScriptBlock";
 
 type EnergyLevel = "build" | "high" | "peak" | "cinematic" | "resolve";
 
@@ -178,6 +180,7 @@ function StatPill({ value, label }: { value: string; label: string }) {
 
 function ActSection({ act }: { act: Act }) {
   const Icon = act.icon;
+  const script = silosToSignalsScript.find((s) => s.actId === act.id);
   return (
     <section id={act.id} className="scroll-mt-24 border-t border-border/60">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16 grid lg:grid-cols-12 gap-10">
@@ -217,6 +220,7 @@ function ActSection({ act }: { act: Act }) {
               ))}
             </div>
           </div>
+          {script && <ScriptBlock script={script} accent={act.accent} />}
           {act.id === "film" && (
             <div className="rounded-xl border border-border bg-gradient-to-br from-blue-500/10 via-card to-violet-500/10 p-4 space-y-4">
               <div className="aspect-video w-full overflow-hidden rounded-lg border border-border bg-black">
