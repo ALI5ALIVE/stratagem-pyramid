@@ -262,7 +262,7 @@ function ActSection({ act }: { act: Act }) {
             <div className="rounded-xl border border-border bg-gradient-to-br from-blue-500/10 via-card to-violet-500/10 p-4 space-y-4">
               <div className="aspect-video w-full overflow-hidden rounded-lg border border-border bg-black">
                 <video
-                  src="/keynote/silos-to-signals.mp4?v=3"
+                  src="/keynote/silos-to-signals.mp4?v=4"
                   controls
                   playsInline
                   preload="metadata"
@@ -277,7 +277,7 @@ function ActSection({ act }: { act: Act }) {
                   <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground/70 mt-2">Voiceover · Brian  ·  Score · Hybrid orchestral</div>
                 </div>
                 <a
-                  href="/keynote/silos-to-signals.mp4?v=3"
+                  href="/keynote/silos-to-signals.mp4?v=4"
                   download
                   className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-xs uppercase tracking-[0.18em] text-foreground hover:bg-muted/40"
                 >
@@ -296,7 +296,7 @@ const downloads = [
   { icon: FileText, title: "Speaker script (PDF)", note: "40-minute on-stage script with breath beats" },
   { icon: BookOpen, title: "Keynote deck", note: "Slide companion · DTOP-themed, low text" },
   { icon: Film, title: "Hero film · From Silos to Signals", note: "2-minute master · 16:9 · captioned" },
-  { icon: Sparkles, title: "Stat sheet", note: "Sourced figures · 65% · $25–35B · 90 vs 35" },
+  { icon: Sparkles, title: "Stat sheet", note: "Sourced figures · ~40% (90-day closure) · $25–35B envelope · 90 vs 35" },
 ];
 
 export default function SilosToSignalsKeynote() {
