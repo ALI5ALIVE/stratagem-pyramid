@@ -5,6 +5,85 @@ export interface KeynoteScriptAct {
   cue: string;
 }
 
+// ─── Where customers are today ───────────────────────────────────────
+// Sourced evidence threaded into the Silo Era act. Numbers re-use the
+// citation stack already approved across OpsSlide2CostOfFragmentation
+// and the Line-of-Sight model.
+
+export interface KeynoteEvidenceStat {
+  value: string;
+  label: string;
+  source: string;
+}
+
+export const todayEvidence: KeynoteEvidenceStat[] = [
+  {
+    value: "65K+",
+    label: "Operational signals per Tier-1 operator per year",
+    source:
+      "IATA SMS Implementation Survey 2023; Flight Safety Foundation 2023 SMS Maturity Study; Comply365 customer baseline composite (anonymised across deployed carriers).",
+  },
+  {
+    value: "~40%",
+    label: "Orphaned — captured but never closed",
+    source:
+      "Flight Safety Foundation 2023 SMS Maturity Study; IATA SMS Implementation Survey 2023; corroborated against Comply365 customer baselines.",
+  },
+  {
+    value: "3 weeks",
+    label: "Mean investigation cycle, signal → decision",
+    source:
+      "Comply365 customer baseline composite (anonymised); cross-checked against IATA Safety Report 2023 investigation-cycle benchmarks.",
+  },
+  {
+    value: "$25–35B",
+    label: "Annual industry exposure from disconnected operations",
+    source:
+      "EUROCONTROL Standard Inputs v4.1; IATA Global Outlook for Air Transport 2024; Oliver Wyman MRO Survey 2024; WTW Airline Insurance Market Renewal Outlook Q4 2025 — composite of controllable costs across safety, maintenance, OTP, fuel variance, and premium escalation.",
+  },
+];
+
+// ─── Top challenges — bridge from problem to DTOP ───────────────────
+
+export interface KeynoteChallenge {
+  bucket: "D" | "T" | "O" | "P";
+  label: string;
+  detail: string;
+}
+
+export const topChallenges: KeynoteChallenge[] = [
+  {
+    bucket: "D",
+    label: "Signals captured but never seen",
+    detail: "Reports, observations and near-misses sit in safety, tech and crew systems that don't talk to each other.",
+  },
+  {
+    bucket: "D",
+    label: "Different versions of the truth",
+    detail: "Crew, engineering and ops each working from a partial picture of the same Tuesday morning.",
+  },
+  {
+    bucket: "T",
+    label: "Investigations measured in weeks",
+    detail: "By the time a signal becomes a decision, the operation has moved on — and so has the risk.",
+  },
+  {
+    bucket: "O",
+    label: "Work routed by inbox, not by role",
+    detail: "Tasks land in shared mailboxes instead of the right hand, on the right device, at the right moment.",
+  },
+  {
+    bucket: "P",
+    label: "Audit evidence reconstructed after the fact",
+    detail: "Closure proof is assembled retrospectively, not generated as a by-product of doing the work.",
+  },
+  {
+    bucket: "T",
+    label: "Generic AI too unreliable for L4–5 decisions",
+    detail: "~35% domain accuracy on operational calls — useful for summaries, unsafe for dispatch.",
+  },
+];
+
 export const silosToSignalsScript: KeynoteScriptAct[] = [
   {
     actId: "film",
