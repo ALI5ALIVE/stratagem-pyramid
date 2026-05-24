@@ -5,8 +5,9 @@ import {
   Film, Download, FileText, BookOpen, Activity, Clock,
 } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
-import { silosToSignalsScript } from "@/data/silosToSignalsScript";
+import { silosToSignalsScript, topChallenges } from "@/data/silosToSignalsScript";
 import { ScriptBlock } from "@/components/keynote/ScriptBlock";
+import KeynoteFragmentationCost from "@/components/keynote/KeynoteFragmentationCost";
 
 type EnergyLevel = "build" | "high" | "peak" | "cinematic" | "resolve";
 
@@ -52,9 +53,10 @@ const acts: Act[] = [
     onStage: "Step into the audience. Tell the composite 'Tuesday morning' story — the same safety signal seen by four systems, acted on by none.",
     onScreen: "Stat wall builds beat by beat. Org-chart fractures into disconnected boxes; signal-traces die at the boundaries.",
     beats: [
-      { label: "~65%", detail: "Operational signals that never make it home." },
-      { label: "$25–35B", detail: "Annual industry exposure from disconnected operations." },
-      { label: "~35%", detail: "Accuracy of generic AI in operational decisions." },
+      { label: "65K+/yr", detail: "Operational signals per Tier-1 operator — IATA SMS Implementation Survey 2023." },
+      { label: "~40%", detail: "Orphaned signals — captured, logged, never closed (Flight Safety Foundation 2023)." },
+      { label: "3 weeks", detail: "Mean signal-to-decision time — Comply365 customer baseline composite." },
+      { label: "$25–35B", detail: "Annual industry exposure stacked from EUROCONTROL, IATA, Oliver Wyman, WTW." },
     ],
   },
   {
@@ -64,9 +66,9 @@ const acts: Act[] = [
     onStage: "Anchor the room in the Category Research Programme. Speak as a witness to the data, not the author of the conclusion.",
     onScreen: "Three findings revealed sequentially with the methodology badge held in the corner for credibility.",
     beats: [
-      { label: "Finding 01", detail: "Buyer language exists for the operating gap — and it is not 'compliance'." },
-      { label: "Finding 02", detail: "Willingness-to-pay clusters around connected operations, not point tools." },
-      { label: "Finding 03", detail: "18–24 executive interviews converged on a shared vocabulary." },
+      { label: "Finding 01", detail: "\"I can't see the operation I'm responsible for.\" Buyer language is line-of-sight, not compliance. (n=300 + interviews → H1)" },
+      { label: "Finding 02", detail: "\"I'm done buying islands.\" WTP clusters on connected operations; budget shifting off point tools. (Conjoint block 4 → H3)" },
+      { label: "Finding 03", detail: "Same four verbs — Detect · Trigger · Orchestrate · Prove — across 3 industries, 5 countries. (Exec interviews → H5)" },
       { label: "Method", detail: "n=300 survey · 18–24 exec interviews · secondary synthesis. Modelled, not measured." },
     ],
   },
