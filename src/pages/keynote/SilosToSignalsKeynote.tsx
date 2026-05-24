@@ -5,8 +5,9 @@ import {
   Film, Download, FileText, BookOpen, Activity, Clock,
 } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
-import { silosToSignalsScript } from "@/data/silosToSignalsScript";
+import { silosToSignalsScript, topChallenges } from "@/data/silosToSignalsScript";
 import { ScriptBlock } from "@/components/keynote/ScriptBlock";
+import KeynoteFragmentationCost from "@/components/keynote/KeynoteFragmentationCost";
 
 type EnergyLevel = "build" | "high" | "peak" | "cinematic" | "resolve";
 
@@ -52,9 +53,10 @@ const acts: Act[] = [
     onStage: "Step into the audience. Tell the composite 'Tuesday morning' story — the same safety signal seen by four systems, acted on by none.",
     onScreen: "Stat wall builds beat by beat. Org-chart fractures into disconnected boxes; signal-traces die at the boundaries.",
     beats: [
-      { label: "~65%", detail: "Operational signals that never make it home." },
-      { label: "$25–35B", detail: "Annual industry exposure from disconnected operations." },
-      { label: "~35%", detail: "Accuracy of generic AI in operational decisions." },
+      { label: "65K+/yr", detail: "Operational signals per Tier-1 operator — IATA SMS Implementation Survey 2023." },
+      { label: "~40%", detail: "Orphaned signals — captured, logged, never closed (Flight Safety Foundation 2023)." },
+      { label: "3 weeks", detail: "Mean signal-to-decision time — Comply365 customer baseline composite." },
+      { label: "$25–35B", detail: "Annual industry exposure stacked from EUROCONTROL, IATA, Oliver Wyman, WTW." },
     ],
   },
   {
@@ -64,9 +66,9 @@ const acts: Act[] = [
     onStage: "Anchor the room in the Category Research Programme. Speak as a witness to the data, not the author of the conclusion.",
     onScreen: "Three findings revealed sequentially with the methodology badge held in the corner for credibility.",
     beats: [
-      { label: "Finding 01", detail: "Buyer language exists for the operating gap — and it is not 'compliance'." },
-      { label: "Finding 02", detail: "Willingness-to-pay clusters around connected operations, not point tools." },
-      { label: "Finding 03", detail: "18–24 executive interviews converged on a shared vocabulary." },
+      { label: "Finding 01", detail: "\"I can't see the operation I'm responsible for.\" Buyer language is line-of-sight, not compliance. (n=300 + interviews → H1)" },
+      { label: "Finding 02", detail: "\"I'm done buying islands.\" WTP clusters on connected operations; budget shifting off point tools. (Conjoint block 4 → H3)" },
+      { label: "Finding 03", detail: "Same four verbs — Detect · Trigger · Orchestrate · Prove — across 3 industries, 5 countries. (Exec interviews → H5)" },
       { label: "Method", detail: "n=300 survey · 18–24 exec interviews · secondary synthesis. Modelled, not measured." },
     ],
   },
@@ -179,6 +181,39 @@ function StatPill({ value, label }: { value: string; label: string }) {
   );
 }
 
+const dtopBadge: Record<"D" | "T" | "O" | "P", { label: string; cls: string }> = {
+  D: { label: "Detect", cls: "border-blue-500/40 text-blue-400 bg-blue-500/10" },
+  T: { label: "Trigger", cls: "border-amber-500/40 text-amber-400 bg-amber-500/10" },
+  O: { label: "Orchestrate", cls: "border-violet-500/40 text-violet-400 bg-violet-500/10" },
+  P: { label: "Prove", cls: "border-emerald-500/40 text-emerald-400 bg-emerald-500/10" },
+};
+
+function TopChallengesGrid() {
+  return (
+    <div className="rounded-xl border border-amber-500/20 bg-amber-500/[0.03] p-5">
+      <div className="text-[10px] uppercase tracking-[0.22em] text-amber-400 mb-4">
+        Top challenges customers describe — and the DTOP step that closes each one
+      </div>
+      <div className="grid sm:grid-cols-2 gap-3">
+        {topChallenges.map((c) => {
+          const badge = dtopBadge[c.bucket];
+          return (
+            <div key={c.label} className="rounded-lg border border-border bg-card p-3">
+              <div className="flex items-center justify-between gap-2 mb-1.5">
+                <h4 className="text-xs font-semibold text-foreground">{c.label}</h4>
+                <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.18em] ${badge.cls}`}>
+                  {badge.label}
+                </span>
+              </div>
+              <p className="text-[11px] text-muted-foreground leading-relaxed">{c.detail}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function ActSection({ act }: { act: Act }) {
   const Icon = act.icon;
   const script = silosToSignalsScript.find((s) => s.actId === act.id);
@@ -222,6 +257,7 @@ function ActSection({ act }: { act: Act }) {
             </div>
           </div>
           {script && <ScriptBlock script={script} accent={act.accent} />}
+          {act.id === "silo-era" && <TopChallengesGrid />}
           {act.id === "film" && (
             <div className="rounded-xl border border-border bg-gradient-to-br from-blue-500/10 via-card to-violet-500/10 p-4 space-y-4">
               <div className="aspect-video w-full overflow-hidden rounded-lg border border-border bg-black">
@@ -374,7 +410,12 @@ export default function SilosToSignalsKeynote() {
         </div>
       </section>
 
-      {acts.map((act) => (<ActSection key={act.id} act={act} />))}
+      {acts.map((act) => (
+        <div key={act.id}>
+          <ActSection act={act} />
+          {act.id === "silo-era" && <KeynoteFragmentationCost />}
+        </div>
+      ))}
 
       <section className="border-t border-border/60 bg-card/20">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
