@@ -2,6 +2,7 @@ import {
   FlaskConical,
   BookOpen, Package, Compass,
   Newspaper, Sparkles, CalendarDays, FileText, Mic,
+  FileBadge,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -76,6 +77,13 @@ export const workstreams: MarketWorkstream[] = [
         purpose: "Three-hour executive whiteboard — outcome-led conversation that tests the category narrative with real operators.",
         status: "Live",
         icon: Compass,
+      },
+      {
+        title: "AI Naming & Architecture Brief",
+        href: "/docs/Comply365_AI_Naming_Brief_v1.pdf",
+        purpose: "Board-ready brief: three-tier naming convention, Intelligence Layer persona shortlist, and JTBD agents mapped to DTOP stages.",
+        status: "Live",
+        icon: FileBadge,
       },
     ],
   },
