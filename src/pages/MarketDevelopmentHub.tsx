@@ -13,9 +13,14 @@ function SectionHeader({ title, subtitle }: { title: string; subtitle: string })
 }
 
 function AssetCard({ asset }: { asset: MarketAsset }) {
+  const isExternal = /^https?:\/\//.test(asset.href) || asset.href.startsWith("/docs/") || asset.href.endsWith(".pdf");
+  const Wrapper: React.ElementType = isExternal ? "a" : Link;
+  const wrapperProps = isExternal
+    ? { href: asset.href, target: "_blank", rel: "noopener noreferrer" }
+    : { to: asset.href };
   return (
-    <Link
-      to={asset.href}
+    <Wrapper
+      {...wrapperProps}
       className="group relative flex flex-col rounded-xl border border-border bg-card p-5 transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5"
     >
       <div className="absolute inset-x-0 top-0 h-[2px] rounded-t-xl bg-gradient-to-r from-primary to-comply-teal opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -35,9 +40,9 @@ function AssetCard({ asset }: { asset: MarketAsset }) {
       <p className="text-xs text-muted-foreground leading-relaxed flex-1">{asset.purpose}</p>
 
       <div className="mt-4 flex items-center text-xs font-medium text-primary opacity-0 transition-all duration-300 group-hover:opacity-100 translate-x-0 group-hover:translate-x-1">
-        Open <ArrowRight className="ml-1 h-3 w-3" />
+        {isExternal ? "Download" : "Open"} <ArrowRight className="ml-1 h-3 w-3" />
       </div>
-    </Link>
+    </Wrapper>
   );
 }
 
