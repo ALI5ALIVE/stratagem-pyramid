@@ -5,6 +5,7 @@ import {
   FileBadge,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import namingBriefPdf from "@/assets/docs/Comply365_AI_Naming_Brief_v1.pdf?url";
 
 export type AssetStatus = "Live" | "Draft" | "In Research";
 
@@ -80,7 +81,7 @@ export const workstreams: MarketWorkstream[] = [
       },
       {
         title: "AI Naming & Architecture Brief",
-        href: "/docs/Comply365_AI_Naming_Brief_v1.pdf",
+        href: namingBriefPdf,
         purpose: "Board-ready brief: three-tier naming convention, Intelligence Layer persona shortlist, and JTBD agents mapped to DTOP stages.",
         status: "Live",
         icon: FileBadge,
