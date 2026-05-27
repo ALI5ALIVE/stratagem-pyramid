@@ -39,6 +39,7 @@ import SalesEnablement from "./pages/SalesEnablement";
 import StrategyVisionSession from "./pages/StrategyVisionSession";
 import CategoryResearchProgramme from "./pages/CategoryResearchProgramme";
 import MarketDevelopmentHub from "./pages/MarketDevelopmentHub";
+import AiNamingBriefViewer from "./pages/AiNamingBriefViewer";
 import SilosToSignalsKeynote from "./pages/keynote/SilosToSignalsKeynote";
 import RoadmapDeck from "./pages/RoadmapDeck";
 import AuthPage from "./pages/Auth";
@@ -139,6 +140,7 @@ const App = () => (
             <Route path="/events/from-signals-to-control" element={<SignalsEvent />} />
             <Route path="/events/from-signals-to-control/brief" element={<SignalsEventBrief />} />
             <Route path="/keynote/silos-to-signals" element={<SilosToSignalsKeynote />} />
+            <Route path="/ai-naming-brief" element={<AiNamingBriefViewer />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
