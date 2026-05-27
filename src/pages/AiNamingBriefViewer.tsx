@@ -168,11 +168,6 @@ export default function AiNamingBriefViewer() {
           <h1 className="mt-5 font-display text-5xl md:text-6xl font-bold tracking-tight">
             Naming the <span className="text-primary">Intelligence Layer</span> & Agent Family
           </h1>
-          <p className="mt-4 max-w-3xl text-base text-muted-foreground leading-relaxed">
-            Comply365 — AI Brand & Naming Brief. Forwardable to Kathrina, Chris, Neil. A board-ready recommendation
-            on retiring the legacy Co-prefix, standardising on Intelligence Layer, and shipping a three-tier naming
-            architecture with a JTBD agent family.
-          </p>
         </div>
 
         {/* 01 — Executive Summary */}
