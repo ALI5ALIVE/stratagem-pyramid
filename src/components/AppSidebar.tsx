@@ -1,12 +1,14 @@
 import {
   Presentation, Brain,
   Rocket, BookOpen, Home, Users, ScrollText, Workflow, Sparkles, Zap, Smartphone, Layers, Radio,
-  LogIn, LogOut, GraduationCap, Mic
+  LogIn, LogOut, GraduationCap, Mic, Activity
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Sidebar,
   SidebarContent,
@@ -94,6 +96,13 @@ function NavGroup({ label, items }: { label: string; items: NavItem[] }) {
 export function AppSidebar() {
   const { open } = useSidebar();
   const { user, profile, signOut } = useAuth();
+  const [isOwner, setIsOwner] = useState(false);
+
+  useEffect(() => {
+    if (!user) { setIsOwner(false); return; }
+    supabase.from("user_roles").select("role").eq("user_id", user.id).eq("role", "owner")
+      .then(({ data }) => setIsOwner((data ?? []).length > 0));
+  }, [user]);
 
   return (
     <Sidebar collapsible="icon" className="border-r-0">
@@ -129,6 +138,15 @@ export function AppSidebar() {
         <NavGroup label="Capabilities" items={capabilityItems} />
         <SidebarSeparator />
         <NavGroup label="Additional Resources" items={additionalResourceItems} />
+        {isOwner && (
+          <>
+            <SidebarSeparator />
+            <NavGroup label="Admin" items={[
+              { title: "Sales Rep Activity", url: "/admin/activity", icon: Activity },
+              { title: "Academy Admin", url: "/academy/admin", icon: GraduationCap },
+            ]} />
+          </>
+        )}
 
         <SidebarSeparator />
         <SidebarGroup>
