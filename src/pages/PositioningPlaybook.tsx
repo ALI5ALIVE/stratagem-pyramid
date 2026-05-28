@@ -91,7 +91,7 @@ export default function PositioningPlaybook() {
       <div className="mx-auto max-w-[1400px] px-6 py-12">
         <main data-pdf-root className="min-w-0 space-y-24">
           {/* HERO */}
-          <section data-pdf-section className="border-b border-border/40 pb-16">
+          <section data-pdf-section data-pdf-title="Cover · From event to control" className="border-b border-border/40 pb-16">
             <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.25em] text-primary">Positioning & Messaging Playbook</p>
             <h1 className="font-display text-5xl lg:text-6xl font-semibold tracking-tight text-foreground leading-[1.05]">
               From event to control.<br />
@@ -107,7 +107,7 @@ export default function PositioningPlaybook() {
           </section>
 
           {/* 1 USE */}
-          <section id="use" data-pdf-section>
+          <section id="use" data-pdf-section data-pdf-title="01 · How to use this playbook">
             <SectionHero n={1} title="How to use this playbook" kicker="Start here">
               This is an additive, canonical reference. Existing playbooks remain the source for deep-dive product, persona and ROI material — this asset gives the GTM org a single place for the story, the language, and the field kit.
             </SectionHero>
@@ -131,7 +131,7 @@ export default function PositioningPlaybook() {
           </section>
 
           {/* 2 CATEGORY */}
-          <section id="category" data-pdf-section>
+          <section id="category" data-pdf-section data-pdf-title="02 · Category & POV">
             <SectionHero n={2} title="Category & POV" kicker="What we stand for">
               We are not selling a tool. We are creating — and naming — a category.
             </SectionHero>
@@ -163,7 +163,7 @@ export default function PositioningPlaybook() {
           </section>
 
           {/* 3 NARRATIVE */}
-          <section id="narrative" data-pdf-section>
+          <section id="narrative" data-pdf-section data-pdf-title="03 · Master narrative">
             <SectionHero n={3} title="Master narrative" kicker="The story" />
             <div className="grid gap-6 md:grid-cols-2">
               <div className="rounded-xl border border-destructive/30 bg-destructive/5 p-6">
@@ -200,7 +200,7 @@ export default function PositioningPlaybook() {
           </section>
 
           {/* 4 POSITIONING */}
-          <section id="positioning" data-pdf-section>
+          <section id="positioning" data-pdf-section data-pdf-title="04 · Positioning architecture">
             <SectionHero n={4} title="Positioning architecture" kicker="The statement" />
             <div className="rounded-xl border border-border/50 bg-card/40 p-8 space-y-4 font-display text-lg leading-relaxed">
               {[
@@ -220,7 +220,7 @@ export default function PositioningPlaybook() {
           </section>
 
           {/* 5 PILLARS × PERSONAS */}
-          <section id="pillars" data-pdf-section>
+          <section id="pillars" data-pdf-section data-pdf-title="05 · Pillars × Personas">
             <SectionHero n={5} title="Messaging pillars × personas" kicker="Pick the cell">
               Four pillars by five personas. Every cell is a one-liner you can drop into an email, slide or call.
             </SectionHero>
@@ -267,7 +267,7 @@ export default function PositioningPlaybook() {
           </section>
 
           {/* 6 PRODUCT */}
-          <section id="product" data-pdf-section>
+          <section id="product" data-pdf-section data-pdf-title="06 · Platform & product story">
             <SectionHero n={6} title="Platform & product story" kicker="What we sell" />
             <div className="space-y-4">
               {productStory.map((p) => (
@@ -289,7 +289,7 @@ export default function PositioningPlaybook() {
           </section>
 
           {/* 7 DTOP */}
-          <section id="dtop" data-pdf-section>
+          <section id="dtop" data-pdf-section data-pdf-title="07 · DTOP operating model">
             <SectionHero n={7} title="The DTOP operating model" kicker="The loop">
               One operating model the whole business can run on. Use this frame whenever you need to show the closed loop from event to control.
             </SectionHero>
@@ -307,7 +307,7 @@ export default function PositioningPlaybook() {
           </section>
 
           {/* 8 INTELLIGENCE */}
-          <section id="intelligence" data-pdf-section>
+          <section id="intelligence" data-pdf-section data-pdf-title="08 · Intelligence Layer">
             <SectionHero n={8} title="Intelligence Layer positioning" kicker="The moat" />
             <div className="rounded-xl border border-primary/40 bg-gradient-to-br from-primary/10 to-transparent p-8 mb-6">
               <p className="text-[10px] font-semibold uppercase tracking-wider text-primary mb-3">Headline</p>
@@ -338,7 +338,7 @@ export default function PositioningPlaybook() {
           </section>
 
           {/* 9 COMPETITIVE */}
-          <section id="competitive" data-pdf-section>
+          <section id="competitive" data-pdf-section data-pdf-title="09 · Competitive frame">
             <SectionHero n={9} title="Competitive frame" kicker="Win themes" />
             <div className="space-y-4">
               {competitiveMatrix.map((c) => (
@@ -365,7 +365,7 @@ export default function PositioningPlaybook() {
           </section>
 
           {/* 10 OBJECTIONS */}
-          <section id="objections" data-pdf-section>
+          <section id="objections" data-pdf-section data-pdf-title="10 · Objections">
             <SectionHero n={10} title="Top 12 objections" kicker="Reframe → proof → close" />
             <div className="grid gap-4 md:grid-cols-2">
               {objections.map((o, i) => (
@@ -386,7 +386,7 @@ export default function PositioningPlaybook() {
           </section>
 
           {/* 11 SALES KIT */}
-          <section id="saleskit" data-pdf-section>
+          <section id="saleskit" data-pdf-section data-pdf-title="11 · Sales kit">
             <SectionHero n={11} title="Sales kit" kicker="Field-ready" />
 
             <h3 className="font-display text-lg font-semibold text-foreground mb-4">Who to target</h3>
@@ -456,7 +456,7 @@ export default function PositioningPlaybook() {
           </section>
 
           {/* 12 BRAND */}
-          <section id="brand" data-pdf-section>
+          <section id="brand" data-pdf-section data-pdf-title="12 · Brand & terminology">
             <SectionHero n={12} title="Brand & terminology rules" kicker="How we talk" />
             <div className="grid gap-4 md:grid-cols-2 mb-8">
               <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-6">
@@ -511,7 +511,7 @@ export default function PositioningPlaybook() {
           </section>
 
           {/* APPENDIX */}
-          <section id="appendix" data-pdf-section>
+          <section id="appendix" data-pdf-section data-pdf-title="13 · Appendix">
             <SectionHero n={13} title="Appendix" kicker="Where this came from">
               This playbook consolidates the strategic story. Use the deep-dive playbooks below for product, persona, technical and ROI material.
             </SectionHero>
