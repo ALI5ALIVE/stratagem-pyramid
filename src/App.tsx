@@ -66,6 +66,8 @@ import AdminDashboard from "./pages/academy/AdminDashboard";
 const TechnicalDeepDiveV4 = lazy(() => import("./pages/TechnicalDeepDiveV4"));
 const PracticeCenter = lazy(() => import("./pages/PracticeCenter"));
 const AdminKnowledgeBase = lazy(() => import("./pages/AdminKnowledgeBase"));
+const SalesRepActivity = lazy(() => import("./pages/admin/SalesRepActivity"));
+const SalesRepActivityDetail = lazy(() => import("./pages/admin/SalesRepActivityDetail"));
 
 const queryClient = new QueryClient();
 
@@ -114,6 +116,8 @@ const App = () => (
             <Route path="/sales-enablement" element={<SalesEnablement />} />
             <Route path="/practice-center" element={<RequireAuth><Suspense fallback={<PageLoader />}><PracticeCenter /></Suspense></RequireAuth>} />
             <Route path="/admin/knowledge-base" element={<RequireAuth><Suspense fallback={<PageLoader />}><AdminKnowledgeBase /></Suspense></RequireAuth>} />
+            <Route path="/admin/activity" element={<RequireAuth><Suspense fallback={<PageLoader />}><SalesRepActivity /></Suspense></RequireAuth>} />
+            <Route path="/admin/activity/:userId" element={<RequireAuth><Suspense fallback={<PageLoader />}><SalesRepActivityDetail /></Suspense></RequireAuth>} />
             <Route path="/roadmap" element={<RoadmapDeck />} />
             <Route path="/review" element={<ReviewDashboard />} />
             <Route path="/customer-overview" element={<CustomerOverview />} />
