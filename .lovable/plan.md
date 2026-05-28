@@ -1,49 +1,76 @@
 ## Goal
 
-Add a "Download PDF" button to `/positioning-playbook` that produces a pixel-perfect mirror of the rendered page — exact same fonts, colors, dark theme, gradients, cards, tabs and layout the user sees on screen.
+Upgrade the Positioning Playbook PDF from raw bleed-to-edge page captures into a properly formatted, branded document with a cover page, page margins, repeating header/footer, and page numbers — while keeping the dark brand look (Space Grotesk, primary blue, dark background) so it still mirrors the live page visually.
+
+## Current problem
+
+`PositioningPlaybookPDFButton.tsx` captures `<main>` and tiles it edge-to-edge across 1920×1080 landscape pages. Result: no margins, no header band, no footer, no page numbers, no cover — looks like raw screenshots, not a document.
 
 ## Approach
 
-The Positioning Playbook is a single long scrollable page (~13 sections, all rendered at once in `src/pages/PositioningPlaybook.tsx`). Because every section is already in the DOM, we can capture the live page itself instead of re-rendering slides in a hidden host (the pattern used for fixed-frame decks like `DeckPDFExportButton`).
+Keep the live-DOM capture (preserves pixel-perfect fidelity) but composite each page inside a branded frame painted directly onto the PDF page. No new template to maintain — just a frame layer drawn around the captured slice.
 
-### New component: `src/components/PositioningPlaybookPDFButton.tsx`
+### Page chrome (drawn on every content page)
 
-- Button styled to match the existing top-bar chips (small, ghost/outline, with Download icon + spinner during export).
-- On click:
-  1. Toast "Preparing PDF…"
-  2. Temporarily expand the Pillars × Personas section so all 4 pillar tabs export (render all pillars stacked, not just the active one) — restored after capture.
-  3. Force-hide the sticky header and the Download button itself during capture via a transient `data-pdf-export` flag on `<html>` plus one small CSS rule.
-  4. Wait for `document.fonts.ready` + all `<img>` loads + 150ms settle.
-  5. Capture the main content container (`<main>`) with `html2canvas` at `scale: 2`, `backgroundColor` = page background, `useCORS: true`, `windowWidth` pinned to the container's render width (1400 max) so the desktop layout is captured regardless of viewport.
-  6. Slice the resulting tall canvas into letter-landscape pages (1920×1080 px, matching existing deck PDFs for visual consistency) using `jsPDF` with `hotfixes: ["px_scaling"]`. Each page = a vertical crop of the master canvas drawn onto a fresh page; avoids cutting cards in half by snapping page breaks to the nearest section boundary (use `data-pdf-section` markers on each `<section>` and the hero).
-  7. Save as `Comply365-Positioning-Playbook.pdf`.
-  8. Toast success / error.
+- Page size: 1920×1080 landscape, dark background `hsl(222 47% 6%)`.
+- Outer hairline border at 32px inset, color `rgba(255,255,255,0.10)`.
+- Header band (top 64px inside the border):
+  - Left: "Comply365 · Positioning & Messaging Playbook" (Inter 18px, foreground/80).
+  - Right: current section name (e.g. "03 · Master narrative") (Inter 16px, primary blue).
+  - Thin hairline rule under the band.
+- Footer band (bottom 48px inside the border):
+  - Left: `v{playbookMeta.version} · Updated {playbookMeta.updated}`.
+  - Center: confidentiality line `Internal GTM use only`.
+  - Right: `Page X of Y`.
+- Content area: the slice from html2canvas, drawn inside the inner box (≈ 1856×920 after chrome) with 16px gutter so card borders aren't kissing the frame.
 
-### Small edits to `src/pages/PositioningPlaybook.tsx`
+### Cover page (page 1)
 
-- Add the button next to the existing version chip in the sticky header.
-- Add `data-pdf-section` to each top-level `<section>` (hero + sections 1–13) so the slicer can snap page breaks cleanly.
-- Add `data-pdf-root` to the `<main>` element so the exporter targets it precisely.
-- Add `data-pdf-hide` to the sticky `<header>` so it's hidden during capture (kept visible in normal use).
-- For the Pillars × Personas tabs, render all four pillar blocks when `document.documentElement.dataset.pdfExport === "true"` (small conditional, no behavior change otherwise) so the PDF includes every pillar matrix.
+Single full-bleed page drawn programmatically (no DOM capture) with:
+- Top-left small kicker: "Positioning & Messaging Playbook".
+- Centered hero title (Space Grotesk 96px): "From event to control."
+- Subline (Inter 32px, muted): "On one platform."
+- Bottom-left meta block: version, updated date, owners.
+- Bottom-right: "Comply365" wordmark.
+- Subtle radial gradient orb behind title using `ctx.createRadialGradient` with primary blue at low alpha.
 
-### Page-break logic (technical detail)
+### Section tracking
 
-- After `html2canvas` returns the master canvas at `scale: 2`, measure each `[data-pdf-section]` element's offsetTop and height (in CSS px), multiply by 2 for canvas px.
-- Page height target = canvas width × (1080 / 1920). Walk sections; start a new page whenever adding the next section would overflow the page; if a single section is taller than one page, allow it to span pages but break at its internal card rows where possible (fallback: hard-cut at the page boundary).
-- Draw each page slice via `pdf.addImage(canvas.toDataURL("image/jpeg", 0.92), …)` with negative Y offset and clipping, identical to the existing deck exporter math.
+To label each page's header with the right section name:
+- Before capture, walk `[data-pdf-section]` and read its visible title (already in the H2 inside `SectionHero`, or fall back to `data-pdf-title` we set on each section).
+- Map every Y-pixel range on the master canvas to a section name. When emitting each page, pick the section whose range covers the page's mid-point and pass that label into the header drawer.
 
-### Dependencies
+### Slicing improvements
 
-`html2canvas` and `jspdf` are already used by `DeckPDFExportButton` — no new packages.
+- Recompute slice height to `1080 - chromeTop(96) - chromeBottom(80) - gutters(32) = ~872` px target inside chrome; the master canvas slice is scaled to fit the inner content rect, preserving aspect ratio.
+- Keep the existing "snap to section boundary" logic so cards never split across pages.
+- Add a 24px bottom gutter inside content rect so the last card on a page never touches the footer rule.
+
+### Files touched
+
+- `src/components/PositioningPlaybookPDFButton.tsx` — replace the slicing/output block with: cover-page draw + per-page chrome draw + section-aware header label. Pull `playbookMeta` for footer text. No public API change.
+- `src/pages/PositioningPlaybook.tsx` — add `data-pdf-title="…"` to each `[data-pdf-section]` so the exporter can label headers without parsing DOM (small additive change to existing markers).
+
+### Technical detail (drawing chrome)
+
+All chrome drawn on a per-page `<canvas>` we already create before `pdf.addImage`:
+- Fill background with dark hex.
+- Stroke outer rounded rect (radius 12) at inset 32 with 1px hairline.
+- Set canvas font to `"600 18px Inter"` etc. (fonts are loaded by `document.fonts.ready` before export).
+- `ctx.drawImage` the source slice into the inner content rect.
+- `ctx.fillText` for header left/right + footer left/center/right.
+- Convert to JPEG and add as the page image (one image per page, identical to current path).
 
 ## Out of scope
 
-- No PPTX export, no narration audio, no separate print stylesheet.
-- No changes to the copy in `src/data/positioningPlaybook.ts`.
-- No changes to other playbooks.
+- No light/print stylesheet variant.
+- No TOC page, no per-section divider pages.
+- No changes to copy or any other playbook export.
 
 ## Acceptance
 
-- Visiting `/positioning-playbook` shows a new "Download PDF" button in the top bar.
-- Clicking it produces `Comply365-Positioning-Playbook.pdf` whose pages, when viewed side-by-side with the live page, match pixel-for-pixel (same dark background, Space Grotesk titles, Inter body, primary blue accents, card borders/gradients, DTOP color tokens) with no clipped cards and all four pillar matrices included.
+- Click "Download PDF" on `/positioning-playbook` → `Comply365-Positioning-Playbook.pdf` with:
+  - Page 1: branded cover.
+  - Pages 2+: dark page with hairline border, header showing playbook name + current section, footer with version, "Internal GTM use only", and "Page X of Y".
+  - Content unchanged in fidelity (same cards, colors, fonts) but framed with consistent margins and no edge-bleed.
+  - No card split across pages.
