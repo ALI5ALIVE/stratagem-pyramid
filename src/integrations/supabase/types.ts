@@ -159,6 +159,36 @@ export type Database = {
           },
         ]
       }
+      page_views: {
+        Row: {
+          deck_id: string | null
+          duration_ms: number | null
+          id: string
+          route: string
+          session_id: string | null
+          user_id: string
+          viewed_at: string
+        }
+        Insert: {
+          deck_id?: string | null
+          duration_ms?: number | null
+          id?: string
+          route: string
+          session_id?: string | null
+          user_id: string
+          viewed_at?: string
+        }
+        Update: {
+          deck_id?: string | null
+          duration_ms?: number | null
+          id?: string
+          route?: string
+          session_id?: string | null
+          user_id?: string
+          viewed_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_color: string
@@ -285,6 +315,35 @@ export type Database = {
           options: Json
           order_index: number
           prompt: string
+        }[]
+      }
+      get_user_activity_detail: {
+        Args: { _user_id: string }
+        Returns: {
+          attempts: Json
+          comments: Json
+          deck_counts: Json
+          page_views: Json
+        }[]
+      }
+      get_user_activity_summary: {
+        Args: never
+        Returns: {
+          academy_avg_score: number
+          academy_last_attempt: string
+          academy_modules_passed: number
+          avatar_color: string
+          comments_total: number
+          created_at: string
+          decks_visited: number
+          display_name: string
+          email: string
+          last_comment_at: string
+          last_page_view: string
+          last_sign_in_at: string
+          page_views_total: number
+          sign_in_count: number
+          user_id: string
         }[]
       }
       has_role: {
