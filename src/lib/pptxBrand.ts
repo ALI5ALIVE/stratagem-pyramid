@@ -1,52 +1,132 @@
 import pptxgen from "pptxgenjs";
 
+/* ─────────────────────────────────────────────────────────────────
+   Two brand palettes share the same token shape, so slide specs
+   keep referencing C.primary / C.ink / C.surface etc., and the
+   palette is swapped at deck-build time via installComply365Brand().
+   ───────────────────────────────────────────────────────────────── */
+
+const DARK_PALETTE = {
+  bg: "0A0F1C",
+  surface: "121A2E",
+  surfaceAlt: "0F1729",
+  hairline: "1F2A44",
+  ink: "F8FAFC",
+  muted: "94A3B8",
+  subtle: "64748B",
+  primary: "0066FF",
+  primarySoft: "1E3A8A",
+  accent: "00B4D8",
+  detect: "60A5FA",
+  trigger: "F59E0B",
+  orchestrate: "A78BFA",
+  prove: "10B981",
+  danger: "EF4444",
+  success: "10B981",
+  warning: "F59E0B",
+  rose: "F43F5E",
+  blue: "3B82F6",
+  emerald: "10B981",
+  violet: "A78BFA",
+  amber: "F59E0B",
+  cyan: "22D3EE",
+  sky: "38BDF8",
+  purple: "C084FC",
+  gridLine: "16213A",
+  glow: "0A2A6B",
+  tier1: "F59E0B",
+  tier2: "A78BFA",
+  tier3: "10B981",
+  gradStart: "0A0F1C",
+  gradEnd: "0E1B3D",
+  dataViz1: "0066FF",
+  dataViz2: "22D3EE",
+  dataViz3: "A78BFA",
+  dataViz4: "F59E0B",
+  dataViz5: "F43F5E",
+  dataViz6: "10B981",
+  wordmarkInk: "16213A",
+} as const;
+
+/** Comply365 official template palette — extracted from the
+ *  AircraftIT Webinar deck theme (Simple Light): primary #0057FF,
+ *  teal #00BBC7, magenta #BA0081, ink #121418, muted #52555C. */
+const COMPLY_PALETTE = {
+  bg: "FFFFFF",
+  surface: "F5F7FB",
+  surfaceAlt: "EEF2F8",
+  hairline: "D5DBE6",
+  ink: "121418",
+  muted: "52555C",
+  subtle: "7A7F8A",
+  primary: "0057FF",
+  primarySoft: "E5EEFF",
+  accent: "00BBC7",
+  detect: "0057FF",
+  trigger: "F59E0B",
+  orchestrate: "BA0081",
+  prove: "00BBC7",
+  danger: "BA0081",
+  success: "00BBC7",
+  warning: "F59E0B",
+  rose: "BA0081",
+  blue: "0057FF",
+  emerald: "00BBC7",
+  violet: "BA0081",
+  amber: "F59E0B",
+  cyan: "00BBC7",
+  sky: "0097A7",
+  purple: "BA0081",
+  gridLine: "E8ECF3",
+  glow: "E5EEFF",
+  tier1: "F59E0B",
+  tier2: "BA0081",
+  tier3: "00BBC7",
+  gradStart: "0A1230",
+  gradEnd: "0057FF",
+  dataViz1: "0057FF",
+  dataViz2: "00BBC7",
+  dataViz3: "BA0081",
+  dataViz4: "F59E0B",
+  dataViz5: "005389",
+  dataViz6: "52555C",
+  wordmarkInk: "EEF2F8",
+} as const;
+
 export const PPTX_BRAND = {
   size: { w: 13.333, h: 7.5 },
-  color: {
-    bg: "0A0F1C",
-    surface: "121A2E",
-    surfaceAlt: "0F1729",
-    hairline: "1F2A44",
-    ink: "F8FAFC",
-    muted: "94A3B8",
-    subtle: "64748B",
-    primary: "0066FF",
-    primarySoft: "1E3A8A",
-    accent: "00B4D8",
-    detect: "60A5FA",
-    trigger: "F59E0B",
-    orchestrate: "A78BFA",
-    prove: "10B981",
-    danger: "EF4444",
-    success: "10B981",
-    warning: "F59E0B",
-    rose: "F43F5E",
-    blue: "3B82F6",
-    emerald: "10B981",
-    violet: "A78BFA",
-    amber: "F59E0B",
-    cyan: "22D3EE",
-    sky: "38BDF8",
-    purple: "C084FC",
-    // Extended tokens (added for brand polish)
-    gridLine: "16213A",
-    glow: "0A2A6B",
-    tier1: "F59E0B", // Reactive
-    tier2: "A78BFA", // Proactive
-    tier3: "10B981", // Predictive
-    gradStart: "0A0F1C",
-    gradEnd: "0E1B3D",
-    dataViz1: "0066FF",
-    dataViz2: "22D3EE",
-    dataViz3: "A78BFA",
-    dataViz4: "F59E0B",
-    dataViz5: "F43F5E",
-    dataViz6: "10B981",
-    wordmarkInk: "16213A",
-  },
-  // Brand fonts (PowerPoint will substitute Calibri locally if not installed)
-  font: { display: "Space Grotesk", body: "Inter" },
-} as const;
+  color: { ...DARK_PALETTE } as Record<keyof typeof DARK_PALETTE, string>,
+  // Brand fonts (PowerPoint will substitute Arial / Calibri locally if not installed)
+  font: { display: "Space Grotesk", body: "Inter" } as { display: string; body: string },
+  /** Active brand mode — controls chrome (background, accents, logo placement). */
+  mode: "dark" as "dark" | "comply365",
+};
+
+/** Swap the live palette + fonts to the Comply365 official template brand.
+ *  Mutates PPTX_BRAND in place so all downstream `C.primary` etc. references
+ *  pick up the new palette without any spec edits. Call restoreDefaultBrand()
+ *  in a `finally` block. */
+export function installComply365Brand() {
+  Object.assign(PPTX_BRAND.color, COMPLY_PALETTE);
+  PPTX_BRAND.font.display = "Arial";
+  PPTX_BRAND.font.body = "Arial";
+  PPTX_BRAND.mode = "comply365";
+}
+
+/** Revert to the default dark Comply365 brand used by other decks. */
+export function restoreDefaultBrand() {
+  Object.assign(PPTX_BRAND.color, DARK_PALETTE);
+  PPTX_BRAND.font.display = "Space Grotesk";
+  PPTX_BRAND.font.body = "Inter";
+  PPTX_BRAND.mode = "dark";
+}
+
+/** Resolve the effective variant for chrome rendering. The exec pitch decks
+ *  pass variant="dark" by historical default, but in comply365 brand mode
+ *  every content slide should render light. */
+function effectiveVariant(requested: "dark" | "light"): "dark" | "light" {
+  return PPTX_BRAND.mode === "comply365" ? "light" : requested;
+}
 
 const C = PPTX_BRAND.color;
 
