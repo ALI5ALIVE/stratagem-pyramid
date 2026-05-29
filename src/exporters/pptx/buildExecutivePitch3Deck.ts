@@ -25,6 +25,11 @@ import {
   regulationSummarySpec,
 } from "./buildTechnicalDeck";
 import { elevatorPitch } from "@/data/insightsPlaybook";
+import {
+  loadComply365Assets,
+  paintComply365Chrome,
+  type C365ChromeKind,
+} from "./comply365Brand";
 
 const C = PPTX_BRAND.color;
 const W = PPTX_BRAND.size.w;
