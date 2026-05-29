@@ -25,11 +25,6 @@ import {
   regulationSummarySpec,
 } from "./buildTechnicalDeck";
 import { elevatorPitch } from "@/data/insightsPlaybook";
-import {
-  loadComply365Assets,
-  paintComply365Chrome,
-  type C365ChromeKind,
-} from "./comply365Brand";
 
 const C = PPTX_BRAND.color;
 const W = PPTX_BRAND.size.w;
@@ -769,7 +764,6 @@ async function buildExec3DeckInternal(opts: BuildOpts, variant: "long" | "medium
 
   const logo = await loadImageAsBase64(logoUrlDark).catch(() => "");
   const logoLight = await loadImageAsBase64(logoUrlLight).catch(() => "");
-  const brandAssets = await loadComply365Assets();
 
   // Lookup helpers — pull specs out of the shared Tech registry by label.
   const byLabel = (label: string): SlideSpec => {
@@ -826,31 +820,27 @@ async function buildExec3DeckInternal(opts: BuildOpts, variant: "long" | "medium
 
   const total = composed.length;
 
-  // Classify each slide so the brand chrome knows whether to paint cover /
-  // divider / closer flourishes versus plain content chrome.
-  const kindFor = (i: number, spec: SlideSpec): C365ChromeKind => {
-    if (i === 0) return "cover";
-    // Only true "▸"-prefixed transition slides get the photo flourish.
-    // Content slides (Strategic Shift, Why Comply365, etc.) stay clean
-    // so their grids and cards aren't overlapped.
-    if (spec.label.trimStart().startsWith("▸")) return "divider";
-    return "content";
-  };
-
   for (let i = 0; i < composed.length; i++) {
     const spec = composed[i];
     opts.onProgress?.(i, total, spec.label);
     const slide = pptx.addSlide();
     try {
+      // Override the deck label on every slide via a wrapped chrome — we
+      // do this by replacing the chrome master after the fact: not supported
+      // by pptxgen, so we instead patch the footer label directly.
       await spec.build(slide, { logo, logoLight, index: i, total });
-      // Overlay official Comply365 template chrome (wordmark, jet mark,
-      // accent rule, hero flourish for cover/dividers).
-      paintComply365Chrome(slide, {
-        assets: brandAssets,
-        kind: kindFor(i, spec),
-        index: i,
-        total,
-        deckLabel: DECK_LABEL,
+      // After the spec drew its own chrome (which used the *Tech* deck label),
+      // overpaint the bottom-left footer label so it reads "Executive Pitch · Medium".
+      // We cover the old text with a thin filled rect that matches the bg, then
+      // re-render the label in the same position used by addBrandMaster().
+      const C2 = PPTX_BRAND.color;
+      slide.addShape("rect", {
+        x: 0.42, y: PPTX_BRAND.size.h - 0.38, w: 5.8, h: 0.3,
+        fill: { color: C2.bg }, line: { type: "none" },
+      });
+      slide.addText(DECK_LABEL, {
+        x: 0.42, y: PPTX_BRAND.size.h - 0.38, w: 5.8, h: 0.3,
+        fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C2.muted,
       });
     } catch (err) {
       console.error(`Exec3 PPTX slide ${i} (${spec.label}) failed:`, err);

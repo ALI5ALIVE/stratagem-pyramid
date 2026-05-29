@@ -1,70 +1,95 @@
 
-# Comply365-Branded PPTX for Medium + Long Executive Pitch
+# Rebrand Executive Pitch PPTX on Comply365 Template
 
-## What I extracted from the template
-- **Palette**: black `#000000`, near-black `#121418`, charcoal `#2C2F37`/`#52555C`, white, primary blue `#0057FF`, deep blue `#005389`, cyan `#00BBC7`/`#0097A7`, magenta accent `#BA0081`, ice text `#C3CFE5`.
-- **Type**: Arial (theme's Latin font) — safe everywhere.
-- **Chrome**: dark background, `COMPLY365` wordmark bottom-left, small jet mark top-right, slide number bottom-right, thin blue accent bar on dividers, aircraft photo on title/section slides.
-- **Layout families**: Title (photo right, headline left), Section divider (photo right, big headline left), Content (dark bg, eyebrow + title + columns), Closer/CTA, Stat/comparison.
+## What you need to do first
+
+Upload Comply365's official PowerPoint template (`.pptx` or `.potx`) to this chat. Ideally it contains:
+- Title / cover slide
+- Section divider slide
+- Standard content slide (title + body)
+- Closing / thank-you slide
+- Any "stat" or "quote" layouts you use
+- Footer + logo placement
+- Brand fonts embedded (or named so we can map them)
+
+If the template only has a cover and one content layout, that's fine — we'll derive the rest.
 
 ## Scope (locked)
-- Only the **Medium (16-slide)** and **Long (20-slide)** Executive Pitch PPTX exports change.
-- All other deck exporters and all web slides remain untouched.
-- Output is **fully editable native pptxgenjs shapes** — no slide-as-image. Only the wordmark, jet mark, and the existing platform-ecosystem PNG are embedded as images.
-- Add a visible "Download Editable PowerPoint" button to the Medium and Long pitch title slides (button already wired via `pptxDeckId`; just needs `hidePdfExport` removed / a dedicated PPTX button surfaced — see step 4).
+
+- **Decks rebranded:** Medium Executive Pitch (16 slides) and Long Executive Pitch (20 slides) only.
+- **Out of scope:** Customer Overview, Technical Deep Dive, AI Infographic — untouched.
+- **Output:** Fully editable native PowerPoint shapes (no slide-as-image). Buyers' teams can edit every title, bullet, stat, and chart in PowerPoint.
 
 ## Approach
 
-### 1. Brand assets
-- Pull `COMPLY365` wordmark and jet-mark PNG out of `/tmp/tpl_unpacked/ppt/media/` and save under `src/assets/brand/comply365/`:
-  - `wordmark-white.png`, `jet-mark.png`, `cover-wing.jpg`, `divider-wing.jpg`.
-- These are real template assets, so chrome will pixel-match the source deck.
+### 1. Extract the template (one-time)
+- Unpack the uploaded `.pptx` with the PPTX skill scripts.
+- Pull out from `ppt/slideMasters/` and `ppt/slideLayouts/`:
+  - Theme colors (`a:clrScheme`)
+  - Font scheme (major + minor)
+  - Logo / footer images (saved into `src/assets/brand/`)
+  - Layout geometry: title position, body box, footer y-coordinate, accent bars
+- Generate a thumbnail grid of the template so we can visually confirm what each layout looks like.
 
-### 2. New brand module — `src/exporters/pptx/comply365Brand.ts`
-Exports:
-- `BRAND = { colors: { bg:'121418', surface:'1B1E24', primary:'0057FF', deepBlue:'005389', cyan:'00BBC7', magenta:'BA0081', text:'FFFFFF', muted:'C3CFE5' }, fonts: { heading:'Arial', body:'Arial' } }`
-- `defineComply365Masters(pptx)` — registers 4 slide masters via `pptx.defineSlideMaster(...)`:
-  - `C365_COVER` — dark bg + cover-wing image right-half + wordmark footer + slide number.
-  - `C365_DIVIDER` — dark bg + thin blue accent bar + wing image right + wordmark footer.
-  - `C365_CONTENT` — dark bg, top eyebrow strip, wordmark footer, jet mark top-right, slide number.
-  - `C365_CLOSER` — dark bg, large headline area, wordmark centered.
-- Helper functions: `addCover(slide,{title,subtitle,presenter})`, `addDivider(slide,{eyebrow,title})`, `addContentHeader(slide,{eyebrow,title})`, `addCloser(slide,{headline,cta})`, plus color/layout constants (title x/y/w/h, body x/y/w/h, footer y).
+### 2. Create a Comply365 brand module
+New file `src/exporters/pptx/comply365Brand.ts` containing:
+- `BRAND_COLORS` — exact hex values from the template's theme (replacing the ad-hoc palette in `pptxBrand.ts` for these two decks)
+- `BRAND_FONTS` — `{ heading, body }` matched to the template's font scheme, with safe fallbacks
+- `LAYOUT` constants — title x/y/w/h, body x/y/w/h, footer y, accent bar coords — all derived from the template
+- `addBrandCover(slide, {title, subtitle, presenter})`
+- `addBrandDivider(slide, {section, number})`
+- `addBrandContent(slide, {title, eyebrow})` — paints title block + footer chrome; caller fills the body region
+- `addBrandCloser(slide, {headline, cta})`
+- `addBrandFooter(slide, {pageNumber, totalPages})` — logo + pagination + confidentiality line
 
-### 3. Rewrite the builders
-File: `src/exporters/pptx/buildExecutivePitch3Deck.ts` (already exports both `buildExecutivePitch3Deck` and `buildExecutivePitchMediumDeck`).
-- Call `defineComply365Masters(pptx)` once.
-- Iterate `execPitch3Slides` / `execPitchMediumSlides`; for each slide pick a master:
-  - Title slide → `C365_COVER`
-  - "Strategic Shift" / "Why Comply365" / phase openers → `C365_DIVIDER`
-  - Everything else → `C365_CONTENT`
-  - Closing → `C365_CLOSER`
-- Re-build each slide's body with native shapes: `addText`, `addShape` (rounded-rect cards, pill chips, circles), `addTable` for roadmap, simple `addChart` only where the web version has a chart. Use brand color tokens for every fill/stroke/text color. Keep titles and copy identical to the web slides; only the visual chrome and layout grid change.
-- Replace the current ad-hoc palette usage; do **not** touch `src/lib/pptxBrand.ts` (other decks still use it).
+These helpers use pptxgenjs's `defineSlideMaster` so PowerPoint sees them as real layouts (editable, not flattened).
 
-### 4. Download button surfacing
-- Medium and Long title slides already pass `pptxDeckId` to the first slide with `hidePdfExport: true`. Confirm `DeckPPTXExportButton` renders on those title slides; if it's currently hidden alongside the PDF button, add it back as an always-visible export action so reps can grab the .pptx with one click.
+### 3. Rewrite the two builders
+- `buildExecutivePitch3Deck.ts` (the existing shared internal builder with `long` / `medium` variants) gets reworked to:
+  - Call `pptx.defineSlideMaster()` once per layout type using the brand module
+  - Walk each slide in `execPitchSlides.ts` / `execPitchMediumSlides.ts` and route to the correct master
+  - Map each web slide's content (hero, columns, DTOP loop, roadmap, stats, capability grids) to native pptxgenjs shapes — `addText`, `addShape`, `addTable`, `addChart` — never `addImage` of a rasterised slide
+  - Use the brand color tokens for every fill, stroke, and text color
+  - Preserve narration-aligned ordering and titles
 
-### 5. QA loop (mandatory)
-For each of the two decks:
-1. Build → save → convert to PDF via `run_libreoffice.py` → `pdftoppm -r 150` per slide.
-2. Read every JPG and check: overflow, low-contrast text, footer collisions, missing logo, wrong fonts, leftover placeholders, misaligned columns, accent bars under wrapped titles.
-3. Fix → re-render affected slides → repeat until clean.
-4. Run `markitdown` and grep for `xxxx|lorem|placeholder|click to edit` — must be empty.
-5. Report findings in chat with before/after notes.
+### 4. Slide-by-slide mapping
+For each slide in the two pitches I'll pick the closest template layout:
+- Title slide → template cover
+- "Strategic Shift", "Why Comply365", section openers → template divider
+- All content slides (DTOP, Capabilities, Intelligence, Regulations, Mobile, Roadmap, Outcomes) → template content layout, with internal grids built from native shapes
+- Final slide → template closer
 
-### 6. Memory
-Add `mem://brand/pptx-template` with: template path, extracted color tokens, asset filenames, master layout coordinates — so future deck rebuilds reuse the same source of truth.
+Complex visuals (DTOP loop, platform ecosystem, roadmap timeline, capability grids) are rebuilt with pptxgenjs `addShape` + `addText` so they remain editable. The platform ecosystem PNG already in `src/assets/` is the one exception — kept as an embedded image because the web version is also a PNG (per `mem://ui/platform-ecosystem-diagram`).
 
-## Out of scope
-- Customer Overview, Technical Deep Dive, AI Infographic exporters.
-- Web slides, narration, copy edits.
-- Shipping new font files (Arial is universal).
-- Other PPTX downloads on the site.
+### 5. QA loop (mandatory, per PPTX skill)
+For both decks:
+1. Export → convert to PDF via LibreOffice → render each page to JPG at 150 DPI
+2. Inspect every slide for: text overflow, low contrast, misaligned footers, missing logos, wrong fonts, leftover template placeholders ("Click to edit…")
+3. Run `markitdown` and grep for leftover placeholder strings
+4. Fix and re-render until a clean pass
+5. Report findings in chat
 
-## Deliverables
-- `src/assets/brand/comply365/{wordmark-white.png, jet-mark.png, cover-wing.jpg, divider-wing.jpg}`
+### 6. Memory update
+Add `mem://brand/pptx-template` recording: template file path, extracted color tokens, font names, master layout coordinates — so future deck rebuilds reuse the same source of truth.
+
+## Out of scope / non-goals
+- No copy changes. Slide text stays as-is.
+- No changes to web slides or narration.
+- No changes to the other decks' exporters or to `src/lib/pptxBrand.ts` (left alone so other decks are unaffected).
+- No new fonts shipped in the repo — we reference the template's font names and rely on PowerPoint's font fallback / embedded fonts in the source template.
+
+## Technical notes
+- pptxgenjs supports `defineSlideMaster({ title, background, objects, slideNumber })` — we'll use it to register cover / divider / content / closer masters extracted from the template.
+- For exact geometry we measure in EMU from the unpacked XML and convert to inches (EMU / 914400).
+- Editability requirement means no `slide.addImage({ data: ...slideAsPng })` for content; only logos and the ecosystem diagram are images.
+- If the template uses a custom font not installed on viewers' machines, we'll set `fontFace` to it and provide a safe fallback (e.g. `'BrandSans, Calibri, Arial'`).
+
+## What I'll deliver
 - `src/exporters/pptx/comply365Brand.ts` (new)
-- Reworked `src/exporters/pptx/buildExecutivePitch3Deck.ts` (both variants)
-- Visible "Download Editable PowerPoint" button on Medium + Long pitch title slides
-- `mem://brand/pptx-template`
-- QA report (issues found + fixes) in chat
+- Updated `src/exporters/pptx/buildExecutivePitch3Deck.ts` (both variants)
+- Extracted brand assets under `src/assets/brand/`
+- QA report: thumbnails of all 16 + 20 slides, list of issues found, fixes applied
+- Memory entry `mem://brand/pptx-template`
+
+## Next step
+Upload the official Comply365 `.pptx` template and I'll implement this end-to-end.
