@@ -830,10 +830,10 @@ async function buildExec3DeckInternal(opts: BuildOpts, variant: "long" | "medium
   // divider / closer flourishes versus plain content chrome.
   const kindFor = (i: number, spec: SlideSpec): C365ChromeKind => {
     if (i === 0) return "cover";
-    if (i === composed.length - 1) return "closer";
-    const l = spec.label.toLowerCase();
-    if (l.startsWith("▸") || l.includes("divider") || l.includes("strategic shift") || l.includes("why comply"))
-      return "divider";
+    // Only true "▸"-prefixed transition slides get the photo flourish.
+    // Content slides (Strategic Shift, Why Comply365, etc.) stay clean
+    // so their grids and cards aren't overlapped.
+    if (spec.label.trimStart().startsWith("▸")) return "divider";
     return "content";
   };
 
