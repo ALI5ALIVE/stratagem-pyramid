@@ -576,21 +576,21 @@ export function addBrandMaster(
   if (PPTX_BRAND.mode === "comply365") {
     // Template-style footer: thin blue rule + small wordmark left, page X / Y right.
     slide.addShape("rect", {
-      x: 0.5, y: H - 0.46, w: W - 1.0, h: 0.012,
+      x: 0.5, y: H - 0.44, w: W - 1.0, h: 0.012,
       fill: { color: C.primary }, line: { type: "none" },
     });
     slide.addText(ctx.deckLabel, {
-      x: 0.5, y: H - 0.40, w: 6, h: 0.30,
+      x: 0.5, y: H - 0.38, w: 6, h: 0.30,
       fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted,
     });
     slide.addText("Comply365 · Operational Performance Platform", {
-      x: W / 2 - 3, y: H - 0.40, w: 6, h: 0.30,
+      x: W / 2 - 3, y: H - 0.38, w: 6, h: 0.30,
       fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, align: "center",
     });
     slide.addText(
       `${String(ctx.index + 1).padStart(2, "0")} / ${String(ctx.total).padStart(2, "0")}`,
       {
-        x: W - 1.4, y: H - 0.40, w: 1, h: 0.30,
+        x: W - 1.4, y: H - 0.38, w: 1, h: 0.30,
         fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, align: "right",
       },
     );
