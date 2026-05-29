@@ -744,12 +744,23 @@ const coAnalystSpec: SlideSpec = {
    ───────────────────────────────────────────────────────────────── */
 
 export async function buildExecutivePitch3Deck(opts: BuildOpts = {}): Promise<Blob> {
+  return buildExec3DeckInternal(opts, "long");
+}
+
+export async function buildExecutivePitchMediumDeck(opts: BuildOpts = {}): Promise<Blob> {
+  return buildExec3DeckInternal(opts, "medium");
+}
+
+async function buildExec3DeckInternal(opts: BuildOpts, variant: "long" | "medium"): Promise<Blob> {
   const pptx = new pptxgen();
   pptx.defineLayout({ name: "WIDE_16_9", width: PPTX_BRAND.size.w, height: PPTX_BRAND.size.h });
   pptx.layout = "WIDE_16_9";
-  pptx.title = "Comply365 — Executive Pitch (Medium)";
+  pptx.title = variant === "long"
+    ? "Comply365 — Executive Pitch (Long)"
+    : "Comply365 — Executive Pitch (Medium)";
   pptx.author = "Comply365";
   pptx.company = "Comply365";
+  const DECK_LABEL = variant === "long" ? DECK_LABEL_LONG : DECK_LABEL_MEDIUM;
 
   const logo = await loadImageAsBase64(logoUrlDark).catch(() => "");
   const logoLight = await loadImageAsBase64(logoUrlLight).catch(() => "");
@@ -762,7 +773,7 @@ export async function buildExecutivePitch3Deck(opts: BuildOpts = {}): Promise<Bl
   };
 
   // Compose slides in the exact order from src/pages/ExecutivePitch3.tsx.
-  const composed: SlideSpec[] = [
+  const longComposed: SlideSpec[] = [
     openerSpec,                                    // 1 · Title
     byLabel("Strategic Shift"),                    // 2
     customerOutcomesSpec,                          // 3 · What This Means for Customers
@@ -783,6 +794,29 @@ export async function buildExecutivePitch3Deck(opts: BuildOpts = {}): Promise<Bl
     byLabel("2026 Roadmap"),                       // 18
     byLabel("Why Comply365"),                      // 19
   ];
+
+  // Condensed Medium = Long minus Automation, Insights — Just Ask, and
+  // Recommendations & Prescriptive Actions.
+  const mediumComposed: SlideSpec[] = [
+    openerSpec,
+    byLabel("Strategic Shift"),
+    customerOutcomesSpec,
+    byLabel("Platform Overview"),
+    exec3DtopDivider,
+    byLabel("DTOP Operating Model"),
+    exec3MobileDivider,
+    byLabel("Unified Mobile"),
+    exec3IntelligenceDivider,
+    coAnalystSpec,
+    byLabel("Tiers vs Generic AI"),
+    exec3RegulationDivider,
+    regulationSummarySpec,
+    exec3RoadmapDivider,
+    byLabel("2026 Roadmap"),
+    byLabel("Why Comply365"),
+  ];
+
+  const composed = variant === "long" ? longComposed : mediumComposed;
 
   const total = composed.length;
 
