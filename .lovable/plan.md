@@ -1,92 +1,95 @@
-## Goal
 
-Give sellers a condensed Medium Pitch to practice with, and rename the current Medium Pitch to Long Pitch.
+# Rebrand Executive Pitch PPTX on Comply365 Template
 
-**New Medium Pitch** (drops Automation + Recommendations & Prescriptive Actions):
+## What you need to do first
 
-1. Title
-2. Strategic Shift
-3. Customer Outcomes
-4. The Platform (Overview)
-5. ▸ DTOP divider
-6. DTOP — System of Work
-7. ▸ Mobile divider
-8. Unified Mobile
-9. ▸ Intelligence Layer divider
-10. Intelligence Layer (CoAnalyst)
-11. Intelligence Layer vs Generic AI
-12. ▸ Regulation Management divider
-13. Regulation Management
-14. ▸ 2026 Phased Roadmap divider
-15. 2026 Phased Roadmap
-16. Why Comply365
+Upload Comply365's official PowerPoint template (`.pptx` or `.potx`) to this chat. Ideally it contains:
+- Title / cover slide
+- Section divider slide
+- Standard content slide (title + body)
+- Closing / thank-you slide
+- Any "stat" or "quote" layouts you use
+- Footer + logo placement
+- Brand fonts embedded (or named so we can map them)
 
-**Removed from Medium:** `exec3-slide-automation`, `exec3-slide-insights-summary` (Insights — Just Ask), `exec3-slide-insights` (Recommendations & Prescriptive Actions).
+If the template only has a cover and one content layout, that's fine — we'll derive the rest.
 
-**Long Pitch** = today's `/pitch-executive-3` deck, unchanged in content. Only labels/filenames change to "Long".
+## Scope (locked)
 
-## Changes
+- **Decks rebranded:** Medium Executive Pitch (16 slides) and Long Executive Pitch (20 slides) only.
+- **Out of scope:** Customer Overview, Technical Deep Dive, AI Infographic — untouched.
+- **Output:** Fully editable native PowerPoint shapes (no slide-as-image). Buyers' teams can edit every title, bullet, stat, and chart in PowerPoint.
 
-### 1. New condensed deck data
-`src/data/execPitchMediumSlides.ts` (new) — re-exports the dividers from `execPitch3Slides.ts` and defines `execPitchMediumSlides` as the 16-slide array above, reusing the same slide components, IDs, and `buyerFocus` strings so narration and `practiceSlidePrompts` keep working for the surviving IDs.
+## Approach
 
-### 2. New page
-`src/pages/ExecutivePitchMedium.tsx` (new) — clone of `ExecutivePitch3.tsx` but imports `execPitchMediumSlides`, sets:
-- `pptxDeckId: "executive-pitch-medium"`
-- `pdfFilename: "Comply365-Executive-Pitch-Medium.pdf"`
-- `deckLabel: "Executive Pitch · Medium"`
+### 1. Extract the template (one-time)
+- Unpack the uploaded `.pptx` with the PPTX skill scripts.
+- Pull out from `ppt/slideMasters/` and `ppt/slideLayouts/`:
+  - Theme colors (`a:clrScheme`)
+  - Font scheme (major + minor)
+  - Logo / footer images (saved into `src/assets/brand/`)
+  - Layout geometry: title position, body box, footer y-coordinate, accent bars
+- Generate a thumbnail grid of the template so we can visually confirm what each layout looks like.
 
-Reuses `useExec3PitchNarration` (narration entries for removed slide IDs simply won't fire).
+### 2. Create a Comply365 brand module
+New file `src/exporters/pptx/comply365Brand.ts` containing:
+- `BRAND_COLORS` — exact hex values from the template's theme (replacing the ad-hoc palette in `pptxBrand.ts` for these two decks)
+- `BRAND_FONTS` — `{ heading, body }` matched to the template's font scheme, with safe fallbacks
+- `LAYOUT` constants — title x/y/w/h, body x/y/w/h, footer y, accent bar coords — all derived from the template
+- `addBrandCover(slide, {title, subtitle, presenter})`
+- `addBrandDivider(slide, {section, number})`
+- `addBrandContent(slide, {title, eyebrow})` — paints title block + footer chrome; caller fills the body region
+- `addBrandCloser(slide, {headline, cta})`
+- `addBrandFooter(slide, {pageNumber, totalPages})` — logo + pagination + confidentiality line
 
-### 3. Rename existing deck to Long
-`src/pages/ExecutivePitch3.tsx` — change export config:
-- `pptxDeckId: "executive-pitch-long"`
-- `pdfFilename: "Comply365-Executive-Pitch-Long.pdf"`
-- `deckLabel: "Executive Pitch · Long"`
+These helpers use pptxgenjs's `defineSlideMaster` so PowerPoint sees them as real layouts (editable, not flattened).
 
-### 4. Routing
-`src/App.tsx` — add `<Route path="/pitch-executive-medium" element={<ExecutivePitchMedium />} />`. Keep `/pitch-executive-3` for the Long deck.
+### 3. Rewrite the two builders
+- `buildExecutivePitch3Deck.ts` (the existing shared internal builder with `long` / `medium` variants) gets reworked to:
+  - Call `pptx.defineSlideMaster()` once per layout type using the brand module
+  - Walk each slide in `execPitchSlides.ts` / `execPitchMediumSlides.ts` and route to the correct master
+  - Map each web slide's content (hero, columns, DTOP loop, roadmap, stats, capability grids) to native pptxgenjs shapes — `addText`, `addShape`, `addTable`, `addChart` — never `addImage` of a rasterised slide
+  - Use the brand color tokens for every fill, stroke, and text color
+  - Preserve narration-aligned ordering and titles
 
-### 5. Sidebar
-`src/components/AppSidebar.tsx` — replace the single "Medium — Executive Pitch" entry with two entries:
-- `Medium — Executive Pitch` → `/pitch-executive-medium`
-- `Long — Executive Pitch` → `/pitch-executive-3`
+### 4. Slide-by-slide mapping
+For each slide in the two pitches I'll pick the closest template layout:
+- Title slide → template cover
+- "Strategic Shift", "Why Comply365", section openers → template divider
+- All content slides (DTOP, Capabilities, Intelligence, Regulations, Mobile, Roadmap, Outcomes) → template content layout, with internal grids built from native shapes
+- Final slide → template closer
 
-### 6. Home page
-`src/pages/HomePage.tsx` — update the existing card to "Long — Executive Pitch" (`/pitch-executive-3`, badge "Long · ~30–35 min · 20 slides") and add a new "Medium — Executive Pitch" card (`/pitch-executive-medium`, badge "Medium · ~20–25 min · 16 slides").
+Complex visuals (DTOP loop, platform ecosystem, roadmap timeline, capability grids) are rebuilt with pptxgenjs `addShape` + `addText` so they remain editable. The platform ecosystem PNG already in `src/assets/` is the one exception — kept as an embedded image because the web version is also a PNG (per `mem://ui/platform-ecosystem-diagram`).
 
-### 7. PPTX exporter
-`src/exporters/pptx/index.ts` — add a new deck key `executive-pitch-medium` (filename `Comply365-Executive-Pitch-Medium.pptx`, label `Executive Pitch · Medium`) and rename `executive-pitch-3` to filename `Comply365-Executive-Pitch-Long.pptx`, label `Executive Pitch · Long`.
+### 5. QA loop (mandatory, per PPTX skill)
+For both decks:
+1. Export → convert to PDF via LibreOffice → render each page to JPG at 150 DPI
+2. Inspect every slide for: text overflow, low contrast, misaligned footers, missing logos, wrong fonts, leftover template placeholders ("Click to edit…")
+3. Run `markitdown` and grep for leftover placeholder strings
+4. Fix and re-render until a clean pass
+5. Report findings in chat
 
-`src/exporters/pptx/buildExecutivePitch3Deck.ts` — update `DECK_LABEL` and `pptx.title` to "Long". Add `buildExecutivePitchMediumDeck.ts` that imports `execPitchMediumSlides` and reuses the existing slide builders (or factor the shared body into a helper and call it from both).
+### 6. Memory update
+Add `mem://brand/pptx-template` recording: template file path, extracted color tokens, font names, master layout coordinates — so future deck rebuilds reuse the same source of truth.
 
-Type union in `src/exporters/pptx/index.ts` adds `"executive-pitch-medium"`.
+## Out of scope / non-goals
+- No copy changes. Slide text stays as-is.
+- No changes to web slides or narration.
+- No changes to the other decks' exporters or to `src/lib/pptxBrand.ts` (left alone so other decks are unaffected).
+- No new fonts shipped in the repo — we reference the template's font names and rely on PowerPoint's font fallback / embedded fonts in the source template.
 
-### 8. Practice Center
-`src/data/practiceScenarios.ts` — point the existing 5 scenarios at the new Medium deck:
-- `deckTitle: "Medium — Executive Pitch"` (unchanged label)
-- `deckRoute: "/pitch-executive-medium"`
+## Technical notes
+- pptxgenjs supports `defineSlideMaster({ title, background, objects, slideNumber })` — we'll use it to register cover / divider / content / closer masters extracted from the template.
+- For exact geometry we measure in EMU from the unpacked XML and convert to inches (EMU / 914400).
+- Editability requirement means no `slide.addImage({ data: ...slideAsPng })` for content; only logos and the ecosystem diagram are images.
+- If the template uses a custom font not installed on viewers' machines, we'll set `fontFace` to it and provide a safe fallback (e.g. `'BrandSans, Calibri, Arial'`).
 
-This is what sellers practice with, per the request. Optionally add a parallel set of Long scenarios — confirm with user before doing so (default: do not add, keep practice on Medium only).
+## What I'll deliver
+- `src/exporters/pptx/comply365Brand.ts` (new)
+- Updated `src/exporters/pptx/buildExecutivePitch3Deck.ts` (both variants)
+- Extracted brand assets under `src/assets/brand/`
+- QA report: thumbnails of all 16 + 20 slides, list of issues found, fixes applied
+- Memory entry `mem://brand/pptx-template`
 
-`src/pages/PracticeCenter.tsx` — no logic change needed; the `dtop`/`mobile`/`intelligence` jump targets and `exec3-slide-insights-summary` override are gated by slide id and only fire if the id is present in the active deck.
-
-### 9. Narration
-`src/data/executivePitchNarration.ts` — leave as-is. Entries for removed IDs (`exec3-slide-automation`, `exec3-slide-insights-summary`, `exec3-slide-insights`) stay in the file but never resolve in the Medium deck because those slide IDs aren't rendered. The Long deck keeps full narration.
-
-### 10. Memory
-Update `mem://index.md` with a short note pointing at a new `mem://product/executive-pitch-decks` file describing Medium = 16 slides (no Automation, no Recommendations) and Long = full 20 slides. Existing pitch persona memory is unchanged.
-
-## Out of scope
-
-- No copy edits to surviving slides
-- No changes to other decks (Operational, Technical, CoAnalyst, etc.)
-- No new narration recordings — Medium uses the subset that already exists
-- No PDF/PPTX visual redesign — just relabeling and a second deck definition
-
-## Acceptance
-
-- `/pitch-executive-medium` loads the 16-slide condensed deck with sidebar, narration, PDF, and PPTX export all working and labeled "Medium".
-- `/pitch-executive-3` still loads the full deck, now labeled "Long" everywhere (sidebar, footer, PPTX filename, PDF filename, home card).
-- Practice Center scenarios route to `/pitch-executive-medium` and run end-to-end.
-- Home page shows both cards.
+## Next step
+Upload the official Comply365 `.pptx` template and I'll implement this end-to-end.
