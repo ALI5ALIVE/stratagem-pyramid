@@ -132,25 +132,25 @@ export function paintComply365Chrome(
 
   // Cover / divider / closer slides get an extra hero flourish on the right.
   if (kind === "cover" && assets.coverChrome) {
-    // Right-half hero with the dark-blue chevron motif from the template.
-    const heroW = W * 0.42;
+    // Right-edge hero with the dark-blue chevron motif from the template.
+    // Kept narrow so it doesn't overlap the title text on the left.
+    const heroW = W * 0.28;
     slide.addImage({
       data: assets.coverChrome,
       x: W - heroW, y: 0.18, w: heroW, h: H - 0.73,
-      // sizing.type 'cover' keeps the chevron aligned to the right edge
       sizing: { type: "cover", w: heroW, h: H - 0.73 },
     });
   } else if (kind === "divider" && assets.wing) {
-    // Section dividers reuse the wing photo on the right third.
-    const heroW = W * 0.36;
+    // True transition dividers (▸-prefixed) get the wing photo on the right.
+    const heroW = W * 0.32;
     slide.addImage({
       data: assets.wing,
       x: W - heroW, y: 0.18, w: heroW, h: H - 0.73,
       sizing: { type: "cover", w: heroW, h: H - 0.73 },
     });
-    // Dark gradient overlay on the left edge of the photo for readability.
+    // Soft dark fade on the inner edge of the photo for readability.
     slide.addShape("rect", {
-      x: W - heroW, y: 0.18, w: 0.6, h: H - 0.73,
+      x: W - heroW, y: 0.18, w: 0.8, h: H - 0.73,
       fill: { color: C.bg, transparency: 35 }, line: { type: "none" },
     });
   }
