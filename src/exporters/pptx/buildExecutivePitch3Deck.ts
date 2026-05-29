@@ -28,7 +28,8 @@ import { elevatorPitch } from "@/data/insightsPlaybook";
 
 const C = PPTX_BRAND.color;
 const W = PPTX_BRAND.size.w;
-const DECK_LABEL = "Executive Pitch · Medium";
+const DECK_LABEL_LONG = "Executive Pitch · Long";
+const DECK_LABEL_MEDIUM = "Executive Pitch · Medium";
 
 /* ─────────────────────────────────────────────────────────────────
    Two specs unique to Exec3 (not present in the Tech V4 builder).
