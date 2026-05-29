@@ -566,12 +566,38 @@ export function addBrandMaster(
   slide: pptxgen.Slide,
   ctx: { logo: string; index: number; total: number; deckLabel: string; variant?: "dark" | "light"; grid?: boolean },
 ) {
-  const variant = ctx.variant ?? "dark";
-  paintBackground(slide, variant);
+  const requested = ctx.variant ?? "dark";
+  const variant = effectiveVariant(requested);
+  paintBackground(slide, requested);
   if (ctx.grid !== false && variant === "dark") addSafeAreaGrid(slide);
   if (ctx.logo) addBrandLogo(slide, ctx.logo, variant);
-  // Faint Comply365 wordmark glyph left of footer label
   const ink = variant === "light" ? C.subtle : C.muted;
+
+  if (PPTX_BRAND.mode === "comply365") {
+    // Template-style footer: thin blue rule + small wordmark left, page X / Y right.
+    slide.addShape("rect", {
+      x: 0.5, y: H - 0.46, w: W - 1.0, h: 0.012,
+      fill: { color: C.primary }, line: { type: "none" },
+    });
+    slide.addText(ctx.deckLabel, {
+      x: 0.5, y: H - 0.40, w: 6, h: 0.30,
+      fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted,
+    });
+    slide.addText("Comply365 · Operational Performance Platform", {
+      x: W / 2 - 3, y: H - 0.40, w: 6, h: 0.30,
+      fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, align: "center",
+    });
+    slide.addText(
+      `${String(ctx.index + 1).padStart(2, "0")} / ${String(ctx.total).padStart(2, "0")}`,
+      {
+        x: W - 1.4, y: H - 0.40, w: 1, h: 0.30,
+        fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, align: "right",
+      },
+    );
+    return;
+  }
+
+  // Faint Comply365 wordmark glyph left of footer label (dark mode only)
   slide.addShape("ellipse", {
     x: 0.18, y: PPTX_BRAND.size.h - 0.36, w: 0.18, h: 0.18,
     fill: { color: C.primary }, line: { type: "none" },
