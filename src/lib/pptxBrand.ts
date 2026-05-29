@@ -631,6 +631,19 @@ export function addBrandMaster(
 
 /** Hero chrome — gradient-ish bg via stacked rects + faint wordmark watermark. */
 export function addBrandHero(slide: pptxgen.Slide) {
+  if (PPTX_BRAND.mode === "comply365") {
+    // Comply365 template cover: deep navy + diagonal blue/teal wedges top-right
+    // and a soft accent wedge bottom-left.
+    slide.background = { color: "0A1230" };
+    addComplyAccents(slide, "hero");
+    // Faint wordmark watermark — large, very low contrast.
+    slide.addText("comply365", {
+      x: 0.5, y: H - 2.6, w: W - 1, h: 2,
+      fontFace: PPTX_BRAND.font.display, fontSize: 180, bold: true,
+      color: "0F1B45", align: "center",
+    });
+    return;
+  }
   slide.background = { color: C.gradStart };
   // Stacked translucent layers approximate a vertical gradient.
   slide.addShape("rect", {
