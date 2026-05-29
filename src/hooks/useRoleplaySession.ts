@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import type { PracticeScenario, Difficulty } from "@/data/practiceScenarios";
 import { buildSystemPrompt } from "@/lib/practice/buildAgentPrompt";
 import { personaProfiles } from "@/data/personaProfiles";
-import { execPitch3Slides } from "@/data/execPitch3Slides";
+import { execPitchMediumSlides as execPitch3Slides } from "@/data/execPitchMediumSlides";
 
 export interface TranscriptTurn {
   role: "rep" | "buyer";

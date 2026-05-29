@@ -26,10 +26,18 @@ const pitchDecks: DeckCard[] = [
   },
   {
     title: "Medium — Executive Pitch",
-    description: "Executive narrative powered by the platform's strongest visuals — DTOP, 5-layer architecture, and intelligence depth.",
+    description: "Condensed executive narrative — Foundation, Unified Mobile, Intelligence Layer, Regulation Management, Roadmap and Why Comply365.",
+    href: "/pitch-executive-medium",
+    icon: Layers,
+    badge: "Medium · ~20–25 min · 16 slides",
+    accent: "from-comply-teal to-accent",
+  },
+  {
+    title: "Long — Executive Pitch",
+    description: "Full executive narrative powered by the platform's strongest visuals — DTOP, 5-layer architecture, Automation, Insights and Recommendations.",
     href: "/pitch-executive-3",
     icon: Layers,
-    badge: "Medium · ~30–35 min · 20 slides",
+    badge: "Long · ~30–35 min · 20 slides",
     accent: "from-comply-teal to-accent",
   },
 ];

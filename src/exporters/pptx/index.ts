@@ -5,7 +5,8 @@ export type { BuildOpts } from "./types";
 export type DeckId =
   | "tech-deep-dive"
   | "executive-pitch"
-  | "executive-pitch-3"
+  | "executive-pitch-long"
+  | "executive-pitch-medium"
   | "customer-overview"
   | "ai-infographic";
 
@@ -38,12 +39,20 @@ export const DECK_BUILDERS: Record<DeckId, DeckBuilder> = {
       return buildExecutiveDeck(opts);
     },
   },
-  "executive-pitch-3": {
-    filename: "Comply365-Executive-Pitch-Medium.pptx",
-    label: "Executive Pitch · Medium",
+  "executive-pitch-long": {
+    filename: "Comply365-Executive-Pitch-Long.pptx",
+    label: "Executive Pitch · Long",
     build: async (opts) => {
       const { buildExecutivePitch3Deck } = await import("./buildExecutivePitch3Deck");
       return buildExecutivePitch3Deck(opts);
+    },
+  },
+  "executive-pitch-medium": {
+    filename: "Comply365-Executive-Pitch-Medium.pptx",
+    label: "Executive Pitch · Medium",
+    build: async (opts) => {
+      const { buildExecutivePitchMediumDeck } = await import("./buildExecutivePitch3Deck");
+      return buildExecutivePitchMediumDeck(opts);
     },
   },
   "customer-overview": {

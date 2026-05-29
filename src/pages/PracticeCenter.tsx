@@ -10,7 +10,7 @@ import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { practiceScenarios, difficulties, type Difficulty, type PracticeScenario } from "@/data/practiceScenarios";
 import { useRoleplaySession } from "@/hooks/useRoleplaySession";
-import { execPitch3Slides } from "@/data/execPitch3Slides";
+import { execPitchMediumSlides as execPitch3Slides } from "@/data/execPitchMediumSlides";
 import { personaProfiles } from "@/data/personaProfiles";
 import { getPersonaSlideFlavor } from "@/lib/practice/buildAgentPrompt";
 import { getSlidePrompts } from "@/data/practiceSlidePrompts";
@@ -20,7 +20,7 @@ const PERSONA_ICONS: Record<string, React.ComponentType<{ className?: string }>>
 };
 
 const AGENT_ID = "agent_5601krecj299fy28nwehe96cejrm";
-const DECK_ROUTE = "/pitch-executive-3";
+const DECK_ROUTE = "/pitch-executive-medium";
 const REP_SILENCE_MS = 8000;
 const REP_SILENCE_MS_OPENING = 12000;
 const SLIDE_DEBOUNCE_MS = 600;
