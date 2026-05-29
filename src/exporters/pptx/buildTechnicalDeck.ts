@@ -68,7 +68,9 @@ export function chrome(
   ctx: { logo: string; logoLight: string; index: number; total: number },
   variant: "dark" | "light" = "dark",
 ) {
-  const isLight = variant === "light";
+  // In Comply365 brand mode every content slide renders light, regardless
+  // of the variant the spec asked for — pick the dark-on-white logo.
+  const isLight = variant === "light" || PPTX_BRAND.mode === "comply365";
   addBrandMaster(slide, {
     logo: isLight ? ctx.logoLight : ctx.logo,
     index: ctx.index,
