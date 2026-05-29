@@ -668,6 +668,10 @@ export function addSectionDivider(
   opts: { eyebrow: string; title: string; subtitle?: string; index?: number; logo?: string },
 ) {
   addBrandHero(slide);
+  const isComply = PPTX_BRAND.mode === "comply365";
+  const titleColor = isComply ? "FFFFFF" : C.ink;
+  const subtitleColor = isComply ? "C3CFE5" : C.muted;
+  const eyebrowColor = isComply ? "00BBC7" : C.accent;
   // Top accent bar
   slide.addShape("rect", {
     x: 0.5, y: 1.6, w: 0.6, h: 0.06,
@@ -681,16 +685,16 @@ export function addSectionDivider(
   }
   slide.addText(opts.eyebrow.toUpperCase(), {
     x: 0.5, y: 3.15, w: 12, h: 0.4,
-    fontFace: PPTX_BRAND.font.body, fontSize: 13, bold: true, color: C.accent, charSpacing: 6,
+    fontFace: PPTX_BRAND.font.body, fontSize: 13, bold: true, color: eyebrowColor, charSpacing: 6,
   });
   slide.addText(opts.title, {
     x: 0.5, y: 3.6, w: 12.3, h: 1.4,
-    fontFace: PPTX_BRAND.font.display, fontSize: 56, bold: true, color: C.ink,
+    fontFace: PPTX_BRAND.font.display, fontSize: 56, bold: true, color: titleColor,
   });
   if (opts.subtitle) {
     slide.addText(opts.subtitle, {
       x: 0.5, y: 5.05, w: 12.3, h: 0.7,
-      fontFace: PPTX_BRAND.font.body, fontSize: 16, color: C.muted,
+      fontFace: PPTX_BRAND.font.body, fontSize: 16, color: subtitleColor,
     });
   }
   if (opts.logo) addBrandLogo(slide, opts.logo, "dark");
