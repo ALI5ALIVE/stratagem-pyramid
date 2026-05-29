@@ -9,8 +9,6 @@ import {
   addBrandMaster,
   addIconBadge,
   addBrandStatBlock,
-  installComply365Brand,
-  restoreDefaultBrand,
 } from "@/lib/pptxBrand";
 import logoUrlDark from "@/assets/comply365-logo-white.png";
 import logoUrlLight from "@/assets/comply365-logo.png";
@@ -755,9 +753,6 @@ export async function buildExecutivePitchMediumDeck(opts: BuildOpts = {}): Promi
 
 async function buildExec3DeckInternal(opts: BuildOpts, variant: "long" | "medium"): Promise<Blob> {
   const pptx = new pptxgen();
-  // Both exec pitches ship on Comply365's official template brand.
-  installComply365Brand();
-  try {
   pptx.defineLayout({ name: "WIDE_16_9", width: PPTX_BRAND.size.w, height: PPTX_BRAND.size.h });
   pptx.layout = "WIDE_16_9";
   pptx.title = variant === "long"
@@ -865,7 +860,4 @@ async function buildExec3DeckInternal(opts: BuildOpts, variant: "long" | "medium
   void addBrandStatBlock;
   const blob = (await pptx.write({ outputType: "blob" })) as Blob;
   return blob;
-  } finally {
-    restoreDefaultBrand();
-  }
 }
