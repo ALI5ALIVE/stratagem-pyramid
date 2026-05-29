@@ -129,14 +129,53 @@ function effectiveVariant(requested: "dark" | "light"): "dark" | "light" {
 }
 
 const C = PPTX_BRAND.color;
+const W = PPTX_BRAND.size.w;
+const H = PPTX_BRAND.size.h;
+
+/** Draw the signature Comply365 template chrome: thin diagonal blue
+ *  accent in the top-right corner and a small accent block in the
+ *  bottom-left (echoes the cover slide). Variant controls whether the
+ *  accent is light (on dark hero) or solid (on white content). */
+function addComplyAccents(slide: pptxgen.Slide, variant: "hero" | "content") {
+  if (variant === "content") {
+    // Top-right diagonal blue wedges (thin stripes), echoing template slide 5+.
+    slide.addShape("rtTriangle", {
+      x: W - 1.8, y: 0, w: 1.8, h: 0.55,
+      fill: { color: C.primary }, line: { type: "none" }, flipH: true,
+    });
+    slide.addShape("rtTriangle", {
+      x: W - 1.1, y: 0, w: 1.1, h: 0.32,
+      fill: { color: C.accent }, line: { type: "none" }, flipH: true,
+    });
+  } else {
+    // Hero: bigger diagonal block top-right + a faint one bottom-left.
+    slide.addShape("rtTriangle", {
+      x: W - 4.2, y: 0, w: 4.2, h: 2.4,
+      fill: { color: C.primary, transparency: 15 }, line: { type: "none" }, flipH: true,
+    });
+    slide.addShape("rtTriangle", {
+      x: W - 2.6, y: 0, w: 2.6, h: 1.4,
+      fill: { color: C.accent, transparency: 35 }, line: { type: "none" }, flipH: true,
+    });
+    slide.addShape("rtTriangle", {
+      x: 0, y: H - 1.2, w: 3.0, h: 1.2,
+      fill: { color: C.primary, transparency: 45 }, line: { type: "none" },
+    });
+  }
+}
 
 /** Paint the slide background dark and add a subtle top hairline. */
 export function paintBackground(slide: pptxgen.Slide, variant: "dark" | "light" = "dark") {
-  slide.background = { color: variant === "light" ? "FFFFFF" : C.bg };
+  const v = effectiveVariant(variant);
+  slide.background = { color: v === "light" ? "FFFFFF" : C.bg };
+  if (PPTX_BRAND.mode === "comply365") {
+    addComplyAccents(slide, "content");
+    return;
+  }
   // top hairline
   slide.addShape("rect", {
     x: 0, y: 0, w: PPTX_BRAND.size.w, h: 0.04,
-    fill: { color: variant === "light" ? "E2E8F0" : C.hairline },
+    fill: { color: v === "light" ? "E2E8F0" : C.hairline },
     line: { type: "none" },
   });
 }
