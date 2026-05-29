@@ -2,9 +2,9 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useSlideNavigation } from "@/contexts/SlideNavigationContext";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useExec3PitchNarration } from "@/hooks/useExec3PitchNarration";
-import { execPitch3Slides as slides } from "@/data/execPitch3Slides";
+import { execPitchMediumSlides as slides } from "@/data/execPitchMediumSlides";
 
-const ExecutivePitch3 = () => {
+const ExecutivePitchMedium = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const { register, unregister } = useSlideNavigation();
@@ -118,19 +118,12 @@ const ExecutivePitch3 = () => {
                     },
                   }
                 : {})}
-              {...(slide.id === "exec3-slide-insights-summary"
-                ? {
-                    title: "The Platform · Insights & Intelligence",
-                    subtitle: "A platform-wide intelligence capability — just by asking",
-                    showWorkflow: true,
-                  }
-                : {})}
               {...(index === 0
                 ? {
                     exportSlides: slides,
-                    pptxDeckId: "executive-pitch-long" as const,
-                    pdfFilename: "Comply365-Executive-Pitch-Long.pdf",
-                    deckLabel: "Executive Pitch · Long",
+                    pptxDeckId: "executive-pitch-medium" as const,
+                    pdfFilename: "Comply365-Executive-Pitch-Medium.pdf",
+                    deckLabel: "Executive Pitch · Medium",
                     hidePdfExport: true,
                   }
                 : {})}
@@ -143,4 +136,4 @@ const ExecutivePitch3 = () => {
   );
 };
 
-export default ExecutivePitch3;
+export default ExecutivePitchMedium;

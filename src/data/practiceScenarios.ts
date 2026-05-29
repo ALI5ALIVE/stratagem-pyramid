@@ -42,7 +42,7 @@ const VOICE = {
 
 const DECK = {
   title: "Medium — Executive Pitch",
-  route: "/pitch-executive-3",
+  route: "/pitch-executive-medium",
   narrationKey: "executivePitch" as const,
 };
 

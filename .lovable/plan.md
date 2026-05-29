@@ -1,77 +1,92 @@
-# Goal
+## Goal
 
-Make every page of `Comply365-Positioning-Playbook.pdf` look like a designed document page: balanced content, no awkward whitespace at the bottom, no cards split across pages, no zoomed-in or zoomed-out content, consistent margins, and the brand chrome (header, footer, page numbers) on every page.
+Give sellers a condensed Medium Pitch to practice with, and rename the current Medium Pitch to Long Pitch.
 
-# Why the current output looks wrong
+**New Medium Pitch** (drops Automation + Recommendations & Prescriptive Actions):
 
-`PositioningPlaybookPDFButton.tsx` today renders the live `<main>` once at width 1400px, scales it to fit the content rect, then slices the master canvas in fixed-height chunks with a "snap to nearest section break" rule. Three structural problems fall out of that:
+1. Title
+2. Strategic Shift
+3. Customer Outcomes
+4. The Platform (Overview)
+5. ▸ DTOP divider
+6. DTOP — System of Work
+7. ▸ Mobile divider
+8. Unified Mobile
+9. ▸ Intelligence Layer divider
+10. Intelligence Layer (CoAnalyst)
+11. Intelligence Layer vs Generic AI
+12. ▸ Regulation Management divider
+13. Regulation Management
+14. ▸ 2026 Phased Roadmap divider
+15. 2026 Phased Roadmap
+16. Why Comply365
 
-1. **One global zoom level.** The whole document is scaled so 1400 CSS px equals the inner content width (~1856 px). Short sections get the same scale as long ones, so a short section becomes a tiny island of content at the top of a near-empty page.
-2. **Slice-first, snap-second.** The slicer only snaps backward to a section top. So a section that's slightly taller than one page becomes "page 1 = mostly full" + "page 2 = a thin tail," and short sections that follow are pushed into half-empty pages.
-3. **No layout reflow per page.** Cards and grids are sized for the live web layout (lg:grid-cols-4, etc.), not for a 1920×1080 page after chrome. On some sections this leaves big gutters; on others it pushes content right to the footer.
+**Removed from Medium:** `exec3-slide-automation`, `exec3-slide-insights-summary` (Insights — Just Ask), `exec3-slide-insights` (Recommendations & Prescriptive Actions).
 
-# Approach
+**Long Pitch** = today's `/pitch-executive-3` deck, unchanged in content. Only labels/filenames change to "Long".
 
-Switch from "capture the whole page, slice it" to "render each section into a sized print frame, fit it to one page, split only when truly overflowing." Keep the existing dark brand chrome (cover + header/footer/page numbers).
+## Changes
 
-## 1. Print stage: an off-DOM, fixed-size render host
+### 1. New condensed deck data
+`src/data/execPitchMediumSlides.ts` (new) — re-exports the dividers from `execPitch3Slides.ts` and defines `execPitchMediumSlides` as the 16-slide array above, reusing the same slide components, IDs, and `buyerFocus` strings so narration and `practiceSlidePrompts` keep working for the surviving IDs.
 
-Build a hidden host sized to the inner content rect (1856 × 920 px at 1× — same numbers used today for `CONTENT_W` / `CONTENT_H`). For each section in order:
+### 2. New page
+`src/pages/ExecutivePitchMedium.tsx` (new) — clone of `ExecutivePitch3.tsx` but imports `execPitchMediumSlides`, sets:
+- `pptxDeckId: "executive-pitch-medium"`
+- `pdfFilename: "Comply365-Executive-Pitch-Medium.pdf"`
+- `deckLabel: "Executive Pitch · Medium"`
 
-- Clone the section's DOM node into the host (deep clone, preserve classes so Tailwind tokens still apply).
-- Force a print-tuned class on the host root (`data-pdf-stage`) so a small CSS block can:
-  - Drop sticky/transform effects and reduce vertical paddings used for web rhythm (`mb-10` → `mb-6`, hero `pb-6` → `pb-4`).
-  - Force pillar tab grids to a balanced 4×n layout that fits 1856px (lg:grid-cols-5 cards already fit; we just need to guarantee equal heights via `items-stretch`).
-  - Hide anything marked `data-pdf-hide` inside the section (e.g. the pillar tab strip — already hidden, but enforce here too).
-- Wait for fonts/images, then measure the host's `scrollHeight`.
+Reuses `useExec3PitchNarration` (narration entries for removed slide IDs simply won't fire).
 
-## 2. One-page fit logic
+### 3. Rename existing deck to Long
+`src/pages/ExecutivePitch3.tsx` — change export config:
+- `pptxDeckId: "executive-pitch-long"`
+- `pdfFilename: "Comply365-Executive-Pitch-Long.pdf"`
+- `deckLabel: "Executive Pitch · Long"`
 
-For each prepared section:
+### 4. Routing
+`src/App.tsx` — add `<Route path="/pitch-executive-medium" element={<ExecutivePitchMedium />} />`. Keep `/pitch-executive-3` for the Long deck.
 
-- If `scrollHeight ≤ CONTENT_H` (920) → render as a single page. Vertically center the content in the page rect (top-align if `scrollHeight ≥ 0.85 × CONTENT_H`, otherwise add equal top/bottom padding so short sections don't float at the top).
-- If `scrollHeight > CONTENT_H` → split into N equal-ish pages by walking the host's **top-level children** (the cards/grids inside the section after the hero). Pack children into a page until the next child would overflow, then start a new page. This guarantees no card is ever cut.
-  - The hero (section title + kicker + intro paragraph) is rendered on the first split page only; on continuation pages, show a subtle "Section X · continued" line in the same slot so the reader keeps context.
+### 5. Sidebar
+`src/components/AppSidebar.tsx` — replace the single "Medium — Executive Pitch" entry with two entries:
+- `Medium — Executive Pitch` → `/pitch-executive-medium`
+- `Long — Executive Pitch` → `/pitch-executive-3`
 
-## 3. Per-page capture
+### 6. Home page
+`src/pages/HomePage.tsx` — update the existing card to "Long — Executive Pitch" (`/pitch-executive-3`, badge "Long · ~30–35 min · 20 slides") and add a new "Medium — Executive Pitch" card (`/pitch-executive-medium`, badge "Medium · ~20–25 min · 16 slides").
 
-For each packed page, render only the chosen children into a fresh stage of size 1856 × 920, html2canvas it at `scale: 2`, then composite into the existing dark frame:
+### 7. PPTX exporter
+`src/exporters/pptx/index.ts` — add a new deck key `executive-pitch-medium` (filename `Comply365-Executive-Pitch-Medium.pptx`, label `Executive Pitch · Medium`) and rename `executive-pitch-3` to filename `Comply365-Executive-Pitch-Long.pptx`, label `Executive Pitch · Long`.
 
-- Cover page: unchanged (already correct).
-- Content pages: existing `drawFrame` (outer hairline, header band with playbook name + section label, footer with version, "Internal GTM use only", "Page X of Y") — but the inner image is now exactly content-sized, never stretched, never sliced mid-card, and never leaves a large empty band.
+`src/exporters/pptx/buildExecutivePitch3Deck.ts` — update `DECK_LABEL` and `pptx.title` to "Long". Add `buildExecutivePitchMediumDeck.ts` that imports `execPitchMediumSlides` and reuses the existing slide builders (or factor the shared body into a helper and call it from both).
 
-## 4. Section-aware header label (kept, simpler)
+Type union in `src/exporters/pptx/index.ts` adds `"executive-pitch-medium"`.
 
-Because we now render section-by-section, the header label is just the current section's `data-pdf-title` — no Y-range mapping needed. Removes a class of off-by-one bugs where the header showed the previous section near a page break.
+### 8. Practice Center
+`src/data/practiceScenarios.ts` — point the existing 5 scenarios at the new Medium deck:
+- `deckTitle: "Medium — Executive Pitch"` (unchanged label)
+- `deckRoute: "/pitch-executive-medium"`
 
-## 5. Per-section layout tweaks (CSS only, scoped to `[data-pdf-stage]`)
+This is what sellers practice with, per the request. Optionally add a parallel set of Long scenarios — confirm with user before doing so (default: do not add, keep practice on Medium only).
 
-Small overrides so dense sections breathe and sparse sections fill:
+`src/pages/PracticeCenter.tsx` — no logic change needed; the `dtop`/`mobile`/`intelligence` jump targets and `exec3-slide-insights-summary` override are gated by slide id and only fire if the id is present in the active deck.
 
-- Pillars × Personas: force `grid-cols-5` even at <lg in the stage; equal-height cards.
-- Product story: keep `grid-cols-[200px_1fr_auto]` but tighten vertical rhythm.
-- Master narrative: cap "master message" font at the same size used on web (already big enough); ensure the two Today/Tomorrow cards equal-height.
-- Pillar matrix: when exporting, render all four pillars stacked (already implemented), but each pillar becomes its own packable unit so each pillar tends to land on its own page or pair of pages instead of two pillars cramming one page and the next two being almost empty.
+### 9. Narration
+`src/data/executivePitchNarration.ts` — leave as-is. Entries for removed IDs (`exec3-slide-automation`, `exec3-slide-insights-summary`, `exec3-slide-insights`) stay in the file but never resolve in the Medium deck because those slide IDs aren't rendered. The Long deck keeps full narration.
 
-# Files touched
+### 10. Memory
+Update `mem://index.md` with a short note pointing at a new `mem://product/executive-pitch-decks` file describing Medium = 16 slides (no Automation, no Recommendations) and Long = full 20 slides. Existing pitch persona memory is unchanged.
 
-- `src/components/PositioningPlaybookPDFButton.tsx` — replace the single-capture + slice loop with the section-stage + packer described above. Keep `drawCover`, `drawFrame`, dimensions, brand colors, and the `data-pdf-export` toggle exactly as they are.
-- `src/pages/PositioningPlaybook.tsx` — add a scoped `<style>` block for `[data-pdf-stage]` rules (tighten paddings, force grid columns, equal heights, hide controls). No copy or component changes. `data-pdf-title` and `data-pdf-section` markers stay as-is.
+## Out of scope
 
-# Out of scope
+- No copy edits to surviving slides
+- No changes to other decks (Operational, Technical, CoAnalyst, etc.)
+- No new narration recordings — Medium uses the subset that already exists
+- No PDF/PPTX visual redesign — just relabeling and a second deck definition
 
-- No new sections, no copy edits, no light/print theme.
-- No TOC or divider pages.
-- No change to the cover page design.
-- No change to filename or button placement.
+## Acceptance
 
-# Acceptance
-
-Open `/positioning-playbook` → click **Download PDF**:
-
-- Page 1: branded cover (unchanged).
-- Pages 2+: every page is visually balanced — content occupies roughly the full content rect with consistent top/bottom breathing room, never a sliver of one card at the top of an otherwise empty page.
-- No card or grid row is ever split across pages.
-- Header shows the correct section title on every page, including continuation pages (which show "· continued").
-- Footer shows version, "Internal GTM use only", and "Page X of Y" correctly.
-- Pillars × Personas renders all four pillars, each pillar's 5-card row stays on one page.
+- `/pitch-executive-medium` loads the 16-slide condensed deck with sidebar, narration, PDF, and PPTX export all working and labeled "Medium".
+- `/pitch-executive-3` still loads the full deck, now labeled "Long" everywhere (sidebar, footer, PPTX filename, PDF filename, home card).
+- Practice Center scenarios route to `/pitch-executive-medium` and run end-to-end.
+- Home page shows both cards.
