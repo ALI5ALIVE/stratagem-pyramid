@@ -7,7 +7,6 @@ import { playbookMeta } from "@/data/positioningPlaybook";
 
 const PAGE_W = 1920;
 const PAGE_H = 1080;
-const RENDER_W = 1400; // matches max-w-[1400px] on the page
 
 // Chrome dimensions (in PDF page px = canvas px)
 const FRAME_INSET = 32;
@@ -177,8 +176,6 @@ function drawCover(ctx: CanvasRenderingContext2D) {
   ctx.fillText("Comply365", PAGE_W - FRAME_INSET - 80, metaY + 12);
 }
 
-type SectionRange = { topPx: number; bottomPx: number; label: string };
-
 const PositioningPlaybookPDFButton = () => {
   const [isExporting, setIsExporting] = useState(false);
 
@@ -186,52 +183,26 @@ const PositioningPlaybookPDFButton = () => {
     setIsExporting(true);
     const toastId = toast.loading("Preparing PDF…");
 
-    // Flip page into export mode (expands tabs, hides header/button)
     document.documentElement.dataset.pdfExport = "true";
 
+    // Off-screen stage host
+    const host = document.createElement("div");
+    host.style.position = "fixed";
+    host.style.left = "-100000px";
+    host.style.top = "0";
+    host.style.width = `${CONTENT_W}px`;
+    host.style.background = BG;
+    host.style.zIndex = "-1";
+    document.body.appendChild(host);
+
     try {
-      // Allow re-render for [data-pdf-export] conditional content
       await new Promise<void>((r) => requestAnimationFrame(() => requestAnimationFrame(() => r())));
       if ((document as any).fonts?.ready) await (document as any).fonts.ready;
 
       const root = document.querySelector<HTMLElement>("[data-pdf-root]");
       if (!root) throw new Error("PDF root not found");
 
-      await waitForImages(root);
-      await new Promise((r) => setTimeout(r, 200));
-
-      toast.loading("Rendering page…", { id: toastId });
-
-      const canvas = await html2canvas(root, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: BG,
-        width: RENDER_W,
-        windowWidth: RENDER_W,
-        logging: false,
-      });
-
-      // Map each Y range to a section label
-      const rootRect = root.getBoundingClientRect();
       const sectionEls = Array.from(root.querySelectorAll<HTMLElement>("[data-pdf-section]"));
-      const sectionRanges: SectionRange[] = sectionEls.map((el, i) => {
-        const r = el.getBoundingClientRect();
-        const top = Math.max(0, Math.floor((r.top - rootRect.top) * 2));
-        const bottom = Math.floor((r.bottom - rootRect.top) * 2);
-        const label = el.dataset.pdfTitle || `Section ${i}`;
-        return { topPx: top, bottomPx: bottom, label };
-      });
-      const labelFor = (midY: number) => {
-        const hit = sectionRanges.find((s) => midY >= s.topPx && midY < s.bottomPx);
-        return hit?.label || "Positioning & Messaging Playbook";
-      };
-      const breakpoints = [0, ...sectionRanges.map((s) => s.topPx).filter((v) => v > 0), canvas.height];
-
-      // Compute slice height in source canvas px so it fits inside the inner content rect
-      // at content rect aspect (CONTENT_W × CONTENT_H), scaled by canvas.width / CONTENT_W.
-      const scale = canvas.width / CONTENT_W;
-      const sliceHeightPx = Math.floor(CONTENT_H * scale);
-
       const pdf = new jsPDF({
         orientation: "landscape",
         unit: "px",
@@ -239,54 +210,150 @@ const PositioningPlaybookPDFButton = () => {
         hotfixes: ["px_scaling"],
       });
 
-      // PASS 1: compute page count for "Page X of Y"
-      const planned: { start: number; end: number }[] = [];
-      let cursor = 0;
-      while (cursor < canvas.height) {
-        const desiredEnd = cursor + sliceHeightPx;
-        let snap = desiredEnd;
-        if (desiredEnd < canvas.height) {
-          const candidate = [...breakpoints].reverse().find((b) => b > cursor + sliceHeightPx * 0.4 && b <= desiredEnd);
-          if (candidate) snap = candidate;
+      // PASS 1: Build pages by packing each section's children into stage-sized pages.
+      type PagePlan = { label: string; nodes: HTMLElement[]; isContinuation: boolean; hero: HTMLElement | null };
+      const plans: PagePlan[] = [];
+
+      for (let s = 0; s < sectionEls.length; s++) {
+        const sec = sectionEls[s];
+        const label = sec.dataset.pdfTitle || `Section ${s + 1}`;
+
+        // Clone section into stage to measure
+        const stage = document.createElement("div");
+        stage.setAttribute("data-pdf-stage", "");
+        stage.style.width = `${CONTENT_W}px`;
+        stage.style.padding = "0";
+        stage.style.boxSizing = "border-box";
+        host.innerHTML = "";
+        host.appendChild(stage);
+
+        const clone = sec.cloneNode(true) as HTMLElement;
+        // Identify hero (first child of section) vs body children
+        const childArr = Array.from(clone.children) as HTMLElement[];
+        const hero = childArr[0] || null;
+        const bodyChildren = childArr.slice(1);
+
+        // Try whole section first
+        clone.style.width = "100%";
+        stage.appendChild(clone);
+        await new Promise<void>((r) => requestAnimationFrame(() => r()));
+        const fullH = stage.scrollHeight;
+
+        if (fullH <= CONTENT_H || bodyChildren.length === 0) {
+          plans.push({ label, nodes: [clone], isContinuation: false, hero: null });
         } else {
-          snap = canvas.height;
+          // Pack body children across pages; hero on first page only
+          stage.innerHTML = "";
+          let currentNodes: HTMLElement[] = [];
+          let isFirst = true;
+          const flush = () => {
+            if (currentNodes.length === 0) return;
+            plans.push({
+              label,
+              nodes: currentNodes,
+              isContinuation: !isFirst,
+              hero: isFirst && hero ? (hero.cloneNode(true) as HTMLElement) : null,
+            });
+            isFirst = false;
+            currentNodes = [];
+          };
+
+          // Build a fresh measurement page
+          const newPage = () => {
+            stage.innerHTML = "";
+            if (isFirst && hero) {
+              stage.appendChild(hero.cloneNode(true) as HTMLElement);
+            } else if (!isFirst) {
+              const cont = document.createElement("div");
+              cont.style.cssText = `font-family:${FONT_BODY};font-size:11px;color:${MUTED};letter-spacing:0.2em;text-transform:uppercase;margin-bottom:16px;`;
+              cont.textContent = `${label} · continued`;
+              stage.appendChild(cont);
+            }
+          };
+          newPage();
+
+          for (const child of bodyChildren) {
+            const c = child.cloneNode(true) as HTMLElement;
+            stage.appendChild(c);
+            await new Promise<void>((r) => requestAnimationFrame(() => r()));
+            if (stage.scrollHeight > CONTENT_H && currentNodes.length > 0) {
+              stage.removeChild(c);
+              flush();
+              newPage();
+              stage.appendChild(c);
+              await new Promise<void>((r) => requestAnimationFrame(() => r()));
+            }
+            currentNodes.push(c);
+          }
+          flush();
         }
-        planned.push({ start: cursor, end: snap });
-        cursor = snap;
-        if (planned.length > 200) break;
       }
 
-      const totalPages = planned.length + 1; // +1 cover
+      const totalPages = plans.length + 1; // +1 cover
 
-      // PASS 2: cover
+      // Cover
       {
         const cover = makePageCanvas();
-        const ctx = cover.getContext("2d")!;
-        drawCover(ctx);
+        drawCover(cover.getContext("2d")!);
         pdf.addImage(cover.toDataURL("image/jpeg", 0.94), "JPEG", 0, 0, PAGE_W, PAGE_H);
       }
 
-      // PASS 3: content pages with chrome
-      planned.forEach((slice, i) => {
+      // Render each page
+      for (let i = 0; i < plans.length; i++) {
+        const plan = plans[i];
+        toast.loading(`Rendering page ${i + 2} of ${totalPages}`, { id: toastId });
+
+        // Build stage for this page
+        const stage = document.createElement("div");
+        stage.setAttribute("data-pdf-stage", "");
+        stage.style.width = `${CONTENT_W}px`;
+        stage.style.minHeight = `${CONTENT_H}px`;
+        stage.style.background = BG;
+        stage.style.boxSizing = "border-box";
+        stage.style.display = "flex";
+        stage.style.flexDirection = "column";
+        host.innerHTML = "";
+        host.appendChild(stage);
+
+        if (plan.hero) stage.appendChild(plan.hero);
+        if (plan.isContinuation) {
+          const cont = document.createElement("div");
+          cont.style.cssText = `font-family:${FONT_BODY};font-size:11px;color:${MUTED};letter-spacing:0.2em;text-transform:uppercase;margin-bottom:16px;`;
+          cont.textContent = `${plan.label} · continued`;
+          stage.appendChild(cont);
+        }
+        for (const n of plan.nodes) stage.appendChild(n);
+
+        await waitForImages(stage);
+        if ((document as any).fonts?.ready) await (document as any).fonts.ready;
+        await new Promise((r) => setTimeout(r, 50));
+
+        const measuredH = Math.min(stage.scrollHeight, CONTENT_H);
+        // Vertically center short content
+        if (measuredH < CONTENT_H * 0.85) {
+          stage.style.justifyContent = "center";
+          stage.style.height = `${CONTENT_H}px`;
+        }
+
+        const snap = await html2canvas(stage, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: BG,
+          width: CONTENT_W,
+          height: CONTENT_H,
+          windowWidth: CONTENT_W,
+          windowHeight: CONTENT_H,
+          logging: false,
+        });
+
         const pageCanvas = makePageCanvas();
         const ctx = pageCanvas.getContext("2d")!;
-        const midY = (slice.start + slice.end) / 2;
-        const label = labelFor(midY);
-        drawFrame(ctx, label, i + 2, totalPages);
-
-        const sliceH = slice.end - slice.start;
-        // Scale slice to fit inside content rect width-preserving
-        const drawW = CONTENT_W;
-        const drawH = sliceH / scale;
-        ctx.drawImage(
-          canvas,
-          0, slice.start, canvas.width, sliceH,
-          CONTENT_X, CONTENT_Y, drawW, drawH
-        );
+        drawFrame(ctx, plan.label, i + 2, totalPages);
+        ctx.drawImage(snap, 0, 0, snap.width, snap.height, CONTENT_X, CONTENT_Y, CONTENT_W, CONTENT_H);
 
         pdf.addPage([PAGE_W, PAGE_H], "landscape");
         pdf.addImage(pageCanvas.toDataURL("image/jpeg", 0.92), "JPEG", 0, 0, PAGE_W, PAGE_H);
-      });
+      }
 
       pdf.save("Comply365-Positioning-Playbook.pdf");
       toast.success(`Exported ${totalPages} pages`, { id: toastId });
@@ -294,6 +361,7 @@ const PositioningPlaybookPDFButton = () => {
       console.error("Positioning PDF export failed:", err);
       toast.error("PDF export failed. See console.", { id: toastId });
     } finally {
+      host.remove();
       delete document.documentElement.dataset.pdfExport;
       setIsExporting(false);
     }
