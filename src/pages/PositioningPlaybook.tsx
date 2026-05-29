@@ -71,7 +71,20 @@ export default function PositioningPlaybook() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <style>{`html[data-pdf-export="true"] [data-pdf-hide]{display:none !important;}`}</style>
+      <style>{`
+        html[data-pdf-export="true"] [data-pdf-hide]{display:none !important;}
+        [data-pdf-stage]{background:hsl(222 47% 6%);color:hsl(210 40% 96%);font-family:'Inter',sans-serif;}
+        [data-pdf-stage] [data-pdf-hide]{display:none !important;}
+        [data-pdf-stage] .sticky{position:static !important;}
+        [data-pdf-stage] .mb-10{margin-bottom:1.25rem !important;}
+        [data-pdf-stage] .mt-8{margin-top:1.25rem !important;}
+        [data-pdf-stage] .pb-16{padding-bottom:0 !important;}
+        [data-pdf-stage] .grid{align-items:stretch;}
+        [data-pdf-stage] .lg\\:grid-cols-5{grid-template-columns:repeat(5,minmax(0,1fr)) !important;}
+        [data-pdf-stage] .lg\\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr)) !important;}
+        [data-pdf-stage] .lg\\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr)) !important;}
+        [data-pdf-stage] .md\\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+      `}</style>
       {/* Top bar */}
       <header data-pdf-hide className="sticky top-0 z-40 border-b border-border/40 bg-background/80 backdrop-blur-lg">
         <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-4">

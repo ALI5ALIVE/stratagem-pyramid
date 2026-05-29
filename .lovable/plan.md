@@ -1,76 +1,77 @@
-## Goal
+# Goal
 
-Upgrade the Positioning Playbook PDF from raw bleed-to-edge page captures into a properly formatted, branded document with a cover page, page margins, repeating header/footer, and page numbers — while keeping the dark brand look (Space Grotesk, primary blue, dark background) so it still mirrors the live page visually.
+Make every page of `Comply365-Positioning-Playbook.pdf` look like a designed document page: balanced content, no awkward whitespace at the bottom, no cards split across pages, no zoomed-in or zoomed-out content, consistent margins, and the brand chrome (header, footer, page numbers) on every page.
 
-## Current problem
+# Why the current output looks wrong
 
-`PositioningPlaybookPDFButton.tsx` captures `<main>` and tiles it edge-to-edge across 1920×1080 landscape pages. Result: no margins, no header band, no footer, no page numbers, no cover — looks like raw screenshots, not a document.
+`PositioningPlaybookPDFButton.tsx` today renders the live `<main>` once at width 1400px, scales it to fit the content rect, then slices the master canvas in fixed-height chunks with a "snap to nearest section break" rule. Three structural problems fall out of that:
 
-## Approach
+1. **One global zoom level.** The whole document is scaled so 1400 CSS px equals the inner content width (~1856 px). Short sections get the same scale as long ones, so a short section becomes a tiny island of content at the top of a near-empty page.
+2. **Slice-first, snap-second.** The slicer only snaps backward to a section top. So a section that's slightly taller than one page becomes "page 1 = mostly full" + "page 2 = a thin tail," and short sections that follow are pushed into half-empty pages.
+3. **No layout reflow per page.** Cards and grids are sized for the live web layout (lg:grid-cols-4, etc.), not for a 1920×1080 page after chrome. On some sections this leaves big gutters; on others it pushes content right to the footer.
 
-Keep the live-DOM capture (preserves pixel-perfect fidelity) but composite each page inside a branded frame painted directly onto the PDF page. No new template to maintain — just a frame layer drawn around the captured slice.
+# Approach
 
-### Page chrome (drawn on every content page)
+Switch from "capture the whole page, slice it" to "render each section into a sized print frame, fit it to one page, split only when truly overflowing." Keep the existing dark brand chrome (cover + header/footer/page numbers).
 
-- Page size: 1920×1080 landscape, dark background `hsl(222 47% 6%)`.
-- Outer hairline border at 32px inset, color `rgba(255,255,255,0.10)`.
-- Header band (top 64px inside the border):
-  - Left: "Comply365 · Positioning & Messaging Playbook" (Inter 18px, foreground/80).
-  - Right: current section name (e.g. "03 · Master narrative") (Inter 16px, primary blue).
-  - Thin hairline rule under the band.
-- Footer band (bottom 48px inside the border):
-  - Left: `v{playbookMeta.version} · Updated {playbookMeta.updated}`.
-  - Center: confidentiality line `Internal GTM use only`.
-  - Right: `Page X of Y`.
-- Content area: the slice from html2canvas, drawn inside the inner box (≈ 1856×920 after chrome) with 16px gutter so card borders aren't kissing the frame.
+## 1. Print stage: an off-DOM, fixed-size render host
 
-### Cover page (page 1)
+Build a hidden host sized to the inner content rect (1856 × 920 px at 1× — same numbers used today for `CONTENT_W` / `CONTENT_H`). For each section in order:
 
-Single full-bleed page drawn programmatically (no DOM capture) with:
-- Top-left small kicker: "Positioning & Messaging Playbook".
-- Centered hero title (Space Grotesk 96px): "From event to control."
-- Subline (Inter 32px, muted): "On one platform."
-- Bottom-left meta block: version, updated date, owners.
-- Bottom-right: "Comply365" wordmark.
-- Subtle radial gradient orb behind title using `ctx.createRadialGradient` with primary blue at low alpha.
+- Clone the section's DOM node into the host (deep clone, preserve classes so Tailwind tokens still apply).
+- Force a print-tuned class on the host root (`data-pdf-stage`) so a small CSS block can:
+  - Drop sticky/transform effects and reduce vertical paddings used for web rhythm (`mb-10` → `mb-6`, hero `pb-6` → `pb-4`).
+  - Force pillar tab grids to a balanced 4×n layout that fits 1856px (lg:grid-cols-5 cards already fit; we just need to guarantee equal heights via `items-stretch`).
+  - Hide anything marked `data-pdf-hide` inside the section (e.g. the pillar tab strip — already hidden, but enforce here too).
+- Wait for fonts/images, then measure the host's `scrollHeight`.
 
-### Section tracking
+## 2. One-page fit logic
 
-To label each page's header with the right section name:
-- Before capture, walk `[data-pdf-section]` and read its visible title (already in the H2 inside `SectionHero`, or fall back to `data-pdf-title` we set on each section).
-- Map every Y-pixel range on the master canvas to a section name. When emitting each page, pick the section whose range covers the page's mid-point and pass that label into the header drawer.
+For each prepared section:
 
-### Slicing improvements
+- If `scrollHeight ≤ CONTENT_H` (920) → render as a single page. Vertically center the content in the page rect (top-align if `scrollHeight ≥ 0.85 × CONTENT_H`, otherwise add equal top/bottom padding so short sections don't float at the top).
+- If `scrollHeight > CONTENT_H` → split into N equal-ish pages by walking the host's **top-level children** (the cards/grids inside the section after the hero). Pack children into a page until the next child would overflow, then start a new page. This guarantees no card is ever cut.
+  - The hero (section title + kicker + intro paragraph) is rendered on the first split page only; on continuation pages, show a subtle "Section X · continued" line in the same slot so the reader keeps context.
 
-- Recompute slice height to `1080 - chromeTop(96) - chromeBottom(80) - gutters(32) = ~872` px target inside chrome; the master canvas slice is scaled to fit the inner content rect, preserving aspect ratio.
-- Keep the existing "snap to section boundary" logic so cards never split across pages.
-- Add a 24px bottom gutter inside content rect so the last card on a page never touches the footer rule.
+## 3. Per-page capture
 
-### Files touched
+For each packed page, render only the chosen children into a fresh stage of size 1856 × 920, html2canvas it at `scale: 2`, then composite into the existing dark frame:
 
-- `src/components/PositioningPlaybookPDFButton.tsx` — replace the slicing/output block with: cover-page draw + per-page chrome draw + section-aware header label. Pull `playbookMeta` for footer text. No public API change.
-- `src/pages/PositioningPlaybook.tsx` — add `data-pdf-title="…"` to each `[data-pdf-section]` so the exporter can label headers without parsing DOM (small additive change to existing markers).
+- Cover page: unchanged (already correct).
+- Content pages: existing `drawFrame` (outer hairline, header band with playbook name + section label, footer with version, "Internal GTM use only", "Page X of Y") — but the inner image is now exactly content-sized, never stretched, never sliced mid-card, and never leaves a large empty band.
 
-### Technical detail (drawing chrome)
+## 4. Section-aware header label (kept, simpler)
 
-All chrome drawn on a per-page `<canvas>` we already create before `pdf.addImage`:
-- Fill background with dark hex.
-- Stroke outer rounded rect (radius 12) at inset 32 with 1px hairline.
-- Set canvas font to `"600 18px Inter"` etc. (fonts are loaded by `document.fonts.ready` before export).
-- `ctx.drawImage` the source slice into the inner content rect.
-- `ctx.fillText` for header left/right + footer left/center/right.
-- Convert to JPEG and add as the page image (one image per page, identical to current path).
+Because we now render section-by-section, the header label is just the current section's `data-pdf-title` — no Y-range mapping needed. Removes a class of off-by-one bugs where the header showed the previous section near a page break.
 
-## Out of scope
+## 5. Per-section layout tweaks (CSS only, scoped to `[data-pdf-stage]`)
 
-- No light/print stylesheet variant.
-- No TOC page, no per-section divider pages.
-- No changes to copy or any other playbook export.
+Small overrides so dense sections breathe and sparse sections fill:
 
-## Acceptance
+- Pillars × Personas: force `grid-cols-5` even at <lg in the stage; equal-height cards.
+- Product story: keep `grid-cols-[200px_1fr_auto]` but tighten vertical rhythm.
+- Master narrative: cap "master message" font at the same size used on web (already big enough); ensure the two Today/Tomorrow cards equal-height.
+- Pillar matrix: when exporting, render all four pillars stacked (already implemented), but each pillar becomes its own packable unit so each pillar tends to land on its own page or pair of pages instead of two pillars cramming one page and the next two being almost empty.
 
-- Click "Download PDF" on `/positioning-playbook` → `Comply365-Positioning-Playbook.pdf` with:
-  - Page 1: branded cover.
-  - Pages 2+: dark page with hairline border, header showing playbook name + current section, footer with version, "Internal GTM use only", and "Page X of Y".
-  - Content unchanged in fidelity (same cards, colors, fonts) but framed with consistent margins and no edge-bleed.
-  - No card split across pages.
+# Files touched
+
+- `src/components/PositioningPlaybookPDFButton.tsx` — replace the single-capture + slice loop with the section-stage + packer described above. Keep `drawCover`, `drawFrame`, dimensions, brand colors, and the `data-pdf-export` toggle exactly as they are.
+- `src/pages/PositioningPlaybook.tsx` — add a scoped `<style>` block for `[data-pdf-stage]` rules (tighten paddings, force grid columns, equal heights, hide controls). No copy or component changes. `data-pdf-title` and `data-pdf-section` markers stay as-is.
+
+# Out of scope
+
+- No new sections, no copy edits, no light/print theme.
+- No TOC or divider pages.
+- No change to the cover page design.
+- No change to filename or button placement.
+
+# Acceptance
+
+Open `/positioning-playbook` → click **Download PDF**:
+
+- Page 1: branded cover (unchanged).
+- Pages 2+: every page is visually balanced — content occupies roughly the full content rect with consistent top/bottom breathing room, never a sliver of one card at the top of an otherwise empty page.
+- No card or grid row is ever split across pages.
+- Header shows the correct section title on every page, including continuation pages (which show "· continued").
+- Footer shows version, "Internal GTM use only", and "Page X of Y" correctly.
+- Pillars × Personas renders all four pillars, each pillar's 5-card row stays on one page.
