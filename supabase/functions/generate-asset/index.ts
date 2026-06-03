@@ -8,6 +8,7 @@ const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 interface GenerateRequest {
   briefId: string;
   refineNote?: string;
+  voice?: "thought_leader" | "corporate" | "hybrid";
 }
 
 const ASSET_TYPE_SPEC: Record<string, string> = {
@@ -21,7 +22,123 @@ const ASSET_TYPE_SPEC: Record<string, string> = {
     "Produce a script in markdown organized scene-by-scene. For each scene give: [Scene N · ~XXs] heading, VISUAL line, SCRIPT line. Cover the full 5-beat spine across 6–10 scenes.",
 };
 
-function buildPrompt(brief: any, item: any, snapshot: any, refineNote?: string) {
+const VOICES: Record<string, { label: string; guide: string }> = {
+  thought_leader: {
+    label: "Thought leader",
+    guide:
+      "First-person where natural. Contrarian or non-obvious POV. Lived operational anchors. Named opinions. Short signature lines. No marketing hedges.",
+  },
+  corporate: {
+    label: "Corporate",
+    guide:
+      "Third-person, brand-led ('Comply365', 'we'). Measured authority. Evidence-backed, no opinion. Procurement-grade language.",
+  },
+  hybrid: {
+    label: "Hybrid",
+    guide:
+      "Corporate frame with thought-leader pull-quotes. Brand narrates, named voices supply opinion.",
+  },
+};
+
+const UNIVERSAL_CRAFT = [
+  "Active voice (Strunk & White).",
+  "Sentence-length variance — alternate short punches with longer rhythmic lines.",
+  "Concrete > abstract: name the system, the dollar, the day.",
+  "Evidence per claim: every assertion has a number, a name, or a source.",
+  "Cut filler adverbs (very, really, simply, just, actually).",
+  "Cut throat-clearing openers. First line earns the second.",
+  "Operational verbs (ship, catch, route) over corporate verbs (leverage, utilize).",
+];
+
+const FRAMEWORKS_BY_TYPE: Record<string, { name: string; authority: string; rules: string[] }[]> = {
+  long_form: [
+    { name: "TRUTH framework", authority: "Ann Handley · Everybody Writes",
+      rules: ["Truthful, Rare, Useful, Tested, Human.", "Don't say what every competitor is already saying."] },
+    { name: "Original research bias", authority: "Andy Crestodina · Orbit Media",
+      rules: ["Lead with proprietary data or first-hand observation.", "Quote a named expert at least once."] },
+    { name: "Scannability (F-pattern)", authority: "Nielsen Norman Group",
+      rules: ["Front-load value in first 11 words of each section.", "Subheads carry meaning if read alone.", "Short paragraphs (≤3 sentences)."] },
+    { name: "BLUF — Bottom Line Up Front", authority: "McKinsey pyramid",
+      rules: ["Conclusion in the first 2 sentences, then support."] },
+  ],
+  social: [
+    { name: "Hook-deck patterns", authority: "Justin Welsh / Dickie Bush",
+      rules: ["Open with contrarian claim, number, or tension.", "Line 1 sells line 2. Line breaks as punctuation."] },
+    { name: "Persuasion principles", authority: "Robert Cialdini · Influence",
+      rules: ["Authority, specificity, social proof.", "'$25–35B' beats 'billions'."] },
+    { name: "AIDA", authority: "E. St. Elmo Lewis",
+      rules: ["Attention → Interest → Desire → Action.", "One idea per line."] },
+  ],
+  enablement: [
+    { name: "Obviously Awesome positioning", authority: "April Dunford",
+      rules: ["Name the competitive alternative honestly.", "Unique attributes → customer value.", "Best-fit customer named."] },
+    { name: "Teach-Tailor-Take Control", authority: "Dixon & Adamson · Challenger Sale",
+      rules: ["Teach buyer something they didn't know.", "Tailor to persona KPIs.", "Recommend a specific next step."] },
+    { name: "Problem→Cost→Solution→Proof→Ask", authority: "B2B enablement standard",
+      rules: ["Problem quantified in $ or risk.", "Differentiator framing, not feature list.", "One CTA, one owner."] },
+  ],
+  script: [
+    { name: "StoryBrand 7-part", authority: "Donald Miller",
+      rules: ["Character has problem, meets guide with plan, called to action, ending in transformation."] },
+    { name: "Three-act structure", authority: "Aristotle / Syd Field",
+      rules: ["Act 1 stake. Act 2 confrontation. Act 3 resolution."] },
+    { name: "Visual/script parallelism", authority: "Broadcast standard",
+      rules: ["VISUAL and SCRIPT on separate lines.", "What viewer SEES reinforces what they HEAR — never duplicates.", "Show, don't tell."] },
+  ],
+};
+
+interface RubricDimension { id: string; label: string; weight: number; guide: string; }
+const RUBRICS_BY_TYPE: Record<string, RubricDimension[]> = {
+  long_form: [
+    { id: "hook", label: "Hook strength", weight: 15, guide: "Does the opener earn the next sentence?" },
+    { id: "originality", label: "Originality / POV", weight: 15, guide: "Non-obvious angle." },
+    { id: "evidence", label: "Evidence density", weight: 15, guide: "Numbers, sources, named customers." },
+    { id: "spine", label: "DTOP / 5-beat fidelity", weight: 15, guide: "All 5 beats present in order." },
+    { id: "scannability", label: "Scannability (NN/g)", weight: 10, guide: "Subheads, short paras, front-loaded value." },
+    { id: "voice", label: "Voice fit", weight: 10, guide: "Matches chosen voice." },
+    { id: "cta", label: "CTA strength", weight: 10, guide: "One specific action." },
+    { id: "terminology", label: "Terminology compliance", weight: 10, guide: "No forbidden terms; product names no spaces." },
+  ],
+  social: [
+    { id: "hook", label: "Hook (line 1)", weight: 25, guide: "Pattern interrupt or specific number." },
+    { id: "specificity", label: "Specificity", weight: 15, guide: "Concrete numbers, names, moments." },
+    { id: "single_idea", label: "Single idea", weight: 10, guide: "Defends one idea, not three." },
+    { id: "pattern", label: "Pattern interrupt", weight: 10, guide: "Rhythm creates stop-scroll." },
+    { id: "authority", label: "Authority signal", weight: 10, guide: "Credential or proof present." },
+    { id: "voice", label: "Voice fit", weight: 15, guide: "Matches chosen voice." },
+    { id: "cta", label: "CTA / question", weight: 10, guide: "Ends with question or ask." },
+    { id: "terminology", label: "Terminology compliance", weight: 5, guide: "No forbidden terms." },
+  ],
+  enablement: [
+    { id: "problem", label: "Problem clarity", weight: 15, guide: "Pain quantified." },
+    { id: "differentiator", label: "Differentiator framing", weight: 15, guide: "Dunford-style." },
+    { id: "proof", label: "Proof density", weight: 15, guide: "Named customers, third-party stats." },
+    { id: "scannability", label: "Scannability", weight: 15, guide: "Skim-readable in 30s." },
+    { id: "sales_ready", label: "Sales-ready", weight: 15, guide: "Usable unchanged by a seller." },
+    { id: "voice", label: "Voice fit", weight: 10, guide: "Matches chosen voice." },
+    { id: "cta", label: "CTA", weight: 10, guide: "Single owned next step." },
+    { id: "terminology", label: "Terminology compliance", weight: 5, guide: "No forbidden terms." },
+  ],
+  script: [
+    { id: "hook", label: "Opening hook", weight: 15, guide: "First 10s earn next 30." },
+    { id: "arc", label: "Story arc", weight: 15, guide: "Three acts." },
+    { id: "parallel", label: "Visual/script parallelism", weight: 15, guide: "VISUAL and SCRIPT reinforce." },
+    { id: "pacing", label: "Pacing", weight: 10, guide: "~30–60s scenes, no dead air." },
+    { id: "spine", label: "DTOP / 5-beat spine", weight: 15, guide: "All 5 beats present." },
+    { id: "voice", label: "Voice fit", weight: 10, guide: "Matches chosen voice." },
+    { id: "cta", label: "CTA", weight: 10, guide: "Specific closing ask." },
+    { id: "terminology", label: "Terminology compliance", weight: 10, guide: "No forbidden terms." },
+  ],
+};
+
+function gradeBand(total: number): string {
+  if (total >= 90) return "A";
+  if (total >= 80) return "B";
+  if (total >= 70) return "C";
+  return "Rework";
+}
+
+function buildPrompt(brief: any, item: any, snapshot: any, voiceId: string, refineNote?: string) {
   const persona = snapshot?.personas?.[item.persona]?.tone ?? "Professional";
   const arc = snapshot?.personas?.[item.persona]?.arc ?? "";
   const spec = ASSET_TYPE_SPEC[item.asset_type] ?? ASSET_TYPE_SPEC.long_form;
@@ -35,23 +152,63 @@ function buildPrompt(brief: any, item: any, snapshot: any, refineNote?: string) 
     })
     .join("\n");
 
-  const system = `You are the senior editor for Comply365's content team.
+  const voice = VOICES[voiceId] ?? VOICES.corporate;
+  const frameworks = FRAMEWORKS_BY_TYPE[item.asset_type] ?? FRAMEWORKS_BY_TYPE.long_form;
+  const rubric = RUBRICS_BY_TYPE[item.asset_type] ?? RUBRICS_BY_TYPE.long_form;
+
+  const frameworkBlock = frameworks
+    .map((f) => `### ${f.name} — ${f.authority}\n${f.rules.map((r) => "- " + r).join("\n")}`)
+    .join("\n\n");
+
+  const rubricBlock = rubric
+    .map((d) => `- ${d.id} (${d.weight} pts) — ${d.label}: ${d.guide}`)
+    .join("\n");
+
+  const system = `You are the senior editor for Comply365's content team — held to the standards of Ann Handley, Andy Crestodina, April Dunford, and Donald Miller.
 Every asset you produce MUST follow the 5-beat spine: Shift → Platform → Loop (DTOP) → Proof → Differentiators.
 DTOP = Detect → Trigger → Orchestrate → Prove.
 Intelligence Layer headline: ~90% domain accuracy at L4–L5 vs ~35% generic AI.
 Product names have NO spaces: Comply365, SafetyManager365, ContentManager365.
 Forbidden terms (do not use): ${forbidden}.
-Tone: ${persona}
+
+Persona tone: ${persona}
 Narrative arc: ${arc}
 
-Output spec:
-${spec}`;
+## VOICE: ${voice.label}
+${voice.guide}
+
+## UNIVERSAL CRAFT RULES (apply to every line)
+${UNIVERSAL_CRAFT.map((r) => "- " + r).join("\n")}
+
+## CRAFT FRAMEWORKS FOR THIS ASSET TYPE
+${frameworkBlock}
+
+## OUTPUT SPEC
+${spec}
+
+## SELF-SCORING — MANDATORY
+After the asset body, append a fenced block exactly like:
+
+\`\`\`json-scorecard
+{
+  "dimensions": [
+    { "id": "hook", "score": 0-10, "rationale": "one sentence", "improvement": "one concrete fix" },
+    ...one entry per rubric dimension below
+  ]
+}
+\`\`\`
+
+Rubric dimensions (id · weight · what to assess):
+${rubricBlock}
+
+Be honest. Score yourself critically — if the hook is generic, score it 4, not 8. Improvements must be concrete edits, not vague advice.`;
 
   const user = `# Brief
 Title: ${item.title}
 Persona: ${item.persona}
 Channel: ${item.channel}
 Asset type: ${item.asset_type}
+Voice: ${voice.label}
 
 Objective: ${brief.objective || "(not provided)"}
 Audience: ${brief.audience || "(not provided)"}
@@ -70,9 +227,41 @@ ${spineLines}
 - ${differentiators}
 
 ${refineNote ? `# Revision note from editor\n${refineNote}\n` : ""}
-Produce the asset now. Markdown only, no preamble.`;
+Produce the asset now. Markdown only, no preamble. End with the json-scorecard block.`;
 
   return { system, user };
+}
+
+function extractScorecard(raw: string, rubric: RubricDimension[]) {
+  const match = raw.match(/```json-scorecard\s*([\s\S]*?)```/i);
+  let body = raw;
+  let scores: any = { dimensions: [] };
+  if (match) {
+    body = raw.replace(match[0], "").trim();
+    try {
+      scores = JSON.parse(match[1]);
+    } catch { /* ignore parse errors */ }
+  }
+  // Compute weighted total
+  const dimMap = new Map(rubric.map((d) => [d.id, d]));
+  let total = 0;
+  let maxPossible = 0;
+  for (const d of rubric) {
+    maxPossible += d.weight;
+    const found = (scores.dimensions ?? []).find((x: any) => x.id === d.id);
+    const s = typeof found?.score === "number" ? Math.max(0, Math.min(10, found.score)) : 0;
+    total += (s / 10) * d.weight;
+  }
+  const totalRounded = Math.round(total);
+  return {
+    body,
+    scores: {
+      dimensions: scores.dimensions ?? [],
+      max_possible: maxPossible,
+    },
+    total: totalRounded,
+    band: gradeBand(totalRounded),
+  };
 }
 
 Deno.serve(async (req) => {
@@ -151,7 +340,8 @@ Deno.serve(async (req) => {
     }
 
     const snapshot = brief.playbook_snapshot ?? {};
-    const { system, user } = buildPrompt(brief, item, snapshot, body.refineNote);
+    const voiceId = body.voice || brief.voice || "corporate";
+    const { system, user } = buildPrompt(brief, item, snapshot, voiceId, body.refineNote);
 
     const model =
       item.asset_type === "social" ? "google/gemini-3-flash-preview" : "google/gemini-2.5-pro";
@@ -180,6 +370,8 @@ Deno.serve(async (req) => {
     }
     const aiJson = await aiResp.json();
     const generated: string = aiJson?.choices?.[0]?.message?.content ?? "";
+    const rubric = RUBRICS_BY_TYPE[item.asset_type] ?? RUBRICS_BY_TYPE.long_form;
+    const parsed = extractScorecard(generated, rubric);
 
     const { data: prevAssets } = await admin
       .from("assets")
@@ -195,8 +387,11 @@ Deno.serve(async (req) => {
         content_item_id: item.id,
         brief_id: brief.id,
         version: nextVersion,
-        body: generated,
-        body_json: {},
+        body: parsed.body,
+        body_json: { voice: voiceId },
+        scores: parsed.scores,
+        score_total: parsed.total,
+        score_band: parsed.band,
         generation_prompt: user,
         model,
         status: "draft",

@@ -208,6 +208,9 @@ export type Database = {
           generation_prompt: string
           id: string
           model: string
+          score_band: string | null
+          score_total: number | null
+          scores: Json
           status: string
           updated_at: string
           version: number
@@ -222,6 +225,9 @@ export type Database = {
           generation_prompt?: string
           id?: string
           model?: string
+          score_band?: string | null
+          score_total?: number | null
+          scores?: Json
           status?: string
           updated_at?: string
           version?: number
@@ -236,6 +242,9 @@ export type Database = {
           generation_prompt?: string
           id?: string
           model?: string
+          score_band?: string | null
+          score_total?: number | null
+          scores?: Json
           status?: string
           updated_at?: string
           version?: number
@@ -278,6 +287,7 @@ export type Database = {
           status: string
           tone: string
           updated_at: string
+          voice: string
         }
         Insert: {
           approved_at?: string | null
@@ -299,6 +309,7 @@ export type Database = {
           status?: string
           tone?: string
           updated_at?: string
+          voice?: string
         }
         Update: {
           approved_at?: string | null
@@ -320,6 +331,7 @@ export type Database = {
           status?: string
           tone?: string
           updated_at?: string
+          voice?: string
         }
         Relationships: [
           {
