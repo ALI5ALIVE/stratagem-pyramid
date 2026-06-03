@@ -403,6 +403,7 @@ export type Database = {
           name: string
           order_index: number
           quarter: string
+          slug: string
           updated_at: string
         }
         Insert: {
@@ -414,6 +415,7 @@ export type Database = {
           name: string
           order_index?: number
           quarter: string
+          slug: string
           updated_at?: string
         }
         Update: {
@@ -425,6 +427,7 @@ export type Database = {
           name?: string
           order_index?: number
           quarter?: string
+          slug?: string
           updated_at?: string
         }
         Relationships: []
