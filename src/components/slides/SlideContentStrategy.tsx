@@ -3,7 +3,7 @@ import { Shield, Zap, Target, TrendingUp, AlertOctagon, RefreshCw, Cog, Radio, R
 import SlideContainer from "./SlideContainer";
 import type { SlideNarrationProps } from "@/types/slideProps";
 import { cn } from "@/lib/utils";
-import { STRATEGY_QUARTERS, type StrategyQuarter, type StrategyAsset } from "@/data/contentStrategy";
+import { STRATEGY_QUARTERS, type StrategyQuarter } from "@/data/contentStrategy";
 
 interface JourneyStage {
   num: number;
@@ -13,7 +13,6 @@ interface JourneyStage {
   bg: string;
 }
 
-type ContentAsset = StrategyAsset;
 type Quarter = StrategyQuarter & {
   icon: React.ElementType;
   color: string;
