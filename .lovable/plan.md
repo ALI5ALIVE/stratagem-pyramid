@@ -1,84 +1,118 @@
-# Upgrade: Editorial Suite → Best-Practice Content Engine
+# Briefs → real editorial briefs (not spine fill-in)
 
-Right now the generator follows Comply365's 5-beat spine and DTOP rules but doesn't apply established content-craft frameworks, doesn't carry a deliberate **voice**, and has no objective **scoring** to drive a review/reflection cycle. This upgrade closes those gaps.
+You're right: the 5-beat spine is **messaging architecture**, not a brief template. Today the brief form makes every item look the same — fill the same five boxes. A proper editorial brief should be **derived from the content strategy** (pillar, persona, channel, asset type), come pre-loaded with a unique **angle, outline, sources, and takeaways**, and be **reviewable/editable before the asset is written**. The spine remains the messaging guardrail in the background, but it is not the brief.
 
-## What changes
+## New flow
 
-### 1. Codify world-class craft frameworks
-Add `src/data/editorialCraft.ts` with named authorities and frameworks the generator must apply per asset type:
+```
+Content Item (strategy)
+     │
+     ▼   AI: "draft me a real brief"
+Editorial Brief (unique per asset)
+  · working title + angle
+  · audience profile
+  · core insight / POV
+  · outline (asset-type specific)
+  · key takeaways
+  · proof / sources to cite
+  · CTA + distribution notes
+  · success metrics
+     │   user reviews + edits
+     ▼   approve
+Asset generation (uses outline as scaffold)
+```
 
-- **Long-form** — Ann Handley (*Everybody Writes* — TRUTH: Truthful · Rare · Useful · Tested · Human), Andy Crestodina (originality + research-backed), Nielsen Norman (F-pattern, scannability), BLUF (Bottom Line Up Front).
-- **Social** — Justin Welsh / Dickie Bush hook-deck patterns, Cialdini's persuasion (specificity + authority), AIDA, "1 idea per line."
-- **Enablement** — April Dunford positioning, Challenger Sale (teach-tailor-take control), problem→cost→solution→proof→ask one-pager structure.
-- **Script** — StoryBrand 7-part (Donald Miller), 3-act narrative, Aristotle's ethos/pathos/logos, "show don't tell," visual-script parallelism.
+Two distinct AI calls: **draft-brief** then **generate-asset**. The user can iterate on the brief without spending tokens on a full draft.
 
-Plus universal craft rules: active voice, sentence length variance, concrete > abstract, no filler adverbs, evidence per claim, sensory verbs.
+## What the brief actually contains (asset-type aware)
 
-### 2. Voice selection (thought-leader vs corporate)
-Add `VOICES` to the playbook:
+Every brief carries these core sections:
+- **Working title & alt titles** (3 options)
+- **One-line angle** — the unique POV for this piece, distinct from every other item in the calendar.
+- **Audience snapshot** — role, KPI under pressure, what they already believe, what they don't.
+- **Core insight** — the non-obvious thing this asset teaches.
+- **Outline** — *the shape of the actual asset, see below.*
+- **Key takeaways** — 3–5 sentences the reader should be able to repeat after reading.
+- **Proof to cite** — specific stats, named customers, Comply365 platform capabilities to weave in (drawn from the playbook).
+- **Sources / references** — external citations the writer should ground claims in.
+- **Voice** — thought-leader / corporate / hybrid (already implemented).
+- **CTA** — single, specific, time-bound.
+- **Distribution** — primary channel + 2 repurpose channels.
+- **Success metric** — e.g. "≥3% LinkedIn engagement", "≥45s avg read time".
+- **Messaging guardrails** (read-only) — the 5-beat spine, DTOP, forbidden terms, differentiators. Shown so the writer/editor sees what the asset will be held to, but not the input form.
 
-- **thought_leader** — first-person where relevant, contrarian POV, lived-experience anchors, named opinions, signature phrasing. Used for exec/ops persona long-form & social.
-- **corporate** — third-person, brand-led, "we/Comply365," measured authority, enterprise-safe. Used for enablement, RFP-adjacent material, official announcements.
-- **hybrid** — corporate frame, thought-leader pull-quotes. Used for scripts, webinars.
+**Outline shape by asset type:**
 
-Voice is selected per brief and locked at approval. The generator's system prompt swaps in the matching style guide.
+| Asset type | Outline schema |
+|---|---|
+| Long-form | H2 sections (5–8), each with: heading, 1-line intent, bullets of sub-points, evidence to cite |
+| Social | Hook line, body lines (4–7), closing question, hashtags |
+| Enablement | Section blocks: Problem · Cost · Solution · How (DTOP) · Proof · Differentiators · Ask. Each with bullets. |
+| Script | Scene list (6–10). Each scene: duration, VISUAL note, SCRIPT beats, on-screen text |
 
-### 3. Per-asset-type scoring rubric (review & reflection loop)
-Each asset type gets a weighted rubric (5–8 dimensions, 0–10 each). The generator returns BOTH the markdown body AND a JSON scorecard in one call.
+Outlines are **structured JSON** so the UI can render section-by-section editing (add/remove/reorder, edit per row) — not one giant textarea.
 
-Rubric examples:
-- **Long-form (100 pts)** — Hook (15) · Originality (15) · Evidence density (15) · DTOP spine fidelity (15) · Scannability/NN guidelines (10) · Voice fit (10) · CTA strength (10) · Terminology compliance (10).
-- **Social (100 pts)** — Hook (25) · Specificity (15) · Single idea (10) · Pattern interrupt (10) · Authority signal (10) · Voice fit (15) · CTA/question (10) · Terminology (5).
-- **Enablement (100 pts)** — Problem clarity (15) · Differentiator framing (15) · Proof density (15) · Scannability (15) · Sales-ready (15) · Voice fit (10) · CTA (10) · Terminology (5).
-- **Script (100 pts)** — Opening hook (15) · Story arc (15) · Visual/script parallelism (15) · Pacing (10) · DTOP spine (15) · Voice fit (10) · CTA (10) · Terminology (10).
+## Brief generation prompt
 
-For every dimension the AI must return: `score`, `rationale`, `improvement` (one concrete fix). Total + grade band (A 90+, B 80+, C 70+, Rework <70) drive a clear reflection step.
+A new `draft-brief` edge function asks the model to:
+1. Read the content item (title, pillar, persona, channel, asset type, quarter, notes) and the playbook snapshot (spine, proofs, differentiators, terminology, personas).
+2. Read the **calendar context** — titles of the other items in the same pillar/quarter — so it can deliberately differentiate the angle from neighbours.
+3. Apply the asset-type craft frameworks (Handley, Dunford, Welsh, StoryBrand, etc. — already codified).
+4. Return a structured brief JSON conforming to the schema above. No prose dump — schema-shaped output the UI can render and edit.
 
-### 4. Reflection loop in the UI
-In `ItemDetail.tsx` per asset version show:
-- Score gauge (total + band) and a bars chart per dimension.
-- "Top 3 improvements" panel from the rationales.
-- One-click **"Regenerate addressing low scores"** that pre-fills the refine note with the sub-70 dimensions and their suggested fixes.
-- Voice picker on the brief.
+Voice and persona drive the recommended angle; the spine is enforced as a guardrail in the writer step, not as a form for the user to fill.
 
-### 5. Brief upgrades
-- New **Voice** dropdown (thought_leader / corporate / hybrid) with a default per asset_type.
-- New **Craft frameworks** read-only chips showing which authorities will be applied (based on asset type).
-- Approval snapshot now also captures voice + craft framework IDs so reproductions are deterministic.
+## UI changes (ItemDetail panel)
 
-## Technical details
+Replace the current "fill 5 spine textareas + 5 brief fields" form with three clear sections:
 
-### Database migration
+1. **Strategy header** (read-only, derived from content item) — pillar, persona, quarter, channel, asset type, voice picker, frameworks chips.
+2. **Brief** (the new structured form) — title/angle/audience/insight/outline editor/takeaways/proof/sources/CTA/distribution/success-metric. A prominent **"Draft brief with AI"** button at the top fills the whole thing in one call; the user then edits anything before approving. Re-draft is allowed.
+3. **Messaging guardrails** (read-only accordion) — collapsed by default. Shows the spine, DTOP, differentiators, forbidden terms. Makes it explicit that these are applied automatically.
+
+After Approve → the **Generate asset** button writes the asset using the approved brief as the scaffold (outline → sections, takeaways → close, proof → citations) while the writer prompt enforces the 5-beat spine and DTOP under the hood.
+
+## Database
+
 ```sql
 ALTER TABLE public.briefs
-  ADD COLUMN IF NOT EXISTS voice text NOT NULL DEFAULT 'corporate';
-
-ALTER TABLE public.assets
-  ADD COLUMN IF NOT EXISTS scores jsonb NOT NULL DEFAULT '{}'::jsonb,
-  ADD COLUMN IF NOT EXISTS score_total integer,
-  ADD COLUMN IF NOT EXISTS score_band text;
+  ADD COLUMN IF NOT EXISTS angle text NOT NULL DEFAULT '',
+  ADD COLUMN IF NOT EXISTS core_insight text NOT NULL DEFAULT '',
+  ADD COLUMN IF NOT EXISTS alt_titles jsonb NOT NULL DEFAULT '[]'::jsonb,
+  ADD COLUMN IF NOT EXISTS outline jsonb NOT NULL DEFAULT '[]'::jsonb,
+  ADD COLUMN IF NOT EXISTS takeaways jsonb NOT NULL DEFAULT '[]'::jsonb,
+  ADD COLUMN IF NOT EXISTS sources jsonb NOT NULL DEFAULT '[]'::jsonb,
+  ADD COLUMN IF NOT EXISTS distribution jsonb NOT NULL DEFAULT '{}'::jsonb,
+  ADD COLUMN IF NOT EXISTS success_metric text NOT NULL DEFAULT '';
 ```
-No RLS changes needed (existing policies cover the columns).
 
-### Files
-- **new** `src/data/editorialCraft.ts` — VOICES, FRAMEWORKS_BY_TYPE, RUBRICS_BY_TYPE, helpers `getRubric()`, `getFrameworks()`, `getDefaultVoice()`.
-- **edit** `src/data/editorialPlaybook.ts` — re-export VOICES; extend `buildPlaybookSnapshot()` to embed voice + craft IDs.
-- **edit** `supabase/functions/generate-asset/index.ts` — request body adds `voice`; prompt composition pulls in framework instructions + rubric; instructs the model to return a fenced ```json``` block at the end containing the scorecard. Parse it, persist `body` (markdown sans json block), `scores`, `score_total`, `score_band`. Keep Gemini 2.5 Pro for long-form/script/enablement; Gemini 3 Flash for social.
-- **edit** `src/components/editorial/ItemDetail.tsx` — Voice select, frameworks chips, scoring panel with bar visualisation, "Regenerate addressing low scores" button.
-- **edit** `src/pages/EditorialSuite.tsx` — minor: surface average score on Assets cards.
-- **migration** add the three columns above.
+`spine_beats` stays (still useful as a snapshot of how the writer plans to address each beat — generated by the brief-drafter, not hand-typed by users). `reference_links` stays. No RLS changes.
 
-### Out of scope
-- Bulk re-scoring of the 55 existing items (each will pick up scoring on next generate).
-- External integrations (Grammarly, Hemingway API).
-- Editing or extending the 5-beat spine itself.
-- Multi-language voices.
+## Files
+
+- **new** `supabase/functions/draft-brief/index.ts` — accepts `{ contentItemId, voice }`, returns structured brief JSON, persists it as the brief in `draft` status.
+- **edit** `supabase/functions/generate-asset/index.ts` — pulls the new fields (`outline`, `core_insight`, `takeaways`, `sources`) into the writer prompt as the asset scaffold; spine/DTOP remain as guardrails.
+- **new** `src/components/editorial/BriefEditor.tsx` — structured editor: title/alt titles, angle, audience, insight, **outline editor** (asset-type aware: section editor for long-form/enablement, line editor for social, scene editor for script), takeaways list, proof checkboxes, sources list, distribution, success metric.
+- **new** `src/components/editorial/OutlineEditor.tsx` — variant-driven outline editor (sections / lines / scenes).
+- **edit** `src/components/editorial/ItemDetail.tsx` — replace inline brief form with Strategy header + `<BriefEditor>` + Messaging guardrails accordion. Wire **"Draft brief with AI"** button to `draft-brief` function.
+- **edit** `src/data/editorialPlaybook.ts` / `editorialCraft.ts` — small helpers: `outlineSchemaFor(assetType)` returning the empty outline shape.
+
+## What stays the same
+
+- The 55 existing items and their pillars stay put.
+- Existing approved briefs keep their data; their new fields default to empty until "Draft brief with AI" is run to enrich them (one click, idempotent — the user can re-draft).
+- Voice, craft frameworks, scoring rubric and reflection loop are unchanged.
+
+## Out of scope
+
+- Bulk brief drafting for all 55 items in one click (follow-up — easy to add once single-item drafting is solid).
+- Image/cover art generation per brief.
+- Calendar-level "rebalance angles to avoid overlap" pass.
 
 ## Open question
-Default voice mapping — confirm or adjust:
-- Exec persona → **thought_leader** for long-form & social, **corporate** for enablement.
-- Ops persona → **hybrid** for long-form, **thought_leader** for social, **corporate** for enablement.
-- Tech persona → **corporate** across the board (precision over personality).
-- All scripts → **hybrid**.
 
-I'll use this mapping unless you tell me otherwise — say the word and I'll build it.
+Two ways to handle existing briefs:
+- **A. Keep them, empty new fields** — user clicks "Draft brief with AI" per item to enrich (recommended, safest).
+- **B. Wipe all 55 existing briefs and require re-draft** — clean slate but loses any edits already made.
+
+I'll go with **A** unless you say otherwise.

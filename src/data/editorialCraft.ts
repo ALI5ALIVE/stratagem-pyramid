@@ -276,3 +276,51 @@ export function bandColor(band: string): string {
     default: return "bg-rose-500";
   }
 }
+
+// =====================================================
+// Outline schemas — shape of the brief's "outline" field
+// per asset type. The OutlineEditor renders the right
+// editor based on the schema kind.
+// =====================================================
+
+export type OutlineKind = "sections" | "social" | "scenes";
+
+export interface SectionOutlineItem {
+  heading: string;
+  intent: string;
+  bullets: string[];
+  evidence: string;
+}
+
+export interface SocialOutlineItem {
+  hook: string;
+  body_lines: string[];
+  closing_question: string;
+  hashtags: string[];
+}
+
+export interface SceneOutlineItem {
+  duration_seconds: number;
+  visual: string;
+  script_beats: string[];
+  on_screen_text: string;
+}
+
+export function outlineKindFor(assetType: AssetTypeId): OutlineKind {
+  switch (assetType) {
+    case "social": return "social";
+    case "script": return "scenes";
+    default: return "sections";
+  }
+}
+
+export function emptyOutlineFor(assetType: AssetTypeId): any {
+  const kind = outlineKindFor(assetType);
+  if (kind === "social") {
+    return [{ hook: "", body_lines: [""], closing_question: "", hashtags: [] }];
+  }
+  if (kind === "scenes") {
+    return [{ duration_seconds: 30, visual: "", script_beats: [""], on_screen_text: "" }];
+  }
+  return [{ heading: "", intent: "", bullets: [""], evidence: "" }];
+}
