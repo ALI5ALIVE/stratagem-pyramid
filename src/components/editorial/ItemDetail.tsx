@@ -261,83 +261,117 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
             </SheetHeader>
 
             <div className="mt-6 space-y-8">
-              {/* BRIEF */}
-              <section>
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-bold text-lg">Brief</h3>
+              {/* STRATEGY HEADER (derived from content item, with voice + frameworks) */}
+              <section className="rounded border border-border bg-card/30 p-4 space-y-3">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <div>
+                    <div className="text-xs uppercase text-muted-foreground">Strategy</div>
+                    <div className="font-semibold">{item.quarter} · {item.persona} persona · {item.channel}</div>
+                    <div className="text-xs text-muted-foreground">Asset type: {item.asset_type}</div>
+                  </div>
                   {brief?.status === "approved" && (
-                    <Badge className="bg-emerald-600"><CheckCircle2 className="w-3 h-3 mr-1" /> Approved</Badge>
+                    <Badge className="bg-emerald-600"><CheckCircle2 className="w-3 h-3 mr-1" /> Brief approved</Badge>
                   )}
                 </div>
-                <fieldset disabled={!canEdit} className="space-y-3">
+                <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-3 items-start">
                   <div>
-                    <Label>Objective</Label>
-                    <Input value={objective} onChange={(e) => setObjective(e.target.value)} placeholder="One sentence: what should this asset do?" />
-                  </div>
-                  <div>
-                    <Label>Audience</Label>
-                    <Input value={audience} onChange={(e) => setAudience(e.target.value)} placeholder="Job title, industry, mindset" />
-                  </div>
-                  <div>
-                    <Label>Key message</Label>
-                    <Textarea value={keyMessage} onChange={(e) => setKeyMessage(e.target.value)} rows={2} placeholder="The one thing they should remember." />
-                  </div>
-                  <div className="grid grid-cols-3 gap-2">
-                    <div><Label>CTA</Label><Input value={cta} onChange={(e) => setCta(e.target.value)} /></div>
-                    <div><Label>Tone</Label><Input value={tone} onChange={(e) => setTone(e.target.value)} /></div>
-                    <div><Label>Length</Label><Input value={length} onChange={(e) => setLength(e.target.value)} /></div>
-                  </div>
-
-                  <div className="grid grid-cols-[1fr_2fr] gap-3 items-start">
-                    <div>
-                      <Label>Voice</Label>
-                      <Select value={voice} onValueChange={(v) => setVoice(v as VoiceId)}>
-                        <SelectTrigger><SelectValue /></SelectTrigger>
-                        <SelectContent>
-                          {Object.entries(VOICES).map(([k, v]) => (
-                            <SelectItem key={k} value={k}>{v.label}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <p className="text-xs text-muted-foreground mt-1">{VOICES[voice].guide}</p>
-                    </div>
-                    <div>
-                      <Label>Craft frameworks applied</Label>
-                      <div className="flex flex-wrap gap-1.5 mt-1.5">
-                        {frameworks.map((f) => (
-                          <Badge key={f.name} variant="outline" className="text-xs" title={f.rules.join(" · ")}>
-                            {f.name} <span className="text-muted-foreground ml-1">· {f.authority.split("·")[0].trim()}</span>
-                          </Badge>
+                    <Label className="text-xs">Voice</Label>
+                    <Select value={voice} onValueChange={(v) => setVoice(v as VoiceId)} disabled={!canEdit}>
+                      <SelectTrigger><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        {Object.entries(VOICES).map(([k, v]) => (
+                          <SelectItem key={k} value={k}>{v.label}</SelectItem>
                         ))}
-                      </div>
-                      <p className="text-xs text-muted-foreground mt-1.5">
-                        Each draft is auto-scored against an {rubric.length}-dimension rubric (100 pts).
-                      </p>
-                    </div>
+                      </SelectContent>
+                    </Select>
+                    <p className="text-xs text-muted-foreground mt-1">{VOICES[voice].guide}</p>
                   </div>
-
                   <div>
-                    <Label className="mb-2 block">5-beat spine</Label>
-                    <div className="space-y-2">
-                      {SPINE_BEATS.map((b) => (
-                        <div key={b.id} className="grid grid-cols-[140px_1fr] gap-2 items-start">
-                          <div className="text-xs">
-                            <div className="font-semibold">{b.label}</div>
-                            <div className="text-muted-foreground">{b.purpose}</div>
-                          </div>
-                          <Textarea
-                            value={spine[b.id] ?? ""}
-                            onChange={(e) => setSpine({ ...spine, [b.id]: e.target.value })}
-                            rows={2}
-                            placeholder="(brief input — leave blank to use playbook default)"
-                          />
-                        </div>
+                    <Label className="text-xs">Craft frameworks applied to this asset type</Label>
+                    <div className="flex flex-wrap gap-1.5 mt-1.5">
+                      {frameworks.map((f) => (
+                        <Badge key={f.name} variant="outline" className="text-xs" title={f.rules.join(" · ")}>
+                          {f.name} <span className="text-muted-foreground ml-1">· {f.authority.split("·")[0].trim()}</span>
+                        </Badge>
                       ))}
                     </div>
+                    <p className="text-xs text-muted-foreground mt-1.5">
+                      Drafts are auto-scored against a {rubric.length}-dimension rubric (100 pts).
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              {/* BRIEF */}
+              <section>
+                <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
+                  <h3 className="font-bold text-lg">Editorial brief</h3>
+                  {canEdit && (
+                    <Button onClick={draftBriefWithAI} disabled={drafting} variant="outline" size="sm">
+                      {drafting
+                        ? <><Loader2 className="w-4 h-4 mr-1 animate-spin" /> Drafting…</>
+                        : <><Wand2 className="w-4 h-4 mr-1" /> {brief ? "Re-draft brief with AI" : "Draft brief with AI"}</>}
+                    </Button>
+                  )}
+                </div>
+                <p className="text-xs text-muted-foreground mb-3">
+                  Drafted from the content strategy + sibling items in this pillar, applied through the craft frameworks above. Edit anything, then approve. The 5-beat messaging spine is enforced at write-time — you don't fill it in here.
+                </p>
+
+                <fieldset disabled={!canEdit} className="space-y-4">
+                  <div>
+                    <Label>Working title</Label>
+                    <Input value={workingTitle} onChange={(e) => setWorkingTitle(e.target.value)} placeholder="Sharper than the calendar title" />
+                  </div>
+
+                  {altTitles.length > 0 && (
+                    <div>
+                      <Label>Alternative titles</Label>
+                      <div className="space-y-1.5">
+                        {altTitles.map((t, i) => (
+                          <Input key={i} value={t} onChange={(e) => updateAltTitle(i, e.target.value)} />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div>
+                    <Label>Angle (unique POV)</Label>
+                    <Textarea value={angle} onChange={(e) => setAngle(e.target.value)} rows={2} placeholder="One sentence — what makes THIS piece different from every other in the pillar." />
                   </div>
 
                   <div>
-                    <Label className="mb-2 block">Proof points</Label>
+                    <Label>Audience snapshot</Label>
+                    <Textarea value={audience} onChange={(e) => setAudience(e.target.value)} rows={3} placeholder="Role, KPI under pressure, what they already believe, what they don't." />
+                  </div>
+
+                  <div>
+                    <Label>Core insight</Label>
+                    <Textarea value={coreInsight} onChange={(e) => setCoreInsight(e.target.value)} rows={2} placeholder="The non-obvious thing this asset teaches." />
+                  </div>
+
+                  <div>
+                    <Label className="mb-2 block">Outline ({outline.length} {outline.length === 1 ? "block" : "blocks"})</Label>
+                    <OutlineEditor
+                      assetType={item.asset_type as any}
+                      value={outline}
+                      onChange={setOutline}
+                      disabled={!canEdit}
+                    />
+                  </div>
+
+                  <div>
+                    <Label className="mb-2 block">Key takeaways (one per line)</Label>
+                    <Textarea
+                      rows={4}
+                      value={takeaways.join("\n")}
+                      onChange={(e) => setTakeaways(e.target.value.split("\n").filter(Boolean))}
+                      placeholder="3–5 sentences the reader should be able to repeat"
+                    />
+                  </div>
+
+                  <div>
+                    <Label className="mb-2 block">Proof to cite</Label>
                     <div className="space-y-1.5">
                       {PROOF_POINTS.map((p) => (
                         <label key={p} className="flex items-start gap-2 text-sm cursor-pointer">
@@ -358,6 +392,42 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
                       ))}
                     </div>
                   </div>
+
+                  <div>
+                    <Label className="mb-2 block">External sources / references (one per line)</Label>
+                    <Textarea
+                      rows={3}
+                      value={sources.join("\n")}
+                      onChange={(e) => setSources(e.target.value.split("\n").filter(Boolean))}
+                      placeholder="Eurocontrol Vol. 8 2024 · IATA Safety Report 2023 · etc."
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                      <Label>Primary distribution channel</Label>
+                      <Input value={distPrimary} onChange={(e) => setDistPrimary(e.target.value)} placeholder="e.g. company blog, LinkedIn, sales email" />
+                    </div>
+                    <div>
+                      <Label>Repurpose channels (comma-separated)</Label>
+                      <Input
+                        value={distRepurpose.join(", ")}
+                        onChange={(e) => setDistRepurpose(e.target.value.split(",").map((s) => s.trim()).filter(Boolean))}
+                        placeholder="LinkedIn carousel, newsletter"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label>Success metric</Label>
+                    <Input value={successMetric} onChange={(e) => setSuccessMetric(e.target.value)} placeholder="e.g. ≥3% LinkedIn engagement · ≥45s avg read time" />
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-2">
+                    <div><Label>CTA</Label><Input value={cta} onChange={(e) => setCta(e.target.value)} /></div>
+                    <div><Label>Tone</Label><Input value={tone} onChange={(e) => setTone(e.target.value)} /></div>
+                    <div><Label>Length</Label><Input value={length} onChange={(e) => setLength(e.target.value)} /></div>
+                  </div>
                 </fieldset>
 
                 {canEdit && (
@@ -368,6 +438,34 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
                     </Button>
                   </div>
                 )}
+
+                {/* Messaging guardrails (collapsed) */}
+                <Collapsible open={guardrailsOpen} onOpenChange={setGuardrailsOpen} className="mt-6">
+                  <CollapsibleTrigger asChild>
+                    <button className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground">
+                      <ChevronDown className={`w-3 h-3 transition-transform ${guardrailsOpen ? "rotate-0" : "-rotate-90"}`} />
+                      Messaging guardrails (auto-applied at write-time)
+                    </button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="mt-3 rounded border border-border bg-card/30 p-3 text-xs space-y-2">
+                    <div>
+                      <div className="font-semibold mb-1">5-beat spine</div>
+                      <ol className="list-decimal pl-4 space-y-0.5 text-muted-foreground">
+                        {SPINE_BEATS.map((b) => <li key={b.id}><span className="text-foreground">{b.label}</span> — {b.purpose}</li>)}
+                      </ol>
+                    </div>
+                    <div>
+                      <div className="font-semibold mb-1">Differentiators (the close)</div>
+                      <ul className="list-disc pl-4 space-y-0.5 text-muted-foreground">
+                        {DIFFERENTIATORS.map((d) => <li key={d}>{d}</li>)}
+                      </ul>
+                    </div>
+                    <div>
+                      <div className="font-semibold mb-1 text-rose-500">Forbidden terms</div>
+                      <p className="text-muted-foreground">{TERMINOLOGY.forbidden.join(" · ")}</p>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
               </section>
 
               {/* GENERATE */}
