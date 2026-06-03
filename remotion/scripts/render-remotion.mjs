@@ -16,13 +16,14 @@ const browser = await openBrowser("chrome", {
   chromeMode: "chrome-for-testing",
 });
 
+const compId = process.argv[2] ?? "main";
+const output = process.argv[3] ?? "/mnt/documents/silos-to-signals.mp4";
+
 const composition = await selectComposition({
   serveUrl: bundled,
-  id: "main",
+  id: compId,
   puppeteerInstance: browser,
 });
-
-const output = process.argv[2] ?? "/mnt/documents/silos-to-signals.mp4";
 
 await renderMedia({
   composition,
