@@ -268,67 +268,91 @@ export type Database = {
       }
       briefs: {
         Row: {
+          alt_titles: Json
+          angle: string
           approved_at: string | null
           approved_by: string | null
           audience: string
           content_item_id: string
+          core_insight: string
           created_at: string
           created_by: string | null
           cta: string
+          distribution: Json
           format: string
           id: string
           key_message: string
           length: string
           objective: string
+          outline: Json
           playbook_snapshot: Json
           proof_points: Json
           reference_links: Json
+          sources: Json
           spine_beats: Json
           status: string
+          success_metric: string
+          takeaways: Json
           tone: string
           updated_at: string
           voice: string
         }
         Insert: {
+          alt_titles?: Json
+          angle?: string
           approved_at?: string | null
           approved_by?: string | null
           audience?: string
           content_item_id: string
+          core_insight?: string
           created_at?: string
           created_by?: string | null
           cta?: string
+          distribution?: Json
           format?: string
           id?: string
           key_message?: string
           length?: string
           objective?: string
+          outline?: Json
           playbook_snapshot?: Json
           proof_points?: Json
           reference_links?: Json
+          sources?: Json
           spine_beats?: Json
           status?: string
+          success_metric?: string
+          takeaways?: Json
           tone?: string
           updated_at?: string
           voice?: string
         }
         Update: {
+          alt_titles?: Json
+          angle?: string
           approved_at?: string | null
           approved_by?: string | null
           audience?: string
           content_item_id?: string
+          core_insight?: string
           created_at?: string
           created_by?: string | null
           cta?: string
+          distribution?: Json
           format?: string
           id?: string
           key_message?: string
           length?: string
           objective?: string
+          outline?: Json
           playbook_snapshot?: Json
           proof_points?: Json
           reference_links?: Json
+          sources?: Json
           spine_beats?: Json
           status?: string
+          success_metric?: string
+          takeaways?: Json
           tone?: string
           updated_at?: string
           voice?: string
