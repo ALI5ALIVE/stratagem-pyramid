@@ -10,6 +10,7 @@ import { Calendar, FileText, Sparkles, BookOpen, Plus, ShieldAlert } from "lucid
 import { CalendarView } from "@/components/editorial/CalendarView";
 import { ItemDialog } from "@/components/editorial/ItemDialog";
 import { ItemDetail } from "@/components/editorial/ItemDetail";
+import { BulkDraftDrawer } from "@/components/editorial/BulkDraftDrawer";
 import {
   SPINE_BEATS, DIFFERENTIATORS, PROOF_POINTS, TERMINOLOGY, PERSONAS,
 } from "@/data/editorialPlaybook";
@@ -26,6 +27,7 @@ export default function EditorialSuite() {
   const [dialogInitial, setDialogInitial] = useState<any | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [detailItemId, setDetailItemId] = useState<string | null>(null);
+  const [bulkOpen, setBulkOpen] = useState(false);
 
   const load = useCallback(async () => {
     const [p, i] = await Promise.all([
@@ -72,9 +74,14 @@ export default function EditorialSuite() {
           <div className="flex items-center gap-3">
             <Badge variant="outline">{role ?? "no role"}</Badge>
             {canEdit && (
+              <>
+                <Button variant="outline" onClick={() => setBulkOpen(true)}>
+                  <Sparkles className="w-4 h-4 mr-1" /> Bulk draft briefs
+                </Button>
               <Button onClick={() => { setDialogInitial(null); setDialogOpen(true); }}>
                 <Plus className="w-4 h-4 mr-1" /> New item
               </Button>
+              </>
             )}
           </div>
         </div>
@@ -147,6 +154,12 @@ export default function EditorialSuite() {
         itemId={detailItemId}
         canEdit={canEdit}
         onChanged={load}
+      />
+      <BulkDraftDrawer
+        open={bulkOpen}
+        onOpenChange={setBulkOpen}
+        pillars={pillars as any}
+        onDone={load}
       />
     </div>
   );

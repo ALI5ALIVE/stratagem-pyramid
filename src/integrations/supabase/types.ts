@@ -266,6 +266,57 @@ export type Database = {
           },
         ]
       }
+      brief_jobs: {
+        Row: {
+          created_at: string
+          created_by: string
+          errors: Json
+          failed: number
+          filters: Json
+          finished_at: string | null
+          id: string
+          skipped: number
+          started_at: string | null
+          status: string
+          succeeded: number
+          total: number
+          updated_at: string
+          voice: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          errors?: Json
+          failed?: number
+          filters?: Json
+          finished_at?: string | null
+          id?: string
+          skipped?: number
+          started_at?: string | null
+          status?: string
+          succeeded?: number
+          total?: number
+          updated_at?: string
+          voice?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          errors?: Json
+          failed?: number
+          filters?: Json
+          finished_at?: string | null
+          id?: string
+          skipped?: number
+          started_at?: string | null
+          status?: string
+          succeeded?: number
+          total?: number
+          updated_at?: string
+          voice?: string
+        }
+        Relationships: []
+      }
       briefs: {
         Row: {
           alt_titles: Json
