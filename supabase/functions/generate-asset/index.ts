@@ -138,6 +138,27 @@ function gradeBand(total: number): string {
   return "Rework";
 }
 
+function renderOutline(outline: any, assetType: string): string {
+  if (!Array.isArray(outline) || outline.length === 0) return "(no outline supplied — use the spine to structure the asset)";
+  try {
+    if (assetType === "social") {
+      const o = outline[0] ?? {};
+      return `Hook: ${o.hook ?? ""}\nBody lines:\n${(o.body_lines ?? []).map((l: string) => "  - " + l).join("\n")}\nClosing question: ${o.closing_question ?? ""}\nHashtags: ${(o.hashtags ?? []).join(" ")}`;
+    }
+    if (assetType === "script") {
+      return outline.map((s: any, i: number) =>
+        `Scene ${i + 1} · ~${s.duration_seconds ?? 30}s\n  VISUAL: ${s.visual ?? ""}\n  SCRIPT beats:\n${(s.script_beats ?? []).map((b: string) => "    - " + b).join("\n")}\n  On-screen: ${s.on_screen_text ?? ""}`
+      ).join("\n\n");
+    }
+    // sections
+    return outline.map((s: any, i: number) =>
+      `### Section ${i + 1}: ${s.heading ?? ""}\nIntent: ${s.intent ?? ""}\nSub-points:\n${(s.bullets ?? []).map((b: string) => "  - " + b).join("\n")}\nEvidence to cite: ${s.evidence ?? ""}`
+    ).join("\n\n");
+  } catch {
+    return JSON.stringify(outline);
+  }
+}
+
 function buildPrompt(brief: any, item: any, snapshot: any, voiceId: string, refineNote?: string) {
   const persona = snapshot?.personas?.[item.persona]?.tone ?? "Professional";
   const arc = snapshot?.personas?.[item.persona]?.arc ?? "";
@@ -151,6 +172,14 @@ function buildPrompt(brief: any, item: any, snapshot: any, voiceId: string, refi
       return `- **${b.label}** — ${b.purpose}\n  Brief input: ${v}`;
     })
     .join("\n");
+
+  const outlineBlock = renderOutline(brief.outline, item.asset_type);
+  const takeaways = (brief.takeaways ?? []).map((t: string) => "- " + t).join("\n") || "(none)";
+  const sources = (brief.sources ?? []).map((s: string) => "- " + s).join("\n") || "(none)";
+  const altTitles = (brief.alt_titles ?? []).join(" · ");
+  const distribution = brief.distribution
+    ? `Primary: ${brief.distribution.primary_channel ?? "(n/a)"} · Repurpose: ${(brief.distribution.repurpose ?? []).join(", ")}`
+    : "(none)";
 
   const voice = VOICES[voiceId] ?? VOICES.corporate;
   const frameworks = FRAMEWORKS_BY_TYPE[item.asset_type] ?? FRAMEWORKS_BY_TYPE.long_form;
@@ -209,15 +238,29 @@ Persona: ${item.persona}
 Channel: ${item.channel}
 Asset type: ${item.asset_type}
 Voice: ${voice.label}
+Working title: ${brief.angle ? (brief as any).working_title ?? item.title : item.title}
+Alt titles considered: ${altTitles || "(none)"}
 
 Objective: ${brief.objective || "(not provided)"}
 Audience: ${brief.audience || "(not provided)"}
-Key message: ${brief.key_message || "(not provided)"}
+Angle (unique POV): ${brief.angle || "(not provided)"}
+Core insight: ${brief.core_insight || brief.key_message || "(not provided)"}
 CTA: ${brief.cta || "(not provided)"}
 Tone override: ${brief.tone || "(use persona default)"}
 Length: ${brief.length || "(use asset spec default)"}
+Success metric: ${brief.success_metric || "(not set)"}
+Distribution: ${distribution}
 
-# 5-beat spine
+# OUTLINE — this is the scaffold for the asset; follow it section by section
+${outlineBlock}
+
+# Key takeaways the reader must leave with
+${takeaways}
+
+# External sources to ground claims in
+${sources}
+
+# 5-beat messaging spine (guardrails — weave naturally, do NOT label sections "Shift" / "Platform" / etc.)
 ${spineLines}
 
 # Proof points to weave in
@@ -227,7 +270,7 @@ ${spineLines}
 - ${differentiators}
 
 ${refineNote ? `# Revision note from editor\n${refineNote}\n` : ""}
-Produce the asset now. Markdown only, no preamble. End with the json-scorecard block.`;
+Produce the asset now. Follow the OUTLINE as the scaffold — every section/scene/line in the outline becomes a section/scene/line in the asset. Weave the spine beats and proof points naturally into that structure. Markdown only, no preamble. End with the json-scorecard block.`;
 
   return { system, user };
 }
