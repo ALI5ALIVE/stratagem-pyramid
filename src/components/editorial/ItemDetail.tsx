@@ -72,12 +72,12 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
       setLength(br.length ?? "");
       setSpine((br.spine_beats as Record<string, string>) ?? {});
       setSelectedProofs((br.proof_points as string[]) ?? []);
-      setVoice((br.voice as VoiceId) ?? getDefaultVoice(it?.persona ?? "exec", it?.asset_type ?? "long_form"));
+      setVoice((br.voice as VoiceId) ?? getDefaultVoice(it?.persona ?? "exec", (it?.asset_type ?? "long_form") as any));
     } else {
       setObjective(""); setAudience(""); setKeyMessage("");
       setCta(""); setTone(""); setLength("");
       setSpine({}); setSelectedProofs([]);
-      setVoice(getDefaultVoice(it?.persona ?? "exec", it?.asset_type ?? "long_form"));
+      setVoice(getDefaultVoice(it?.persona ?? "exec", (it?.asset_type ?? "long_form") as any));
     }
     const { data: ass } = await supabase
       .from("assets")
@@ -176,8 +176,8 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
 
   if (!open) return null;
 
-  const frameworks = item ? getFrameworks(item.asset_type) : [];
-  const rubric = item ? getRubric(item.asset_type) : [];
+  const frameworks = item ? getFrameworks(item.asset_type as any) : [];
+  const rubric = item ? getRubric(item.asset_type as any) : [];
   const rubricMap = Object.fromEntries(rubric.map((r) => [r.id, r]));
 
   return (
