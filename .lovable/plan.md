@@ -1,83 +1,36 @@
-# Bulk-enrich all 55 briefs
+# DTOP in 90 Seconds — Explainer Video Render
 
-Goal: populate `angle`, `core_insight`, `outline`, `takeaways`, `sources`, `alt_titles`, `distribution`, `success_metric` (and refreshed `spine_beats`) on every brief by running the existing `draft-brief` edge function — without overwriting any human-edited content and without hitting rate limits.
+Render the approved script `Explainer Video Script: DTOP in 90 Seconds` (asset `88f04ace…`) into a 100s MP4 using the existing Remotion project in `remotion/`, with synced ElevenLabs voiceover, on-brand motion graphics, and dark Comply365 styling.
 
-## 1. New edge function: `bulk-draft-briefs`
+## Approach
 
-A server-side orchestrator so the work survives browser refresh and respects gateway limits.
+1. **New composition `dtop90`** registered in `remotion/src/Root.tsx` — 1920×1080, 30fps, ~3000 frames (100s, leaves headroom for the 7 scenes that total ~100s in the script).
+2. **Seven scene components** under `remotion/src/scenes/dtop90/`, one per script scene, durations matching the script:
+   - `S1_Scramble` (15s) — split-screen chaos vs clean loop, "The Scramble vs The Loop"
+   - `S2_Detect` (10s) — signal pulse entering the loop, DETECT label
+   - `S3_Trigger` (10s) — first domino tips, TRIGGER label
+   - `S4_Orchestrate` (20s) — branching domino chain illuminating Notify/Update/Assign/Ground icons + Comply365/SafetyManager365/ContentManager365 lockups, ORCHESTRATE label
+   - `S5_Prove` (15s) — final domino into slot, completed form with green check + signature, closed glowing circuit, PROVE label
+   - `S6_DTOP` (20s) — closed loop pulls back, D-T-O-P letters reveal, chaotic wires fade to black, taglines
+   - `S7_CTA` (10s) — Comply365 logo + "See Your DTOP Loop in Action" button (static end card, not interactive)
+3. **Motion system** — reuse `PersistentBackground` tone; DTOP brand colors: D blue, T amber, O violet, P emerald, primary `#0066FF`, bg `hsl(222 47% 6%)`. Space Grotesk headings, Inter body via `@remotion/google-fonts`. Spring entrances (`{damping: 20, stiffness: 200}`), no CSS transitions. Domino chain built from staggered `interpolate` of rotation + drop-shadow.
+4. **Voiceover** — generate 7 mp3 files at `remotion/public/audio/dtop90/sN.mp3` using ElevenLabs (voice `JBFqnCBsd6RMkjVDRZzb` — George, corporate male) via a one-off `scripts/generate-dtop90-vo.mjs` that hits the existing `elevenlabs-tts` edge function (or direct API with `ELEVENLABS_API_KEY` secret). Each scene `<Sequence>` mounts its `<Audio>` with a 12-frame offset so VO starts after the visual hook.
+5. **Music bed** — reuse `public/audio/score.mp3` if present; otherwise omit. Duck to 0.16 during VO windows, same pattern as `MainVideo.tsx`.
+6. **Render** — `cd remotion && node scripts/render-remotion.mjs` with the script updated to select composition id `dtop90` and write to `/mnt/documents/dtop-90-seconds.mp4`. Use `chromeMode: "chrome-for-testing"`, `muted: false` (audio needed), `concurrency: 1`.
+7. **QA** — render stills at frames 30, 480, 1200, 2400, 2850 with `bunx remotion still` and inspect each before the full render. Re-render on visual issues.
+8. **Deliver** — emit `<presentation-artifact path="dtop-90-seconds.mp4" mime_type="video/mp4">`.
 
-Inputs (all optional):
-- `quarter`: limit to Q1/Q2/Q3/Q4
-- `pillarId`: limit to one pillar
-- `onlyEmpty` (default `true`): skip briefs where `angle <> ''` (preserves human edits)
-- `voice`: `corporate` (default) | `thought_leader` | `hybrid`
-- `concurrency` (default `2`, max `4`)
-- `dryRun` (default `false`): return the target list without calling the model
+## Files
 
-Behaviour:
-- Auth: editor/owner only (same gate as `draft-brief`).
-- Loads target `content_items` grouped by `pillar_id` so sibling context is consistent.
-- Calls the **existing `draft-brief` logic** per item (refactor its core into a shared `draftBriefForItem(itemId, voice)` helper imported by both functions — no duplication).
-- Throttle: process items in batches of `concurrency`, with a 1.2s gap between batches to stay well under Lovable AI gateway limits.
-- Per-item error isolation: one failure does not abort the run.
-- Returns a JSON summary: `{ attempted, succeeded, failed: [{itemId, title, error}], skipped }`.
-- Emits progress rows to a new lightweight `brief_jobs` table so the UI can poll.
+- new `remotion/src/scenes/dtop90/S1_Scramble.tsx` … `S7_CTA.tsx`
+- new `remotion/src/compositions/DTOP90.tsx` (composition wrapper + audio mux)
+- new `remotion/scripts/generate-dtop90-vo.mjs`
+- edit `remotion/src/Root.tsx` — add `<Composition id="dtop90" …>`
+- edit `remotion/scripts/render-remotion.mjs` — accept composition id arg or duplicate for dtop90
+- new `remotion/public/audio/dtop90/s1…s7.mp3` (generated)
 
-## 2. New table: `brief_jobs`
+## Open questions
 
-Tracks each bulk run for visibility and resumability.
-
-```text
-brief_jobs
-- id uuid pk
-- created_by uuid
-- status text  (queued | running | done | error)
-- total int, succeeded int, failed int
-- filters jsonb, voice text
-- errors jsonb  (array of {itemId, title, message})
-- started_at, finished_at timestamptz
-```
-
-RLS: editors/owners can read/insert/update their own jobs. Standard GRANTs.
-
-## 3. UI: Bulk-draft drawer on `/editorial`
-
-Add a **"Bulk draft briefs"** button in the Editorial Suite header that opens a drawer:
-
-- Filters: Quarter (All / Q1–Q4), Pillar (All / list), Voice (Corporate / Thought leader / Hybrid).
-- Toggle: **"Only enrich empty briefs"** (default on).
-- "Preview targets" → calls `bulk-draft-briefs` with `dryRun: true` and shows the count + titles.
-- "Start enrichment" → kicks off the real run, opens a live progress panel polling `brief_jobs` every 2s.
-- On completion: summary card with succeeded/failed counts, a list of failures with retry buttons, and a "Review enriched briefs" link that filters the calendar to recently updated items.
-
-## 4. Safety & idempotency
-
-- `onlyEmpty=true` is the default so re-running never clobbers human work.
-- A small **"Re-draft this brief"** action already exists per item — unchanged. The bulk path uses the same write path, so behaviour stays consistent.
-- All writes go through the existing `briefs` upsert in `draft-brief` (now in the shared helper). No new write surface.
-
-## 5. Sibling-awareness (already in `draft-brief`)
-
-`draft-brief` already loads sibling items by `pillar_id` and instructs the model to differentiate the angle. The bulk function preserves this — siblings are read fresh per item, so as the run progresses later items see the updated pillar context.
-
-## 6. Out of scope
-
-- No changes to the asset writer (`generate-asset`).
-- No automatic regeneration of assets after briefs change — user explicitly approves each.
-- No model upgrade; keeps `google/gemini-2.5-pro` as in `draft-brief`.
-
-## Technical notes
-
-Files:
-- New: `supabase/functions/bulk-draft-briefs/index.ts`
-- New: `supabase/functions/_shared/draftBrief.ts` (extracted from `draft-brief/index.ts`)
-- Edit: `supabase/functions/draft-brief/index.ts` to import the shared helper
-- New migration: `brief_jobs` table + GRANTs + RLS
-- New: `src/components/editorial/BulkDraftDrawer.tsx`
-- Edit: `src/pages/EditorialSuite.tsx` to mount the button + drawer
-
-Estimated runtime for full 55-item run at concurrency 2: ~3–4 minutes.
-
-## Open question
-
-For the **5 briefs that already have human edits** (if any exist when you run it) — confirm default `onlyEmpty=true` is correct, or do you want a "Force re-draft all" override available in the drawer too? I'll include both controls unless you say otherwise.
+1. **Voice** — George (corporate male, default) or a different ElevenLabs voice from the approved list?
+2. **Music bed** — include the existing `score.mp3` ducked under VO, or VO-only?
+3. **End card CTA** — keep the literal "See Your DTOP Loop in Action" button as a static graphic, or swap for "Book a demo · comply365.com"?
