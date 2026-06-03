@@ -159,6 +159,276 @@ export type Database = {
           },
         ]
       }
+      asset_comments: {
+        Row: {
+          asset_id: string
+          body: string
+          created_at: string
+          id: string
+          resolved: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          asset_id: string
+          body: string
+          created_at?: string
+          id?: string
+          resolved?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          asset_id?: string
+          body?: string
+          created_at?: string
+          id?: string
+          resolved?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "asset_comments_asset_id_fkey"
+            columns: ["asset_id"]
+            isOneToOne: false
+            referencedRelation: "assets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      assets: {
+        Row: {
+          body: string
+          body_json: Json
+          brief_id: string | null
+          content_item_id: string
+          created_at: string
+          created_by: string | null
+          generation_prompt: string
+          id: string
+          model: string
+          status: string
+          updated_at: string
+          version: number
+        }
+        Insert: {
+          body?: string
+          body_json?: Json
+          brief_id?: string | null
+          content_item_id: string
+          created_at?: string
+          created_by?: string | null
+          generation_prompt?: string
+          id?: string
+          model?: string
+          status?: string
+          updated_at?: string
+          version?: number
+        }
+        Update: {
+          body?: string
+          body_json?: Json
+          brief_id?: string | null
+          content_item_id?: string
+          created_at?: string
+          created_by?: string | null
+          generation_prompt?: string
+          id?: string
+          model?: string
+          status?: string
+          updated_at?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assets_brief_id_fkey"
+            columns: ["brief_id"]
+            isOneToOne: false
+            referencedRelation: "briefs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "assets_content_item_id_fkey"
+            columns: ["content_item_id"]
+            isOneToOne: false
+            referencedRelation: "content_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      briefs: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          audience: string
+          content_item_id: string
+          created_at: string
+          created_by: string | null
+          cta: string
+          format: string
+          id: string
+          key_message: string
+          length: string
+          objective: string
+          playbook_snapshot: Json
+          proof_points: Json
+          reference_links: Json
+          spine_beats: Json
+          status: string
+          tone: string
+          updated_at: string
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          audience?: string
+          content_item_id: string
+          created_at?: string
+          created_by?: string | null
+          cta?: string
+          format?: string
+          id?: string
+          key_message?: string
+          length?: string
+          objective?: string
+          playbook_snapshot?: Json
+          proof_points?: Json
+          reference_links?: Json
+          spine_beats?: Json
+          status?: string
+          tone?: string
+          updated_at?: string
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          audience?: string
+          content_item_id?: string
+          created_at?: string
+          created_by?: string | null
+          cta?: string
+          format?: string
+          id?: string
+          key_message?: string
+          length?: string
+          objective?: string
+          playbook_snapshot?: Json
+          proof_points?: Json
+          reference_links?: Json
+          spine_beats?: Json
+          status?: string
+          tone?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "briefs_content_item_id_fkey"
+            columns: ["content_item_id"]
+            isOneToOne: false
+            referencedRelation: "content_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      content_items: {
+        Row: {
+          asset_type: string
+          channel: string
+          created_at: string
+          created_by: string | null
+          due_date: string | null
+          id: string
+          notes: string
+          owner_id: string | null
+          persona: string
+          pillar_id: string | null
+          quarter: string
+          status: string
+          target_week: number | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          asset_type?: string
+          channel?: string
+          created_at?: string
+          created_by?: string | null
+          due_date?: string | null
+          id?: string
+          notes?: string
+          owner_id?: string | null
+          persona?: string
+          pillar_id?: string | null
+          quarter: string
+          status?: string
+          target_week?: number | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          asset_type?: string
+          channel?: string
+          created_at?: string
+          created_by?: string | null
+          due_date?: string | null
+          id?: string
+          notes?: string
+          owner_id?: string | null
+          persona?: string
+          pillar_id?: string | null
+          quarter?: string
+          status?: string
+          target_week?: number | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_items_pillar_id_fkey"
+            columns: ["pillar_id"]
+            isOneToOne: false
+            referencedRelation: "content_pillars"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      content_pillars: {
+        Row: {
+          color: string
+          created_at: string
+          created_by: string | null
+          description: string
+          id: string
+          name: string
+          order_index: number
+          quarter: string
+          updated_at: string
+        }
+        Insert: {
+          color?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string
+          id?: string
+          name: string
+          order_index?: number
+          quarter: string
+          updated_at?: string
+        }
+        Update: {
+          color?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string
+          id?: string
+          name?: string
+          order_index?: number
+          quarter?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       page_views: {
         Row: {
           deck_id: string | null
@@ -359,7 +629,7 @@ export type Database = {
       }
     }
     Enums: {
-      app_role: "owner" | "reviewer"
+      app_role: "owner" | "reviewer" | "editor"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -487,7 +757,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["owner", "reviewer"],
+      app_role: ["owner", "reviewer", "editor"],
     },
   },
 } as const
