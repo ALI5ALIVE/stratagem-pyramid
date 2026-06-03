@@ -62,8 +62,8 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
       setCta(br.cta ?? "");
       setTone(br.tone ?? "");
       setLength(br.length ?? "");
-      setSpine(br.spine_beats ?? {});
-      setSelectedProofs(br.proof_points ?? []);
+      setSpine((br.spine_beats as Record<string, string>) ?? {});
+      setSelectedProofs((br.proof_points as string[]) ?? []);
     } else {
       setObjective(""); setAudience(""); setKeyMessage("");
       setCta(""); setTone(""); setLength("");
