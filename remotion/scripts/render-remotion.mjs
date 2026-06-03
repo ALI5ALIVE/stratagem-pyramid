@@ -35,7 +35,7 @@ await renderMedia({
   puppeteerInstance: browser,
   muted: false,
   enforceAudioTrack: true,
-  concurrency: 1,
+  concurrency: 4,
 });
 
 await browser.close({ silent: false });
