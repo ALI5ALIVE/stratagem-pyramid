@@ -10,17 +10,20 @@ import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, Sparkles, Copy, Download, RefreshCw, CheckCircle2 } from "lucide-react";
+import { Loader2, Sparkles, Copy, Download, RefreshCw, CheckCircle2, Wand2, ChevronDown } from "lucide-react";
 import {
   SPINE_BEATS, PROOF_POINTS, buildPlaybookSnapshot,
+  DIFFERENTIATORS, TERMINOLOGY,
 } from "@/data/editorialPlaybook";
 import {
-  VOICES, getDefaultVoice, getFrameworks, getRubric, bandColor,
+  VOICES, getDefaultVoice, getFrameworks, getRubric, bandColor, emptyOutlineFor,
   type VoiceId,
 } from "@/data/editorialCraft";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
+import { OutlineEditor } from "./OutlineEditor";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 interface Props {
   open: boolean;
@@ -41,15 +44,24 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
   const [refineNote, setRefineNote] = useState("");
 
   // Brief form local state
-  const [objective, setObjective] = useState("");
+  const [angle, setAngle] = useState("");
   const [audience, setAudience] = useState("");
-  const [keyMessage, setKeyMessage] = useState("");
+  const [coreInsight, setCoreInsight] = useState("");
+  const [workingTitle, setWorkingTitle] = useState("");
+  const [altTitles, setAltTitles] = useState<string[]>([]);
+  const [outline, setOutline] = useState<any[]>([]);
+  const [takeaways, setTakeaways] = useState<string[]>([]);
+  const [sources, setSources] = useState<string[]>([]);
+  const [distPrimary, setDistPrimary] = useState("");
+  const [distRepurpose, setDistRepurpose] = useState<string[]>([]);
+  const [successMetric, setSuccessMetric] = useState("");
   const [cta, setCta] = useState("");
   const [tone, setTone] = useState("");
   const [length, setLength] = useState("");
-  const [spine, setSpine] = useState<Record<string, string>>({});
   const [selectedProofs, setSelectedProofs] = useState<string[]>([]);
   const [voice, setVoice] = useState<VoiceId>("corporate");
+  const [drafting, setDrafting] = useState(false);
+  const [guardrailsOpen, setGuardrailsOpen] = useState(false);
 
   useEffect(() => {
     if (!open || !itemId) return;
@@ -64,19 +76,33 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
     const { data: br } = await supabase.from("briefs").select("*").eq("content_item_id", itemId).maybeSingle();
     setBrief(br);
     if (br) {
-      setObjective(br.objective ?? "");
+      setAngle((br as any).angle ?? br.objective ?? "");
       setAudience(br.audience ?? "");
-      setKeyMessage(br.key_message ?? "");
+      setCoreInsight((br as any).core_insight ?? br.key_message ?? "");
+      setWorkingTitle(it?.title ?? "");
+      setAltTitles(((br as any).alt_titles as string[]) ?? []);
+      setOutline(((br as any).outline as any[]) ?? []);
+      setTakeaways(((br as any).takeaways as string[]) ?? []);
+      setSources(((br as any).sources as string[]) ?? []);
+      const dist = (br as any).distribution ?? {};
+      setDistPrimary(dist.primary_channel ?? "");
+      setDistRepurpose(dist.repurpose ?? []);
+      setSuccessMetric((br as any).success_metric ?? "");
       setCta(br.cta ?? "");
       setTone(br.tone ?? "");
       setLength(br.length ?? "");
-      setSpine((br.spine_beats as Record<string, string>) ?? {});
       setSelectedProofs((br.proof_points as string[]) ?? []);
       setVoice((br.voice as VoiceId) ?? getDefaultVoice(it?.persona ?? "exec", (it?.asset_type ?? "long_form") as any));
     } else {
-      setObjective(""); setAudience(""); setKeyMessage("");
+      setAngle(""); setAudience(""); setCoreInsight("");
+      setWorkingTitle(it?.title ?? "");
+      setAltTitles([]);
+      setOutline(it ? emptyOutlineFor(it.asset_type as any) : []);
+      setTakeaways([]); setSources([]);
+      setDistPrimary(it?.channel ?? ""); setDistRepurpose([]);
+      setSuccessMetric("");
       setCta(""); setTone(""); setLength("");
-      setSpine({}); setSelectedProofs([]);
+      setSelectedProofs([]);
       setVoice(getDefaultVoice(it?.persona ?? "exec", (it?.asset_type ?? "long_form") as any));
     }
     const { data: ass } = await supabase
@@ -93,8 +119,19 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
     if (!itemId) return;
     const payload: any = {
       content_item_id: itemId,
-      objective, audience, key_message: keyMessage, cta, tone, length,
-      spine_beats: spine, proof_points: selectedProofs, voice,
+      objective: angle, // legacy alias
+      angle,
+      audience,
+      key_message: coreInsight, // legacy alias
+      core_insight: coreInsight,
+      alt_titles: altTitles,
+      outline,
+      takeaways,
+      sources,
+      distribution: { primary_channel: distPrimary, repurpose: distRepurpose },
+      success_metric: successMetric,
+      cta, tone, length,
+      proof_points: selectedProofs, voice,
       status: approve ? "approved" : "draft",
     };
     if (approve) {
@@ -118,6 +155,33 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
     toast.success(approve ? "Brief approved — ready to generate" : "Brief saved");
     onChanged();
     load();
+  }
+
+  async function draftBriefWithAI() {
+    if (!itemId) return;
+    setDrafting(true);
+    const { data, error } = await supabase.functions.invoke("draft-brief", {
+      body: { contentItemId: itemId, voice },
+    });
+    setDrafting(false);
+    if (error) { toast.error(error.message); return; }
+    if (data?.error) { toast.error(data.error); return; }
+    toast.success("Brief drafted — review, edit, then approve.");
+    onChanged();
+    load();
+  }
+
+  function updateAltTitle(i: number, v: string) {
+    const next = [...altTitles]; next[i] = v; setAltTitles(next);
+  }
+  function updateTakeaway(i: number, v: string) {
+    const next = [...takeaways]; next[i] = v; setTakeaways(next);
+  }
+  function updateSource(i: number, v: string) {
+    const next = [...sources]; next[i] = v; setSources(next);
+  }
+  function updateRepurpose(i: number, v: string) {
+    const next = [...distRepurpose]; next[i] = v; setDistRepurpose(next);
   }
 
   async function generate() {
