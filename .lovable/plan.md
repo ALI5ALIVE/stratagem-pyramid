@@ -1,118 +1,83 @@
-# Briefs → real editorial briefs (not spine fill-in)
+# Bulk-enrich all 55 briefs
 
-You're right: the 5-beat spine is **messaging architecture**, not a brief template. Today the brief form makes every item look the same — fill the same five boxes. A proper editorial brief should be **derived from the content strategy** (pillar, persona, channel, asset type), come pre-loaded with a unique **angle, outline, sources, and takeaways**, and be **reviewable/editable before the asset is written**. The spine remains the messaging guardrail in the background, but it is not the brief.
+Goal: populate `angle`, `core_insight`, `outline`, `takeaways`, `sources`, `alt_titles`, `distribution`, `success_metric` (and refreshed `spine_beats`) on every brief by running the existing `draft-brief` edge function — without overwriting any human-edited content and without hitting rate limits.
 
-## New flow
+## 1. New edge function: `bulk-draft-briefs`
 
-```
-Content Item (strategy)
-     │
-     ▼   AI: "draft me a real brief"
-Editorial Brief (unique per asset)
-  · working title + angle
-  · audience profile
-  · core insight / POV
-  · outline (asset-type specific)
-  · key takeaways
-  · proof / sources to cite
-  · CTA + distribution notes
-  · success metrics
-     │   user reviews + edits
-     ▼   approve
-Asset generation (uses outline as scaffold)
-```
+A server-side orchestrator so the work survives browser refresh and respects gateway limits.
 
-Two distinct AI calls: **draft-brief** then **generate-asset**. The user can iterate on the brief without spending tokens on a full draft.
+Inputs (all optional):
+- `quarter`: limit to Q1/Q2/Q3/Q4
+- `pillarId`: limit to one pillar
+- `onlyEmpty` (default `true`): skip briefs where `angle <> ''` (preserves human edits)
+- `voice`: `corporate` (default) | `thought_leader` | `hybrid`
+- `concurrency` (default `2`, max `4`)
+- `dryRun` (default `false`): return the target list without calling the model
 
-## What the brief actually contains (asset-type aware)
+Behaviour:
+- Auth: editor/owner only (same gate as `draft-brief`).
+- Loads target `content_items` grouped by `pillar_id` so sibling context is consistent.
+- Calls the **existing `draft-brief` logic** per item (refactor its core into a shared `draftBriefForItem(itemId, voice)` helper imported by both functions — no duplication).
+- Throttle: process items in batches of `concurrency`, with a 1.2s gap between batches to stay well under Lovable AI gateway limits.
+- Per-item error isolation: one failure does not abort the run.
+- Returns a JSON summary: `{ attempted, succeeded, failed: [{itemId, title, error}], skipped }`.
+- Emits progress rows to a new lightweight `brief_jobs` table so the UI can poll.
 
-Every brief carries these core sections:
-- **Working title & alt titles** (3 options)
-- **One-line angle** — the unique POV for this piece, distinct from every other item in the calendar.
-- **Audience snapshot** — role, KPI under pressure, what they already believe, what they don't.
-- **Core insight** — the non-obvious thing this asset teaches.
-- **Outline** — *the shape of the actual asset, see below.*
-- **Key takeaways** — 3–5 sentences the reader should be able to repeat after reading.
-- **Proof to cite** — specific stats, named customers, Comply365 platform capabilities to weave in (drawn from the playbook).
-- **Sources / references** — external citations the writer should ground claims in.
-- **Voice** — thought-leader / corporate / hybrid (already implemented).
-- **CTA** — single, specific, time-bound.
-- **Distribution** — primary channel + 2 repurpose channels.
-- **Success metric** — e.g. "≥3% LinkedIn engagement", "≥45s avg read time".
-- **Messaging guardrails** (read-only) — the 5-beat spine, DTOP, forbidden terms, differentiators. Shown so the writer/editor sees what the asset will be held to, but not the input form.
+## 2. New table: `brief_jobs`
 
-**Outline shape by asset type:**
+Tracks each bulk run for visibility and resumability.
 
-| Asset type | Outline schema |
-|---|---|
-| Long-form | H2 sections (5–8), each with: heading, 1-line intent, bullets of sub-points, evidence to cite |
-| Social | Hook line, body lines (4–7), closing question, hashtags |
-| Enablement | Section blocks: Problem · Cost · Solution · How (DTOP) · Proof · Differentiators · Ask. Each with bullets. |
-| Script | Scene list (6–10). Each scene: duration, VISUAL note, SCRIPT beats, on-screen text |
-
-Outlines are **structured JSON** so the UI can render section-by-section editing (add/remove/reorder, edit per row) — not one giant textarea.
-
-## Brief generation prompt
-
-A new `draft-brief` edge function asks the model to:
-1. Read the content item (title, pillar, persona, channel, asset type, quarter, notes) and the playbook snapshot (spine, proofs, differentiators, terminology, personas).
-2. Read the **calendar context** — titles of the other items in the same pillar/quarter — so it can deliberately differentiate the angle from neighbours.
-3. Apply the asset-type craft frameworks (Handley, Dunford, Welsh, StoryBrand, etc. — already codified).
-4. Return a structured brief JSON conforming to the schema above. No prose dump — schema-shaped output the UI can render and edit.
-
-Voice and persona drive the recommended angle; the spine is enforced as a guardrail in the writer step, not as a form for the user to fill.
-
-## UI changes (ItemDetail panel)
-
-Replace the current "fill 5 spine textareas + 5 brief fields" form with three clear sections:
-
-1. **Strategy header** (read-only, derived from content item) — pillar, persona, quarter, channel, asset type, voice picker, frameworks chips.
-2. **Brief** (the new structured form) — title/angle/audience/insight/outline editor/takeaways/proof/sources/CTA/distribution/success-metric. A prominent **"Draft brief with AI"** button at the top fills the whole thing in one call; the user then edits anything before approving. Re-draft is allowed.
-3. **Messaging guardrails** (read-only accordion) — collapsed by default. Shows the spine, DTOP, differentiators, forbidden terms. Makes it explicit that these are applied automatically.
-
-After Approve → the **Generate asset** button writes the asset using the approved brief as the scaffold (outline → sections, takeaways → close, proof → citations) while the writer prompt enforces the 5-beat spine and DTOP under the hood.
-
-## Database
-
-```sql
-ALTER TABLE public.briefs
-  ADD COLUMN IF NOT EXISTS angle text NOT NULL DEFAULT '',
-  ADD COLUMN IF NOT EXISTS core_insight text NOT NULL DEFAULT '',
-  ADD COLUMN IF NOT EXISTS alt_titles jsonb NOT NULL DEFAULT '[]'::jsonb,
-  ADD COLUMN IF NOT EXISTS outline jsonb NOT NULL DEFAULT '[]'::jsonb,
-  ADD COLUMN IF NOT EXISTS takeaways jsonb NOT NULL DEFAULT '[]'::jsonb,
-  ADD COLUMN IF NOT EXISTS sources jsonb NOT NULL DEFAULT '[]'::jsonb,
-  ADD COLUMN IF NOT EXISTS distribution jsonb NOT NULL DEFAULT '{}'::jsonb,
-  ADD COLUMN IF NOT EXISTS success_metric text NOT NULL DEFAULT '';
+```text
+brief_jobs
+- id uuid pk
+- created_by uuid
+- status text  (queued | running | done | error)
+- total int, succeeded int, failed int
+- filters jsonb, voice text
+- errors jsonb  (array of {itemId, title, message})
+- started_at, finished_at timestamptz
 ```
 
-`spine_beats` stays (still useful as a snapshot of how the writer plans to address each beat — generated by the brief-drafter, not hand-typed by users). `reference_links` stays. No RLS changes.
+RLS: editors/owners can read/insert/update their own jobs. Standard GRANTs.
 
-## Files
+## 3. UI: Bulk-draft drawer on `/editorial`
 
-- **new** `supabase/functions/draft-brief/index.ts` — accepts `{ contentItemId, voice }`, returns structured brief JSON, persists it as the brief in `draft` status.
-- **edit** `supabase/functions/generate-asset/index.ts` — pulls the new fields (`outline`, `core_insight`, `takeaways`, `sources`) into the writer prompt as the asset scaffold; spine/DTOP remain as guardrails.
-- **new** `src/components/editorial/BriefEditor.tsx` — structured editor: title/alt titles, angle, audience, insight, **outline editor** (asset-type aware: section editor for long-form/enablement, line editor for social, scene editor for script), takeaways list, proof checkboxes, sources list, distribution, success metric.
-- **new** `src/components/editorial/OutlineEditor.tsx` — variant-driven outline editor (sections / lines / scenes).
-- **edit** `src/components/editorial/ItemDetail.tsx` — replace inline brief form with Strategy header + `<BriefEditor>` + Messaging guardrails accordion. Wire **"Draft brief with AI"** button to `draft-brief` function.
-- **edit** `src/data/editorialPlaybook.ts` / `editorialCraft.ts` — small helpers: `outlineSchemaFor(assetType)` returning the empty outline shape.
+Add a **"Bulk draft briefs"** button in the Editorial Suite header that opens a drawer:
 
-## What stays the same
+- Filters: Quarter (All / Q1–Q4), Pillar (All / list), Voice (Corporate / Thought leader / Hybrid).
+- Toggle: **"Only enrich empty briefs"** (default on).
+- "Preview targets" → calls `bulk-draft-briefs` with `dryRun: true` and shows the count + titles.
+- "Start enrichment" → kicks off the real run, opens a live progress panel polling `brief_jobs` every 2s.
+- On completion: summary card with succeeded/failed counts, a list of failures with retry buttons, and a "Review enriched briefs" link that filters the calendar to recently updated items.
 
-- The 55 existing items and their pillars stay put.
-- Existing approved briefs keep their data; their new fields default to empty until "Draft brief with AI" is run to enrich them (one click, idempotent — the user can re-draft).
-- Voice, craft frameworks, scoring rubric and reflection loop are unchanged.
+## 4. Safety & idempotency
 
-## Out of scope
+- `onlyEmpty=true` is the default so re-running never clobbers human work.
+- A small **"Re-draft this brief"** action already exists per item — unchanged. The bulk path uses the same write path, so behaviour stays consistent.
+- All writes go through the existing `briefs` upsert in `draft-brief` (now in the shared helper). No new write surface.
 
-- Bulk brief drafting for all 55 items in one click (follow-up — easy to add once single-item drafting is solid).
-- Image/cover art generation per brief.
-- Calendar-level "rebalance angles to avoid overlap" pass.
+## 5. Sibling-awareness (already in `draft-brief`)
+
+`draft-brief` already loads sibling items by `pillar_id` and instructs the model to differentiate the angle. The bulk function preserves this — siblings are read fresh per item, so as the run progresses later items see the updated pillar context.
+
+## 6. Out of scope
+
+- No changes to the asset writer (`generate-asset`).
+- No automatic regeneration of assets after briefs change — user explicitly approves each.
+- No model upgrade; keeps `google/gemini-2.5-pro` as in `draft-brief`.
+
+## Technical notes
+
+Files:
+- New: `supabase/functions/bulk-draft-briefs/index.ts`
+- New: `supabase/functions/_shared/draftBrief.ts` (extracted from `draft-brief/index.ts`)
+- Edit: `supabase/functions/draft-brief/index.ts` to import the shared helper
+- New migration: `brief_jobs` table + GRANTs + RLS
+- New: `src/components/editorial/BulkDraftDrawer.tsx`
+- Edit: `src/pages/EditorialSuite.tsx` to mount the button + drawer
+
+Estimated runtime for full 55-item run at concurrency 2: ~3–4 minutes.
 
 ## Open question
 
-Two ways to handle existing briefs:
-- **A. Keep them, empty new fields** — user clicks "Draft brief with AI" per item to enrich (recommended, safest).
-- **B. Wipe all 55 existing briefs and require re-draft** — clean slate but loses any edits already made.
-
-I'll go with **A** unless you say otherwise.
+For the **5 briefs that already have human edits** (if any exist when you run it) — confirm default `onlyEmpty=true` is correct, or do you want a "Force re-draft all" override available in the drawer too? I'll include both controls unless you say otherwise.
