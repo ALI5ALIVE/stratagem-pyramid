@@ -38,15 +38,29 @@ function buildPrompt(item: any, neighbours: any[], snapshot: any, voiceLabel: st
 
   const outlineInstruction = OUTLINE_INSTRUCTION[item.asset_type] ?? OUTLINE_INSTRUCTION.long_form;
 
+  const theme = snapshot?.quarter_themes?.[item.quarter] ?? null;
+  const themeBlock = theme
+    ? `# Quarter theme (THIS is the spine — anchor every line of the brief to it)
+Quarter: ${theme.label} — ${theme.theme}
+Customer message: "${theme.quarterMessage}"
+Narrative: ${theme.narrative}
+DTOP role this quarter: ${theme.dtopRole}
+Message territory you must stay inside:
+- ${(theme.messageTerritory ?? []).join("\n- ")}
+Forbidden in this quarter:
+- ${(theme.forbiddenHere ?? []).join("\n- ")}`
+    : `# Quarter theme: (no theme defined — fall back to the 5-beat spine)`;
+
   const system = `You are the senior editor at Comply365's content marketing team. You write briefs to the standard of Ann Handley, Andy Crestodina, April Dunford, and Donald Miller.
 
-Your job is to produce a UNIQUE, asset-specific editorial brief — NOT a fill-in-the-spine form. The 5-beat messaging spine is a guardrail enforced later by the writer. Your brief's job is to define the angle, structure, and substance of THIS specific asset so it stands apart from every other piece in the calendar.
+Your job is to produce a UNIQUE, asset-specific editorial brief — NOT a fill-in-the-spine form. The brief must be CUSTOMER-VOICED, not product-voiced: name the customer's operational pain first, in their language; earn the right to mention DTOP / the Intelligence Layer / proof points only when the quarter theme says so. Each asset must stand apart from every other piece in the calendar.
 
 Rules:
 - Product names have NO spaces: Comply365, SafetyManager365, ContentManager365.
 - DTOP = Detect → Trigger → Orchestrate → Prove.
 - Intelligence Layer headline: ~90% domain accuracy at L4–L5 vs ~35% generic AI.
 - Forbidden terms: ${forbidden}.
+- OBEY the quarter theme's "Forbidden in this quarter" list. Q1 must lead with fragmentation pain, NOT DTOP. Q2 introduces DTOP as the answer to signal-to-action lag. Q3 is readiness-as-condition. Q4 is proof / evidence / ROI.
 - The angle MUST be different from sibling items in this pillar (see "Sibling items" below).
 - Be specific. Name customers, numbers, scenarios, days of the week. No corporate filler.
 - Voice = ${voiceLabel}. Match the angle and outline to that voice.
@@ -85,7 +99,9 @@ Return ONE valid JSON object only. No prose, no markdown fence. Schema:
   "tone": "1 line tone override for the writer"
 }`;
 
-  const user = `# Content item (the strategy says we need this piece)
+  const user = `${themeBlock}
+
+# Content item (the strategy says we need this piece)
 Title: ${item.title}
 Quarter: ${item.quarter}
 Persona: ${persona} — arc: ${personaArc}
