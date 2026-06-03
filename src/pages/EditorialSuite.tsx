@@ -13,6 +13,7 @@ import { ItemDetail } from "@/components/editorial/ItemDetail";
 import { BulkDraftDrawer } from "@/components/editorial/BulkDraftDrawer";
 import {
   SPINE_BEATS, DIFFERENTIATORS, PROOF_POINTS, TERMINOLOGY, PERSONAS,
+  QUARTER_THEMES,
 } from "@/data/editorialPlaybook";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -232,6 +233,31 @@ function AssetsList({ items, onOpen }: { items: any[]; onOpen: (id: string) => v
 function PlaybookView() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <Card className="p-5 lg:col-span-2 border-primary/40">
+        <h3 className="font-bold mb-1">Quarter Themes — the customer narrative arc</h3>
+        <p className="text-xs text-muted-foreground mb-4">
+          This is what every brief is now anchored to. Generated briefs must lead with the
+          quarter's customer message before any product or DTOP framing.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {Object.values(QUARTER_THEMES).map((qt) => (
+            <div key={qt.label} className="rounded border border-border/60 p-3 bg-card/40">
+              <div className="flex items-center justify-between mb-1">
+                <div className="font-semibold">
+                  {qt.label} — {qt.theme}
+                </div>
+                <span className="text-[10px] text-muted-foreground">{qt.subtitle}</span>
+              </div>
+              <p className="text-sm italic text-primary mb-2">"{qt.quarterMessage}"</p>
+              <p className="text-xs text-muted-foreground mb-2">{qt.narrative}</p>
+              <div className="text-[11px] text-muted-foreground">
+                <span className="text-foreground/80 font-semibold">Stay inside:</span>{" "}
+                {qt.messageTerritory.join(" · ")}
+              </div>
+            </div>
+          ))}
+        </div>
+      </Card>
       <Card className="p-5">
         <h3 className="font-bold mb-3">5-Beat Spine</h3>
         <ol className="space-y-2">
