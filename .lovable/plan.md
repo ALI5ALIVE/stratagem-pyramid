@@ -1,104 +1,54 @@
-## Editorial Suite — Plan
+# Populate Content Strategy + Briefs
 
-A new authenticated workspace at `/editorial` that takes an idea from Calendar → Brief → Draft → Review → Final, with every asset inheriting the messaging playbook (DTOP, 5-beat spine, 90% vs 35% proof, canonical differentiators, terminology rules).
+Right now the Editorial Suite has the 4 quarterly pillars seeded but **0 items** and **0 briefs**. This plan fills it end-to-end so the team opens `/editorial` and finds a fully-built Q1–Q4 plan with an approved brief per asset, ready to generate.
 
-Scope: ~55 assets across Q1–Q4 2026, multi-user marketing team, 4 asset families (long-form, social, sales enablement, video/deck scripts).
+## What gets created
 
----
+**55 content items**, distributed by pillar and persona, with a sensible weekly cadence across 2026:
 
-### 1. Information architecture
+| Quarter | Pillar | Items | Mix |
+|---|---|---|---|
+| Q1 | DTOP Education | 14 | 4 long-form, 4 social, 3 enablement, 3 script |
+| Q2 | Intelligence Layer Proof | 14 | 4 long-form, 4 social, 3 enablement, 3 script |
+| Q3 | Industry Solutions (Aviation / Defense / Rail) | 15 | 5 long-form, 4 social, 3 enablement, 3 script |
+| Q4 | Sales Enablement & Demand | 12 | 3 long-form, 3 social, 4 enablement, 2 script |
 
-New top-level route `/editorial` (owner + new `editor` role can access), four sub-views:
+Each item has: title, pillar, quarter, persona (exec / ops / tech), channel, asset_type, status=`brief`, target due_date (week-by-week), notes.
 
-```text
-/editorial
-├── /calendar      Quarter grid · 55 planned assets · filters
-├── /briefs        Brief builder + library of approved briefs
-├── /assets        Generated drafts, versions, exports
-└── /playbook      Read-only view of canonical messaging rules
-```
+**55 approved briefs**, one per item, each containing:
+- Objective (one sentence outcome)
+- Audience (persona + buying stage)
+- Key message (DTOP-anchored, one line)
+- 5-beat spine pre-filled per persona arc (Shift → Platform → Loop → Proof → Differentiators) with bullet content unique to that asset
+- 3–5 proof points selected from canonical library
+- Format / length / tone presets for the asset type
+- CTA (matched to funnel stage: educate / convert / enable)
+- Reference links to existing decks and playbooks already in the codebase
+- `playbook_snapshot` JSON captured at approval
+- `status = 'approved'`, `approved_at = now()`
 
-### 2. Data model (Lovable Cloud)
+## How it gets built
 
-Five new tables, all RLS-protected:
+A single seeding pipeline driven by a typed catalogue in code, then loaded into the database. No new UI — the existing Calendar / Briefs / Assets tabs render everything.
 
-- `content_pillars` — Q1–Q4 themes (e.g. "DTOP Education", "Intelligence Layer Proof"), color, quarter, owner.
-- `content_items` — one row per planned asset: title, pillar_id, quarter, target_week, persona (exec/ops/tech), channel, asset_type, status (idea | brief | draft | review | final), owner, due_date.
-- `briefs` — 1:1 with `content_items`: objective, audience, key_message, proof_points[], cta, tone, length, format, references[], spine_beats (jsonb), playbook_snapshot (jsonb captured at approval time), approved_by, approved_at.
-- `assets` — generated outputs: content_item_id, brief_id, version, body (markdown/jsonb), generation_prompt, model, status, created_by.
-- `asset_comments` — reuse pattern from existing `slide_comments`.
+1. **`src/data/editorialCatalog.ts`** — typed array of 55 items. Each entry declares pillar slug, persona, channel, asset_type, week, title, objective, key_message, 5-beat bullets, proof_point ids, CTA, reference_links.
+2. **`scripts/seedEditorialCatalog.ts`** — one-shot Node script. Resolves pillar UUIDs, upserts items by title, upserts approved briefs by `content_item_id`. Idempotent (safe to re-run).
+3. **Migration**: add `UNIQUE (content_item_id)` on `briefs` to make the upsert deterministic, and add a `slug` column to `content_pillars` so the catalogue can reference pillars by stable key instead of UUID.
+4. **Insert** (via the data-insert tool, not migration): run after the migration to load all 55 items + 55 briefs in a single transaction.
 
-Add `editor` to the `app_role` enum.
+## Generation strategy (not in this step)
 
-### 3. Calendar view
+This plan stops at approved briefs. It does **not** auto-trigger asset generation for all 55 — that would be ~55 LLM calls and produce drafts no one has reviewed. Instead, the user clicks "Generate" per item from the Calendar, exactly as designed. The briefs being pre-approved means every generate click is one tap.
 
-- Default view: 4-column quarter grid (Q1/Q2/Q3/Q4), cards grouped by pillar.
-- Alternate views: list (sortable table), Gantt-lite by week.
-- Filters: persona, channel, asset_type, status, owner.
-- Create/edit item inline; bulk-create from a CSV import on first load to seed all 55.
-- Status badges color-coded; click card → opens brief if exists, else "Create brief".
+If the user wants bulk generation too, that becomes a follow-up plan (with a "Generate all Q1" batch button + concurrency limit).
 
-### 4. Brief Builder
+## Out of scope
 
-Structured form, not a blank textbox. Sections:
+- Editing the playbook itself (already locked).
+- Building the bulk-generate UI.
+- Producing the actual asset drafts.
+- Importing from an external CSV — catalogue lives in code so it's reviewable in PRs.
 
-1. **Context** — pulled from `content_item` (title, persona, channel).
-2. **Objective** — single sentence.
-3. **5-beat spine** — required fields for each beat (Shift / Platform / Loop / Proof / Differentiators), pre-filled from playbook for the selected persona.
-4. **Proof points** — multi-select from a canonical proof library (90% vs 35%, customer logos, ROI stats).
-5. **Tone & length** — preset chips per asset_type.
-6. **References** — link to existing decks/slides.
-7. **Approve** — locks the brief, snapshots playbook rules into `playbook_snapshot`, enables "Generate".
+## Open question
 
-Briefs are reusable templates — duplicate-and-edit supported.
-
-### 5. Asset Generator
-
-Lovable AI Gateway via an edge function `generate-asset`:
-
-- Input: brief_id.
-- Builds a system prompt from `playbook_snapshot` + brief fields + asset_type-specific output spec (blog = markdown, LinkedIn = ≤1,300 chars, one-pager = sectioned JSON, video script = scene-by-scene).
-- Default model: `google/gemini-2.5-pro` for long-form, `google/gemini-3-flash-preview` for social.
-- Streams response into a draft `asset` row.
-- "Regenerate", "Refine with note", and "Manual edit" all create new versions; previous versions retained.
-- Export buttons: copy markdown, download .md / .docx (long-form), .txt (social), .pdf (one-pager via existing pptx/print pipeline).
-
-### 6. Review & approval
-
-- Per-asset comment thread (reuses `slide_comments` pattern).
-- Status transitions: draft → review → final (final requires editor or owner role).
-- Final assets appear in `/assets` library with search and filter by pillar/persona/channel.
-
-### 7. Roles
-
-- `owner` — everything.
-- `editor` (new) — full CRUD on items/briefs/assets, can approve briefs and finalize assets.
-- `reviewer` (existing) — read + comment.
-
-### 8. Build sequence
-
-1. Migration: tables, enum value, RLS, GRANTs, trigger functions, role seed for current owner.
-2. `/editorial` shell + nav guard.
-3. Calendar (seed 55-row CSV importer included).
-4. Brief Builder + playbook snapshot logic.
-5. `generate-asset` edge function + AI Gateway wiring.
-6. Asset viewer, version history, comments, exports.
-7. Playbook read-only view (renders from existing mem-derived data file).
-
-### 9. Out of scope (for v1)
-
-- Real-time collaborative editing on briefs (single-editor lock instead).
-- Auto-publishing to LinkedIn/CMS (export only).
-- Image/video generation (text + script only; deck builds stay in existing slide system).
-- Analytics on published asset performance.
-
-### 10. Technical notes
-
-- Edge function uses `streamText` from AI SDK with the Lovable AI Gateway provider helper; structured outputs via `Output.object` for one-pagers and battle cards.
-- Brief→prompt assembly lives server-side so the playbook snapshot can't be tampered with from the client.
-- All new tables follow existing RLS + GRANT pattern used by `slide_comments` / `academy_modules`.
-- Reuses existing dark theme, Space Grotesk + Inter, `#0066FF` primary — no new design tokens.
-
----
-
-**Direct answer to your "is it best just to prompt" question:** for 55 assets across a team, no — ad-hoc prompting will drift in voice, lose audit trail, and force you to re-explain the playbook every time. The suite above pays for itself by asset ~10 because every brief inherits the playbook automatically and every generated draft starts at 70% quality instead of 30%.
+Persona split — confirm the default mix you want across the 55: **40% exec / 35% ops / 25% tech** (matches the 3 pitch decks), or weight differently? If you don't answer, I'll use that 40/35/25 split.
