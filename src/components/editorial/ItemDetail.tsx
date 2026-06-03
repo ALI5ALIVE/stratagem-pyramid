@@ -224,6 +224,34 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
                     <div><Label>Length</Label><Input value={length} onChange={(e) => setLength(e.target.value)} /></div>
                   </div>
 
+                  <div className="grid grid-cols-[1fr_2fr] gap-3 items-start">
+                    <div>
+                      <Label>Voice</Label>
+                      <Select value={voice} onValueChange={(v) => setVoice(v as VoiceId)}>
+                        <SelectTrigger><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          {Object.entries(VOICES).map(([k, v]) => (
+                            <SelectItem key={k} value={k}>{v.label}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <p className="text-xs text-muted-foreground mt-1">{VOICES[voice].guide}</p>
+                    </div>
+                    <div>
+                      <Label>Craft frameworks applied</Label>
+                      <div className="flex flex-wrap gap-1.5 mt-1.5">
+                        {frameworks.map((f) => (
+                          <Badge key={f.name} variant="outline" className="text-xs" title={f.rules.join(" · ")}>
+                            {f.name} <span className="text-muted-foreground ml-1">· {f.authority.split("·")[0].trim()}</span>
+                          </Badge>
+                        ))}
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-1.5">
+                        Each draft is auto-scored against an {rubric.length}-dimension rubric (100 pts).
+                      </p>
+                    </div>
+                  </div>
+
                   <div>
                     <Label className="mb-2 block">5-beat spine</Label>
                     <div className="space-y-2">
@@ -345,6 +373,46 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
                         <div className="rounded border border-border bg-card/30 p-4 max-h-[500px] overflow-y-auto">
                           <pre className="text-sm whitespace-pre-wrap font-sans">{activeAsset.body}</pre>
                         </div>
+                        {typeof activeAsset.score_total === "number" && (
+                          <div className="rounded border border-border bg-card/30 p-4 space-y-3">
+                            <div className="flex items-center justify-between flex-wrap gap-2">
+                              <div>
+                                <div className="text-xs uppercase text-muted-foreground">Editorial scorecard</div>
+                                <div className="text-3xl font-bold mt-0.5">{activeAsset.score_total}<span className="text-base text-muted-foreground"> / 100</span></div>
+                              </div>
+                              <Badge className={bandColor(activeAsset.score_band ?? "Rework")}>
+                                Grade {activeAsset.score_band ?? "—"}
+                              </Badge>
+                              {canEdit && (
+                                <Button size="sm" variant="outline" onClick={regenerateAddressingLowScores}>
+                                  <RefreshCw className="w-3 h-3 mr-1" /> Address low scores
+                                </Button>
+                              )}
+                            </div>
+                            <div className="space-y-1.5">
+                              {(activeAsset.scores?.dimensions ?? []).map((d: any) => {
+                                const meta = rubricMap[d.id];
+                                if (!meta) return null;
+                                const pct = Math.max(0, Math.min(100, (d.score ?? 0) * 10));
+                                const barColor = d.score >= 8 ? "bg-emerald-500" : d.score >= 6 ? "bg-amber-500" : "bg-rose-500";
+                                return (
+                                  <div key={d.id} className="text-xs">
+                                    <div className="flex items-center justify-between">
+                                      <span className="font-medium">{meta.label} <span className="text-muted-foreground">· {meta.weight}pt</span></span>
+                                      <span className="font-mono">{d.score ?? 0}/10</span>
+                                    </div>
+                                    <div className="h-1.5 bg-muted rounded overflow-hidden mt-0.5">
+                                      <div className={`h-full ${barColor}`} style={{ width: `${pct}%` }} />
+                                    </div>
+                                    {d.improvement && (
+                                      <p className="text-muted-foreground mt-0.5 italic">→ {d.improvement}</p>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        )}
                         <p className="text-xs text-muted-foreground">
                           Generated with {activeAsset.model} · {new Date(activeAsset.created_at).toLocaleString()}
                         </p>
