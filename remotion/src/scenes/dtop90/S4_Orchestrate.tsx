@@ -2,10 +2,10 @@ import { AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate } from "remo
 import { COLORS, HEAD, BODY, springIn, stageFade } from "./shared";
 
 const OUTCOMES = [
-  { label: "NOTIFY CREW", icon: "👥" },
-  { label: "UPDATE MANUAL", icon: "📘" },
+  { label: "NOTIFY CREW", icon: "◉" },
+  { label: "UPDATE MANUAL", icon: "▤" },
   { label: "ASSIGN TASK", icon: "✓" },
-  { label: "GROUND AIRCRAFT", icon: "✈" },
+  { label: "GROUND AIRCRAFT", icon: "▲" },
 ];
 
 const PRODUCTS = ["Comply365", "SafetyManager365", "ContentManager365"];
