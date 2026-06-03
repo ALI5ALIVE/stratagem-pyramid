@@ -3,6 +3,7 @@ import { Shield, Zap, Target, TrendingUp, AlertOctagon, RefreshCw, Cog, Radio, R
 import SlideContainer from "./SlideContainer";
 import type { SlideNarrationProps } from "@/types/slideProps";
 import { cn } from "@/lib/utils";
+import { STRATEGY_QUARTERS, type StrategyQuarter, type StrategyAsset } from "@/data/contentStrategy";
 
 interface JourneyStage {
   num: number;
@@ -12,29 +13,20 @@ interface JourneyStage {
   bg: string;
 }
 
-interface ContentAsset {
-  title: string;
-  format: string;
-  audience: string;
-  summary: string;
-}
-
-interface Quarter {
-  id: string;
-  label: string;
-  theme: string;
-  subtitle: string;
+type ContentAsset = StrategyAsset;
+type Quarter = StrategyQuarter & {
   icon: React.ElementType;
   color: string;
   bgColor: string;
   borderAccent: string;
-  narrative: string;
-  quarterMessage: string;
-  dtopRole: string;
-  messageTerritory: string[];
-  journeyStageNums: number[];
-  assets: ContentAsset[];
-}
+};
+
+const QUARTER_VISUALS: Record<StrategyQuarter["id"], Pick<Quarter, "icon" | "color" | "bgColor" | "borderAccent">> = {
+  q1: { icon: Shield,     color: "text-blue-400",    bgColor: "bg-blue-400/10",    borderAccent: "border-blue-400/40" },
+  q2: { icon: Zap,        color: "text-amber-400",   bgColor: "bg-amber-400/10",   borderAccent: "border-amber-400/40" },
+  q3: { icon: Target,     color: "text-emerald-400", bgColor: "bg-emerald-400/10", borderAccent: "border-emerald-400/40" },
+  q4: { icon: TrendingUp, color: "text-purple-400",  bgColor: "bg-purple-400/10",  borderAccent: "border-purple-400/40" },
+};
 
 const journeyStages: JourneyStage[] = [
   { num: 1, title: "The status quo is failing", icon: AlertOctagon, color: "text-red-400", bg: "bg-red-400" },
