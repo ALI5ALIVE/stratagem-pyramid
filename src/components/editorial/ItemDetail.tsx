@@ -14,6 +14,13 @@ import { Loader2, Sparkles, Copy, Download, RefreshCw, CheckCircle2 } from "luci
 import {
   SPINE_BEATS, PROOF_POINTS, buildPlaybookSnapshot,
 } from "@/data/editorialPlaybook";
+import {
+  VOICES, getDefaultVoice, getFrameworks, getRubric, bandColor,
+  type VoiceId,
+} from "@/data/editorialCraft";
+import {
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+} from "@/components/ui/select";
 
 interface Props {
   open: boolean;
@@ -42,6 +49,7 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
   const [length, setLength] = useState("");
   const [spine, setSpine] = useState<Record<string, string>>({});
   const [selectedProofs, setSelectedProofs] = useState<string[]>([]);
+  const [voice, setVoice] = useState<VoiceId>("corporate");
 
   useEffect(() => {
     if (!open || !itemId) return;
@@ -64,10 +72,12 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
       setLength(br.length ?? "");
       setSpine((br.spine_beats as Record<string, string>) ?? {});
       setSelectedProofs((br.proof_points as string[]) ?? []);
+      setVoice((br.voice as VoiceId) ?? getDefaultVoice(it?.persona ?? "exec", it?.asset_type ?? "long_form"));
     } else {
       setObjective(""); setAudience(""); setKeyMessage("");
       setCta(""); setTone(""); setLength("");
       setSpine({}); setSelectedProofs([]);
+      setVoice(getDefaultVoice(it?.persona ?? "exec", it?.asset_type ?? "long_form"));
     }
     const { data: ass } = await supabase
       .from("assets")
@@ -84,7 +94,7 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
     const payload: any = {
       content_item_id: itemId,
       objective, audience, key_message: keyMessage, cta, tone, length,
-      spine_beats: spine, proof_points: selectedProofs,
+      spine_beats: spine, proof_points: selectedProofs, voice,
       status: approve ? "approved" : "draft",
     };
     if (approve) {
@@ -115,7 +125,7 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
     if (brief.status !== "approved") { toast.error("Approve the brief first"); return; }
     setGenerating(true);
     const { data, error } = await supabase.functions.invoke("generate-asset", {
-      body: { briefId: brief.id, refineNote: refineNote || undefined },
+      body: { briefId: brief.id, refineNote: refineNote || undefined, voice },
     });
     setGenerating(false);
     if (error) { toast.error(error.message); return; }
@@ -124,6 +134,19 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
     setRefineNote("");
     onChanged();
     load();
+  }
+
+  function regenerateAddressingLowScores() {
+    if (!activeAsset?.scores?.dimensions) return;
+    const lows = (activeAsset.scores.dimensions as any[])
+      .filter((d) => typeof d.score === "number" && d.score < 7)
+      .sort((a, b) => a.score - b.score)
+      .slice(0, 4);
+    if (lows.length === 0) { toast.success("No low scores to address — this draft is strong."); return; }
+    const note = "Improve these weak dimensions from the last version:\n" +
+      lows.map((d) => `- ${d.id} (scored ${d.score}/10): ${d.improvement || d.rationale}`).join("\n");
+    setRefineNote(note);
+    toast.info("Refinement note pre-filled — click Generate to produce the next version.");
   }
 
   async function setAssetStatus(status: string) {
@@ -152,6 +175,10 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
   }
 
   if (!open) return null;
+
+  const frameworks = item ? getFrameworks(item.asset_type) : [];
+  const rubric = item ? getRubric(item.asset_type) : [];
+  const rubricMap = Object.fromEntries(rubric.map((r) => [r.id, r]));
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
