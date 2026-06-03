@@ -114,6 +114,6 @@ export function buildPlaybookSnapshot() {
     personas: PERSONAS,
     terminology: TERMINOLOGY,
     snapshot_at: new Date().toISOString(),
-    version: "1.0.0",
+    version: "1.1.0",
   };
 }
