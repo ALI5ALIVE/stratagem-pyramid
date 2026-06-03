@@ -331,4 +331,38 @@ const DEFAULT_SNAPSHOT = {
   terminology: {
     forbidden: ["FOQA", "FDM", "ASAP", "CoAnalyst (in customer-facing copy)", "CoAuthor / CoTrainer (in customer-facing copy)", "Spaces in product names (Comply 365, Safety Manager 365)"],
   },
+  quarter_themes: {
+    Q1: {
+      label: "Q1", theme: "Build the Foundation",
+      quarterMessage: "You cannot raise performance on fragmented foundations.",
+      narrative: "Performance breaks down when safety, compliance, training, content, and IT improve separately. Before organisations can improve how they act, they need a connected foundation built on shared visibility, governance, and accountability.",
+      messageTerritory: ["The market is still managing performance in silos","Fragmented systems reduce control and slow progress","Connected foundations are the first step to better performance"],
+      dtopRole: "Introduce Detect as the need to see what matters clearly. Set up Trigger, Orchestrate, Prove by showing why disconnected systems weaken the whole performance model.",
+      forbiddenHere: ["Leading with DTOP, the Intelligence Layer, or 90/35 — those are Q2.","Naming our product first. Always name the customer pain first."],
+    },
+    Q2: {
+      label: "Q2", theme: "From Signals to Action",
+      quarterMessage: "Performance improves when signals lead to action, not delay.",
+      narrative: "Operational performance is shaped by what happens after something important is identified. The real challenge is not visibility — it is how quickly and consistently teams trigger response, coordinate action, and close the gap between issue and follow-through.",
+      messageTerritory: ["Visibility alone does not improve performance","Signals create value when ownership is clear","Coordinated response reduces lag and strengthens control"],
+      dtopRole: "DTOP enters fully: Detect what matters → Trigger the right response → Orchestrate cross-functional action → begin to Prove through follow-through.",
+      forbiddenHere: ["Treating DTOP as an acronym education exercise. Earn it through the signal-to-action pain."],
+    },
+    Q3: {
+      label: "Q3", theme: "Make Readiness Continuous",
+      quarterMessage: "Readiness is not an event. It is a condition of performance.",
+      narrative: "Readiness should not be a periodic push or a completion exercise. It is an ongoing performance capability built when training, compliance, and operational change work together inside a connected model.",
+      messageTerritory: ["Readiness goes beyond training completion","Continuous readiness improves predictability and control","Role-based alignment strengthens performance across teams"],
+      dtopRole: "Emphasise the back half of DTOP: stronger Orchestrate across functions, clearer Prove through role-based readiness and consistency over time.",
+      forbiddenHere: ["Framing readiness as a training-team problem. It is cross-functional."],
+    },
+    Q4: {
+      label: "Q4", theme: "Prove Performance at Scale",
+      quarterMessage: "Performance only scales when progress can be proved.",
+      narrative: "Performance improvement only scales when organisations can prove progress, readiness, and control across teams and regions. Leaders need more than activity reporting — they need evidence that supports confident decisions.",
+      messageTerritory: ["Proof matters more than reporting volume","Standardisation strengthens confidence at scale","Visibility, readiness, and evidence support investment and expansion"],
+      dtopRole: "Completes the DTOP story by focusing on Prove as measurable, repeatable, and scalable. The operating model becomes evidence, confidence, and wider rollout potential.",
+      forbiddenHere: ["Activity-volume framing (dashboards, report counts). Lead with evidence, ROI, expansion."],
+    },
+  },
 };
