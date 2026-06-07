@@ -8,7 +8,7 @@ import { SLIDE_REGISTRY } from "@/components/academy/slideRegistry";
 import type { AcademyModule } from "@/hooks/useAcademyProgress";
 import PlaybookNarrationBar from "@/components/PlaybookNarrationBar";
 import { usePlaybookNarration } from "@/hooks/usePlaybookNarration";
-import { PLAYBOOK_NARRATIONS } from "@/data/playbookNarrations";
+import { hasPlaybookNarration } from "@/data/playbookNarrations";
 
 export default function ModuleLesson() {
   const { moduleId } = useParams();
@@ -29,7 +29,7 @@ export default function ModuleLesson() {
 
   const slideIds = module.slide_ids;
   const activeSlideId = slideIds[Math.min(activeIdx, slideIds.length - 1)];
-  const hasNarration = !!PLAYBOOK_NARRATIONS[activeSlideId];
+  const hasNarration = hasPlaybookNarration(activeSlideId);
 
   const scrollToIdx = (idx: number) => {
     const target = slideIds[idx];

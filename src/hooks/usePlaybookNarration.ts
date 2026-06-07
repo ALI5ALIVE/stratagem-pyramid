@@ -34,6 +34,9 @@ export const usePlaybookNarration = () => {
     const narration = getPlaybookNarration(slideId);
     if (!narration) throw new Error(`No playbook narration found for ${slideId}`);
 
+    const body = narration.segments && narration.segments.length > 0
+      ? { segments: narration.segments }
+      : { text: narration.script, voiceId: narration.voiceId };
     const response = await fetch(`${SUPABASE_URL}/functions/v1/elevenlabs-tts`, {
       method: "POST",
       headers: {
@@ -41,7 +44,7 @@ export const usePlaybookNarration = () => {
         apikey: SUPABASE_ANON_KEY,
         Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
       },
-      body: JSON.stringify({ text: narration.script, voiceId: narration.voiceId }),
+      body: JSON.stringify(body),
     });
     if (!response.ok) throw new Error(`TTS request failed: ${response.status}`);
     const blob = await response.blob();
