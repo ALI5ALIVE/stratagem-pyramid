@@ -131,5 +131,14 @@ export const PLAYBOOK_NARRATIONS: Record<string, PlaybookNarration> = {
   "sig-closing": { voiceId: VOICE, script: `Close on talk track and objections. Anchor on the lifecycle: detect, classify, act, prove. Common objection: how do you avoid alert fatigue? Answer: classification and prioritisation are aviation-trained, and the workflow tunes over time. Ask one closing question: what weak signal in your operation today would you most want to catch earlier? Take the quiz when you are ready.` },
 };
 
-export const getPlaybookNarration = (slideId: string): PlaybookNarration | undefined =>
-  PLAYBOOK_NARRATIONS[slideId];
+import { salesEnablementNarrations } from "./salesEnablementNarration";
+
+export const getPlaybookNarration = (slideId: string): PlaybookNarration | undefined => {
+  if (PLAYBOOK_NARRATIONS[slideId]) return PLAYBOOK_NARRATIONS[slideId];
+  const se = salesEnablementNarrations.find((n) => n.slideId === slideId);
+  if (se) return { script: se.script, voiceId: se.voiceId, segments: se.segments };
+  return undefined;
+};
+
+export const hasPlaybookNarration = (slideId: string): boolean =>
+  !!getPlaybookNarration(slideId);
