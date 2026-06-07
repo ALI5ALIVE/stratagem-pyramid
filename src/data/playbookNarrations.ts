@@ -15,6 +15,7 @@
 export interface PlaybookNarration {
   script: string;
   voiceId: string;
+  segments?: Array<{ voiceId: string; text: string }>;
 }
 
 const VOICE = "JBFqnCBsd6RMkjVDRZzb"; // George
