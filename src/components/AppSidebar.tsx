@@ -1,5 +1,5 @@
 import {
-  Presentation, Brain,
+  Brain,
   Rocket, BookOpen, Home, Users, ScrollText, Workflow, Sparkles, Zap, Smartphone, Layers, Radio,
   LogIn, LogOut, GraduationCap, Mic, Activity
 } from "lucide-react";
