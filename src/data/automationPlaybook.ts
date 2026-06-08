@@ -1,4 +1,4 @@
-// Platform-wide Automation & Orchestration — Sales Enablement Playbook Data
+// Platform Automation — Sales Enablement Playbook Data
 
 export interface PainPoint {
   label: string;
@@ -66,7 +66,7 @@ export interface CompetitiveContrast {
 
 // Hero
 export const heroEyebrow = "POC — Foundation for the Platform Orchestration Layer";
-export const heroTitle = "Platform-wide Automation & Orchestration";
+export const heroTitle = "Platform Automation";
 export const heroTagline = "One automation layer across your entire operation.";
 export const heroSubtitle =
   "A modern, embedded orchestration layer that connects training, content and safety workflows — and the third-party tools you already run.";
