@@ -27,7 +27,7 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "Layer 3 · Intelligence & Orchestration",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Layer 3 — Intelligence and Orchestration. This is where data becomes action. Three capabilities: Insights and Intelligence, Recommendations and Prescriptive Actions, and Automation. Together they turn the data foundation into operational outcomes.",
+      "Layer 3 — Intelligence and Orchestration. This is where data becomes action. Three capabilities: Insights and Intelligence, Platform Recommendations, and Automation. Together they turn the data foundation into operational outcomes.",
   },
   {
     slideId: "tech-divider-mobile",
@@ -122,10 +122,10 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
   },
   {
     slideId: "tech-slide-insights",
-    title: "Recommendations & Prescriptive Actions",
+    title: "Platform Recommendations",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Insights and Intelligence answers questions. Recommendations and Prescriptive Actions go a step further — surfacing the questions you should be asking and the next move you should make. Three capabilities. Pattern detection: cross-domain correlation that links training gaps to safety events to procedural ambiguity. Recommended actions: every insight comes paired with a concrete next step and a traceable reasoning trail. Trend and foresight: continuous, exploratory analysis that turns reactive reporting into proactive risk identification. Worked example: a COO asks, are dangerous goods incidents linked to training gaps? Sixty seconds later: three hub stations correlate with overdue DG recurrent training. Targeted retraining for one hundred and eighty ground crew, expedite SOP republish, audit pack generated. Question to evidence-backed action plan in under a minute.",
+      "Insights and Intelligence answers questions. Platform Recommendations go a step further — surfacing the questions you should be asking and the next move you should make. Three capabilities. Pattern detection: cross-domain correlation that links training gaps to safety events to procedural ambiguity. Recommended actions: every insight comes paired with a concrete next step and a traceable reasoning trail. Trend and foresight: continuous, exploratory analysis that turns reactive reporting into proactive risk identification. Worked example: a COO asks, are dangerous goods incidents linked to training gaps? Sixty seconds later: three hub stations correlate with overdue DG recurrent training. Targeted retraining for one hundred and eighty ground crew, expedite SOP republish, audit pack generated. Question to evidence-backed action plan in under a minute.",
   },
   {
     slideId: "tech-slide-automation",
