@@ -26,7 +26,6 @@ export async function buildKnowledgeDocs(): Promise<KbDoc[]> {
     ops,
     tech,
     coa,
-    co,
     pb,
     personas,
     scenarios,
@@ -35,7 +34,6 @@ export async function buildKnowledgeDocs(): Promise<KbDoc[]> {
     import("@/data/operationalPitchNarration"),
     import("@/data/technicalPitchNarration"),
     import("@/data/coanalystNarration"),
-    import("@/data/customerOverviewNarration"),
     import("@/data/playbookNarrations"),
     import("@/data/personaProfiles"),
     import("@/data/practiceScenarios"),
@@ -68,13 +66,6 @@ export async function buildKnowledgeDocs(): Promise<KbDoc[]> {
     name: `${NAME_PREFIX}coanalyst`,
     text: `# Intelligence Layer Playbook — Narrations\n\n${joinNarration(
       coa.coanalystNarrations as any,
-    )}`,
-  });
-
-  docs.push({
-    name: `${NAME_PREFIX}customer-overview`,
-    text: `# Customer Overview — Narrations\n\n${joinNarration(
-      co.customerOverviewNarrations as any,
     )}`,
   });
 
