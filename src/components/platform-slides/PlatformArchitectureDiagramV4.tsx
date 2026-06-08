@@ -75,7 +75,7 @@ const PlatformArchitectureDiagramV4 = ({ compact = false }: { compact?: boolean 
             <div className="inline-block text-[8px] font-bold uppercase tracking-wider text-cyan-200 bg-cyan-500/20 border border-cyan-400/40 rounded px-1 py-px mb-0.5">Future Vision</div>
             <div className="flex items-center gap-1.5 mb-0.5">
               <Sparkles className="h-3 w-3 text-cyan-400" />
-              <span className="text-[10px] font-semibold text-cyan-300">Recommendations & Prescriptive Actions</span>
+              <span className="text-[10px] font-semibold text-cyan-300">Platform Recommendations</span>
             </div>
             <div className="text-[10px] text-muted-foreground leading-tight">Patterns + prescriptive next steps</div>
           </div>
