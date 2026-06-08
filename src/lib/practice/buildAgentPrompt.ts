@@ -11,7 +11,6 @@ async function getDeckScript(scenario: PracticeScenario): Promise<string> {
       case "operationalPitch": return join((await import("@/data/operationalPitchNarration")).operationalPitchNarrations as any);
       case "technicalPitch": return join((await import("@/data/technicalPitchNarration")).technicalPitchNarrations as any);
       case "coanalyst": return join((await import("@/data/coanalystNarration")).coanalystNarrations as any);
-      case "customerOverview": return join((await import("@/data/customerOverviewNarration")).customerOverviewNarrations as any);
       case "playbook": {
         const { PLAYBOOK_NARRATIONS } = await import("@/data/playbookNarrations");
         const prefix = scenario.playbookId ?? "";
