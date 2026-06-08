@@ -18,7 +18,7 @@ import { dividerProps, sectionDividerProps } from "@/data/execPitch3Slides";
  * Intelligence Layer, Regulation Management) + Roadmap + Why Comply365.
  *
  * Drops Automation (`exec3-slide-automation`), Insights — Just Ask
- * (`exec3-slide-insights-summary`) and Recommendations & Prescriptive Actions
+ * (`exec3-slide-insights-summary`) and Platform Recommendations
  * (`exec3-slide-insights`) from the Long pitch.
  *
  * Slide IDs are preserved so existing narration entries
