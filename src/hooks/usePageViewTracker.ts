@@ -12,7 +12,6 @@ const DECK_PREFIXES: Array<[RegExp, string]> = [
   [/^\/pitch-operational/, "pitch-operational"],
   [/^\/pitch-technical-v4/, "pitch-technical-v4"],
   [/^\/pitch-technical/, "pitch-technical"],
-  [/^\/customer-overview/, "customer-overview"],
   [/^\/coanalyst/, "coanalyst"],
   [/^\/dtop-playbook/, "dtop-playbook"],
   [/^\/insights-playbook/, "insights-playbook"],
