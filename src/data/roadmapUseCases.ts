@@ -179,7 +179,7 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "regdb-replatform-rollout",
-    title: "Regulation Database Replatforming — Rollout",
+    title: "Regulation Database — Modernisation Rollout",
     oneLiner: "Production rollout of the modern regulation substrate.",
     status: "in-progress",
     phase: "h2-2026",
@@ -288,7 +288,7 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "automation-platform-rollout",
-    title: "Platform-wide Automation — Rollout",
+    title: "Platform Automation Rollout",
     oneLiner: "Production rollout of cross-module automation at customer scale.",
     status: "planned",
     phase: "h2-2026",
@@ -397,7 +397,7 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "insights-platform-rollout",
-    title: "Platform-wide Insights & Recommendations — Rollout",
+    title: "Platform Intelligence Rollout",
     oneLiner: "Recommendations as a platform capability, embedded everywhere decisions are made.",
     status: "planned",
     phase: "2027-plus",
@@ -424,7 +424,7 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "automation-continued-rollout",
-    title: "Continued Roll-out of Platform-wide Automation",
+    title: "Continued Roll Out of Platform Automation",
     oneLiner: "More connectors, more conditions, more actions — automation as a living capability.",
     status: "planned",
     phase: "2027-plus",
