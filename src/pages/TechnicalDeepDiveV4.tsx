@@ -60,7 +60,7 @@ const dividerProps = {
     platformGroupLabel: "The Platform · Part of One Integrated Solution",
     upNext: [
       "Insights & Intelligence",
-      "Recommendations & Prescriptive Actions",
+      "Platform Recommendations",
       "Automation",
       "Tiers vs Generic AI",
     ],
@@ -114,7 +114,7 @@ const slides = [
   // Intelligence & Orchestration (data substrate folded in)
   { id: "tech-divider-intelligence", label: "▸ Intelligence & Orchestration", component: TechSlideLayerDivider, dividerProps: dividerProps.intelligence },
   { id: "tech-slide-coanalyst", label: "Insights & Intelligence", component: TechSlide7CoAnalyst },
-  { id: "tech-slide-insights", label: "Recommendations & Prescriptive Actions", component: TechSlideInsights },
+  { id: "tech-slide-insights", label: "Platform Recommendations", component: TechSlideInsights },
   { id: "tech-slide-automation", label: "Automation", component: TechSlideAutomation },
   { id: "tech-slide-tiers-vs-ai", label: "Tiers vs Generic AI", component: TechSlideTiersVsAI },
   // Mobile

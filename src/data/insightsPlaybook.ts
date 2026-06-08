@@ -1,4 +1,4 @@
-// Platform-wide Insights & Recommendations — Sales Enablement Playbook Data
+// Platform Intelligence — Sales Enablement Playbook Data
 
 export interface PainPoint {
   label: string;
@@ -66,7 +66,7 @@ export interface CompetitiveContrast {
 
 // Hero
 export const heroEyebrow = "POC — Foundation for the Comply365 Intelligence Layer";
-export const heroTitle = "Platform-wide Insights & Recommendations";
+export const heroTitle = "Platform Intelligence";
 export const heroTagline = "From data to intelligence — just by asking.";
 export const heroSubtitle =
   "Turn fragmented operational data into real-time intelligence by asking questions in plain English.";

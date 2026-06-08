@@ -1,42 +1,102 @@
-## Problem
 
-In the Academy, lessons 2 (Week 2 · Capabilities) and 3 (Week 3 · Sell & Win) show slides but no narration control bar / no voiceover. Lessons 4–10 (specialist playbooks) work fine. Week 1 has the same underlying bug and is also silent.
+## Scope
 
-## Root cause
+Apply the three changes from Kathrina's email:
 
-`src/pages/academy/ModuleLesson.tsx` decides whether to show the narration bar with:
+1. **Roadmap slide edits** (Medium + Long pitch decks)
+2. **Broad terminology rename** across the rest of the Lovable site
+3. **Delete the Short Deck** (Customer Overview) end-to-end
 
-```ts
-const hasNarration = !!PLAYBOOK_NARRATIONS[activeSlideId];
-```
+Both decks share the same component, so a single edit covers both.
 
-`PLAYBOOK_NARRATIONS` (in `src/data/playbookNarrations.ts`) only contains the specialist-playbook slide ids (`dtop-*`, `au-*`, `ir-*`, `mo-*`, `pf-*`, `sig-*`, `rm-*`). The Sales Enablement slide ids used by `m-w1` / `m-w2` / `m-w3` (`se-slide-shift`, `se-week-2-overview`, `se-platform-insights-intelligence`, `se-discovery-to-close`, …) live in a separate registry, `salesEnablementNarrations` in `src/data/salesEnablementNarration.ts`. That registry is consumed by `SalesEnablement.tsx` via `useSalesEnablementNarration` but is never seen by `usePlaybookNarration`, so in the Academy path the bar never renders and no audio is fetched.
+---
 
-## Fix
+## 1. Roadmap slide — `src/components/tech-slides/TechSlide15Roadmap2026.tsx`
 
-Bridge the two narration registries behind a single lookup that the Academy already uses, without touching the working specialist playbook pages.
+### H1 2026 — remove three lines
 
-### 1. `src/data/playbookNarrations.ts`
-- Import `salesEnablementNarrations` from `./salesEnablementNarration`.
-- Extend `PlaybookNarration` to optionally carry `segments` (matches the shape the `elevenlabs-tts` edge function already accepts).
-- Update `getPlaybookNarration(slideId)` to:
-  1. Return the matching entry from `PLAYBOOK_NARRATIONS` if present.
-  2. Otherwise, find a `salesEnablementNarrations` entry with the same `slideId` and return `{ script, voiceId, segments }`.
-- Export a small helper, e.g. `hasPlaybookNarration(slideId)`, that uses the same combined lookup.
+Delete:
+- `✅ Regulation Database Replatforming POC (Operational Data Foundation)`
+- `✅ Platform Proof of Concept — Automation (Intelligence & Orchestration Layer)`
+- `✅ Platform Proof of Concept — Platform-wide Insights (...) — POC only, not yet customer-deliverable`
 
-### 2. `src/hooks/usePlaybookNarration.ts`
-- When the narration has `segments`, POST `{ segments }` to `elevenlabs-tts` instead of `{ text, voiceId }` (the edge function already handles both branches and stitches the audio).
-- Otherwise keep the current `{ text, voiceId }` request.
-- No other behaviour change — caching, play/pause/stop, progress, completion all stay the same.
+Result: H1 2026 keeps Training↔Documents link, Regulation Database↔ContentManager365 integration, and All-in-One Mobile Phase 1.
 
-### 3. `src/pages/academy/ModuleLesson.tsx`
-- Replace the direct `PLAYBOOK_NARRATIONS[activeSlideId]` check with `hasPlaybookNarration(activeSlideId)` so Weeks 1–3 slides surface the narration bar.
+### H2 2026 — rename two lines
 
-No database, edge function, or slide-component changes are needed; the edge function already supports the `segments` payload and the slide components don't own narration UI.
+- `Platform-wide Insights — production rollout (...)` → **`Platform Intelligence Rollout (Intelligence & Orchestration Layer)`**
+- `Roll-out of Platform-wide Automation engine (...)` → **`Platform Automation Rollout (Intelligence & Orchestration Layer)`**
+
+### 2027 & Beyond — rename three lines
+
+- `Recommendations & Prescriptive Actions — Future Vision (...)` → **`Platform Recommendations — Future Vision (Intelligence & Orchestration Layer)`**
+- `Continued roll-out of Platform-wide Insights (...)` → **`Continued Roll Out of Platform Intelligence (Intelligence & Orchestration Layer)`**
+- `Continued roll-out of Platform-wide Automation capability (...)` → **`Continued Roll Out of Platform Automation (Intelligence & Orchestration Layer)`**
+
+No layout, no styling, no narration script changes here — strings only.
+
+---
+
+## 2. Broad rename across the site
+
+Kathrina asked for the new wording to be reflected "broadly across the Lovable site". Applied as a controlled find-and-replace in these files (titles, narration scripts, study notes, layer badges, exporters):
+
+- `src/data/roadmapUseCases.ts` (titles + one-liners for the standalone Roadmap deck)
+- `src/components/tech-slides/ArchitectureLayerBadge.tsx`
+- `src/components/tech-slides/TechSlideInsights.tsx`
+- `src/components/tech-slides/v4/TechV4SlideInsights.tsx`
+- `src/components/platform-slides/PlatformArchitectureDiagramV4.tsx`
+- `src/components/sales-enablement-slides/SECapabilityUseCases.tsx`
+- `src/data/execPitch3Slides.ts` (label only)
+- `src/data/executivePitchNarration.ts`
+- `src/data/technicalPitchNarration.ts`
+- `src/data/salesEnablementNarration.ts`
+- `src/data/salesEnablementStudyNotes.ts`
+- `src/data/insightsPlaybook.ts` (`heroTitle` + header comment)
+- `src/data/automationPlaybook.ts` (`heroTitle` + header comment)
+
+Mapping applied uniformly:
+
+| Old phrase | New phrase |
+|---|---|
+| `Recommendations & Prescriptive Actions` | `Platform Recommendations` |
+| `Recommendations and Prescriptive Actions` (narration prose) | `Platform Recommendations` |
+| `Prescriptive Action Plans` (the V4 Insights tile) | `Platform Recommendation Plans` |
+| `Platform-wide Insights & Recommendations` (playbook/section titles) | `Platform Intelligence` |
+| `Platform-wide Insights` | `Platform Intelligence` |
+| `Platform-wide Automation & Orchestration` / `Platform-wide Automation` | `Platform Automation` |
+| `Regulation Database Replatforming — POC` / `… — Rollout` (in `roadmapUseCases.ts`) | removed POC entry; rollout entry renamed to `Regulation Database — Modernisation Rollout` (the POC is no longer surfaced anywhere) |
+
+Narration scripts and study-note prose are updated to use the new short names. No memory entries need rewriting — `mem://product/roadmap-dates` doesn't carry these phrases.
+
+---
+
+## 3. Delete the Short Deck (Customer Overview)
+
+Remove the deck entirely so it stops appearing in nav, home, sidebar, exporters, and analytics:
+
+- **Routing**: in `src/App.tsx`, remove the import of `CustomerOverview` and the `<Route path="/customer-overview" …>` entry.
+- **Home**: in `src/pages/HomePage.tsx`, drop the "Short — Customer Overview" card from `pitchDecks`.
+- **Sidebar**: in `src/components/AppSidebar.tsx`, remove the "Short — Customer Overview" link.
+- **Marketing nav**: in `src/components/home/TopNav.tsx`, drop the `Customers → /customer-overview` link; in `src/components/home/Footer.tsx`, remove the "Customer overview" footer link.
+- **PPTX exporter**: in `src/exporters/pptx/index.ts`, remove the `"customer-overview"` entry from the deck map and update the union type.
+- **Practice scenarios**: in `src/data/practiceScenarios.ts`, drop `"customerOverview"` from the union and any scenario records that target it; in `src/lib/practice/buildKnowledgeDocs.ts`, remove the corresponding knowledge-doc registration.
+- **Analytics**: in `src/hooks/usePageViewTracker.ts`, delete the `/^\/customer-overview/` matcher.
+- **Files**: delete `src/pages/CustomerOverview.tsx`, the `src/components/customer-overview-slides/` directory, `src/data/customerOverviewNarration.ts`, `src/hooks/useCustomerOverviewNarration.ts`, and `src/exporters/pptx/buildCustomerOverviewDeck.ts`.
+
+Anything else that imports from those files will be fixed in the same pass.
+
+---
+
+## Out of scope (explicitly not changing)
+
+- No edits to `mem://`, no DB migrations, no edge-function changes.
+- No tone/structure changes to narration beyond the phrase swaps.
+- The 5-layer architecture diagram still has a "Platform Recommendations" tile in the Intelligence layer — only the label changes.
 
 ## Verification
 
-1. Open `/academy/m-w2` (Lesson 2 · Capabilities) — the glassmorphism narration bar appears, Play streams audio for `se-week-2-overview`, and scrolling to the next slide switches to that slide's script.
-2. Same on `/academy/m-w3` (Lesson 3) for `se-discovery-to-close` and `/academy/m-w1` for `se-slide-shift`.
-3. Open `/academy/m-dtop` (Lesson 5) and confirm specialist-playbook narration still plays (regression check).
-4. Watch the network tab: SE slides hit `functions/v1/elevenlabs-tts` with a `segments` body when the narration entry defines segments, and a `{ text, voiceId }` body otherwise, returning `audio/mpeg`.
+1. Open `/pitch-executive-medium` and `/pitch-executive-3` → the Roadmap slide reflects all H1/H2/2027 edits.
+2. `/customer-overview` returns Not Found; sidebar, home, marketing nav, and footer no longer surface it.
+3. `rg -n "Platform-wide Insights|Platform-wide Automation|Prescriptive Action|Regulation Database Replat|Platform Proof of Concept" src/` returns no matches.
+4. Spot-check `/pitch-technical-v4`, `/sales-enablement`, and `/roadmap-deck` to confirm renamed copy reads cleanly and narration still references the new names.

@@ -7,7 +7,6 @@ export type DeckId =
   | "executive-pitch"
   | "executive-pitch-long"
   | "executive-pitch-medium"
-  | "customer-overview"
   | "ai-infographic";
 
 export interface DeckBuilder {
@@ -53,14 +52,6 @@ export const DECK_BUILDERS: Record<DeckId, DeckBuilder> = {
     build: async (opts) => {
       const { buildExecutivePitchMediumDeck } = await import("./buildExecutivePitch3Deck");
       return buildExecutivePitchMediumDeck(opts);
-    },
-  },
-  "customer-overview": {
-    filename: "Comply365-Customer-Overview.pptx",
-    label: "Customer Overview",
-    build: async (opts) => {
-      const { buildCustomerOverviewDeck } = await import("./buildCustomerOverviewDeck");
-      return buildCustomerOverviewDeck(opts);
     },
   },
   "ai-infographic": {

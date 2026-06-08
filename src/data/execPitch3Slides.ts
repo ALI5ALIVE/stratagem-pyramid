@@ -78,7 +78,7 @@ export const execPitch3Slides = [
   { id: "exec3-slide-insights-summary", label: "Insights — Just Ask", component: IRSlide2WhatIs, buyerFocus: "natural-language access to operational data — who can ask what" },
   { id: "exec3-slide-coanalyst", label: "Intelligence Layer", component: TechV4Slide7CoAnalyst, buyerFocus: "~90% domain accuracy at L4–5 vs ~35% generic AI — push on how that's measured" },
   { id: "exec3-slide-tiers-vs-ai", label: "Intelligence Layer vs Generic AI", component: TechV4SlideTiersVsAI, buyerFocus: "why generic AI fails on aviation context — proof, not claims" },
-  { id: "exec3-slide-insights", label: "Recommendations & Prescriptive Actions", component: TechV4SlideInsights, buyerFocus: "from recommendation to action — approval, audit, rollback" },
+  { id: "exec3-slide-insights", label: "Platform Recommendations", component: TechV4SlideInsights, buyerFocus: "from recommendation to action — approval, audit, rollback" },
   { id: "exec3-divider-regulation", label: "▸ Regulation Management", component: TechSlideSectionDivider, sectionProps: sectionDividerProps.regulation, isTransition: true },
   { id: "exec3-slide-regulation", label: "Regulation Management", component: TechSlideRegulationSummary, buyerFocus: "tracing a reg change to an in-app procedure update" },
   { id: "exec3-divider-roadmap", label: "▸ 2026 Phased Roadmap", component: TechSlideSectionDivider, sectionProps: sectionDividerProps.roadmap, isTransition: true },

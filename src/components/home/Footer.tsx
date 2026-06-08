@@ -21,7 +21,6 @@ const COLS = [
   {
     title: "Customers",
     links: [
-      { label: "Customer overview", href: "/customer-overview" },
       { label: "Line of Sight", href: "/line-of-sight" },
     ],
   },

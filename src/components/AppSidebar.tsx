@@ -1,5 +1,5 @@
 import {
-  Presentation, Brain,
+  Brain,
   Rocket, BookOpen, Home, Users, ScrollText, Workflow, Sparkles, Zap, Smartphone, Layers, Radio,
   LogIn, LogOut, GraduationCap, Mic, Activity
 } from "lucide-react";
@@ -29,7 +29,6 @@ type NavItem = {
 };
 
 const pitchItems: NavItem[] = [
-  { title: "Short — Customer Overview", url: "/customer-overview", icon: Presentation },
   { title: "Medium — Executive Pitch", url: "/pitch-executive-medium", icon: Rocket },
   { title: "Long — Executive Pitch", url: "/pitch-executive-3", icon: Rocket },
 ];

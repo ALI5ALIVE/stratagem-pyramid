@@ -20,7 +20,6 @@ export interface PracticeScenario {
     | "operationalPitch"
     | "technicalPitch"
     | "coanalyst"
-    | "customerOverview"
     | "playbook";
   /** Optional playbook id when narrationKey === 'playbook' */
   playbookId?: string;

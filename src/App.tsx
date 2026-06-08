@@ -46,7 +46,6 @@ import RoadmapDeck from "./pages/RoadmapDeck";
 import AuthPage from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
 import ReviewDashboard from "./pages/ReviewDashboard";
-import CustomerOverview from "./pages/CustomerOverview";
 import PlatformOverview from "./pages/PlatformOverview";
 import Comply365Home from "./pages/Comply365Home";
 import Comply365MockupHome from "./pages/Comply365MockupHome";
@@ -123,7 +122,6 @@ const App = () => (
             <Route path="/admin/activity/:userId" element={<RequireAuth><Suspense fallback={<PageLoader />}><SalesRepActivityDetail /></Suspense></RequireAuth>} />
             <Route path="/roadmap" element={<RoadmapDeck />} />
             <Route path="/review" element={<ReviewDashboard />} />
-            <Route path="/customer-overview" element={<CustomerOverview />} />
             <Route path="/platform" element={<PasswordGate><PlatformOverview /></PasswordGate>} />
             <Route path="/comply365-home" element={<PasswordGate><Comply365Home /></PasswordGate>} />
             <Route path="/comply365-mockup" element={<Comply365MockupHome />} />

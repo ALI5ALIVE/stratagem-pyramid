@@ -6,7 +6,7 @@ interface Props extends SlideNarrationProps { slideNumber?: number; }
 
 const capabilities = [
   { icon: Radar, title: "Continuous Pattern Detection", desc: "The platform watches operational data 24/7, correlating safety, training, content and ops — no question required, no dashboard to build.", color: "text-amber-400", bg: "bg-amber-500/10", border: "border-amber-500/30" },
-  { icon: ListOrdered, title: "Prescriptive Action Plans", desc: "Not a single suggestion — a ranked plan: what to do, where, in what order, by whom, with predicted impact and effort.", color: "text-violet-400", bg: "bg-violet-500/10", border: "border-violet-500/30" },
+  { icon: ListOrdered, title: "Platform Recommendation Plans", desc: "Not a single suggestion — a ranked plan: what to do, where, in what order, by whom, with predicted impact and effort.", color: "text-violet-400", bg: "bg-violet-500/10", border: "border-violet-500/30" },
   { icon: TrendingUp, title: "Predicted Impact & Foresight", desc: "Each action carries a forecast — risk reduction, compliance exposure closed, hours saved — so leaders prioritise on outcome, not opinion.", color: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/30" },
 ];
 
@@ -20,7 +20,7 @@ const workedSteps = [
 const TechV4SlideInsights = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer
     id="tech-slide-insights"
-    title="The Platform · Recommendations & Prescriptive Actions"
+    title="The Platform · Platform Recommendations"
     subtitle="Always-on pattern detection across the platform — surfacing prioritised actions before anyone thinks to ask."
     slideNumber={slideNumber}
     {...narrationProps}

@@ -69,7 +69,7 @@ const DATA: Record<Capability, CapabilityData> = {
     ],
   },
   recommendations: {
-    title: "Recommendations & Prescriptive Actions — Use Cases",
+    title: "Platform Recommendations — Use Cases",
     subtitle: "How this shows up per solution and across the platform.",
     perSolution: [
       {

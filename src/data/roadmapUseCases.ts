@@ -94,87 +94,6 @@ export const roadmapUseCases: RoadmapUseCase[] = [
     ],
     modules: ["TrainingManager365", "ContentManager365"],
   },
-  {
-    id: "regdb-replatform-poc",
-    title: "Regulation Database Replatforming — POC",
-    oneLiner: "Modern regulation substrate proven and ready to scale.",
-    status: "done",
-    phase: "h1-2026",
-    layer: "Operational Data Foundation",
-    problemToday:
-      "The legacy regulation store is hard to query, slow to update, and disconnected from the operational systems that consume it.",
-    whatWereDelivering: [
-      "A modern, structured regulation database designed for cross-platform consumption",
-      "Validated ingestion, versioning and traceability against representative authorities",
-      "Foundation for live integration with ContentManager365 and downstream automation",
-    ],
-    dtop: {
-      detect: "Authority publishes a regulatory update",
-      trigger: "Change captured, classified and versioned in the new database",
-      orchestrate: "Impacted documents and controls identified for downstream review",
-      prove: "Lineage from regulation → control → document → training is queryable end-to-end",
-    },
-    customerOutcomes: [
-      "Removes the regulation database as a bottleneck for the wider platform",
-      "Unlocks faster, evidence-backed compliance change management",
-      "Sets the stage for automated regulatory impact analysis",
-    ],
-    modules: ["ContentManager365", "Regulation Management"],
-  },
-  {
-    id: "automation-poc",
-    title: "Automation Engine — POC",
-    oneLiner: "Proven that platform events can drive deterministic, auditable actions.",
-    status: "done",
-    phase: "h1-2026",
-    layer: "Intelligence & Orchestration Layer",
-    problemToday:
-      "Operational follow-up is manual: a signal arrives, somebody has to read it, route it, and chase the action. Time and accountability leak.",
-    whatWereDelivering: [
-      "An automation runtime that listens to platform events across the core apps",
-      "Rule-based and policy-aware actions (notify, assign, route, escalate)",
-      "Full audit trail of every triggered action and its outcome",
-    ],
-    dtop: {
-      detect: "Platform event emitted by SafetyManager365 / ContentManager365 / TrainingManager365",
-      trigger: "Automation policy matched against event signature",
-      orchestrate: "Action executed against the right system and routed to the right owner",
-      prove: "Every triggered action logged with outcome and time-to-action",
-    },
-    customerOutcomes: [
-      "Validates the automation pattern that scales across the platform",
-      "Replaces invisible manual steps with visible, governed workflow",
-      "Gives operations a measurable lever on cycle time",
-    ],
-    modules: ["SafetyManager365", "ContentManager365", "TrainingManager365"],
-  },
-  {
-    id: "insights-poc",
-    title: "Platform-wide Insights & Recommendations — POC",
-    oneLiner: "From dashboards to recommended next actions, grounded in operational data.",
-    status: "done",
-    phase: "h1-2026",
-    layer: "Intelligence & Orchestration Layer",
-    problemToday:
-      "Leaders see lagging dashboards. By the time a trend is visible, the cost has already been paid and the window to act has closed.",
-    whatWereDelivering: [
-      "Cross-module signal correlation across Safety, Content and Training data",
-      "Recommended actions surfaced with the evidence behind them",
-      "Validated against real operational scenarios with customer-grade accuracy",
-    ],
-    dtop: {
-      detect: "Patterns surfaced across SafetyManager365, ContentManager365 and TrainingManager365",
-      trigger: "Recommendation generated when a pattern crosses a defined threshold",
-      orchestrate: "Recommended action presented to the accountable role with context",
-      prove: "Recommendation, decision and outcome retained as evidence",
-    },
-    customerOutcomes: [
-      "Shifts leaders from reactive reporting to proactive recommendation",
-      "Cuts the time between a leading signal and a decision",
-      "Establishes the baseline for platform-wide intelligence at scale",
-    ],
-    modules: ["SafetyManager365", "ContentManager365", "TrainingManager365"],
-  },
   // ──────────────── H1 2026 — In Progress ────────────────
   {
     id: "regdb-cm365-integration",
@@ -260,7 +179,7 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "regdb-replatform-rollout",
-    title: "Regulation Database Replatforming — Rollout",
+    title: "Regulation Database — Modernisation Rollout",
     oneLiner: "Production rollout of the modern regulation substrate.",
     status: "in-progress",
     phase: "h2-2026",
@@ -369,7 +288,7 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "automation-platform-rollout",
-    title: "Platform-wide Automation — Rollout",
+    title: "Platform Automation Rollout",
     oneLiner: "Production rollout of cross-module automation at customer scale.",
     status: "planned",
     phase: "h2-2026",
@@ -478,7 +397,7 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "insights-platform-rollout",
-    title: "Platform-wide Insights & Recommendations — Rollout",
+    title: "Platform Intelligence Rollout",
     oneLiner: "Recommendations as a platform capability, embedded everywhere decisions are made.",
     status: "planned",
     phase: "2027-plus",
@@ -505,7 +424,7 @@ export const roadmapUseCases: RoadmapUseCase[] = [
   },
   {
     id: "automation-continued-rollout",
-    title: "Continued Roll-out of Platform-wide Automation",
+    title: "Continued Roll Out of Platform Automation",
     oneLiner: "More connectors, more conditions, more actions — automation as a living capability.",
     status: "planned",
     phase: "2027-plus",

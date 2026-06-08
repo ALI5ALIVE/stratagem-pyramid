@@ -61,11 +61,11 @@ const dividerProps = {
   },
   intelligence: {
     layerNumber: 3, layerName: "Intelligence & Orchestration",
-    tagline: "Insights & Intelligence · Recommendations & Prescriptive Actions · Automation — turning data into action.",
+    tagline: "Insights & Intelligence · Platform Recommendations · Automation — turning data into action.",
     active: "intelligence" as const,
     upNext: [
       "Insights & Intelligence",
-      "Recommendations & Prescriptive Actions",
+      "Platform Recommendations",
       "Automation",
       "Tiers vs Generic AI",
     ],
@@ -117,7 +117,7 @@ const slides = [
   // Intelligence & Orchestration
   { id: "tech-divider-intelligence", label: "▸ Layer 3 · Intelligence & Orchestration", component: TechSlideLayerDivider, dividerProps: dividerProps.intelligence },
   { id: "tech-slide-coanalyst", label: "L3 · Insights & Intelligence", component: TechSlide7CoAnalyst },
-  { id: "tech-slide-insights", label: "L3 · Recommendations & Prescriptive Actions", component: TechSlideInsights },
+  { id: "tech-slide-insights", label: "L3 · Platform Recommendations", component: TechSlideInsights },
   { id: "tech-slide-automation", label: "L3 · Automation", component: TechSlideAutomation },
   { id: "tech-slide-tiers-vs-ai", label: "L3 · Tiers vs Generic AI", component: TechSlideTiersVsAI },
   { id: "tech-divider-mobile", label: "▸ Layer 4 · Unified Mobile", component: TechSlideLayerDivider, dividerProps: dividerProps.mobile },

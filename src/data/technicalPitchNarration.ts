@@ -27,7 +27,7 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "Layer 3 · Intelligence & Orchestration",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Layer 3 — Intelligence and Orchestration. This is where data becomes action. Three capabilities: Insights and Intelligence, Recommendations and Prescriptive Actions, and Automation. Together they turn the data foundation into operational outcomes.",
+      "Layer 3 — Intelligence and Orchestration. This is where data becomes action. Three capabilities: Insights and Intelligence, Platform Recommendations, and Automation. Together they turn the data foundation into operational outcomes.",
   },
   {
     slideId: "tech-divider-mobile",
@@ -122,10 +122,10 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
   },
   {
     slideId: "tech-slide-insights",
-    title: "Recommendations & Prescriptive Actions",
+    title: "Platform Recommendations",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Insights and Intelligence answers questions. Recommendations and Prescriptive Actions go a step further — surfacing the questions you should be asking and the next move you should make. Three capabilities. Pattern detection: cross-domain correlation that links training gaps to safety events to procedural ambiguity. Recommended actions: every insight comes paired with a concrete next step and a traceable reasoning trail. Trend and foresight: continuous, exploratory analysis that turns reactive reporting into proactive risk identification. Worked example: a COO asks, are dangerous goods incidents linked to training gaps? Sixty seconds later: three hub stations correlate with overdue DG recurrent training. Targeted retraining for one hundred and eighty ground crew, expedite SOP republish, audit pack generated. Question to evidence-backed action plan in under a minute.",
+      "Insights and Intelligence answers questions. Platform Recommendations go a step further — surfacing the questions you should be asking and the next move you should make. Three capabilities. Pattern detection: cross-domain correlation that links training gaps to safety events to procedural ambiguity. Recommended actions: every insight comes paired with a concrete next step and a traceable reasoning trail. Trend and foresight: continuous, exploratory analysis that turns reactive reporting into proactive risk identification. Worked example: a COO asks, are dangerous goods incidents linked to training gaps? Sixty seconds later: three hub stations correlate with overdue DG recurrent training. Targeted retraining for one hundred and eighty ground crew, expedite SOP republish, audit pack generated. Question to evidence-backed action plan in under a minute.",
   },
   {
     slideId: "tech-slide-automation",
@@ -181,7 +181,7 @@ export const technicalPitchNarrations: TechNarrationSlide[] = [
     title: "2026 Roadmap",
     voiceId: DEFAULT_VOICE_ID,
     script:
-      "Here's the phased delivery plan — each phase builds on proven value, layering capability without disrupting operations. First half of twenty twenty-six — in production and quick wins. Training Modules now linked to Documents, Regulation Database replatforming proof of concept complete, Automation proof of concept complete, and Platform-wide Insights and Recommendations proof of concept complete — all on the Operational Data Foundation and the Intelligence and Orchestration Layer. In progress for H1 — Regulation Database integration with ContentManager365, and surfacing Training screens inside the Comply iOS Mobile app. Second half of twenty twenty-six — connected operations. Standardising UI fonts and colours across the unified experience, completing the Regulation Database replatforming, surfacing Safety Reporting in the Comply iOS Mobile app, and kicking off Platform-wide Automation and Business Intelligence proofs of concept. Twenty twenty-seven and beyond — intelligent operations. Next phase Regulation Management integration — sync compliance mappings, TrainingManager365 integration, automation triggers. Roll out of Platform-wide Automation and Platform-wide Business Intelligence. Full unification of the mobile experience. Contextual document viewing from TrainingManager365. And roll out of Platform-wide Insights and Recommendations. The proof point: every milestone is anchored to a layer of the platform — foundation, intelligence, mobile — so the architecture compounds with every release.",
+      "Here's the phased delivery plan — each phase builds on proven value, layering capability without disrupting operations. First half of twenty twenty-six — in production and quick wins. Training Modules now linked to Documents, Regulation Database integration with ContentManager365 in progress, and surfacing Training screens inside the Comply iOS Mobile app — all on the Operational Data Foundation. Second half of twenty twenty-six — connected operations. Standardising UI fonts and colours across the unified experience, completing the Regulation Database modernisation, surfacing Safety Reporting in the Comply iOS Mobile app, Platform Intelligence Rollout, Platform Automation Rollout, and next-phase Regulation Management integration. Twenty twenty-seven and beyond — intelligent operations. Platform Recommendations — future vision. Full unification of the mobile experience. Contextual document viewing from TrainingManager365. Continued Roll Out of Platform Intelligence and Continued Roll Out of Platform Automation. The proof point: every milestone is anchored to a layer of the platform — foundation, intelligence, mobile — so the architecture compounds with every release.",
   },
   {
     slideId: "tech-slide-why-comply",
