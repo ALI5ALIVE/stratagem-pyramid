@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { 
   Rocket, Briefcase, BookOpen, Compass,
-  Presentation, Brain, 
+  Brain, 
   ArrowRight, Users, ScrollText, Workflow, Layers, Sparkles, Zap, Smartphone, GraduationCap, Radio, Mic, FlaskConical
 } from "lucide-react";
 import logo from "@/assets/comply365-logo-white.png";
