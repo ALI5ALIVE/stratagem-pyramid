@@ -642,11 +642,11 @@ export const STUDY_NOTES: Record<string, SlideOnePager> = {
       "Per-app (left column). Safety: recommend risk controls for unstable approach at location X. Content: recommend OMA search updates based on user behaviour. Training: recommend DG training updates to lift engagement.",
       "Platform (right column). Where should attention focus today? How well did our Just Culture campaign work? If audited today, where would attention focus?",
       "Every recommendation shows its evidence. Every recommendation closes a step in DTOP.",
-      "Roadmap: Recommendations and Prescriptive Actions are 2027+. Sell direction, not next quarter.",
+      "Roadmap: Platform Recommendations are 2027+. Sell direction, not next quarter.",
     ],
     terms: [T.recommendedActions, T.dtop, T.insights],
     facts: [
-      "Roadmap: 2027+ for Recommendations & Prescriptive Actions.",
+      "Roadmap: 2027+ for Platform Recommendations.",
       "Every recommendation has a rank, the evidence, and the DTOP step it closes.",
     ],
     watchOut: "Do not oversell. This is direction of travel, not this quarter's invoice. Be precise about the year.",
@@ -1726,7 +1726,7 @@ export const WHATS_ON_SLIDE: Record<string, string[]> = {
   "se-slide-insights-usecases": [
     "Two columns: Per-solution (Safety/Content/Training) and Platform-level recommendation examples.",
     "Cited-evidence badge on every recommendation card.",
-    "Roadmap honesty chip: Recommendations & Prescriptive Actions 2027+.",
+    "Roadmap honesty chip: Platform Recommendations 2027+.",
   ],
   "se-slide-automation": [
     "Trust sequence shown left-to-right: Insights → Recommendations → Automation.",
