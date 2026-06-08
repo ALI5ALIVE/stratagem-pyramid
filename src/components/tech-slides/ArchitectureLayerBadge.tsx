@@ -26,7 +26,7 @@ const layers: { id: Layer; label: string; color: string; bg: string; border: str
 const sublayersByLayer: Record<string, { id: Sublayer; label: string }[]> = {
   intelligence: [
     { id: "insights-intelligence", label: "Insights & Intelligence" },
-    { id: "recommendations",       label: "Recommendations & Prescriptive Actions" },
+    { id: "recommendations",       label: "Platform Recommendations" },
     { id: "automation",            label: "Automation" },
   ],
   core: [
