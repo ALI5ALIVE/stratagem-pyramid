@@ -21,7 +21,7 @@ const workedSteps = [
 const TechSlideInsights = ({ slideNumber, ...narrationProps }: Props) => (
   <SalesSlideContainer
     id="tech-slide-insights"
-    title="Layer 3 · Intelligence & Orchestration — Recommendations & Prescriptive Actions"
+    title="Layer 3 · Intelligence & Orchestration — Platform Recommendations"
     subtitle="From insight to prescriptive action — proactive signals across the platform"
     slideNumber={slideNumber}
     {...narrationProps}
