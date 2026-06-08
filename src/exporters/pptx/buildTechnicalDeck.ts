@@ -1046,7 +1046,7 @@ export const slideSpecs: SlideSpec[] = [
       const subCaps = [
         { title: "Automation", body: "Cross-product workflows", accent: mobAccent, future: false },
         { title: "Insights & Intelligence", body: "Ask anything in plain English", accent: intAccent, future: false },
-        { title: "Recommendations & Prescriptive Actions", body: "Patterns + prescriptive next steps", accent: C.cyan, future: true },
+        { title: "Platform Recommendations", body: "Patterns + prescriptive next steps", accent: C.cyan, future: true },
       ];
       subCaps.forEach((s, i) => {
         const sx = innerX + 0.15 + i * (subW + subGap);
@@ -1437,11 +1437,11 @@ slideSpecs.push(
     label: "▸ Layer 3 · Intelligence & Orchestration",
     layerNumber: 3,
     layerName: "Intelligence & Orchestration Layer",
-    tagline: "Insights & Intelligence · Recommendations & Prescriptive Actions · Automation — turning data into action.",
+    tagline: "Insights & Intelligence · Platform Recommendations · Automation — turning data into action.",
     active: "intelligence",
     upNext: [
       "Insights & Intelligence",
-      "Recommendations & Prescriptive Actions",
+      "Platform Recommendations",
       "Automation",
     ],
   }),
@@ -1498,10 +1498,10 @@ slideSpecs.push(
 
   // ─── 9. RECOMMENDATIONS & PRESCRIPTIVE ACTIONS ───────────────
   {
-    label: "Recommendations & Prescriptive Actions",
+    label: "Platform Recommendations",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Intelligence & Orchestration", "Layer 3 · Intelligence & Orchestration — Recommendations & Prescriptive Actions",
+      header(slide, "Intelligence & Orchestration", "Layer 3 · Intelligence & Orchestration — Platform Recommendations",
         "From insight to prescriptive action — proactive signals across the platform");
 
       const caps = [
@@ -2226,9 +2226,9 @@ slideSpecs.push(
           phase: "H1 2026", label: "In Production & Quick Wins", color: C.sky,
           items: [
             "✓ Link Training Modules to Documents",
-            "✓ Regulation Database Replatforming — POC",
+            "✓ Regulation Database — Modernisation POC",
             "✓ Automation Engine — POC",
-            "✓ Platform-wide Insights & Recommendations — POC",
+            "✓ Platform Intelligence — POC",
             "Regulation Database ↔ ContentManager365 integration",
             "All-in-One Mobile Experience — Phase 1 (Training)",
           ],
@@ -2237,11 +2237,11 @@ slideSpecs.push(
           phase: "H2 2026", label: "Connected Operations", color: C.violet,
           items: [
             "Standardise UI Fonts & Colors (Unified Web Experience)",
-            "Regulation Database Replatforming — Rollout",
+            "Regulation Database — Modernisation Rollout",
             "All-in-One Mobile Experience — Phase 2 (Safety Reporting)",
             "Platform-wide Business Intelligence — POC",
             "Next-Phase Regulation Management Integration",
-            "Platform-wide Automation — Rollout",
+            "Platform Automation Rollout",
           ],
         },
         {
@@ -2250,8 +2250,8 @@ slideSpecs.push(
             "Platform-wide Business Intelligence — Rollout",
             "All-in-One Mobile Experience — Phase 3 (OCM + Training + Safety)",
             "Contextual Document Viewing from TrainingManager365",
-            "Platform-wide Insights & Recommendations — Rollout (Future Vision)",
-            "Continued roll-out of Platform-wide Automation capability",
+            "Platform Intelligence — Future Vision Rollout",
+            "Continued Roll Out of Platform Automation",
             "Future Platform PoCs — defined with customer input",
           ],
         },
@@ -2964,7 +2964,7 @@ export async function buildTechnicalDeck(opts: BuildOpts = {}): Promise<Blob> {
     // ── Layer 3 · Intelligence & Orchestration ──
     byLabel("▸ Layer 3 · Intelligence & Orchestration"),
     byLabel("Insights & Intelligence"),
-    byLabel("Recommendations & Prescriptive Actions"),
+    byLabel("Platform Recommendations"),
     byLabel("Automation"),
     byLabel("Tiers vs Generic AI"),
     // ── Layer 4 · Unified Mobile ──

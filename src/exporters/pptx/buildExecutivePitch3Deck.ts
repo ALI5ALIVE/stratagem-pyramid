@@ -450,7 +450,7 @@ const exec3IntelligenceDivider: SlideSpec = layerDividerSpec({
   layerNumber: 3,
   layerName: "Intelligence & Orchestration",
   tagline:
-    "Automation · Insights & Intelligence · Intelligence Layer (Recommendations & Prescriptive Actions) — turning operational data into action.",
+    "Automation · Insights & Intelligence · Intelligence Layer (Platform Recommendations) — turning operational data into action.",
   active: "intelligence",
   upNext: ["Automation", "Insights & Recommendations", "Intelligence Layer", "Intelligence Layer vs Generic AI"],
 });
@@ -787,7 +787,7 @@ async function buildExec3DeckInternal(opts: BuildOpts, variant: "long" | "medium
     insightsJustAskSpec,                           // 11 · Insights — Just Ask
     coAnalystSpec,                                 // 12
     byLabel("Tiers vs Generic AI"),                // 13 · Intelligence Layer vs Generic AI
-    byLabel("Recommendations & Prescriptive Actions"), // 14
+    byLabel("Platform Recommendations"), // 14
     exec3RegulationDivider,                        // 15
     regulationSummarySpec,                         // 16
     exec3RoadmapDivider,                           // 17
@@ -796,7 +796,7 @@ async function buildExec3DeckInternal(opts: BuildOpts, variant: "long" | "medium
   ];
 
   // Condensed Medium = Long minus Automation, Insights — Just Ask, and
-  // Recommendations & Prescriptive Actions.
+  // Platform Recommendations.
   const mediumComposed: SlideSpec[] = [
     openerSpec,
     byLabel("Strategic Shift"),
