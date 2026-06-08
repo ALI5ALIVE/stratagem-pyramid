@@ -17,14 +17,6 @@ interface DeckCard {
 
 const pitchDecks: DeckCard[] = [
   {
-    title: "Short — Customer Overview",
-    description: "Customer-facing · Sales-led. 10-slide narrative from today's reality to the first 90 days. No architecture, no acronyms.",
-    href: "/customer-overview",
-    icon: Presentation,
-    badge: "Short · ~15–20 min · 10 slides",
-    accent: "from-primary to-comply-teal",
-  },
-  {
     title: "Medium — Executive Pitch",
     description: "Condensed executive narrative — Foundation, Unified Mobile, Intelligence Layer, Regulation Management, Roadmap and Why Comply365.",
     href: "/pitch-executive-medium",
