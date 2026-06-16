@@ -2345,71 +2345,81 @@ slideSpecs.push(
     label: "Why Comply365",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Value & close", "Outcomes & Why Comply365",
-        "Measured outcomes from carriers running on the platform — and the three things that make them possible");
+      header(
+        slide,
+        "Value & close",
+        "Why Comply365",
+        "Point solutions manage silos. Generic AI creates noise. We close the loop with the Comply365 Operational Performance Platform.",
+      );
 
-      // Outcomes strip
-      const outcomes = [
-        { v: "78%", l: "Reduction in repeat events", c: C.rose },
-        { v: "6 wks → 48 hrs", l: "Signal to coordinated response", c: C.blue },
-        { v: "5 days", l: "Directive to crew acknowledgement", c: C.violet },
-        { v: "90% vs 35%", l: "Domain accuracy vs generic AI", c: C.amber },
-      ];
-      const oY = CONTENT_TOP;
-      const oH = 1.05;
-      const oW = (W - 1 - 3 * 0.2) / 4;
-      outcomes.forEach((o, i) => {
-        const x = 0.5 + i * (oW + 0.2);
-        addCard(slide, x, oY, oW, oH, { border: C.primary });
-        slide.addText(o.v, {
-          x: x + 0.1, y: oY + 0.12, w: oW - 0.2, h: 0.5,
-          fontFace: PPTX_BRAND.font.display, fontSize: 22, bold: true, color: o.c, align: "center",
-        });
-        slide.addText(o.l, {
-          x: x + 0.1, y: oY + 0.62, w: oW - 0.2, h: 0.4,
-          fontFace: PPTX_BRAND.font.body, fontSize: 9.5, color: C.muted, align: "center",
-        });
-      });
-
-      // 3 differentiators
+      // 3 differentiators — mirror TechSlideWhyComply.tsx
       const diffs = [
-        { title: "Connected Foundation", desc: "One data model, three core apps, one intelligence layer. Content, training and safety reason together — not in parallel.", color: C.sky },
-        { title: "Domain-Trained Intelligence", desc: "Insights & Intelligence built on aviation data since 2023. Not a generic AI with an aviation wrapper — purpose-built for the operational corpus.", color: C.primary },
-        { title: "Proof by Design", desc: "Every action logged automatically. The audit trail is a byproduct, not a report. Closed loop — Detect, Trigger, Orchestrate, Prove.", color: C.prove },
+        {
+          title: "Connected Foundation",
+          desc: "One Connected Data Model, three core apps, one intelligence layer for Content, training and safety.",
+          color: C.sky,
+        },
+        {
+          title: "Domain-Trained Intelligence",
+          desc: "Insights & Intelligence built on aviation data. Not a generic AI with an aviation wrapper — purpose-built for the operational corpus.",
+          color: C.primary,
+        },
+        {
+          title: "Proof by Design",
+          desc: "Every action logged automatically. The audit trail is a byproduct, not a report. Closed loop — Detect, Trigger, Orchestrate, Prove.",
+          color: C.prove,
+        },
       ];
-      const dY = oY + oH + 0.25;
-      const dH = 2.4;
-      const dW = (W - 1 - 2 * 0.2) / 3;
+      const trustH = 0.75;
+      const gapAround = 0.3;
+      const dH = 2.6;
+      const totalH = dH + gapAround + trustH;
+      const stackY = CONTENT_TOP + ((CONTENT_BOTTOM - CONTENT_TOP) - totalH) / 2;
+      const dY = stackY;
+      const dW = (W - 1 - 2 * 0.25) / 3;
       diffs.forEach((d, i) => {
-        const x = 0.5 + i * (dW + 0.2);
+        const x = 0.5 + i * (dW + 0.25);
         addLabeledCard(slide, x, dY, dW, dH, {
-          title: d.title, body: d.desc, accent: d.color, titleSize: 14, bodySize: 11,
+          title: d.title, body: d.desc, accent: d.color, titleSize: 15, bodySize: 11,
         });
       });
 
-      // Trust strip
+      // Trust strip + deep-dive chip
+      const tY = dY + dH + gapAround;
+      addCard(slide, 0.5, tY, W - 1, trustH, { fill: C.surfaceAlt, border: C.primary });
       const trust = [
         { v: "550+", l: "Airlines Worldwide" },
         { v: "~2.5M", l: "Users" },
         { v: "6", l: "Continents" },
       ];
-      const tY = dY + dH + 0.25;
-      addCard(slide, 0.5, tY, W - 1, 0.7, { fill: C.surfaceAlt });
-      const tW = (W - 1) / 4;
+      const trustAreaW = (W - 1) * 0.66;
+      const tCellW = trustAreaW / trust.length;
       trust.forEach((t, i) => {
-        const tx = 0.5 + i * tW;
-        slide.addText(t.v, {
-          x: tx + 0.1, y: tY + 0.05, w: tW - 0.2, h: 0.4,
-          fontFace: PPTX_BRAND.font.display, fontSize: 16, bold: true, color: C.primary, align: "center",
-        });
-        slide.addText(t.l, {
-          x: tx + 0.1, y: tY + 0.42, w: tW - 0.2, h: 0.25,
-          fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, align: "center",
-        });
+        const tx = 0.7 + i * tCellW;
+        slide.addText(
+          [
+            { text: `${t.v}  `, options: { bold: true, color: C.ink, fontSize: 14 } },
+            { text: t.l, options: { color: C.muted, fontSize: 10 } },
+          ],
+          {
+            x: tx, y: tY, w: tCellW, h: trustH,
+            fontFace: PPTX_BRAND.font.body, valign: "middle",
+          },
+        );
       });
-      slide.addText('"Point solutions manage silos. Generic AI creates noise. We close the loop."', {
-        x: 0.5 + 3 * tW, y: tY, w: tW, h: 0.7,
-        fontFace: PPTX_BRAND.font.body, fontSize: 10, color: C.ink, italic: true, align: "center", valign: "middle",
+      // Deep-dive chip on the right
+      const chipW = 2.6;
+      const chipH = 0.45;
+      const chipX = W - 0.5 - chipW - 0.2;
+      const chipY = tY + (trustH - chipH) / 2;
+      slide.addShape("roundRect", {
+        x: chipX, y: chipY, w: chipW, h: chipH,
+        fill: { color: C.primarySoft }, line: { color: C.primary, width: 0.75 }, rectRadius: 0.06,
+      });
+      slide.addText("Deep dive · Platform & Use Cases  →", {
+        x: chipX, y: chipY, w: chipW, h: chipH,
+        fontFace: PPTX_BRAND.font.body, fontSize: 10.5, bold: true, color: C.primary,
+        align: "center", valign: "middle",
       });
     },
   },
