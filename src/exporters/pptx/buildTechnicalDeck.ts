@@ -2275,7 +2275,7 @@ slideSpecs.push(
         });
       });
       const phasesY = pY + 0.65;
-      const pH = CONTENT_BOTTOM - phasesY - 0.6;
+      const pH = CONTENT_BOTTOM - phasesY - 0.95;
       const pW = (W - 1 - 2 * 0.25) / 3;
       phases.forEach((p, i) => {
         const x = 0.5 + i * (pW + 0.25);
