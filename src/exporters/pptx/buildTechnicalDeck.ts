@@ -2225,34 +2225,31 @@ slideSpecs.push(
         {
           phase: "H1 2026", label: "In Production & Quick Wins", color: C.sky,
           items: [
-            "✓ Link Training Modules to Documents",
-            "✓ Regulation Database — Modernisation POC",
-            "✓ Automation Engine — POC",
-            "✓ Platform Intelligence — POC",
-            "Regulation Database ↔ ContentManager365 integration",
-            "All-in-One Mobile Experience — Phase 1 (Training)",
+            "✓ Link Training Modules to Documents (Operational Data Foundation)",
+            "○ Regulation Database integration with ContentManager365 (Operational Data Foundation)",
+            "○ All-in-One Mobile Experience — Phase 1: Training screens in the Comply iOS Mobile app (Unified Mobile Experience)",
           ],
         },
         {
           phase: "H2 2026", label: "Connected Operations", color: C.violet,
           items: [
-            "Standardise UI Fonts & Colors (Unified Web Experience)",
-            "Regulation Database — Modernisation Rollout",
-            "All-in-One Mobile Experience — Phase 2 (Safety Reporting)",
-            "Platform-wide Business Intelligence — POC",
-            "Next-Phase Regulation Management Integration",
-            "Platform Automation Rollout",
+            "○ Standardise UI Fonts & Colors (Unified Web Experience)",
+            "○ Regulation Database Replatforming (Operational Data Foundation)",
+            "○ All-in-One Mobile Experience — Phase 2: Safety Reporting in the Comply iOS Mobile app (Unified Mobile Experience)",
+            "▢ Platform Intelligence Rollout",
+            "▢ Next-Phase Regulation Management Integration — sync compliance mappings, TM365 integration, automation triggers (Operational Data Foundation)",
+            "▢ Platform Automation Rollout",
           ],
         },
         {
           phase: "2027 and Beyond", label: "Intelligent Operations", color: C.prove,
           items: [
-            "Platform-wide Business Intelligence — Rollout",
-            "All-in-One Mobile Experience — Phase 3 (OCM + Training + Safety)",
-            "Contextual Document Viewing from TrainingManager365",
-            "Platform Intelligence — Future Vision Rollout",
+            "Platform Recommendations — Future Vision",
+            "All-in-One Mobile Experience — Phase 3: Unified Experience across OCM, Training & Safety",
+            "Contextual Document Viewing from TrainingManager365 (Operational Data Foundation)",
+            "Continued Roll Out of Platform Intelligence",
             "Continued Roll Out of Platform Automation",
-            "Future Platform PoCs — defined with customer input",
+            "Future Platform PoCs — to be defined with customer input",
           ],
         },
       ];
@@ -2278,7 +2275,7 @@ slideSpecs.push(
         });
       });
       const phasesY = pY + 0.65;
-      const pH = CONTENT_BOTTOM - phasesY - 0.6;
+      const pH = CONTENT_BOTTOM - phasesY - 0.95;
       const pW = (W - 1 - 2 * 0.25) / 3;
       phases.forEach((p, i) => {
         const x = 0.5 + i * (pW + 0.25);
@@ -2291,15 +2288,48 @@ slideSpecs.push(
           x: x + 0.2, y: phasesY + 0.42, w: pW - 0.4, h: 0.4,
           fontFace: PPTX_BRAND.font.display, fontSize: 14, bold: true, color: p.color,
         });
-        const items = p.items.map((it) => ({
-          text: it.startsWith("✓") ? it.slice(2) : it,
-          options: { bullet: { code: it.startsWith("✓") ? "2713" : "25CF" }, color: it.startsWith("✓") ? C.prove : C.ink },
-        }));
+        const statusMap: Record<string, { code: string; color: string }> = {
+          "✓": { code: "2713", color: C.prove },   // Done
+          "○": { code: "25CB", color: C.amber },   // In Progress
+          "▢": { code: "25A1", color: C.subtle },  // Planned
+        };
+        const items = p.items.map((it) => {
+          const prefix = it.charAt(0);
+          const meta = statusMap[prefix];
+          if (meta) {
+            return {
+              text: it.slice(1).trimStart(),
+              options: { bullet: { code: meta.code }, color: meta.color },
+            };
+          }
+          return {
+            text: it,
+            options: { bullet: { code: "25CF" }, color: C.ink },
+          };
+        });
         slide.addText(items, {
           x: x + 0.2, y: phasesY + 0.95, w: pW - 0.4, h: pH - 1.05,
           fontFace: PPTX_BRAND.font.body, fontSize: 10.5, color: C.ink, paraSpaceAfter: 6,
         });
       });
+      // Legend strip — mirrors the live web slide
+      const legendY = CONTENT_BOTTOM - 0.85;
+      addCard(slide, 0.5, legendY, W - 1, 0.35, { fill: C.surfaceAlt });
+      slide.addText(
+        [
+          { text: "✓ ", options: { color: C.prove, bold: true } },
+          { text: "Done    ", options: { color: C.muted } },
+          { text: "○ ", options: { color: C.amber, bold: true } },
+          { text: "In Progress    ", options: { color: C.muted } },
+          { text: "▢ ", options: { color: C.subtle, bold: true } },
+          { text: "Planned    ", options: { color: C.muted } },
+          { text: "·  POC = internal prototype, not customer-deliverable  ·  Specific deliverables refined during discovery", options: { color: C.subtle } },
+        ],
+        {
+          x: 0.6, y: legendY, w: W - 1.2, h: 0.35,
+          fontFace: PPTX_BRAND.font.body, fontSize: 9, align: "center", valign: "middle",
+        },
+      );
       // illustrative note
       const nY = CONTENT_BOTTOM - 0.4;
       addCard(slide, 0.5, nY, W - 1, 0.4, { border: C.amber, fill: "1F1A0A" });
@@ -2315,71 +2345,81 @@ slideSpecs.push(
     label: "Why Comply365",
     build: (slide, ctx) => {
       chrome(slide, ctx);
-      header(slide, "Value & close", "Outcomes & Why Comply365",
-        "Measured outcomes from carriers running on the platform — and the three things that make them possible");
+      header(
+        slide,
+        "Value & close",
+        "Why Comply365",
+        "Point solutions manage silos. Generic AI creates noise. We close the loop with the Comply365 Operational Performance Platform.",
+      );
 
-      // Outcomes strip
-      const outcomes = [
-        { v: "78%", l: "Reduction in repeat events", c: C.rose },
-        { v: "6 wks → 48 hrs", l: "Signal to coordinated response", c: C.blue },
-        { v: "5 days", l: "Directive to crew acknowledgement", c: C.violet },
-        { v: "90% vs 35%", l: "Domain accuracy vs generic AI", c: C.amber },
-      ];
-      const oY = CONTENT_TOP;
-      const oH = 1.05;
-      const oW = (W - 1 - 3 * 0.2) / 4;
-      outcomes.forEach((o, i) => {
-        const x = 0.5 + i * (oW + 0.2);
-        addCard(slide, x, oY, oW, oH, { border: C.primary });
-        slide.addText(o.v, {
-          x: x + 0.1, y: oY + 0.12, w: oW - 0.2, h: 0.5,
-          fontFace: PPTX_BRAND.font.display, fontSize: 22, bold: true, color: o.c, align: "center",
-        });
-        slide.addText(o.l, {
-          x: x + 0.1, y: oY + 0.62, w: oW - 0.2, h: 0.4,
-          fontFace: PPTX_BRAND.font.body, fontSize: 9.5, color: C.muted, align: "center",
-        });
-      });
-
-      // 3 differentiators
+      // 3 differentiators — mirror TechSlideWhyComply.tsx
       const diffs = [
-        { title: "Connected Foundation", desc: "One data model, three core apps, one intelligence layer. Content, training and safety reason together — not in parallel.", color: C.sky },
-        { title: "Domain-Trained Intelligence", desc: "Insights & Intelligence built on aviation data since 2023. Not a generic AI with an aviation wrapper — purpose-built for the operational corpus.", color: C.primary },
-        { title: "Proof by Design", desc: "Every action logged automatically. The audit trail is a byproduct, not a report. Closed loop — Detect, Trigger, Orchestrate, Prove.", color: C.prove },
+        {
+          title: "Connected Foundation",
+          desc: "One Connected Data Model, three core apps, one intelligence layer for Content, training and safety.",
+          color: C.sky,
+        },
+        {
+          title: "Domain-Trained Intelligence",
+          desc: "Insights & Intelligence built on aviation data. Not a generic AI with an aviation wrapper — purpose-built for the operational corpus.",
+          color: C.primary,
+        },
+        {
+          title: "Proof by Design",
+          desc: "Every action logged automatically. The audit trail is a byproduct, not a report. Closed loop — Detect, Trigger, Orchestrate, Prove.",
+          color: C.prove,
+        },
       ];
-      const dY = oY + oH + 0.25;
-      const dH = 2.4;
-      const dW = (W - 1 - 2 * 0.2) / 3;
+      const trustH = 0.75;
+      const gapAround = 0.3;
+      const dH = 2.6;
+      const totalH = dH + gapAround + trustH;
+      const stackY = CONTENT_TOP + ((CONTENT_BOTTOM - CONTENT_TOP) - totalH) / 2;
+      const dY = stackY;
+      const dW = (W - 1 - 2 * 0.25) / 3;
       diffs.forEach((d, i) => {
-        const x = 0.5 + i * (dW + 0.2);
+        const x = 0.5 + i * (dW + 0.25);
         addLabeledCard(slide, x, dY, dW, dH, {
-          title: d.title, body: d.desc, accent: d.color, titleSize: 14, bodySize: 11,
+          title: d.title, body: d.desc, accent: d.color, titleSize: 15, bodySize: 11,
         });
       });
 
-      // Trust strip
+      // Trust strip + deep-dive chip
+      const tY = dY + dH + gapAround;
+      addCard(slide, 0.5, tY, W - 1, trustH, { fill: C.surfaceAlt, border: C.primary });
       const trust = [
         { v: "550+", l: "Airlines Worldwide" },
         { v: "~2.5M", l: "Users" },
         { v: "6", l: "Continents" },
       ];
-      const tY = dY + dH + 0.25;
-      addCard(slide, 0.5, tY, W - 1, 0.7, { fill: C.surfaceAlt });
-      const tW = (W - 1) / 4;
+      const trustAreaW = (W - 1) * 0.66;
+      const tCellW = trustAreaW / trust.length;
       trust.forEach((t, i) => {
-        const tx = 0.5 + i * tW;
-        slide.addText(t.v, {
-          x: tx + 0.1, y: tY + 0.05, w: tW - 0.2, h: 0.4,
-          fontFace: PPTX_BRAND.font.display, fontSize: 16, bold: true, color: C.primary, align: "center",
-        });
-        slide.addText(t.l, {
-          x: tx + 0.1, y: tY + 0.42, w: tW - 0.2, h: 0.25,
-          fontFace: PPTX_BRAND.font.body, fontSize: 9, color: C.muted, align: "center",
-        });
+        const tx = 0.7 + i * tCellW;
+        slide.addText(
+          [
+            { text: `${t.v}  `, options: { bold: true, color: C.ink, fontSize: 14 } },
+            { text: t.l, options: { color: C.muted, fontSize: 10 } },
+          ],
+          {
+            x: tx, y: tY, w: tCellW, h: trustH,
+            fontFace: PPTX_BRAND.font.body, valign: "middle",
+          },
+        );
       });
-      slide.addText('"Point solutions manage silos. Generic AI creates noise. We close the loop."', {
-        x: 0.5 + 3 * tW, y: tY, w: tW, h: 0.7,
-        fontFace: PPTX_BRAND.font.body, fontSize: 10, color: C.ink, italic: true, align: "center", valign: "middle",
+      // Deep-dive chip on the right
+      const chipW = 2.6;
+      const chipH = 0.45;
+      const chipX = W - 0.5 - chipW - 0.2;
+      const chipY = tY + (trustH - chipH) / 2;
+      slide.addShape("roundRect", {
+        x: chipX, y: chipY, w: chipW, h: chipH,
+        fill: { color: C.primarySoft }, line: { color: C.primary, width: 0.75 }, rectRadius: 0.06,
+      });
+      slide.addText("Deep dive · Platform & Use Cases  →", {
+        x: chipX, y: chipY, w: chipW, h: chipH,
+        fontFace: PPTX_BRAND.font.body, fontSize: 10.5, bold: true, color: C.primary,
+        align: "center", valign: "middle",
       });
     },
   },
