@@ -2288,15 +2288,48 @@ slideSpecs.push(
           x: x + 0.2, y: phasesY + 0.42, w: pW - 0.4, h: 0.4,
           fontFace: PPTX_BRAND.font.display, fontSize: 14, bold: true, color: p.color,
         });
-        const items = p.items.map((it) => ({
-          text: it.startsWith("✓") ? it.slice(2) : it,
-          options: { bullet: { code: it.startsWith("✓") ? "2713" : "25CF" }, color: it.startsWith("✓") ? C.prove : C.ink },
-        }));
+        const statusMap: Record<string, { code: string; color: string }> = {
+          "✓": { code: "2713", color: C.prove },   // Done
+          "○": { code: "25CB", color: C.amber },   // In Progress
+          "▢": { code: "25A1", color: C.subtle },  // Planned
+        };
+        const items = p.items.map((it) => {
+          const prefix = it.charAt(0);
+          const meta = statusMap[prefix];
+          if (meta) {
+            return {
+              text: it.slice(1).trimStart(),
+              options: { bullet: { code: meta.code }, color: meta.color },
+            };
+          }
+          return {
+            text: it,
+            options: { bullet: { code: "25CF" }, color: C.ink },
+          };
+        });
         slide.addText(items, {
           x: x + 0.2, y: phasesY + 0.95, w: pW - 0.4, h: pH - 1.05,
           fontFace: PPTX_BRAND.font.body, fontSize: 10.5, color: C.ink, paraSpaceAfter: 6,
         });
       });
+      // Legend strip — mirrors the live web slide
+      const legendY = CONTENT_BOTTOM - 0.85;
+      addCard(slide, 0.5, legendY, W - 1, 0.35, { fill: C.surfaceAlt });
+      slide.addText(
+        [
+          { text: "✓ ", options: { color: C.prove, bold: true } },
+          { text: "Done    ", options: { color: C.muted } },
+          { text: "○ ", options: { color: C.amber, bold: true } },
+          { text: "In Progress    ", options: { color: C.muted } },
+          { text: "▢ ", options: { color: C.subtle, bold: true } },
+          { text: "Planned    ", options: { color: C.muted } },
+          { text: "·  POC = internal prototype, not customer-deliverable  ·  Specific deliverables refined during discovery", options: { color: C.subtle } },
+        ],
+        {
+          x: 0.6, y: legendY, w: W - 1.2, h: 0.35,
+          fontFace: PPTX_BRAND.font.body, fontSize: 9, align: "center", valign: "middle",
+        },
+      );
       // illustrative note
       const nY = CONTENT_BOTTOM - 0.4;
       addCard(slide, 0.5, nY, W - 1, 0.4, { border: C.amber, fill: "1F1A0A" });
