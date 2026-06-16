@@ -1,102 +1,50 @@
+Two edits to the downloadable PowerPoint, both in `src/exporters/pptx/buildTechnicalDeck.ts`. Both slides are shared specs reused by the Medium, Long, and Technical decks via `byLabel(...)`, so this single edit propagates to every PPT export that includes them — which matches the "align with the Lovable version" intent.
 
-## Scope
+## 1. Roadmap slide (`label: "2026 Roadmap"`, ~lines 2218–2311)
 
-Apply the three changes from Kathrina's email:
+Replace the three `phases[].items` arrays with the live web copy from `TechSlide15Roadmap2026.tsx`, **with the `(Intelligence & Orchestration Layer)` parentheticals stripped** per the email. All other "(...)" tags (Operational Data Foundation, Unified Mobile Experience, Unified Web Experience) stay — only the Intelligence & Orchestration Layer ones are removed.
 
-1. **Roadmap slide edits** (Medium + Long pitch decks)
-2. **Broad terminology rename** across the rest of the Lovable site
-3. **Delete the Short Deck** (Customer Overview) end-to-end
+PPTX doesn't render emoji glyphs reliably, so map the live status emoji to the existing PPTX status convention: `✅`/`✓` → green check bullet (`2713`, color `C.prove`); `🔄` → in-progress circle bullet (`25CB`, color `C.amber`); `📋` → planned bullet (`25A1`, color `C.subtle`); items with no prefix → existing `25CF` filled dot.
 
-Both decks share the same component, so a single edit covers both.
+Final items per column:
 
----
+**H1 2026 — In Production & Quick Wins** (sky)
+- ✓ Link Training Modules to Documents (Operational Data Foundation)
+- 🔄 Regulation Database integration with ContentManager365 (Operational Data Foundation)
+- 🔄 All-in-One Mobile Experience — Phase 1: Training screens in the Comply iOS Mobile app (Unified Mobile Experience)
 
-## 1. Roadmap slide — `src/components/tech-slides/TechSlide15Roadmap2026.tsx`
+**H2 2026 — Connected Operations** (violet)
+- 🔄 Standardise UI Fonts & Colors (Unified Web Experience)
+- 🔄 Regulation Database Replatforming (Operational Data Foundation)
+- 🔄 All-in-One Mobile Experience — Phase 2: Safety Reporting in the Comply iOS Mobile app (Unified Mobile Experience)
+- 📋 Platform Intelligence Rollout
+- 📋 Next-Phase Regulation Management Integration — sync compliance mappings, TM365 integration, automation triggers (Operational Data Foundation)
+- 📋 Platform Automation Rollout
 
-### H1 2026 — remove three lines
+**2027 and Beyond — Intelligent Operations** (prove/emerald)
+- Platform Recommendations — Future Vision
+- All-in-One Mobile Experience — Phase 3: Unified Experience across OCM, Training & Safety
+- Contextual Document Viewing from TrainingManager365 (Operational Data Foundation)
+- Continued Roll Out of Platform Intelligence
+- Continued Roll Out of Platform Automation
+- Future Platform PoCs — to be defined with customer input
 
-Delete:
-- `✅ Regulation Database Replatforming POC (Operational Data Foundation)`
-- `✅ Platform Proof of Concept — Automation (Intelligence & Orchestration Layer)`
-- `✅ Platform Proof of Concept — Platform-wide Insights (...) — POC only, not yet customer-deliverable`
+Also add a small legend strip below the cards (mirrors the web): `✓ Done · ○ In Progress · ▢ Planned · POC = internal prototype · Specific deliverables refined during discovery`. Keep the existing amber "illustrative" note.
 
-Result: H1 2026 keeps Training↔Documents link, Regulation Database↔ContentManager365 integration, and All-in-One Mobile Phase 1.
+## 2. Why Comply365 slide (`label: "Why Comply365"`, ~lines 2315–2385)
 
-### H2 2026 — rename two lines
+Rebuild to mirror `TechSlideWhyComply.tsx`:
 
-- `Platform-wide Insights — production rollout (...)` → **`Platform Intelligence Rollout (Intelligence & Orchestration Layer)`**
-- `Roll-out of Platform-wide Automation engine (...)` → **`Platform Automation Rollout (Intelligence & Orchestration Layer)`**
+- New header: title `Why Comply365`, subtitle `Point solutions manage silos. Generic AI creates noise. We close the loop with the Comply365 Operational Performance Platform.`
+- **Remove** the four-stat outcomes strip (78%, 6 wks → 48 hrs, 5 days, 90% vs 35%) and the bottom italic quote — they aren't on the web slide.
+- Keep the 3 differentiator cards, vertically centred, with copy updated to match the web:
+  - **Connected Foundation** — "One Connected Data Model, three core apps, one intelligence layer for Content, training and safety."
+  - **Domain-Trained Intelligence** — "Insights & Intelligence built on aviation data. Not a generic AI with an aviation wrapper — purpose-built for the operational corpus."
+  - **Proof by Design** — "Every action logged automatically. The audit trail is a byproduct, not a report. Closed loop — Detect, Trigger, Orchestrate, Prove."
+- Trust strip below: `550+ Airlines Worldwide · ~2.5M Users · 6 Continents`, right-aligned chip reading `Deep dive · Platform & Use Cases →` (visual only — PPT can't open the in-app route).
 
-### 2027 & Beyond — rename three lines
+## Scope / out of scope
 
-- `Recommendations & Prescriptive Actions — Future Vision (...)` → **`Platform Recommendations — Future Vision (Intelligence & Orchestration Layer)`**
-- `Continued roll-out of Platform-wide Insights (...)` → **`Continued Roll Out of Platform Intelligence (Intelligence & Orchestration Layer)`**
-- `Continued roll-out of Platform-wide Automation capability (...)` → **`Continued Roll Out of Platform Automation (Intelligence & Orchestration Layer)`**
-
-No layout, no styling, no narration script changes here — strings only.
-
----
-
-## 2. Broad rename across the site
-
-Kathrina asked for the new wording to be reflected "broadly across the Lovable site". Applied as a controlled find-and-replace in these files (titles, narration scripts, study notes, layer badges, exporters):
-
-- `src/data/roadmapUseCases.ts` (titles + one-liners for the standalone Roadmap deck)
-- `src/components/tech-slides/ArchitectureLayerBadge.tsx`
-- `src/components/tech-slides/TechSlideInsights.tsx`
-- `src/components/tech-slides/v4/TechV4SlideInsights.tsx`
-- `src/components/platform-slides/PlatformArchitectureDiagramV4.tsx`
-- `src/components/sales-enablement-slides/SECapabilityUseCases.tsx`
-- `src/data/execPitch3Slides.ts` (label only)
-- `src/data/executivePitchNarration.ts`
-- `src/data/technicalPitchNarration.ts`
-- `src/data/salesEnablementNarration.ts`
-- `src/data/salesEnablementStudyNotes.ts`
-- `src/data/insightsPlaybook.ts` (`heroTitle` + header comment)
-- `src/data/automationPlaybook.ts` (`heroTitle` + header comment)
-
-Mapping applied uniformly:
-
-| Old phrase | New phrase |
-|---|---|
-| `Recommendations & Prescriptive Actions` | `Platform Recommendations` |
-| `Recommendations and Prescriptive Actions` (narration prose) | `Platform Recommendations` |
-| `Prescriptive Action Plans` (the V4 Insights tile) | `Platform Recommendation Plans` |
-| `Platform-wide Insights & Recommendations` (playbook/section titles) | `Platform Intelligence` |
-| `Platform-wide Insights` | `Platform Intelligence` |
-| `Platform-wide Automation & Orchestration` / `Platform-wide Automation` | `Platform Automation` |
-| `Regulation Database Replatforming — POC` / `… — Rollout` (in `roadmapUseCases.ts`) | removed POC entry; rollout entry renamed to `Regulation Database — Modernisation Rollout` (the POC is no longer surfaced anywhere) |
-
-Narration scripts and study-note prose are updated to use the new short names. No memory entries need rewriting — `mem://product/roadmap-dates` doesn't carry these phrases.
-
----
-
-## 3. Delete the Short Deck (Customer Overview)
-
-Remove the deck entirely so it stops appearing in nav, home, sidebar, exporters, and analytics:
-
-- **Routing**: in `src/App.tsx`, remove the import of `CustomerOverview` and the `<Route path="/customer-overview" …>` entry.
-- **Home**: in `src/pages/HomePage.tsx`, drop the "Short — Customer Overview" card from `pitchDecks`.
-- **Sidebar**: in `src/components/AppSidebar.tsx`, remove the "Short — Customer Overview" link.
-- **Marketing nav**: in `src/components/home/TopNav.tsx`, drop the `Customers → /customer-overview` link; in `src/components/home/Footer.tsx`, remove the "Customer overview" footer link.
-- **PPTX exporter**: in `src/exporters/pptx/index.ts`, remove the `"customer-overview"` entry from the deck map and update the union type.
-- **Practice scenarios**: in `src/data/practiceScenarios.ts`, drop `"customerOverview"` from the union and any scenario records that target it; in `src/lib/practice/buildKnowledgeDocs.ts`, remove the corresponding knowledge-doc registration.
-- **Analytics**: in `src/hooks/usePageViewTracker.ts`, delete the `/^\/customer-overview/` matcher.
-- **Files**: delete `src/pages/CustomerOverview.tsx`, the `src/components/customer-overview-slides/` directory, `src/data/customerOverviewNarration.ts`, `src/hooks/useCustomerOverviewNarration.ts`, and `src/exporters/pptx/buildCustomerOverviewDeck.ts`.
-
-Anything else that imports from those files will be fixed in the same pass.
-
----
-
-## Out of scope (explicitly not changing)
-
-- No edits to `mem://`, no DB migrations, no edge-function changes.
-- No tone/structure changes to narration beyond the phrase swaps.
-- The 5-layer architecture diagram still has a "Platform Recommendations" tile in the Intelligence layer — only the label changes.
-
-## Verification
-
-1. Open `/pitch-executive-medium` and `/pitch-executive-3` → the Roadmap slide reflects all H1/H2/2027 edits.
-2. `/customer-overview` returns Not Found; sidebar, home, marketing nav, and footer no longer surface it.
-3. `rg -n "Platform-wide Insights|Platform-wide Automation|Prescriptive Action|Regulation Database Replat|Platform Proof of Concept" src/` returns no matches.
-4. Spot-check `/pitch-technical-v4`, `/sales-enablement`, and `/roadmap-deck` to confirm renamed copy reads cleanly and narration still references the new names.
+- Only `src/exporters/pptx/buildTechnicalDeck.ts` changes. No web slide, narration, data, or routing edits.
+- Both Medium and Long executive PPT exports pick up these changes (shared specs). The user requested Medium; matching the Lovable web version means the Long deck is corrected the same way — flagging here in case that's not desired.
+- Re-export and visually QA the Medium PPT after the edit (convert to PDF → images, inspect both slides).
