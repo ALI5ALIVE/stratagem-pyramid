@@ -571,6 +571,9 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
                           <Button size="sm" variant="outline" onClick={downloadMd}>
                             <Download className="w-3 h-3 mr-1" /> Download .md
                           </Button>
+                          <Button size="sm" variant="outline" onClick={downloadClientPackage}>
+                            <Download className="w-3 h-3 mr-1" /> Client package
+                          </Button>
                           {canEdit && activeAsset.status !== "review" && (
                             <Button size="sm" variant="outline" onClick={() => setAssetStatus("review")}>
                               Mark in review
