@@ -242,19 +242,9 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
     if (!activeAsset) return;
     const title = workingTitle || item?.title || "Asset";
     const slug = (item?.title ?? "asset").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
-    const bullet = (label: string, val?: string) =>
-      val && val.trim() ? `- **${label}:** ${val.trim()}\n` : "";
-    const list = (label: string, arr?: string[]) =>
-      arr && arr.filter(Boolean).length
-        ? `- **${label}:**\n${arr.filter(Boolean).map((x) => `  - ${x}`).join("\n")}\n`
-        : "";
     const meta = [item?.quarter, item?.persona, item?.channel, item?.asset_type]
       .filter(Boolean)
       .join(" · ");
-    const draftNote =
-      activeAsset.status !== "final"
-        ? `> **Note:** This draft (v${activeAsset.version}) has not yet been approved as final.\n\n`
-        : "";
     const distLine = [
       distPrimary ? `Primary: ${distPrimary}` : "",
       distRepurpose.filter(Boolean).length ? `Repurpose: ${distRepurpose.filter(Boolean).join(", ")}` : "",
@@ -265,32 +255,91 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
       length ? `Length: ${length}` : "",
     ].filter(Boolean).join(" · ");
 
-    const md =
-      `# ${title}\n\n` +
-      (meta ? `_${meta}_\n\n` : "") +
-      draftNote +
-      `## Brief\n` +
-      bullet("Angle", angle) +
-      bullet("Audience", audience) +
-      bullet("Core insight", coreInsight) +
-      list("Key takeaways", takeaways) +
-      list("Proof points", selectedProofs) +
-      bullet("Distribution", distLine) +
-      bullet("CTA / Tone / Length", ctlLine) +
-      bullet("Success metric", successMetric) +
-      list("Sources", sources) +
-      `\n---\n\n` +
-      `## Final copy (v${activeAsset.version})\n\n` +
-      activeAsset.body +
-      `\n`;
+    const children: any[] = [
+      new DocxParagraph({ heading: DocxHeadingLevel.HEADING_1, children: [new DocxTextRun({ text: title })] }),
+    ];
+    if (meta) {
+      children.push(new DocxParagraph({
+        children: [new DocxTextRun({ text: meta, italics: true, color: "666666" })],
+      }));
+    }
+    if (activeAsset.status !== "final") {
+      children.push(new DocxParagraph({
+        children: [new DocxTextRun({
+          text: `Note: This draft (v${activeAsset.version}) has not yet been approved as final.`,
+          italics: true, color: "B45309",
+        })],
+      }));
+    }
 
-    const blob = new Blob([md], { type: "text/markdown" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${slug}-client-package-v${activeAsset.version}.md`;
-    a.click();
-    URL.revokeObjectURL(url);
+    children.push(new DocxParagraph({ heading: DocxHeadingLevel.HEADING_2, children: [new DocxTextRun({ text: "Brief" })] }));
+    const labeled = (label: string, val?: string) => {
+      if (!val || !val.trim()) return;
+      children.push(new DocxParagraph({
+        children: [
+          new DocxTextRun({ text: `${label}: `, bold: true }),
+          new DocxTextRun({ text: val.trim() }),
+        ],
+      }));
+    };
+    const listed = (label: string, arr?: string[]) => {
+      const items = (arr ?? []).filter(Boolean);
+      if (!items.length) return;
+      children.push(new DocxParagraph({ children: [new DocxTextRun({ text: label, bold: true })] }));
+      for (const it of items) {
+        children.push(new DocxParagraph({ text: it, bullet: { level: 0 } }));
+      }
+    };
+    labeled("Angle", angle);
+    labeled("Audience", audience);
+    labeled("Core insight", coreInsight);
+    listed("Key takeaways", takeaways);
+    listed("Proof points", selectedProofs);
+    labeled("Distribution", distLine);
+    labeled("CTA / Tone / Length", ctlLine);
+    labeled("Success metric", successMetric);
+    listed("Sources", sources);
+
+    children.push(new DocxParagraph({
+      heading: DocxHeadingLevel.HEADING_2,
+      children: [new DocxTextRun({ text: `Final copy (v${activeAsset.version})` })],
+    }));
+
+    const lines = String(activeAsset.body ?? "").replace(/\r\n/g, "\n").split("\n");
+    for (const raw of lines) {
+      const line = raw.trimEnd();
+      if (!line.trim()) { children.push(new DocxParagraph({ children: [] })); continue; }
+      const h1 = line.match(/^#\s+(.*)$/);
+      const h2 = line.match(/^##\s+(.*)$/);
+      const h3 = line.match(/^###\s+(.*)$/);
+      const bul = line.match(/^[-*]\s+(.*)$/);
+      const num = line.match(/^\d+\.\s+(.*)$/);
+      if (h3) children.push(new DocxParagraph({ heading: DocxHeadingLevel.HEADING_3, children: [new DocxTextRun({ text: h3[1] })] }));
+      else if (h2) children.push(new DocxParagraph({ heading: DocxHeadingLevel.HEADING_2, children: [new DocxTextRun({ text: h2[1] })] }));
+      else if (h1) children.push(new DocxParagraph({ heading: DocxHeadingLevel.HEADING_1, children: [new DocxTextRun({ text: h1[1] })] }));
+      else if (bul) children.push(new DocxParagraph({ text: bul[1], bullet: { level: 0 } }));
+      else if (num) children.push(new DocxParagraph({ text: num[1], numbering: { reference: "cp-num", level: 0 } }));
+      else children.push(new DocxParagraph({ children: [new DocxTextRun({ text: line })] }));
+    }
+
+    const doc = new DocxDocument({
+      numbering: {
+        config: [{
+          reference: "cp-num",
+          levels: [{ level: 0, format: "decimal" as any, text: "%1.", alignment: "left" as any }],
+        }],
+      },
+      sections: [{ children }],
+    });
+
+    DocxPacker.toBlob(doc).then((blob) => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${slug}-client-package-v${activeAsset.version}.docx`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
   }
 
   if (!open) return null;
