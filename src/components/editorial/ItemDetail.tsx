@@ -238,6 +238,61 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
     URL.revokeObjectURL(url);
   }
 
+  function downloadClientPackage() {
+    if (!activeAsset) return;
+    const title = workingTitle || item?.title || "Asset";
+    const slug = (item?.title ?? "asset").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+    const bullet = (label: string, val?: string) =>
+      val && val.trim() ? `- **${label}:** ${val.trim()}\n` : "";
+    const list = (label: string, arr?: string[]) =>
+      arr && arr.filter(Boolean).length
+        ? `- **${label}:**\n${arr.filter(Boolean).map((x) => `  - ${x}`).join("\n")}\n`
+        : "";
+    const meta = [item?.quarter, item?.persona, item?.channel, item?.asset_type]
+      .filter(Boolean)
+      .join(" · ");
+    const draftNote =
+      activeAsset.status !== "final"
+        ? `> **Note:** This draft (v${activeAsset.version}) has not yet been approved as final.\n\n`
+        : "";
+    const distLine = [
+      distPrimary ? `Primary: ${distPrimary}` : "",
+      distRepurpose.filter(Boolean).length ? `Repurpose: ${distRepurpose.filter(Boolean).join(", ")}` : "",
+    ].filter(Boolean).join(" · ");
+    const ctlLine = [
+      cta ? `CTA: ${cta}` : "",
+      tone ? `Tone: ${tone}` : "",
+      length ? `Length: ${length}` : "",
+    ].filter(Boolean).join(" · ");
+
+    const md =
+      `# ${title}\n\n` +
+      (meta ? `_${meta}_\n\n` : "") +
+      draftNote +
+      `## Brief\n` +
+      bullet("Angle", angle) +
+      bullet("Audience", audience) +
+      bullet("Core insight", coreInsight) +
+      list("Key takeaways", takeaways) +
+      list("Proof points", selectedProofs) +
+      bullet("Distribution", distLine) +
+      bullet("CTA / Tone / Length", ctlLine) +
+      bullet("Success metric", successMetric) +
+      list("Sources", sources) +
+      `\n---\n\n` +
+      `## Final copy (v${activeAsset.version})\n\n` +
+      activeAsset.body +
+      `\n`;
+
+    const blob = new Blob([md], { type: "text/markdown" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${slug}-client-package-v${activeAsset.version}.md`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   if (!open) return null;
 
   const frameworks = item ? getFrameworks(item.asset_type as any) : [];
@@ -515,6 +570,9 @@ export function ItemDetail({ open, onOpenChange, itemId, canEdit, onChanged }: P
                           </Button>
                           <Button size="sm" variant="outline" onClick={downloadMd}>
                             <Download className="w-3 h-3 mr-1" /> Download .md
+                          </Button>
+                          <Button size="sm" variant="outline" onClick={downloadClientPackage}>
+                            <Download className="w-3 h-3 mr-1" /> Client package
                           </Button>
                           {canEdit && activeAsset.status !== "review" && (
                             <Button size="sm" variant="outline" onClick={() => setAssetStatus("review")}>

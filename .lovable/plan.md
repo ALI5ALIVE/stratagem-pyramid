@@ -1,9 +1,38 @@
-Grant `pete@tomorrow-people.com` the `owner` role so they have full editorial access (plan, brief, generate, approve).
+Add a "Download client package" button in the asset section of the Editorial Suite item detail that exports the approved brief plus the selected asset version as a single, client-ready file.
 
-## Steps
-1. Look up the user id for `pete@tomorrow-people.com` in `auth.users`.
-2. Run a migration inserting `(user_id, 'owner')` into `public.user_roles` with `ON CONFLICT DO NOTHING`. (Keeps existing `reviewer` row; `useEditorialRole` prefers owner.)
+## Where
+`src/components/editorial/ItemDetail.tsx` — asset toolbar (next to the existing "Download .md" button).
 
-## Notes
-- If the email doesn't exist yet, ask Pete to sign up at `/auth` first, then re-run.
-- Using `owner` (not `editor`) so they can also see admin-only surfaces. Confirm if you'd prefer `editor` instead.
+## Output
+A single `.md` file, client-tone (no internal scoring/rubric noise):
+
+```
+# {Working title}
+
+_{Quarter} · {Persona} · {Channel} · {Asset type}_
+
+## Brief
+- Angle: …
+- Audience: …
+- Core insight: …
+- Key takeaways: …
+- Proof points: …
+- Distribution: …
+- CTA / Tone / Length: …
+- Sources: …
+
+---
+
+## Final copy (v{n})
+{asset.body}
+```
+
+Filename: `{slugified-title}-client-package-v{version}.md`.
+
+## Behaviour
+- Enabled whenever an asset exists. If the active asset isn't `final`, prepend a small "Draft — not yet approved as final" note so shared files are honest.
+- Pulls brief fields from current state (already loaded); no new fetches.
+- Keep the existing "Download .md" (raw copy only) alongside it.
+
+## Scope
+Frontend only. No schema, edge function, or data changes.
