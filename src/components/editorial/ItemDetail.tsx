@@ -24,6 +24,13 @@ import {
 } from "@/components/ui/select";
 import { OutlineEditor } from "./OutlineEditor";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import {
+  Document as DocxDocument,
+  Packer as DocxPacker,
+  Paragraph as DocxParagraph,
+  TextRun as DocxTextRun,
+  HeadingLevel as DocxHeadingLevel,
+} from "docx";
 
 interface Props {
   open: boolean;
