@@ -1,38 +1,15 @@
-Add a "Download client package" button in the asset section of the Editorial Suite item detail that exports the approved brief plus the selected asset version as a single, client-ready file.
+Switch the "Client package" export from Markdown to a Word `.docx` file.
 
-## Where
-`src/components/editorial/ItemDetail.tsx` — asset toolbar (next to the existing "Download .md" button).
-
-## Output
-A single `.md` file, client-tone (no internal scoring/rubric noise):
-
-```
-# {Working title}
-
-_{Quarter} · {Persona} · {Channel} · {Asset type}_
-
-## Brief
-- Angle: …
-- Audience: …
-- Core insight: …
-- Key takeaways: …
-- Proof points: …
-- Distribution: …
-- CTA / Tone / Length: …
-- Sources: …
-
----
-
-## Final copy (v{n})
-{asset.body}
-```
-
-Filename: `{slugified-title}-client-package-v{version}.md`.
-
-## Behaviour
-- Enabled whenever an asset exists. If the active asset isn't `final`, prepend a small "Draft — not yet approved as final" note so shared files are honest.
-- Pulls brief fields from current state (already loaded); no new fetches.
-- Keep the existing "Download .md" (raw copy only) alongside it.
+## Approach
+- Add the `docx` npm package (browser-compatible).
+- Replace `downloadClientPackage()` in `src/components/editorial/ItemDetail.tsx` to build a `Document` with:
+  - Title (working title) as Heading 1
+  - Meta line (quarter · persona · channel · asset type)
+  - Optional "Draft — not yet approved as final" note when asset isn't final
+  - **Brief** section (Heading 2) with labeled paragraphs / bulleted lists for angle, audience, core insight, takeaways, proof points, distribution, CTA/tone/length, success metric, sources
+  - **Final copy (v{n})** section (Heading 2) — asset body split by blank lines into paragraphs; lines starting with `# `/`## `/`### ` become headings, `- ` become bullets
+- Use `Packer.toBlob()` and trigger download as `{slug}-client-package-v{n}.docx`.
+- Keep existing "Download .md" and "Copy" buttons unchanged.
 
 ## Scope
-Frontend only. No schema, edge function, or data changes.
+Frontend only. No backend, schema, or data changes.
