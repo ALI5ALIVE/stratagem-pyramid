@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { FileCode2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { buildMediumPitchHtmlZip } from "@/exporters/html/buildMediumPitchHtml";
+// Lazy-imported inside handler to avoid a circular module init between
+// TechSlideOpener → DeckHtmlExportButton → buildMediumPitchHtml → execPitchMediumSlides → TechSlideOpener.
 
 type Deck = "executive-pitch-medium";
 
@@ -22,6 +23,7 @@ const DeckHtmlExportButton: React.FC<Props> = ({ deckId, className }) => {
     setBusy(true);
     const tid = toast.loading("Preparing HTML bundle…");
     try {
+      const { buildMediumPitchHtmlZip } = await import("@/exporters/html/buildMediumPitchHtml");
       const blob = await buildMediumPitchHtmlZip((current, total, label) => {
         if (current >= total) {
           toast.loading("Packaging HTML bundle…", { id: tid });
