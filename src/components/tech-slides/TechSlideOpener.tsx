@@ -4,6 +4,7 @@ import type { SlideNarrationProps } from "@/types/slideProps";
 import { heroEyebrow, heroTagline, heroSubtitle, statusLabel } from "@/data/platformPlaybook";
 import DeckPDFExportButton from "@/components/DeckPDFExportButton";
 import DeckPPTXExportButton from "@/components/DeckPPTXExportButton";
+import DeckHtmlExportButton from "@/components/DeckHtmlExportButton";
 import type { DeckId } from "@/exporters/pptx";
 
 interface ExportSlideDef {
@@ -19,6 +20,7 @@ interface Props extends SlideNarrationProps {
   pdfFilename?: string;
   deckLabel?: string;
   hidePdfExport?: boolean;
+  htmlBundleDeckId?: "executive-pitch-medium";
 }
 
 /**
@@ -32,6 +34,7 @@ const TechSlideOpener = ({
   pdfFilename = "Comply365-Technical-Deep-Dive.pdf",
   deckLabel = "Technical Deep Dive",
   hidePdfExport = false,
+  htmlBundleDeckId,
   ...narrationProps
 }: Props) => (
   <SalesSlideContainer
@@ -61,6 +64,7 @@ const TechSlideOpener = ({
       <div className="absolute bottom-24 right-8 z-40 flex flex-col items-end gap-1 text-right">
         <div className="flex items-center gap-2">
           <DeckPPTXExportButton deckId={pptxDeckId} />
+          {htmlBundleDeckId && <DeckHtmlExportButton deckId={htmlBundleDeckId} />}
           {!hidePdfExport && (
             <DeckPDFExportButton
               slides={exportSlides}

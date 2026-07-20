@@ -125,6 +125,7 @@ const ExecutivePitchMedium = () => {
                     pdfFilename: "Comply365-Executive-Pitch-Medium.pdf",
                     deckLabel: "Executive Pitch · Medium",
                     hidePdfExport: true,
+                    htmlBundleDeckId: "executive-pitch-medium" as const,
                   }
                 : {})}
               {...narrationProps}
