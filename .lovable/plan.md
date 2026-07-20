@@ -1,57 +1,52 @@
-# Comply365 Explainer — v2 (Product & Value-Led) — New Page
+## Goal
+Produce a folder of static HTML files (one per slide + index) for the Medium Executive Pitch, so it can be uploaded/rebuilt into the WordPress site. No React, no interactivity — just clean static markup, CSS, and image assets.
 
-Keep v1 exactly as it is at `/editorial/comply365-explainer-v1`. Publish the product-led revision as **v2** on a brand-new page so both versions can be compared side-by-side for Wednesday.
+## Approach
+Add a **"Download HTML bundle"** button on the Medium Pitch title slide (next to the existing PPTX export). Clicking it:
 
-## New narrative shape (≤2 min, ~195 words) — product-first
+1. Renders each of the 16 slides at 1920×1080 into a hidden host (reusing `src/exporters/pptx/renderToImage.ts` pattern) and captures a high-res PNG per slide.
+2. Builds one HTML page per slide containing:
+   - The slide PNG as a full-bleed responsive `<img>`
+   - Extracted slide title + narration script (from `executivePitchNarration.ts` where present) as real HTML text below the image — so WordPress has editable copy, alt text, and SEO content, not just a picture.
+   - Prev/Next links between slides.
+3. Generates an `index.html` with a thumbnail grid linking to each slide.
+4. Ships a small shared `styles.css` (dark theme matching the deck) and an `assets/` folder with the PNGs.
+5. Zips the whole thing via `jszip` and triggers a browser download as `comply365-medium-pitch-html.zip`.
 
-| Beat | Time | Purpose | On-screen |
-|---|---|---|---|
-| 1. Name the product | 0:00–0:12 | Introduce Comply365 as the Operational Performance Platform | Logo + one-line definition, isometric base plate lands |
-| 2. What it replaces | 0:12–0:25 | Fragmented SMS / Docs / TMS → one platform | 3 legacy slabs snap into the base plate |
-| 3. The stack (product tour) | 0:25–1:05 | Layer-by-layer reveal with a **value line per layer** | Isometric build: Core Apps → Data Foundation → Intelligence Layer → Unified Mobile |
-| 4. DTOP in motion | 1:05–1:30 | How the layers work together | DTOP ribbon wraps the stack, signal dot travels loop |
-| 5. Value & proof | 1:30–1:50 | Quantified outcomes + trust signals | Outcome tiles + "550+ operators" strip |
-| 6. Close | 1:50–2:00 | One-line promise + logo | Endframe |
+## Folder structure produced
+```text
+comply365-medium-pitch-html/
+├── index.html              (thumbnail grid, deck title, intro)
+├── styles.css              (shared dark theme, responsive)
+├── slides/
+│   ├── 01-title.html
+│   ├── 02-strategic-shift.html
+│   ├── ...
+│   └── 16-why-comply365.html
+└── assets/
+    ├── 01-title.png
+    ├── 02-strategic-shift.png
+    └── ...
+```
 
-Key shift vs v1: product name and value proposition appear in the **first 12 seconds**; each stack layer carries a **capability + benefit line**; payoff beat uses specific outcomes from `lineOfSightData.ts`.
+Each slide HTML: semantic `<article>` with `<h1>` title, `<img>` slide render, `<section class="narration">` with the voiceover script as paragraphs, and prev/next nav. Fully standalone — open any file directly in a browser or paste the markup into a WordPress Custom HTML block.
 
-## Draft script (v2, ~195 words)
+## WordPress rebuild options this gives you
+- **Fastest:** upload the whole folder via SFTP/File Manager to `/wp-content/uploads/medium-pitch/` and link to `index.html`.
+- **Editable in WP:** copy the `<img>` + narration text from each slide file into a Gutenberg Image + Paragraph block. Titles become real headings for SEO.
+- **Assets only:** grab just the PNGs from `assets/` and rebuild layouts natively in WP.
 
-> **[0:00 · Name]** This is Comply365 — the Operational Performance Platform for safety-critical operations. One connected system for content, training, safety and compliance.
->
-> **[0:12 · Replaces]** It replaces the disconnected mix of document tools, safety systems and training records most operators still run today — with a single, purpose-built platform.
->
-> **[0:25 · Stack]** At the base, Core Operational Apps run your procedures, competence and occurrences. Above them, an Operational Data Foundation connects every signal, document and record. On top, the Intelligence Layer reads that data with domain-trained AI — around 90% accuracy on operational language, versus about 35% for generic tools. And a Unified Mobile shell puts it all in the hands of the frontline.
->
-> **[1:05 · DTOP]** Around the stack runs our operating model — DTOP. Detect every signal. Trigger the right response. Orchestrate work across procedures, training and safety. And Prove it with an auditable evidence chain.
->
-> **[1:30 · Value]** The result: protected schedules, protected revenue, lower cost of operations, and a frontline that trusts the system. Trusted today by 550+ operators.
->
-> **[1:50 · Close]** Comply365. One platform. One operating model. One entry point.
+## Easier alternative worth considering
+If the aim is just to *show* the deck on the WP site (not rebuild it), the fastest path is a single-line embed:
+```html
+<iframe src="https://stratagem-pyramid.lovable.app/pitch-executive-medium"
+        width="100%" height="720" style="border:0"></iframe>
+```
+Zero rebuild, always in sync with edits here. The HTML bundle above is the right choice if you want the content living inside WordPress (for SEO, editing, or independence from Lovable hosting).
 
-## Storyboard (12 shots) — product-led re-cast
-- Shots 1–2: **Product intro** — logo + base plate lands, product definition types in.
-- Shot 3: Legacy slabs (SMS · Docs · TMS) snap into the base plate.
-- Shot 4: Camera rotates to isometric 3/4.
-- Shots 5–8: Layer build (Core Apps → Data Foundation → Intelligence Layer → Unified Mobile), each with a **floating value caption** (e.g. Layer 3 shows "90% domain accuracy vs 35%").
-- Shot 9: DTOP ribbon wraps the stack, signal dot travels the loop.
-- Shot 10: Outcome tiles with **specific numbers** from `lineOfSightData.ts`.
-- Shot 11: Add **"550+ operators"** trust strip.
-- Shot 12: Endframe — logo lock-up.
-
-## Content sources (already in-app)
-- `src/data/positioningPlaybook.ts` — three differentiators
-- `src/data/lineOfSightData.ts` — quantified outcomes
-- `src/components/exec-slides/ExecSlide3Platform.tsx` + `ExecSlide4Intelligence.tsx` — layer definitions & value lines
-- Memory: DTOP colours, 90% vs 35% accuracy, forbidden terms
-
-## Technical implementation
-1. **Create `src/data/comply365ExplainerV2.ts`** — mirrors v1's structure and exports the v2 beats/script/storyboard, plus a new `LAYER_VALUE_LINES` array for the per-layer capability + benefit captions. `EXPLAINER_META.version = "v2 · product-led"`.
-2. **Create `src/pages/editorial/Comply365ExplainerV2.tsx`** — copies v1's layout, imports from `comply365ExplainerV2.ts`, and renders `LAYER_VALUE_LINES` as an extra caption under Visual for storyboard shots 5–8. Adds a small header link back to v1 for comparison. Includes the same `.docx` download button (filename `Comply365-Explainer-v2.docx`).
-3. **Register route** `/editorial/comply365-explainer-v2` in `src/App.tsx`.
-4. **Link from v1 page and Editorial Suite header** — a "View v2 (product-led)" link on v1's header, and a second badge/button on `EditorialSuite.tsx` alongside the existing v1 link.
-5. **Leave v1 completely untouched** so both versions remain reviewable in parallel.
-
-## Out of scope
-- Animation rendering — v2 stays a written brief.
-- Voice casting, music bed, localisation.
+## Technical notes
+- Reuses existing `renderComponentToPng` — no changes to slide components.
+- Adds `jszip` dependency for client-side zipping.
+- New files: `src/exporters/html/buildMediumPitchHtml.ts`, `src/components/DeckHtmlExportButton.tsx`. Wired into `TechSlideOpener` behind a `htmlBundleDeckId` prop, same pattern as `pptxDeckId`.
+- Narration copy is pulled from `src/data/executivePitchNarration.ts` (matching slide IDs) so each HTML file has real body text, not just an image.
+- Approx bundle size: 16 PNGs × ~400KB ≈ 6–8 MB zipped.
