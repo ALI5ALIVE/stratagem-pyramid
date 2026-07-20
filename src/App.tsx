@@ -69,6 +69,7 @@ const AdminKnowledgeBase = lazy(() => import("./pages/AdminKnowledgeBase"));
 const SalesRepActivity = lazy(() => import("./pages/admin/SalesRepActivity"));
 const SalesRepActivityDetail = lazy(() => import("./pages/admin/SalesRepActivityDetail"));
 const EditorialSuite = lazy(() => import("./pages/EditorialSuite"));
+const Comply365ExplainerV1 = lazy(() => import("./pages/editorial/Comply365ExplainerV1"));
 
 const queryClient = new QueryClient();
 
@@ -142,6 +143,7 @@ const App = () => (
             <Route path="/dtop-packaging-pov" element={<DtopPackagingPov />} />
             <Route path="/content-strategy" element={<ContentStrategyPage />} />
             <Route path="/editorial" element={<Suspense fallback={<PageLoader />}><EditorialSuite /></Suspense>} />
+            <Route path="/editorial/comply365-explainer-v1" element={<Suspense fallback={<PageLoader />}><Comply365ExplainerV1 /></Suspense>} />
             <Route path="/ai-infographic" element={<AIInfographic />} />
             <Route path="/events/from-signals-to-control" element={<SignalsEvent />} />
             <Route path="/events/from-signals-to-control/brief" element={<SignalsEventBrief />} />
