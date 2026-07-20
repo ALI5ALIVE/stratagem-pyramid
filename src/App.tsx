@@ -23,6 +23,7 @@ import ExecutivePitch from "./pages/ExecutivePitch";
 import ExecutivePitch2 from "./pages/ExecutivePitch2";
 import ExecutivePitch3 from "./pages/ExecutivePitch3";
 import ExecutivePitchMedium from "./pages/ExecutivePitchMedium";
+import PitchScripts from "./pages/PitchScripts";
 import OperationalPitch from "./pages/OperationalPitch";
 import TechnicalDeepDive from "./pages/TechnicalDeepDive";
 import CoAnalystPreview from "./pages/CoAnalystPreview";
@@ -99,6 +100,7 @@ const App = () => (
             <Route path="/pitch-executive-2" element={<ExecutivePitch2 />} />
             <Route path="/pitch-executive-3" element={<ExecutivePitch3 />} />
             <Route path="/pitch-executive-medium" element={<ExecutivePitchMedium />} />
+            <Route path="/pitch-scripts" element={<PitchScripts />} />
             <Route path="/pitch-operational" element={<OperationalPitch />} />
             <Route path="/pitch-technical" element={<TechnicalDeepDive />} />
             <Route path="/pitch-technical-v4" element={<Suspense fallback={<PageLoader />}><TechnicalDeepDiveV4 /></Suspense>} />
