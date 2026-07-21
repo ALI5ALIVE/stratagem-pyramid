@@ -9,7 +9,10 @@ import {
 } from "docx";
 import { execPitchMediumSlides } from "@/data/execPitchMediumSlides";
 import { execPitch3Slides } from "@/data/execPitch3Slides";
-import { executivePitchNarrations } from "@/data/executivePitchNarration";
+import {
+  executivePitchNarrations,
+  exec3PitchNarrations,
+} from "@/data/executivePitchNarration";
 import { executivePitch2Narrations } from "@/data/executivePitch2Narration";
 
 export type PitchScriptDeckId = "short" | "medium" | "long";
@@ -37,7 +40,8 @@ const shortSlides = [
 ];
 
 const execNarr = (id: string) =>
-  executivePitchNarrations.find((n) => n.slideId === id)?.script;
+  executivePitchNarrations.find((n) => n.slideId === id)?.script ??
+  exec3PitchNarrations.find((n) => n.slideId === id)?.script;
 const exec2Narr = (id: string) =>
   executivePitch2Narrations.find((n) => n.slideId === id)?.script;
 
