@@ -5,6 +5,7 @@ import { heroEyebrow, heroTagline, heroSubtitle, statusLabel } from "@/data/plat
 import DeckPDFExportButton from "@/components/DeckPDFExportButton";
 import DeckPPTXExportButton from "@/components/DeckPPTXExportButton";
 import DeckHtmlExportButton from "@/components/DeckHtmlExportButton";
+import DeckHtmlReplicaExportButton from "@/components/DeckHtmlReplicaExportButton";
 import type { DeckId } from "@/exporters/pptx";
 
 interface ExportSlideDef {
@@ -65,6 +66,7 @@ const TechSlideOpener = ({
         <div className="flex items-center gap-2">
           <DeckPPTXExportButton deckId={pptxDeckId} />
           {htmlBundleDeckId && <DeckHtmlExportButton deckId={htmlBundleDeckId} />}
+          {htmlBundleDeckId && <DeckHtmlReplicaExportButton deckId={htmlBundleDeckId} />}
           {!hidePdfExport && (
             <DeckPDFExportButton
               slides={exportSlides}
