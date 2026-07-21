@@ -11,7 +11,7 @@ interface Props {
 }
 
 const FILENAMES: Record<Deck, string> = {
-  "executive-pitch-medium": "comply365-medium-pitch-replica.html",
+  "executive-pitch-medium": "comply365-medium-pitch-webpage.zip",
 };
 
 const DeckHtmlReplicaExportButton: React.FC<Props> = ({ deckId, className }) => {
@@ -19,12 +19,12 @@ const DeckHtmlReplicaExportButton: React.FC<Props> = ({ deckId, className }) => 
 
   const handleClick = async () => {
     setBusy(true);
-    const tid = toast.loading("Preparing replica HTML…");
+    const tid = toast.loading("Preparing standalone HTML webpage…");
     try {
       const { buildMediumPitchReplicaHtml } = await import("@/exporters/html/buildMediumPitchReplica");
       const blob = await buildMediumPitchReplicaHtml((current, total, label) => {
         if (current >= total) {
-          toast.loading("Packaging HTML file…", { id: tid });
+          toast.loading("Packaging HTML webpage…", { id: tid });
         } else {
           toast.loading(`Slide ${current + 1}/${total} — ${label}`, { id: tid });
         }
@@ -37,10 +37,10 @@ const DeckHtmlReplicaExportButton: React.FC<Props> = ({ deckId, className }) => 
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
-      toast.success("Replica HTML ready", { id: tid });
+      toast.success("Standalone HTML webpage ready", { id: tid });
     } catch (err) {
-      console.error("Replica HTML export failed:", err);
-      toast.error("Replica HTML export failed. See console.", { id: tid });
+      console.error("Standalone HTML export failed:", err);
+      toast.error("Standalone HTML export failed. See console.", { id: tid });
     } finally {
       setBusy(false);
     }
